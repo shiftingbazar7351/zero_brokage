@@ -48,15 +48,15 @@
                                                     data-bs-toggle="modal" data-bs-target="#edit-category">
                                                     <i class="fe fe-edit"></i>
                                                 </button>
-                                                <form action="{{ route('categories.destroy', $category->id) }}" method="POST"
-                                                    style="display:inline;">
+                                              
+                                                <form action="{{ route('categories.destroy', $category->id) }}"
+                                                    method="POST" style="display:inline;">
                                                     @csrf
                                                     @method('DELETE')
-                                                    <button class="btn delete-table" type="submit" data-bs-toggle="modal"
-                                                        data-bs-target="#delete-category">
+                                                    <button type="submit" class="btn delete-table"
+                                                        onclick="return confirm('Are you sure you want to delete this sub-category?');">
                                                         <i class="fe fe-trash-2"></i>
                                                     </button>
-                                                    <!-- <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure you want to delete this category?');">Delete</button> -->
                                                 </form>
 
                                             </div>

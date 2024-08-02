@@ -29,11 +29,13 @@ Route::get('/services_menu', [UserController::class, 'menu'])->name('menu');
 Route::get('/services_submenu', [UserController::class, 'submenu'])->name('submenu');
 
 ####-----------------------------------------MenuController---------------------------------- ------###
-Route::post('/menus', [MenuController::class, 'store'])->name('menus.store');
-Route::get('menus/{id}/edit', [MenuController::class, 'edit'])->name('menus.edit');
-Route::put('menus/{id}', [MenuController::class, 'update'])->name('menus.update');
-Route::delete('menus/{id}', [MenuController::class, 'destroy'])->name('menus.destroy');
-Route::post('/services-menu', [MenuController::class, 'store'])->name('menu.store');
+// Route::post('/menus', [MenuController::class, 'store'])->name('menus.store');
+// Route::get('menus/{id}/edit', [MenuController::class, 'edit'])->name('menus.edit');
+// Route::put('menus/{id}', [MenuController::class, 'update'])->name('menus.update');
+// Route::delete('menus/{id}', [MenuController::class, 'destroy'])->name('menus.destroy');
+// Route::post('/services-menu', [MenuController::class, 'store'])->name('menu.store');
+
+Route::resource('menu', CategoryController::class);
 
 ####-----------------------------------------FooterController----------------------------------------###
 Route::get('/footer-about-us', [FooterController::class, 'about_us'])->name('about');

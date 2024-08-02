@@ -2,83 +2,65 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Models\Menu;
+use Illuminate\Http\Request;
 
 class MenuController extends Controller
 {
+    /**
+     * Display a listing of the resource.
+     */
+    public function index()
+    {
+       $menus = Menu::orderByDesc('created_at')->paginate(10);
+        return view('backend.sub-category.index',compact('subcategories','categories'));
+    }
+
+    /**
+     * Show the form for creating a new resource.
+     */
+    public function create()
+    {
+        //
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     */
     public function store(Request $request)
     {
-        $request->validate([
-            'name' => 'required',
-            'category' => 'nullable|string|max:255', 
-            'subcategory' => 'nullable|string|max:255', 
-            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
-        ]);
-    
-        $menu = new Menu();
-        $menu->name = $request->name;
-        $menu->category_id = $request->input('category');
-        $menu->subcategory_id = $request->input('subcategory');
-    
-        if ($request->hasFile('image')) {
-            $image = $request->file('image');
-            $imageName = time() . '_' . $image->getClientOriginalName(); // Generate unique name
-            $image->storeAs('assets/menu', $imageName, 'public'); // Store the image in assets/category
-            $menu->image = $imageName; // Save the unique name
-        }
-    
-        $menu->save();
-        return redirect()->back()->with('success', 'Menu created successfully.');
+        //
     }
 
-    public function edit($id)
+    /**
+     * Display the specified resource.
+     */
+    public function show(string $id)
     {
-        $menu = Menu::findOrFail($id);
-        // Pass the menu item to the view for editing
-        return view('menus.edit', compact('menu'));
+        //
     }
 
-    public function update(Request $request, $id)
+    /**
+     * Show the form for editing the specified resource.
+     */
+    public function edit(string $id)
     {
-        $request->validate([
-            'name' => 'required',
-            'category' => 'nullable|string|max:255',
-            'subcategory' => 'nullable|string|max:255',
-            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
-        ]);
-    
-        $menu = Menu::findOrFail($id);
-        $menu->name = $request->name;
-        $menu->category_id = $request->input('category');
-        $menu->subcategory_id = $request->input('subcategory');
-    
-        if ($request->hasFile('image')) {
-            // Delete old image if exists
-            if ($menu->image) {
-                \Storage::disk('public')->delete('assets/menu/' . $menu->image);
-            }
-            $image = $request->file('image');
-            $imageName = time() . '_' . $image->getClientOriginalName(); // Generate unique name
-            $image->storeAs('assets/menu', $imageName, 'public'); // Store the image in assets/category
-            $menu->image = $imageName; // Save the unique name
-        }
-    
-        $menu->save();
-        return redirect()->back()->with('success', 'Menu updated successfully.');
+        //
     }
 
-    public function destroy($id)
+    /**
+     * Update the specified resource in storage.
+     */
+    public function update(Request $request, string $id)
     {
-        $menu = Menu::findOrFail($id);
-        
-        // Delete image if exists
-        if ($menu->image) {
-            \Storage::disk('public')->delete('assets/menu/' . $menu->image);
-        }
-        
-        $menu->delete();
-        return redirect()->back()->with('success', 'Menu deleted successfully.');
+        //
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     */
+    public function destroy(string $id)
+    {
+        //
     }
 }
-

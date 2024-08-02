@@ -34,7 +34,7 @@
                                     <td>{{ $subcategory->name }}</td>
                                     <td>
                                         @if ($subcategory->image)
-                                            <img src="{{ asset('storage/images/' . $subcategory->image) }}"
+                                            <img src="{{ Storage::url('assets/subcategory/' . $subcategory->image) }}"
                                                 class="img-thumbnail" width="100">
                                         @else
                                             No Image

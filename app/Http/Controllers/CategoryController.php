@@ -12,7 +12,7 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        $categories = Category::get();
+        $categories = Category::orderByDesc('id')->get();
         return view('backend.category.index',compact('categories'));
     }
     /**
@@ -63,7 +63,7 @@ class CategoryController extends Controller
      */
     public function show(string $id)
     {
-        //
+        
     }
 
     /**
@@ -79,31 +79,7 @@ class CategoryController extends Controller
      */
     public function update(Request $request, Category $category)
     {
-        $request->validate([
-            'name' => 'required',
-            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
-            'icon' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
-        ]);
     
-        $category->name = $request->name;
-    
-        if ($request->hasFile('image')) {     
-            $image = $request->file('image');
-            $imageName = time() . '_' . $image->getClientOriginalName(); // Generate unique name
-            $image->storeAs('assets/category', $imageName, 'public'); // Store the image in assets/category
-            $category->image = $imageName; // Save the unique name
-        }
-    
-        if ($request->hasFile('icon')) { 
-            $icon = $request->file('icon');
-            $iconName = time() . '_' . $icon->getClientOriginalName(); // Generate unique name
-            $icon->storeAs('assets/icon', $iconName, 'public'); // Store the icon in assets/icon
-            $category->icon = $iconName; // Save the unique name
-        }
-    
-        $category->save();
-    
-        return redirect()->route('list')->with('success', 'Category updated successfully.');
     }
 
     /**
@@ -111,6 +87,6 @@ class CategoryController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        
     }
 }

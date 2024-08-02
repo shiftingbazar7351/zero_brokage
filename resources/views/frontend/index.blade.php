@@ -316,7 +316,7 @@
                 <div class="row">
                     @foreach($categories as $category)
                     <div class="col-md-2 col-lg-3">
-                        <a href="{{ route('details') }}" class="feature-box aos" data-aos="fade-up">
+                        <a href="#" class="feature-box aos" data-aos="fade-up">
                             <div class="feature-icon">
                                 <span>
                                     <img src="{{ Storage::url('assets/icon/' . $category->icon) }}" alt="img">
@@ -470,7 +470,7 @@
                 @foreach($subCategories as $subcategory)
                     
                     <div class="col-md-2">
-                        <a href="{{ route('details') }}" class="feature-box aos" data-aos="fade-up">
+                        <a href="#" class="feature-box aos" data-aos="fade-up">
                             <div class="feature-icon">
                                 <span>
                                 <img src="{{ Storage::url('assets/subcategory/' . $subcategory->image) }}" alt="img">

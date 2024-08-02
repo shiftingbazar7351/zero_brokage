@@ -43,7 +43,7 @@
                                     <td>
                                         <!-- Edit Button -->
                                         <!-- <a href="{{ route('subcategories.edit', $subcategory->id) }}"
-                                                        class="fa fa-edit"></a> -->
+                                                            class="fa fa-edit"></a> -->
                                         <div class="d-flex">
                                             <a class="btn delete-table me-2"
                                                 href="{{ route('subcategories.edit', $subcategory->id) }}">
@@ -89,7 +89,7 @@
 
                     <div class="form-group">
                         <label for="name">Name</label>
-                        <input type="text" class="form-control" id="name" name="name" required>
+                        <input type="text" class="form-control" id="name" name="name" placeholder="Enter Name" required>
                     </div>
                     <div class="form-group">
                         <label for="category">Category</label>
@@ -100,10 +100,55 @@
                             @endforeach
                         </select>
                     </div>
-                    <div class="form-group">
-                        <label for="image">Image:</label>
-                        <input type="file" name="image" id="image">
-                    </div>
+                    <div class="mb-3">
+    <label class="form-label">Category Image</label>
+    <div class="form-uploads">
+        <div class="form-uploads-path" style="position: relative; text-align: center;">
+            <!-- Image Preview -->
+            <div id="image-preview-container" style="border: 2px dashed #ccc; border-radius: 5px; padding: 10px; display: inline-block; width: 150px; height: 150px; overflow: hidden; position: relative;">
+                <img id="image-preview" src="{{asset('admin/assets/img/icons/upload.svg')}}" alt="Preview" style="width: 100%; height: 100%; object-fit: cover; display: block;">
+            </div>
+            <!-- File Upload -->
+            <div class="file-browse" style="margin-top: 10px;">
+                <h6 style="margin: 0;">Drag & drop image or</h6>
+                <input type="file" id="image-upload" name="image" accept="image/jpeg, image/png" style="display: none;">
+                <a href="javascript:void(0);" id="browse-btn" style="color: #007bff; text-decoration: underline; cursor: pointer;">Browse</a>
+                <h5 style="margin-top: 10px;">Supported formats: JPEG, PNG</h5>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+    const fileInput = document.getElementById('image-upload');
+    const imagePreview = document.getElementById('image-preview');
+    const browseBtn = document.getElementById('browse-btn');
+
+    // Handle file input change event
+    fileInput.addEventListener('change', function(event) {
+        const file = event.target.files[0];
+        if (file && (file.type === 'image/jpeg' || file.type === 'image/png')) {
+            const reader = new FileReader();
+            
+            reader.onload = function(e) {
+                imagePreview.src = e.target.result;
+            };
+
+            reader.readAsDataURL(file);
+        } else {
+            alert('Please select a JPEG or PNG image.');
+            fileInput.value = ''; // Clear the input
+        }
+    });
+
+    // Trigger file input click when browse button is clicked
+    browseBtn.addEventListener('click', function() {
+        fileInput.click();
+    });
+});
+
+</script>
                     <button type="submit" class="btn btn-primary">Save</button>
                 </form>
             </div>

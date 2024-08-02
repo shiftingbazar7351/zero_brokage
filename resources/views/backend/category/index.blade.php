@@ -45,7 +45,7 @@
                                                 <span>{{ $category->name }}</span>
                                             </div>
                                         </td>
-                                        <td>
+                                        
                                         <!-- <button type="submit" class="fa-toggle-btn">
                                             <input type="hidden" name="status" value="{{ $category->status ? 0 : 1 }}">
                                             @if($category->status)
@@ -54,7 +54,15 @@
                                                 <i class="fa fa-toggle-off"></i>
                                             @endif
                                         </button> -->
-                                        </td>
+
+                                        <div class="active-switch">
+            <label class="switch">
+                <input type="checkbox" 
+                       onchange="toggleStatus(this, {{ $category->id }})"
+                       {{ $category->status ? 'checked' : '' }}>
+                <span class="slider round"></span>
+            </label>
+        </div>
 
                                         <td>
                                             <div class="table-actions d-flex justify-content-center">
@@ -247,5 +255,15 @@
             }
         });
     }
+
+function toggleStatus(checkbox, categoryId) {
+    var form = checkbox.closest('form');
+    var hiddenInput = form.querySelector('.status-input');
+    
+    hiddenInput.value = checkbox.checked ? 1 : 0;
+    
+    form.submit();
+}
 </script>
+
 @endsection

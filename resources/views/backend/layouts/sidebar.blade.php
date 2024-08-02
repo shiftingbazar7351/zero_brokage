@@ -31,7 +31,7 @@
                 <li class="{{ Route::currentRouteName() === 'categories.index' ? 'active' : '' }}">
                     <a href="{{ route('categories.index') }}">
                         <i class="fe fe-file-text"></i>
-                        <span>Categories</span>
+                        <span>Category</span>
                     </a>
                 </li>
                 <li class="{{ Route::currentRouteName() === 'subcategories.index' ? 'active' : '' }}">

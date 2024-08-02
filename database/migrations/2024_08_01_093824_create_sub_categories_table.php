@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('slug')->nullable();
             $table->unsignedBigInteger('category_id')->nullable();
             $table->foreign('category_id')->references('id')->on('categories')->onDelete('cascade')->onUpdate('cascade');
+            $table->boolean('status')->default(1)->comment('0=>inactive,1=>active');
             $table->softDeletes();
             $table->timestamps();
         });

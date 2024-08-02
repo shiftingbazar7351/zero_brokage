@@ -21,13 +21,19 @@
                             <tr>
                                 <th>#</th>
                                 <th>Category</th>
+                                <th>Status</th>
                                 <th>Action</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
+                            @if($categories->isEmpty())
+                                <tr>
+                                    <td colspan="4" class="text-center">No data found</td>
+                                </tr>
+                            @else
                                 @foreach($categories as $category)
-                                        <td>{{ $category->id }}</td>
+                                    <tr>
+                                        <td>{{ $loop->iteration }}</td>
                                         <td>
                                             <div class="table-imgname">
                                                 @if ($category->icon)
@@ -36,9 +42,18 @@
                                                 @else
                                                     No Image
                                                 @endif
-
                                                 <span>{{ $category->name }}</span>
                                             </div>
+                                        </td>
+                                        <td>
+                                        <!-- <button type="submit" class="fa-toggle-btn">
+                                            <input type="hidden" name="status" value="{{ $category->status ? 0 : 1 }}">
+                                            @if($category->status)
+                                                <i class="fa fa-toggle-on"></i>
+                                            @else
+                                                <i class="fa fa-toggle-off"></i>
+                                            @endif
+                                        </button> -->
                                         </td>
 
                                         <td>
@@ -48,9 +63,9 @@
                                                     data-bs-toggle="modal" data-bs-target="#edit-category">
                                                     <i class="fe fe-edit"></i>
                                                 </button>
-                                              
-                                                <form action="{{ route('categories.destroy', $category->id) }}"
-                                                    method="POST" style="display:inline;">
+
+                                                <form action="{{ route('categories.destroy', $category->id) }}" method="POST"
+                                                    style="display:inline;">
                                                     @csrf
                                                     @method('DELETE')
                                                     <button type="submit" class="btn delete-table"
@@ -64,6 +79,7 @@
                                     </tr>
 
                                 @endforeach
+                            @endif
                         </tbody>
                     </table>
                 </div>
@@ -71,7 +87,7 @@
         </div>
     </div>
 </div>
-</div>
+
 
 <!-- Add Category Modal -->
 <div class="modal fade" id="add-category">

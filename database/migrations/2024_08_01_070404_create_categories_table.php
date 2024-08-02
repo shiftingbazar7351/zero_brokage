@@ -17,6 +17,7 @@ return new class extends Migration
             $table->string('slug')->nullable();
             $table->string('image')->nullable();
             $table->string('icon')->nullable();
+            $table->boolean('status')->default(1)->comment('0=>inactive,1=>active');
             $table->timestamps();
             $table->softDeletes();
         });

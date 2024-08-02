@@ -12,6 +12,7 @@ use App\Http\Controllers\UserController;
 
 
 Route::resource('categories', CategoryController::class);
+Route::get('/categories-details', [CategoryController::class, 'service_details'])->name('details');
 ####-----------------------------------------CategoryController--------------------------  ---------###
 Route::resource('subcategories', SubCategoryController::class);
 // Route::post('/sub_categories/create', [SubCategoryController::class, 'store'])->name('subcategories.store');

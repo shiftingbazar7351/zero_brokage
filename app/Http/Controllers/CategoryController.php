@@ -76,17 +76,49 @@ class CategoryController extends Controller
 
     /**
      * Update the specified resource in storage.
-     */
-    public function update(Request $request, Category $category)
+     */ public function update(Request $request, Category $category)
     {
-    
+        $request->validate([
+            'name' => 'required',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:5048',
+            'icon' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:5048',
+        ]);
+
+        $category->name = $request->name;
+
+        if ($request->hasFile('image')) {
+            $image = $request->file('image');
+            $imageName = time() . '_' . $image->getClientOriginalName();
+            $image->storeAs('assets/category', $imageName, 'public');
+            $category->image = $imageName;
+        }
+
+        if ($request->hasFile('icon')) {
+            $icon = $request->file('icon');
+            $iconName = time() . '_' . $icon->getClientOriginalName();
+            $icon->storeAs('assets/icon', $iconName, 'public');
+            $category->icon = $iconName;
+        }
+
+        $category->save();
+
+        return redirect()->back()->with('success', 'Category updated successfully.');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Category $category)
     {
-        
+        if ($category->image) {
+            \Storage::delete('public/assets/category/' . $category->image);
+        }
+        if ($category->icon) {
+            \Storage::delete('public/assets/icon/' . $category->icon);
+        }
+
+        $category->delete();
+
+        return redirect()->back()->with('success', 'Category deleted successfully.');
     }
 }

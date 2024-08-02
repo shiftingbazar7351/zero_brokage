@@ -121,4 +121,9 @@ class CategoryController extends Controller
 
         return redirect()->back()->with('success', 'Category deleted successfully.');
     }
+
+    public function service_details()
+    {
+        return view('frontend.service-details');
+    }
 }

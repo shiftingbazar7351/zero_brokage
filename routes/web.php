@@ -38,7 +38,7 @@ Route::get('/services_submenu', [UserController::class, 'submenu'])->name('subme
 // Route::post('/services-menu', [MenuController::class, 'store'])->name('menu.store');
 
 Route::resource('menu', CategoryController::class);
-Route::patch('/categories/{id}/update-status', [CategoryController::class, 'updateStatus'])->name('categories.updateStatus');
+Route::post('/update-status', [CategoryController::class, 'updateStatus'])->name('update.status');
 
 ####-----------------------------------------FooterController----------------------------------------###
 Route::get('/footer-about-us', [FooterController::class, 'about_us'])->name('about');

@@ -2,8 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Models\Category;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class CategoryController extends Controller
 {
@@ -120,10 +121,10 @@ class CategoryController extends Controller
     public function destroy(Category $category)
     {
         if ($category->image) {
-            \Storage::delete('public/assets/category/' . $category->image);
+            Storage::delete('public/assets/category/' . $category->image);
         }
         if ($category->icon) {
-            \Storage::delete('public/assets/icon/' . $category->icon);
+            Storage::delete('public/assets/icon/' . $category->icon);
         }
 
         $category->delete();
@@ -131,13 +132,17 @@ class CategoryController extends Controller
         return redirect()->back()->with('success', 'Category deleted successfully.');
     }
 
-    public function updateStatus(Request $request, $id)
+    public function updateStatus(Request $request)
     {
-        $category = Category::findOrFail($id);
-        $category->status = $request->input('status', 0);
-        $category->save();
+        $item = Category::find($request->id);
+        if ($item) {
+            $item->status = $request->status;
+            $item->save();
 
-        return redirect()->back()->with('success', 'Status updated successfully');
+            return response()->json(['success' => true, 'message' => 'Status updated successfully.']);
+        }
+
+        return response()->json(['success' => false, 'message' => 'Item not found.']);
     }
 
 

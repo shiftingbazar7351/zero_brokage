@@ -71,8 +71,9 @@ class SubCategoryController extends Controller
      */
     public function edit(string $id)
     {
-        $subcategory = SubCategory::findOrFail($id);
-        return view('backend.sub-category.edit', compact('subcategory'));
+        $subcategories = SubCategory::findOrFail($id);
+        $category =  Category::get();
+        return view('backend.sub-category.edit', compact('subcategories','category'));
     }
 
     /**
@@ -88,17 +89,29 @@ class SubCategoryController extends Controller
 
         $subcategory = SubCategory::findOrFail($id);
         $subcategory->name = $request->name;
-        $subcategory->category = $request->category;
+        $subcategory->category_id = $request->category;
 
         if ($request->hasFile('image')) {
             $image = $request->file('image');
-            $imagePath = $image->store('images', 'public');
-            $subcategory->image = $imagePath;
+            $imageName = time() . '_' . $image->getClientOriginalName(); 
+            $image->storeAs('assets/subcategory', $imageName, 'public'); 
+            $subcategory->image = $imageName; 
+        }
+
+        if ($request->hasFile('image')) {
+            // Delete old image if exists
+            if ($subcategory->image) {
+                \Storage::disk('public')->delete('assets/subcategory/' . $subcategory->image);
+            }
+            $image = $request->file('image');
+            $imageName = time() . '_' . $image->getClientOriginalName(); // Generate unique name
+            $image->storeAs('assets/subcategory', $imageName, 'public'); // Store the image in assets/category
+            $subcategory->image = $imageName; // Save the unique name
         }
 
         $subcategory->save();
 
-        return redirect()->route('services_subcategory')->with('success', 'SubCategory updated successfully.');
+        return redirect()->back()->with('success', 'SubCategory updated successfully.');
     }
 
     /**

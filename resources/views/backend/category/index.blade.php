@@ -47,18 +47,22 @@
                                                 data-bs-toggle="modal" data-bs-target="#edit-category">
                                                 <i class="fe fe-edit"></i>
                                             </button>
-                                            <form action="{{ route('categories.destroy', $category->id) }}" method="POST"
-                                                style="display:inline;">
-                                                @csrf
-                                                @method('DELETE')
-                                                <button class="btn delete-table" type="submit">
-                                                    <i class="fe fe-trash-2"></i>
-                                                </button>
-                                            </form>
-                                        </div>
-                                    </td>
-                                </tr>
-                            @endforeach
+                                              
+                                                <form action="{{ route('categories.destroy', $category->id) }}"
+                                                    method="POST" style="display:inline;">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <button type="submit" class="btn delete-table"
+                                                        onclick="return confirm('Are you sure you want to delete this sub-category?');">
+                                                        <i class="fe fe-trash-2"></i>
+                                                    </button>
+                                                </form>
+
+                                            </div>
+                                        </td>
+                                    </tr>
+
+                                @endforeach
                         </tbody>
                     </table>
                 </div>

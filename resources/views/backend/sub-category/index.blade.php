@@ -35,7 +35,7 @@
                             @else
                                 @foreach($subcategories as $subcategory)
                                     <tr>
-                                        <td>{{ $subcategory->id }}</td>
+                                        <td>{{ $loop->iteration }}</td>
                                         <td>{{ $subcategory->name }}</td>
                                         <td>
                                             @if ($subcategory->image)
@@ -76,7 +76,7 @@
         </div>
     </div>
 </div>
-<div class="modal fade" id="addCategoryModal" tabindex="-1" aria-labelledby="addCategoryModalLabel" aria-hidden="true">
+<div class="modal fade" id="addCategoryModal">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">

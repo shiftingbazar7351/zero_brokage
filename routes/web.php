@@ -15,7 +15,6 @@ Route::resource('categories', CategoryController::class);
 Route::get('/categories-details', [CategoryController::class, 'service_details'])->name('details');
 ####-----------------------------------------CategoryController--------------------------  ---------###
 Route::resource('subcategories', SubCategoryController::class);
-// Route::post('/sub_categories/create', [SubCategoryController::class, 'store'])->name('subcategories.store');
 Route::post('/fetch-subcategory/{id}', [SubCategoryController::class, 'fetchsubcategory']);
 Route::post('/fetch-menus/{id}', [SubCategoryController::class, 'fetchmenu']);
 
@@ -37,6 +36,7 @@ Route::get('/services_submenu', [UserController::class, 'submenu'])->name('subme
 // Route::post('/services-menu', [MenuController::class, 'store'])->name('menu.store');
 
 Route::resource('menu', CategoryController::class);
+Route::patch('/categories/{id}/update-status', [CategoryController::class, 'updateStatus'])->name('categories.updateStatus');
 
 ####-----------------------------------------FooterController----------------------------------------###
 Route::get('/footer-about-us', [FooterController::class, 'about_us'])->name('about');

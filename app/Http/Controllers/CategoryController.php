@@ -12,7 +12,7 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        $categories = Category::orderByDesc('id')->get();
+        $categories = Category::orderByDesc('created_at')->get();
         return view('backend.category.index',compact('categories'));
     }
     /**
@@ -120,10 +120,5 @@ class CategoryController extends Controller
         $category->delete();
 
         return redirect()->back()->with('success', 'Category deleted successfully.');
-    }
-
-    public function service_details()
-    {
-        return view('frontend.service-details');
     }
 }

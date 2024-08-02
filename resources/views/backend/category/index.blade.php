@@ -21,41 +21,52 @@
                             <tr>
                                 <th>#</th>
                                 <th>Category</th>
+                                <th>Status</th>
                                 <th>Action</th>
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach($categories as $category)
-                                <tr>
-                                    <td>{{ $category->id }}</td>
-                                    <td>
-                                        <div class="table-imgname">
-                                            @if ($category->icon)
-                                                <img src="{{ Storage::url('assets/icon/' . $category->icon) }}" class="me-2"
-                                                    alt="img">
-                                            @else
-                                                No Image
-                                            @endif
+                            <tr>
+                                @foreach($categories as $category)
+                                        <td>{{ $category->id }}</td>
+                                        <td>
+                                            <div class="table-imgname">
+                                                @if ($category->icon)
+                                                    <img src="{{ Storage::url('assets/icon/' . $category->icon) }}" class="me-2"
+                                                        alt="img">
+                                                @else
+                                                    No Image
+                                                @endif
 
-                                            <span>{{ $category->name }}</span>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <div class="table-actions d-flex justify-content-center">
-                                            <button class="btn delete-table me-2"
-                                                onclick="editCategory({{ $category->id }})" type="button"
-                                                data-bs-toggle="modal" data-bs-target="#edit-category">
-                                                <i class="fe fe-edit"></i>
-                                            </button>
-                                              
-                                                <form action="{{ route('categories.destroy', $category->id) }}"
-                                                    method="POST" style="display:inline;">
+                                                <span>{{ $category->name }}</span>
+                                            </div>
+                                        </td>
+
+                                        <td>
+                                            <div class="active-switch">
+                                                <label class="switch">
+                                                    <input type="checkbox">
+                                                    <span class="sliders round"></span>
+                                                </label>
+                                            </div>
+                                        </td>   
+
+                                        <td>
+                                            <div class="table-actions d-flex justify-content-center">
+                                                <button class="btn delete-table me-2"
+                                                    onclick="editCategory({{ $category->id }})" type="button"
+                                                    data-bs-toggle="modal" data-bs-target="#edit-category">
+                                                    <i class="fe fe-edit"></i>
+                                                </button>
+                                                <form action="{{ route('categories.destroy', $category->id) }}" method="POST"
+                                                    style="display:inline;">
                                                     @csrf
                                                     @method('DELETE')
-                                                    <button type="submit" class="btn delete-table"
-                                                        onclick="return confirm('Are you sure you want to delete this sub-category?');">
+                                                    <button class="btn delete-table" type="submit" data-bs-toggle="modal"
+                                                        data-bs-target="#delete-category">
                                                         <i class="fe fe-trash-2"></i>
                                                     </button>
+                                                    <!-- <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure you want to delete this category?');">Delete</button> -->
                                                 </form>
 
                                             </div>
@@ -69,6 +80,7 @@
             </div>
         </div>
     </div>
+</div>
 </div>
 
 <!-- Add Category Modal -->
@@ -204,5 +216,15 @@
             }
         });
     }
+
+function toggleStatus(checkbox, categoryId) {
+    var form = checkbox.closest('form');
+    var hiddenInput = form.querySelector('.status-input');
+    
+    hiddenInput.value = checkbox.checked ? 1 : 0;
+    
+    form.submit();
+}
 </script>
+
 @endsection

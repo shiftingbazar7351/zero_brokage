@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('slug');
             $table->unsignedBigInteger('menu_id')->nullable();
             $table->foreign('menu_id')->references('id')->on('menus')->onDelete('cascade')->onUpdate('cascade');
+            $table->boolean('status')->default(1)->comment('0=>inactive,1=>active');
             $table->timestamps(); 
             $table->softDeletes();
         });

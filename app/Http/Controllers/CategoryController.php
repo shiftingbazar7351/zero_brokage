@@ -132,13 +132,17 @@ class CategoryController extends Controller
         return redirect()->back()->with('success', 'Category deleted successfully.');
     }
 
-    public function updateStatus(Request $request,$id)
+    public function updateStatus(Request $request)
     {
-        $category = Category::findOrFail($id);
-        $category->status = $request->input('status', 0);
-        $category->save();
-    
-        return redirect()->back()->with('success', 'Status updated successfully');
+        $item = Category::find($request->id);
+        if ($item) {
+            $item->status = $request->status;
+            $item->save();
+ 
+            return response()->json(['success' => true, 'message' => 'Status updated successfully.']);
+        }
+ 
+        return response()->json(['success' => false, 'message' => 'Item not found.']);
     }
     
 

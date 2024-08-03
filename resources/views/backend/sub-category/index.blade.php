@@ -105,21 +105,18 @@
 
                     <div class="form-group">
                         <label for="category">State</label>
-                        <select class="form-control" id="category" name="state" >
+                        <select class="form-control" id="state" name="state" >
                             <option value="">Select a state</option>
-                            @foreach($categories as $category)
-                                <option value="{{ $category->id }}">{{ $category->name }}</option>
+                            @foreach($states as $state)
+                                <option value="{{ $state->id }}">{{ ucwords($state->name) }}</option>
                             @endforeach
                         </select>
                     </div>
 
                     <div class="form-group">
                         <label for="category">City</label>
-                        <select class="form-control" id="category" name="city" >
-                            <option value="">Select a category</option>
-                            @foreach($categories as $category)
-                                <option value="{{ $category->id }}">{{ $category->name }}</option>
-                            @endforeach
+                        <select class="form-control" id="city" name="city" >
+                            <option value="">Select a category</option> 
                         </select>
                     </div>
 
@@ -236,6 +233,37 @@
                             @endforeach
                         </select>
                     </div>
+                    <div class="form-group">
+                        <label for="category">State</label>
+                        <select class="form-control" id="edit-state" name="state" >
+                            <option value="">Select a state</option>
+                            @foreach($states as $state)
+                                <option value="{{ $state->id }}">{{ ucwords($state->name) }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="category">City</label>
+                        <select class="form-control" id="edit-city" name="city" >
+                            <option value="">Select a category</option> 
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="price">Price(INR)</label>
+                        <input type="text" class="form-control" id="edit-price" name="price" placeholder="Enter Ammount" >
+                    </div>
+
+                    <div class="form-group">
+                        <label for="price">Discount(%)</label>
+                        <input type="text" class="form-control" id="edit-discount" name="discount" placeholder="Enter Discount percentage" >
+                    </div>
+
+                    <div class="form-group">
+                        <label for="final-price">Final Price (INR)</label>
+                        <input type="text" class="form-control" id="edit-final-price" name="final_price" readonly disabled> 
+                    </div>
                     <div class="mb-3">
                         <label class="form-label">Sub Category Image</label>
                         <div class="form-uploads">
@@ -342,6 +370,49 @@
             editFileInput.click();
         });
     });
+
+    // -----------------------fetch city name--------------------------------------//
+    
+    // <script type="text/javascript" src="js/jquery.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script type="text/javascript">
+       $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
+
+        $(document).ready(function() {
+            $('#state').on('change', function() {
+                var stateId = $(this).val();
+                if (stateId) {
+                    $.ajax({
+                        url: '/fetch-city/' + stateId, // Adjusted URL based on route
+                        type: 'POST',
+                        data: {
+                            _token: '{{ csrf_token() }}' // Include CSRF token for security
+                        },
+                        success: function(response) {
+                            if (response.status === 1) {
+                                var cities = response.data;
+                                $('#city').find('option').remove(); // Clear existing options
+                                var options = '<option value="">Select a city</option>'; // Default option
+                                $.each(cities, function(key, city) {
+                                    options += "<option value='" + city.id + "'>" + city.name + "</option>";
+                                });
+                                $('#city').append(options);
+                            }
+                        }
+                    });
+                } else {
+                    $('#city').find('option').remove(); // Clear options if no state is selected
+                    $('#city').append('<option value="">Select a city</option>');
+                }
+            });
+        });
+    </script>
+    
+    
 
 </script>
 @endsection

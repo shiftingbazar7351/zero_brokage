@@ -13,16 +13,29 @@ use App\Http\Controllers\UserController;
 
 
 
-Route::get('/service-grid', function () {
-    return view('frontend.service-grid');
-})->name('service.grid');
+Route::get('/category-listing', function () {
+    return view('frontend.categories');
+})->name('categories.listing');
+
+Route::get('/booking', function () {
+    return view('frontend.booking');
+})->name('booking');
+
+Route::get('/service-details', function () {
+    return view('frontend.service-details');
+})->name('service-details');
+// frontend 
+Route::get('/', [FrontendController::class, 'home'])->name('home');
+Route::get('/service-grid', [FrontendController::class, 'subCategory'])->name('service.grid');
+
+// for backend
 Route::resource('categories', CategoryController::class);
 Route::get('/categories-details', [CategoryController::class, 'service_details'])->name('details');
 Route::resource('subcategories', SubCategoryController::class);
 Route::post('/fetch-subcategory/{id}', [SubCategoryController::class, 'fetchsubcategory']);
 Route::post('/fetch-menus/{id}', [SubCategoryController::class, 'fetchmenu']);
 Route::post('/services-submenu', [SubmenuController::class, 'store'])->name('submenu.store');
-Route::get('/', [FrontendController::class, 'home'])->name('home');
+
 Route::get('/services_subcategory', [UserController::class, 'sub_category'])->name('subcategory');
 Route::get('/services_menu', [UserController::class, 'menu'])->name('menu');
 Route::get('/services_submenu', [UserController::class, 'submenu'])->name('submenu');

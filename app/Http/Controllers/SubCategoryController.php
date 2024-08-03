@@ -3,29 +3,31 @@
 namespace App\Http\Controllers;
 
 use App\Models\Category;
+use App\Models\Country;
 use App\Models\Menu;
 use Illuminate\Http\Request;
 use App\Models\SubCategory;
+use App\Models\State;
+use App\Models\City;
 
 class SubCategoryController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
+
     public function index()
     {
-        $subcategories   = SubCategory::get();
-        $categories  = Category::get();
-        return view('backend.sub-category.index',compact('subcategories','categories'));
+    $subcategories = SubCategory::all();
+    $categories = Category::all();
+
+    $countryId = Country::where('name', 'India')->value('id');
+
+    $states = State::where('country_id', $countryId)->get(['name','id']);
+
+    return view('backend.sub-category.index', compact('subcategories', 'categories', 'states'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
 
     /**
      * Store a newly created resource in storage.
@@ -41,7 +43,6 @@ class SubCategoryController extends Controller
             'final_price' => 'nullable|numeric',
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
-        // dd( $request);
 
         $finalPrice = $request->input('price');
         $discountPercentage = $request->input('discount');
@@ -56,8 +57,8 @@ class SubCategoryController extends Controller
         $subcategory = new SubCategory();
         $subcategory->name = $request->input('name');
         $subcategory->category_id = $request->input('category');
-        // $subCategory->state_id = $request->input('state');
-        // $subCategory->city_id = $request->input('city');
+        // $subcategory->state_id = $request->input('state');
+        $subcategory->city_id = $request->input('city');
         $subcategory->price = $request->input('price');
         $subcategory->discount = $request->input('discount');
         $subcategory->final_price = $finalPrice;
@@ -158,6 +159,14 @@ class SubCategoryController extends Controller
         ]);
     }
 
+
+    public function fetchcity($state_id = null) {
+        $data = City::where('state_id', $state_id)->get();
+        return response()->json([
+            'status' => 1,
+            'data' => $data
+        ]);
+    }
 
     
 }

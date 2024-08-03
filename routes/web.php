@@ -13,8 +13,6 @@ use App\Http\Controllers\UserController;
 
 
 
-
-
 Route::get('/service-grid', function () {
     return view('frontend.service-grid');
 })->name('service.grid');
@@ -34,3 +32,4 @@ Route::get('/footer-about-us', [FooterController::class, 'about_us'])->name('abo
 Route::get('/footer-blog', [FooterController::class, 'blog'])->name('blog');
 Route::get('/footer-contact', [FooterController::class, 'contact'])->name('contact');
 Route::get('/admin-homepage', [AdminController::class, 'homepage'])->name('admin_page');
+Route::post('/fetch-city/{id}', [SubCategoryController::class, 'fetchcity']);

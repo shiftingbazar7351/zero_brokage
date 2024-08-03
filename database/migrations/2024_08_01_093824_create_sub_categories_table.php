@@ -16,7 +16,11 @@ return new class extends Migration
             $table->string('name')->nullable();
             $table->string('image')->nullable();
             $table->string('slug')->nullable();
+            $table->string('price')->nullable();
+            $table->string('discount')->nullable();
+            $table->string('final_price')->nullable();
             $table->unsignedBigInteger('category_id')->nullable();
+            $table->unsignedBigInteger('city_id')->nullable();
             $table->foreign('category_id')->references('id')->on('categories')->onDelete('cascade')->onUpdate('cascade');
             $table->boolean('status')->default(1)->comment('0=>inactive,1=>active');
             $table->softDeletes();

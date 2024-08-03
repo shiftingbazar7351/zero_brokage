@@ -102,29 +102,38 @@
                             @endforeach
                         </select>
                     </div>
-                    {{-- <div class="mb-3">
-                        <label class="form-label">Category Image</label>
-                        <div class="form-uploads">
-                            <div class="form-uploads-path" style="position: relative; text-align: center;">
-                                <!-- Image Preview -->
-                                <div id="image-preview-container"
-                                    style="border: 2px dashed #ccc; border-radius: 5px; padding: 10px; display: inline-block; width: 150px; height: 150px; overflow: hidden; position: relative;">
-                                    <img id="image-preview" src="{{asset('admin/assets/img/icons/upload.svg')}}"
-                                        alt="Preview"
-                                        style="width: 100%; height: 100%; object-fit: cover; display: block;">
-                                </div>
-                                <!-- File Upload -->
-                                <div class="file-browse" style="margin-top: 10px;">
-                                    <h6 style="margin: 0;">Drag & drop image or</h6>
-                                    <input type="file" id="image-upload" name="image" accept="image/jpeg, image/png"
-                                        style="display: none;">
-                                    <a href="javascript:void(0);" id="browse-btn"
-                                        style="color: #007bff; text-decoration: underline; cursor: pointer;">Browse</a>
-                                    <h5 style="margin-top: 10px;">Supported formats: JPEG, PNG</h5>
-                                </div>
-                            </div>
-                        </div>
-                    </div> --}}
+
+                    <div class="form-group">
+                        <label for="category">State</label>
+                        <select class="form-control" id="state" name="state" >
+                            <option value="">Select a state</option>
+                            @foreach($states as $state)
+                                <option value="{{ $state->id }}">{{ ucwords($state->name) }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="category">City</label>
+                        <select class="form-control" id="city" name="city" >
+                            <option value="">Select a category</option> 
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="price">Price(INR)</label>
+                        <input type="text" class="form-control" id="price" name="price" placeholder="Enter Ammount" >
+                    </div>
+
+                    <div class="form-group">
+                        <label for="price">Discount(%)</label>
+                        <input type="text" class="form-control" id="discount" name="discount" placeholder="Enter Discount percentage" >
+                    </div>
+
+                    <div class="form-group">
+                        <label for="final-price">Final Price (INR)</label>
+                        <input type="text" class="form-control" id="final-price" name="final_price" readonly disabled> 
+                    </div>
 
                     <div class="mb-3">
                         <label class="form-label">Sub Category Image</label>
@@ -224,6 +233,37 @@
                             @endforeach
                         </select>
                     </div>
+                    <div class="form-group">
+                        <label for="category">State</label>
+                        <select class="form-control" id="edit-state" name="state" >
+                            <option value="">Select a state</option>
+                            @foreach($states as $state)
+                                <option value="{{ $state->id }}">{{ ucwords($state->name) }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="category">City</label>
+                        <select class="form-control" id="edit-city" name="city" >
+                            <option value="">Select a category</option> 
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="price">Price(INR)</label>
+                        <input type="text" class="form-control" id="edit-price" name="price" placeholder="Enter Ammount" >
+                    </div>
+
+                    <div class="form-group">
+                        <label for="price">Discount(%)</label>
+                        <input type="text" class="form-control" id="edit-discount" name="discount" placeholder="Enter Discount percentage" >
+                    </div>
+
+                    <div class="form-group">
+                        <label for="final-price">Final Price (INR)</label>
+                        <input type="text" class="form-control" id="edit-final-price" name="final_price" readonly disabled> 
+                    </div>
                     <div class="mb-3">
                         <label class="form-label">Sub Category Image</label>
                         <div class="form-uploads">
@@ -258,6 +298,51 @@
 @endsection
 @section('scripts')
 <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        function handleImagePreview(inputId, previewId) {
+            const input = document.getElementById(inputId);
+            const preview = document.getElementById(previewId);
+
+            input.addEventListener('change', function(event) {
+                const file = event.target.files[0];
+
+                if (file) {
+                    const reader = new FileReader();
+                    reader.onload = function(e) {
+                        preview.src = e.target.result;
+                        preview.classList.add('preview-img');
+                    }
+                    reader.readAsDataURL(file);
+                } else {
+                    preview.src = "{{ asset('admin/assets/img/icons/upload.svg') }}";
+                    preview.classList.remove('preview-img');
+                }
+            });
+        }
+
+        handleImagePreview('image-input-bg', 'image-preview-bg');
+
+        // Function to calculate final price
+        function calculateFinalPrice() {
+            const price = parseFloat(document.getElementById('price').value);
+            const discountPercentage = parseFloat(document.getElementById('discount').value);
+
+            if (!isNaN(price) && !isNaN(discountPercentage)) {
+                const discountAmount = (price * discountPercentage) / 100;
+                const finalPrice = price - discountAmount;
+
+                document.getElementById('final-price').value = finalPrice.toFixed(2);
+            } else {
+                document.getElementById('final-price').value = '';
+            }
+        }
+
+        document.getElementById('price').addEventListener('input', calculateFinalPrice);
+        document.getElementById('discount').addEventListener('input', calculateFinalPrice);
+    });
+</script>
+
+<script>
     document.addEventListener('DOMContentLoaded', function () {
         const editFileInput = document.getElementById('edit-image-upload');
         const editImagePreview = document.getElementById('edit-image-preview');
@@ -285,6 +370,49 @@
             editFileInput.click();
         });
     });
+
+    // -----------------------fetch city name--------------------------------------//
+    
+    // <script type="text/javascript" src="js/jquery.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script type="text/javascript">
+       $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
+
+        $(document).ready(function() {
+            $('#state').on('change', function() {
+                var stateId = $(this).val();
+                if (stateId) {
+                    $.ajax({
+                        url: '/fetch-city/' + stateId, // Adjusted URL based on route
+                        type: 'POST',
+                        data: {
+                            _token: '{{ csrf_token() }}' // Include CSRF token for security
+                        },
+                        success: function(response) {
+                            if (response.status === 1) {
+                                var cities = response.data;
+                                $('#city').find('option').remove(); // Clear existing options
+                                var options = '<option value="">Select a city</option>'; // Default option
+                                $.each(cities, function(key, city) {
+                                    options += "<option value='" + city.id + "'>" + city.name + "</option>";
+                                });
+                                $('#city').append(options);
+                            }
+                        }
+                    });
+                } else {
+                    $('#city').find('option').remove(); // Clear options if no state is selected
+                    $('#city').append('<option value="">Select a city</option>');
+                }
+            });
+        });
+    </script>
+    
+    
 
 </script>
 @endsection

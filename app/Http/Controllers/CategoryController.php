@@ -43,16 +43,16 @@ class CategoryController extends Controller
 
         if ($request->hasFile('image')) {
             $image = $request->file('image');
-            $imageName = time() . '_' . $image->getClientOriginalName(); // Generate unique name
-            $image->storeAs('assets/category', $imageName, 'public'); // Store the image in assets/category
-            $category->image = $imageName; // Save the unique name
+            $imageName = time() . '_' . $image->getClientOriginalName();
+            $image->storeAs('assets/category', $imageName, 'public');
+            $category->image = $imageName; 
         }
 
         if ($request->hasFile('icon')) {
             $icon = $request->file('icon');
-            $iconName = time() . '_' . $icon->getClientOriginalName(); // Generate unique name
-            $icon->storeAs('assets/icon', $iconName, 'public'); // Store the icon in assets/icon
-            $category->icon = $iconName; // Save the unique name
+            $iconName = time() . '_' . $icon->getClientOriginalName();
+            $icon->storeAs('assets/icon', $iconName, 'public'); 
+            $category->icon = $iconName; 
         }
 
         $category->save();

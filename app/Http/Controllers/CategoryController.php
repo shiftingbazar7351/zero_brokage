@@ -2,8 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Models\Category;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class CategoryController extends Controller
 {
@@ -13,14 +14,14 @@ class CategoryController extends Controller
     public function index()
     {
         $categories = Category::orderByDesc('created_at')->get();
-        return view('backend.category.index',compact('categories'));
+        return view('backend.category.index', compact('categories'));
     }
     /**
      * Show the form for creating a new resource.
      */
     public function create()
     {
-        
+
     }
 
     /**
@@ -38,24 +39,32 @@ class CategoryController extends Controller
         $category->name = $request->name;
         $category->image = $request->image;
         $category->icon = $request->icon;
-    
+        $category->slug = $this->generateSlug($request->name);
+
         if ($request->hasFile('image')) {
             $image = $request->file('image');
             $imageName = time() . '_' . $image->getClientOriginalName(); // Generate unique name
             $image->storeAs('assets/category', $imageName, 'public'); // Store the image in assets/category
             $category->image = $imageName; // Save the unique name
         }
-    
+
         if ($request->hasFile('icon')) {
             $icon = $request->file('icon');
             $iconName = time() . '_' . $icon->getClientOriginalName(); // Generate unique name
             $icon->storeAs('assets/icon', $iconName, 'public'); // Store the icon in assets/icon
             $category->icon = $iconName; // Save the unique name
         }
-    
+
         $category->save();
-    
+
         return redirect()->back()->with('success', 'Category created successfully.');
+    }
+
+    protected function generateSlug($name)
+    {
+        $slug = str_replace(' ', '_', $name);
+        $slug = strtolower($slug);
+        return $slug;
     }
 
     /**
@@ -63,7 +72,7 @@ class CategoryController extends Controller
      */
     public function show(string $id)
     {
-        
+
     }
 
     /**
@@ -76,7 +85,8 @@ class CategoryController extends Controller
 
     /**
      * Update the specified resource in storage.
-     */ public function update(Request $request, Category $category)
+     */
+    public function update(Request $request, Category $category)
     {
         $request->validate([
             'name' => 'required',
@@ -111,10 +121,10 @@ class CategoryController extends Controller
     public function destroy(Category $category)
     {
         if ($category->image) {
-            \Storage::delete('public/assets/category/' . $category->image);
+            Storage::delete('public/assets/category/' . $category->image);
         }
         if ($category->icon) {
-            \Storage::delete('public/assets/icon/' . $category->icon);
+            Storage::delete('public/assets/icon/' . $category->icon);
         }
 
         $category->delete();
@@ -122,15 +132,14 @@ class CategoryController extends Controller
         return redirect()->back()->with('success', 'Category deleted successfully.');
     }
 
-    public function updateStatus(Request $request, Category $category)
+    public function updateStatus(Request $request,$id)
     {
-    $request->validate([
-        'status' => 'required|boolean',
-    ]);
-
-    $category->update(['status' => $request->status]);
-
-    return response()->json(['success' => true]);
+        $category = Category::findOrFail($id);
+        $category->status = $request->input('status', 0);
+        $category->save();
+    
+        return redirect()->back()->with('success', 'Status updated successfully');
     }
+    
 
 }

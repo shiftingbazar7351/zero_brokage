@@ -1,36 +1,4 @@
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0">
-    <title>Truelysell | Template</title>
-
-    <link rel="shortcut icon" href="{{url('assets/img/favicon.png')}}">
-
-    <link rel="stylesheet" href="{{url('assets/css/bootstrap.min.css')}}">
-
-    <link rel="stylesheet" href="{{ url('assets/plugins/fontawesome/css/fontawesome.min.css') }}">
-    <link rel="stylesheet" href="{{ url('assets/plugins/fontawesome/css/all.min.css') }}">
-
-    <link rel="stylesheet" href="{{ url('assets/css/feather.css') }}">
-
-    <link rel="stylesheet" href="{{ url('assets/plugins/select2/css/select2.min.css') }}">
-
-    <link rel="stylesheet" href="{{ url('assets/css/owl.carousel.min.css') }}">
-
-    <link rel="stylesheet" href="{{ url('assets/plugins/aos/aos.css') }} ">
-
-    <link rel="stylesheet" href="{{url('assets/css/style.css') }} ">
-</head>
-
-
-<!-- Mirrored from truelysell.dreamstechnologies.com/html/template/index.html by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 24 Jul 2024 07:49:43 GMT -->
-
-<body class="body-one">
-    <div class="main-wrapper">
-
-        <header class="header header-one">
+<header class="header header-one">
             <div class="container">
                 <nav class="navbar navbar-expand-lg header-nav">
                     <div class="navbar-header">
@@ -42,7 +10,7 @@
                             </span>
                         </a>
                         <a href="index.html" class="navbar-brand logo">
-                            <img src="{{ url('assets/img/logofinal.png') }}" class="img-fluid" alt="Logo">
+                            <img src="{{ asset('assets/img/logofinal.png') }}" class="img-fluid" alt="Logo">
                         </a>
                         <!-- <a href="index.html" class="navbar-brand logo-small">
                             <img src="assets/img/logo-small.png" class="img-fluid" alt="Logo">
@@ -51,7 +19,7 @@
                     <div class="main-menu-wrapper">
                         <div class="menu-header">
                             <a href="index.html" class="menu-logo">
-                                <img src="{{ url('assets/img/logofinal.png') }} " class="img-fluid" alt="Logo">
+                                <img src="{{ asset('assets/img/logofinal.png') }} " class="img-fluid" alt="Logo">
                             </a>
                             <a id="menu_close" class="menu-close" href="javascript:void(0);"> <i
                                     class="fas fa-times"></i></a>
@@ -65,9 +33,7 @@
                                             <div class="row">
                                                 <div class="col-lg-2">
                                                     <div class="single-demo active">
-                                                        <!-- <div class="demo-img">
-<a href="index.html"><img src="assets/img/home-01.jpg" class="img-fluid" alt="img"></a>
-</div> -->
+                                                       
                                                         <div class="demo-info">
                                                             <a href="index.html">Electrical Home</a>
                                                         </div>
@@ -75,9 +41,7 @@
                                                 </div>
                                                 <div class="col-lg-2">
                                                     <div class="single-demo">
-                                                        <!-- <div class="demo-img">
-<a href="index-2.html"><img src="assets/img/home-02.jpg" class="img-fluid" alt="img"></a>
-</div> -->
+                                                        
                                                         <div class="demo-info">
                                                             <a href="index-2.html">Cleaning Home</a>
                                                         </div>
@@ -85,9 +49,7 @@
                                                 </div>
                                                 <div class="col-lg-2">
                                                     <div class="single-demo">
-                                                        <!-- <div class="demo-img">
-<a href="index-3.html"><img src="assets/img/home-03.jpg" class="img-fluid" alt="img"></a>
-</div> -->
+                                                       
                                                         <div class="demo-info">
                                                             <a href="index-3.html">Saloon Home</a>
                                                         </div>
@@ -95,9 +57,7 @@
                                                 </div>
                                                 <div class="col-lg-2">
                                                     <div class="single-demo">
-                                                        <!-- <div class="demo-img">
-<a href="index-4.html"><img src="assets/img/home-04.jpg" class="img-fluid" alt="img"></a>
-</div> -->
+                                                      
                                                         <div class="demo-info">
                                                             <a href="index-4.html">Catering Home</a>
                                                         </div>
@@ -105,9 +65,7 @@
                                                 </div>
                                                 <div class="col-lg-2">
                                                     <div class="single-demo">
-                                                        <!-- <div class="demo-img">
-<a href="index-5.html"><img src="assets/img/home-05.jpg" class="img-fluid" alt="img"></a>
-</div> -->
+                                                       
                                                         <div class="demo-info">
                                                             <a href="index-5.html">Car Wash Home</a>
                                                         </div>
@@ -115,9 +73,7 @@
                                                 </div>
                                                 <div class="col-lg-2">
                                                     <div class="single-demo">
-                                                        <!-- <div class="demo-img">
-<a href="index-6.html"><img src="assets/img/home-06.jpg" class="img-fluid" alt="img"></a>
-</div> -->
+                                                       
                                                         <div class="demo-info">
                                                             <a href="index-6.html">Cleaning Home</a>
                                                         </div>
@@ -125,9 +81,7 @@
                                                 </div>
                                                 <div class="col-lg-2">
                                                     <div class="single-demo">
-                                                        <!-- <div class="demo-img">
-<a href="index-7.html"><img src="assets/img/home-07.jpg" class="img-fluid" alt="img"></a>
-</div> -->
+                                                      
                                                         <div class="demo-info">
                                                             <a href="index-7.html">House Problem Home</a>
                                                         </div>
@@ -135,9 +89,7 @@
                                                 </div>
                                                 <div class="col-lg-2">
                                                     <div class="single-demo">
-                                                        <!-- <div class="demo-img">
-<a href="index-8.html"><img src="assets/img/home-08.jpg" class="img-fluid" alt="img"></a>
-</div> -->
+                                                        
                                                         <div class="demo-info">
                                                             <a href="index-8.html">Pet Grooming Home</a>
                                                         </div>
@@ -145,9 +97,7 @@
                                                 </div>
                                                 <div class="col-lg-2">
                                                     <div class="single-demo">
-                                                        <!-- <div class="demo-img">
-<a href="index-9.html"><img src="assets/img/home-09.jpg" class="img-fluid" alt="img"></a>
-</div> -->
+                                                        
                                                         <div class="demo-info">
                                                             <a href="index-9.html">Mechanic Home</a>
                                                         </div>
@@ -222,54 +172,7 @@
                                     <li><a href="provider-chat.html">Chat</a></li>
                                 </ul>
                             </li>
-                            <!-- <li class="has-submenu">
-                                <a href="javascript:void(0);">Pages <i class="fas fa-chevron-down"></i></a>
-                                <ul class="submenu">
-                                    <li><a href="about-us.html">About</a></li>
-                                    <li><a href="contact-us.html">Contact Us</a></li>
-                                    <li><a href="how-it-works.html">How It Works</a></li>
-                                    <li class="has-submenu">
-                                        <a href="javascript:void(0);">Error Page</a>
-                                        <ul class="submenu">
-                                            <li><a href="error-404.html">404 Error</a></li>
-                                            <li><a href="error-500.html">500 Error</a></li>
-                                        </ul>
-                                    </li>
-                                    <li class="has-submenu">
-                                        <a href="javascript:void(0);">Authentication</a>
-                                        <ul class="submenu">
-                                            <li><a href="choose-signup.html">Signup Choose </a></li>
-                                            <li><a href="user-signup.html">Customer Signup</a></li>
-                                            <li><a href="provider-signup.html">Provider Signup</a></li>
-                                            <li><a href="login.html">Login</a></li>
-                                            <li><a href="reset-password.html">Reset Password</a></li>
-                                            <li><a href="password-recovery.html">Password Update</a></li>
-                                            <li><a href="phone-otp.html">Phone OTP</a></li>
-                                            <li><a href="email-otp.html">Email OTP</a></li>
-                                            <li><a href="free-trial.html">Free Trial</a></li>
-                                        </ul>
-                                    </li>
-                                    <li class="has-submenu">
-                                        <a href="javascript:void(0);">Booking</a>
-                                        <ul class="submenu">
-                                            <li><a href="booking.html">Booking 1</a></li>
-                                            <li><a href="booking-2.html">Booking 2</a></li>
-                                            <li><a href="booking-payment.html">Booking Checkout</a></li>
-                                            <li><a href="booking-done.html">Booking Success</a></li>
-                                            <li><a href="booking-details.html">Booking Details</a></li>
-                                        </ul>
-                                    </li>
-                                    <li><a href="categories.html">Categories</a></li>
-                                    <li><a href="pricing.html">Pricing Plan</a></li>
-                                    <li><a href="faq.html">FAQ</a></li>
-                                    <li><a href="maintenance.html">Maintenance</a></li>
-                                    <li><a href="coming-soon.html">Coming Soon</a></li>
-                                    <li><a href="privacy-policy.html">Privacy Policy</a></li>
-                                    <li><a href="terms-condition.html">Terms & Conditions</a></li>
-                                    <li><a href="session-expired.html">Session Expired</a></li>
-                                    <li><a href="installer.html">Installer</a></li>
-                                </ul>
-                            </li> -->
+
                             <li class="has-submenu">
                                 <a href="blog-grid.html">Blog <i class="fas fa-chevron-down"></i></a>
                                 <ul class="submenu">
@@ -278,7 +181,7 @@
                                     <li><a href="blog-details.html">Blog Details</a></li>
                                 </ul>
                             </li>
-                            <li><a href="admin/index.html">Admin</a></li>
+                            <li><a href="{{ route('admin_page') }} ">Admin</a></li>
                             <li class="login-link">
                                 <a href="choose-signup.html">Register</a>
                             </li>

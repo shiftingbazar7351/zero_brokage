@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\FrontendController;
 use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\AdminController;
@@ -22,7 +23,8 @@ Route::post('/fetch-menus/{id}', [SubCategoryController::class, 'fetchmenu']);
 Route::post('/services-submenu', [SubmenuController::class, 'store'])->name('submenu.store');
 
 ####-----------------------------------------UserController--------------------------------  -------###
-Route::get('/', [UserController::class, 'homepage'])->name('services');
+// Route::get('/', [UserController::class, 'homepage'])->name('services');
+Route::get('/', [FrontendController::class, 'home'])->name('home');
 Route::get('/services_subcategory', [UserController::class, 'sub_category'])->name('subcategory');
 // Route::get('/categories-demo', [UserController::class, 'category_demo']);
 Route::get('/services_menu', [UserController::class, 'menu'])->name('menu');
@@ -36,7 +38,7 @@ Route::get('/services_submenu', [UserController::class, 'submenu'])->name('subme
 // Route::post('/services-menu', [MenuController::class, 'store'])->name('menu.store');
 
 Route::resource('menu', CategoryController::class);
-Route::patch('/categories/{id}/update-status', [CategoryController::class, 'updateStatus'])->name('categories.updateStatus');
+Route::post('/update-status', [CategoryController::class, 'updateStatus'])->name('update.status');
 
 ####-----------------------------------------FooterController----------------------------------------###
 Route::get('/footer-about-us', [FooterController::class, 'about_us'])->name('about');

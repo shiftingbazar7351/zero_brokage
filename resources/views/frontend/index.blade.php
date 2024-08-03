@@ -61,27 +61,6 @@
 
 
 
-            <!-- <div class="row">
-                            @foreach ($categories as $category)
-    <div class="col-md-2 col-lg-3">
-                                <a href="#" class="feature-box aos" data-aos="fade-up">
-                                    <div class="feature-icon">
-                                        <span>
-                                            <img src="{{ Storage::url('assets/icon/' . $category->icon) }}" alt="img">
-                                        </span>
-                                    </div>
-                                    <h5>{{ $category->name }}</h5>
-                                    @if ($category->image)
-    <div class="feature-overlay">
-                                        <img src="{{ Storage::url('assets/category/' . $category->image) }}" alt="img">
-                                    </div>
-@else
-    No Image
-    @endif
-                                </a>
-                            </div>
-    @endforeach
-                        </div> -->
 
             <div class="row">
                 <!-- <div class="col-md-2 col-lg-3">

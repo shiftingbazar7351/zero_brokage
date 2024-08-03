@@ -57,13 +57,13 @@ class SubCategoryController extends Controller
         $subcategory = new SubCategory();
         $subcategory->name = $request->input('name');
         $subcategory->category_id = $request->input('category');
+        $subcategory->slug = $this->generateSlug($request->name);
+
         // $subcategory->state_id = $request->input('state');
         $subcategory->city_id = $request->input('city');
-        $subcategory->price = $request->input('price');
+        $subcategory->total_price = $request->input('price');
         $subcategory->discount = $request->input('discount');
-        $subcategory->final_price = $finalPrice;
-
-
+        $subcategory->discounted_price = $finalPrice;
 
         if ($request->hasFile('image')) {
             $image = $request->file('image');
@@ -76,6 +76,12 @@ class SubCategoryController extends Controller
         $subcategory->save();
 
         return redirect()->back()->with('success', 'Sub-Category created successfully.');
+    }
+    protected function generateSlug($name)
+    {
+        $slug = str_replace(' ', '_', $name);
+        $slug = strtolower($slug);
+        return $slug;
     }
 
     /**
@@ -110,6 +116,8 @@ class SubCategoryController extends Controller
         $subcategory = SubCategory::findOrFail($id);
         $subcategory->name = $request->name;
         $subcategory->category_id = $request->category;
+        $subcategory->slug = $this->generateSlug($request->name);
+
 
         if ($request->hasFile('image')) {
             $image = $request->file('image');

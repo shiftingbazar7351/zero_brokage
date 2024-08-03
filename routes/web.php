@@ -11,8 +11,6 @@ use App\Http\Controllers\SubmenuController;
 use App\Http\Controllers\FooterController;
 use App\Http\Controllers\UserController;
 
-
-
 Route::get('/category-listing', function () {
     return view('frontend.categories');
 })->name('categories.listing');
@@ -26,7 +24,8 @@ Route::get('/service-details', function () {
 })->name('service-details');
 // frontend 
 Route::get('/', [FrontendController::class, 'home'])->name('home');
-Route::get('/service-grid', [FrontendController::class, 'subCategory'])->name('service.grid');
+Route::get('/service-grid/{slug}', [FrontendController::class, 'subCategory'])->name('service.grid');
+// Route::get('/service-details/{slug}', [FrontendController::class, 'serviceDetails'])->name('service.details');
 
 // for backend
 Route::resource('categories', CategoryController::class);

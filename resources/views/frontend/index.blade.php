@@ -1,5 +1,7 @@
 ﻿@extends('frontend.layouts.main')
 @section('content')
+
+
 <section class="hero-section">
             <div class="container">
                 <div class="home-banner">
@@ -61,7 +63,7 @@
                 <div class="row">
                     @foreach ($categories as $category)
                     <div class="col-md-2 col-lg-3">
-                        <a href="{{route('service.grid')}}" class="feature-box aos" data-aos="fade-up">
+                        <a href="{{ route('service.grid', ['slug' => $category->slug]) }}" class="feature-box aos" data-aos="fade-up">
                             <div class="feature-icon">
                                 <span>
                                     <img src="{{ asset('storage/assets/icon/' . $category->icon ??'') }}" class="rounded-circle" alt="img">

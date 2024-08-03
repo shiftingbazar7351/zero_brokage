@@ -1,9 +1,9 @@
 @extends('frontend.layouts.main')
 @section('content')
     <div class="bg-img">
-        <img src="assets/img/bg/work-bg-03.png" alt="img" class="bgimg1">
-        <img src="assets/img/bg/work-bg-03.png" alt="img" class="bgimg2">
-        <img src="assets/img/bg/feature-bg-03.png" alt="img" class="bgimg3">
+        <img src="{{ asset('assets/img/bg/work-bg-03.png') }}" alt="img" class="bgimg1">
+        <img src="{{ asset('assets/img/bg/work-bg-03.png') }}" alt="img" class="bgimg2">
+        <img src="{{ asset('assets/img/bg/feature-bg-03.png') }}" alt="img" class="bgimg3">
     </div>
 
     <div class="breadcrumb-bar">
@@ -242,7 +242,7 @@
                             <div class="col-xl-4 col-md-3">
                                 <div class="service-widget servicecontent">
                                     <div class="service-img">
-                                        <a href="service-details.html">
+                                        <a href="{{ route('service-details') }}">
                                             <img class="img-fluid serv-img" alt="Service Image"
                                                 src="{{ asset('storage/assets/subcategory/' . $subcategory->image ??'') }}">
                                         </a>
@@ -254,13 +254,13 @@
                                         </div>
                                         <div class="item-info">
                                             <a href="providers.html"><span class="item-img"><img
-                                                        src="assets/img/profiles/avatar-01.jpg" class="avatar"
+                                                        src="{{ asset('assets/img/profiles/avatar-01.jpg') }}" class="avatar"
                                                         alt="User"></span></a>
                                         </div>
                                     </div>
                                     <div class="service-content">
                                         <h3 class="title">
-                                            <a href="service-details.html">{{ $subcategory->name ??'' }}</a>
+                                            <a href="{{ route('service-details') }}">{{ $subcategory->name ??'' }}</a>
                                         </h3>
                                         <p><i class="feather-map-pin"></i>Maryland City, USA<span class="rate"><i
                                                     class="fas fa-star filled"></i>4.9</span></p>
@@ -274,7 +274,7 @@
 
                                         </div>
                                         <div>
-                                            <a href="{{ route('booking') }}" class="btn btn-book"
+                                            <a href="{{ route('service-details') }}" class="btn btn-book"
                                                 style="width: 100%; margin-top: 2%;">View details</a>
                                         </div>
                                     </div>

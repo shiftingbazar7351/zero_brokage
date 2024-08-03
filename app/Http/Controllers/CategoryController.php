@@ -60,12 +60,12 @@ class CategoryController extends Controller
         return redirect()->back()->with('success', 'Category created successfully.');
     }
 
-    protected function generateSlug($name)
-    {
-        $slug = str_replace(' ', '_', $name);
-        $slug = strtolower($slug);
-        return $slug;
-    }
+        protected function generateSlug($name)
+        {
+            $slug = str_replace(' ', '_', $name);
+            $slug = strtolower($slug);
+            return $slug;
+        }
 
     /**
      * Display the specified resource.
@@ -95,6 +95,8 @@ class CategoryController extends Controller
         ]);
 
         $category->name = $request->name;
+        $category->slug = $this->generateSlug($request->name);
+
 
         if ($request->hasFile('image')) {
             $image = $request->file('image');

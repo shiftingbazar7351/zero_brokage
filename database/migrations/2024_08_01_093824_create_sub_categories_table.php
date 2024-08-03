@@ -16,9 +16,9 @@ return new class extends Migration
             $table->string('name')->nullable();
             $table->string('image')->nullable();
             $table->string('slug')->nullable();
-            $table->string('price')->nullable();
+            $table->string('total_price')->nullable();
             $table->string('discount')->nullable();
-            $table->string('final_price')->nullable();
+            $table->string('discounted_price')->nullable();
             $table->unsignedBigInteger('category_id')->nullable();
             $table->unsignedBigInteger('city_id')->nullable();
             $table->foreign('category_id')->references('id')->on('categories')->onDelete('cascade')->onUpdate('cascade');

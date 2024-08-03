@@ -77,10 +77,10 @@
     </div>
 </div>
 <div class="modal fade" id="addCategoryModal">
-    <div class="modal-dialog">
+   <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title">Add Category</h5>
+                <h5 class="modal-title">Add Sub Category</h5>
                 <button type="button" class="btn-close close-modal" data-bs-dismiss="modal" aria-label="Close">
                     <i class="fe fe-x"></i>
                 </button>
@@ -102,7 +102,7 @@
                             @endforeach
                         </select>
                     </div>
-                    <div class="mb-3">
+                    {{-- <div class="mb-3">
                         <label class="form-label">Category Image</label>
                         <div class="form-uploads">
                             <div class="form-uploads-path" style="position: relative; text-align: center;">
@@ -124,38 +124,68 @@
                                 </div>
                             </div>
                         </div>
+                    </div> --}}
+
+                    <div class="mb-3">
+                        <label class="form-label">Sub Category Image</label>
+                        <div class="form-uploads">
+                            <div class="form-uploads-path">
+                                <img id="image-preview-bg" src="{{ asset('admin/assets/img/icons/upload.svg') }}" alt="img" class="default-img">
+                                <div class="file-browse">
+                                    <h6>Drag & drop image or </h6>
+                                    <div class="file-browse-path">
+                                        <input type="file" name="image" id="image-input-bg" accept="image/jpeg, image/png">
+                                        <a href="javascript:void(0);"> Browse</a>
+                                    </div>
+                                </div>
+                                <h5>Supported formats: JPEG, PNG</h5>
+                            </div>
+                        </div>
                     </div>
 
                     <script>
-                        document.addEventListener('DOMContentLoaded', function () {
-                            const fileInput = document.getElementById('image-upload');
-                            const imagePreview = document.getElementById('image-preview');
-                            const browseBtn = document.getElementById('browse-btn');
+                        document.addEventListener('DOMContentLoaded', function() {
+    // Function to handle image preview
+    function handleImagePreview(inputId, previewId) {
+        const input = document.getElementById(inputId);
+        const preview = document.getElementById(previewId);
 
-                            // Handle file input change event
-                            fileInput.addEventListener('change', function (event) {
-                                const file = event.target.files[0];
-                                if (file && (file.type === 'image/jpeg' || file.type === 'image/png')) {
-                                    const reader = new FileReader();
+        input.addEventListener('change', function(event) {
+            const file = event.target.files[0];
 
-                                    reader.onload = function (e) {
-                                        imagePreview.src = e.target.result;
-                                    };
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    preview.src = e.target.result;
+                    preview.classList.add('preview-img');
+                }
+                reader.readAsDataURL(file);
+            } else {
+                preview.src = "{{ asset('admin/assets/img/icons/upload.svg') }}";
+                preview.classList.remove('preview-img');
+            }
+        });
+    }
 
-                                    reader.readAsDataURL(file);
-                                } else {
-                                    alert('Please select a JPEG or PNG image.');
-                                    fileInput.value = ''; // Clear the input
-                                }
-                            });
-
-                            // Trigger file input click when browse button is clicked
-                            browseBtn.addEventListener('click', function () {
-                                fileInput.click();
-                            });
-                        });
+    // Initialize the preview handler for the sub category image
+    handleImagePreview('image-input-bg', 'image-preview-bg');
+});
 
                     </script>
+
+<style>
+    .default-img {
+    width: auto; /* Default width for the upload.svg icon */
+}
+
+.preview-img {
+    width: 100px; /* Width for the preview image */
+    height: 100px; /* Height for the preview image */
+    object-fit: cover; /* Ensure the image fits within the dimensions */
+}
+
+</style>
+
                     <button type="submit" class="btn btn-primary">Save</button>
                 </form>
             </div>
@@ -177,7 +207,7 @@
                 <form action="{{ route('subcategories.update', $subcategory->id ?? '') }}" method="POST"
                     enctype="multipart/form-data">
                     @csrf
-                    @method('PUT') 
+                    @method('PUT')
                    <div class="form-group">
                         <label for="edit-name">Name</label>
                         <input type="text" class="form-control" id="edit-name" name="name"
@@ -195,7 +225,7 @@
                         </select>
                     </div>
                     <div class="mb-3">
-                        <label class="form-label">Category Image</label>
+                        <label class="form-label">Sub Category Image</label>
                         <div class="form-uploads">
                             <div class="form-uploads-path" style="position: relative; text-align: center;">
 

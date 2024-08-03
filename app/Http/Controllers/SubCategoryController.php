@@ -34,14 +34,33 @@ class SubCategoryController extends Controller
     {
         $request->validate([
             'name' => 'required|string|max:255',
-            // 'category_id' => 'required|exists:categories,id', // Ensure category_id is required and exists in the categories table
-            // 'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'state' => 'nullable|exists:states,id',
+            'city' => 'nullable|exists:cities,id',
+            'price' => 'nullable|numeric',
+            'discount' => 'nullable|numeric',
+            'final_price' => 'nullable|numeric',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
+        // dd( $request);
+
+        $finalPrice = $request->input('price');
+        $discountPercentage = $request->input('discount');
+
+        if (!empty($finalPrice) && !empty($discountPercentage)) {
+            $discountAmount = ($finalPrice * $discountPercentage) / 100;
+            $finalPrice -= $discountAmount;
+        } else {
+            $finalPrice = $request->input('price');
+        }
     
-        // Create a new sub-category instance
         $subcategory = new SubCategory();
         $subcategory->name = $request->input('name');
         $subcategory->category_id = $request->input('category');
+        // $subCategory->state_id = $request->input('state');
+        // $subCategory->city_id = $request->input('city');
+        $subcategory->price = $request->input('price');
+        $subcategory->discount = $request->input('discount');
+        $subcategory->final_price = $finalPrice;
 
 
 
@@ -138,5 +157,7 @@ class SubCategoryController extends Controller
             'data' => $data
         ]);
     }
+
+
     
 }

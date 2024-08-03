@@ -121,4 +121,16 @@ class CategoryController extends Controller
 
         return redirect()->back()->with('success', 'Category deleted successfully.');
     }
+
+    public function updateStatus(Request $request, Category $category)
+    {
+    $request->validate([
+        'status' => 'required|boolean',
+    ]);
+
+    $category->update(['status' => $request->status]);
+
+    return response()->json(['success' => true]);
+    }
+
 }

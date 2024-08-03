@@ -45,12 +45,12 @@
                                         <td>
                                             <div class="active-switch">
                                                 <label class="switch">
-                                                    <input type="checkbox">
+                                                    <input type="checkbox" name="status" value="{{ $category->id}}">
                                                     <span class="sliders round"></span>
                                                 </label>
                                             </div>
-                                        </td>   
-
+                                        </td>
+                                           
                                         <td>
                                             <div class="table-actions d-flex justify-content-center">
                                                 <button class="btn delete-table me-2"
@@ -217,14 +217,42 @@
         });
     }
 
-function toggleStatus(checkbox, categoryId) {
-    var form = checkbox.closest('form');
-    var hiddenInput = form.querySelector('.status-input');
+// function toggleStatus(checkbox, categoryId) {
+//     var form = checkbox.closest('form');
+//     var hiddenInput = form.querySelector('.status-input');
     
-    hiddenInput.value = checkbox.checked ? 1 : 0;
+//     hiddenInput.value = checkbox.checked ? 1 : 0;
     
-    form.submit();
-}
+//     form.submit();
+// }
+
+//-----------------------------------------------------------------------------//
+    document.querySelectorAll('input[name="status"]').forEach(checkbox => {
+        checkbox.addEventListener('change', function() {
+            const categoryId = this.dataset.id;
+            alert(categoryId);
+            
+            const status = this.checked ? 1 : 0;
+
+            fetch(`/categories/${categoryId}/status`, {
+                method: 'post',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                },
+                body: JSON.stringify({ status })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    alert('Status updated successfully.');
+                } else {
+                    alert('Failed to update status.');
+                }
+            });
+        });
+    });
+
 </script>
 
 @endsection

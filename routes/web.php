@@ -10,7 +10,7 @@ use App\Http\Controllers\SubmenuController;
 use App\Http\Controllers\FooterController;
 use App\Http\Controllers\UserController;
 
-
+Route::post('/categories/{category}/status', [CategoryController::class, 'updateStatus']);
 Route::resource('categories', CategoryController::class);
 Route::get('/categories-details', [CategoryController::class, 'service_details'])->name('details');
 ####-----------------------------------------CategoryController--------------------------  ---------###

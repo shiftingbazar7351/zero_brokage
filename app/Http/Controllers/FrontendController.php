@@ -10,13 +10,9 @@ class FrontendController extends Controller
 {
     public function home()
     {
-        $menu = Menu::orderByDesc('created_at')->get();
-        $subcat = Category::orderByDesc('created_at')->get();
-        $cat = Category::orderByDesc('created_at')->get();
-        return view('frontend.index', [
-            'menus' => $menu,
-            'categories' => $cat,
-            'subCategories' => $subcat  
-        ]);
+        $menus = Menu::orderByDesc('created_at')->get();
+        $subcategories = Category::orderByDesc('created_at')->get();
+        $categories = Category::orderByDesc('created_at')->get();
+        return view('frontend.index', compact('subcategories','menus','categories'));
     }
 }

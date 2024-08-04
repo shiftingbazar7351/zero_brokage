@@ -3,29 +3,31 @@
 namespace App\Http\Controllers;
 
 use App\Models\Category;
+use App\Models\Country;
 use App\Models\Menu;
 use Illuminate\Http\Request;
 use App\Models\SubCategory;
+use App\Models\State;
+use App\Models\City;
 
 class SubCategoryController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
+
     public function index()
     {
-        $subcategories   = SubCategory::get();
-        $categories  = Category::get();
-        return view('backend.sub-category.index',compact('subcategories','categories'));
+    $subcategories = SubCategory::all();
+    $categories = Category::all();
+
+    $countryId = Country::where('name', 'India')->value('id');
+
+    $states = State::where('country_id', $countryId)->get(['name','id']);
+
+    return view('backend.sub-category.index', compact('subcategories', 'categories', 'states'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
 
     /**
      * Store a newly created resource in storage.
@@ -34,16 +36,34 @@ class SubCategoryController extends Controller
     {
         $request->validate([
             'name' => 'required|string|max:255',
-            // 'category_id' => 'required|exists:categories,id', // Ensure category_id is required and exists in the categories table
-            // 'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'state' => 'nullable|exists:states,id',
+            'city' => 'nullable|exists:cities,id',
+            'price' => 'nullable|numeric',
+            'discount' => 'nullable|numeric',
+            'final_price' => 'nullable|numeric',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
+
+        $finalPrice = $request->input('price');
+        $discountPercentage = $request->input('discount');
+
+        if (!empty($finalPrice) && !empty($discountPercentage)) {
+            $discountAmount = ($finalPrice * $discountPercentage) / 100;
+            $finalPrice -= $discountAmount;
+        } else {
+            $finalPrice = $request->input('price');
+        }
     
-        // Create a new sub-category instance
         $subcategory = new SubCategory();
         $subcategory->name = $request->input('name');
         $subcategory->category_id = $request->input('category');
+        $subcategory->slug = $this->generateSlug($request->name);
 
-
+        // $subcategory->state_id = $request->input('state');
+        $subcategory->city_id = $request->input('city');
+        $subcategory->total_price = $request->input('price');
+        $subcategory->discount = $request->input('discount');
+        $subcategory->discounted_price = $finalPrice;
 
         if ($request->hasFile('image')) {
             $image = $request->file('image');
@@ -56,6 +76,12 @@ class SubCategoryController extends Controller
         $subcategory->save();
 
         return redirect()->back()->with('success', 'Sub-Category created successfully.');
+    }
+    protected function generateSlug($name)
+    {
+        $slug = str_replace(' ', '_', $name);
+        $slug = strtolower($slug);
+        return $slug;
     }
 
     /**
@@ -90,6 +116,8 @@ class SubCategoryController extends Controller
         $subcategory = SubCategory::findOrFail($id);
         $subcategory->name = $request->name;
         $subcategory->category_id = $request->category;
+        $subcategory->slug = $this->generateSlug($request->name);
+
 
         if ($request->hasFile('image')) {
             $image = $request->file('image');
@@ -138,5 +166,15 @@ class SubCategoryController extends Controller
             'data' => $data
         ]);
     }
+
+
+    public function fetchcity($state_id = null) {
+        $data = City::where('state_id', $state_id)->get();
+        return response()->json([
+            'status' => 1,
+            'data' => $data
+        ]);
+    }
+
     
 }

@@ -11,46 +11,36 @@ use App\Http\Controllers\SubmenuController;
 use App\Http\Controllers\FooterController;
 use App\Http\Controllers\UserController;
 
+Route::get('/category-listing', function () {
+    return view('frontend.categories');
+})->name('categories.listing');
 
+Route::get('/booking', function () {
+    return view('frontend.booking');
+})->name('booking');
+
+Route::get('/service-details', function () {
+    return view('frontend.service-details');
+})->name('service-details');
+// frontend 
+Route::get('/', [FrontendController::class, 'home'])->name('home');
+Route::get('/service-grid/{slug}', [FrontendController::class, 'subCategory'])->name('service.grid');
+// Route::get('/service-details/{slug}', [FrontendController::class, 'serviceDetails'])->name('service.details');
+
+// for backend
 Route::resource('categories', CategoryController::class);
 Route::get('/categories-details', [CategoryController::class, 'service_details'])->name('details');
-####-----------------------------------------CategoryController--------------------------  ---------###
 Route::resource('subcategories', SubCategoryController::class);
 Route::post('/fetch-subcategory/{id}', [SubCategoryController::class, 'fetchsubcategory']);
 Route::post('/fetch-menus/{id}', [SubCategoryController::class, 'fetchmenu']);
-
-####-----------------------------------------SubmenuController-------------------------------- -----###
 Route::post('/services-submenu', [SubmenuController::class, 'store'])->name('submenu.store');
 
-####-----------------------------------------UserController--------------------------------  -------###
-// Route::get('/', [UserController::class, 'homepage'])->name('services');
-Route::get('/', [FrontendController::class, 'home'])->name('home');
 Route::get('/services_subcategory', [UserController::class, 'sub_category'])->name('subcategory');
-// Route::get('/categories-demo', [UserController::class, 'category_demo']);
 Route::get('/services_menu', [UserController::class, 'menu'])->name('menu');
 Route::get('/services_submenu', [UserController::class, 'submenu'])->name('submenu');
-
-####-----------------------------------------MenuController---------------------------------- ------###
-// Route::post('/menus', [MenuController::class, 'store'])->name('menus.store');
-// Route::get('menus/{id}/edit', [MenuController::class, 'edit'])->name('menus.edit');
-// Route::put('menus/{id}', [MenuController::class, 'update'])->name('menus.update');
-// Route::delete('menus/{id}', [MenuController::class, 'destroy'])->name('menus.destroy');
-// Route::post('/services-menu', [MenuController::class, 'store'])->name('menu.store');
-
 Route::resource('menu', CategoryController::class);
 Route::post('/update-status', [CategoryController::class, 'updateStatus'])->name('update.status');
-
-####-----------------------------------------FooterController----------------------------------------###
 Route::get('/footer-about-us', [FooterController::class, 'about_us'])->name('about');
 Route::get('/footer-blog', [FooterController::class, 'blog'])->name('blog');
 Route::get('/footer-contact', [FooterController::class, 'contact'])->name('contact');
-
-####-----------------------------------------AdminController------------------------------------    ---###
 Route::get('/admin-homepage', [AdminController::class, 'homepage'])->name('admin_page');
-
-
-
-
-// Route::get('/admin', function () {
-//     return view('admin');
-// });

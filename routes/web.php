@@ -22,7 +22,7 @@ Route::get('/booking', function () {
 Route::get('/service-details', function () {
     return view('frontend.service-details');
 })->name('service-details');
-// frontend 
+// frontend
 Route::get('/', [FrontendController::class, 'home'])->name('home');
 Route::get('/service-grid/{slug}', [FrontendController::class, 'subCategory'])->name('service.grid');
 // Route::get('/service-details/{slug}', [FrontendController::class, 'serviceDetails'])->name('service.details');
@@ -33,6 +33,8 @@ Route::get('/categories-details', [CategoryController::class, 'service_details']
 Route::resource('subcategories', SubCategoryController::class);
 Route::post('/fetch-subcategory/{id}', [SubCategoryController::class, 'fetchsubcategory']);
 Route::post('/fetch-menus/{id}', [SubCategoryController::class, 'fetchmenu']);
+Route::post('/fetch-city/{stateId}', [SubCategoryController::class, 'fetchCity']);
+
 Route::post('/services-submenu', [SubmenuController::class, 'store'])->name('submenu.store');
 
 Route::get('/services_subcategory', [UserController::class, 'sub_category'])->name('subcategory');

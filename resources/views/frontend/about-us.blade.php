@@ -5,7 +5,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0">
-<title>Truelysell | Template</title>
+<title>Zero Brokage</title>
 
 <link rel="shortcut icon" href="{{url('assets/img/favicon.png')}}">
 

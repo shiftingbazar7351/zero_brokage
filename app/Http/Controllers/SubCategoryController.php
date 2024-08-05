@@ -12,13 +12,12 @@ use Illuminate\Support\Facades\Storage;
 
 class SubCategoryController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $subcategories = SubCategory::all();
+        $subcategories = SubCategory::with('cityName')->get();
         $categories = Category::all();
         $countryId = Country::where('name', 'India')->value('id');
         $states = State::where('country_id', $countryId)->get(['name', 'id']);
-
         return view('backend.sub-category.index', compact('subcategories', 'categories', 'states'));
     }
 
@@ -85,17 +84,22 @@ class SubCategoryController extends Controller
      * Show the form for editing the specified resource.
      */
 
-    public function edit($id)
-    {
-        $subcategory = SubCategory::findOrFail($id);
-        return response()->json($subcategory);
-    }
+     public function edit($id)
+     {
+        return $subcategory = SubCategory::with('cityName.state')->findOrFail($id); // Eager load related data
 
-    
+         return response()->json([
+             'subcategory' => $subcategory,
+             'states' => State::where('country_id', Country::where('name', 'India')->value('id'))->get(['name', 'id']),
+         ]);
+     }
+
+
+
     /**
      * Update the specified resource in storage.
      */
- 
+
     public function update(Request $request, $id)
     {
         $request->validate([

@@ -10,6 +10,7 @@ use App\Http\Controllers\MenuController;
 use App\Http\Controllers\SubmenuController;
 use App\Http\Controllers\FooterController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\MetaDescripConroller;
 
 Route::get('/category-listing', function () {
     return view('frontend.categories');
@@ -49,3 +50,4 @@ Route::get('/footer-blog', [FooterController::class, 'blog'])->name('blog');
 Route::get('/footer-contact', [FooterController::class, 'contact'])->name('contact');
 Route::get('/admin-homepage', [AdminController::class, 'homepage'])->name('admin_page');
 Route::post('/fetch-city/{id}', [SubCategoryController::class, 'fetchcity']);
+Route::resource('/meta', MetaDescripConroller::class);

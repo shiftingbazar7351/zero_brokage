@@ -63,17 +63,22 @@ class SubCategoryController extends Controller
         $subcategory->discount = $request->input('discount');
         $subcategory->discounted_price = $finalPrice;
 
-        if ($request->hasFile('image')) {
-            $image = $request->file('image');
-            $imageName = time() . '_' . $image->getClientOriginalName(); // Generate unique name
-            $image->storeAs('assets/subcategory', $imageName, 'public'); // Store the image in assets/category
-            $subcategory->image = $imageName; // Save the unique name
+
+        if ($request->hasFile('images')) {
+            $imageNames = [];
+            foreach ($request->file('images') as $image) {
+                $imageName = time() . '_' . $image->getClientOriginalName();
+                $image->storeAs('assets/subcategory', $imageName, 'public');
+                $imageNames[] = $imageName;
+            }
+            $subcategory->image = json_encode($imageNames); // Store image names as a JSON array
         }
 
         $subcategory->save();
 
         return redirect()->back()->with('success', 'Sub-Category created successfully.');
     }
+
     protected function generateSlug($name)
     {
         $slug = str_replace(' ', '_', $name);
@@ -99,45 +104,63 @@ class SubCategoryController extends Controller
         return view('backend.sub-category.edit', compact('subcategories', 'category'));
     }
 
+
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
-    {
-        $request->validate([
-            'name' => 'required',
-            'category' => 'nullable|string|max:255',
-            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
-        ]);
 
-        $subcategory = SubCategory::findOrFail($id);
-        $subcategory->name = $request->name;
-        $subcategory->category_id = $request->category;
-        $subcategory->slug = $this->generateSlug($request->name);
+     public function update(Request $request, $id)
+     {
+         $request->validate([
+             'name' => 'required|string|max:255',
+             'state_id' => 'nullable|exists:states,id',
+             'city_id' => 'nullable|exists:cities,id',
+             'price' => 'nullable|numeric',
+             'discount' => 'nullable|numeric',
+             'final_price' => 'nullable|numeric',
+             'images.*' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048', // Allow multiple images
+         ]);
 
+         $finalPrice = $request->input('price');
+         $discountPercentage = $request->input('discount');
 
-        if ($request->hasFile('image')) {
-            $image = $request->file('image');
-            $imageName = time() . '_' . $image->getClientOriginalName();
-            $image->storeAs('assets/subcategory', $imageName, 'public');
-            $subcategory->image = $imageName;
-        }
+         if (!empty($finalPrice) && !empty($discountPercentage)) {
+             $discountAmount = ($finalPrice * $discountPercentage) / 100;
+             $finalPrice -= $discountAmount;
+         } else {
+             $finalPrice = $request->input('price');
+         }
 
-        if ($request->hasFile('image')) {
-            // Delete old image if exists
-            if ($subcategory->image) {
-                Storage::disk('public')->delete('assets/subcategory/' . $subcategory->image);
-            }
-            $image = $request->file('image');
-            $imageName = time() . '_' . $image->getClientOriginalName(); // Generate unique name
-            $image->storeAs('assets/subcategory', $imageName, 'public'); // Store the image in assets/category
-            $subcategory->image = $imageName; // Save the unique name
-        }
+         $subcategory = SubCategory::findOrFail($id);
+         $subcategory->name = $request->input('name');
+         $subcategory->category_id = $request->input('category_id');
+         $subcategory->city_id = $request->input('city_id');
+         $subcategory->price = $request->input('price');
+         $subcategory->discount = $request->input('discount');
+         $subcategory->final_price = $finalPrice;
 
-        $subcategory->save();
+         if ($request->hasFile('images')) {
+             if ($subcategory->images) {
+                 $oldImages = json_decode($subcategory->images, true);
+                 foreach ($oldImages as $oldImage) {
+                     Storage::disk('public')->delete('assets/subcategory/' . $oldImage);
+                 }
+             }
 
-        return redirect()->back()->with('success', 'SubCategory updated successfully.');
-    }
+             $imageNames = [];
+             foreach ($request->file('images') as $image) {
+                 $imageName = time() . '_' . $image->getClientOriginalName();
+                 $image->storeAs('assets/subcategory', $imageName, 'public');
+                 $imageNames[] = $imageName;
+             }
+             $subcategory->images = json_encode($imageNames);
+         }
+
+         $subcategory->save();
+
+         return redirect()->back()->with('success', 'SubCategory updated successfully.');
+     }
+
 
     /**
      * Remove the specified resource from storage.

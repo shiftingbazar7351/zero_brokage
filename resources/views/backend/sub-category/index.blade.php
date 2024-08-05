@@ -41,12 +41,22 @@
 
                                             <td>
                                                 @if ($subcategory->image)
-                                                    <img src="{{ Storage::url('assets/subcategory/' . $subcategory->image) }}"
-                                                        class="img-thumbnail" width="50px">
+                                                    @php
+                                                        $images = json_decode($subcategory->image, true); // Decode the JSON string into an array
+                                                    @endphp
+                                                    @if (is_array($images) && !empty($images))
+                                                        @foreach ($images as $image)
+                                                            <img src="{{ Storage::url('assets/subcategory/' . $image) }}" class="img-thumbnail" width="50px" style="margin-right: 5px;">
+                                                        @endforeach
+                                                    @else
+                                                        No Image
+                                                    @endif
                                                 @else
                                                     No Image
                                                 @endif
                                             </td>
+
+
                                             <td>
                                                 <div class="active-switch">
                                                     <label class="switch">
@@ -168,7 +178,7 @@
                                 </div>
                             </div>
                         </div>
-                        
+
 
                         <script>
                             document.addEventListener('DOMContentLoaded', function() {

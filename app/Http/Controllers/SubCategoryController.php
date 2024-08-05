@@ -57,7 +57,6 @@ class SubCategoryController extends Controller
         $subcategory = new SubCategory();
         $subcategory->name = $request->input('name');
         $subcategory->category_id = $request->input('category');
-        // $subcategory->state_id = $request->input('state');
         $subcategory->city_id = $request->input('city');
         $subcategory->price = $request->input('price');
         $subcategory->discount = $request->input('discount');
@@ -78,13 +77,7 @@ class SubCategoryController extends Controller
         return redirect()->back()->with('success', 'Sub-Category created successfully.');
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-       //
-    }
+
 
     /**
      * Show the form for editing the specified resource.
@@ -102,14 +95,32 @@ class SubCategoryController extends Controller
     public function update(Request $request, string $id)
     {
         $request->validate([
-            'name' => 'required',
-            'category' => 'nullable|string|max:255', 
+            'name' => 'required|string|max:255',
+            'state' => 'nullable|exists:states,id',
+            'city' => 'nullable|exists:cities,id',
+            'price' => 'nullable|numeric',
+            'discount' => 'nullable|numeric',
+            'final_price' => 'nullable|numeric',
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
+
+        $finalPrice = $request->input('price');
+        $discountPercentage = $request->input('discount');
+
+        if (!empty($finalPrice) && !empty($discountPercentage)) {
+            $discountAmount = ($finalPrice * $discountPercentage) / 100;
+            $finalPrice -= $discountAmount;
+        } else {
+            $finalPrice = $request->input('price');
+        }
 
         $subcategory = SubCategory::findOrFail($id);
         $subcategory->name = $request->name;
         $subcategory->category_id = $request->category;
+        $subcategory->city_id = $request->input('city');
+        $subcategory->price = $request->input('price');
+        $subcategory->discount = $request->input('discount');
+        $subcategory->final_price = $finalPrice;
 
         if ($request->hasFile('image')) {
             $image = $request->file('image');
@@ -143,6 +154,8 @@ class SubCategoryController extends Controller
         $subcategory->delete();
         return redirect()->back()->with('success', 'SubCategory deleted successfully.');
     }
+
+    
     public function fetchsubcategory($category_id = null) {
         $data = SubCategory::where('category_id', $category_id)->get();
         return response()->json([
@@ -166,6 +179,20 @@ class SubCategoryController extends Controller
             'status' => 1,
             'data' => $data
         ]);
+    }
+
+
+    public function updateStatus(Request $request)
+    {
+        $item = SubCategory::find($request->id);
+        if ($item) {
+            $item->status = $request->status;
+            $item->save();
+ 
+            return response()->json(['success' => true, 'message' => 'Status updated successfully.']);
+        }
+ 
+        return response()->json(['success' => false, 'message' => 'Item not found.']);
     }
 
     

@@ -24,6 +24,7 @@
     <link rel="stylesheet" href="{{ asset('assets/plugins/aos/aos.css') }} ">
 
     <link rel="stylesheet" href="{{ asset('assets/css/style.css') }} ">
+    <link rel="stylesheet" href="{{ asset('assets/css/slider.css') }}">
 </head>
 
 <body class="body-one">

@@ -23,8 +23,8 @@
                                 <tr>
                                     <th>ID</th>
                                     <th>Name</th>
-                                    <th>Status</th>
                                     <th>Image</th>
+                                    <th>Status</th>
                                     <th>Actions</th>
                                 </tr>
                             </thead>
@@ -38,6 +38,15 @@
                                         <tr>
                                             <td>{{ $loop->iteration }}</td>
                                             <td>{{ $subcategory->name }}</td>
+
+                                            <td>
+                                                @if ($subcategory->image)
+                                                    <img src="{{ Storage::url('assets/subcategory/' . $subcategory->image) }}"
+                                                        class="img-thumbnail" width="50px">
+                                                @else
+                                                    No Image
+                                                @endif
+                                            </td>
                                             <td>
                                                 <div class="active-switch">
                                                     <label class="switch">
@@ -47,14 +56,6 @@
                                                         <span class="sliders round"></span>
                                                     </label>
                                                 </div>
-                                            </td>
-                                            <td>
-                                                @if ($subcategory->image)
-                                                    <img src="{{ Storage::url('assets/subcategory/' . $subcategory->image) }}"
-                                                        class="img-thumbnail" width="50px">
-                                                @else
-                                                    No Image
-                                                @endif
                                             </td>
 
                                             <td>
@@ -320,6 +321,7 @@
     </div>
 @endsection
 @section('scripts')
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             function handleImagePreview(inputId, previewId) {
@@ -384,9 +386,7 @@
 
         document.getElementById('edit-price').addEventListener('input', calculateFinalPrice);
         document.getElementById('edit-discount').addEventListener('input', calculateFinalPrice);
-    </script>
 
-    <script>
         document.addEventListener('DOMContentLoaded', function() {
             const editFileInput = document.getElementById('edit-image-upload');
             const editImagePreview = document.getElementById('edit-image-preview');
@@ -461,14 +461,9 @@
         // -----------------------fetch city name--------------------------------------//
 
         // <script type="text/javascript" src="js/jquery.js">
-    </script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-    <script type="text/javascript">
-        $.ajaxSetup({
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            }
-        });
+
+
+
 
         $(document).ready(function() {
             $('#state').on('change', function() {
@@ -501,9 +496,5 @@
                 }
             });
         });
-    </script>
-
-
-
     </script>
 @endsection

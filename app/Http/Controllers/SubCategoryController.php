@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Category;
 use App\Models\City;
 use App\Models\Country;
+use App\Models\Menu;
 use App\Models\State;
 use App\Models\SubCategory;
 use Illuminate\Http\Request;
@@ -12,26 +13,35 @@ use Illuminate\Support\Facades\Storage;
 
 class SubCategoryController extends Controller
 {
+    /**
+     * Display a listing of the resource.
+     */
+
     public function index()
     {
         $subcategories = SubCategory::all();
         $categories = Category::all();
+
         $countryId = Country::where('name', 'India')->value('id');
+
         $states = State::where('country_id', $countryId)->get(['name', 'id']);
 
         return view('backend.sub-category.index', compact('subcategories', 'categories', 'states'));
     }
 
+    /**
+     * Store a newly created resource in storage.
+     */
     public function store(Request $request)
     {
         $request->validate([
             'name' => 'required|string|max:255',
-            'state_id' => 'nullable|exists:states,id',
-            'city_id' => 'nullable|exists:cities,id',
+            'state' => 'nullable|exists:states,id',
+            'city' => 'nullable|exists:cities,id',
             'price' => 'nullable|numeric',
             'discount' => 'nullable|numeric',
             'final_price' => 'nullable|numeric',
-            'images.*' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048', // Allow multiple images
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
 
         $finalPrice = $request->input('price');
@@ -52,6 +62,7 @@ class SubCategoryController extends Controller
         $subcategory->total_price = $request->input('price');
         $subcategory->discount = $request->input('discount');
         $subcategory->discounted_price = $finalPrice;
+
 
         if ($request->hasFile('images')) {
             $imageNames = [];
@@ -83,14 +94,14 @@ class SubCategoryController extends Controller
         //
     }
 
-      /**
+    /**
      * Show the form for editing the specified resource.
      */
-
-    public function edit($id)
+    public function edit(string $id)
     {
-        $subcategory = SubCategory::findOrFail($id);
-        return response()->json($subcategory);
+        $subcategories = SubCategory::findOrFail($id);
+        $category = Category::get();
+        return view('backend.sub-category.edit', compact('subcategories', 'category'));
     }
 
 
@@ -151,11 +162,31 @@ class SubCategoryController extends Controller
      }
 
 
-    public function destroy($id)
+    /**
+     * Remove the specified resource from storage.
+     */
+    public function destroy(string $id)
     {
         $subcategory = SubCategory::findOrFail($id);
         $subcategory->delete();
         return redirect()->back()->with('success', 'SubCategory deleted successfully.');
+    }
+    public function fetchsubcategory($category_id = null)
+    {
+        $data = SubCategory::where('category_id', $category_id)->get();
+        return response()->json([
+            'status' => 1,
+            'data' => $data,
+        ]);
+    }
+
+    public function fetchmenu($menu_id = null)
+    {
+        $data = Menu::where('subcategory_id', $menu_id)->get();
+        return response()->json([
+            'status' => 1,
+            'data' => $data,
+        ]);
     }
 
     public function fetchCity($stateId)
@@ -164,14 +195,11 @@ class SubCategoryController extends Controller
             $city->name = ucwords($city->name);
             return $city;
         });
-
         if ($cities->isEmpty()) {
             return response()->json(['status' => 0, 'message' => 'No cities found']);
         }
-
         return response()->json(['status' => 1, 'data' => $cities]);
     }
-
     public function updateStatus(Request $request)
     {
         $item = SubCategory::find($request->id);
@@ -184,4 +212,5 @@ class SubCategoryController extends Controller
 
         return response()->json(['success' => false, 'message' => 'Item not found.']);
     }
+
 }

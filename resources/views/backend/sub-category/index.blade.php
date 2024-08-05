@@ -23,8 +23,8 @@
                                 <tr>
                                     <th>ID</th>
                                     <th>Name</th>
-                                    <th>Status</th>
                                     <th>Image</th>
+                                    <th>Status</th>
                                     <th>Actions</th>
                                 </tr>
                             </thead>
@@ -38,6 +38,15 @@
                                         <tr>
                                             <td>{{ $loop->iteration }}</td>
                                             <td>{{ $subcategory->name }}</td>
+                                           
+                                            <td>
+                                                @if ($subcategory->image)
+                                                    <img src="{{ Storage::url('assets/subcategory/' . $subcategory->image) }}"
+                                                        class="img-thumbnail" width="50px">
+                                                @else
+                                                    No Image
+                                                @endif
+                                            </td>
                                             <td>
                                                 <div class="active-switch">
                                                     <label class="switch">
@@ -47,14 +56,6 @@
                                                         <span class="sliders round"></span>
                                                     </label>
                                                 </div>
-                                            </td>
-                                            <td>
-                                                @if ($subcategory->image)
-                                                    <img src="{{ Storage::url('assets/subcategory/' . $subcategory->image) }}"
-                                                        class="img-thumbnail" width="50px">
-                                                @else
-                                                    No Image
-                                                @endif
                                             </td>
 
                                             <td>

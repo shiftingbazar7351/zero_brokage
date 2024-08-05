@@ -3,12 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Models\Category;
+use App\Models\City;
 use App\Models\Country;
 use App\Models\Menu;
-use Illuminate\Http\Request;
-use App\Models\SubCategory;
 use App\Models\State;
-use App\Models\City;
+use App\Models\SubCategory;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class SubCategoryController extends Controller
 {
@@ -18,16 +19,15 @@ class SubCategoryController extends Controller
 
     public function index()
     {
-    $subcategories = SubCategory::all();
-    $categories = Category::all();
+        $subcategories = SubCategory::all();
+        $categories = Category::all();
 
-    $countryId = Country::where('name', 'India')->value('id');
+        $countryId = Country::where('name', 'India')->value('id');
 
-    $states = State::where('country_id', $countryId)->get(['name','id']);
+        $states = State::where('country_id', $countryId)->get(['name', 'id']);
 
-    return view('backend.sub-category.index', compact('subcategories', 'categories', 'states'));
+        return view('backend.sub-category.index', compact('subcategories', 'categories', 'states'));
     }
-
 
     /**
      * Store a newly created resource in storage.
@@ -53,7 +53,7 @@ class SubCategoryController extends Controller
         } else {
             $finalPrice = $request->input('price');
         }
-    
+
         $subcategory = new SubCategory();
         $subcategory->name = $request->input('name');
         $subcategory->category_id = $request->input('category');
@@ -62,22 +62,25 @@ class SubCategoryController extends Controller
         $subcategory->discount = $request->input('discount');
         $subcategory->final_price = $finalPrice;
 
-
-
         if ($request->hasFile('image')) {
             $image = $request->file('image');
             $imageName = time() . '_' . $image->getClientOriginalName(); // Generate unique name
             $image->storeAs('assets/subcategory', $imageName, 'public'); // Store the image in assets/category
             $subcategory->image = $imageName; // Save the unique name
         }
-    
 
         $subcategory->save();
 
         return redirect()->back()->with('success', 'Sub-Category created successfully.');
     }
 
-
+    /**
+     * Display the specified resource.
+     */
+    public function show(string $id)
+    {
+       //
+    }
 
     /**
      * Show the form for editing the specified resource.
@@ -85,8 +88,8 @@ class SubCategoryController extends Controller
     public function edit(string $id)
     {
         $subcategories = SubCategory::findOrFail($id);
-        $category =  Category::get();
-        return view('backend.sub-category.edit', compact('subcategories','category'));
+        $category = Category::get();
+        return view('backend.sub-category.edit', compact('subcategories', 'category'));
     }
 
     /**
@@ -95,12 +98,8 @@ class SubCategoryController extends Controller
     public function update(Request $request, string $id)
     {
         $request->validate([
-            'name' => 'required|string|max:255',
-            'state' => 'nullable|exists:states,id',
-            'city' => 'nullable|exists:cities,id',
-            'price' => 'nullable|numeric',
-            'discount' => 'nullable|numeric',
-            'final_price' => 'nullable|numeric',
+            'name' => 'required',
+            'category' => 'nullable|string|max:255', 
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
 
@@ -124,15 +123,15 @@ class SubCategoryController extends Controller
 
         if ($request->hasFile('image')) {
             $image = $request->file('image');
-            $imageName = time() . '_' . $image->getClientOriginalName(); 
-            $image->storeAs('assets/subcategory', $imageName, 'public'); 
-            $subcategory->image = $imageName; 
+            $imageName = time() . '_' . $image->getClientOriginalName();
+            $image->storeAs('assets/subcategory', $imageName, 'public');
+            $subcategory->image = $imageName;
         }
 
         if ($request->hasFile('image')) {
             // Delete old image if exists
             if ($subcategory->image) {
-                \Storage::disk('public')->delete('assets/subcategory/' . $subcategory->image);
+                Storage::disk('public')->delete('assets/subcategory/' . $subcategory->image);
             }
             $image = $request->file('image');
             $imageName = time() . '_' . $image->getClientOriginalName(); // Generate unique name
@@ -154,45 +153,33 @@ class SubCategoryController extends Controller
         $subcategory->delete();
         return redirect()->back()->with('success', 'SubCategory deleted successfully.');
     }
-
-    
     public function fetchsubcategory($category_id = null) {
         $data = SubCategory::where('category_id', $category_id)->get();
         return response()->json([
             'status' => 1,
-            'data' => $data
+            'data' => $data,
         ]);
     }
 
-    public function fetchmenu($menu_id = null) {
+    public function fetchmenu($menu_id = null)
+    {
         $data = Menu::where('subcategory_id', $menu_id)->get();
         return response()->json([
             'status' => 1,
-            'data' => $data
+            'data' => $data,
         ]);
     }
 
-
-    public function fetchcity($state_id = null) {
-        $data = City::where('state_id', $state_id)->get();
-        return response()->json([
-            'status' => 1,
-            'data' => $data
-        ]);
-    }
-
-
-    public function updateStatus(Request $request)
+    public function fetchCity($stateId)
     {
-        $item = SubCategory::find($request->id);
-        if ($item) {
-            $item->status = $request->status;
-            $item->save();
- 
-            return response()->json(['success' => true, 'message' => 'Status updated successfully.']);
+        $cities = City::where('state_id', $stateId)->get()->map(function ($city) {
+            $city->name = ucwords($city->name);
+            return $city;
+        });
+        if ($cities->isEmpty()) {
+            return response()->json(['status' => 0, 'message' => 'No cities found']);
         }
- 
-        return response()->json(['success' => false, 'message' => 'Item not found.']);
+        return response()->json(['status' => 1, 'data' => $cities]);
     }
 
     

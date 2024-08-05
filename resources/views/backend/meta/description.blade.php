@@ -46,9 +46,8 @@
                                             <td>{{ $description->id }}</td>
                                             <td> {{ $description->description }} </td>
 
-
                                             <td>
-                                                
+                               
                                             </td>
                                         </tr>
                                     @endforeach

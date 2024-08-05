@@ -49,9 +49,9 @@ class SubCategoryController extends Controller
         $subcategory->category_id = $request->input('category');
         $subcategory->slug = $this->generateSlug($request->name);
         $subcategory->city_id = $request->input('city');
-        $subcategory->price = $request->input('price');
+        $subcategory->total_price = $request->input('price');
         $subcategory->discount = $request->input('discount');
-        $subcategory->final_price = $finalPrice;
+        $subcategory->discounted_price = $finalPrice;
 
         if ($request->hasFile('images')) {
             $imageNames = [];

@@ -1,7 +1,6 @@
 <?php
 
 namespace App\Http\Controllers;
-use App\Models\Category;
 use App\Models\MetaDescription;
 use Illuminate\Http\Request;
 
@@ -10,6 +9,7 @@ class MetaDescripConroller extends Controller
     public function index()
     {
         $descriptions = MetaDescription::get();
+        $hasDescription = $descriptions->isNotEmpty();
        
         return view('backend.meta.description', compact('descriptions'));
     }

@@ -153,16 +153,14 @@
                         </div>
 
                         <div class="mb-3">
-                            <label class="form-label">Sub Category Image</label>
+                            <label class="form-label">Sub Category Images</label>
                             <div class="form-uploads">
                                 <div class="form-uploads-path">
-                                    <img id="image-preview-bg" src="{{ asset('admin/assets/img/icons/upload.svg') }}"
-                                        alt="img" class="default-img">
+                                    <img id="image-preview-bg" src="{{ asset('admin/assets/img/icons/upload.svg') }}" alt="img" class="default-img">
                                     <div class="file-browse">
-                                        <h6>Drag & drop image or </h6>
+                                        <h6>Drag & drop images or </h6>
                                         <div class="file-browse-path">
-                                            <input type="file" name="image" id="image-input-bg"
-                                                accept="image/jpeg, image/png">
+                                            <input type="file" name="images[]" id="image-input-bg" accept="image/jpeg, image/png" multiple>
                                             <a href="javascript:void(0);"> Browse</a>
                                         </div>
                                     </div>
@@ -170,6 +168,7 @@
                                 </div>
                             </div>
                         </div>
+                        
 
                         <script>
                             document.addEventListener('DOMContentLoaded', function() {

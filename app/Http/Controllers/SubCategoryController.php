@@ -33,17 +33,17 @@ class SubCategoryController extends Controller
             'final_price' => 'nullable|numeric',
             'images.*' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048', // Allow multiple images
         ]);
-    
+
         $finalPrice = $request->input('price');
         $discountPercentage = $request->input('discount');
-    
+
         if (!empty($finalPrice) && !empty($discountPercentage)) {
             $discountAmount = ($finalPrice * $discountPercentage) / 100;
             $finalPrice -= $discountAmount;
         } else {
             $finalPrice = $request->input('price');
         }
-    
+
         $subcategory = new SubCategory();
         $subcategory->name = $request->input('name');
         $subcategory->category_id = $request->input('category');
@@ -52,7 +52,7 @@ class SubCategoryController extends Controller
         $subcategory->total_price = $request->input('price');
         $subcategory->discount = $request->input('discount');
         $subcategory->discounted_price = $finalPrice;
-    
+
         if ($request->hasFile('images')) {
             $imageNames = [];
             foreach ($request->file('images') as $image) {
@@ -62,12 +62,12 @@ class SubCategoryController extends Controller
             }
             $subcategory->image = json_encode($imageNames); // Store image names as a JSON array
         }
-    
+
         $subcategory->save();
-    
+
         return redirect()->back()->with('success', 'Sub-Category created successfully.');
     }
-    
+
     protected function generateSlug($name)
     {
         $slug = str_replace(' ', '_', $name);
@@ -93,11 +93,11 @@ class SubCategoryController extends Controller
         return response()->json($subcategory);
     }
 
-    
+
     /**
      * Update the specified resource in storage.
      */
- 
+
      public function update(Request $request, $id)
      {
          $request->validate([
@@ -109,17 +109,17 @@ class SubCategoryController extends Controller
              'final_price' => 'nullable|numeric',
              'images.*' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048', // Allow multiple images
          ]);
-     
+
          $finalPrice = $request->input('price');
          $discountPercentage = $request->input('discount');
-     
+
          if (!empty($finalPrice) && !empty($discountPercentage)) {
              $discountAmount = ($finalPrice * $discountPercentage) / 100;
              $finalPrice -= $discountAmount;
          } else {
              $finalPrice = $request->input('price');
          }
-     
+
          $subcategory = SubCategory::findOrFail($id);
          $subcategory->name = $request->input('name');
          $subcategory->category_id = $request->input('category_id');
@@ -127,7 +127,7 @@ class SubCategoryController extends Controller
          $subcategory->price = $request->input('price');
          $subcategory->discount = $request->input('discount');
          $subcategory->final_price = $finalPrice;
-     
+
          if ($request->hasFile('images')) {
              if ($subcategory->images) {
                  $oldImages = json_decode($subcategory->images, true);
@@ -135,7 +135,7 @@ class SubCategoryController extends Controller
                      Storage::disk('public')->delete('assets/subcategory/' . $oldImage);
                  }
              }
-     
+
              $imageNames = [];
              foreach ($request->file('images') as $image) {
                  $imageName = time() . '_' . $image->getClientOriginalName();
@@ -144,12 +144,12 @@ class SubCategoryController extends Controller
              }
              $subcategory->images = json_encode($imageNames);
          }
-     
+
          $subcategory->save();
-     
+
          return redirect()->back()->with('success', 'SubCategory updated successfully.');
      }
-     
+
 
     public function destroy($id)
     {

@@ -31,8 +31,7 @@ class FrontendController extends Controller
             ->where('status', 1)
             ->orderByDesc('created_at')
             ->select('id', 'name', 'image', 'slug', 'total_price', 'discounted_price', 'discount', 'category_id')
-            ->get();
-
+            ->paginate(20);
         return view('frontend.service-grid', compact('subcategories', 'category'));
     }
 

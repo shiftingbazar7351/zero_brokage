@@ -209,7 +209,7 @@
                     <div class="row sorting-div">
                         <div class="col-lg-4 col-sm-12 ">
                             <div class="count-search">
-                                <h6>Found 12 Services</h6>
+                                <h6>Found {{count($subcategories)!=0}} Services</h6>
                             </div>
                         </div>
                         <div class="col-lg-8 col-sm-12 d-flex justify-content-end ">

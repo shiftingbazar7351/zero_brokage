@@ -10,14 +10,14 @@
                     </span>
                 </a>
                 <a href="{{route('home')}}" class="navbar-brand logo">
-                    <img src="assets/img/logofinal.png" class="img-fluid" alt="Logo">
+                    <img src="{{asset('assets/img/logofinal.png')}}" class="img-fluid" alt="Logo">
                 </a>
 
             </div>
             <div class="main-menu-wrapper">
                 <div class="menu-header">
                     <a href="{{route('home')}}" class="menu-logo">
-                        <img src="assets/img/logofinal.png" class="img-fluid" alt="Logo">
+                        <img src="{{asset('assets/img/logofinal.png')}}" class="img-fluid" alt="Logo">
                     </a>
                     <a id="menu_close" class="menu-close" href="javascript:void(0);"> <i class="fas fa-times"></i></a>
                 </div>

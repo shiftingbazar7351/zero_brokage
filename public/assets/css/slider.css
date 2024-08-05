@@ -24,7 +24,7 @@
 }
 
 .slide {
-    min-width: 220px;
+    max-width: 300px;
     text-align: center;
     margin: 0 5px;
     transition: transform 0.3s ease;

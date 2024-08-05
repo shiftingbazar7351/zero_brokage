@@ -18,7 +18,7 @@ class FrontendController extends Controller
     }
     public function subCategory($slug)
     {
-        $category = Category::where('slug', $slug)->select('id', 'name')->first();
+        $category = Category::where('slug', $slug)->select('id', 'name','image')->first();
         if (!$category) {
             abort(404, 'Category not found');
         }

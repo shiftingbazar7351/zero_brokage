@@ -28,11 +28,12 @@
             <button class="prev" onclick="slideLeft()">&#10094;</button>
             <div class="slider-wrapper">
                 <div class="slider">
-                    @foreach ($category as $subcategory)
-                        <div class="slide"><img src="{{ asset('assets/img/services/service-01.jpg') }}"
+                    {{-- @foreach ($category as $cat) --}}
+                        <div class="slide"><img src="{{ asset('storage/assets/category/' . $category->image ?? '') }}"
                                 alt="Quick Booking"><span>Quick
                                 Booking</span></div>
-                    @endforeach
+                    {{-- @endforeach --}}
+
                 </div>
             </div>
             <button class="next" onclick="slideRight()">&#10095;</button>
@@ -130,12 +131,12 @@
                             </select>
                         </div>
                         <!-- <div class="filter-content">
-                                        <h2>Location</h2>
-                                        <div class="group-img">
-                                            <input type="text" class="form-control" placeholder="Select Location">
-                                            <i class="feather-map-pin"></i>
-                                        </div>
-                                    </div> -->
+                                            <h2>Location</h2>
+                                            <div class="group-img">
+                                                <input type="text" class="form-control" placeholder="Select Location">
+                                                <i class="feather-map-pin"></i>
+                                            </div>
+                                        </div> -->
                         <div class="filter-content">
                             <h2 class="mb-4">Price Range</h2>
                             <div class="filter-range">
@@ -223,6 +224,8 @@
                         <button class="btn btn-primary">Search</button>
                     </div>
                 </div>
+
+
                 <div class="col-md-9 col-sm-12">
                     <div class="row sorting-div">
                         <div class="col-lg-4 col-sm-12 ">

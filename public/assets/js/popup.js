@@ -7,16 +7,20 @@ function validateNum(elem) {
     document.getElementById("saveChanges").classList.add("unclickable");
   } else {
     document.getElementById("res").innerText = "";
-    document.getElementById("saveChanges").classList.remove("unclickable");   
+    document.getElementById("saveChanges").classList.remove("unclickable");
+     
     if (elem.value.length<10) {
       document.getElementById("res").innerText = "Enter 10 digit number";
       document.getElementById("saveChanges").classList.add("unclickable");
     }
+     
+    
     if (elem.value[0]==0) {
       document.getElementById("res").innerText =
         "First character should not be zero";
       document.getElementById("saveChanges").classList.add("unclickable");
     }
+   
   }
 }
 

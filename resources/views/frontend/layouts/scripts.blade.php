@@ -1,4 +1,5 @@
 @yield('scripts')
+<script src="{{ asset('assets/js/slider.js') }}"></script>
 <script data-cfasync="false" src="{{asset('assets/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js')}}"></script>
     <script src="{{asset('assets/js/jquery-3.7.0.min.js')}}" type="98a76c34a45049bd2fdaa03f-text/javascript"></script>
 

@@ -2791,6 +2791,7 @@ html.menu-opened body {
     overflow: hidden;
     z-index: 1;
     border-radius: 10px 10px 0 0;
+	max-width: 350px;
 }
 .service-img .serv-img {
     border-radius: 10px 10px 0 0;
@@ -4962,11 +4963,11 @@ a.reset-link:hover{
     text-decoration: underline;
 }
 .filter-content {
-    padding: 20px;
+    padding: 5px;
 	background: #F7F7FF;
 	border: 2px solid #F5F5F5;
 	border-radius: 5px;
-    margin-bottom: 18px;
+    margin-bottom: 10px;
 }
 .rating-set li {
     margin-bottom: 15px;
@@ -4994,7 +4995,7 @@ a.reset-link:hover{
 .filter-content h2 {
     font-size: 18px;
 	font-weight: 500;
-    margin-bottom: 20px;
+    margin-bottom: 10px;
 }
 .filter-content h2 span {
 	float: right;

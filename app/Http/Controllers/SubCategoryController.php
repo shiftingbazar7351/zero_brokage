@@ -58,8 +58,6 @@ class SubCategoryController extends Controller
         $subcategory->name = $request->input('name');
         $subcategory->category_id = $request->input('category');
         $subcategory->slug = $this->generateSlug($request->name);
-
-        // $subcategory->state_id = $request->input('state');
         $subcategory->city_id = $request->input('city');
         $subcategory->total_price = $request->input('price');
         $subcategory->discount = $request->input('discount');
@@ -178,6 +176,18 @@ class SubCategoryController extends Controller
             return response()->json(['status' => 0, 'message' => 'No cities found']);
         }
         return response()->json(['status' => 1, 'data' => $cities]);
+    }
+    public function updateStatus(Request $request)
+    {
+        $item = SubCategory::find($request->id);
+        if ($item) {
+            $item->status = $request->status;
+            $item->save();
+
+            return response()->json(['success' => true, 'message' => 'Status updated successfully.']);
+        }
+
+        return response()->json(['success' => false, 'message' => 'Item not found.']);
     }
 
 }

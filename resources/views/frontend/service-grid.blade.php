@@ -232,6 +232,8 @@
                             </div>
                         </div>
                     </div>
+
+                    
                     <div class="row">
                         @foreach ($subcategories as $subcategory)
                             <div class="col-xl-4 col-md-3">

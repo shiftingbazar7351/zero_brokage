@@ -38,9 +38,9 @@ class SubCategoryController extends Controller
             'name' => 'required|string|max:255',
             'state' => 'nullable|exists:states,id',
             'city' => 'nullable|exists:cities,id',
-            'price' => 'nullable|numeric',
+            'total_price' => 'nullable|numeric',
             'discount' => 'nullable|numeric',
-            'final_price' => 'nullable|numeric',
+            'discounted_price' => 'nullable|numeric',
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
 
@@ -106,51 +106,48 @@ class SubCategoryController extends Controller
      * Update the specified resource in storage.
      */
 
-     public function update(Request $request, $id)
-     {
-         $request->validate([
-             'name' => 'required|string|max:255',
-             'state_id' => 'nullable|exists:states,id',
-             'city_id' => 'nullable|exists:cities,id',
-             'price' => 'nullable|numeric',
-             'discount' => 'nullable|numeric',
-             'final_price' => 'nullable|numeric',
-             'images.*' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048', // Allow multiple images
-         ]);
+    public function update(Request $request, $id)
+    {
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'state_id' => 'nullable|exists:states,id',
+            'city_id' => 'nullable|exists:cities,id',
+            'price' => 'nullable|numeric',
+            'discount' => 'nullable|numeric',
+            'final_price' => 'nullable|numeric',
+            'images.*' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048', // Allow multiple images
+        ]);
 
-         $finalPrice = $request->input('price');
-         $discountPercentage = $request->input('discount');
+        $finalPrice = $request->input('price');
+        $discountPercentage = $request->input('discount');
 
-         if (!empty($finalPrice) && !empty($discountPercentage)) {
-             $discountAmount = ($finalPrice * $discountPercentage) / 100;
-             $finalPrice -= $discountAmount;
-         } else {
-             $finalPrice = $request->input('price');
-         }
+        if (!empty($finalPrice) && !empty($discountPercentage)) {
+            $discountAmount = ($finalPrice * $discountPercentage) / 100;
+            $finalPrice -= $discountAmount;
+        } else {
+            $finalPrice = $request->input('price');
+        }
 
-         $subcategory = SubCategory::findOrFail($id);
-         $subcategory->name = $request->input('name');
-         $subcategory->category_id = $request->input('category_id');
-         $subcategory->city_id = $request->input('city_id');
-         $subcategory->price = $request->input('price');
-         $subcategory->discount = $request->input('discount');
-         $subcategory->final_price = $finalPrice;
+        $subcategory = SubCategory::findOrFail($id);
+        $subcategory->name = $request->input('name');
+        $subcategory->category_id = $request->input('category_id');
+        $subcategory->city_id = $request->input('city_id');
+        $subcategory->total_price = $request->input('price');
+        $subcategory->discount = $request->input('discount');
+        $subcategory->discounted_price = $finalPrice;
 
-         if ($request->hasFile('image')) {
+        if ($request->hasFile('image')) {
             if ($subcategory->image) {
                 Storage::disk('public')->delete('assets/subcategory/' . $subcategory->image);
             }
-
             $image = $request->file('image');
             $imageName = time() . '_' . $image->getClientOriginalName();
             $image->storeAs('assets/subcategory', $imageName, 'public');
             $subcategory->image = $imageName;
         }
-
-         $subcategory->save();
-
-         return redirect()->back()->with('success', 'SubCategory updated successfully.');
-     }
+        $subcategory->save();
+        return redirect()->back()->with('success', 'SubCategory updated successfully.');
+    }
 
 
     /**

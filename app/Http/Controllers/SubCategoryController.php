@@ -21,11 +21,8 @@ class SubCategoryController extends Controller
     {
         $subcategories = SubCategory::all();
         $categories = Category::all();
-
         $countryId = Country::where('name', 'India')->value('id');
-
         $states = State::where('country_id', $countryId)->get(['name', 'id']);
-
         return view('backend.sub-category.index', compact('subcategories', 'categories', 'states'));
     }
 
@@ -46,14 +43,12 @@ class SubCategoryController extends Controller
 
         $finalPrice = $request->input('price');
         $discountPercentage = $request->input('discount');
-
         if (!empty($finalPrice) && !empty($discountPercentage)) {
             $discountAmount = ($finalPrice * $discountPercentage) / 100;
             $finalPrice -= $discountAmount;
         } else {
             $finalPrice = $request->input('price');
         }
-
         $subcategory = new SubCategory();
         $subcategory->name = $request->input('name');
         $subcategory->category_id = $request->input('category');
@@ -62,8 +57,6 @@ class SubCategoryController extends Controller
         $subcategory->total_price = $request->input('price');
         $subcategory->discount = $request->input('discount');
         $subcategory->discounted_price = $finalPrice;
-
-
         if ($request->hasFile('images')) {
             $imageNames = [];
             foreach ($request->file('images') as $image) {
@@ -73,9 +66,7 @@ class SubCategoryController extends Controller
             }
             $subcategory->image = json_encode($imageNames); // Store image names as a JSON array
         }
-
         $subcategory->save();
-
         return redirect()->back()->with('success', 'Sub-Category created successfully.');
     }
 

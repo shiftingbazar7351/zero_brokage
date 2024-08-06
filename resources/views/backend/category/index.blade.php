@@ -99,7 +99,7 @@
             </div>
         </div>
     </div>
-    </div>
+
 
     <!-- Add Category Modal -->
     <div class="modal fade" id="add-category">
@@ -188,8 +188,8 @@
                             <label class="form-label">Category Image</label>
                             <div class="form-uploads">
                                 <div class="form-uploads-path">
-                                    <img id="icon-preview" src="{{ asset('admin/assets/img/icons/upload.svg') }}"
-                                        alt="img">
+                                    <img id="icon-preview" src="{{ isset($category->icon) ? Storage::url('assets/icon/' . $category->icon) : asset('admin/assets/img/icons/upload.svg') }}"
+                                        alt="img" width="100px" height="100px">
                                     <div class="file-browse">
                                         <h6>Drag & drop image or </h6>
                                         <div class="file-browse-path">
@@ -207,8 +207,8 @@
                             <label class="form-label">Category Background-Image</label>
                             <div class="form-uploads">
                                 <div class="form-uploads-path">
-                                    <img id="background-preview" src="{{ asset('admin/assets/img/icons/upload.svg') }}"
-                                        alt="img">
+                                    <img id="background-preview" src="{{ isset($category->image) ? Storage::url('assets/category/' . $category->image) : asset('admin/assets/img/icons/upload.svg') }}"
+                                        alt="img" width="100px" height="100px">
                                     <div class="file-browse">
                                         <h6>Drag & drop image or </h6>
                                         <div class="file-browse-path">
@@ -221,7 +221,6 @@
                                 </div>
                             </div>
                         </div>
-
 
                         <div class="text-end">
                             <button type="button" class="btn btn-secondary me-2" data-bs-dismiss="modal">Cancel</button>
@@ -236,113 +235,112 @@
 @endsection
 
 @section('scripts')
-
-<script>
-    function editCategory(id) {
-        $.ajax({
-            url: '/categories/' + id + '/edit',
-            method: 'GET',
-            success: function(response) {
-                $('#editCategoryId').val(response.category.id);
-                $('#editName').val(response.category.name);
-                $('#editCategoryForm').attr('action', '/categories/' + id);
-                $('#edit-category').modal('show');
-            }
-        });
-    }
-
-    function toggleStatus(checkbox, categoryId) {
-        var form = checkbox.closest('form');
-        var hiddenInput = form.querySelector('.status-input');
-
-        hiddenInput.value = checkbox.checked ? 1 : 0;
-
-        form.submit();
-    }
-
-    document.addEventListener('DOMContentLoaded', function() {
-        function handleImagePreview(inputId, previewId) {
-            document.getElementById(inputId).addEventListener('change', function(event) {
-                const file = event.target.files[0];
-                const preview = document.getElementById(previewId);
-
-                if (file) {
-                    const reader = new FileReader();
-                    reader.onload = function(e) {
-                        preview.src = e.target.result;
-                        preview.classList.add('preview-img');
-                    }
-                    reader.readAsDataURL(file);
-                } else {
-                    preview.src = "{{ asset('admin/assets/img/icons/upload.svg') }}";
-                    preview.classList.remove('preview-img');
+    <script>
+        function editCategory(id) {
+            $.ajax({
+                url: '/categories/' + id + '/edit',
+                method: 'GET',
+                success: function(response) {
+                    $('#editCategoryId').val(response.category.id);
+                    $('#editName').val(response.category.name);
+                    $('#editImage').val(response.category.image);
+                    $('#editCategoryForm').attr('action', '/categories/' + id);
+                    $('#edit-category').modal('show');
                 }
             });
         }
-        handleImagePreview('image-input-icon', 'image-preview-icon');
-        handleImagePreview('image-input-bg', 'image-preview-bg');
-    });
 
-    // for updating the status through ajax request
-    document.addEventListener('DOMContentLoaded', function() {
-        document.querySelectorAll('.status-toggle').forEach(function(toggle) {
-            toggle.addEventListener('change', function() {
-                const itemId = this.getAttribute('data-id');
-                const status = this.checked ? 1 : 0;
+        function toggleStatus(checkbox, categoryId) {
+            var form = checkbox.closest('form');
+            var hiddenInput = form.querySelector('.status-input');
 
-                fetch('{{ route('update.status') }}', {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json',
-                            'X-CSRF-TOKEN': document.querySelector(
-                                'meta[name="csrf-token"]').getAttribute('content')
-                        },
-                        body: JSON.stringify({
-                            id: itemId,
-                            status: status
-                        })
-                    })
-                    .then(response => response.json())
-                    .then(data => {
-                        if (data.success) {
-                            console.log(data.message);
-                        } else {
-                            console.error(data.message);
+            hiddenInput.value = checkbox.checked ? 1 : 0;
+
+            form.submit();
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            function handleImagePreview(inputId, previewId) {
+                document.getElementById(inputId).addEventListener('change', function(event) {
+                    const file = event.target.files[0];
+                    const preview = document.getElementById(previewId);
+
+                    if (file) {
+                        const reader = new FileReader();
+                        reader.onload = function(e) {
+                            preview.src = e.target.result;
+                            preview.classList.add('preview-img');
                         }
-                    })
-                    .catch(error => {
-                        console.error('Error:', error);
-                    });
+                        reader.readAsDataURL(file);
+                    } else {
+                        preview.src = "{{ asset('admin/assets/img/icons/upload.svg') }}";
+                        preview.classList.remove('preview-img');
+                    }
+                });
+            }
+            handleImagePreview('image-input-icon', 'image-preview-icon');
+            handleImagePreview('image-input-bg', 'image-preview-bg');
+        });
+
+        // for updating the status through ajax request
+        document.addEventListener('DOMContentLoaded', function() {
+            document.querySelectorAll('.status-toggle').forEach(function(toggle) {
+                toggle.addEventListener('change', function() {
+                    const itemId = this.getAttribute('data-id');
+                    const status = this.checked ? 1 : 0;
+
+                    fetch('{{ route('update.status') }}', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'X-CSRF-TOKEN': document.querySelector(
+                                    'meta[name="csrf-token"]').getAttribute('content')
+                            },
+                            body: JSON.stringify({
+                                id: itemId,
+                                status: status
+                            })
+                        })
+                        .then(response => response.json())
+                        .then(data => {
+                            if (data.success) {
+                                console.log(data.message);
+                            } else {
+                                console.error(data.message);
+                            }
+                        })
+                        .catch(error => {
+                            console.error('Error:', error);
+                        });
+                });
             });
         });
-    });
 
-    // preview image for edit page
-    document.addEventListener('DOMContentLoaded', function() {
-        function previewImage(inputId, previewId) {
-            const inputElement = document.getElementById(inputId);
-            const previewElement = document.getElementById(previewId);
+        // preview image for edit page
+        document.addEventListener('DOMContentLoaded', function() {
+            function previewImage(inputId, previewId) {
+                const inputElement = document.getElementById(inputId);
+                const previewElement = document.getElementById(previewId);
 
-            inputElement.addEventListener('change', function(event) {
-                const file = event.target.files[0];
+                inputElement.addEventListener('change', function(event) {
+                    const file = event.target.files[0];
 
-                if (file) {
-                    const reader = new FileReader();
-                    reader.onload = function(e) {
-                        previewElement.src = e.target.result;
-                        previewElement.classList.add('preview-img');
+                    if (file) {
+                        const reader = new FileReader();
+                        reader.onload = function(e) {
+                            previewElement.src = e.target.result;
+                            previewElement.classList.add('preview-img');
+                        }
+                        reader.readAsDataURL(file);
+                    } else {
+                        previewElement.src = "{{ asset('admin/assets/img/icons/upload.svg') }}";
+                        previewElement.classList.remove('preview-img');
                     }
-                    reader.readAsDataURL(file);
-                } else {
-                    previewElement.src = "{{ asset('admin/assets/img/icons/upload.svg') }}";
-                    previewElement.classList.remove('preview-img');
-                }
-            });
-        }
+                });
+            }
 
-        previewImage('editIcon', 'icon-preview');
-        previewImage('editImage', 'background-preview');
-    });
-</script>
-
+            previewImage('editIcon', 'icon-preview');
+            previewImage('editImage', 'background-preview');
+        });
+    </script>
 @endsection

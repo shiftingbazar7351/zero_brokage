@@ -259,18 +259,17 @@
                         </div>
                         <div class="form-group">
                             <label for="category">State</label>
-                            <select class="form-control" id="edit-state" name="state">
-                                <option value="">Select a state</option>
+                            <select class="form-control" id="state" name="state">
+                                <option value="">Select State</option>
                                 @foreach ($states as $state)
                                     <option value="{{ $state->id }}">{{ ucwords($state->name) }}</option>
                                 @endforeach
                             </select>
                         </div>
-
                         <div class="form-group">
                             <label for="category">City</label>
-                            <select class="form-control" id="edit-city" name="city">
-                                <option value="">Select a category</option>
+                            <select class="form-control" id="city" name="city">
+                                <option value="">Select city</option>
                             </select>
                         </div>
 

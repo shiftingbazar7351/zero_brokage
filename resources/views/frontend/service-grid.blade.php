@@ -106,13 +106,6 @@
                                 <option>Construction</option>
                             </select>
                         </div>
-                        <!-- <div class="filter-content">
-                                        <h2>Location</h2>
-                                        <div class="group-img">
-                                            <input type="text" class="form-control" placeholder="Select Location">
-                                            <i class="feather-map-pin"></i>
-                                        </div>
-                                    </div> -->
                         <div class="filter-content">
                             <h2 class="mb-4">Price Range</h2>
                             <div class="filter-range">
@@ -204,7 +197,7 @@
                     <div class="row sorting-div">
                         <div class="col-lg-4 col-sm-12 ">
                             <div class="count-search">
-                                <h6>Found {{ count($subcategories) != 0 }} Services</h6>
+                                <h6>Found {{ count($subcategories) }} Services</h6>
                             </div>
                         </div>
                         <div class="col-lg-8 col-sm-12 d-flex justify-content-end ">
@@ -233,22 +226,17 @@
                         </div>
                     </div>
 
-                    
+
                     <div class="row">
                         @foreach ($subcategories as $subcategory)
                             <div class="col-xl-4 col-md-3">
                                 <div class="service-widget servicecontent">
                                     <div class="service-img">
                                         <a href="{{ route('service-details') }}">
-                                            @php
-                                                $images = json_decode($subcategory->image, true); // Decode the JSON string into an array
-                                            @endphp
-                                            @if (is_array($images) && !empty($images))
-                                                <img class="img-fluid serv-img" alt="Service Image"
-                                                    src="{{ Storage::url('assets/subcategory/' . $images[0]) }}">
-                                            @else
-                                                No Image
-                                            @endif
+
+                                            <img class="img-fluid serv-img" alt="Service Image"
+                                                src="{{ Storage::url('assets/subcategory/' . $subcategory->image) }}">
+
                                         </a>
                                         <div class="fav-item">
                                             <a href="categories.html"><span

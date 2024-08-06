@@ -18,7 +18,7 @@
                     <ul>
                         <li>
                             <button class="btn btn-primary" type="button" data-bs-toggle="modal"
-                                data-bs-target="#add-url"><i class="fa fa-plus me-2"></i>Add Description</button>
+                                data-bs-target="#add-category"><i class="fa fa-plus me-2"></i>Add url</button>
                         </li>
                     </ul>
                 </div>
@@ -30,7 +30,7 @@
                             <thead>
                                 <tr>
                                     <th>#</th>
-                                    <th>Description</th>
+                                    <th>Url</th>
 
                                     <th>Action</th>
                                 </tr>
@@ -77,7 +77,7 @@
                         <div class="mb-3">
                             <label class="form-label">Meta Url</label>
                             <input type="text" class="form-control" name="url" placeholder="Enter Meta Url"
-                                value="">
+                            value="">
                         </div>
                         
               

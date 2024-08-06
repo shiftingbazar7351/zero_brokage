@@ -2,27 +2,27 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\MetaUrl;
+use App\Models\MetaTitle;
 use Illuminate\Http\Request;
 
-class MetaUrlController extends Controller
+class MetaTitleController extends Controller
 {
     public function index()
     {
-        $urls = MetaUrl::get();
+        $titles = MetaTitle::get();
         // $hasDescription = $descriptions->isNotEmpty();
        
-        return view('backend.meta.url', compact('urls'));
+        return view('backend.meta.title', compact('titles'));
     }
 
     public function store(Request $request)
     {
         $request->validate([
-            'url' => 'required',
+            'title' => 'required',
         ]);
         // dd($request->url);
-        $desc = new MetaUrl();
-        $desc->url = $request->url;
+        $desc = new MetaTitle();
+        $desc->title = $request->title;
 
         $desc->save();
 

@@ -14,6 +14,7 @@ class CategoryController extends Controller
     public function index()
     {
         $categories = Category::orderByDesc('created_at')->get();
+       
         return view('backend.category.index', compact('categories'));
     }
     /**
@@ -43,16 +44,16 @@ class CategoryController extends Controller
 
         if ($request->hasFile('image')) {
             $image = $request->file('image');
-            $imageName = time() . '_' . $image->getClientOriginalName(); // Generate unique name
-            $image->storeAs('assets/category', $imageName, 'public'); // Store the image in assets/category
-            $category->image = $imageName; // Save the unique name
+            $imageName = time() . '_' . $image->getClientOriginalName();
+            $image->storeAs('assets/category', $imageName, 'public');
+            $category->image = $imageName; 
         }
 
         if ($request->hasFile('icon')) {
             $icon = $request->file('icon');
-            $iconName = time() . '_' . $icon->getClientOriginalName(); // Generate unique name
-            $icon->storeAs('assets/icon', $iconName, 'public'); // Store the icon in assets/icon
-            $category->icon = $iconName; // Save the unique name
+            $iconName = time() . '_' . $icon->getClientOriginalName();
+            $icon->storeAs('assets/icon', $iconName, 'public'); 
+            $category->icon = $iconName; 
         }
 
         $category->save();
@@ -60,12 +61,12 @@ class CategoryController extends Controller
         return redirect()->back()->with('success', 'Category created successfully.');
     }
 
-    protected function generateSlug($name)
-    {
-        $slug = str_replace(' ', '_', $name);
-        $slug = strtolower($slug);
-        return $slug;
-    }
+        protected function generateSlug($name)
+        {
+            $slug = str_replace(' ', '_', $name);
+            $slug = strtolower($slug);
+            return $slug;
+        }
 
     /**
      * Display the specified resource.
@@ -95,6 +96,8 @@ class CategoryController extends Controller
         ]);
 
         $category->name = $request->name;
+        $category->slug = $this->generateSlug($request->name);
+
 
         if ($request->hasFile('image')) {
             $image = $request->file('image');
@@ -132,13 +135,17 @@ class CategoryController extends Controller
         return redirect()->back()->with('success', 'Category deleted successfully.');
     }
 
-    public function updateStatus(Request $request,$id)
+    public function updateStatus(Request $request)
     {
-        $category = Category::findOrFail($id);
-        $category->status = $request->input('status', 0);
-        $category->save();
-    
-        return redirect()->back()->with('success', 'Status updated successfully');
+        $item = Category::find($request->id);
+        if ($item) {
+            $item->status = $request->status;
+            $item->save();
+ 
+            return response()->json(['success' => true, 'message' => 'Status updated successfully.']);
+        }
+ 
+        return response()->json(['success' => false, 'message' => 'Item not found.']);
     }
     
 

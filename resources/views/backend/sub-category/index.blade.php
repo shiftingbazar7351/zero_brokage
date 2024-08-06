@@ -350,6 +350,10 @@
             });
         });
 
+        // -----------------------fetch city name--------------------------------------//
+
+        // <script type="text/javascript" src="js/jquery.js">
+
 
         $(document).ready(function() {
             $('#state').on('change', function() {

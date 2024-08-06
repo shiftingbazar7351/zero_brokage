@@ -1,5 +1,16 @@
 @extends('backend.layouts.main')
 @section('content')
+    <style>
+        <style>.default-img {
+            width: auto;
+        }
+
+        .preview-img {
+            width: 100px;
+            height: 100px;
+            object-fit: cover;
+        }
+    </style>
     <div class="page-wrapper page-settings">
         <div class="content">
             <div class="content-page-header content-page-headersplit mb-0">
@@ -157,12 +168,12 @@
                             <label class="form-label">Sub Category Image</label>
                             <div class="form-uploads">
                                 <div class="form-uploads-path">
-                                    <img id="image-preview-bg" src="{{ asset('admin/assets/img/icons/upload.svg') }}"
+                                    <img id="image-preview-icon" src="{{ asset('admin/assets/img/icons/upload.svg') }}"
                                         alt="img" class="default-img">
                                     <div class="file-browse">
                                         <h6>Drag & drop image or </h6>
                                         <div class="file-browse-path">
-                                            <input type="file" name="image" id="image-input-bg"
+                                            <input type="file" name="icon" id="image-input-icon"
                                                 accept="image/jpeg, image/png">
                                             <a href="javascript:void(0);"> Browse</a>
                                         </div>
@@ -171,52 +182,6 @@
                                 </div>
                             </div>
                         </div>
-
-
-                        <script>
-                            document.addEventListener('DOMContentLoaded', function() {
-                                // Function to handle image preview
-                                function handleImagePreview(inputId, previewId) {
-                                    const input = document.getElementById(inputId);
-                                    const preview = document.getElementById(previewId);
-
-                                    input.addEventListener('change', function(event) {
-                                        const file = event.target.files[0];
-
-                                        if (file) {
-                                            const reader = new FileReader();
-                                            reader.onload = function(e) {
-                                                preview.src = e.target.result;
-                                                preview.classList.add('preview-img');
-                                            }
-                                            reader.readAsDataURL(file);
-                                        } else {
-                                            preview.src = "{{ asset('admin/assets/img/icons/upload.svg') }}";
-                                            preview.classList.remove('preview-img');
-                                        }
-                                    });
-                                }
-
-                                // Initialize the preview handler for the sub category image
-                                handleImagePreview('image-input-bg', 'image-preview-bg');
-                            });
-                        </script>
-
-                        <style>
-                            .default-img {
-                                width: auto;
-                                /* Default width for the upload.svg icon */
-                            }
-
-                            .preview-img {
-                                width: 100px;
-                                /* Width for the preview image */
-                                height: 100px;
-                                /* Height for the preview image */
-                                object-fit: cover;
-                                /* Ensure the image fits within the dimensions */
-                            }
-                        </style>
 
                         <button type="submit" class="btn btn-primary">Save</button>
                     </form>
@@ -276,41 +241,39 @@
                         <div class="form-group">
                             <label for="price">Price(INR)</label>
                             <input type="text" class="form-control" id="edit-price" name="price"
-                                placeholder="Enter Ammount" value="{{ old('price') }}">
+                                placeholder="Enter Ammount" value="{{ old('price', $subcategory->total_price ?? '') }}">
                         </div>
 
                         <div class="form-group">
                             <label for="price">Discount(%)</label>
                             <input type="text" class="form-control" id="edit-discount" name="discount"
-                                placeholder="Enter Discount percentage" value="{{ old('discount') }}">
+                                placeholder="Enter Discount percentage"
+                                value="{{ old('discount', $subcategory->discount ?? '') }}">
                         </div>
 
                         <div class="form-group">
                             <label for="final-price">Final Price (INR)</label>
                             <input type="text" class="form-control" id="edit-final-price" name="edit_final_price"
-                                value="{{ old('edit_final_price') }}" readonly disabled>
+                                value="{{ old('edit_final_price', $subcategory->edit_final_price ?? '') }}" readonly
+                                disabled>
                         </div>
+
+
                         <div class="mb-3">
                             <label class="form-label">Sub Category Image</label>
                             <div class="form-uploads">
-                                <div class="form-uploads-path" style="position: relative; text-align: center;">
-
-                                    <div id="edit-image-preview-container"
-                                        style="border: 2px dashed #ccc; border-radius: 5px; padding: 10px; display: inline-block; width: 150px; height: 150px; overflow: hidden; position: relative;">
-                                        <img id="edit-image-preview"
-                                            src="{{ isset($subcategory->image) ? Storage::url('assets/subcategory/' . $subcategory->image) : asset('admin/assets/img/icons/upload.svg') }}"
-                                            alt="Preview"
-                                            style="width: 100%; height: 100%; object-fit: cover; display: block;">
+                                <div class="form-uploads-path">
+                                    <img id="icon-preview" src="{{ isset($subcategory->image) ? Storage::url('assets/subcategory/' . $subcategory->image) : asset('admin/assets/img/icons/upload.svg') }}"
+                                        alt="img" width="100px" height="100px">
+                                    <div class="file-browse">
+                                        <h6>Drag & drop image or </h6>
+                                        <div class="file-browse-path">
+                                            <input type="file" id="editIcon" name="icon"
+                                                accept="image/jpeg, image/png">
+                                            <a href="javascript:void(0);"> Browse</a>
+                                        </div>
                                     </div>
-
-                                    <div class="file-browse" style="margin-top: 10px;">
-                                        <h6 style="margin: 0;">Drag & drop image or</h6>
-                                        <input type="file" id="edit-image-upload" name="image"
-                                            accept="image/jpeg, image/png" style="display: none;">
-                                        <a href="javascript:void(0);" id="edit-browse-btn"
-                                            style="color: #007bff; text-decoration: underline; cursor: pointer;">Browse</a>
-                                        <h5 style="margin-top: 10px;">Supported formats: JPEG, PNG</h5>
-                                    </div>
+                                    <h5>Supported formats: JPEG, PNG</h5>
                                 </div>
                             </div>
                         </div>
@@ -324,31 +287,9 @@
 @endsection
 @section('scripts')
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="{{ asset('admin/assets/js/preview-img.js') }}"></script>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            function handleImagePreview(inputId, previewId) {
-                const input = document.getElementById(inputId);
-                const preview = document.getElementById(previewId);
-
-                input.addEventListener('change', function(event) {
-                    const file = event.target.files[0];
-
-                    if (file) {
-                        const reader = new FileReader();
-                        reader.onload = function(e) {
-                            preview.src = e.target.result;
-                            preview.classList.add('preview-img');
-                        }
-                        reader.readAsDataURL(file);
-                    } else {
-                        preview.src = "{{ asset('admin/assets/img/icons/upload.svg') }}";
-                        preview.classList.remove('preview-img');
-                    }
-                });
-            }
-
-            handleImagePreview('image-input-bg', 'image-preview-bg');
-
             // Function to calculate final price
             function calculateFinalPrice() {
                 const price = parseFloat(document.getElementById('price').value);
@@ -363,66 +304,15 @@
                     document.getElementById('final-price').value = '';
                 }
             }
-
             document.getElementById('price').addEventListener('input', calculateFinalPrice);
             document.getElementById('discount').addEventListener('input', calculateFinalPrice);
 
         });
 
-
-        // Edit Function to calculate final price
-
-        function calculateFinalPrice() {
-            const price = parseFloat(document.getElementById('edit-price').value);
-            const discountPercentage = parseFloat(document.getElementById('edit-discount').value);
-
-            if (!isNaN(price) && !isNaN(discountPercentage)) {
-                const discountAmount = (price * discountPercentage) / 100;
-                const finalPrice = price - discountAmount;
-
-                document.getElementById('edit-final-price').value = finalPrice.toFixed(2);
-            } else {
-                document.getElementById('edit-final-price').value = '';
-            }
-        }
-
-        document.getElementById('edit-price').addEventListener('input', calculateFinalPrice);
-        document.getElementById('edit-discount').addEventListener('input', calculateFinalPrice);
-
-        document.addEventListener('DOMContentLoaded', function() {
-            const editFileInput = document.getElementById('edit-image-upload');
-            const editImagePreview = document.getElementById('edit-image-preview');
-            const editBrowseBtn = document.getElementById('edit-browse-btn');
-
-            // Handle file input change event
-            editFileInput.addEventListener('change', function(event) {
-                const file = event.target.files[0];
-                if (file && (file.type === 'image/jpeg' || file.type === 'image/png')) {
-                    const reader = new FileReader();
-
-                    reader.onload = function(e) {
-                        editImagePreview.src = e.target.result;
-                    };
-
-                    reader.readAsDataURL(file);
-                } else {
-                    alert('Please select a JPEG or PNG image.');
-                    editFileInput.value = ''; // Clear the input
-                }
-            });
-
-            // Trigger file input click when browse button is clicked
-            editBrowseBtn.addEventListener('click', function() {
-                editFileInput.click();
-            });
-        });
-
         function toggleStatus(checkbox, categoryId) {
             var form = checkbox.closest('form');
             var hiddenInput = form.querySelector('.status-input');
-
             hiddenInput.value = checkbox.checked ? 1 : 0;
-
             form.submit();
         }
 
@@ -459,12 +349,6 @@
                 });
             });
         });
-
-        // -----------------------fetch city name--------------------------------------//
-
-        // <script type="text/javascript" src="js/jquery.js">
-
-
 
 
         $(document).ready(function() {

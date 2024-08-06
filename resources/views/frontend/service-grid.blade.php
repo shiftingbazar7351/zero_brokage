@@ -5,7 +5,6 @@
         <img src="{{ asset('assets/img/bg/work-bg-03.png') }}" alt="img" class="bgimg2">
         <img src="{{ asset('assets/img/bg/feature-bg-03.png') }}" alt="img" class="bgimg3">
     </div>
-
     <div class="breadcrumb-bar">
         <div class="container">
             <div class="row">
@@ -21,11 +20,9 @@
             </div>
         </div>
     </div>
-
     <div class="content">
         <div class="container-fluid">
             <div class="row">
-
                 <div class="col-md-3 col-sm-12 theiaStickySidebar">
                     <div class="filter-div">
                         <div class="filter-head">
@@ -203,8 +200,6 @@
                         <button class="btn btn-primary">Search</button>
                     </div>
                 </div>
-
-
                 <div class="col-md-9 col-sm-12">
                     <div class="row sorting-div">
                         <div class="col-lg-4 col-sm-12 ">
@@ -321,7 +316,6 @@
                     </div>
 
                 </div>
-
             </div>
         </div>
     </div>

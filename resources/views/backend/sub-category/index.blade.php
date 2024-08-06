@@ -349,7 +349,6 @@
                 });
             });
         });
-
         // -----------------------fetch city name--------------------------------------//
 
         // <script type="text/javascript" src="js/jquery.js">

@@ -135,9 +135,9 @@ class SubCategoryController extends Controller
          $subcategory->name = $request->input('name');
          $subcategory->category_id = $request->input('category_id');
          $subcategory->city_id = $request->input('city_id');
-         $subcategory->price = $request->input('price');
+         $subcategory->total_price = $request->input('price');
          $subcategory->discount = $request->input('discount');
-         $subcategory->final_price = $finalPrice;
+         $subcategory->discounted_price = $finalPrice;
 
          if ($request->hasFile('images')) {
              if ($subcategory->images) {

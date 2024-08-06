@@ -64,14 +64,11 @@ class SubCategoryController extends Controller
         $subcategory->discounted_price = $finalPrice;
 
 
-        if ($request->hasFile('images')) {
-            $imageNames = [];
-            foreach ($request->file('images') as $image) {
-                $imageName = time() . '_' . $image->getClientOriginalName();
-                $image->storeAs('assets/subcategory', $imageName, 'public');
-                $imageNames[] = $imageName;
-            }
-            $subcategory->image = json_encode($imageNames); // Store image names as a JSON array
+        if ($request->hasFile('image')) {
+            $image = $request->file('image');
+            $imageName = time() . '_' . $image->getClientOriginalName();
+            $image->storeAs('assets/subcategory', $imageName, 'public');
+            $subcategory->image = $imageName;
         }
 
         $subcategory->save();
@@ -139,22 +136,16 @@ class SubCategoryController extends Controller
          $subcategory->discount = $request->input('discount');
          $subcategory->final_price = $finalPrice;
 
-         if ($request->hasFile('images')) {
-             if ($subcategory->images) {
-                 $oldImages = json_decode($subcategory->images, true);
-                 foreach ($oldImages as $oldImage) {
-                     Storage::disk('public')->delete('assets/subcategory/' . $oldImage);
-                 }
-             }
+         if ($request->hasFile('image')) {
+            if ($subcategory->image) {
+                Storage::disk('public')->delete('assets/subcategory/' . $subcategory->image);
+            }
 
-             $imageNames = [];
-             foreach ($request->file('images') as $image) {
-                 $imageName = time() . '_' . $image->getClientOriginalName();
-                 $image->storeAs('assets/subcategory', $imageName, 'public');
-                 $imageNames[] = $imageName;
-             }
-             $subcategory->images = json_encode($imageNames);
-         }
+            $image = $request->file('image');
+            $imageName = time() . '_' . $image->getClientOriginalName();
+            $image->storeAs('assets/subcategory', $imageName, 'public');
+            $subcategory->image = $imageName;
+        }
 
          $subcategory->save();
 

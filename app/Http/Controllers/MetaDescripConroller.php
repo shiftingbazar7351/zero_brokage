@@ -1,7 +1,6 @@
 <?php
 
 namespace App\Http\Controllers;
-use App\Models\Category;
 use App\Models\MetaDescription;
 use Illuminate\Http\Request;
 
@@ -10,6 +9,7 @@ class MetaDescripConroller extends Controller
     public function index()
     {
         $descriptions = MetaDescription::get();
+        $hasDescription = $descriptions->isNotEmpty();
        
         return view('backend.meta.description', compact('descriptions'));
     }
@@ -17,7 +17,7 @@ class MetaDescripConroller extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'desc' => 'required',
+            'desc' => 'required|string|min:10|max:255',
         ]);
 
         $desc = new MetaDescription();
@@ -26,5 +26,19 @@ class MetaDescripConroller extends Controller
         $desc->save();
 
         return redirect()->back()->with('success', 'Description created successfully.');
+    }
+
+    public function update(Request $request, $id)
+    {
+        $request->validate([
+            'desc' => 'required|string|min:10|max:255',
+        ]);
+        // dd( $request->input('desc'));
+        $description = MetaDescription::findOrFail($id);
+        $description->description = $request->input('desc');
+
+        $description->save();
+
+        return redirect()->back()->with('success', 'Description updated successfully.');
     }
 }

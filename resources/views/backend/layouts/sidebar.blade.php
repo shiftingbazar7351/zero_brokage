@@ -53,14 +53,14 @@
                                 <span>Meta Description</span>
                             </a>
                         </li>
-                        <li class="{{ Route::currentRouteName() === 'subcategories.index' ? 'active' : '' }}">
-                            <a href="{{ route('subcategories.index') }}">
+                        <li class="{{ Route::currentRouteName() === 'meta-url.index' ? 'active' : '' }}">
+                            <a href="{{ route('meta-url.index') }}">
                                 <i class="fe fe-file-text"></i>
                                 <span>Meta Url</span>
                             </a>
                         </li>
-                        <li class="{{ Route::currentRouteName() === 'subcategories.index' ? 'active' : '' }}">
-                            <a href="{{ route('subcategories.index') }}">
+                        <li class="{{ Route::currentRouteName() === 'meta-title.index' ? 'active' : '' }}">
+                            <a href="{{ route('meta-title.index') }}">
                                 <i class="fe fe-file-text"></i>
                                 <span>Meta Title</span>
                             </a>

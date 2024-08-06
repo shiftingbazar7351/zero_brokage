@@ -41,21 +41,12 @@
 
                                             <td>
                                                 @if ($subcategory->image)
-                                                    @php
-                                                        $images = json_decode($subcategory->image, true); // Decode the JSON string into an array
-                                                    @endphp
-                                                    @if (is_array($images) && !empty($images))
-                                                        @foreach ($images as $image)
-                                                            <img src="{{ Storage::url('assets/subcategory/' . $image) }}" class="img-thumbnail" width="50px" style="margin-right: 5px;">
-                                                        @endforeach
-                                                    @else
-                                                        No Image
-                                                    @endif
+                                                    <img src="{{ Storage::url('assets/subcategory/' . $subcategory->image) }}"
+                                                        class="img-thumbnail" width="50px">
                                                 @else
                                                     No Image
                                                 @endif
                                             </td>
-
 
                                             <td>
                                                 <div class="active-switch">
@@ -163,14 +154,16 @@
                         </div>
 
                         <div class="mb-3">
-                            <label class="form-label">Sub Category Images</label>
+                            <label class="form-label">Sub Category Image</label>
                             <div class="form-uploads">
                                 <div class="form-uploads-path">
-                                    <img id="image-preview-bg" src="{{ asset('admin/assets/img/icons/upload.svg') }}" alt="img" class="default-img">
+                                    <img id="image-preview-bg" src="{{ asset('admin/assets/img/icons/upload.svg') }}"
+                                        alt="img" class="default-img">
                                     <div class="file-browse">
-                                        <h6>Drag & drop images or </h6>
+                                        <h6>Drag & drop image or </h6>
                                         <div class="file-browse-path">
-                                            <input type="file" name="images[]" id="image-input-bg" accept="image/jpeg, image/png" multiple>
+                                            <input type="file" name="image" id="image-input-bg"
+                                                accept="image/jpeg, image/png">
                                             <a href="javascript:void(0);"> Browse</a>
                                         </div>
                                     </div>
@@ -331,7 +324,7 @@
     </div>
 @endsection
 @section('scripts')
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             function handleImagePreview(inputId, previewId) {
@@ -491,7 +484,7 @@
                                 console.log(cities);
                                 $('#city').find('option').remove(); // Clear existing options
                                 var options =
-                                '<option value="">Select a city</option>'; // Default option
+                                    '<option value="">Select a city</option>'; // Default option
                                 $.each(cities, function(key, city) {
                                     options += "<option value='" + city.id + "'>" + city
                                         .name + "</option>";

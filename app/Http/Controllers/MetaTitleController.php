@@ -9,9 +9,7 @@ class MetaTitleController extends Controller
 {
     public function index()
     {
-        $titles = MetaTitle::get();
-        // $hasDescription = $descriptions->isNotEmpty();
-       
+        $titles = MetaTitle::all();
         return view('backend.meta.title', compact('titles'));
     }
 
@@ -20,12 +18,30 @@ class MetaTitleController extends Controller
         $request->validate([
             'title' => 'required',
         ]);
-        // dd($request->url);
-        $desc = new MetaTitle();
-        $desc->title = $request->title;
 
-        $desc->save();
+        $title = new MetaTitle();
+        $title->title = $request->title;
+        $title->save();
 
-        return redirect()->back()->with('success', 'Url created successfully.');
+        return response()->json(['success' => true, 'message' => 'Meta title added successfully']);
+    }
+
+    public function update(Request $request, MetaTitle $metaTitle)
+    {
+        $request->validate([
+            'title' => 'required',
+        ]);
+
+        $metaTitle->title = $request->title;
+        $metaTitle->save();
+
+        return response()->json(['success' => true, 'message' => 'Meta title updated successfully']);
+    }
+
+    public function destroy(MetaTitle $metaTitle)
+    {
+        $metaTitle->delete();
+
+        return response()->json(['success' => true, 'message' => 'Meta title deleted successfully']);
     }
 }

@@ -29,15 +29,16 @@
             <div class="slider-wrapper">
                 <div class="slider">
                     @foreach ($categories as $cat)
-                        <div class="slide"><img src="{{ asset('storage/assets/icon/' . $cat->icon ?? '') }}"
-                                alt="Quick Booking"><span>{{ $cat->name ?? '' }}</span></div>
+                        <div class="slide">
+                            <img src="{{ asset('storage/assets/icon/' . $cat->icon ?? '') }}"
+                                alt="Quick Booking"><span>{{ $cat->name ?? '' }}</span>
+                            </div>
                     @endforeach
                 </div>
             </div>
             <button class="next" onclick="slideRight()">&#10095;</button>
         </div>
     </div>
-
     <div class="content">
         <div class="container-fluid">
             <div class="row">

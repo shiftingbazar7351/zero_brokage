@@ -19,8 +19,8 @@ class SubCategoryController extends Controller
 
     public function index()
     {
-        $subcategories = SubCategory::all();
-        $categories = Category::all();
+        $subcategories = SubCategory::orderByDesc('created_at')->get();
+        $categories = Category::orderByDesc('created_at')->get();
         $countryId = Country::where('name', 'India')->value('id');
         $states = State::where('country_id', $countryId)->get(['name', 'id']);
         return view('backend.sub-category.index', compact('subcategories', 'categories', 'states'));

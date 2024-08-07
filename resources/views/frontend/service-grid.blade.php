@@ -28,12 +28,10 @@
             <button class="prev" onclick="slideLeft()">&#10094;</button>
             <div class="slider-wrapper">
                 <div class="slider">
-                    @foreach ($category as $cat)
-                    <div class="slide"><img src="{{ asset('storage/assets/category/' . $category->image ?? '') }}"
-                            alt="Quick Booking"><span>Quick
-                            Booking</span></div>
+                    @foreach ($categories as $cat)
+                    <div class="slide"><img src="{{ asset('storage/assets/icon/' . $cat->icon ?? '') }}"
+                            alt="Quick Booking"><span>{{ $cat->name ??'' }}</span></div>
                     @endforeach
-
                 </div>
             </div>
             <button class="next" onclick="slideRight()">&#10095;</button>
@@ -485,7 +483,6 @@
                             </div>
                         </div>
                     </div>
-
                 </div>
             </div>
         </section>

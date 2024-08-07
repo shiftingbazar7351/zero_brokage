@@ -24,7 +24,7 @@ let currentIndex = 1; // Start with the first real slide
 const slideWidth = 300; // Adjust this to match the width of your slides
 const totalSlides = document.querySelectorAll('.slide').length;
 
-function slideLeft() {
+function updateSliderPosition() {
     const slider = document.querySelector('.slider');
 
     currentIndex--;

@@ -255,8 +255,6 @@
                                 value="{{ old('edit_final_price', $subcategory->edit_final_price ?? '') }}" readonly
                                 disabled>
                         </div>
-
-
                         <div class="mb-3">
                             <label class="form-label">Sub Category Image</label>
                             <div class="form-uploads">
@@ -266,7 +264,7 @@
                                     <div class="file-browse">
                                         <h6>Drag & drop image or </h6>
                                         <div class="file-browse-path">
-                                            <input type="file" id="editIcon" name="icon"
+                                            <input type="file" id="editIcon" name="image"
                                                 accept="image/jpeg, image/png">
                                             <a href="javascript:void(0);"> Browse</a>
                                         </div>

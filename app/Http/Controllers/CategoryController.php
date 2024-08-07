@@ -31,7 +31,7 @@ class CategoryController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'name' => 'required',
+            'name' => 'required|unique:categories,name',
             // 'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:5048',
             // 'icon' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:5048', // Validate icon field as an image
         ]);
@@ -90,7 +90,7 @@ class CategoryController extends Controller
     public function update(Request $request, Category $category)
     {
         $request->validate([
-            'name' => 'required|unique:subcategories:name',
+            'name' => 'required|unique:categories,name,' . $category->id,
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:5048',
             'icon' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:5048',
         ]);

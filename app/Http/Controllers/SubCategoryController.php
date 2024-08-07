@@ -32,7 +32,7 @@ class SubCategoryController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'name' => 'required|string|max:255',
+            'name' => 'required|unique:sub_categories,name',
             'state' => 'nullable|exists:states,id',
             'city' => 'nullable|exists:cities,id',
             'total_price' => 'nullable|numeric',
@@ -114,7 +114,7 @@ class SubCategoryController extends Controller
     public function update(Request $request, $id)
     {
         $request->validate([
-            'name' => 'required|string|max:255',
+            'name' => 'required|unique:sub_categories,name,' . $request->id,
             'state_id' => 'nullable|exists:states,id',
             'city_id' => 'nullable|exists:cities,id',
             'price' => 'nullable|numeric',

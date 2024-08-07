@@ -288,10 +288,10 @@
                                             <p><i class="feather-map-pin"></i>Maryland City, USA<span class="rate"><i
                                                         class="fas fa-star filled"></i>4.9</span></p>
                                             <div class="serv-info">
-                                                <h6>&#8377;{{ $subcategory->total_price }}
+                                                <h6>&#8377;{{ $subcategory->discounted_price }}
                                                     @if ($subcategory->discount != null)
                                                         <span
-                                                            class="old-price">&#8377;{{ $subcategory->discounted_price ?? '' }}</span>
+                                                            class="old-price">&#8377;{{ $subcategory->total_price ?? '' }}</span>
                                                     @endif
                                                 </h6>
                                                 <a href="{{ route('booking') }}" class="btn btn-book" id="book-now">Book Now</a>

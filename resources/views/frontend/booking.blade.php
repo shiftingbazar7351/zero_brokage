@@ -1,4 +1,7 @@
 @extends('frontend.layouts.main')
+@section('styles')
+<link rel="stylesheet" href="assets/css/bootstrap-datetimepicker.min.css">
+@endsection
 @section('content')
 <div class="bg-img">
     <img src="assets/img/bg/work-bg-03.png" alt="img" class="bgimg1">
@@ -347,3 +350,8 @@
         </div>
     </div>
 </div>
+<script src="{{ asset('assets/js/bootstrap-datetimepicker.min.js') }}" type="b8ee9809a0c13792276a4346-text/javascript"></script>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src ="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.full.min.js"></script>
+@endsection

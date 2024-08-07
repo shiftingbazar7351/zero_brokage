@@ -163,7 +163,6 @@
                             <input type="text" class="form-control" id="final-price" name="final_price" readonly
                                 disabled>
                         </div>
-
                         <div class="mb-3">
                             <label class="form-label">Sub Category Image</label>
                             <div class="form-uploads">
@@ -173,7 +172,7 @@
                                     <div class="file-browse">
                                         <h6>Drag & drop image or </h6>
                                         <div class="file-browse-path">
-                                            <input type="file" name="icon" id="image-input-icon"
+                                            <input type="file" name="image" id="image-input-icon"
                                                 accept="image/jpeg, image/png">
                                             <a href="javascript:void(0);"> Browse</a>
                                         </div>
@@ -182,7 +181,6 @@
                                 </div>
                             </div>
                         </div>
-
                         <button type="submit" class="btn btn-primary">Save</button>
                     </form>
                 </div>
@@ -234,7 +232,9 @@
                         <div class="form-group">
                             <label for="category">City</label>
                             <select class="form-control" id="editcity" name="city">
-                                <option value="">Select city</option>
+                                @foreach ($states as $state)
+                                <option value="{{ $state->id }}">{{ ucwords($state->name) }}</option>
+                            @endforeach
                             </select>
                         </div>
 
@@ -257,8 +257,6 @@
                                 value="{{ old('edit_final_price', $subcategory->edit_final_price ?? '') }}" readonly
                                 disabled>
                         </div>
-
-
                         <div class="mb-3">
                             <label class="form-label">Sub Category Image</label>
                             <div class="form-uploads">
@@ -268,7 +266,7 @@
                                     <div class="file-browse">
                                         <h6>Drag & drop image or </h6>
                                         <div class="file-browse-path">
-                                            <input type="file" id="editIcon" name="icon"
+                                            <input type="file" id="editIcon" name="image"
                                                 accept="image/jpeg, image/png">
                                             <a href="javascript:void(0);"> Browse</a>
                                         </div>
@@ -382,6 +380,39 @@
                 } else {
                     $('#city').find('option').remove(); // Clear options if no state is selected
                     $('#city').append('<option value="">Select city</option>');
+                }
+            });
+        });
+
+        $(document).ready(function() {
+            $('#editstate').on('change', function() {
+                var stateId = $(this).val();
+                if (stateId) {
+                    $.ajax({
+                        url: '/fetch-city/' + stateId, // Adjusted URL based on route
+                        type: 'POST',
+                        data: {
+                            _token: '{{ csrf_token() }}' // Include CSRF token for security
+                        },
+                        success: function(response) {
+                            if (response.status === 1) {
+                                var cities = response.data;
+                                console.log(cities);
+                                $('#city').find('option').remove(); // Clear existing options
+                                var options =
+                                    '<option value="">Select city</option>'; // Default option
+                                $.each(cities, function(key, city) {
+                                    options += "<option value='" + city.id + "'>" + city
+                                        .name + "</option>";
+                                        // alert(response.stateId);
+                                });
+                                $('#editcity').append(options);
+                            }
+                        }
+                    });
+                } else {
+                    $('#editcity').find('option').remove(); // Clear options if no state is selected
+                    $('#editcity').append('<option value="">Select city</option>');
                 }
             });
         });

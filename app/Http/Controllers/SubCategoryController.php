@@ -21,11 +21,8 @@ class SubCategoryController extends Controller
     {
         $subcategories = SubCategory::all();
         $categories = Category::all();
-
         $countryId = Country::where('name', 'India')->value('id');
-
         $states = State::where('country_id', $countryId)->get(['name', 'id']);
-
         return view('backend.sub-category.index', compact('subcategories', 'categories', 'states'));
     }
 

@@ -368,11 +368,7 @@
                                             <i class="feather-heart"></i>
                                         </a>
                                     </div>
-                                    <div class="item-info">
-                                        <a href="providers.html"><span class="item-img"><img
-                                                    src="{{ asset('assets/img/profiles/avatar-01.jpg') }}" class="avatar"
-                                                    alt="User"></span></a>
-                                    </div>
+
                                 </div>
                                 <div class="service-content">
                                     <h3 class="title">
@@ -398,11 +394,7 @@
                                             <i class="feather-heart"></i>
                                         </a>
                                     </div>
-                                    <div class="item-info">
-                                        <a href="providers.html"><span class="item-img"><img
-                                                    src="{{ asset('assets/img/profiles/avatar-02.jpg') }}" class="avatar"
-                                                    alt="User"></span></a>
-                                    </div>
+
                                 </div>
                                 <div class="service-content">
                                     <h3 class="title">
@@ -428,11 +420,7 @@
                                             <i class="feather-heart"></i>
                                         </a>
                                     </div>
-                                    <div class="item-info">
-                                        <a href="providers.html"><span class="item-img"><img
-                                                    src="{{ asset('assets/img/profiles/avatar-03.jpg') }}" class="avatar"
-                                                    alt="User"></span></a>
-                                    </div>
+                                  
                                 </div>
                                 <div class="service-content">
                                     <h3 class="title">

@@ -9,7 +9,6 @@
     </style>
 @endsection
 @section('content')
-
     <div class="page-wrapper page-settings">
         <div class="content">
             <div class="content-page-header content-page-headersplit mb-0">
@@ -176,7 +175,7 @@
                     </button>
                 </div>
                 <div class="modal-body pt-0">
-                    <form id="editCategoryForm" method="POST" enctype="multipart/form-data">
+                    <form id="editCategoryForm" action="{{ route('categories.update', ['category' => $category->id]) }}" method="POST" enctype="multipart/form-data">
                         @csrf
                         @method('PUT')
                         <input type="hidden" id="editCategoryId" name="category_id">

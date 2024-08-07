@@ -30,7 +30,7 @@ Route::get('/', [FrontendController::class, 'home'])->name('home');
 Route::get('/service-grid/{slug}', [FrontendController::class, 'subCategory'])->name('service.grid');
 // for backend
 Route::resource('categories', CategoryController::class);
-Route::get('/categories-details', [CategoryController::class, 'service_details'])->name('details');
+Route::get('/categories-details', [CategoryController::class, 'service_details'])->name('details'); 
 
 Route::resource('subcategories', SubCategoryController::class);
 Route::post('/fetch-subcategory/{id}', [SubCategoryController::class, 'fetchsubcategory']);

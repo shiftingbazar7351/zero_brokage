@@ -31,6 +31,7 @@ Route::get('/service-grid/{slug}', [FrontendController::class, 'subCategory'])->
 // for backend
 Route::resource('categories', CategoryController::class);
 Route::get('/categories-details', [CategoryController::class, 'service_details'])->name('details');
+
 Route::resource('subcategories', SubCategoryController::class);
 Route::post('/fetch-subcategory/{id}', [SubCategoryController::class, 'fetchsubcategory']);
 Route::post('/fetch-menus/{id}', [SubCategoryController::class, 'fetchmenu']);

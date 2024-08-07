@@ -19,9 +19,7 @@
                     <ul>
                         <li>
                             <button type="button" class="btn btn-primary mb-3" data-toggle="modal"
-                                data-target="#addCategoryModal">
-                                Add Sub-Category
-                            </button>
+                                data-target="#addCategoryModal">Add Sub-Category</button>
                         </li>
                     </ul>
                 </div>

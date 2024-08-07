@@ -205,12 +205,13 @@ class SubCategoryController extends Controller
 
         return response()->json(['success' => false, 'message' => 'Item not found.']);
     }
-    public function editFetchCity($stateId)
+    public function editFetchCity($cityId)
     {
-        $cities = City::where('state_id', $stateId)->get()->map(function ($city) {
-            $city->name = ucwords($city->name);
-            return $city;
-        });
+        $cities = City::where('id',$cityId)->first();
+        // $cities = City::where('state_id', $stateId)->get()->map(function ($city) {
+        //     $city->name = ucwords($city->name);
+        //     return $city;
+        // });
         if ($cities->isEmpty()) {
             return response()->json(['status' => 0, 'message' => 'No cities found']);
         }

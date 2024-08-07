@@ -36,7 +36,7 @@ Route::resource('subcategories', SubCategoryController::class);
 Route::post('/fetch-subcategory/{id}', [SubCategoryController::class, 'fetchsubcategory']);
 Route::post('/fetch-menus/{id}', [SubCategoryController::class, 'fetchmenu']);
 Route::post('/fetch-city/{stateId}', [SubCategoryController::class, 'fetchCity']);
-Route::post('/edit-fetch-city/{stateId}', [SubCategoryController::class, 'editFetchCity']);
+Route::post('/edit-fetch-city/{cityId}', [SubCategoryController::class, 'editFetchCity']);
 
 
 Route::post('/update-subcategorystatus', [SubCategoryController::class, 'updateStatus'])->name('update.subcategorystatus');

@@ -91,12 +91,20 @@ class SubCategoryController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit($id)
     {
-        $subcategories = SubCategory::findOrFail($id);
-        $category = Category::get();
-        return view('backend.sub-category.edit', compact('subcategories', 'category'));
+        $record = SubCategory::find($id);
+        $states = State::all();
+        $selectedCity = $record->city_id;
+        $selectedState = City::where('id', $selectedCity)->pluck('state_id')->first();
+        $cities = City::where('state_id', $selectedState)->get()->map(function ($city) {
+            $city->name = ucwords($city->name);
+            return $city;
+        });
+
+        return view('backend.sub-category.index', compact('record', 'states', 'selectedState', 'selectedCity', 'cities'));
     }
+
 
 
     /**

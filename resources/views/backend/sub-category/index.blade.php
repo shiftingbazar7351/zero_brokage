@@ -122,7 +122,7 @@
                         <div class="form-group">
                             <label for="category">Category</label>
                             <select class="form-control" id="category" name="category" required>
-                                <option value="">Select a category</option>
+                                <option value="">Select category</option>
                                 @foreach ($categories as $category)
                                     <option value="{{ $category->id }}">{{ $category->name }}</option>
                                 @endforeach
@@ -132,7 +132,7 @@
                         <div class="form-group">
                             <label for="category">State</label>
                             <select class="form-control" id="state" name="state">
-                                <option value="">Select a state</option>
+                                <option value="">Select state</option>
                                 @foreach ($states as $state)
                                     <option value="{{ $state->id }}">{{ ucwords($state->name) }}</option>
                                 @endforeach
@@ -142,7 +142,7 @@
                         <div class="form-group">
                             <label for="category">City</label>
                             <select class="form-control" id="city" name="city">
-                                <option value="">Select a category</option>
+                                <option value="">Select City</option>
                             </select>
                         </div>
 
@@ -213,7 +213,7 @@
                         <div class="form-group">
                             <label for="edit-category">Category</label>
                             <select class="form-control" id="edit-category" name="category" required>
-                                <option value="">Select a category</option>
+                                <option value="">Select category</option>
                                 @foreach ($categories as $category)
                                     <option value="{{ $category->id }}"
                                         {{ ($subcategory->category_id ?? '') == $category->id ? 'selected' : '' }}>
@@ -370,7 +370,7 @@
                                 console.log(cities);
                                 $('#city').find('option').remove(); // Clear existing options
                                 var options =
-                                    '<option value="">Select a city</option>'; // Default option
+                                    '<option value="">Select city</option>'; // Default option
                                 $.each(cities, function(key, city) {
                                     options += "<option value='" + city.id + "'>" + city
                                         .name + "</option>";
@@ -381,7 +381,7 @@
                     });
                 } else {
                     $('#city').find('option').remove(); // Clear options if no state is selected
-                    $('#city').append('<option value="">Select a city</option>');
+                    $('#city').append('<option value="">Select city</option>');
                 }
             });
         });

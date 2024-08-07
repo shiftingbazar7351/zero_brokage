@@ -381,5 +381,37 @@
                 }
             });
         });
+
+        $(document).ready(function() {
+            $('#editstate').on('change', function() {
+                var stateId = $(this).val();
+                if (stateId) {
+                    $.ajax({
+                        url: '/edit-fetch-city/' + stateId, // Adjusted URL based on route
+                        type: 'POST',
+                        data: {
+                            _token: '{{ csrf_token() }}' // Include CSRF token for security
+                        },
+                        success: function(response) {
+                            if (response.status === 1) {
+                                var cities = response.data;
+                                console.log(cities);
+                                $('#city').find('option').remove(); // Clear existing options
+                                var options =
+                                    '<option value="">Select city</option>'; // Default option
+                                $.each(cities, function(key, city) {
+                                    options += "<option value='" + city.id + "'>" + city
+                                        .name + "</option>";
+                                });
+                                $('#editcity').append(options);
+                            }
+                        }
+                    });
+                } else {
+                    $('#editcity').find('option').remove(); // Clear options if no state is selected
+                    $('#editcity').append('<option value="">Select city</option>');
+                }
+            });
+        });
     </script>
 @endsection

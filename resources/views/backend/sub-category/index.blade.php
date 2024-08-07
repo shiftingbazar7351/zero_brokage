@@ -19,7 +19,9 @@
                     <ul>
                         <li>
                             <button type="button" class="btn btn-primary mb-3" data-toggle="modal"
-                                data-target="#addCategoryModal">Add Sub-Category</button>
+                                data-target="#addCategoryModal">
+                                Add Sub-Category
+                            </button>
                         </li>
                     </ul>
                 </div>
@@ -385,7 +387,7 @@
                 var stateId = $(this).val();
                 if (stateId) {
                     $.ajax({
-                        url: '/edit-fetch-city/' + stateId, // Adjusted URL based on route
+                        url: '/fetch-city/' + stateId, // Adjusted URL based on route
                         type: 'POST',
                         data: {
                             _token: '{{ csrf_token() }}' // Include CSRF token for security
@@ -400,6 +402,7 @@
                                 $.each(cities, function(key, city) {
                                     options += "<option value='" + city.id + "'>" + city
                                         .name + "</option>";
+                                        // alert(response.stateId);
                                 });
                                 $('#editcity').append(options);
                             }

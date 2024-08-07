@@ -231,12 +231,14 @@
                         <div class="form-group">
                             <label for="category">City</label>
                             <select class="form-control" id="editcity" name="city">
-                                @foreach ($states as $state)
-                                <option value="{{ $state->id }}">{{ ucwords($state->name) }}</option>
-                            @endforeach
+                                @foreach ($cities as $city)
+                                    <option value="{{ $city->id }}" {{ $city->id == $subcategory->city_id ? 'selected' : '' }}>
+                                        {{ ucwords($city->name) }}
+                                    </option>
+                                @endforeach
                             </select>
                         </div>
-
+                        
                         <div class="form-group">
                             <label for="price">Price(INR)</label>
                             <input type="text" class="form-control" id="edit-price" name="price"
@@ -260,7 +262,8 @@
                             <label class="form-label">Sub Category Image</label>
                             <div class="form-uploads">
                                 <div class="form-uploads-path">
-                                    <img id="icon-preview" src="{{ isset($subcategory->image) ? Storage::url('assets/subcategory/' . $subcategory->image) : asset('admin/assets/img/icons/upload.svg') }}"
+                                    <img id="icon-preview"
+                                        src="{{ isset($subcategory->image) ? Storage::url('assets/subcategory/' . $subcategory->image) : asset('admin/assets/img/icons/upload.svg') }}"
                                         alt="img" width="100px" height="100px">
                                     <div class="file-browse">
                                         <h6>Drag & drop image or </h6>
@@ -403,7 +406,7 @@
                                 $.each(cities, function(key, city) {
                                     options += "<option value='" + city.id + "'>" + city
                                         .name + "</option>";
-                                        // alert(response.stateId);
+                                    // alert(response.stateId);
                                 });
                                 $('#editcity').append(options);
                             }

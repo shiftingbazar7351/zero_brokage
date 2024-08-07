@@ -227,12 +227,6 @@
                         </ul>
                     </li>
                     <li><a href="admin/index.html">Admin</a></li>
-                    <!-- <li class="login-link">
-                        <a href="choose-signup.html">Register</a>
-                    </li>
-                    <li class="login-link">
-                        <a href="login.html">Login</a>
-                    </li> -->
                 </ul>
             </div>
            @include('frontend.layouts.login-popup')

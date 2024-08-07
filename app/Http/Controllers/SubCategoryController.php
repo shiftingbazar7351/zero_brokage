@@ -20,11 +20,11 @@ class SubCategoryController extends Controller
     public function index()
     {
         $subcategories = SubCategory::orderByDesc('created_at')->get();
-        $subcategory = SubCategory::orderByDesc('created_at')->first();
+        // $subcategory = SubCategory::orderByDesc('created_at')->first();
         $categories = Category::orderByDesc('created_at')->get();
         $countryId = Country::where('name', 'India')->value('id');
         $states = State::where('country_id', $countryId)->get(['name', 'id']);
-        $cities = CIty::where('id',$subcategory->city_id)->get();
+        // $cities = CIty::where('id',$subcategory->city_id)->get();
         return view('backend.sub-category.index', compact('subcategories', 'categories', 'states'));
     }
 

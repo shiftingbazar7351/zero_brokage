@@ -28,11 +28,11 @@
             <button class="prev" onclick="slideLeft()">&#10094;</button>
             <div class="slider-wrapper">
                 <div class="slider">
-                    {{-- @foreach ($category as $cat) --}}
+                    @foreach ($category as $cat)
                     <div class="slide"><img src="{{ asset('storage/assets/category/' . $category->image ?? '') }}"
                             alt="Quick Booking"><span>Quick
                             Booking</span></div>
-                    {{-- @endforeach --}}
+                    @endforeach
 
                 </div>
             </div>

@@ -24,9 +24,10 @@
 }
 
 .slide {
-    max-width: 300px;
+    width: 200px;
     text-align: center;
     margin: 0 5px;
+    padding: 10px;
     transition: transform 0.3s ease;
 }
 .slide:hover {
@@ -36,6 +37,7 @@
 .slide img {
     width: 100%;
     height: auto;
+    object-fit: contain;
     border-radius: 8px;
 }
 

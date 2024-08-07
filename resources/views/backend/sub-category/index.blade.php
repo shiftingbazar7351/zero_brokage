@@ -163,7 +163,6 @@
                             <input type="text" class="form-control" id="final-price" name="final_price" readonly
                                 disabled>
                         </div>
-
                         <div class="mb-3">
                             <label class="form-label">Sub Category Image</label>
                             <div class="form-uploads">
@@ -173,7 +172,7 @@
                                     <div class="file-browse">
                                         <h6>Drag & drop image or </h6>
                                         <div class="file-browse-path">
-                                            <input type="file" name="icon" id="image-input-icon"
+                                            <input type="file" name="image" id="image-input-icon"
                                                 accept="image/jpeg, image/png">
                                             <a href="javascript:void(0);"> Browse</a>
                                         </div>
@@ -182,7 +181,6 @@
                                 </div>
                             </div>
                         </div>
-
                         <button type="submit" class="btn btn-primary">Save</button>
                     </form>
                 </div>

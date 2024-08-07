@@ -232,7 +232,9 @@
                         <div class="form-group">
                             <label for="category">City</label>
                             <select class="form-control" id="editcity" name="city">
-                                <option value="">Select city</option>
+                                @foreach ($states as $state)
+                                <option value="{{ $state->id }}">{{ ucwords($state->name) }}</option>
+                            @endforeach
                             </select>
                         </div>
 

@@ -294,9 +294,10 @@
                                                             class="old-price">&#8377;{{ $subcategory->discounted_price ?? '' }}</span>
                                                     @endif
                                                 </h6>
-                                                <a href="{{ route('booking') }}" class="btn btn-book">Book Now</a>
+                                                <a href="{{ route('booking') }}" class="btn btn-book" id="book-now">Book Now</a>
 
                                             </div>
+
                                             <div>
                                                 <a href="{{ route('service-details') }}" class="btn btn-book"
                                                     style="width: 100%; margin-top: 2%;">View details</a>
@@ -382,6 +383,7 @@
                                     </div>
                                 </div>
                             </div>
+                            
                             <div class="service-widget aos" data-aos="fade-up">
                                 <div class="service-img p-2">
                                     <a href="service-details.html">
@@ -420,7 +422,7 @@
                                             <i class="feather-heart"></i>
                                         </a>
                                     </div>
-                                  
+
                                 </div>
                                 <div class="service-content">
                                     <h3 class="title">

@@ -105,6 +105,13 @@
                         </div>
                     </div>
                 </div>
+
+                <div class="row">
+                    <div class="location mb-1">
+                        <button type="button" class="btn btn-info">Get your Location <img src="assets/img/icons/my_location.svg" class="ms-3 text-danger" alt=""></button>
+                    </div>
+                </div>
+
                 <div class="book-form">
                     <div class="row">
                         <div class="col-md-4">
@@ -139,6 +146,8 @@
                         </div>
                     </div>
                 </div>
+
+            </div>
 
 
                 <div class="row">

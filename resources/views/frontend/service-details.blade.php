@@ -353,106 +353,7 @@
                             Reviews</a>
                     </div>
                 </div>
-                <div class="row align-items-center">
-                    <div class="col-md-6">
-                        <div class="service-wrap">
-                            <h5>Related Services</h5>
-                        </div>
-                    </div>
-                    <div class="col-md-6 text-md-end">
-                        <div class="owl-nav mynav"></div>
-                    </div>
-                </div>
-                <div class="owl-carousel related-slider">
-                    <div class="service-widget mb-0">
-                        <div class="service-img">
-                            <a href="service-details.html">
-                                <img class="img-fluid serv-img" alt="Service Image"
-                                    src="assets/img/services/service-01.jpg">
-                            </a>
-                            <div class="fav-item">
-                                <a href="categories.html"><span class="item-cat">Cleaning</span></a>
-                                <a href="javascript:void(0)" class="fav-icon">
-                                    <i class="feather-heart"></i>
-                                </a>
-                            </div>
-                            <div class="item-info">
-                                <a href="providers.html"><span class="item-img"><img
-                                            src="assets/img/profiles/avatar-04.jpg" class="avatar"
-                                            alt="User"></span></a>
-                            </div>
-                        </div>
-                        <div class="service-content">
-                            <h3 class="title">
-                                <a href="service-details.html">Electric Panel Repairing Service</a>
-                            </h3>
-                            <p><i class="feather-map-pin"></i>Montana, USA<span class="rate"><i
-                                        class="fas fa-star filled"></i>4.9</span></p>
-                            <div class="serv-info">
-                                <h6>$25.00<span class="old-price">$35.00</span></h6>
-                                <a href="booking.html" class="btn btn-book">Book Now</a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="service-widget mb-0">
-                        <div class="service-img">
-                            <a href="service-details.html">
-                                <img class="img-fluid serv-img" alt="Service Image"
-                                    src="assets/img/services/service-02.jpg">
-                            </a>
-                            <div class="fav-item">
-                                <a href="categories.html"><span class="item-cat">Construction</span></a>
-                                <a href="javascript:void(0)" class="fav-icon">
-                                    <i class="feather-heart"></i>
-                                </a>
-                            </div>
-                            <div class="item-info">
-                                <a href="providers.html"><span class="item-img"><img
-                                            src="assets/img/profiles/avatar-03.jpg" class="avatar"
-                                            alt="User"></span></a>
-                            </div>
-                        </div>
-                        <div class="service-content">
-                            <h3 class="title">
-                                <a href="service-details.html">Toughened Glass Fitting Services</a>
-                            </h3>
-                            <p><i class="feather-map-pin"></i>Montana, USA</p>
-                            <div class="serv-info">
-                                <h6>$45.00</h6>
-                                <a href="booking.html" class="btn btn-book">Book Now</a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="service-widget mb-0">
-                        <div class="service-img">
-                            <a href="service-details.html">
-                                <img class="img-fluid serv-img" alt="Service Image"
-                                    src="assets/img/services/service-03.jpg">
-                            </a>
-                            <div class="fav-item">
-                                <a href="categories.html"><span class="item-cat">Carpentry</span></a>
-                                <a href="javascript:void(0)" class="fav-icon">
-                                    <i class="feather-heart"></i>
-                                </a>
-                            </div>
-                            <div class="item-info">
-                                <a href="providers.html"><span class="item-img"><img
-                                            src="assets/img/profiles/avatar-02.jpg" class="avatar"
-                                            alt="User"></span></a>
-                            </div>
-                        </div>
-                        <div class="service-content">
-                            <h3 class="title">
-                                <a href="service-details.html">Wooden Carpentry Work</a>
-                            </h3>
-                            <p><i class="feather-map-pin"></i>Montana, USA</p>
-                            <div class="serv-info">
-                                <h6>$45.00</h6>
-                                <a href="booking.html" class="btn btn-book">Book Now</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+
             </div>
 
             <div class="col-lg-4 theiaStickySidebar">
@@ -596,6 +497,135 @@
 
             </div>
         </div>
+        <section class="service-section">
+            <div class="container">
+                <div class="section-heading">
+                    <div class="row align-items-center">
+                        <div class="col-md-6 aos" data-aos="fade-up">
+                            <h2>Featured Services</h2>
+                            <p>Explore the greates our services. You won’t be disappointed</p>
+                        </div>
+                        <div class="col-md-6 text-md-end aos" data-aos="fade-up">
+                            <div class="owl-nav mynav"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="owl-carousel service-slider">
+                            <div class="service-widget aos" data-aos="fade-up">
+                                <div class="service-img p-2">
+                                    <a href="service-details.html">
+                                        <img class="img-fluid serv-img" alt="Service Image"
+                                            src="{{ asset('assets/img/services/service-01.jpg') }}">
+                                    </a>
+                                    <div class="fav-item">
+                                        <a href="categories.html"><span class="item-cat">Cleaning</span></a>
+                                        <a href="javascript:void(0)" class="fav-icon">
+                                            <i class="feather-heart"></i>
+                                        </a>
+                                    </div>
+
+                                </div>
+                                <div class="service-content">
+                                    <h3 class="title">
+                                        <a href="service-details.html">Electric Panel Repairing Service</a>
+                                    </h3>
+                                    <p><i class="feather-map-pin"></i>New Jersey, USA<span class="rate"><i
+                                                class="fas fa-star filled"></i>4.9</span></p>
+                                    <div class="serv-info">
+                                        <h6>$25.00<span class="old-price">$35.00</span></h6>
+                                        <a href="service-details.html" class="btn btn-book">Book Now</a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="service-widget aos" data-aos="fade-up">
+                                <div class="service-img p-2">
+                                    <a href="service-details.html">
+                                        <img class="img-fluid serv-img" alt="Service Image"
+                                            src="{{ asset('assets/img/services/service-02.jpg') }}">
+                                    </a>
+                                    <div class="fav-item">
+                                        <a href="categories.html"><span class="item-cat">Construction</span></a>
+                                        <a href="javascript:void(0)" class="fav-icon">
+                                            <i class="feather-heart"></i>
+                                        </a>
+                                    </div>
+
+                                </div>
+                                <div class="service-content">
+                                    <h3 class="title">
+                                        <a href="service-details.html">Toughened Glass Fitting Services</a>
+                                    </h3>
+                                    <p><i class="feather-map-pin"></i>Montana, USA<span class="rate"><i
+                                                class="fas fa-star filled"></i>4.9</span></p>
+                                    <div class="serv-info">
+                                        <h6>$45.00</h6>
+                                        <a href="service-details.html" class="btn btn-book">Book Now</a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="service-widget aos" data-aos="fade-up">
+                                <div class="service-img p-2">
+                                    <a href="service-details.html">
+                                        <img class="img-fluid serv-img" alt="Service Image"
+                                            src="{{ asset('assets/img/services/service-03.jpg') }}">
+                                    </a>
+                                    <div class="fav-item">
+                                        <a href="categories.html"><span class="item-cat">Carpentry</span></a>
+                                        <a href="javascript:void(0)" class="fav-icon">
+                                            <i class="feather-heart"></i>
+                                        </a>
+                                    </div>
+
+                                </div>
+                                <div class="service-content">
+                                    <h3 class="title">
+                                        <a href="service-details.html">Wooden Carpentry Work</a>
+                                    </h3>
+                                    <p><i class="feather-map-pin"></i>Montana, USA<span class="rate"><i
+                                                class="fas fa-star filled"></i>4.9</span></p>
+                                    <div class="serv-info">
+                                        <h6>$45.00</h6>
+                                        <a href="service-details.html" class="btn btn-book">Book Now</a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="service-widget aos" data-aos="fade-up">
+                                <div class="service-img p-2">
+                                    <a href="service-details.html">
+                                        <img class="img-fluid serv-img" alt="Service Image"
+                                            src="{{ asset('assets/img/services/service-11.jpg') }}">
+                                    </a>
+                                    <div class="fav-item">
+                                        <a href="categories.html"><span class="item-cat">Construction</span></a>
+                                        <a href="javascript:void(0)" class="fav-icon">
+                                            <i class="feather-heart"></i>
+                                        </a>
+                                    </div>
+                                    <div class="item-info">
+                                        <a href="providers.html"><span class="item-img"><img
+                                                    src="{{ asset('assets/img/profiles/avatar-04.jpg') }}" class="avatar"
+                                                    alt="User"></span></a>
+                                    </div>
+                                </div>
+                                <div class="service-content">
+                                    <h3 class="title">
+                                        <a href="service-details.html">Plumbing Services</a>
+                                    </h3>
+                                    <p><i class="feather-map-pin"></i>Georgia, USA<span class="rate"><i
+                                                class="fas fa-star filled"></i>4.9</span></p>
+                                    <div class="serv-info">
+                                        <h6>$45.00</h6>
+                                        <a href="service-details.html" class="btn btn-book">Book Now</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
     </div>
 </div>
 @endsection

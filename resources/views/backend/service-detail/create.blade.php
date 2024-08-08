@@ -13,24 +13,28 @@
     <div class="page-wrapper page-settings">
         <div class="content">
             <div class="row">
-                <div class="col-12">
-                    <h1> Paragraph</h1>
+                {{-- <div class="col-12"> --}}
+                    {{-- <h1> Paragraph</h1> --}}
+                    <div class="mb-3">
+                        <label class="form-label">Category Name</label>
+                        <input type="text" class="form-control" id="editName" name="name">
+                    </div>
                     <div class="form-group">
-                        <label for="description" class="col-form-label">description <span class="text-danger">*</span></label>
+                        <label for="description" class="col-form-label">description <span
+                                class="text-danger">*</span></label>
                         <textarea class="form-control" id="description" name="description">{{ old('description') }}</textarea>
                         @error('description')
                             <span class="text-danger">{{ $message }}</span>
                         @enderror
                     </div>
 
-                </div>
+                {{-- </div> --}}
             </div>
         </div>
     </div>
 @endsection
 
 @section('scripts')
-    {{-- <script src="{{ asset('admin/laravel-filemanager/js/stand-alone-button.js') }}"></script> --}}
     <script src="{{ asset('admin/summernote/summernote.min.js') }}"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.1/js/bootstrap-select.min.js"></script>
 
@@ -44,7 +48,3 @@
         });
     </script>
 @endsection
-
-{{-- @section('sc') --}}
-
-{{-- @endsection --}}

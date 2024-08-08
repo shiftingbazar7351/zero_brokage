@@ -41,10 +41,10 @@
                     </a>
                 </li>
 
-                <li class="{{ Route::currentRouteName() === 'editor' ? 'active' : '' }}">
-                    <a href="{{ route('editor') }}">
+                <li class="{{ Route::currentRouteName() === 'service-detail.index' ? 'active' : '' }}">
+                    <a href="{{ route('service-detail.index') }}">
                         <i class="fe fe-file-text"></i>
-                        <span>Editor</span>
+                        <span>Service details description</span>
                     </a>
                 </li>
 

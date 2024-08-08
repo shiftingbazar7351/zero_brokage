@@ -1,18 +1,15 @@
 <?php
 
+use App\Http\Controllers\AdminController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\FrontendController;
+use App\Http\Controllers\MetaDescripConroller;
+use App\Http\Controllers\MetaTitleController;
+use App\Http\Controllers\MetaUrlController;
+use App\Http\Controllers\ServiceDetailController;
+use App\Http\Controllers\SubCategoryController;
 use Illuminate\Support\Facades\Route;
 
-use App\Http\Controllers\AdminController;
-use App\Http\Controllers\SubCategoryController;
-use App\Http\Controllers\MenuController;
-use App\Http\Controllers\SubmenuController;
-use App\Http\Controllers\FooterController;
-use App\Http\Controllers\UserController;
-use App\Http\Controllers\MetaDescripConroller;
-use App\Http\Controllers\MetaUrlController;
-use App\Http\Controllers\MetaTitleController;
 
 
 // frontend
@@ -51,7 +48,8 @@ Route::post('/update-subcategorystatus', [SubCategoryController::class, 'updateS
 Route::resource('/meta', MetaDescripConroller::class);
 Route::resource('/meta-url', MetaUrlController::class);
 Route::resource('/meta-title', MetaTitleController::class);
-Route::get('/editor', [AdminController::class, 'editor'])->name('editor');
+Route::resource('/service-detail', ServiceDetailController::class);
+// Route::get('/editor', [AdminController::class, 'editor'])->name('editor');
 
 
 // Route::post('/services-submenu', [SubmenuController::class, 'store'])->name('submenu.store');

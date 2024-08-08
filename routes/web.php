@@ -13,7 +13,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\MetaDescripConroller;
 use App\Http\Controllers\MetaUrlController;
 use App\Http\Controllers\MetaTitleController;
-
+use App\Http\Controllers\EnquiryController;
 
 // frontend
 // These routes are handled by the FrontendController
@@ -52,6 +52,9 @@ Route::resource('/meta', MetaDescripConroller::class);
 Route::resource('/meta-url', MetaUrlController::class);
 Route::resource('/meta-title', MetaTitleController::class);
 Route::get('/editor', [AdminController::class, 'editor'])->name('editor');
+
+Route::resource('/enquiry', EnquiryController::class);
+Route::post('/fetch-subcategory/{id}', [EnquiryController::class, 'fetchsubcategory']);
 
 
 // Route::post('/services-submenu', [SubmenuController::class, 'store'])->name('submenu.store');

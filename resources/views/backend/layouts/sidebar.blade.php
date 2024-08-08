@@ -48,6 +48,13 @@
                     </a>
                 </li>
 
+                <li class="{{ Route::currentRouteName() === 'enquiry' ? 'active' : '' }}">
+                    <a href="{{ route('enquiry.index') }}">
+                        <i class="fe fe-file-text"></i>
+                        <span>Enquiry</span>
+                    </a>
+                </li>
+
                 <li class="submenu">
                     <a href="javascript:void(0);"><i class="fe fe-briefcase"></i>
                         <span>Meta</span>

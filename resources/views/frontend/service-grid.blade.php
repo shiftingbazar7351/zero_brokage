@@ -6,6 +6,9 @@
         <img src="{{ asset('assets/img/bg/feature-bg-03.png') }}" alt="img" class="bgimg3">
     </div>
 
+<link rel="stylesheet" href="{{ asset('assets/css/booking_infoPopup.css') }}">
+
+
     <div class="breadcrumb-bar">
         <div class="container">
             <div class="row">
@@ -252,7 +255,7 @@
                                         <a href="service-list.html">
                                             <i class="feather-list"></i>
                                         </a>
-                                    </li>
+                                      </li>
                                 </ul>
                             </div>
                         </div>
@@ -294,7 +297,7 @@
                                                             class="old-price">&#8377;{{ $subcategory->total_price ?? '' }}</span>
                                                     @endif
                                                 </h6>
-                                                <a href="{{ route('booking') }}" class="btn btn-book" id="book-now">Book Now</a>
+                                                <a  class="btn btn-book" id="book-now">Book Now</a>
 
                                             </div>
 
@@ -383,7 +386,7 @@
                                     </div>
                                 </div>
                             </div>
-                            
+
                             <div class="service-widget aos" data-aos="fade-up">
                                 <div class="service-img p-2">
                                     <a href="service-details.html">
@@ -472,3 +475,5 @@
             </div>
         </section>
     @endsection
+
+<script src="{{ asset('assets/js/booking_infoPopup.js') }}"></script>

@@ -33,6 +33,7 @@ var editnum = document.getElementById("editnumber");
 
 btn.onclick = function () {
     popup.classList.add("show");
+    clearInput();
 };
 
 closeSpan.onclick = function () {
@@ -46,9 +47,14 @@ window.onclick = function (event) {
 };
 
 saveChangesBtn.onclick = function () {
-    popup.classList.remove("show");
-    popup2.classList.add("show");
-    startCountdown(60);
+    if(document.getElementById("phoneNumberInput").value == ""){
+        // validateNum(document.getElementById('phoneNumberInput'))
+        alert("enter your number");
+        }else{
+        popup.classList.remove("show");
+        popup2.classList.add("show");
+        startCountdown(60);
+        }
 };
 
 editnum.onclick = function () {
@@ -96,3 +102,9 @@ otpOnWhatsapp.onclick = function () {
 document.getElementById("verify-otp").onclick = function () {
     alert("OTP verified successfully!");
 };
+
+function clearInput(){
+    document.getElementById('phoneNumberInput').value = '';
+    document.getElementById('res').innerText = '';
+    document.getElementById('checkbox-login').checked = false;
+  }

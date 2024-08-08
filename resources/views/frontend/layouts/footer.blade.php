@@ -45,13 +45,13 @@
                     <h2 class="footer-title">Quick Links</h2>
                     <ul>
                         <li>
-                            <a href="{{ route('about') }}">About Us</a>
+                            <a href="javascript:void(0);">About Us</a>
                         </li>
                         <li>
-                            <a href="{{ route('blog') }}">Blogs</a>
+                            <a href="javascript:void(0);">Blogs</a>
                         </li>
                         <li>
-                            <a href="{{ route('contact') }}">Contact Us</a>
+                            <a href="javascript:void(0);">Contact Us</a>
                         </li>
                         <li>
                             <a href="provider-signup.html">Become a Professional</a>

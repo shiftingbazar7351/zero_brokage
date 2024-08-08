@@ -1,7 +1,7 @@
 @extends('backend.layouts.main')
 @section('content')
     <style>
-        <style>.default-img {
+       .default-img {
             width: auto;
         }
 
@@ -238,7 +238,7 @@
                                 @endforeach
                             </select>
                         </div>
-                        
+
                         <div class="form-group">
                             <label for="price">Price(INR)</label>
                             <input type="text" class="form-control" id="edit-price" name="price"

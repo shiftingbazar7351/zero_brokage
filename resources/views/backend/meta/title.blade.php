@@ -47,9 +47,10 @@
                                             <td>{{ $title->id }}</td>
                                             <td>{{ $title->title }}</td>
                                             <td>
-                                                <button class="btn btn-sm btn-warning edit-title" data-id="{{ $title->id }}" data-title="{{ $title->title }}" data-bs-toggle="modal" data-bs-target="#edit-category">
-                                                    Edit
+                                                <button class="btn delete-table me-2 edit-url" data-id="{{ $title->id }}" data-url="{{ $title->title }}" type="button" data-bs-toggle="modal" data-bs-target="#edit-category">
+                                                    <i class="fe fe-edit"></i>
                                                 </button>
+                                                
                                                 {{-- <button class="btn btn-sm btn-danger delete-title" data-id="{{ $title->id }}">
                                                     Delete
                                                 </button> --}}

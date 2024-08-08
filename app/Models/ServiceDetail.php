@@ -9,6 +9,9 @@ class ServiceDetail extends Model
 {
     use HasFactory;
     protected $fillable = [
-        ''
+        'subcategory_id',
+        'discription',
+        'created_by',
+        'status',
     ];
 }

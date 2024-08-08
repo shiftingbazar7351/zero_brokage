@@ -5,8 +5,10 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class SubMenu extends Model
+class ServiceDetail extends Model
 {
     use HasFactory;
-    protected $fillable = ['name', 'image'];
+    protected $fillable = [
+        ''
+    ];
 }

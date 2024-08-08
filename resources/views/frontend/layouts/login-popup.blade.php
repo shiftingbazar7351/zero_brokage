@@ -94,12 +94,12 @@
                 <img src="{{ asset('assets/img/icons/signup.png') }}" alt="">
                 <h5 class="sign-up-text">Enter your Mobile Number</h5>
                 <input type="tel" id="phoneNumberInput" class="phone-number-field" onkeyup="validateNum(this)"
-                    maxlength="10" placeholder="Enter Mobile Number">
+                    maxlength="10" placeholder="Enter Mobile Number" required>
                 <div id="res"></div>
                 <button id="saveChanges" class="btn" onclick="startCountdown(60)">Continue</button>
                 <!-- <button id="closePopupBtn" class="btn">Close</button> -->
                 <div class="term-condition">
-                    <input type="checkbox" class="checkbox">
+                    <input type="checkbox" class="checkbox" id="checkbox-login">
                     <p>By Continuing, you agree to our <span class="term">Term and Condition</span>
                     </p>
                 </div>
@@ -144,8 +144,8 @@
 <script src="{{ asset('assets/js/popup.js') }}"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/intlTelInput.min.js"></script>
 <script>
-    const input = document.querySelector("#phoneNumberInput");
-    window.intlTelInput(input, {
+    const inputtest = document.querySelector("#phoneNumberInput");
+    window.intlTelInput(inputtest, {
         initialCountry: "in",
         separateDialCode: true
     });

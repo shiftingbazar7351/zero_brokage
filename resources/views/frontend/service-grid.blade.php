@@ -6,6 +6,9 @@
         <img src="{{ asset('assets/img/bg/feature-bg-03.png') }}" alt="img" class="bgimg3">
     </div>
 
+<link rel="stylesheet" href="{{ asset('assets/css/booking_infoPopup.css') }}">
+
+
     <div class="breadcrumb-bar">
         <div class="container">
             <div class="row">
@@ -30,8 +33,8 @@
                 <div class="slider">
                     @foreach ($categories as $cat)
                         <div class="slide">
-                            <img src="{{ asset('storage/assets/icon/' . $cat->icon ?? '') }}"
-                                alt="Quick Booking"><span>{{ $cat->name ?? '' }}</span>
+                            <a href=""><img src="{{ asset('storage/assets/icon/' . $cat->icon ?? '') }}"
+                                alt="Quick Booking"><span>{{ $cat->name ?? '' }}</span></a>
                             </div>
                     @endforeach
                 </div>
@@ -67,49 +70,49 @@
                                 <ul>
                                     <li>
                                         <label class="checkboxs">
-                                            <input type="checkbox" class="toggleCheckbox">
+                                            <input type="checkbox" class="toggleCheckbox" id="allCategories">
                                             <span><i></i></span>
                                             <b class="check-content">All Categories</b>
                                         </label>
                                     </li>
                                     <li>
                                         <label class="checkboxs">
-                                            <input type="checkbox" class="toggleCheckbox">
+                                            <input type="checkbox" class="toggleCheckbox categoryCheckbox" >
                                             <span><i></i></span>
                                             <b class="check-content">Construction</b>
                                         </label>
                                     </li>
                                     <li>
                                         <label class="checkboxs">
-                                            <input type="checkbox" class="toggleCheckbox">
+                                            <input type="checkbox" class="toggleCheckbox categoryCheckbox">
                                             <span><i></i></span>
                                             <b class="check-content">Car Wash</b>
                                         </label>
                                     </li>
                                     <li>
                                         <label class="checkboxs">
-                                            <input type="checkbox" class="toggleCheckbox">
+                                            <input type="checkbox" class="toggleCheckbox categoryCheckbox">
                                             <span><i></i></span>
                                             <b class="check-content">Electrical</b>
                                         </label>
                                     </li>
                                     <li>
                                         <label class="checkboxs">
-                                            <input type="checkbox" class="toggleCheckbox">
+                                            <input type="checkbox" class="toggleCheckbox categoryCheckbox">
                                             <span><i></i></span>
                                             <b class="check-content">Cleaning</b>
                                         </label>
                                     </li>
                                     <li>
                                         <label class="checkboxs">
-                                            <input type="checkbox" class="toggleCheckbox">
+                                            <input type="checkbox" class="toggleCheckbox categoryCheckbox">
                                             <span><i></i></span>
                                             <b class="check-content">Interior</b>
                                         </label>
                                     </li>
                                     <li>
                                         <label class="checkboxs">
-                                            <input type="checkbox" class="toggleCheckbox">
+                                            <input type="checkbox" class="toggleCheckbox categoryCheckbox">
                                             <span><i></i></span>
                                             <b class="check-content">Computer</b>
                                         </label>
@@ -252,7 +255,7 @@
                                         <a href="service-list.html">
                                             <i class="feather-list"></i>
                                         </a>
-                                    </li>
+                                      </li>
                                 </ul>
                             </div>
                         </div>
@@ -270,9 +273,7 @@
                                             <div class="fav-item">
                                                 <a href="categories.html"><span
                                                         class="item-cat">{{ $subcategory->category->name ?? '' }}</span></a>
-                                                <a href="javascript:void(0)" class="fav-icon">
-                                                    <i class="feather-heart"></i>
-                                                </a>
+
                                             </div>
                                             <div class="item-info">
                                                 <a href="providers.html"><span class="item-img"><img
@@ -294,9 +295,10 @@
                                                             class="old-price">&#8377;{{ $subcategory->total_price ?? '' }}</span>
                                                     @endif
                                                 </h6>
-                                                <a href="{{ route('booking') }}" class="btn btn-book">Book Now</a>
+                                                <a  class="btn btn-book" id="book-now">Book Now</a>
 
                                             </div>
+
                                             <div>
                                                 <a href="{{ route('service-details') }}" class="btn btn-book"
                                                     style="width: 100%; margin-top: 2%;">View details</a>
@@ -382,6 +384,7 @@
                                     </div>
                                 </div>
                             </div>
+
                             <div class="service-widget aos" data-aos="fade-up">
                                 <div class="service-img p-2">
                                     <a href="service-details.html">
@@ -470,3 +473,5 @@
             </div>
         </section>
     @endsection
+
+<script src="{{ asset('assets/js/booking_infoPopup.js') }}"></script>

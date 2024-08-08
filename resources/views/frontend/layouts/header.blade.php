@@ -12,7 +12,7 @@
                 <a href="{{ route('home') }}" class="navbar-brand logo">
                     <img src="{{ asset('assets/img/logofinal.png') }}" class="img-fluid" alt="Logo">
                 </a>
-               
+
             </div>
             <div class="main-menu-wrapper">
                 <div class="menu-header">
@@ -31,7 +31,7 @@
                                     <div class="row">
                                         <div class="col-lg-2">
                                             <div class="single-demo active">
-                                             
+
                                                 <div class="demo-info">
                                                     <a href="index.html">Electrical Home</a>
                                                 </div>
@@ -39,7 +39,7 @@
                                         </div>
                                         <div class="col-lg-2">
                                             <div class="single-demo">
-                                                
+
                                                 <div class="demo-info">
                                                     <a href="index-2.html">Cleaning Home</a>
                                                 </div>
@@ -47,7 +47,7 @@
                                         </div>
                                         <div class="col-lg-2">
                                             <div class="single-demo">
-                                               
+
                                                 <div class="demo-info">
                                                     <a href="index-3.html">Saloon Home</a>
                                                 </div>
@@ -55,7 +55,7 @@
                                         </div>
                                         <div class="col-lg-2">
                                             <div class="single-demo">
-                                                
+
                                                 <div class="demo-info">
                                                     <a href="index-4.html">Catering Home</a>
                                                 </div>
@@ -63,7 +63,7 @@
                                         </div>
                                         <div class="col-lg-2">
                                             <div class="single-demo">
-                                              
+
                                                 <div class="demo-info">
                                                     <a href="index-5.html">Car Wash Home</a>
                                                 </div>
@@ -71,7 +71,7 @@
                                         </div>
                                         <div class="col-lg-2">
                                             <div class="single-demo">
-                                                
+
                                                 <div class="demo-info">
                                                     <a href="index-6.html">Cleaning Home</a>
                                                 </div>
@@ -79,7 +79,7 @@
                                         </div>
                                         <div class="col-lg-2">
                                             <div class="single-demo">
-                                              
+
                                                 <div class="demo-info">
                                                     <a href="index-7.html">House Problem Home</a>
                                                 </div>
@@ -87,7 +87,7 @@
                                         </div>
                                         <div class="col-lg-2">
                                             <div class="single-demo">
-                                               
+
                                                 <div class="demo-info">
                                                     <a href="index-8.html">Pet Grooming Home</a>
                                                 </div>
@@ -95,7 +95,7 @@
                                         </div>
                                         <div class="col-lg-2">
                                             <div class="single-demo">
-                                               
+
                                                 <div class="demo-info">
                                                     <a href="index-9.html">Mechanic Home</a>
                                                 </div>
@@ -226,7 +226,7 @@
                             <li><a href="blog-details.html">Blog Details</a></li>
                         </ul>
                     </li>
-                    <li><a href="admin/index.html">Admin</a></li>
+                    <li><a href="{{ route('home') }}">Admin</a></li>
                 </ul>
             </div>
            @include('frontend.layouts.login-popup')

@@ -54,3 +54,5 @@ Route::post('/fetch-city/{id}', [SubCategoryController::class, 'fetchcity']);
 Route::resource('/meta', MetaDescripConroller::class);
 Route::resource('/meta-url', MetaUrlController::class);
 Route::resource('/meta-title', MetaTitleController::class);
+Route::get('/editor', [AdminController::class, 'editor'])->name('editor');
+

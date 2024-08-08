@@ -1,17 +1,7 @@
-{{-- @extends('backend.layouts.main')
-@section('content') --}}
-
-
-
 @extends('backend.layouts.main')
 @section('styles')
-    <style>
-        .preview-img {
-            width: 100px;
-            height: 100px;
-            object-fit: cover;
-        }
-    </style>
+    <link rel="stylesheet" href="{{ asset('admin/summernote/summernote.min.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.1/css/bootstrap-select.css" />
 @endsection
 @section('content')
     <div class="page-wrapper page-settings">
@@ -33,10 +23,7 @@
 @endsection
 
 
-@section('styles')
-    <link rel="stylesheet" href="{{ asset('admin/summernote/summernote.min.css') }}">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.1/css/bootstrap-select.css" />
-@endsection
+
 
 @section('scripts')
     {{-- <script src="{{ asset('vendor/laravel-filemanager/js/stand-alone-button.js') }}"></script> --}}

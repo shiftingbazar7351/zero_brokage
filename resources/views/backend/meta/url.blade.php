@@ -47,7 +47,7 @@
                                             <td> {{ $url->url }} </td>
 
                                             <td>
-                               
+
                                             </td>
                                         </tr>
                                     @endforeach
@@ -79,8 +79,8 @@
                             <input type="text" class="form-control" name="url" placeholder="Enter Meta Url"
                             value="">
                         </div>
-                        
-              
+
+
                         <div class="text-end">
                             <button type="button" class="btn btn-secondary me-2" data-bs-dismiss="modal">Cancel</button>
                             <button type="submit" class="btn btn-primary">Save</button>
@@ -91,7 +91,7 @@
         </div>
     </div>
 
-  
+
 
 @endsection
 

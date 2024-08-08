@@ -98,3 +98,20 @@ function resetVal(){
         });
 
    }
+
+
+document.addEventListener('DOMContentLoaded', () => {
+    const allCategoriesCheckbox = document.querySelector('#allCategories');
+    const categoryCheckboxes = document.querySelectorAll('.categoryCheckbox');
+
+    // Update all category checkboxes when "All Categories" is toggled
+    allCategoriesCheckbox.addEventListener('change', () => {
+        // const isChecked = allCategoriesCheckbox.checked;
+        categoryCheckboxes.forEach(checkbox => {
+            checkbox.checked = true;
+        });
+    });
+
+});
+
+

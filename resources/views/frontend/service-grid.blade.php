@@ -33,8 +33,8 @@
                 <div class="slider">
                     @foreach ($categories as $cat)
                         <div class="slide">
-                            <img src="{{ asset('storage/assets/icon/' . $cat->icon ?? '') }}"
-                                alt="Quick Booking"><span>{{ $cat->name ?? '' }}</span>
+                            <a href=""><img src="{{ asset('storage/assets/icon/' . $cat->icon ?? '') }}"
+                                alt="Quick Booking"><span>{{ $cat->name ?? '' }}</span></a>
                             </div>
                     @endforeach
                 </div>
@@ -70,49 +70,49 @@
                                 <ul>
                                     <li>
                                         <label class="checkboxs">
-                                            <input type="checkbox" class="toggleCheckbox">
+                                            <input type="checkbox" class="toggleCheckbox" id="allCategories">
                                             <span><i></i></span>
                                             <b class="check-content">All Categories</b>
                                         </label>
                                     </li>
                                     <li>
                                         <label class="checkboxs">
-                                            <input type="checkbox" class="toggleCheckbox">
+                                            <input type="checkbox" class="toggleCheckbox categoryCheckbox" >
                                             <span><i></i></span>
                                             <b class="check-content">Construction</b>
                                         </label>
                                     </li>
                                     <li>
                                         <label class="checkboxs">
-                                            <input type="checkbox" class="toggleCheckbox">
+                                            <input type="checkbox" class="toggleCheckbox categoryCheckbox">
                                             <span><i></i></span>
                                             <b class="check-content">Car Wash</b>
                                         </label>
                                     </li>
                                     <li>
                                         <label class="checkboxs">
-                                            <input type="checkbox" class="toggleCheckbox">
+                                            <input type="checkbox" class="toggleCheckbox categoryCheckbox">
                                             <span><i></i></span>
                                             <b class="check-content">Electrical</b>
                                         </label>
                                     </li>
                                     <li>
                                         <label class="checkboxs">
-                                            <input type="checkbox" class="toggleCheckbox">
+                                            <input type="checkbox" class="toggleCheckbox categoryCheckbox">
                                             <span><i></i></span>
                                             <b class="check-content">Cleaning</b>
                                         </label>
                                     </li>
                                     <li>
                                         <label class="checkboxs">
-                                            <input type="checkbox" class="toggleCheckbox">
+                                            <input type="checkbox" class="toggleCheckbox categoryCheckbox">
                                             <span><i></i></span>
                                             <b class="check-content">Interior</b>
                                         </label>
                                     </li>
                                     <li>
                                         <label class="checkboxs">
-                                            <input type="checkbox" class="toggleCheckbox">
+                                            <input type="checkbox" class="toggleCheckbox categoryCheckbox">
                                             <span><i></i></span>
                                             <b class="check-content">Computer</b>
                                         </label>
@@ -273,9 +273,7 @@
                                             <div class="fav-item">
                                                 <a href="categories.html"><span
                                                         class="item-cat">{{ $subcategory->category->name ?? '' }}</span></a>
-                                                <a href="javascript:void(0)" class="fav-icon">
-                                                    <i class="feather-heart"></i>
-                                                </a>
+
                                             </div>
                                             <div class="item-info">
                                                 <a href="providers.html"><span class="item-img"><img

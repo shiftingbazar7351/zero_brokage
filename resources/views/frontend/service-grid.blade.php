@@ -136,7 +136,7 @@
                                                         <i class="feather-map-pin"></i>
                                                     </div>
                                                 </div> -->
-                        <div class="filter-content">
+                        <div class="filter-content">   
                             <h2 class="mb-4">Price Range</h2>
                             <div class="filter-range">
                                 <input type="text" id="range_03">

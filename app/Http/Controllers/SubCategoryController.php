@@ -19,11 +19,13 @@ class SubCategoryController extends Controller
 
     public function index()
     {
-        $subcategories = SubCategory::all();
-        $categories = Category::all();
+        $subcategories = SubCategory::orderByDesc('created_at')->get();
+        // $subcategory = SubCategory::orderByDesc('created_at')->first();
+        $categories = Category::orderByDesc('created_at')->get();
         $countryId = Country::where('name', 'India')->value('id');
         $states = State::where('country_id', $countryId)->get(['name', 'id']);
-        return view('backend.sub-category.index', compact('subcategories', 'categories', 'states'));
+        $cities = City::get();
+        return view('backend.sub-category.index', compact('subcategories', 'categories', 'states','cities'));
     }
 
     /**
@@ -32,7 +34,7 @@ class SubCategoryController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'name' => 'required|string|max:255',
+            'name' => 'required|unique:sub_categories,name',
             'state' => 'nullable|exists:states,id',
             'city' => 'nullable|exists:cities,id',
             'total_price' => 'nullable|numeric',
@@ -91,12 +93,20 @@ class SubCategoryController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit($id)
     {
-        $subcategories = SubCategory::findOrFail($id);
-        $category = Category::get();
-        return view('backend.sub-category.edit', compact('subcategories', 'category'));
+        $record = SubCategory::find($id);
+        $states = State::all();
+        $selectedCity = $record->city_id;
+        $selectedState = City::where('id', $selectedCity)->pluck('state_id')->first();
+        $cities = City::where('state_id', $selectedState)->get()->map(function ($city) {
+            $city->name = ucwords($city->name);
+            return $city;
+        });
+
+        return view('backend.sub-category.index', compact('record', 'states', 'selectedState', 'selectedCity', 'cities'));
     }
+
 
 
     /**
@@ -106,7 +116,7 @@ class SubCategoryController extends Controller
     public function update(Request $request, $id)
     {
         $request->validate([
-            'name' => 'required|string|max:255',
+            'name' => 'required|unique:sub_categories,name,' . $request->id,
             'state_id' => 'nullable|exists:states,id',
             'city_id' => 'nullable|exists:cities,id',
             'price' => 'nullable|numeric',
@@ -197,5 +207,16 @@ class SubCategoryController extends Controller
 
         return response()->json(['success' => false, 'message' => 'Item not found.']);
     }
-
+    // public function editFetchCity($cityId)
+    // {
+    //     $cities = City::where('id',$cityId)->first();
+    //     // $cities = City::where('state_id', $stateId)->get()->map(function ($city) {
+    //     //     $city->name = ucwords($city->name);
+    //     //     return $city;
+    //     // });
+    //     if ($cities->isEmpty()) {
+    //         return response()->json(['status' => 0, 'message' => 'No cities found']);
+    //     }
+    //     return response()->json(['status' => 1, 'data' => $cities]);
+    // }
 }

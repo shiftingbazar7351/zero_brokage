@@ -41,26 +41,26 @@
                     </a>
                 </li>
 
-                <li>
+                <li class="submenu">
                     <a href="javascript:void(0);"><i class="fe fe-briefcase"></i>
                         <span>Meta</span>
                         <span class="menu-arrow"><i class="fe fe-chevron-right"></i></span>
                     </a>
                     <ul>
-                        <li class="{{ Route::currentRouteName() === 'meta.index' ? 'active' : '' }}">
-                            <a href="{{ route('meta.index') }}">
+                        <li>
+                            <a href="{{ route('meta.index') }}" class="{{ Route::currentRouteName() === 'meta.index' ? 'active' : '' }}">
                                 <i class="fe fe-file-text"></i>
                                 <span>Meta Description</span>
                             </a>
                         </li>
-                        <li class="{{ Route::currentRouteName() === 'meta-url.index' ? 'active' : '' }}">
-                            <a href="{{ route('meta-url.index') }}">
+                        <li>
+                            <a href="{{ route('meta-url.index') }}" class="{{ Route::currentRouteName() === 'meta-url.index' ? 'active' : '' }}">
                                 <i class="fe fe-file-text"></i>
                                 <span>Meta Url</span>
                             </a>
                         </li>
-                        <li class="{{ Route::currentRouteName() === 'meta-title.index' ? 'active' : '' }}">
-                            <a href="{{ route('meta-title.index') }}">
+                        <li>
+                            <a href="{{ route('meta-title.index') }}" class="{{ Route::currentRouteName() === 'meta-title.index' ? 'active' : '' }}">
                                 <i class="fe fe-file-text"></i>
                                 <span>Meta Title</span>
                             </a>
@@ -68,7 +68,6 @@
                     </ul>
                 </li>
 
-            
             </ul>
         </div>
     </div>

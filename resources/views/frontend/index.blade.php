@@ -33,13 +33,13 @@
                                     </div>
                                     <div class="search-btn">
                                         <button class="btn btn-primary mt-3" type="submit"><i
-                                                class="feather-search me-2"></i>Search</button>
+                                                class="feather-search me-2"></i>Search
+                                        </button>
                                     </div>
                                 </form>
                             </div>
                         </div>
                     </div>
-
                 </div>
             </div>
         </div>
@@ -150,7 +150,6 @@
                             </span>
                         </div>
                         <h6>Photographer</h6>
-
                     </a>
                 </div>
                 <div class="col-md-2">

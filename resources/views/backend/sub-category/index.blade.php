@@ -95,7 +95,6 @@
                                 @endif
                             </tbody>
                         </table>
-
                     </div>
                 </div>
             </div>
@@ -122,7 +121,7 @@
                         <div class="form-group">
                             <label for="category">Category</label>
                             <select class="form-control" id="category" name="category" required>
-                                <option value="">Select a category</option>
+                                <option value="">Select category</option>
                                 @foreach ($categories as $category)
                                     <option value="{{ $category->id }}">{{ $category->name }}</option>
                                 @endforeach
@@ -132,7 +131,7 @@
                         <div class="form-group">
                             <label for="category">State</label>
                             <select class="form-control" id="state" name="state">
-                                <option value="">Select a state</option>
+                                <option value="">Select state</option>
                                 @foreach ($states as $state)
                                     <option value="{{ $state->id }}">{{ ucwords($state->name) }}</option>
                                 @endforeach
@@ -142,7 +141,7 @@
                         <div class="form-group">
                             <label for="category">City</label>
                             <select class="form-control" id="city" name="city">
-                                <option value="">Select a category</option>
+                                <option value="">Select City</option>
                             </select>
                         </div>
 
@@ -163,7 +162,6 @@
                             <input type="text" class="form-control" id="final-price" name="final_price" readonly
                                 disabled>
                         </div>
-
                         <div class="mb-3">
                             <label class="form-label">Sub Category Image</label>
                             <div class="form-uploads">
@@ -173,7 +171,7 @@
                                     <div class="file-browse">
                                         <h6>Drag & drop image or </h6>
                                         <div class="file-browse-path">
-                                            <input type="file" name="icon" id="image-input-icon"
+                                            <input type="file" name="image" id="image-input-icon"
                                                 accept="image/jpeg, image/png">
                                             <a href="javascript:void(0);"> Browse</a>
                                         </div>
@@ -182,7 +180,6 @@
                                 </div>
                             </div>
                         </div>
-
                         <button type="submit" class="btn btn-primary">Save</button>
                     </form>
                 </div>
@@ -213,7 +210,7 @@
                         <div class="form-group">
                             <label for="edit-category">Category</label>
                             <select class="form-control" id="edit-category" name="category" required>
-                                <option value="">Select a category</option>
+                                <option value="">Select category</option>
                                 @foreach ($categories as $category)
                                     <option value="{{ $category->id }}"
                                         {{ ($subcategory->category_id ?? '') == $category->id ? 'selected' : '' }}>
@@ -224,7 +221,7 @@
                         </div>
                         <div class="form-group">
                             <label for="category">State</label>
-                            <select class="form-control" id="state" name="state">
+                            <select class="form-control" id="editstate" name="state">
                                 <option value="">Select State</option>
                                 @foreach ($states as $state)
                                     <option value="{{ $state->id }}">{{ ucwords($state->name) }}</option>
@@ -233,11 +230,15 @@
                         </div>
                         <div class="form-group">
                             <label for="category">City</label>
-                            <select class="form-control" id="city" name="city">
-                                <option value="">Select city</option>
+                            <select class="form-control" id="editcity" name="city">
+                                @foreach ($cities as $city)
+                                    <option value="{{ $city->id }}" {{ $city->id == $subcategory->city_id ? 'selected' : '' }}>
+                                        {{ ucwords($city->name) }}
+                                    </option>
+                                @endforeach
                             </select>
                         </div>
-
+                        
                         <div class="form-group">
                             <label for="price">Price(INR)</label>
                             <input type="text" class="form-control" id="edit-price" name="price"
@@ -257,18 +258,17 @@
                                 value="{{ old('edit_final_price', $subcategory->edit_final_price ?? '') }}" readonly
                                 disabled>
                         </div>
-
-
                         <div class="mb-3">
                             <label class="form-label">Sub Category Image</label>
                             <div class="form-uploads">
                                 <div class="form-uploads-path">
-                                    <img id="icon-preview" src="{{ isset($subcategory->image) ? Storage::url('assets/subcategory/' . $subcategory->image) : asset('admin/assets/img/icons/upload.svg') }}"
+                                    <img id="icon-preview"
+                                        src="{{ isset($subcategory->image) ? Storage::url('assets/subcategory/' . $subcategory->image) : asset('admin/assets/img/icons/upload.svg') }}"
                                         alt="img" width="100px" height="100px">
                                     <div class="file-browse">
                                         <h6>Drag & drop image or </h6>
                                         <div class="file-browse-path">
-                                            <input type="file" id="editIcon" name="icon"
+                                            <input type="file" id="editIcon" name="image"
                                                 accept="image/jpeg, image/png">
                                             <a href="javascript:void(0);"> Browse</a>
                                         </div>
@@ -349,7 +349,6 @@
                 });
             });
         });
-
         // -----------------------fetch city name--------------------------------------//
 
         // <script type="text/javascript" src="js/jquery.js">
@@ -371,7 +370,7 @@
                                 console.log(cities);
                                 $('#city').find('option').remove(); // Clear existing options
                                 var options =
-                                    '<option value="">Select a city</option>'; // Default option
+                                    '<option value="">Select city</option>'; // Default option
                                 $.each(cities, function(key, city) {
                                     options += "<option value='" + city.id + "'>" + city
                                         .name + "</option>";
@@ -382,7 +381,40 @@
                     });
                 } else {
                     $('#city').find('option').remove(); // Clear options if no state is selected
-                    $('#city').append('<option value="">Select a city</option>');
+                    $('#city').append('<option value="">Select city</option>');
+                }
+            });
+        });
+
+        $(document).ready(function() {
+            $('#editstate').on('change', function() {
+                var stateId = $(this).val();
+                if (stateId) {
+                    $.ajax({
+                        url: '/fetch-city/' + stateId, // Adjusted URL based on route
+                        type: 'POST',
+                        data: {
+                            _token: '{{ csrf_token() }}' // Include CSRF token for security
+                        },
+                        success: function(response) {
+                            if (response.status === 1) {
+                                var cities = response.data;
+                                console.log(cities);
+                                $('#city').find('option').remove(); // Clear existing options
+                                var options =
+                                    '<option value="">Select city</option>'; // Default option
+                                $.each(cities, function(key, city) {
+                                    options += "<option value='" + city.id + "'>" + city
+                                        .name + "</option>";
+                                    // alert(response.stateId);
+                                });
+                                $('#editcity').append(options);
+                            }
+                        }
+                    });
+                } else {
+                    $('#editcity').find('option').remove(); // Clear options if no state is selected
+                    $('#editcity').append('<option value="">Select city</option>');
                 }
             });
         });

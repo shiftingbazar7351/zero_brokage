@@ -8,12 +8,11 @@
     overflow: hidden;
     display: flex;
     align-items: center;
-    margin-top: 3%;
 }
 
 .slider-wrapper {
     overflow: hidden;
-    width: calc(100% - 60px);
+    width: 100%;
 }
 
 .slider {
@@ -24,18 +23,24 @@
 }
 
 .slide {
-    max-width: 300px;
+    width: 220px;
+    height: 200px;
     text-align: center;
-    margin: 0 5px;
+    margin: 21px 5px;
+    padding: 10px;
     transition: transform 0.3s ease;
-}
-.slide:hover {
-    transform: scale(1.1); /* Increase size on hover */
+    flex: 0 0 auto;
 }
 
+
+.slide:hover {
+    transform: scale(1.1) rotate(-4deg);;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
 .slide img {
     width: 100%;
-    height: auto;
+    height: 100%;
+    object-fit: fill;
     border-radius: 8px;
 }
 
@@ -61,3 +66,4 @@
 .next {
     margin-left: 10px;
 }
+

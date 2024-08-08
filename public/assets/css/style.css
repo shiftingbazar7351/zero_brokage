@@ -2801,7 +2801,7 @@ html.menu-opened body {
 .serv-img-grid{
     width: 100%;
     height: 100%;
-    object-fit: cover;
+    object-fit: fill;
 }
 
 .service-img .serv-img {

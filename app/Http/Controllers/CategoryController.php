@@ -14,7 +14,7 @@ class CategoryController extends Controller
     public function index()
     {
         $categories = Category::orderByDesc('created_at')->get();
-       
+
         return view('backend.category.index', compact('categories'));
     }
     /**
@@ -31,7 +31,7 @@ class CategoryController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'name' => 'required',
+            'name' => 'required|unique:categories,name',
             // 'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:5048',
             // 'icon' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:5048', // Validate icon field as an image
         ]);
@@ -46,14 +46,14 @@ class CategoryController extends Controller
             $image = $request->file('image');
             $imageName = time() . '_' . $image->getClientOriginalName();
             $image->storeAs('assets/category', $imageName, 'public');
-            $category->image = $imageName; 
+            $category->image = $imageName;
         }
 
         if ($request->hasFile('icon')) {
             $icon = $request->file('icon');
             $iconName = time() . '_' . $icon->getClientOriginalName();
-            $icon->storeAs('assets/icon', $iconName, 'public'); 
-            $category->icon = $iconName; 
+            $icon->storeAs('assets/icon', $iconName, 'public');
+            $category->icon = $iconName;
         }
 
         $category->save();
@@ -90,31 +90,25 @@ class CategoryController extends Controller
     public function update(Request $request, Category $category)
     {
         $request->validate([
-            'name' => 'required',
+            'name' => 'required|unique:categories,name,' . $category->id,
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:5048',
             'icon' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:5048',
         ]);
-
         $category->name = $request->name;
         $category->slug = $this->generateSlug($request->name);
-
-
         if ($request->hasFile('image')) {
             $image = $request->file('image');
             $imageName = time() . '_' . $image->getClientOriginalName();
             $image->storeAs('assets/category', $imageName, 'public');
             $category->image = $imageName;
         }
-
         if ($request->hasFile('icon')) {
             $icon = $request->file('icon');
             $iconName = time() . '_' . $icon->getClientOriginalName();
             $icon->storeAs('assets/icon', $iconName, 'public');
             $category->icon = $iconName;
         }
-
         $category->save();
-
         return redirect()->back()->with('success', 'Category updated successfully.');
     }
 
@@ -141,12 +135,12 @@ class CategoryController extends Controller
         if ($item) {
             $item->status = $request->status;
             $item->save();
- 
+
             return response()->json(['success' => true, 'message' => 'Status updated successfully.']);
         }
- 
+
         return response()->json(['success' => false, 'message' => 'Item not found.']);
     }
-    
+
 
 }

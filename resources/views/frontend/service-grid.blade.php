@@ -28,18 +28,17 @@
             <button class="prev" onclick="slideLeft()">&#10094;</button>
             <div class="slider-wrapper">
                 <div class="slider">
-                    {{-- @foreach ($category as $cat) --}}
-                    <div class="slide"><img src="{{ asset('storage/assets/category/' . $category->image ?? '') }}"
-                            alt="Quick Booking"><span>Quick
-                            Booking</span></div>
-                    {{-- @endforeach --}}
-
+                    @foreach ($categories as $cat)
+                        <div class="slide">
+                            <img src="{{ asset('storage/assets/icon/' . $cat->icon ?? '') }}"
+                                alt="Quick Booking"><span>{{ $cat->name ?? '' }}</span>
+                            </div>
+                    @endforeach
                 </div>
             </div>
             <button class="next" onclick="slideRight()">&#10095;</button>
         </div>
     </div>
-
     <div class="content">
         <div class="container-fluid">
             <div class="row">
@@ -131,12 +130,12 @@
                             </select>
                         </div>
                         <!-- <div class="filter-content">
-                                                <h2>Location</h2>
-                                                <div class="group-img">
-                                                    <input type="text" class="form-control" placeholder="Select Location">
-                                                    <i class="feather-map-pin"></i>
-                                                </div>
-                                            </div> -->
+                                                    <h2>Location</h2>
+                                                    <div class="group-img">
+                                                        <input type="text" class="form-control" placeholder="Select Location">
+                                                        <i class="feather-map-pin"></i>
+                                                    </div>
+                                                </div> -->
                         <div class="filter-content">
                             <h2 class="mb-4">Price Range</h2>
                             <div class="filter-range">
@@ -265,15 +264,8 @@
                                     <div class="service-widget servicecontent">
                                         <div class="service-img service-img-grid">
                                             <a href="{{ route('service-details') }}">
-                                                @php
-                                                    $images = json_decode($subcategory->image, true); // Decode the JSON string into an array
-                                                @endphp
-                                                @if (is_array($images) && !empty($images))
-                                                    <img class="img-fluid serv-img serv-img-grid" alt="Service Image"
-                                                        src="{{ Storage::url('assets/subcategory/' . $images[0]) }}">
-                                                @else
-                                                    No Image
-                                                @endif
+                                                <img class="img-fluid serv-img serv-img-grid" alt="Service Image"
+                                                    src="{{ Storage::url('assets/subcategory/' . $subcategory->image) }}">
                                             </a>
                                             <div class="fav-item">
                                                 <a href="categories.html"><span
@@ -290,15 +282,16 @@
                                         </div>
                                         <div class="service-content">
                                             <h3 class="title">
-                                                <a href="{{ route('service-details') }}">{{ $subcategory->name ?? '' }}</a>
+                                                <a
+                                                    href="{{ route('service-details') }}">{{ $subcategory->name ?? '' }}</a>
                                             </h3>
                                             <p><i class="feather-map-pin"></i>Maryland City, USA<span class="rate"><i
                                                         class="fas fa-star filled"></i>4.9</span></p>
                                             <div class="serv-info">
-                                                <h6>&#8377;{{ $subcategory->total_price }}
+                                                <h6>&#8377;{{ $subcategory->discounted_price }}
                                                     @if ($subcategory->discount != null)
                                                         <span
-                                                            class="old-price">&#8377;{{ $subcategory->discounted_price ?? '' }}</span>
+                                                            class="old-price">&#8377;{{ $subcategory->total_price ?? '' }}</span>
                                                     @endif
                                                 </h6>
                                                 <a href="{{ route('booking') }}" class="btn btn-book">Book Now</a>
@@ -375,11 +368,7 @@
                                             <i class="feather-heart"></i>
                                         </a>
                                     </div>
-                                    <div class="item-info">
-                                        <a href="providers.html"><span class="item-img"><img
-                                                    src="{{ asset('assets/img/profiles/avatar-01.jpg') }}" class="avatar"
-                                                    alt="User"></span></a>
-                                    </div>
+
                                 </div>
                                 <div class="service-content">
                                     <h3 class="title">
@@ -405,11 +394,7 @@
                                             <i class="feather-heart"></i>
                                         </a>
                                     </div>
-                                    <div class="item-info">
-                                        <a href="providers.html"><span class="item-img"><img
-                                                    src="{{ asset('assets/img/profiles/avatar-02.jpg') }}" class="avatar"
-                                                    alt="User"></span></a>
-                                    </div>
+
                                 </div>
                                 <div class="service-content">
                                     <h3 class="title">
@@ -435,11 +420,7 @@
                                             <i class="feather-heart"></i>
                                         </a>
                                     </div>
-                                    <div class="item-info">
-                                        <a href="providers.html"><span class="item-img"><img
-                                                    src="{{ asset('assets/img/profiles/avatar-03.jpg') }}" class="avatar"
-                                                    alt="User"></span></a>
-                                    </div>
+
                                 </div>
                                 <div class="service-content">
                                     <h3 class="title">
@@ -485,9 +466,7 @@
                             </div>
                         </div>
                     </div>
-
                 </div>
             </div>
         </section>
     @endsection
-        

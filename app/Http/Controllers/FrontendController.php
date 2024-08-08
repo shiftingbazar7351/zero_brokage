@@ -18,6 +18,7 @@ class FrontendController extends Controller
     }
     public function subCategory($slug)
     {
+        $categories = Category::select('id', 'name','icon')->get();
         $category = Category::where('slug', $slug)->select('id', 'name','image')->first();
         if (!$category) {
             abort(404, 'Category not found');
@@ -32,6 +33,6 @@ class FrontendController extends Controller
             ->orderByDesc('created_at')
             ->select('id', 'name', 'image', 'slug', 'total_price', 'discounted_price', 'discount', 'category_id')
             ->paginate(20);
-        return view('frontend.service-grid', compact('subcategories', 'category'));
+        return view('frontend.service-grid', compact('subcategories', 'category','categories'));
     }
 }

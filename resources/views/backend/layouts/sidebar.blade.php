@@ -41,6 +41,13 @@
                     </a>
                 </li>
 
+                <li class="{{ Route::currentRouteName() === 'editor' ? 'active' : '' }}">
+                    <a href="{{ route('editor') }}">
+                        <i class="fe fe-file-text"></i>
+                        <span>Editor</span>
+                    </a>
+                </li>
+
                 <li class="submenu">
                     <a href="javascript:void(0);"><i class="fe fe-briefcase"></i>
                         <span>Meta</span>

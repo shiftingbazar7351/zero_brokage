@@ -219,7 +219,25 @@
                                 @endforeach
                             </select>
                         </div>
+
                         <div class="form-group">
+                            <label for="category">State</label>
+                            <select class="form-control" id="state" name="state">
+                                <option value="">Select state</option>
+                                @foreach ($states as $state)
+                                    <option value="{{ $state->id }}">{{ ucwords($state->name) }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="category">City</label>
+                            <select class="form-control" id="city" name="city">
+                                <option value="">Select City</option>
+                            </select>
+                        </div>
+
+                        {{-- <div class="form-group">
                             <label for="category">State</label>
                             <select class="form-control" id="editstate" name="state">
                                 <option value="">Select State</option>
@@ -237,7 +255,7 @@
                                     </option>
                                 @endforeach
                             </select>
-                        </div>
+                        </div> --}}
 
                         <div class="form-group">
                             <label for="price">Price(INR)</label>

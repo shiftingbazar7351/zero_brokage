@@ -16,7 +16,7 @@
                     <h2 class="breadcrumb-title">Service Grid</h2>
                     <nav aria-label="breadcrumb" class="page-breadcrumb">
                         <ol class="breadcrumb">
-                            <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+                            <li class="breadcrumb-item"><a href="{{ route('home') }}">Home</a></li>
                             <li class="breadcrumb-item active" aria-current="page">Service Grid</li>
                         </ol>
                     </nav>
@@ -139,7 +139,7 @@
                                                         <i class="feather-map-pin"></i>
                                                     </div>
                                                 </div> -->
-                        <div class="filter-content">
+                        <div class="filter-content">   
                             <h2 class="mb-4">Price Range</h2>
                             <div class="filter-range">
                                 <input type="text" id="range_03">

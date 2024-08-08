@@ -11,10 +11,10 @@ class FrontendController extends Controller
 {
     public function home()
     {
-        $menus = Menu::where('status', 1)->orderByDesc('created_at')->get();
+        // $menus = Menu::where('status', 1)->orderByDesc('created_at')->get();
         $subcategories = Category::where('status', 1)->orderByDesc('created_at')->get();
         $categories = Category::where('status', 1)->orderByDesc('created_at')->get();
-        return view('frontend.index', compact('subcategories', 'menus', 'categories'));
+        return view('frontend.index', compact('subcategories','categories'));
     }
     public function subCategory($slug)
     {

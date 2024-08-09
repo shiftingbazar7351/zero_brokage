@@ -60,6 +60,16 @@
                                         <input type="datetime-local" class="form-control" id="exampleInputPassword"
                                             placeholder="Choose your date">
                                     </div>
+                                    <div class="form-group">
+                                        <label for="">Location :</label>
+                                        <select class="form-select mb-3" aria-label="Default select example">
+                                            <option selected>Select Location</option>
+                                            <option value="1">Delhi</option>
+                                            <option value="2">Two</option>
+                                            <option value="3">Three</option>
+                                        </select>
+
+                                    </div>
                                     <label for="exampleInputEmail1">Email address</label>
                                     <input type="email" class="form-control" id="exampleInputEmail"
                                         aria-describedby="emailHelp" placeholder="Enter email">

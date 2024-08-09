@@ -15,5 +15,12 @@ class AdminController extends Controller
 
     }
 
+    public function editor()
+    {
+        
+        return view('backend.editor');
+
+    }
+
 
 }

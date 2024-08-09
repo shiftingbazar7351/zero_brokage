@@ -50,16 +50,7 @@
                                         <input type="datetime-local" class="form-control" id="exampleInputPassword"
                                             placeholder="Choose your date" name="date_time">
                                     </div>
-                                    <div class="form-group">
-                                        <label for="">Location :</label>
-                                        <select class="form-select mb-3" aria-label="Default select example">
-                                            <option selected>Select Location</option>
-                                            <option value="1">Delhi</option>
-                                            <option value="2">Two</option>
-                                            <option value="3">Three</option>
-                                        </select>
 
-                                    </div>
                                     <label for="exampleInputEmail1">Email address</label>
                                     <input type="email" class="form-control" id="exampleInputEmail"
                                         aria-describedby="emailHelp" placeholder="Enter email" name="email">
@@ -89,7 +80,14 @@
                                         <div class="input-container">
                                             <input  name="mobile_number" type="text" class="form-control" id="phoneNumberInput-booking"
                                                 aria-describedby="emailHelp" placeholder="Enter your Phone Number"
-                                                autocomplete="off" data-intl-tel-input-id="0" style="padding-left: 84px;">
+                                                autocomplete="off" data-intl-tel-input-id="0" style="padding-left: 84px;"
+                                                onkeydown="return ( event.ctrlKey || event.altKey
+                                            || (47<event.keyCode && event.keyCode<58 && event.shiftKey==false)
+                                            || (95<event.keyCode && event.keyCode<106)
+                                            || (event.keyCode==8) || (event.keyCode==9)
+                                            || (event.keyCode>34 && event.keyCode<40)
+                                            || (event.keyCode==46) )"
+                                            minlength="10" maxlength="10" >
                                         </div>
                                     </div>
 

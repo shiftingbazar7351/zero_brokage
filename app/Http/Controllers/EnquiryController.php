@@ -18,7 +18,7 @@ class EnquiryController extends Controller
         $subcategories = SubCategory::orderByDesc('created_at')->get();
         $categories = Category::orderByDesc('created_at')->get();
         $enquiries = Enquiry::orderByDesc('created_at')->get();
-        return view('backend.enquiry_list', compact('enquiries','subcategories', 'categories'));
+        return view('backend.enquiry_list', compact('enquiries', 'subcategories', 'categories'));
     }
 
 
@@ -28,7 +28,7 @@ class EnquiryController extends Controller
             'category' => 'required|string',
             'subcategory_id' => 'required|string',
             'move_from_origin' => 'required|string|max:255',
-            'move_from_destination' => 'required|string|max:255',
+            // 'check_me_out' => 'required|string|max:255',
             'date_time' => 'required|string|max:255',
             'name' => 'required|string|max:255',
             'email' => 'required|email|max:255',
@@ -38,7 +38,6 @@ class EnquiryController extends Controller
         if ($validator->fails()) {
             return response()->json(['errors' => $validator->errors()], 422);
         }
-
         $enquiry = new Enquiry($request->all());
         $enquiry->save();
         session()->flash('success', 'Submitted Successfully');
@@ -46,8 +45,38 @@ class EnquiryController extends Controller
     }
 
 
+    /**
+     * Show the form for editing the specified resource.
+     */
+    public function edit($id)
+    {
+        $enquiry = Enquiry::findOrFail($id);
+        return view('backend.enquiry_list', compact('enquiry'));
+    }
 
+    /**
+     * Update the specified resource in storage.
+     */
 
+    public function update(Request $request, $id)
+    {
+        $validator = Validator::make($request->all(), [
+            'category' => 'required|string',
+            'subcategory_id' => 'required|string',
+            'move_from_origin' => 'required|string|max:255',
+            'date_time' => 'required|string|max:255',
+            'name' => 'required|string|max:255',
+            'email' => 'required|email|max:255',
+            'mobile_number' => 'required|string|max:255',
+        ]);
+        if ($validator->fails()) {
+            return response()->json(['errors' => $validator->errors()], 422);
+        }
+        $enquiry = new Enquiry($request->all());
+        $enquiry->update();
+        session()->flash('success', 'Updated Successfully');
+        return response()->json(['redirect' => url()->previous()]);
+    }
 
     /**
      * Remove the specified resource from storage.
@@ -55,21 +84,10 @@ class EnquiryController extends Controller
     public function destroy($id, Request $request)
     {
         $enquiry = Enquiry::find($id);
-
         if ($enquiry) {
             $enquiry->delete();
-
-            if ($request->ajax()) {
-                return response()->json(['status' => 1, 'message' => 'Enquiry deleted successfully!']);
-            }
-
             return redirect(route('enquiry.index'))->with('success', 'Enquiry deleted successfully!');
         }
-
-        if ($request->ajax()) {
-            return response()->json(['status' => 0, 'message' => 'Enquiry not found!']);
-        }
-
         return redirect(route('enquiry.index'))->with('error', 'Enquiry not found!');
     }
 

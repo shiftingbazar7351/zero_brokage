@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Category;
 use App\Models\Menu;
+use App\Models\ServiceDetail;
 use App\Models\SubCategory;
 use Illuminate\Http\Request;
 
@@ -40,7 +41,8 @@ class FrontendController extends Controller
         // $menus = Menu::where('status', 1)->orderByDesc('created_at')->get();
         $subcategories = SubCategory::orderByDesc('created_at')->get();
         $categories = Category::orderByDesc('created_at')->get();
-        return view('frontend.service-details',compact('subcategories','categories'));
+        $services = ServiceDetail::orderByDesc('created_at')->first();
+        return view('frontend.service-details',compact('subcategories','categories','services'));
     }
 
 }

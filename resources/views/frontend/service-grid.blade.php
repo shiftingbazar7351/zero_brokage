@@ -1,12 +1,89 @@
 @extends('frontend.layouts.main')
 @section('content')
+    {{-- <link rel="stylesheet" href="{{ asset('assets/css/booking_infoPopup.css') }}"> --}}
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+
+        /* Popup Background */
+        .popup {
+            /* display: block; */
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        /* Popup Content */
+        .popup-content {
+            background-color: #eee7e7;
+            margin: 4% auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 42%;
+            text-align: center;
+            border-radius: 5px;
+            transform: translateY(-30px);
+            transition: transform 0.3s ease;
+        }
+
+        .popup.show {
+            display: block;
+            opacity: 1;
+        }
+
+        .popup.show .popup-content {
+            transform: translateY(0);
+            /* Move to original position */
+        }
+
+        .close {
+            color: red;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
+
+        .close:hover,
+        .close:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        .btn {
+            background-color: #007bff;
+            /* Bootstrap primary color */
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            margin: 5px;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+
+        .btn:hover {
+            background-color: #1573d6;
+            /* Darker blue on hover */
+        }
+    </style>
+
     <div class="bg-img">
         <img src="{{ asset('assets/img/bg/work-bg-03.png') }}" alt="img" class="bgimg1">
         <img src="{{ asset('assets/img/bg/work-bg-03.png') }}" alt="img" class="bgimg2">
         <img src="{{ asset('assets/img/bg/feature-bg-03.png') }}" alt="img" class="bgimg3">
     </div>
 
-<link rel="stylesheet" href="{{ asset('assets/css/booking_infoPopup.css') }}">
+
 
 
     <div class="breadcrumb-bar">
@@ -34,8 +111,8 @@
                     @foreach ($categories as $cat)
                         <div class="slide">
                             <a href=""><img src="{{ asset('storage/assets/icon/' . $cat->icon ?? '') }}"
-                                alt="Quick Booking"><span>{{ $cat->name ?? '' }}</span></a>
-                            </div>
+                                    alt="Quick Booking"><span>{{ $cat->name ?? '' }}</span></a>
+                        </div>
                     @endforeach
                 </div>
             </div>
@@ -77,7 +154,7 @@
                                     </li>
                                     <li>
                                         <label class="checkboxs">
-                                            <input type="checkbox" class="toggleCheckbox categoryCheckbox" >
+                                            <input type="checkbox" class="toggleCheckbox categoryCheckbox">
                                             <span><i></i></span>
                                             <b class="check-content">Construction</b>
                                         </label>
@@ -133,13 +210,13 @@
                             </select>
                         </div>
                         <!-- <div class="filter-content">
-                                                    <h2>Location</h2>
-                                                    <div class="group-img">
-                                                        <input type="text" class="form-control" placeholder="Select Location">
-                                                        <i class="feather-map-pin"></i>
-                                                    </div>
-                                                </div> -->
-                        <div class="filter-content">   
+                                                            <h2>Location</h2>
+                                                            <div class="group-img">
+                                                                <input type="text" class="form-control" placeholder="Select Location">
+                                                                <i class="feather-map-pin"></i>
+                                                            </div>
+                                                        </div> -->
+                        <div class="filter-content">
                             <h2 class="mb-4">Price Range</h2>
                             <div class="filter-range">
                                 <input type="text" id="range_03">
@@ -255,11 +332,31 @@
                                         <a href="service-list.html">
                                             <i class="feather-list"></i>
                                         </a>
-                                      </li>
+                                    </li>
                                 </ul>
                             </div>
                         </div>
                     </div>
+                    <div id="myPopup-booking" class="popup">
+                        <div class="popup-content">
+                            <h3>Login/Sign up</h3>
+                            <span class="close" id="closePopup-booking">&times;</span>
+                            <img src="{{ asset('assets/img/icons/signup.png') }}" alt="">
+                            <h5 class="sign-up-text">Enter your Mobile Number</h5>
+                            <input type="tel" id="phoneNumberInput-booking" class="phone-number-field"
+                                onkeyup="validateNum(this)" maxlength="10" placeholder="Enter Mobile Number" required>
+                            <div id="res"></div>
+                            <button id="saveChanges-booking" class="btn"
+                                onclick="startCountdown(60)">Continue</button>
+                            <!-- <button id="closePopupBtn" class="btn">Close</button> -->
+                            <div class="term-condition">
+                                <input type="checkbox" class="checkbox" id="checkbox-login-booking">
+                                <p>By Continuing, you agree to our <span class="term">Term and Condition</span>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
                     <div class="row">
                         <div class="row">
                             @foreach ($subcategories as $subcategory)
@@ -295,7 +392,7 @@
                                                             class="old-price">&#8377;{{ $subcategory->total_price ?? '' }}</span>
                                                     @endif
                                                 </h6>
-                                                <a  class="btn btn-book" id="book-now">Book Now</a>
+                                                <a class="btn btn-book" id="booking-services">Book Now</a>
 
                                             </div>
 
@@ -472,6 +569,26 @@
                 </div>
             </div>
         </section>
-    @endsection
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        {{-- <script>
+            var booking_btn = document.getElementById('booking-services');
+            var myPopup_booking = document.getElementById('myPopup_booking')
+            var closePopup_booking = document.getElementById("closePopup_booking");
 
-<script src="{{ asset('assets/js/booking_infoPopup.js') }}"></script>
+            var popup2_booking = document.getElementById("myPopup2_booking");
+            var closeSpan2_booking = document.getElementById("closePopup2_booking");
+            var editnum_booking = document.getElementById("editnumber_booking");
+            var saveChanges_booking = document.getElementById("saveChanges_booking");
+
+            // console.log(booking_btn);
+
+
+            booking_btn.onclick = function() {
+                alert();
+                myPopup_booking.classList.add("show");
+            };
+
+        </script> --}}
+
+        <script src="{{ asset('assets/js/booking_infoPopup.js') }}"></script>
+    @endsection

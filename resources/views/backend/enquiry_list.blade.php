@@ -58,9 +58,17 @@
                                         <td>{{ $enquiry->email }}</td>
                                         <td>{{ $enquiry->mobile_number }}</td>
                                         <td>
-                                            <button class="btn btn-danger delete-enquiry" data-id="{{ $enquiry->id }}">Delete</button>
+                                            <form action="{{ route('enquiry.destroy', $enquiry->id) }}"
+                                                method="POST" style="display:inline;">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="submit" class="btn delete-table"
+                                                    onclick="return confirm('Are you sure you want to delete this sub-category?');">
+                                                    <i class="fe fe-trash-2"></i>
+                                                </button>
+                                            </form>
                                         </td>
-                                         
+
                                     </tr>
                                 @endforeach
                             @endif
@@ -122,7 +130,7 @@
                         <button type="submit" class="btn btn-primary">Submit</button>
                     </div>
                 </form>
-                
+
             </div>
         </div>
     </div>
@@ -188,32 +196,6 @@ $(document).ready(function() {
                 alert('An error occurred: ' + xhr.responseText);
             }
         });
-    });
-
-    // Handle enquiry deletion
-    $(document).off('click', '.delete-enquiry').on('click', '.delete-enquiry', function() {
-        var enquiryId = $(this).data('id');
-
-        if (confirm('Are you sure you want to delete this enquiry?')) {
-            $.ajax({
-                url: '/enquiry/' + enquiryId,
-                method: 'DELETE',
-                data: {
-                    _token: '{{ csrf_token() }}'
-                },
-                success: function(response) {
-                    if (response.status === 1) {
-                        alert(response.message);
-                        location.reload();
-                    } else {
-                        alert('Error occurred while deleting the enquiry.');
-                    }
-                },
-                error: function(xhr, status, error) {
-                    alert('An error occurred: ' + xhr.responseText);
-                }
-            });
-        }
     });
 
     // Clear the form and reset the modal when it is closed

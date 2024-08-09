@@ -22,6 +22,7 @@
     <link rel="stylesheet" href="{{ asset('assets/css/owl.carousel.min.css') }}">
 
     <link rel="stylesheet" href="{{ asset('assets/plugins/aos/aos.css') }} ">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 
     <link rel="stylesheet" href="{{ asset('assets/css/style.css') }} ">
     <link rel="stylesheet" href="{{ asset('assets/css/slider.css') }}">

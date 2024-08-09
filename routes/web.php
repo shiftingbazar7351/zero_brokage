@@ -26,6 +26,7 @@ Route::get('/service-details', function () {
 })->name('service-details');
 
 Route::get('/', [FrontendController::class, 'home'])->name('home');
+Route::get('/service-details', [FrontendController::class, 'serviceDetails'])->name('service-details');
 Route::get('/service-grid/{slug}', [FrontendController::class, 'subCategory'])->name('service.grid');
 
 // Backend Routes

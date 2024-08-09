@@ -32,40 +32,31 @@
                             </select>
                         </div>
 
-                        <div class="mb-3">
-                            <label for="move_from_origin" class="form-label">Move From (Origin)</label>
-                            <input type="text" id="move_from_origin" name="move_from_origin" class="form-control">
-                        </div>
-                        <div class="mb-3">
-                            <label for="move_from_destination" class="form-label">Move From (Destination)</label>
-                            <input type="text" id="move_from_destination" name="move_from_destination"
-                                class="form-control">
-                        </div>
-                        <div class="mb-3">
-                            <label for="date_time" class="form-label">Date and Time</label>
-                            <input type="datetime-local" id="date_time" name="date_time" class="form-control">
-                        </div>
-                        <div class="mb-3">
-                            <label for="name" class="form-label">Name</label>
-                            <input type="text" id="name" name="name" class="form-control">
-                        </div>
-                        <div class="mb-3">
-                            <label for="email" class="form-label">Email</label>
-                            <input type="email" id="email" name="email" class="form-control">
-                        </div>
-                        <div class="mb-3">
-                            <label for="mobile_number" class="form-label">Mobile Number</label>
-                            <input type="text" id="mobile_number" name="mobile_number" class="form-control">
-                        </div>
-                        <div class="mb-3">
-                            <label for="otp" class="form-label">OTP</label>
-                            <input type="text" id="otp" name="otp" class="form-control">
-                        </div>
-                        <div class="text-end">
-                            <button type="submit" class="btn btn-primary">Submit</button>
-                        </div>
-                    </form>
-                </div>
+                    <div class="mb-3">
+                        <label for="move_from_origin" class="form-label">Location</label>
+                        <input type="text" id="move_from_origin" name="move_from_origin" class="form-control">
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="date_time" class="form-label">Date and Time</label>
+                        <input type="datetime-local" id="date_time" name="date_time" class="form-control">
+                    </div>
+                    <div class="mb-3">
+                        <label for="name" class="form-label">Name</label>
+                        <input type="text" id="name" name="name" class="form-control">
+                    </div>
+                    <div class="mb-3">
+                        <label for="email" class="form-label">Email</label>
+                        <input type="email" id="email" name="email" class="form-control">
+                    </div>
+                    <div class="mb-3">
+                        <label for="mobile_number" class="form-label">Mobile Number</label>
+                        <input type="text" id="mobile_number" name="mobile_number" class="form-control">
+                    </div>
+                    <div class="text-end">
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                    </div>
+                </form>
             </div>
         </div>
     </div>

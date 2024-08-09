@@ -44,7 +44,7 @@
                 <li class="{{ Route::currentRouteName() === 'service-detail.index' ? 'active' : '' }}">
                     <a href="{{ route('service-detail.index') }}">
                         <i class="fe fe-file-text"></i>
-                        <span>Service details description</span>
+                        <span>Service details</span>
                     </a>
                 </li>
 

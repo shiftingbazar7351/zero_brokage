@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Category;
 use App\Models\ServiceDetail;
+use App\Models\SubCategory;
 use Illuminate\Http\Request;
 
 class ServiceDetailController extends Controller
@@ -12,8 +14,8 @@ class ServiceDetailController extends Controller
      */
     public function index()
     {
-        $services = ServiceDetail::get();
-        return view('backend.service-detail.create', compact('services'));
+        $serviceDetails = ServiceDetail::orderByDesc('created_by')->get();
+        return view('backend.service-detail.index', compact('serviceDetails'));
     }
 
     /**
@@ -21,7 +23,9 @@ class ServiceDetailController extends Controller
      */
     public function create()
     {
-        //
+        $subcategories = SubCategory::orderByDesc('created_at')->get();
+        $categories = Category::orderByDesc('created_at')->get();
+        return view('backend.service-detail.create', compact('subcategories','categories'));
     }
 
     /**
@@ -29,7 +33,13 @@ class ServiceDetailController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validatedData = $request->validate([
+            'subcategory_id' => 'required|string',
+            'description' => 'required|string',
+            'summery' => 'nullable',
+        ]);
+        ServiceDetail::create($validatedData);
+        return redirect(route('service-detail.index'))->with('success', 'Enquiry submitted successfully!');
     }
 
     /**
@@ -61,6 +71,11 @@ class ServiceDetailController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $service = ServiceDetail::findOrFail($id);
+        if($service){
+            $service->delete();
+            return redirect()->back()->with('success','Deleted Successfully');
+        }
+        return redirect()->back()->with('error','Something went wrong');
     }
 }

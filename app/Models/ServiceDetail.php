@@ -10,8 +10,12 @@ class ServiceDetail extends Model
     use HasFactory;
     protected $fillable = [
         'subcategory_id',
-        'discription',
+        'description',
+        'summery',
         'created_by',
         'status',
     ];
+    public function subCategory(){
+        return $this->belongsTo(SubCategory::class,'subcategory_id','id');
+    }
 }

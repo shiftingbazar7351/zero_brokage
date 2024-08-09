@@ -27518,3 +27518,8 @@ td.ant-table-column-sort {
 	border: 2px solid red;
 }
 
+.text-wrap {
+                                                    overflow-wrap: break-word;
+                                                    max-width: 200px;
+                                                    padding: 5px;
+                                                }

@@ -1,15 +1,20 @@
 <?php
 
-
-if (!function_exists('truncateWords')) {
-    function truncateWords($text, $limit = 40)
+if (!function_exists('truncateCharacters')) {
+    function truncateCharacters($text, $limit = 100)
     {
-        $words = explode(' ', $text);
-        if (count($words) <= $limit) {
+        // Remove HTML tags to ensure accurate character count
+        $text = strip_tags($text);
+
+        // Truncate text to the desired limit
+        if (strlen($text) <= $limit) {
             return $text;
         }
 
-        return implode(' ', array_slice($words, 0, $limit)) . '...';
+        // Split text into an array of lines
+        $lines = str_split(substr($text, 0, $limit), 50); // 50 characters per line
+
+        return implode('<br>', $lines) . '...';
     }
 }
 

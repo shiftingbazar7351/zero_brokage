@@ -1,18 +1,14 @@
 @extends('frontend.layouts.main')
 @section('content')
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/css/intlTelInput.min.css">
-
     <div class="bg-img">
-        <img src="assets/img/bg/work-bg-03.png" alt="img" class="bgimg1">
-        <img src="assets/img/bg/work-bg-03.png" alt="img" class="bgimg2">
-        <img src="assets/img/bg/feature-bg-03.png" alt="img" class="bgimg3">
+        <img src="{{ asset('assets/img/bg/work-bg-03.png') }}" alt="img" class="bgimg1">
+        <img src="{{ asset('assets/img/bg/work-bg-03.png') }}" alt="img" class="bgimg2">
+        <img src="{{ asset('assets/img/bg/feature-bg-03.png') }}" alt="img" class="bgimg3">
     </div>
-
-
     <div class="content">
         <div class="container">
             <div class="row">
-
                 <div class="col-md-8">
                     <div class="serv-profile">
                         <h2>Car Repair Services</h2>
@@ -20,79 +16,89 @@
                             <li>
                                 <span class="badge">Car Wash</span>
                             </li>
-
                         </ul>
                     </div>
                 </div>
-
                 <div class="col-md-12 mx-auto border border-gray  rounded">
                     <div class="service-gal p-4">
-                        <form id="enquiryForm">
+                        <form id="enquiryForm" action="{{ route('enquiry.store') }}" method="POST">
                             @csrf
                             <div class="row">
                                 <div class="col-6">
                                     <div class="form-group">
                                         <label for="category">Select Services :</label>
-                                        <select class="form-control" id="category" name="category" required>
-                                            <option value="">Select Services</option>
+                                        <select class="form-control" id="category" required name="category" >
+                                            <option value="" selected disabled>Select Services</option>
                                             @foreach ($categories as $category)
                                                 <option value="{{ $category->id }}">{{ $category->name }}</option>
                                             @endforeach
                                         </select>
-
+                                        <div class="text-danger category-error"></div>
                                     </div>
                                     <div class="form-group">
                                         <label for="move_from_origin" class="form-label">Location</label>
-                                         <input type="text" id="move_from_origin" name="move_from_origin" class="form-control" placeholder="Enter your location">
+                                        <input type="text" id="move_from_origin" required name="move_from_origin"
+                                            class="form-control" placeholder="Enter your location">
+                                        <div class="text-danger move_from_origin-error"></div>
                                     </div>
                                     <div class="form-group">
                                         <label for="">Choose your Date</label>
                                         <input type="datetime-local" class="form-control" id="exampleInputPassword"
-                                            placeholder="Choose your date" name="date_time">
+                                            placeholder="Choose your date" required name="date_time">
+                                        <div class="text-danger date_time-error"></div>
                                     </div>
 
                                     <label for="exampleInputEmail1">Email address</label>
                                     <input type="email" class="form-control" id="exampleInputEmail"
-                                        aria-describedby="emailHelp" placeholder="Enter email" name="email">
-
+                                        aria-describedby="emailHelp" placeholder="Enter email" required name="email">
+                                    <div class="text-danger email-error"></div>
                                     <div class="form-check mt-1">
-                                        <input type="checkbox" class="form-check-input" id="exampleCheck1" required>
+                                        <input type="checkbox" class="form-check-input" id="exampleCheck1" name="check_me_out" required>
                                         <label class="form-check-label" for="exampleCheck1">Check me out</label>
+                                        <div class="text-danger check_me_out-error"></div>
                                     </div>
-                                    <button type="submit" class="btn btn-primary">Submit</button>
+                                    {{-- <button type="submit" class="btn btn-primary">Submit</button> --}}
                                 </div>
                                 <div class="col-6">
                                     <div class="form-group">
                                         <label for="category">Select Sub-services</label>
-                                        <select class="form-control" id="subcategory" name="subcategory_id">
-                                            <option value="">Select Subservices</option>
+                                        <select class="form-control" id="subcategory" required name="subcategory_id">
+                                            <option value="" selected disabled>Select Subservices</option>
                                         </select>
+                                        <div class="text-danger subcategory_id-error"></div>
                                     </div>
 
                                     <div class="form-group">
                                         <label for="">Name</label>
                                         <input type="text" class="form-control" id="exampleInputEmail1"
-                                            aria-describedby="emailHelp" placeholder="Enter your name" name="name">
+                                            aria-describedby="emailHelp" placeholder="Enter your name" required
+                                            name="name">
+                                        <div class="text-danger name-error"></div>
                                     </div>
                                     <div class="form-group phone-div">
                                         <label for="">Mobile Number</label>
                                         <br>
                                         <div class="input-container">
-                                            <input  name="mobile_number" type="text" class="form-control" id="phoneNumberInput-booking"
-                                                aria-describedby="emailHelp" placeholder="Enter your Phone Number"
-                                                autocomplete="off" data-intl-tel-input-id="0" style="padding-left: 84px;"
+                                            <input required name="mobile_number" type="text" class="form-control"
+                                                id="phoneNumberInput-booking" aria-describedby="emailHelp"
+                                                placeholder="Enter your Phone Number" autocomplete="off"
+                                                data-intl-tel-input-id="0" style="padding-left: 84px;"
                                                 onkeydown="return ( event.ctrlKey || event.altKey
                                             || (47<event.keyCode && event.keyCode<58 && event.shiftKey==false)
                                             || (95<event.keyCode && event.keyCode<106)
                                             || (event.keyCode==8) || (event.keyCode==9)
                                             || (event.keyCode>34 && event.keyCode<40)
                                             || (event.keyCode==46) )"
-                                            minlength="10" maxlength="10" >
+                                                minlength="10" maxlength="10">
+                                            <div class="text-danger mobile_number-error"></div>
                                         </div>
                                     </div>
-
                                 </div>
                             </div>
+                            <div style="text-align: center;">
+                                <button type="submit" class="btn btn-primary">Submit</button>
+                              </div>
+
                         </form>
                     </div>
                 </div>
@@ -101,7 +107,6 @@
 
 
             <section class="work-section pt-0">
-
                 <div class="container">
                     <div class="row">
                         <div class="col-md-12 text-center">
@@ -212,27 +217,19 @@
                 </div>
             </section>
 
-
             <div class="row">
-
                 <div class="col-lg-12">
                     <div class="service-wrap">
                         <h5>Service Details</h5>
-                        <p>Car wash is a facility used to clean the exterior and, in some cases, the interior of
+                        <p> {!! $services->description ??'' !!}</p>
+                        <p> {!! $services->summery ??'' !!}</p>
+                        {{-- <p>Car wash is a facility used to clean the exterior and, in some cases, the interior of
                             motor vehicles. Car washes can be self-serve, fully automated, or full-service with
                             attendants who wash the vehicle.</p>
                         <p>Car wash is a facility used to clean the exterior and, in some cases, the interior of
                             motor vehicles. Car washes can be self-serve, fully automated, or full-service with
-                            attendants who wash the vehicle.</p>
-                        <p>Car wash is a facility used to clean the exterior and, in some cases, the interior of
-                            motor vehicles. Car washes can be self-serve, fully automated, or full-service with
-                            attendants who wash the vehicle.</p>
-
-
-
+                            attendants who wash the vehicle.</p> --}}
                     </div>
-
-
 
                     <div class="service-wrap">
                         <h5>Reviews</h5>
@@ -467,7 +464,7 @@
             </section>
         </div>
     </div>
-    @endsection
+@endsection
 @section('scripts')
     <script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/intlTelInput.min.js"></script>
     <script>
@@ -479,61 +476,70 @@
     </script>
 
 
-<script>
-    $(document).ready(function() {
-        $('#category').on('change', function() {
-            var subcategoryId = $(this).val();
+    <script>
+        $(document).ready(function() {
+            $('#category').on('change', function() {
+                var subcategoryId = $(this).val();
 
-            if (subcategoryId) {
-                $.ajax({
-                    url: '/fetch-subcategory/' + subcategoryId, // Adjusted URL based on route
-                    type: 'POST',
-                    data: {
-                        _token: '{{ csrf_token() }}' // Include CSRF token for security
-                    },
-                    success: function(response) {
-                        if (response.status === 1) {
-                            var subcategory = response.data;
-                            $('#subcategory').find('option').remove(); // Clear existing options
-                            var options =
-                                '<option value="">Select subcategory</option>'; // Default option
-                            $.each(subcategory, function(key, subcateg) {
-                                options += "<option value='" + subcateg.id + "'>" + subcateg.name + "</option>";
-                            });
-                            $('#subcategory').append(options);
+                if (subcategoryId) {
+                    $.ajax({
+                        url: '/fetch-subcategory/' + subcategoryId, // Adjusted URL based on route
+                        type: 'POST',
+                        data: {
+                            _token: '{{ csrf_token() }}' // Include CSRF token for security
+                        },
+                        success: function(response) {
+                            if (response.status === 1) {
+                                var subcategory = response.data;
+                                $('#subcategory').find('option')
+                                    .remove(); // Clear existing options
+                                var options =
+                                    '<option value="" selected disabled>Select Subservices</option>'; // Default option
+                                $.each(subcategory, function(key, subcateg) {
+                                    options += "<option value='"  + subcateg.id + "'>" +
+                                        subcateg.name + "</option>";
+                                });
+                                $('#subcategory').append(options);
+                            }
                         }
+                    });
+                } else {
+                    $('#subcategory').find('option').remove(); // Clear options if no state is selected
+                    $('#subcategory').append('<option value="">Select Subservices</option>');
+                }
+            });
+        });
+
+        // Handle form submission
+        $('#enquiryForm').off('submit').on('submit', function(event) {
+                event.preventDefault(); // Prevent the default form submission
+                var formData = $(this).serialize(); // Serialize form data
+                var url = $(this).attr('action'); // Get the form action URL
+
+                $.ajax({
+                    url: url,
+                    method: 'POST',
+                    data: formData,
+                    success: function(response) {
+
+                        var message = response.message === 'Submitted Successfully';
+                        $('#addEnquiryModal').modal(message ? 'hide' : 'show');
+                        $("#addEnquiryModal .success-msg").toggle(message).delay(3000).hide(0);
+                        setTimeout(function() {
+                            window.location.reload();
+                        }, message ? 3000 : 0);
+                    },
+                    error: function(xhr) {
+                        var errors = xhr.responseJSON.errors;
+                        $('.text-danger').text('');
+
+                        $.each(errors, function(key, value) {
+                            var errorElement = $('.' + key + '-error');
+                            errorElement.text(value[0]);
+
+                        });
                     }
                 });
-            } else {
-                $('#subcategory').find('option').remove(); // Clear options if no state is selected
-                $('#subcategory').append('<option value="">Select subcategory</option>');
-            }
-        });
-    });
-
-      // Handle form submission
-      $('#enquiryForm').off('submit').on('submit', function(e) {
-        e.preventDefault();
-
-        $.ajax({
-            url: "{{ route('enquiry.store') }}",
-            method: "POST",
-            data: $(this).serialize(),
-            success: function(response) {
-                if (response.status === 1) {
-                    alert(response.message);
-                    $('#addEnquiryModal').modal('hide');
-                    location.reload();
-                } else {
-                    alert('Error occurred while submitting the enquiry.');
-                }
-            },
-            error: function(xhr, status, error) {
-                alert('An error occurred: ' + xhr.responseText);
-            }
-        });
-    });
-</script>
-
+            });
+    </script>
 @endsection
-

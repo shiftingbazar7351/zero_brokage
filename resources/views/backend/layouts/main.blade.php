@@ -30,11 +30,7 @@
         @yield('content')
 
     </div>
-    <!-- <div id="overlayer">
-        <span class="loader">
-            <span class="loader-inner"></span>
-        </span>
-    </div> -->
+
     <script>
         $(document).ready(function() {
             $('#price, #discount').on('input', function() {

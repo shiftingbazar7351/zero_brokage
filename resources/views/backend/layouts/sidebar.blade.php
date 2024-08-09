@@ -41,6 +41,13 @@
                     </a>
                 </li>
 
+                <li class="{{ Route::currentRouteName() === 'menus.index' ? 'active' : '' }}">
+                    <a href="{{ route('menus.index') }}">
+                        <i class="fe fe-file-text"></i>
+                        <span>Menu</span>
+                    </a>
+                </li>
+
                 <li class="{{ Route::currentRouteName() === 'service-detail.index' ? 'active' : '' }}">
                     <a href="{{ route('service-detail.index') }}">
                         <i class="fe fe-file-text"></i>

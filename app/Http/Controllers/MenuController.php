@@ -3,7 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\Menu;
+use App\Models\SubCategory;
+use App\Models\Category;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class MenuController extends Controller
 {
@@ -12,8 +15,10 @@ class MenuController extends Controller
      */
     public function index()
     {
-       $menus = Menu::orderByDesc('created_at')->paginate(10);
-        return view('backend.sub-category.index',compact('subcategories','categories'));
+        $subcategories = SubCategory::orderByDesc('created_at')->get();
+        $categories = Category::orderByDesc('created_at')->get();
+        $menus = Menu::orderByDesc('created_by')->paginate(10);
+        return view('backend.menu.index',compact('subcategories','categories','menus'));
     }
 
  
@@ -23,32 +28,110 @@ class MenuController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'category' => 'required',
+            'subcategory' => 'nullable',
+            'icon' => 'nullable|image|mimes:jpeg,png|max:2048',
+        ]);
+
+        $menu = new Menu();
+        $menu->name = $request->input('name');
+        $menu->subcategory_id = $request->input('subcategory');
+        $menu->slug = $this->generateSlug($request->name);
+
+        if ($request->hasFile('image')) {
+            $image = $request->file('image');
+            $imageName = time() . '_' . $image->getClientOriginalName();
+            $image->storeAs('assets/menu', $imageName, 'public');
+            $menu->image = $imageName;
+        }
+
+        $menu->save();
+    
+        return response()->json(['status' => 1, 'message' => 'Menu added successfully!']);
+    }
+    protected function generateSlug($name)
+    {
+        $slug = str_replace(' ', '_', $name);
+        $slug = strtolower($slug);
+        return $slug;
+    }
+    
+    public function edit($id)
+    {
+        $menu = Menu::findOrFail($id);
+        return response()->json($menu);
+    }
+    
+    public function update(Request $request, $id)
+    {
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'category' => 'required',
+            'subcategory' => 'nullable',
+            'icon' => 'nullable|image|mimes:jpeg,png|max:2048',
+        ]);
+    
+        $menu = Menu::findOrFail($id);
+        $menu->name = $request->input('name');
+        $menu->subcategory_id = $request->input('subcategory');
+        $menu->slug = $this->generateSlug($request->name);
+    
+        if ($request->hasFile('image')) {
+            if ($menu->image) {
+                Storage::disk('public')->delete('assets/menu/' . $menu->image);
+            }
+            $image = $request->file('image');
+            $imageName = time() . '_' . $image->getClientOriginalName();
+            $image->storeAs('assets/menu', $imageName, 'public');
+            $menu->image = $imageName;
+        }
+    
+        $menu->save();
+    
+        return response()->json(['status' => 1, 'message' => 'Menu updated successfully!']);
+    }
+    
+    
+    public function destroy($id)
+    {
+        $menu = Menu::findOrFail($id);
+    
+        if ($menu->image) {
+            Storage::disk('public')->delete('assets/menu/' . $menu->image);
+        }
+    
+        $menu->delete();
+    
+        // return response()->json(['status' => 1, 'message' => 'Menu deleted successfully!']);
+        return redirect()->back()->with('success', 'Menu Deleted.');
+    }
+    
+
+    public function fetchsubcategory($categoryId)
+    {
+        $subcategories = SubCategory::where('category_id', $categoryId)->get()->map(function ($subcategory) {
+            $subcategory->name = ucwords($subcategory->name);
+            return $subcategory;
+        });
+    
+        if ($subcategories->isEmpty()) {
+            return response()->json(['status' => 0, 'message' => 'No subcategory found']);
+        }
+        return response()->json(['status' => 1, 'data' => $subcategories]);
     }
 
-
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
+    public function updateStatus(Request $request)
     {
-        //
-    }
+        $item = SubCategory::find($request->id);
+        if ($item) {
+            $item->status = $request->status;
+            $item->save();
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        //
-    }
+            return response()->json(['success' => true, 'message' => 'Status updated successfully.']);
+        }
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
+        return response()->json(['success' => false, 'message' => 'Item not found.']);
     }
 }

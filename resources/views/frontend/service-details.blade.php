@@ -8,21 +8,6 @@
         <img src="assets/img/bg/feature-bg-03.png" alt="img" class="bgimg3">
     </div>
 
-    {{-- <div class="breadcrumb-bar">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-12 col-12">
-                    <h2 class="breadcrumb-title">Service Details</h2>
-                    <nav aria-label="breadcrumb" class="page-breadcrumb">
-                        <ol class="breadcrumb">
-                            <li class="breadcrumb-item"><a href="{{ Route('home') }}">Home</a></li>
-                            <li class="breadcrumb-item active" aria-current="page">Service Details</li>
-                        </ol>
-                    </nav>
-                </div>
-            </div>
-        </div>
-    </div> --}}
 
     <div class="content">
         <div class="container">
@@ -42,57 +27,62 @@
 
                 <div class="col-md-12 mx-auto border border-gray  rounded">
                     <div class="service-gal p-4">
-                        <form>
+                        <form id="enquiryForm">
+                            @csrf
                             <div class="row">
                                 <div class="col-6">
                                     <div class="form-group">
-                                        <label for="">Select Services :</label>
-                                        <select class="form-select mb-3" aria-label="Default select example">
-                                            <option selected>Select services</option>
-                                            <option value="1">One</option>
-                                            <option value="2">Two</option>
-                                            <option value="3">Three</option>
+                                        <label for="category">Select Services :</label>
+                                        <select class="form-control" id="category" name="category" required>
+                                            <option value="">Select Services</option>
+                                            @foreach ($categories as $category)
+                                                <option value="{{ $category->id }}">{{ $category->name }}</option>
+                                            @endforeach
                                         </select>
 
                                     </div>
                                     <div class="form-group">
+                                        <label for="move_from_origin" class="form-label">Location</label>
+                                         <input type="text" id="move_from_origin" name="move_from_origin" class="form-control" placeholder="Enter your location">
+                                    </div>
+                                    <div class="form-group">
                                         <label for="">Choose your Date</label>
                                         <input type="datetime-local" class="form-control" id="exampleInputPassword"
-                                            placeholder="Choose your date">
+                                            placeholder="Choose your date" name="date_time">
                                     </div>
                                     <label for="exampleInputEmail1">Email address</label>
                                     <input type="email" class="form-control" id="exampleInputEmail"
-                                        aria-describedby="emailHelp" placeholder="Enter email">
+                                        aria-describedby="emailHelp" placeholder="Enter email" name="email">
 
                                     <div class="form-check mt-1">
-                                        <input type="checkbox" class="form-check-input" id="exampleCheck1">
+                                        <input type="checkbox" class="form-check-input" id="exampleCheck1" required>
                                         <label class="form-check-label" for="exampleCheck1">Check me out</label>
                                     </div>
                                     <button type="submit" class="btn btn-primary">Submit</button>
                                 </div>
                                 <div class="col-6">
                                     <div class="form-group">
-                                        <label for="">Select Sub-Services :</label>
-                                        <select class="form-select mb-3" aria-label="Default select example">
-                                            <option selected>Select Sub-services</option>
-                                            <option value="1">One</option>
-                                            <option value="2">Two</option>
-                                            <option value="3">Three</option>
+                                        <label for="category">Select Sub-services</label>
+                                        <select class="form-control" id="subcategory" name="subcategory_id">
+                                            <option value="">Select Subservices</option>
                                         </select>
+                                    </div>
 
+                                    <div class="form-group">
                                         <label for="">Name</label>
                                         <input type="text" class="form-control" id="exampleInputEmail1"
-                                            aria-describedby="emailHelp" placeholder="Enter your name">
+                                            aria-describedby="emailHelp" placeholder="Enter your name" name="name">
                                     </div>
                                     <div class="form-group phone-div">
                                         <label for="">Mobile Number</label>
                                         <br>
                                         <div class="input-container">
-                                            <input type="text" class="form-control" id="phoneNumberInput-booking"
+                                            <input  name="mobile_number" type="text" class="form-control" id="phoneNumberInput-booking"
                                                 aria-describedby="emailHelp" placeholder="Enter your Phone Number"
                                                 autocomplete="off" data-intl-tel-input-id="0" style="padding-left: 84px;">
                                         </div>
                                     </div>
+
                                 </div>
                             </div>
                         </form>
@@ -469,6 +459,8 @@
             </section>
         </div>
     </div>
+    @endsection
+@section('scripts')
     <script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/intlTelInput.min.js"></script>
     <script>
         const input = document.querySelector("#phoneNumberInput-booking");
@@ -477,4 +469,63 @@
             separateDialCode: true
         });
     </script>
+
+
+<script>
+    $(document).ready(function() {
+        $('#category').on('change', function() {
+            var subcategoryId = $(this).val();
+
+            if (subcategoryId) {
+                $.ajax({
+                    url: '/fetch-subcategory/' + subcategoryId, // Adjusted URL based on route
+                    type: 'POST',
+                    data: {
+                        _token: '{{ csrf_token() }}' // Include CSRF token for security
+                    },
+                    success: function(response) {
+                        if (response.status === 1) {
+                            var subcategory = response.data;
+                            $('#subcategory').find('option').remove(); // Clear existing options
+                            var options =
+                                '<option value="">Select subcategory</option>'; // Default option
+                            $.each(subcategory, function(key, subcateg) {
+                                options += "<option value='" + subcateg.id + "'>" + subcateg.name + "</option>";
+                            });
+                            $('#subcategory').append(options);
+                        }
+                    }
+                });
+            } else {
+                $('#subcategory').find('option').remove(); // Clear options if no state is selected
+                $('#subcategory').append('<option value="">Select subcategory</option>');
+            }
+        });
+    });
+
+      // Handle form submission
+      $('#enquiryForm').off('submit').on('submit', function(e) {
+        e.preventDefault();
+
+        $.ajax({
+            url: "{{ route('enquiry.store') }}",
+            method: "POST",
+            data: $(this).serialize(),
+            success: function(response) {
+                if (response.status === 1) {
+                    alert(response.message);
+                    $('#addEnquiryModal').modal('hide');
+                    location.reload();
+                } else {
+                    alert('Error occurred while submitting the enquiry.');
+                }
+            },
+            error: function(xhr, status, error) {
+                alert('An error occurred: ' + xhr.responseText);
+            }
+        });
+    });
+</script>
+
 @endsection
+

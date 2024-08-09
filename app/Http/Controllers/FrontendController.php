@@ -35,4 +35,12 @@ class FrontendController extends Controller
             ->paginate(20);
         return view('frontend.service-grid', compact('subcategories', 'category','categories'));
     }
+    public function serviceDetails()
+    {
+        // $menus = Menu::where('status', 1)->orderByDesc('created_at')->get();
+        $subcategories = SubCategory::orderByDesc('created_at')->get();
+        $categories = Category::orderByDesc('created_at')->get();
+        return view('frontend.service-details',compact('subcategories','categories'));
+    }
+
 }

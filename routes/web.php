@@ -10,6 +10,7 @@ use App\Http\Controllers\ServiceDetailController;
 use App\Http\Controllers\SubCategoryController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\EnquiryController;
+use App\Http\Controllers\MenuController;
 
 // frontend
 // These routes are handled by the FrontendController
@@ -53,6 +54,9 @@ Route::resource('/service-detail', ServiceDetailController::class);
 Route::resource('/enquiry', EnquiryController::class);
 Route::post('/fetch-subcategory/{id}', [EnquiryController::class, 'fetchsubcategory']);
 
+Route::resource('/menus', MenuController::class);
+Route::post('/update-subcategorystatus', [MenuController::class, 'updateStatus'])->name('update.subcategorystatus');
+Route::post('/fetch-subcategory/{id}', [MenuController::class, 'fetchsubcategory']);
 
 // Route::post('/services-submenu', [SubmenuController::class, 'store'])->name('submenu.store');
 // Route::get('/services_subcategory', [UserController::class, 'sub_category'])->name('subcategory');

@@ -1,7 +1,7 @@
 @extends('backend.layouts.main')
 @section('content')
     <style>
-       .default-img {
+        .default-img {
             width: auto;
         }
 

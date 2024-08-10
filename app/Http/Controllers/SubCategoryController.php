@@ -20,7 +20,6 @@ class SubCategoryController extends Controller
     public function index()
     {
         $subcategories = SubCategory::orderByDesc('created_at')->get();
-        // $subcategory = SubCategory::orderByDesc('created_at')->first();
         $categories = Category::orderByDesc('created_at')->get();
         $countryId = Country::where('name', 'India')->value('id');
         $states = State::where('country_id', $countryId)->get(['name', 'id']);
@@ -57,7 +56,7 @@ class SubCategoryController extends Controller
         $subcategory->name = $request->input('name');
         $subcategory->category_id = $request->input('category');
         $subcategory->slug = $this->generateSlug($request->name);
-        $subcategory->city_id = $request->input('city');
+        $subcategory->city_id = $request->input('subcategory');
         $subcategory->total_price = $request->input('price');
         $subcategory->discount = $request->input('discount');
         $subcategory->discounted_price = $finalPrice;
@@ -66,7 +65,7 @@ class SubCategoryController extends Controller
         if ($request->hasFile('image')) {
             $image = $request->file('image');
             $imageName = time() . '_' . $image->getClientOriginalName();
-            $image->storeAs('assets/subcategory', $imageName, 'public');
+            $image->storeAs('assets/menu', $imageName, 'public');
             $subcategory->image = $imageName;
         }
 

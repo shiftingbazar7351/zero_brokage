@@ -260,7 +260,6 @@
         }
 
 
-
         // for updating the status through ajax request
         document.addEventListener('DOMContentLoaded', function() {
             document.querySelectorAll('.status-toggle').forEach(function(toggle) {

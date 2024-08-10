@@ -1,81 +1,7 @@
 @extends('frontend.layouts.main')
 @section('content')
-    {{-- <link rel="stylesheet" href="{{ asset('assets/css/booking_infoPopup.css') }}"> --}}
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: #f4f4f4;
-        }
-
-        /* Popup Background */
-        .popup {
-            /* display: block; */
-            position: fixed;
-            z-index: 1000;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.5);
-            opacity: 0;
-            transition: opacity 0.3s ease;
-        }
-
-        /* Popup Content */
-        .popup-content {
-            background-color: #eee7e7;
-            margin: 4% auto;
-            padding: 20px;
-            border: 1px solid #888;
-            width: 42%;
-            text-align: center;
-            border-radius: 5px;
-            transform: translateY(-30px);
-            transition: transform 0.3s ease;
-        }
-
-        .popup.show {
-            display: block;
-            opacity: 1;
-        }
-
-        .popup.show .popup-content {
-            transform: translateY(0);
-            /* Move to original position */
-        }
-
-        .close {
-            color: red;
-            float: right;
-            font-size: 28px;
-            font-weight: bold;
-        }
-
-        .close:hover,
-        .close:focus {
-            color: black;
-            text-decoration: none;
-            cursor: pointer;
-        }
-
-        .btn {
-            background-color: #007bff;
-            /* Bootstrap primary color */
-            color: white;
-            border: none;
-            padding: 10px 15px;
-            margin: 5px;
-            cursor: pointer;
-            border-radius: 5px;
-        }
-
-        .btn:hover {
-            background-color: #1573d6;
-            /* Darker blue on hover */
-        }
-    </style>
+    <link rel="stylesheet" href="{{ asset('assets/css/booking_infoPopup.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/css/intlTelInput.min.css">
 
     <div class="bg-img">
         <img src="{{ asset('assets/img/bg/work-bg-03.png') }}" alt="img" class="bgimg1">
@@ -210,12 +136,12 @@
                             </select>
                         </div>
                         <!-- <div class="filter-content">
-                                                            <h2>Location</h2>
-                                                            <div class="group-img">
-                                                                <input type="text" class="form-control" placeholder="Select Location">
-                                                                <i class="feather-map-pin"></i>
-                                                            </div>
-                                                        </div> -->
+                                                                <h2>Location</h2>
+                                                                <div class="group-img">
+                                                                    <input type="text" class="form-control" placeholder="Select Location">
+                                                                    <i class="feather-map-pin"></i>
+                                                                </div>
+                                                            </div> -->
                         <div class="filter-content">
                             <h2 class="mb-4">Price Range</h2>
                             <div class="filter-range">
@@ -337,18 +263,44 @@
                             </div>
                         </div>
                     </div>
-                    <div id="myPopup-booking" class="popup">
+
+                    <div id="myPopup-booking1" class="popup">
                         <div class="popup-content">
-                            <h3>Login/Sign up</h3>
-                            <span class="close" id="closePopup-booking">&times;</span>
+                            <span class="close" id="closePopup-booking1">&times;</span>
+                            <h3>To Book a Service</h3>
                             <img src="{{ asset('assets/img/icons/signup.png') }}" alt="">
                             <h5 class="sign-up-text">Enter your Mobile Number</h5>
-                            <input type="tel" id="phoneNumberInput-booking" class="phone-number-field"
-                                onkeyup="validateNum(this)" maxlength="10" placeholder="Enter Mobile Number" required>
-                            <div id="res"></div>
-                            <button id="saveChanges-booking" class="btn"
-                                onclick="startCountdown(60)">Continue</button>
+                            <input type="tel" id="phoneNumberInput-booking" class="phone-number-field form-group input-details"
+                                onkeyup="validateNumBookingg(this)" maxlength="10" placeholder="Enter Mobile Number"
+                                required>
+                            <div id="res-booking1"></div>
+                            <button id="saveChanges-booking1" class="btn">Continue</button>
                             <!-- <button id="closePopupBtn" class="btn">Close</button> -->
+                            <div class="term-condition">
+                                <input type="checkbox" class="checkbox" id="checkbox-login-booking1">
+                                <p>By Continuing, you agree to our <span class="term">Term and Condition</span>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="myPopup-booking" class="popup">
+                        <div class="popup-content">
+                            <span class="close" id="closePopup-booking">&times;</span>
+                            <h3>Enter Your Details</h3>
+
+                            <img src="{{ asset('assets/img/icons/write-icons.svg') }}" alt="" width="75px">
+                            <div class="row w-75 mx-auto detail-input">
+
+                                <input type="text" class="form-control text-center mb-3 input-details"
+                                    id="exampleInputEmail1" aria-describedby="emailHelp"
+                                    placeholder="Enter Your Location">
+                                <input type="text" class="form-control text-center mb-3 input-details"
+                                    id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter your Name">
+                                <input type="email" class="form-control text-center mb-3 input-details"
+                                    id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter your email">
+                            </div>
+                            <button id="saveChanges-booking" class="btn">Get OTP</button>
                             <div class="term-condition">
                                 <input type="checkbox" class="checkbox" id="checkbox-login-booking">
                                 <p>By Continuing, you agree to our <span class="term">Term and Condition</span>
@@ -356,6 +308,42 @@
                             </div>
                         </div>
                     </div>
+                    <div id="myPopup2-booking" class="popup">
+                        <div class="popup-content">
+                            <span class="close" id="closePopup2-booking">&times;</span>
+                            <h3>Verify OTP</h3>
+                            <img src="{{ asset('assets/img/icons/lock-icon.png') }}" alt="">
+
+                            <h5 class="sign-up-text">We've Sent you a 4 Digit Pin On Your Number</h5>
+
+                            <div class="edit-phone-cont">
+                                <div class="Phone-Number">8303361853</div>
+                                <div class="edit-icon" id="editnumber-booking"><img
+                                        src="{{ asset('assets/img/icons/edit-icon.svg') }}" alt="">Edit</div>
+                            </div>
+                            <input type="text" class="text-center rounded p-1" id="phone2-booking"
+                                placeholder="Enter your OTP">
+                            <div class="resend">
+                                <div class="get-otp">Don't get OTP?</div>
+                                <div id="counter-booking" class="text-danger"></div>
+                            </div>
+                            <div class="resend-container">
+                                <h5 class="resend-otp" id="resendOtpTextBooking">Resend OTP</h5>
+                                <p class="whatsapp-otp" id="otpOnWhatsappBooking">Get OTP on <img
+                                        src="{{ asset('assets/img/icons/icons8-whatsapp.gif') }}" alt=""></p>
+                            </div>
+                            <button type="button" class="btn btn-primary btn-lg" id="verify-otp-booking">Verify
+                                OTP</button>
+
+                            <!-- <button id="closePopupBtn" class="btn">Close</button> -->
+                            <div class="term-condition">
+                                <input type="checkbox" class="checkbox">
+                                <p>By Continuing, you agree to our <span class="term">Term and Condition</span>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
 
                     <div class="row">
                         <div class="row">
@@ -392,7 +380,7 @@
                                                             class="old-price">&#8377;{{ $subcategory->total_price ?? '' }}</span>
                                                     @endif
                                                 </h6>
-                                                <a class="btn btn-book" id="booking-services">Book Now</a>
+                                                <a class="btn btn-book book-Now-btn" id="booking-services">Book Now</a>
 
                                             </div>
 
@@ -570,25 +558,15 @@
             </div>
         </section>
         <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-        {{-- <script>
-            var booking_btn = document.getElementById('booking-services');
-            var myPopup_booking = document.getElementById('myPopup_booking')
-            var closePopup_booking = document.getElementById("closePopup_booking");
 
-            var popup2_booking = document.getElementById("myPopup2_booking");
-            var closeSpan2_booking = document.getElementById("closePopup2_booking");
-            var editnum_booking = document.getElementById("editnumber_booking");
-            var saveChanges_booking = document.getElementById("saveChanges_booking");
-
-            // console.log(booking_btn);
-
-
-            booking_btn.onclick = function() {
-                alert();
-                myPopup_booking.classList.add("show");
-            };
-
-        </script> --}}
 
         <script src="{{ asset('assets/js/booking_infoPopup.js') }}"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/intlTelInput.min.js"></script>
+        <script>
+            const inputtestt = document.querySelector("#phoneNumberInput-booking");
+            window.intlTelInput(inputtestt, {
+                initialCountry: "in",
+                separateDialCode: true
+            });
+        </script>
     @endsection

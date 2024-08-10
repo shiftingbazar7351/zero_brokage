@@ -23,8 +23,8 @@ class SubCategoryController extends Controller
         $categories = Category::orderByDesc('created_at')->get();
         $countryId = Country::where('name', 'India')->value('id');
         $states = State::where('country_id', $countryId)->get(['name', 'id']);
-        $cities = City::get();
-        return view('backend.sub-category.index', compact('subcategories', 'categories', 'states','cities'));
+        // $cities = City::get();
+        return view('backend.sub-category.index', compact('subcategories', 'categories', 'states'));
     }
 
     /**
@@ -207,5 +207,5 @@ class SubCategoryController extends Controller
         return response()->json(['success' => false, 'message' => 'Item not found.']);
     }
 
-    
+
 }

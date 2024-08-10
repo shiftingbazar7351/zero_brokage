@@ -17,8 +17,8 @@ class EnquiryController extends Controller
     {
         $subcategories = SubCategory::orderByDesc('created_at')->get();
         $categories = Category::orderByDesc('created_at')->get();
-        $enquiries = Enquiry::orderByDesc('created_at')->get();
-        return view('backend.enquiry_list', compact('enquiries', 'subcategories', 'categories'));
+        $enquiries = Enquiry::with('subcategory.category')->orderByDesc('created_at')->get();
+        return view('backend.enquiry.enquiry_list', compact('enquiries', 'subcategories', 'categories'));
     }
 
 
@@ -48,10 +48,10 @@ class EnquiryController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit($id)
+    public function edit(Enquiry $enquiry)
     {
-        $enquiry = Enquiry::findOrFail($id);
-        return view('backend.enquiry_list', compact('enquiry'));
+        return response()->json(['category' => $enquiry]);
+
     }
 
     /**
@@ -98,7 +98,6 @@ class EnquiryController extends Controller
             $subcategory->name = ucwords($subcategory->name);
             return $subcategory;
         });
-
         if ($subcategories->isEmpty()) {
             return response()->json(['status' => 0, 'message' => 'No subcategory found']);
         }

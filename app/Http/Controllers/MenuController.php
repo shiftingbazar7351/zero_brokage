@@ -17,8 +17,8 @@ class MenuController extends Controller
     {
         $subcategories = SubCategory::orderByDesc('created_at')->get();
         $categories = Category::orderByDesc('created_at')->get();
-        $menus = Menu::orderByDesc('created_by')->paginate(10);
-        return view('backend.menu.index',compact('subcategories','categories','menus'));
+        $menusCat = Menu::orderByDesc('created_at')->get();
+        return view('backend.menu.index',compact('subcategories','categories','menusCat'));
     }
 
  
@@ -37,7 +37,7 @@ class MenuController extends Controller
 
         $menu = new Menu();
         $menu->name = $request->input('name');
-        $menu->subcategory_id = $request->input('subcategory');
+        $menu->subcategory_id = $request->input('subcategory_id');
         $menu->slug = $this->generateSlug($request->name);
 
         if ($request->hasFile('image')) {
@@ -61,7 +61,9 @@ class MenuController extends Controller
     public function edit($id)
     {
         $menu = Menu::findOrFail($id);
-        return response()->json($menu);
+        $categories = Category::all();
+        $subcategories = SubCategory::where('category_id', $menu->category_id)->get();
+        return view('backend.menu.index', compact('menu', 'categories', 'subcategories'));
     }
     
     public function update(Request $request, $id)
@@ -69,14 +71,14 @@ class MenuController extends Controller
         $request->validate([
             'name' => 'required|string|max:255',
             'category' => 'required',
-            'subcategory' => 'nullable',
-            'icon' => 'nullable|image|mimes:jpeg,png|max:2048',
+            'subcategory_id' => 'nullable',
+            'image' => 'nullable|image|mimes:jpeg,png|max:2048',
         ]);
-    
+
         $menu = Menu::findOrFail($id);
         $menu->name = $request->input('name');
-        $menu->subcategory_id = $request->input('subcategory');
-        $menu->slug = $this->generateSlug($request->name);
+        $menu->subcategory_id = $request->input('subcategory_id');
+        $menu->slug = $this->generateSlug($request->input('name'));
     
         if ($request->hasFile('image')) {
             if ($menu->image) {
@@ -90,8 +92,9 @@ class MenuController extends Controller
     
         $menu->save();
     
-        return response()->json(['status' => 1, 'message' => 'Menu updated successfully!']);
+        return redirect()->route('menus.index')->with('success', 'Menu updated successfully.');
     }
+    
     
     
     public function destroy($id)
@@ -121,10 +124,11 @@ class MenuController extends Controller
         }
         return response()->json(['status' => 1, 'data' => $subcategories]);
     }
+   
 
     public function updateStatus(Request $request)
     {
-        $item = SubCategory::find($request->id);
+        $item = Menu::find($request->id);
         if ($item) {
             $item->status = $request->status;
             $item->save();

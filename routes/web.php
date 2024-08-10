@@ -55,7 +55,8 @@ Route::resource('/enquiry', EnquiryController::class);
 Route::post('/fetch-subcategory/{id}', [EnquiryController::class, 'fetchsubcategory']);
 
 Route::resource('/menus', MenuController::class);
-
+Route::post('/update-subcategorystatus', [MenuController::class, 'updateStatus'])->name('update.subcategorystatus');
+Route::post('/fetch-subcategory/{id}', [MenuController::class, 'fetchsubcategory']);
 
 // Route::post('/services-submenu', [SubmenuController::class, 'store'])->name('submenu.store');
 // Route::get('/services_subcategory', [UserController::class, 'sub_category'])->name('subcategory');

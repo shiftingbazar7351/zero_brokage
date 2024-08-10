@@ -4,7 +4,6 @@
         .default-img {
             width: auto;
         }
-
         .preview-img {
             width: 100px;
             height: 100px;
@@ -186,7 +185,6 @@
             </div>
         </div>
     </div>
-
     <div class="modal fade" id="editCategoryModal" tabindex="-1" aria-labelledby="editCategoryModalLabel"
         aria-hidden="true">
         <div class="modal-dialog">

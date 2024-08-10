@@ -234,7 +234,6 @@
 @endsection
 
 @section('scripts')
-<script src="{{ asset('admin/assets/js/preview-img.js') }}"></script>
     <script>
         function editCategory(id) {
             $.ajax({

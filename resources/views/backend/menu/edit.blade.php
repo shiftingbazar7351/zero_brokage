@@ -1,4 +1,4 @@
-<div class="modal fade" id="editCategoryModal">
+<div class="modal fade" id="edit-category">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header">  
@@ -8,7 +8,7 @@
                 </button>
             </div>
             <div class="modal-body pt-0">
-                <form id="editMenuForm" action="{{ route('menus.update', $menu->id ?? '') }}" method="POST"
+                <form id="editMenuForm" action="{{ route('menus.update',['menu' => $menu->id]) }}" method="POST"
                     enctype="multipart/form-data">
                     @csrf
                     @method('PATCH')

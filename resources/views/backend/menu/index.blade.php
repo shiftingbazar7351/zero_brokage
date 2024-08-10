@@ -57,11 +57,11 @@
                                             <td>
                                                 <div class="d-flex">
                                                     <!-- Edit Button -->
-                                                    <a class="btn delete-table me-2 edit-category"
-                                                    data-id="{{ $menu->id }}" data-bs-toggle="modal"
-                                                    data-bs-target="#editCategoryModal">
-                                                    <i class="fe fe-edit"></i>
-                                                </a>
+                                                    <button class="btn delete-table me-2"
+                                                        onclick="editCategory({{ $menu->id }})" type="button"
+                                                        data-bs-toggle="modal" data-bs-target="#edit-category">
+                                                        <i class="fe fe-edit"></i>
+                                                    </button>
                                                     
                             
                                                     <!-- Delete Button -->
@@ -289,21 +289,36 @@
     // });
 
     // Open the edit modal with existing data
-    $('.edit-subcategory').on('click', function() {
-        var menuId = $(this).data('id');
-        $.ajax({
-            url: '/menus/' + menuId + '/edit',
-            type: 'GET',
-            success: function(response) {
-                // Populate the modal with existing data
-                $('#editMenuForm').data('menu-id', response.menu.id);
-                $('#editMenuName').val(response.menu.name);
-                $('#editCategory').val(response.menu.category_id);
-                $('#editSubcategory').val(response.menu.subcategory_id);
-                $('#edit-category').modal('show');
-            }
-        });
-    });
+    // $('.edit-subcategory').on('click', function() {
+    //     var menuId = $(this).data('id');
+    //     $.ajax({
+    //         url: '/menus/' + menuId + '/edit',
+    //         type: 'GET',
+    //         success: function(response) {
+    //             // Populate the modal with existing data
+    //             $('#editMenuForm').data('menu-id', response.menu.id);
+    //             $('#editMenuName').val(response.menu.name);
+    //             $('#editCategory').val(response.menu.category_id);
+    //             $('#editSubcategory').val(response.menu.subcategory_id);
+    //             $('#edit-category').modal('show');
+    //         }
+    //     });
+    // });
+
+    function editCategory(id) {
+            $.ajax({
+                url: '/menus/' + id + '/edit',
+                method: 'GET',
+                success: function(response) {
+                    $('#editCategoryId').val(response.menu.id);
+                    $('#editName').val(response.menu.name);
+                    $('#editCategory').val(response.menu.category_id);
+                    $('#editImage').val(response.menu.image);
+                    $('#editCategoryForm').attr('action', '/menus/' + id);
+                    $('#edit-category').modal('show');
+                }
+            });
+        }
 
     // Reset form when modal is closed
     $('#edit-category').on('hidden.bs.modal', function() {

@@ -60,6 +60,7 @@ class MenuController extends Controller
     
     public function edit($id)
     {
+
         $menu = Menu::findOrFail($id);
         $categories = Category::all();
         $subcategories = SubCategory::where('category_id', $menu->category_id)->get();

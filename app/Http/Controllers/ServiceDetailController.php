@@ -14,7 +14,7 @@ class ServiceDetailController extends Controller
      */
     public function index()
     {
-        $serviceDetails = ServiceDetail::orderByDesc('created_by')->get();
+        $serviceDetails = ServiceDetail::with('subCategory')->orderByDesc('created_by')->get();
         return view('backend.service-detail.index', compact('serviceDetails'));
     }
 
@@ -25,7 +25,7 @@ class ServiceDetailController extends Controller
     {
         $subcategories = SubCategory::orderByDesc('created_at')->get();
         $categories = Category::orderByDesc('created_at')->get();
-        return view('backend.service-detail.create', compact('subcategories','categories'));
+        return view('backend.service-detail.create', compact('subcategories', 'categories'));
     }
 
     /**
@@ -72,10 +72,10 @@ class ServiceDetailController extends Controller
     public function destroy(string $id)
     {
         $service = ServiceDetail::findOrFail($id);
-        if($service){
+        if ($service) {
             $service->delete();
-            return redirect()->back()->with('success','Deleted Successfully');
+            return redirect()->back()->with('success', 'Deleted Successfully');
         }
-        return redirect()->back()->with('error','Something went wrong');
+        return redirect()->back()->with('error', 'Something went wrong');
     }
 }

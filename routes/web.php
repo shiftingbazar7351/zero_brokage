@@ -49,7 +49,6 @@ Route::resource('/meta', MetaDescripConroller::class);
 Route::resource('/meta-url', MetaUrlController::class);
 Route::resource('/meta-title', MetaTitleController::class);
 Route::resource('/service-detail', ServiceDetailController::class);
-// Route::get('/editor', [AdminController::class, 'editor'])->name('editor');
 
 Route::resource('/enquiry', EnquiryController::class);
 Route::post('/fetch-subcategory/{id}', [EnquiryController::class, 'fetchsubcategory']);

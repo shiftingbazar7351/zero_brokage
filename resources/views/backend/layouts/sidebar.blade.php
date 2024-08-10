@@ -48,7 +48,7 @@
                     </a>
                 </li>
 
-                <li class="{{ Route::currentRouteName() === 'enquiry' ? 'active' : '' }}">
+                <li class="{{ Route::currentRouteName() === 'enquiry.index' ? 'active' : '' }}">
                     <a href="{{ route('enquiry.index') }}">
                         <i class="fe fe-file-text"></i>
                         <span>Enquiry</span>

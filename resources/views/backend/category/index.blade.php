@@ -66,8 +66,6 @@
                                                     </label>
                                                 </div>
                                             </td>
-
-
                                             <td>
                                                 <div class="table-actions d-flex justify-content-center">
                                                     <button class="btn delete-table me-2"
@@ -85,7 +83,6 @@
                                                         </button>
                                                         <!-- <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure you want to delete this category?');">Delete</button> -->
                                                     </form>
-
                                                 </div>
                                             </td>
                                         </tr>
@@ -163,7 +160,6 @@
             </div>
         </div>
     </div>
-
     <!-- Edit Category Modal -->
     <div class="modal fade" id="edit-category">
         <div class="modal-dialog modal-dialog-centered">
@@ -220,7 +216,6 @@
                                 </div>
                             </div>
                         </div>
-
                         <div class="text-end">
                             <button type="button" class="btn btn-secondary me-2" data-bs-dismiss="modal">Cancel</button>
                             <button type="submit" class="btn btn-primary">Save Changes</button>
@@ -253,12 +248,9 @@
         function toggleStatus(checkbox, categoryId) {
             var form = checkbox.closest('form');
             var hiddenInput = form.querySelector('.status-input');
-
             hiddenInput.value = checkbox.checked ? 1 : 0;
-
             form.submit();
         }
-
 
         // for updating the status through ajax request
         document.addEventListener('DOMContentLoaded', function() {
@@ -294,6 +286,6 @@
             });
         });
 
-     
+
     </script>
 @endsection

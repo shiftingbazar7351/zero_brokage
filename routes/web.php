@@ -29,6 +29,23 @@ Route::get('/service-details', function () {
     return view('frontend.service-details');
 })->name('service-details');
 
+Route::get('/preview-details', function () {
+    return view('frontend.preview_details');
+})->name('service-details');
+
+Route::get('/pricing-details', function () {
+    return view('frontend.pricing');
+})->name('pricing');
+
+Route::get('/privacy-policy', function () {
+    return view('frontend.privacy-policy');
+})->name('privacy');
+
+Route::get('/term-condition', function () {
+    return view('frontend.term-condition');
+})->name('term-condition');
+
+
 Route::get('/', [FrontendController::class, 'home'])->name('home');
 Route::get('/service-grid/{slug}', [FrontendController::class, 'subCategory'])->name('service.grid');
 

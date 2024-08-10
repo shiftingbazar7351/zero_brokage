@@ -91,6 +91,7 @@ function startCountdownBooking(seconds) {
 
 
 function resetBookingDetails(){
+    document.getElementById('res-booking1').innerHTML='';
     document.getElementById('checkbox-login-booking').checked=false;
     document.getElementById('checkbox-login-booking1').checked=false;
 
@@ -103,46 +104,46 @@ function resetBookingDetails(){
    }
 
 
-   function validateNumBooking(elem){
-    document.getElementById("res-booking").style.color = "red";
-    document.getElementById("res-booking").style.marginTop = "-15px";
-     if(isNaN(elem.value)){
-        document.getElementById('res-booking').innerText="please enter a Number Only"
-     }
+//    function validateNumBooking(elem){
+//     document.getElementById("res-booking").style.color = "red";
+//     document.getElementById("res-booking").style.marginTop = "-15px";
+//      if(isNaN(elem.value)){
+//         document.getElementById('res-booking').innerText="please enter a Number Only"
+//      }
 
-    else {
-        document.getElementById("res-booking").innerText = "";
+//     else {
+//         document.getElementById("res-booking").innerText = "";
 
-        if (elem.value.length < 10) {
-            document.getElementById("res-booking").innerText = "Enter 10 digit number";
-        }
+//         if (elem.value.length < 10) {
+//             document.getElementById("res-booking").innerText = "Enter 10 digit number";
+//         }
 
-        if (elem.value[0] == 0) {
-            document.getElementById("res-booking").innerText =
-                "First character should not be zero";
-        }
-    }
-}
+//         if (elem.value[0] == 0) {
+//             document.getElementById("res-booking").innerText =
+//                 "First character should not be zero";
+//         }
+//     }
+// }
 
 
 function validateNumBookingg(elemm){
     document.getElementById("res-booking1").style.color = "red";
     if (isNaN(elemm.value)) {
         document.getElementById("res-booking1").innerText = "please enter number only";
-        document.getElementById("saveChanges-booking").classList.add("unclickable");
+        document.getElementById("saveChanges-booking1").classList.add("unclickable");
     } else {
         document.getElementById("res-booking1").innerText = "";
-        document.getElementById("saveChanges-booking").classList.remove("unclickable");
+        document.getElementById("saveChanges-booking1").classList.remove("unclickable");
 
         if (elemm.value.length < 10) {
             document.getElementById("res-booking1").innerText = "Enter 10 digit number";
-            document.getElementById("saveChanges-booking").classList.add("unclickable");
+            document.getElementById("saveChanges-booking1").classList.add("unclickable");
         }
 
         if (elemm.value[0] == 0) {
             document.getElementById("res-booking1").innerText =
                 "First character should not be zero";
-            document.getElementById("saveChanges-booking").classList.add("unclickable");
+            document.getElementById("saveChanges-booking1").classList.add("unclickable");
         }
     }
 }

@@ -7364,15 +7364,17 @@ table.table td h2.table-user span {
 -----------------------*/
 
 .terms-content p {
+    font-size: 18px;
 	margin-bottom: 24px;
-    color: #74788d;
+    color: black;
 }
 .terms-content ul {
 	margin-bottom: 24px;
 }
 .terms-content ul li {
 	position: relative;
-    color: #74788d;
+    color: black;
+    font-size: 18px;
 	margin-bottom: 10px;
 	padding-left: 30px;
 }

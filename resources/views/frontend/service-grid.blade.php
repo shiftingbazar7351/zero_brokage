@@ -270,7 +270,7 @@
                             <h3>To Book a Service</h3>
                             <img src="{{ asset('assets/img/icons/signup.png') }}" alt="">
                             <h5 class="sign-up-text">Enter your Mobile Number</h5>
-                            <input type="tel" id="phoneNumberInput-booking" class="phone-number-field form-group"
+                            <input type="tel" id="phoneNumberInput-booking" class="phone-number-field form-group input-details"
                                 onkeyup="validateNumBookingg(this)" maxlength="10" placeholder="Enter Mobile Number"
                                 required>
                             <div id="res-booking1"></div>
@@ -291,10 +291,7 @@
 
                             <img src="{{ asset('assets/img/icons/write-icons.svg') }}" alt="" width="75px">
                             <div class="row w-75 mx-auto detail-input">
-                                <input type="tel" class="form-control text-center mb-3 input-details"
-                                    id="exampleInputEmail1" onkeyup="validateNumBooking(this)" maxlength="10"
-                                    aria-describedby="emailHelp" placeholder="Enter Your 10 digit number">
-                                <div class="input-details" id="res-booking"></div>
+
                                 <input type="text" class="form-control text-center mb-3 input-details"
                                     id="exampleInputEmail1" aria-describedby="emailHelp"
                                     placeholder="Enter Your Location">
@@ -313,8 +310,8 @@
                     </div>
                     <div id="myPopup2-booking" class="popup">
                         <div class="popup-content">
-                            <h3>Verify OTP</h3>
                             <span class="close" id="closePopup2-booking">&times;</span>
+                            <h3>Verify OTP</h3>
                             <img src="{{ asset('assets/img/icons/lock-icon.png') }}" alt="">
 
                             <h5 class="sign-up-text">We've Sent you a 4 Digit Pin On Your Number</h5>

@@ -21,8 +21,6 @@ class MenuController extends Controller
         return view('backend.menu.index',compact('subcategories','categories','menusCat'));
     }
 
- 
-
     /**
      * Store a newly created resource in storage.
      */
@@ -48,7 +46,7 @@ class MenuController extends Controller
         }
 
         $menu->save();
-    
+
         return response()->json(['status' => 1, 'message' => 'Menu added successfully!']);
     }
     protected function generateSlug($name)
@@ -57,7 +55,7 @@ class MenuController extends Controller
         $slug = strtolower($slug);
         return $slug;
     }
-    
+
     public function edit($id)
     {
         $menu = Menu::findOrFail($id);
@@ -65,7 +63,7 @@ class MenuController extends Controller
         $subcategories = SubCategory::where('category_id', $menu->category_id)->get();
         return view('backend.menu.index', compact('menu', 'categories', 'subcategories'));
     }
-    
+
     public function update(Request $request, $id)
     {
         $request->validate([
@@ -79,7 +77,7 @@ class MenuController extends Controller
         $menu->name = $request->input('name');
         $menu->subcategory_id = $request->input('subcategory_id');
         $menu->slug = $this->generateSlug($request->input('name'));
-    
+
         if ($request->hasFile('image')) {
             if ($menu->image) {
                 Storage::disk('public')->delete('assets/menu/' . $menu->image);
@@ -89,28 +87,28 @@ class MenuController extends Controller
             $image->storeAs('assets/menu', $imageName, 'public');
             $menu->image = $imageName;
         }
-    
+
         $menu->save();
-    
+
         return redirect()->route('menus.index')->with('success', 'Menu updated successfully.');
     }
-    
-    
-    
+
+
+
     public function destroy($id)
     {
         $menu = Menu::findOrFail($id);
-    
+
         if ($menu->image) {
             Storage::disk('public')->delete('assets/menu/' . $menu->image);
         }
-    
+
         $menu->delete();
-    
+
         // return response()->json(['status' => 1, 'message' => 'Menu deleted successfully!']);
         return redirect()->back()->with('success', 'Menu Deleted.');
     }
-    
+
 
     public function fetchsubcategory($categoryId)
     {
@@ -118,13 +116,13 @@ class MenuController extends Controller
             $subcategory->name = ucwords($subcategory->name);
             return $subcategory;
         });
-    
+
         if ($subcategories->isEmpty()) {
             return response()->json(['status' => 0, 'message' => 'No subcategory found']);
         }
         return response()->json(['status' => 1, 'data' => $subcategories]);
     }
-   
+
 
     public function updateStatus(Request $request)
     {

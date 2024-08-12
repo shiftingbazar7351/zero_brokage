@@ -23,7 +23,6 @@ class SubCategoryController extends Controller
         $categories = Category::orderByDesc('created_at')->get();
         $countryId = Country::where('name', 'India')->value('id');
         $states = State::where('country_id', $countryId)->get(['name', 'id']);
-        // $cities = City::get();
         return view('backend.sub-category.index', compact('subcategories', 'categories', 'states'));
     }
 
@@ -60,8 +59,6 @@ class SubCategoryController extends Controller
         $subcategory->total_price = $request->input('price');
         $subcategory->discount = $request->input('discount');
         $subcategory->discounted_price = $finalPrice;
-
-
         if ($request->hasFile('image')) {
             $image = $request->file('image');
             $imageName = time() . '_' . $image->getClientOriginalName();
@@ -109,6 +106,9 @@ class SubCategoryController extends Controller
             'image_url' => $subcategory->image ? Storage::url('assets/subcategory/' . $subcategory->image) : asset('admin/assets/img/icons/upload.svg'),
         ]);
     }
+
+
+
 
     /**
      * Update the specified resource in storage.

@@ -48,7 +48,7 @@ Route::get('/service-details', [FrontendController::class, 'serviceDetails'])->n
 Route::get('/service-grid/{slug}', [FrontendController::class, 'subCategory'])->name('service.grid');
 
 // Backend Routes
-Route::get('/admin-homepage', [AdminController::class, 'homepage'])->name('admin_page');
+Route::get('/dashboard', [AdminController::class, 'homepage'])->name('admin_page');
 
 // These routes are handled by the CategoryController
 Route::resource('categories', CategoryController::class);

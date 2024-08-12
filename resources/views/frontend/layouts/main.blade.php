@@ -144,6 +144,7 @@
             </path>
         </svg>
     </div>
+    
     @include('frontend.layouts.scripts')
 </body>
 

@@ -123,9 +123,7 @@ class CategoryController extends Controller
         if ($category->icon) {
             Storage::delete('public/assets/icon/' . $category->icon);
         }
-
         $category->delete();
-
         return redirect()->back()->with('success', 'Category deleted successfully.');
     }
 
@@ -135,12 +133,8 @@ class CategoryController extends Controller
         if ($item) {
             $item->status = $request->status;
             $item->save();
-
             return response()->json(['success' => true, 'message' => 'Status updated successfully.']);
         }
-
         return response()->json(['success' => false, 'message' => 'Item not found.']);
     }
-
-
 }

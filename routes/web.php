@@ -22,13 +22,13 @@ Route::get('/booking', function () {
     return view('frontend.booking');
 })->name('booking');
 
-Route::get('/service-details', function () {
-    return view('frontend.service-details');
-})->name('service-details');
+// Route::get('/service-details', function () {
+//     return view('frontend.service-details');
+// })->name('service-details');
 
 Route::get('/preview-details', function () {
     return view('frontend.preview_details');
-})->name('service-details');
+})->name('preview-details');
 
 Route::get('/pricing-details', function () {
     return view('frontend.pricing');

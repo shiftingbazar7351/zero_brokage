@@ -3,170 +3,159 @@
 namespace App\Http\Controllers;
 
 use App\Models\Category;
-use App\Models\Menu;
-use Illuminate\Http\Request;
 use App\Models\SubCategory;
+use App\Services\FileUploadService;
+use Exception;
+use Illuminate\Http\RedirectRedirectResponse;
+use Illuminate\Http\Request;
 
 class SubCategoryController extends Controller
 {
+    protected $fileUploadService;
+
+    public function __construct(FileUploadService $fileUploadService)
+    {
+        $this->fileUploadService = $fileUploadService;
+    }
     /**
      * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function index()
     {
-        $subcategories   = SubCategory::get();
-        $categories  = Category::get();
-        return view('backend.sub-category.index',compact('subcategories','categories'));
+        $categories = Category::get();
+        $subcategories = SubCategory::orderByDesc('created_at')->paginate(10);
+        return view('backend.sub-category.index', compact('subcategories','categories'));
     }
 
     /**
      * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\RedirectResponse
      */
-    public function create()
-    {
-        //
-    }
+    // public function create()
+    // {
+    //     //
+    // }
 
     /**
      * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function store(Request $request)
     {
         $request->validate([
-            'name' => 'required|string|max:255',
-            // 'state' => 'nullable|exists:states,id',
-            // 'city' => 'nullable|exists:cities,id',
-            'price' => 'nullable|numeric',
-            'discount' => 'nullable|numeric',
-            'final_price' => 'nullable|numeric',
-            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'name' => 'required|unique:categories,name',
+            'background_image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:5048',
+            'icon' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:5048',
         ]);
-        // dd( $request);
+        $category = new SubCategory();
+        $category->name = $request->name;
+        $category->category_id = $request->category_id;
+        $category->background_image = $request->background_image;
+        $category->icon = $request->icon;
+        $category->slug = generateSlug($request->name);
 
-        $finalPrice = $request->input('price');
-        $discountPercentage = $request->input('discount');
-
-        if (!empty($finalPrice) && !empty($discountPercentage)) {
-            $discountAmount = ($finalPrice * $discountPercentage) / 100;
-            $finalPrice -= $discountAmount;
-        } else {
-            $finalPrice = $request->input('price');
+        if ($request->hasFile('background_image')) {
+            $filename = $this->fileUploadService->uploadImage('background_image/', $request->file('background_image'));
+            $category['background_image'] = $filename;
         }
-    
-        $subcategory = new SubCategory();
-        $subcategory->name = $request->input('name');
-        $subcategory->category_id = $request->input('category');
-        $subcategory->slug = $this->generateSlug($request->name);
-        // $subCategory->state_id = $request->input('state');
-        // $subCategory->city_id = $request->input('city');
-        $subcategory->total_price = $request->input('price');
-        $subcategory->discount = $request->input('discount');
-        $subcategory->discounted_price = $finalPrice;
 
-
-
-        if ($request->hasFile('image')) {
-            $image = $request->file('image');
-            $imageName = time() . '_' . $image->getClientOriginalName(); // Generate unique name
-            $image->storeAs('assets/subcategory', $imageName, 'public'); // Store the image in assets/category
-            $subcategory->image = $imageName; // Save the unique name
+        if ($request->hasFile('icon')) {
+            $filename = $this->fileUploadService->uploadImage('icon/', $request->file('icon'));
+            $category['icon'] = $filename;
         }
-    
-
-        $subcategory->save();
-
-        return redirect()->back()->with('success', 'Sub-Category created successfully.');
-    }
-
-    protected function generateSlug($name)
-    {
-        $slug = str_replace(' ', '_', $name);
-        $slug = strtolower($slug);
-        return $slug;
+        $category->save();
+        return redirect()->back()->with('success', 'Category created successfully.');
     }
 
     /**
      * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\RedirectResponse
      */
-    public function show(string $id)
-    {
-       //
-    }
+    // public function show($id)
+    // {
+    //     //
+    // }
 
     /**
      * Show the form for editing the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\RedirectResponse
      */
-    public function edit(string $id)
-    {
-        $subcategories = SubCategory::findOrFail($id);
-        $category =  Category::get();
-        return view('backend.sub-category.edit', compact('subcategories','category'));
-    }
+    // public function edit($id)
+    // {
+    //     //
+    // }
 
     /**
      * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\RedirectResponse
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, SubCategory $subcategory)
     {
         $request->validate([
-            'name' => 'required',
-            'category' => 'nullable|string|max:255', 
-            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'name' => 'required|unique:categories,name,' . $subcategory->id,
+            'background_image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:5048',
+            'icon' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:5048',
         ]);
-
-        $subcategory = SubCategory::findOrFail($id);
         $subcategory->name = $request->name;
-        $subcategory->category_id = $request->category;
-        $subcategory->slug = $this->generateSlug($request->name);
-
-        if ($request->hasFile('image')) {
-            $image = $request->file('image');
-            $imageName = time() . '_' . $image->getClientOriginalName(); 
-            $image->storeAs('assets/subcategory', $imageName, 'public'); 
-            $subcategory->image = $imageName; 
+        $subcategory->slug = generateSlug($request->name);
+        if ($request->hasFile('background_image')) {
+            $filename = $this->fileUploadService->uploadImage('background_image/', $request->file('background_image'));
+            $subcategory['background_image'] = $filename;
         }
-
-        if ($request->hasFile('image')) {
-            // Delete old image if exists
-            if ($subcategory->image) {
-                \Storage::disk('public')->delete('assets/subcategory/' . $subcategory->image);
-            }
-            $image = $request->file('image');
-            $imageName = time() . '_' . $image->getClientOriginalName(); // Generate unique name
-            $image->storeAs('assets/subcategory', $imageName, 'public'); // Store the image in assets/category
-            $subcategory->image = $imageName; // Save the unique name
+        if ($request->hasFile('icon')) {
+            $filename = $this->fileUploadService->uploadImage('icon/', $request->file('icon'));
+            $subcategory['icon'] = $filename;
         }
-
         $subcategory->save();
-
-        return redirect()->back()->with('success', 'SubCategory updated successfully.');
+        return redirect()->back()->with('success', 'Category updated successfully.');
     }
 
     /**
      * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\RedirectResponse
      */
-    public function destroy(string $id)
+    public function destroy($id)
     {
-        $subcategory = SubCategory::findOrFail($id);
-        $subcategory->delete();
-        return redirect()->back()->with('success', 'SubCategory deleted successfully.');
-    }
-    public function fetchsubcategory($category_id = null) {
-        $data = SubCategory::where('category_id', $category_id)->get();
-        return response()->json([
-            'status' => 1,
-            'data' => $data
-        ]);
-    }
-
-    public function fetchmenu($menu_id = null) {
-        $data = Menu::where('subcategory_id', $menu_id)->get();
-        return response()->json([
-            'status' => 1,
-            'data' => $data
-        ]);
+        try {
+            $subcategory = SubCategory::findOrFail($id);
+            $old_background_image = $subcategory->background_image;
+            $old_icon = $subcategory->icon;
+            $subcategory->forceDelete();
+            if ($old_background_image) {
+                $this->fileUploadService->removeImage('background_image/', $old_background_image);
+            }
+            if ($old_icon) {
+                $this->fileUploadService->removeImage('icon/', $old_icon);
+            }
+            return redirect()->back()->with('success' , 'Deleted Successfully');
+        } catch (Exception $e) {
+            return redirect()->back()->with('error', 'Something went wrong');
+        }
     }
 
+    public function subCategoryStatus(Request $request)
+    {
+        $item = SubCategory::find($request->id);
+        if ($item) {
+            $item->status = $request->status;
+            $item->save();
+            return response()->json(['success' => true, 'message' => 'Status updated successfully.']);
+        }
+        return response()->json(['success' => false, 'message' => 'Item not found.']);
+    }
 
-    
 }

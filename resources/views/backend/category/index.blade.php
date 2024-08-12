@@ -1,13 +1,4 @@
 @extends('backend.layouts.main')
-@section('styles')
-    <style>
-        .preview-img {
-            width: 100px;
-            height: 100px;
-            object-fit: cover;
-        }
-    </style>
-@endsection
 @section('content')
 
     <div class="page-wrapper page-settings">
@@ -30,7 +21,7 @@
                             <thead>
                                 <tr>
                                     <th>#</th>
-                                    <th>Category</th>
+                                    <th>Name</th>
                                     <th>Status</th>
                                     <th>Action</th>
                                 </tr>
@@ -43,16 +34,9 @@
                                 @else
                                     @foreach ($categories as $category)
                                         <tr>
-                                            <td>{{ $category->id }}</td>
+                                            <td>{{ $loop->iteration }}</td>
                                             <td>
                                                 <div class="table-imgname">
-                                                    @if ($category->icon)
-                                                        <img src="{{ Storage::url('assets/icon/' . $category->icon) }}"
-                                                            class="me-2" alt="img">
-                                                    @else
-                                                        No Image
-                                                    @endif
-
                                                     <span>{{ $category->name }}</span>
                                                 </div>
                                             </td>
@@ -61,7 +45,7 @@
                                                 <div class="active-switch">
                                                     <label class="switch">
                                                         <input type="checkbox" class="status-toggle"
-                                                            data-id="{{ $category->id }}"
+                                                            data-id="{{ $category->id }}" onclick="return confirm('Are you sure want to change status')"
                                                             {{ $category->status ? 'checked' : '' }}>
                                                         <span class="sliders round"></span>
                                                     </label>
@@ -72,10 +56,12 @@
                                             <td>
                                                 <div class="table-actions d-flex justify-content-center">
                                                     <button class="btn delete-table me-2"
-                                                        onclick="editCategory({{ $category->id }})" type="button"
-                                                        data-bs-toggle="modal" data-bs-target="#edit-category">
+                                                        onclick="editCategory({{ $category->id }}, '{{ $category->name }}')"
+                                                        type="button" data-bs-toggle="modal"
+                                                        data-bs-target="#edit-category">
                                                         <i class="fe fe-edit"></i>
                                                     </button>
+
                                                     <form action="{{ route('categories.destroy', $category->id) }}"
                                                         method="POST" style="display:inline;">
                                                         @csrf
@@ -118,43 +104,13 @@
                             <label class="form-label">Category Name</label>
                             <input type="text" class="form-control" name="name" placeholder="Enter Category Name"
                                 value="{{ old('name') }}">
+                            <span style="color: red">
+                                @error('name')
+                                    {{ $message }}
+                                @enderror
+                            </span>
                         </div>
-                        <div class="mb-3">
-                            <label class="form-label">Category Image</label>
-                            <div class="form-uploads">
-                                <div class="form-uploads-path">
-                                    <img id="image-preview-icon" src="{{ asset('admin/assets/img/icons/upload.svg') }}"
-                                        alt="img" class="default-img">
-                                    <div class="file-browse">
-                                        <h6>Drag & drop image or </h6>
-                                        <div class="file-browse-path">
-                                            <input type="file" name="icon" id="image-input-icon"
-                                                accept="image/jpeg, image/png">
-                                            <a href="javascript:void(0);"> Browse</a>
-                                        </div>
-                                    </div>
-                                    <h5>Supported formats: JPEG, PNG</h5>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="mb-3">
-                            <label class="form-label">Category Background-Image</label>
-                            <div class="form-uploads">
-                                <div class="form-uploads-path">
-                                    <img id="image-preview-bg" src="{{ asset('admin/assets/img/icons/upload.svg') }}"
-                                        alt="img" class="default-img">
-                                    <div class="file-browse">
-                                        <h6>Drag & drop image or </h6>
-                                        <div class="file-browse-path">
-                                            <input type="file" name="image" id="image-input-bg"
-                                                accept="image/jpeg, image/png">
-                                            <a href="javascript:void(0);"> Browse</a>
-                                        </div>
-                                    </div>
-                                    <h5>Supported formats: JPEG, PNG</h5>
-                                </div>
-                            </div>
-                        </div>
+
                         <div class="text-end">
                             <button type="button" class="btn btn-secondary me-2" data-bs-dismiss="modal">Cancel</button>
                             <button type="submit" class="btn btn-primary">Save</button>
@@ -182,47 +138,14 @@
                         <input type="hidden" id="editCategoryId" name="category_id">
                         <div class="mb-3">
                             <label class="form-label">Category Name</label>
-                            <input type="text" class="form-control" id="editName" name="name">
+                            <input type="text" class="form-control" id="editName" value="{{ $category->name ?? '' }}"
+                                name="name">
+                            <span style="color: red">
+                                @error('name')
+                                    {{ $message }}
+                                @enderror
+                            </span>
                         </div>
-                        <div class="mb-3">
-                            <label class="form-label">Category Image</label>
-                            <div class="form-uploads">
-                                <div class="form-uploads-path">
-                                    <img id="icon-preview" src="{{ asset('admin/assets/img/icons/upload.svg') }}"
-                                        alt="img">
-                                    <div class="file-browse">
-                                        <h6>Drag & drop image or </h6>
-                                        <div class="file-browse-path">
-                                            <input type="file" id="editIcon" name="icon"
-                                                accept="image/jpeg, image/png">
-                                            <a href="javascript:void(0);"> Browse</a>
-                                        </div>
-                                    </div>
-                                    <h5>Supported formats: JPEG, PNG</h5>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="mb-3">
-                            <label class="form-label">Category Background-Image</label>
-                            <div class="form-uploads">
-                                <div class="form-uploads-path">
-                                    <img id="background-preview" src="{{ asset('admin/assets/img/icons/upload.svg') }}"
-                                        alt="img">
-                                    <div class="file-browse">
-                                        <h6>Drag & drop image or </h6>
-                                        <div class="file-browse-path">
-                                            <input type="file" id="editImage" name="image"
-                                                accept="image/jpeg, image/png">
-                                            <a href="javascript:void(0);"> Browse</a>
-                                        </div>
-                                    </div>
-                                    <h5>Supported formats: JPEG, PNG</h5>
-                                </div>
-                            </div>
-                        </div>
-
-
                         <div class="text-end">
                             <button type="button" class="btn btn-secondary me-2" data-bs-dismiss="modal">Cancel</button>
                             <button type="submit" class="btn btn-primary">Save Changes</button>
@@ -234,115 +157,16 @@
     </div>
 
 @endsection
-
-@section('scripts')
-
 <script>
-    function editCategory(id) {
-        $.ajax({
-            url: '/categories/' + id + '/edit',
-            method: 'GET',
-            success: function(response) {
-                $('#editCategoryId').val(response.category.id);
-                $('#editName').val(response.category.name);
-                $('#editCategoryForm').attr('action', '/categories/' + id);
-                $('#edit-category').modal('show');
-            }
-        });
-    }
-
-    function toggleStatus(checkbox, categoryId) {
-        var form = checkbox.closest('form');
-        var hiddenInput = form.querySelector('.status-input');
-
-        hiddenInput.value = checkbox.checked ? 1 : 0;
-
-        form.submit();
-    }
-
-    document.addEventListener('DOMContentLoaded', function() {
-        function handleImagePreview(inputId, previewId) {
-            document.getElementById(inputId).addEventListener('change', function(event) {
-                const file = event.target.files[0];
-                const preview = document.getElementById(previewId);
-
-                if (file) {
-                    const reader = new FileReader();
-                    reader.onload = function(e) {
-                        preview.src = e.target.result;
-                        preview.classList.add('preview-img');
-                    }
-                    reader.readAsDataURL(file);
-                } else {
-                    preview.src = "{{ asset('admin/assets/img/icons/upload.svg') }}";
-                    preview.classList.remove('preview-img');
-                }
-            });
-        }
-        handleImagePreview('image-input-icon', 'image-preview-icon');
-        handleImagePreview('image-input-bg', 'image-preview-bg');
-    });
-
-    // for updating the status through ajax request
-    document.addEventListener('DOMContentLoaded', function() {
-        document.querySelectorAll('.status-toggle').forEach(function(toggle) {
-            toggle.addEventListener('change', function() {
-                const itemId = this.getAttribute('data-id');
-                const status = this.checked ? 1 : 0;
-
-                fetch('{{ route('update.status') }}', {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json',
-                            'X-CSRF-TOKEN': document.querySelector(
-                                'meta[name="csrf-token"]').getAttribute('content')
-                        },
-                        body: JSON.stringify({
-                            id: itemId,
-                            status: status
-                        })
-                    })
-                    .then(response => response.json())
-                    .then(data => {
-                        if (data.success) {
-                            console.log(data.message);
-                        } else {
-                            console.error(data.message);
-                        }
-                    })
-                    .catch(error => {
-                        console.error('Error:', error);
-                    });
-            });
-        });
-    });
-
-    // preview image for edit page
-    document.addEventListener('DOMContentLoaded', function() {
-        function previewImage(inputId, previewId) {
-            const inputElement = document.getElementById(inputId);
-            const previewElement = document.getElementById(previewId);
-
-            inputElement.addEventListener('change', function(event) {
-                const file = event.target.files[0];
-
-                if (file) {
-                    const reader = new FileReader();
-                    reader.onload = function(e) {
-                        previewElement.src = e.target.result;
-                        previewElement.classList.add('preview-img');
-                    }
-                    reader.readAsDataURL(file);
-                } else {
-                    previewElement.src = "{{ asset('admin/assets/img/icons/upload.svg') }}";
-                    previewElement.classList.remove('preview-img');
-                }
-            });
-        }
-
-        previewImage('editIcon', 'icon-preview');
-        previewImage('editImage', 'background-preview');
-    });
+    var statusRoute = `{{ route('categories.status') }}`;
 </script>
-
-@endsection
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="{{ asset('admin/assets/js/status-update.js') }}"></script>
+<script>
+    function editCategory(categoryId, categoryName) {
+        const form = document.getElementById('editCategoryForm');
+        form.action = `/categories/${categoryId}`; // Ensure this matches your route
+        document.getElementById('editCategoryId').value = categoryId;
+        document.getElementById('editName').value = categoryName;
+    }
+</script>

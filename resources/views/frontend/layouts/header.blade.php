@@ -9,17 +9,18 @@
                         <span></span>
                     </span>
                 </a>
-                <a href="{{route('home')}}" class="navbar-brand logo">
-                    <img src="assets/img/logofinal.png" class="img-fluid" alt="Logo">
+                <a href="{{ route('home') }}" class="navbar-brand logo">
+                    <img src="{{ asset('assets/img/logofinal.png') }}" class="img-fluid" alt="Logo">
                 </a>
 
             </div>
             <div class="main-menu-wrapper">
                 <div class="menu-header">
-                    <a href="{{route('home')}}" class="menu-logo">
-                        <img src="assets/img/logofinal.png" class="img-fluid" alt="Logo">
+                    <a href="{{ route('home') }}" class="menu-logo">
+                        <img src="{{ asset('assets/img/logofinal.png') }}" class="img-fluid" alt="Logo">
                     </a>
-                    <a id="menu_close" class="menu-close" href="javascript:void(0);"> <i class="fas fa-times"></i></a>
+                    <a id="menu_close" class="menu-close" href="javascript:void(0);"> <i
+                            class="fas fa-times"></i></a>
                 </div>
                 <ul class="main-nav">
                     <li class="has-submenu megamenu active">
@@ -32,7 +33,7 @@
                                             <div class="single-demo active">
 
                                                 <div class="demo-info">
-                                                    <a href="{{route('home')}}">Electrical Home</a>
+                                                    <a href="index.html">Electrical Home</a>
                                                 </div>
                                             </div>
                                         </div>
@@ -225,66 +226,10 @@
                             <li><a href="blog-details.html">Blog Details</a></li>
                         </ul>
                     </li>
-                    <li><a href="{{route('admin_page')}}">Admin</a></li>
+                    <li><a href="{{ route('admin_page') }}">Admin</a></li>
                 </ul>
             </div>
-            <ul class="nav header-navbar-rht">
-
-                <li class="nav-item">
-                    <button id="openPopup" class="btn">Login</button>
-
-                    <!-- The Popup -->
-                    <div id="myPopup" class="popup">
-                        <div class="popup-content">
-                            <h3>Login/Sign up</h3>
-                            <span class="close" id="closePopup">&times;</span>
-                            <img src="assets/img/icons/signup.png" alt="">
-                            <h5 class="sign-up-text">Enter your Mobile Number</h5>
-                            <input type="tel" id="phoneNumberInput" class="phone-number-field"
-                                onkeyup="validateNum(this)" maxlength="10" placeholder="Enter Mobile Number">
-                            <div id="res"></div>
-                            <button id="saveChanges" class="btn" onclick="startCountdown(60)">Continue</button>
-                            <div class="term-condition">
-                                <input type="checkbox" class="checkbox">
-                                <p>By Continuing, you agree to our <span class="term">Term and Condition</span>
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-                    <div id="myPopup2" class="popup">
-                        <div class="popup-content">
-                            <h3>Verify OTP</h3>
-                            <span class="close" id="closePopup2">&times;</span>
-                            <img src="assets/img/icons/lock-icon.png" alt="">
-
-                            <h5 class="sign-up-text">We've Sent you a 4 Digit Pin On Your Number</h5>
-
-                            <div class="edit-phone-cont">
-                                <div class="Phone-Number">8303361853</div>
-                                <div class="edit-icon" id="editnumber"><img src="assets/img/icons/edit-icon.svg" alt="">
-                                </div>
-                            </div>
-                            <input type="text" id="phone2" placeholder="Enter your OTP">
-                            <div class="resend">
-                                <div class="get-otp">Don't get OTP?</div>
-                                <div id="counter"></div>
-                            </div>
-                            <div class="resend-container">
-                                <h5 class="resend-otp" id="resendOtpText">Resend OTP</h5>
-                                <p class="whatsapp-otp" id="otpOnWhatsapp">Get OTP on <img
-                                        src="assets/img/icons/icons8-whatsapp.gif" alt=""></p>
-                            </div>
-                            <button type="button" class="btn btn-primary btn-lg" id="verify-otp">Verify
-                                OTP</button>
-
-                            <div class="term-condition">
-                                <input type="checkbox" class="checkbox">
-                                <p>By Continuing, you agree to our <span class="term">Term and Condition</span>
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-            </ul>
+           @include('frontend.layouts.login-popup')
         </nav>
     </div>
 </header>

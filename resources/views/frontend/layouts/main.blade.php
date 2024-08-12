@@ -1,9 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
+
+<!-- Mirrored from trueldddysell.dreamstechnologies.com/html/template/index.html by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 24 Jul 2024 07:49:43 GMT -->
+
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0">
-    <title>Truelysell | Template</title>
+    <title>Zero Brokage</title>
 
     <link rel="shortcut icon" href="{{ asset('assets/img/favicon.png') }}">
 
@@ -19,8 +22,11 @@
     <link rel="stylesheet" href="{{ asset('assets/css/owl.carousel.min.css') }}">
 
     <link rel="stylesheet" href="{{ asset('assets/plugins/aos/aos.css') }} ">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 
     <link rel="stylesheet" href="{{ asset('assets/css/style.css') }} ">
+    <link rel="stylesheet" href="{{ asset('assets/css/slider.css') }}">
+    @yield('styles')
 </head>
 
 <body class="body-one">
@@ -138,6 +144,7 @@
             </path>
         </svg>
     </div>
+    
     @include('frontend.layouts.scripts')
 </body>
 

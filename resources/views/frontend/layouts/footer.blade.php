@@ -1,5 +1,4 @@
 <footer class="footer">
-
 <div class="footer-top aos" data-aos="fade-up">
     <div class="container">
         <div class="row">
@@ -7,7 +6,7 @@
 
                 <div class="footer-widget">
                     <div class="footer-logo">
-                        <a href="index.html"><img src="assets/img/logofinal.png" alt="logo"></a>
+                        <a href="index.html"><img src="{{ asset('assets/img/logofinal.png') }}" alt="logo"></a>
                     </div>
                     <div class="footer-content">
                         <p>Lorem ipsum dolor sit consectetur adipiscing elit, sed do eiusmod tempor commodo
@@ -18,7 +17,7 @@
                         <div class="row">
                             <div class="col-lg-12 d-flex">
                                 <div class="footer-select">
-                                    <img src="assets/img/icons/global.svg" alt="img">
+                                    <img src="{{ asset('assets/img/icons/global.svg') }}" alt="img">
                                     <select class="select">
                                         <option>English</option>
                                         <option>France</option>
@@ -26,7 +25,7 @@
                                     </select>
                                 </div>
                                 <div class="footer-select">
-                                    <img src="assets/img/icons/dropdown.svg" class="footer-dropdown"
+                                    <img src="{{ asset('assets/img/icons/dropdown.svg') }}" class="footer-dropdown"
                                         alt="img">
                                     <select class="select">
                                         <option>US Dollars</option>
@@ -46,13 +45,13 @@
                     <h2 class="footer-title">Quick Links</h2>
                     <ul>
                         <li>
-                            <a href="{{ route('about') }}">About Us</a>
+                            <a href="javascript:void(0);">About Us</a>
                         </li>
                         <li>
-                            <a href="{{ route('blog') }}">Blogs</a>
+                            <a href="javascript:void(0);">Blogs</a>
                         </li>
                         <li>
-                            <a href="{{ route('contact') }}">Contact Us</a>
+                            <a href="javascript:void(0);">Contact Us</a>
                         </li>
                         <li>
                             <a href="provider-signup.html">Become a Professional</a>
@@ -132,19 +131,19 @@
                     <div class="payment-image">
                         <ul>
                             <li>
-                                <a href="javascript:void(0);"><img src="assets/img/payment/visa.png"
+                                <a href="javascript:void(0);"><img src="{{ asset('assets/img/payment/visa.png') }}"
                                         alt="img"></a>
                             </li>
                             <li>
-                                <a href="javascript:void(0);"><img src="assets/img/payment/mastercard.png"
+                                <a href="javascript:void(0);"><img src="{{ asset('assets/img/payment/mastercard.png') }}"
                                         alt="img"></a>
                             </li>
                             <li>
-                                <a href="javascript:void(0);"><img src="assets/img/payment/stripe.png"
+                                <a href="javascript:void(0);"><img src="{{ asset('assets/img/payment/stripe.png') }}"
                                         alt="img"></a>
                             </li>
                             <li>
-                                <a href="javascript:void(0);"><img src="assets/img/payment/discover.png"
+                                <a href="javascript:void(0);"><img src="{{ asset('assets/img/payment/discover.png') }}"
                                         alt="img"></a>
                             </li>
                         </ul>

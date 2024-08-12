@@ -1,601 +1,545 @@
 @extends('frontend.layouts.main')
 @section('content')
-<div class="bg-img">
-    <img src="assets/img/bg/work-bg-03.png" alt="img" class="bgimg1">
-    <img src="assets/img/bg/work-bg-03.png" alt="img" class="bgimg2">
-    <img src="assets/img/bg/feature-bg-03.png" alt="img" class="bgimg3">
-</div>
-
-<div class="breadcrumb-bar">
-    <div class="container">
-        <div class="row">
-            <div class="col-md-12 col-12">
-                <h2 class="breadcrumb-title">Service Details</h2>
-                <nav aria-label="breadcrumb" class="page-breadcrumb">
-                    <ol class="breadcrumb">
-                        <li class="breadcrumb-item"><a href="{{ Route('home') }}">Home</a></li>
-                        <li class="breadcrumb-item active" aria-current="page">Service Details</li>
-                    </ol>
-                </nav>
-            </div>
-        </div>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/css/intlTelInput.min.css">
+    <div class="bg-img">
+        <img src="{{ asset('assets/img/bg/work-bg-03.png') }}" alt="img" class="bgimg1">
+        <img src="{{ asset('assets/img/bg/work-bg-03.png') }}" alt="img" class="bgimg2">
+        <img src="{{ asset('assets/img/bg/feature-bg-03.png') }}" alt="img" class="bgimg3">
     </div>
-</div>
-
-<div class="content">
-    <div class="container">
-        <div class="row">
-
-            <div class="col-md-8">
-                <div class="serv-profile">
-                    <h2>Car Repair Services</h2>
-                    <ul>
-                        <li>
-                            <span class="badge">Car Wash</span>
-                        </li>
-                        <li class="service-map"><i class="feather-map-pin"></i> Alabama, USA</li>
-                    </ul>
+    <div class="content">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-8">
+                    <div class="serv-profile">
+                        <h2>Car Repair Services</h2>
+                        <ul>
+                            <li>
+                                <span class="badge">Car Wash</span>
+                            </li>
+                        </ul>
+                    </div>
                 </div>
-            </div>
-            <div class="col-md-4">
-                <div class="serv-action">
-                    <ul>
-                        <li>
-                            <a href="#"><i class="feather-heart"></i></a>
-                        </li>
-                        <li>
-                            <a href="#" data-bs-toggle="tooltip" title="Share"><i
-                                    class="feather-share-2"></i></a>
-                        </li>
-                        <li>
-                            <a href="#"><i class="feather-printer"></i></a>
-                        </li>
-                        <li>
-                            <a href="#"><i class="feather-download"></i></a>
-                        </li>
-                    </ul>
+                <div class="col-md-12 mx-auto border border-gray  rounded">
+                    <div class="service-gal p-4">
+                        <form id="enquiryForm" action="{{ route('enquiry.store') }}" method="POST">
+                            @csrf
+                            <div class="row">
+                                <div class="col-6">
+                                    <div class="form-group">
+                                        <label for="category">Select Services :</label>
+                                        <select class="form-control" id="category" required name="category" >
+                                            <option value="" selected disabled>Select Services</option>
+                                            @foreach ($categories as $category)
+                                                <option value="{{ $category->id }}">{{ $category->name }}</option>
+                                            @endforeach
+                                        </select>
+                                        <div class="text-danger category-error"></div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="move_from_origin" class="form-label">Location</label>
+                                        <input type="text" id="move_from_origin" required name="move_from_origin"
+                                            class="form-control" placeholder="Enter your location">
+                                        <div class="text-danger move_from_origin-error"></div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="">Choose your Date</label>
+                                        <input type="datetime-local" class="form-control" id="exampleInputPassword"
+                                            placeholder="Choose your date" required name="date_time">
+                                        <div class="text-danger date_time-error"></div>
+                                    </div>
+
+                                    <label for="exampleInputEmail1">Email address</label>
+                                    <input type="email" class="form-control" id="exampleInputEmail"
+                                        aria-describedby="emailHelp" placeholder="Enter email" required name="email">
+                                    <div class="text-danger email-error"></div>
+                                    <div class="form-check mt-1">
+                                        <input type="checkbox" class="form-check-input" id="exampleCheck1" name="check_me_out" required>
+                                        <label class="form-check-label" for="exampleCheck1">Check me out</label>
+                                        <div class="text-danger check_me_out-error"></div>
+                                    </div>
+                                    {{-- <button type="submit" class="btn btn-primary">Submit</button> --}}
+                                </div>
+                                <div class="col-6">
+                                    <div class="form-group">
+                                        <label for="category">Select Sub-services</label>
+                                        <select class="form-control" id="subcategory" required name="subcategory_id">
+                                            <option value="" selected disabled>Select Subservices</option>
+                                        </select>
+                                        <div class="text-danger subcategory_id-error"></div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="">Name</label>
+                                        <input type="text" class="form-control" id="exampleInputEmail1"
+                                            aria-describedby="emailHelp" placeholder="Enter your name" required
+                                            name="name">
+                                        <div class="text-danger name-error"></div>
+                                    </div>
+                                    <div class="form-group phone-div">
+                                        <label for="">Mobile Number</label>
+                                        <br>
+                                        <div class="input-container">
+                                            <input required name="mobile_number" type="text" class="form-control"
+                                                id="phoneNumberInput-booking" aria-describedby="emailHelp"
+                                                placeholder="Enter your Phone Number" autocomplete="off"
+                                                data-intl-tel-input-id="0" style="padding-left: 84px;"
+                                                onkeydown="return ( event.ctrlKey || event.altKey
+                                            || (47<event.keyCode && event.keyCode<58 && event.shiftKey==false)
+                                            || (95<event.keyCode && event.keyCode<106)
+                                            || (event.keyCode==8) || (event.keyCode==9)
+                                            || (event.keyCode>34 && event.keyCode<40)
+                                            || (event.keyCode==46) )"
+                                                minlength="10" maxlength="10">
+                                            <div class="text-danger mobile_number-error"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div style="text-align: center;">
+                                <button type="submit" class="btn btn-primary">Submit</button>
+                              </div>
+
+                        </form>
+                    </div>
                 </div>
+
             </div>
-            <div class="col-md-12">
-                <div class="service-gal">
-                    <div class="row gx-2">
-                        <div class="col-md-9">
-                            <div class="service-images big-gallery">
-                                <img src="assets/img/services/service-ban-01.jpg" class="img-fluid"
-                                    alt="img">
-                                <a href="assets/img/services/service-ban-01.jpg" data-fancybox="gallery"
-                                    class="btn btn-show"><i class="feather-image me-2"></i>Show all photos</a>
+
+
+            <section class="work-section pt-0">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-12 text-center">
+                            <div class="section-heading aos " data-aos="fade-up">
+                                <h2>How It Works</h2>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-3">
+                            <div class="work-box aos" data-aos="fade-up">
+                                <div class="work-icon">
+                                    <span class="first">
+                                        <img src="assets/img/icons/work-icon.svg" alt="img">
+                                    </span>
+                                </div>
+                                <h5>Share Your Requiremen</h5>
+                                <p class="workbox-p">Let us know what goods you need to shift and your preferred time.</p>
+                                <h4>01</h4>
                             </div>
                         </div>
                         <div class="col-md-3">
-                            <div class="service-images small-gallery">
-                                <a href="assets/img/services/service-ban-02.jpg" data-fancybox="gallery">
-                                    <img src="assets/img/services/service-ban-02.jpg" class="img-fluid"
-                                        alt="img">
-                                    <span class="circle-icon"><i class="feather-plus"></i></span>
-                                </a>
+                            <div class="work-box aos" data-aos="fade-up">
+                                <div class="work-icon">
+                                    <span>
+                                        <img src="assets/img/icons/find-icon.svg" alt="img">
+                                    </span>
+                                </div>
+                                <h5>Find the Perfect Matches</h5>
+                                <p>We'll find three top-rated movers that match your needs.</p>
+                                <h4>02</h4>
                             </div>
-                            <div class="service-images small-gallery">
-                                <a href="assets/img/services/service-ban-03.jpg" data-fancybox="gallery">
-                                    <img src="assets/img/services/service-ban-03.jpg" class="img-fluid"
-                                        alt="img">
-                                    <span class="circle-icon"><i class="feather-plus"></i></span>
-                                </a>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="work-box aos" data-aos="fade-up">
+                                <div class="work-icon">
+                                    <span>
+                                        <img src="assets/img/icons/place-icon.svg" alt="img">
+                                    </span>
+                                </div>
+                                <h5>Compare and Hire</h5>
+                                <p>Compare shifting quotes and choose the best movers within your budget.</p>
+                                <h4>03</h4>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="work-box aos" data-aos="fade-up">
+                                <div class="work-icon">
+                                    <span>
+                                        <img src="assets/img/icons/next-icon.svg" alt="img">
+                                    </span>
+                                </div>
+                                <h5>Schedule Your Move</h5>
+                                <p>Confirm the booking details, including the date & time for a seamless move.</p>
+                                <h4>03</h4>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
+            </section>
 
-        </div>
-        <div class="row">
+            <section class="blog-section">
+                <div class="container">
+                    <div class="row justify-content-between">
+                        <div class="col-lg-4 col-md-6 d-flex">
+                            <div class="blog flex-fill aos" data-aos="fade-up">
+                                <div class="blog-image">
+                                    <a><img class="img-fluid" src="assets/img/blog/blog-01.jpg" alt="Post Image"></a>
+                                </div>
+                                <div class="blog-content">
 
-            <div class="col-lg-8">
-                <div class="service-wrap">
-                    <h5>Service Details</h5>
-                    <p>Car wash is a facility used to clean the exterior and, in some cases, the interior of
-                        motor vehicles. Car washes can be self-serve, fully automated, or full-service with
-                        attendants who wash the vehicle.</p>
+                                    <h5>
+                                        Resedential
+                                    </h5>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-4 col-md-6 d-flex">
+                            <div class="blog flex-fill aos" data-aos="fade-up">
+                                <div class="blog-image">
+                                    <a href=""><img class="img-fluid" src="assets/img/blog/blog-02.jpg"
+                                            alt="Post Image"></a>
+                                </div>
+                                <div class="blog-content">
+
+                                    <h5>
+                                        <a href="">Commercial</a>
+                                    </h5>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-4 col-md-6 d-flex">
+                            <div class="blog flex-fill aos" data-aos="fade-up">
+                                <div class="blog-image">
+                                    <a href="blog-details.html"><img class="img-fluid" src="assets/img/blog/blog-03.jpg"
+                                            alt="Post Image"></a>
+                                </div>
+                                <div class="blog-content">
+
+                                    <h5>
+                                        <a href="">International</a>
+                                    </h5>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <div class="service-wrap provide-service">
-                    <h5>Service Provider</h5>
+            </section>
+
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="service-wrap">
+                        <h5>Service Details</h5>
+                        <p> {!! $services->description ??'' !!}</p>
+                        <p> {!! $services->summery ??'' !!}</p>
+                        {{-- <p>Car wash is a facility used to clean the exterior and, in some cases, the interior of
+                            motor vehicles. Car washes can be self-serve, fully automated, or full-service with
+                            attendants who wash the vehicle.</p>
+                        <p>Car wash is a facility used to clean the exterior and, in some cases, the interior of
+                            motor vehicles. Car washes can be self-serve, fully automated, or full-service with
+                            attendants who wash the vehicle.</p> --}}
+                    </div>
+
+                    <div class="service-wrap">
+                        <h5>Reviews</h5>
+                        <section class="client-section">
+                            <div class="container">
+                                <div class="row">
+                                    <div class="col-md-12 text-center">
+                                        <div class="section-heading aos" data-aos="fade-up">
+                                            <h2>What our client says</h2>
+                                            <p>Lorem ipsum dolor sit amet, consectetur elit</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="owl-carousel testimonial-slider">
+                                            <div class="client-widget aos" data-aos="fade-up">
+                                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
+                                                    tempor
+                                                    incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+                                                    quis
+                                                    nostrud exercitation ullamco laboris nisi </p>
+                                                <h5>Sophie Moore</h5>
+                                                <h6>Director</h6>
+                                            </div>
+                                            <div class="client-widget aos" data-aos="fade-up">
+
+                                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
+                                                    tempor
+                                                    incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+                                                    quis
+                                                    nostrud exercitation ullamco laboris nisi </p>
+                                                <h5>Mike Hussy</h5>
+                                                <h6>Lead</h6>
+                                            </div>
+                                            <div class="client-widget aos" data-aos="fade-up">
+
+                                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
+                                                    tempor
+                                                    incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+                                                    quis
+                                                    nostrud exercitation ullamco laboris nisi </p>
+                                                <h5>John Doe</h5>
+                                                <h6>CEO</h6>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
+                    </div>
+
+                </div>
+
+            </div>
+            <section class="service-section">
+                <div class="container">
+                    <div class="section-heading">
+                        <div class="row align-items-center">
+                            <div class="col-md-6 aos" data-aos="fade-up">
+                                <h2>Featured Services</h2>
+                                <p>Explore the greates our services. You won’t be disappointed</p>
+                            </div>
+                            <div class="col-md-6 text-md-end aos" data-aos="fade-up">
+                                <div class="owl-nav mynav"></div>
+                            </div>
+                        </div>
+                    </div>
                     <div class="row">
-                        <div class="col-md-4">
-                            <div class="provide-box">
-                                <img src="assets/img/profiles/avatar-02.jpg" class="img-fluid"
-                                    alt="img">
-                                <div class="provide-info">
-                                    <h6>Member Since</h6>
-                                    <div class="serv-review"><i class="fa-solid fa-star"></i> <span>4.9
-                                        </span>(255 reviews)</div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-4">
-                            <div class="provide-box">
-                                <span><i class="feather-user"></i></span>
-                                <div class="provide-info">
-                                    <h6>Member Since</h6>
-                                    <p>Apr 2020</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-4">
-                            <div class="provide-box">
-                                <span><i class="feather-map-pin"></i></span>
-                                <div class="provide-info">
-                                    <h6>Address</h6>
-                                    <p>Hanover, Maryland</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-4">
-                            <div class="provide-box">
-                                <span><i class="feather-mail"></i></span>
-                                <div class="provide-info">
-                                    <h6>Email</h6>
-                                    <p><a href="https://truelysell.dreamstechnologies.com/cdn-cgi/l/email-protection"
-                                            class="__cf_email__"
-                                            data-cfemail="2c584443414d5f446c49544d415c4049024f4341">[email&#160;protected]</a>
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-4">
-                            <div class="provide-box">
-                                <span><i class="feather-phone"></i></span>
-                                <div class="provide-info">
-                                    <h6>Phone</h6>
-                                    <p>+1 888 888 8888</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-4">
-                            <div class="social-icon provide-social">
-                                <ul>
-                                    <li>
-                                        <a href="#" target="_blank"><i class="feather-instagram"></i>
+                        <div class="col-md-12">
+                            <div class="owl-carousel service-slider">
+                                <div class="service-widget aos" data-aos="fade-up">
+                                    <div class="service-img p-2">
+                                        <a href="service-details.html">
+                                            <img class="img-fluid serv-img" alt="Service Image"
+                                                src="{{ asset('assets/img/services/service-01.jpg') }}">
                                         </a>
-                                    </li>
-                                    <li>
-                                        <a href="#" target="_blank"><i class="feather-twitter"></i>
+                                        <div class="fav-item">
+                                            <a href="categories.html"><span class="item-cat">Cleaning</span></a>
+                                        </div>
+
+                                    </div>
+                                    <div class="service-content">
+                                        <h3 class="title">
+                                            <a href="service-details.html">Electric Panel Repairing Service</a>
+                                        </h3>
+                                        <p><i class="feather-map-pin"></i>New Jersey, USA<span class="rate"><i
+                                                    class="fas fa-star filled"></i>4.9</span></p>
+                                        <div class="serv-info">
+                                            <h6>$25.00<span class="old-price">$35.00</span></h6>
+                                            <a href="service-details.html" class="btn btn-book">Book Now</a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="service-widget aos" data-aos="fade-up">
+                                    <div class="service-img p-2">
+                                        <a href="service-details.html">
+                                            <img class="img-fluid serv-img" alt="Service Image"
+                                                src="{{ asset('assets/img/services/service-02.jpg') }}">
                                         </a>
-                                    </li>
-                                    <li>
-                                        <a href="#" target="_blank"><i class="feather-youtube"></i></a>
-                                    </li>
-                                    <li>
-                                        <a href="#" target="_blank"><i
-                                                class="feather-linkedin"></i></a>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="service-wrap">
-                    <div class="row">
-                        <div class="col-md-6">
-                            <h5>Gallery</h5>
-                        </div>
-                        <div class="col-md-6 text-md-end">
-                            <div class="owl-nav mynav3"></div>
-                        </div>
-                    </div>
-                    <div class="owl-carousel gallery-slider">
-                        <div class="gallery-widget">
-                            <a href="assets/img/gallery/gallery-big-01.jpg" data-fancybox="gallery">
-                                <img class="img-fluid" alt="Image"
-                                    src="assets/img/gallery/gallery-01.jpg">
-                            </a>
-                        </div>
-                        <div class="gallery-widget">
-                            <a href="assets/img/gallery/gallery-big-02.jpg" data-fancybox="gallery">
-                                <img class="img-fluid" alt="Image"
-                                    src="assets/img/gallery/gallery-02.jpg">
-                            </a>
-                        </div>
-                        <div class="gallery-widget">
-                            <a href="assets/img/gallery/gallery-big-03.jpg" data-fancybox="gallery">
-                                <img class="img-fluid" alt="Image"
-                                    src="assets/img/gallery/gallery-03.jpg">
-                            </a>
-                        </div>
-                        <div class="gallery-widget">
-                            <a href="assets/img/gallery/gallery-02.jpg" data-fancybox="gallery">
-                                <img class="img-fluid" alt="Image"
-                                    src="assets/img/gallery/gallery-02.jpg">
-                            </a>
-                        </div>
-                    </div>
-                </div>
-                <div class="service-wrap">
-                    <h5>Video</h5>
-                    <div id="background-video">
-                        <a class="play-btn" data-fancybox
-                            href="https://www.youtube.com/watch?v=Vdp6x7Bibtk"><i
-                                class="fa-solid fa-play"></i></a>
-                    </div>
-                </div>
-                <div class="service-wrap">
-                    <h5>Reviews</h5>
-                    <ul>
-                        <li class="review-box">
-                            <div class="review-profile">
-                                <div class="review-img">
-                                    <img src="assets/img/profiles/avatar-02.jpg" class="img-fluid"
-                                        alt="img">
-                                    <div class="review-name">
-                                        <h6>Dennis</h6>
-                                        <p>a week ago</p>
-                                    </div>
-                                </div>
-                                <div class="rating">
-                                    <i class="fas fa-star filled"></i>
-                                    <i class="fas fa-star filled"></i>
-                                    <i class="fas fa-star filled"></i>
-                                    <i class="fas fa-star filled"></i>
-                                    <i class="fas fa-star filled"></i>
-                                </div>
-                            </div>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipicing elit, sed do eiusmod tempor
-                                incididunt ut labore et dolore magna aliqa. Ut enim ad minim veniam, quis
-                                nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat</p>
-                            <div class="recommend-item">
-                                <a href="#"><img alt="Image" src="assets/img/icons/reply-icon.svg"
-                                        class="me-2"> Reply</a>
-                                <div class="recommend-info">
-                                    <p>Recommend?</p>
-                                    <a href="#"><i class="feather-thumbs-up"></i> Yes</a>
-                                    <a href="#"><i class="feather-thumbs-down"></i> No</a>
-                                </div>
-                            </div>
-                        </li>
-                        <li class="review-box">
-                            <div class="review-profile">
-                                <div class="review-img">
-                                    <img src="assets/img/profiles/avatar-03.jpg" class="img-fluid"
-                                        alt="img">
-                                    <div class="review-name">
-                                        <h6>Jaime</h6>
-                                        <p>yesterday | 10:35AM </p>
-                                    </div>
-                                </div>
-                                <div class="rating">
-                                    <i class="fas fa-star filled"></i>
-                                    <i class="fas fa-star filled"></i>
-                                    <i class="fas fa-star filled"></i>
-                                    <i class="fas fa-star filled"></i>
-                                    <i class="fas fa-star filled"></i>
-                                </div>
-                            </div>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipicing elit, sed do eiusmod tempor
-                                incididunt ut labore et dolore magna aliqa. Ut enim ad minim veniam, quis
-                                nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat</p>
-                            <div class="recommend-item">
-                                <a href="#"><img alt="Image" src="assets/img/icons/reply-icon.svg"
-                                        class="me-2"> Reply</a>
-                                <div class="recommend-info">
-                                    <p>Recommend?</p>
-                                    <a href="#"><i class="feather-thumbs-up"></i> Yes</a>
-                                    <a href="#"><i class="feather-thumbs-down"></i> No</a>
-                                </div>
-                            </div>
-                        </li>
-                        <li class="review-box">
-                            <div class="review-profile">
-                                <div class="review-img">
-                                    <img src="assets/img/profiles/avatar-07.jpg" class="img-fluid"
-                                        alt="img">
-                                    <div class="review-name">
-                                        <h6>Martinez</h6>
-                                        <p>2 days ago | 14:35PM </p>
-                                    </div>
-                                </div>
-                                <div class="rating">
-                                    <i class="fas fa-star filled"></i>
-                                    <i class="fas fa-star filled"></i>
-                                    <i class="fas fa-star filled"></i>
-                                    <i class="fas fa-star filled"></i>
-                                    <i class="fas fa-star filled"></i>
-                                </div>
-                            </div>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipicing elit, sed do eiusmod tempor
-                                incididunt ut labore et dolore magna aliqa. Ut enim ad minim veniam, quis
-                                nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat</p>
-                            <div class="recommend-item">
-                                <a href="#"><img alt="Image" src="assets/img/icons/reply-icon.svg"
-                                        class="me-2"> Reply</a>
-                                <div class="recommend-info">
-                                    <p>Recommend?</p>
-                                    <a href="#"><i class="feather-thumbs-up"></i> Yes</a>
-                                    <a href="#"><i class="feather-thumbs-down"></i> No</a>
-                                </div>
-                            </div>
-                            <div class="reply-area">
-                                <textarea class="form-control mb-0" rows="3" placeholder="Type your response....."></textarea>
-                            </div>
-                        </li>
-                        <li class="review-box">
-                            <div class="review-profile">
-                                <div class="review-img">
-                                    <img src="assets/img/profiles/avatar-05.jpg" class="img-fluid"
-                                        alt="img">
-                                    <div class="review-name">
-                                        <h6>Bradley</h6>
-                                        <p>1 month ago | 17:35PM </p>
-                                    </div>
-                                </div>
-                                <div class="rating">
-                                    <i class="fas fa-star filled"></i>
-                                    <i class="fas fa-star filled"></i>
-                                    <i class="fas fa-star filled"></i>
-                                    <i class="fas fa-star filled"></i>
-                                    <i class="fas fa-star filled"></i>
-                                </div>
-                            </div>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipicing elit, sed do eiusmod tempor
-                                incididunt ut labore et dolore magna aliqa. Ut enim ad minim veniam, quis
-                                nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat</p>
-                            <div class="recommend-item">
-                                <a href="#"><img alt="Image" src="assets/img/icons/reply-icon.svg"
-                                        class="me-2"> Reply</a>
-                                <div class="recommend-info">
-                                    <p>Recommend?</p>
-                                    <a href="#"><i class="feather-thumbs-up"></i> Yes</a>
-                                    <a href="#"><i class="feather-thumbs-down"></i> No</a>
-                                </div>
-                            </div>
-                        </li>
-                    </ul>
-                    <div class="text-center">
-                        <a href="customer-reviews.html" class="btn btn-primary btn-review">View All
-                            Reviews</a>
-                    </div>
-                </div>
-                <div class="row align-items-center">
-                    <div class="col-md-6">
-                        <div class="service-wrap">
-                            <h5>Related Services</h5>
-                        </div>
-                    </div>
-                    <div class="col-md-6 text-md-end">
-                        <div class="owl-nav mynav"></div>
-                    </div>
-                </div>
-                <div class="owl-carousel related-slider">
-                    <div class="service-widget mb-0">
-                        <div class="service-img">
-                            <a href="service-details.html">
-                                <img class="img-fluid serv-img" alt="Service Image"
-                                    src="assets/img/services/service-01.jpg">
-                            </a>
-                            <div class="fav-item">
-                                <a href="categories.html"><span class="item-cat">Cleaning</span></a>
-                                <a href="javascript:void(0)" class="fav-icon">
-                                    <i class="feather-heart"></i>
-                                </a>
-                            </div>
-                            <div class="item-info">
-                                <a href="providers.html"><span class="item-img"><img
-                                            src="assets/img/profiles/avatar-04.jpg" class="avatar"
-                                            alt="User"></span></a>
-                            </div>
-                        </div>
-                        <div class="service-content">
-                            <h3 class="title">
-                                <a href="service-details.html">Electric Panel Repairing Service</a>
-                            </h3>
-                            <p><i class="feather-map-pin"></i>Montana, USA<span class="rate"><i
-                                        class="fas fa-star filled"></i>4.9</span></p>
-                            <div class="serv-info">
-                                <h6>$25.00<span class="old-price">$35.00</span></h6>
-                                <a href="booking.html" class="btn btn-book">Book Now</a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="service-widget mb-0">
-                        <div class="service-img">
-                            <a href="service-details.html">
-                                <img class="img-fluid serv-img" alt="Service Image"
-                                    src="assets/img/services/service-02.jpg">
-                            </a>
-                            <div class="fav-item">
-                                <a href="categories.html"><span class="item-cat">Construction</span></a>
-                                <a href="javascript:void(0)" class="fav-icon">
-                                    <i class="feather-heart"></i>
-                                </a>
-                            </div>
-                            <div class="item-info">
-                                <a href="providers.html"><span class="item-img"><img
-                                            src="assets/img/profiles/avatar-03.jpg" class="avatar"
-                                            alt="User"></span></a>
-                            </div>
-                        </div>
-                        <div class="service-content">
-                            <h3 class="title">
-                                <a href="service-details.html">Toughened Glass Fitting Services</a>
-                            </h3>
-                            <p><i class="feather-map-pin"></i>Montana, USA</p>
-                            <div class="serv-info">
-                                <h6>$45.00</h6>
-                                <a href="booking.html" class="btn btn-book">Book Now</a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="service-widget mb-0">
-                        <div class="service-img">
-                            <a href="service-details.html">
-                                <img class="img-fluid serv-img" alt="Service Image"
-                                    src="assets/img/services/service-03.jpg">
-                            </a>
-                            <div class="fav-item">
-                                <a href="categories.html"><span class="item-cat">Carpentry</span></a>
-                                <a href="javascript:void(0)" class="fav-icon">
-                                    <i class="feather-heart"></i>
-                                </a>
-                            </div>
-                            <div class="item-info">
-                                <a href="providers.html"><span class="item-img"><img
-                                            src="assets/img/profiles/avatar-02.jpg" class="avatar"
-                                            alt="User"></span></a>
-                            </div>
-                        </div>
-                        <div class="service-content">
-                            <h3 class="title">
-                                <a href="service-details.html">Wooden Carpentry Work</a>
-                            </h3>
-                            <p><i class="feather-map-pin"></i>Montana, USA</p>
-                            <div class="serv-info">
-                                <h6>$45.00</h6>
-                                <a href="booking.html" class="btn btn-book">Book Now</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+                                        <div class="fav-item">
+                                            <a href="categories.html"><span class="item-cat">Construction</span></a>
 
-            <div class="col-lg-4 theiaStickySidebar">
+                                        </div>
 
-                <div class="card card-provide mb-0">
-                    <div class="card-body">
-                        <div class="provide-widget">
-                            <div class="service-amount">
-                                <h5>$150<span>$170</span></h5>
-                                <p class="serv-review"><i class="fa-solid fa-star"></i> <span>4.9 </span>(255
-                                    reviews)</p>
-                            </div>
-                            <div class="serv-proimg">
-                                <img src="assets/img/profiles/avatar-02.jpg" class="img-fluid"
-                                    alt="img">
-                                <span><i class="fa-solid fa-circle-check"></i></span>
-                            </div>
-                        </div>
-                        <div class="package-widget">
-                            <h5>Available Service Packages</h5>
-                            <ul>
-                                <li>Full car wash and clean</li>
-                                <li>Auto Electrical</li>
-                                <li>Pre Purchase Inspection</li>
-                                <li>Pre Purchase Inspection</li>
-                            </ul>
-                        </div>
-                        <div class="package-widget pack-service">
-                            <h5>Additional Service</h5>
-                            <ul>
-                                <li>
-                                    <div class="add-serving">
-                                        <label class="custom_check">
-                                            <input type="checkbox" name="rememberme">
-                                            <span class="checkmark"></span>
-                                        </label>
-                                        <div class="add-serv-item">
-                                            <div class="add-serv-img">
-                                                <img src="assets/img/services/service-09.jpg" alt="image">
-                                            </div>
-                                            <div class="add-serv-info">
-                                                <h6>House Cleaning</h6>
-                                                <p><i class="feather-map-pin"></i> Alabama, USA</p>
-                                            </div>
+                                    </div>
+                                    <div class="service-content">
+                                        <h3 class="title">
+                                            <a href="service-details.html">Toughened Glass Fitting Services</a>
+                                        </h3>
+                                        <p><i class="feather-map-pin"></i>Montana, USA<span class="rate"><i
+                                                    class="fas fa-star filled"></i>4.9</span></p>
+                                        <div class="serv-info">
+                                            <h6>$45.00</h6>
+                                            <a href="service-details.html" class="btn btn-book">Book Now</a>
                                         </div>
                                     </div>
-                                    <div class="add-serv-amt">
-                                        <h6>$500.75</h6>
+                                </div>
+                                <div class="service-widget aos" data-aos="fade-up">
+                                    <div class="service-img p-2">
+                                        <a href="service-details.html">
+                                            <img class="img-fluid serv-img" alt="Service Image"
+                                                src="{{ asset('assets/img/services/service-03.jpg') }}">
+                                        </a>
+                                        <div class="fav-item">
+                                            <a href="categories.html"><span class="item-cat">Carpentry</span></a>
+
+                                        </div>
+
                                     </div>
-                                </li>
-                                <li>
-                                    <div class="add-serving">
-                                        <label class="custom_check">
-                                            <input type="checkbox" name="rememberme">
-                                            <span class="checkmark"></span>
-                                        </label>
-                                        <div class="add-serv-item">
-                                            <div class="add-serv-img">
-                                                <img src="assets/img/services/service-16.jpg" alt="image">
-                                            </div>
-                                            <div class="add-serv-info">
-                                                <h6>Air Conditioner Service</h6>
-                                                <p><i class="feather-map-pin"></i> Illinois, USA</p>
-                                            </div>
+                                    <div class="service-content">
+                                        <h3 class="title">
+                                            <a href="service-details.html">Wooden Carpentry Work</a>
+                                        </h3>
+                                        <p><i class="feather-map-pin"></i>Montana, USA<span class="rate"><i
+                                                    class="fas fa-star filled"></i>4.9</span></p>
+                                        <div class="serv-info">
+                                            <h6>$45.00</h6>
+                                            <a href="service-details.html" class="btn btn-book">Book Now</a>
                                         </div>
                                     </div>
-                                    <div class="add-serv-amt">
-                                        <h6>$500.75</h6>
-                                    </div>
-                                </li>
-                                <li>
-                                    <div class="add-serving">
-                                        <label class="custom_check">
-                                            <input type="checkbox" name="rememberme">
-                                            <span class="checkmark"></span>
-                                        </label>
-                                        <div class="add-serv-item">
-                                            <div class="add-serv-img">
-                                                <img src="assets/img/services/service-07.jpg" alt="Service">
-                                            </div>
-                                            <div class="add-serv-info">
-                                                <h6>Interior Designing</h6>
-                                                <p><i class="feather-map-pin"></i> California, USA</p>
-                                            </div>
+                                </div>
+                                <div class="service-widget aos" data-aos="fade-up">
+                                    <div class="service-img p-2">
+                                        <a href="service-details.html">
+                                            <img class="img-fluid serv-img" alt="Service Image"
+                                                src="{{ asset('assets/img/services/service-11.jpg') }}">
+                                        </a>
+                                        <div class="fav-item">
+                                            <a href="categories.html"><span class="item-cat">Construction</span></a>
+                                            <a href="javascript:void(0)" class="fav-icon">
+                                                <i class="feather-heart"></i>
+                                            </a>
+                                        </div>
+                                        <div class="item-info">
+                                            <a href="providers.html"><span class="item-img"><img
+                                                        src="{{ asset('assets/img/profiles/avatar-04.jpg') }}"
+                                                        class="avatar" alt="User"></span></a>
                                         </div>
                                     </div>
-                                    <div class="add-serv-amt">
-                                        <h6>$500.75</h6>
-                                    </div>
-                                </li>
-                                <li>
-                                    <div class="add-serving">
-                                        <label class="custom_check">
-                                            <input type="checkbox" name="rememberme">
-                                            <span class="checkmark"></span>
-                                        </label>
-                                        <div class="add-serv-item">
-                                            <div class="add-serv-img">
-                                                <img src="assets/img/services/service-03.jpg"
-                                                    alt="Service Image">
-                                            </div>
-                                            <div class="add-serv-info">
-                                                <h6>Wooden Carpentry Work</h6>
-                                                <p><i class="feather-map-pin"></i> Alabama, USA</p>
-                                            </div>
+                                    <div class="service-content">
+                                        <h3 class="title">
+                                            <a href="service-details.html">Plumbing Services</a>
+                                        </h3>
+                                        <p><i class="feather-map-pin"></i>Georgia, USA<span class="rate"><i
+                                                    class="fas fa-star filled"></i>4.9</span></p>
+                                        <div class="serv-info">
+                                            <h6>$45.00</h6>
+                                            <a href="service-details.html" class="btn btn-book">Book Now</a>
                                         </div>
-                                    </div>
-                                    <div class="add-serv-amt">
-                                        <h6>$354.45</h6>
-                                    </div>
-                                </li>
-                            </ul>
-                        </div>
-                        <div class="card card-available">
-                            <div class="card-body">
-                                <div class="available-widget">
-                                    <div class="available-info">
-                                        <h5>Service Availability</h5>
-                                        <ul>
-                                            <li>Monday <span>9:30 AM - 7:00 PM</span> </li>
-                                            <li>Tuesday <span>9:30 AM - 7:00 PM</span> </li>
-                                            <li>Wednesday <span>9:30 AM - 7:00 PM</span> </li>
-                                            <li>Thursday <span>9:30 AM - 7:00 PM</span> </li>
-                                            <li>Friday <span>9:30 AM - 7:00 PM</span> </li>
-                                            <li>Saturday <span>9:30 AM - 7:00 PM</span> </li>
-                                            <li>Sunday <span class="text-danger">Closed</span> </li>
-                                        </ul>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <div class="map-grid">
-                            <iframe
-                                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d6509170.989457427!2d-123.80081967108484!3d37.192957227641294!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x808fb9fe5f285e3d%3A0x8b5109a227086f55!2sCalifornia%2C%20USA!5e0!3m2!1sen!2sin!4v1669181581381!5m2!1sen!2sin"
-                                style="border:0;" allowfullscreen loading="lazy"
-                                referrerpolicy="no-referrer-when-downgrade" class="contact-map"></iframe>
-                        </div>
-                        <a href="booking.html" class="btn btn-primary">Book Service</a>
                     </div>
                 </div>
+            </section>
+            <section class="blog-section">
+                <div class="container">
+                    <h2 class="text-center pb-3">How <span class="text-danger">ZeroBroker</span> Hire Packer and Mover
+                        Services Work?</h2>
+                    <div class="row justify-content-between">
+                        <div class="col-lg-4 col-md-6 d-flex">
+                            <div class="blog flex-fill aos" data-aos="fade-up">
+                                <div class="blog-image">
+                                    <a><img class="img-fluid" src="assets/img/blog/blog-01.jpg" alt="Post Image"></a>
+                                </div>
+                                <div class="blog-content">
 
-            </div>
+                                    <h4>
+                                        Share Your Requirment
+                                    </h4>
+                                    <p>Tell us where and when do you want to move</p>
+                                    <div>Rating : </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-4 col-md-6 d-flex">
+                            <div class="blog flex-fill aos" data-aos="fade-up">
+                                <div class="blog-image">
+                                    <a href=""><img class="img-fluid" src="assets/img/blog/blog-02.jpg"
+                                            alt="Post Image"></a>
+                                </div>
+                                <div class="blog-content">
+
+                                    <h4>
+                                        <a href="">Schedule and confirm</a>
+                                    </h4>
+                                    <p>Pick a slot and pick a token amount to confirm and move</p>
+                                    <div>Rating : </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-4 col-md-6 d-flex">
+                            <div class="blog flex-fill aos" data-aos="fade-up">
+                                <div class="blog-image">
+                                    <a href="blog-details.html"><img class="img-fluid" src="assets/img/blog/blog-03.jpg"
+                                            alt="Post Image"></a>
+                                </div>
+                                <div class="blog-content">
+
+                                    <h4>
+                                        <a href="">We get you moved</a>
+                                    </h4>
+                                    <p>Pick a slot and pick a token amount to confirm and move</p>
+                                    <div>Rating : </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
         </div>
     </div>
-</div>
+@endsection
+@section('scripts')
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/intlTelInput.min.js"></script>
+    <script>
+        const input = document.querySelector("#phoneNumberInput-booking");
+        window.intlTelInput(input, {
+            initialCountry: "in",
+            separateDialCode: true
+        });
+    </script>
+
+
+    <script>
+        $(document).ready(function() {
+            $('#category').on('change', function() {
+                var subcategoryId = $(this).val();
+
+                if (subcategoryId) {
+                    $.ajax({
+                        url: '/fetch-subcategory/' + subcategoryId, // Adjusted URL based on route
+                        type: 'POST',
+                        data: {
+                            _token: '{{ csrf_token() }}' // Include CSRF token for security
+                        },
+                        success: function(response) {
+                            if (response.status === 1) {
+                                var subcategory = response.data;
+                                $('#subcategory').find('option')
+                                    .remove(); // Clear existing options
+                                var options =
+                                    '<option value="" selected disabled>Select Subservices</option>'; // Default option
+                                $.each(subcategory, function(key, subcateg) {
+                                    options += "<option value='"  + subcateg.id + "'>" +
+                                        subcateg.name + "</option>";
+                                });
+                                $('#subcategory').append(options);
+                            }
+                        }
+                    });
+                } else {
+                    $('#subcategory').find('option').remove(); // Clear options if no state is selected
+                    $('#subcategory').append('<option value="">Select Subservices</option>');
+                }
+            });
+        });
+
+        // Handle form submission
+        $('#enquiryForm').off('submit').on('submit', function(event) {
+                event.preventDefault(); // Prevent the default form submission
+                var formData = $(this).serialize(); // Serialize form data
+                var url = $(this).attr('action'); // Get the form action URL
+
+                $.ajax({
+                    url: url,
+                    method: 'POST',
+                    data: formData,
+                    success: function(response) {
+
+                        var message = response.message === 'Submitted Successfully';
+                        $('#addEnquiryModal').modal(message ? 'hide' : 'show');
+                        $("#addEnquiryModal .success-msg").toggle(message).delay(3000).hide(0);
+                        setTimeout(function() {
+                            window.location.reload();
+                        }, message ? 3000 : 0);
+                    },
+                    error: function(xhr) {
+                        var errors = xhr.responseJSON.errors;
+                        $('.text-danger').text('');
+
+                        $.each(errors, function(key, value) {
+                            var errorElement = $('.' + key + '-error');
+                            errorElement.text(value[0]);
+
+                        });
+                    }
+                });
+            });
+    </script>
 @endsection

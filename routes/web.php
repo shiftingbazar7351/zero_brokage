@@ -1,47 +1,64 @@
 <?php
 
+use App\Http\Controllers\AdminController;
 use App\Http\Controllers\CategoryController;
-use App\Http\Controllers\FrontendController;
+use App\Http\Controllers\MenuController;
+use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\SubCategoryController;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
-use App\Http\Controllers\AdminController;
-use App\Http\Controllers\SubCategoryController;
-use App\Http\Controllers\MenuController;
-use App\Http\Controllers\SubmenuController;
-use App\Http\Controllers\FooterController;
-use App\Http\Controllers\UserController;
 
 
 
-Route::get('/category-listing', function () {
-    return view('frontend.categories');
-})->name('categories.listing');
 
-Route::get('/booking', function () {
-    return view('frontend.booking');
-})->name('booking');
 
-Route::get('/service-details', function () {
-    return view('frontend.service-details');
-})->name('service-details');
-// frontend 
-Route::get('/', [FrontendController::class, 'home'])->name('home');
-Route::get('/service-grid', [FrontendController::class, 'subCategory'])->name('service.grid');
+/*
+|--------------------------------------------------------------------------
+| Web Routes
+|--------------------------------------------------------------------------
+|
+| Here is where you can register web routes for your application. These
+| routes are loaded by the RouteServiceProvider within a group which
+| contains the "web" middleware group. Now create something great!
+|
+*/
 
-// for backend
-Route::resource('categories', CategoryController::class);
-Route::get('/categories-details', [CategoryController::class, 'service_details'])->name('details');
-Route::resource('subcategories', SubCategoryController::class);
-Route::post('/fetch-subcategory/{id}', [SubCategoryController::class, 'fetchsubcategory']);
-Route::post('/fetch-menus/{id}', [SubCategoryController::class, 'fetchmenu']);
-Route::post('/services-submenu', [SubmenuController::class, 'store'])->name('submenu.store');
 
-Route::get('/services_subcategory', [UserController::class, 'sub_category'])->name('subcategory');
-Route::get('/services_menu', [UserController::class, 'menu'])->name('menu');
-Route::get('/services_submenu', [UserController::class, 'submenu'])->name('submenu');
-Route::resource('menu', CategoryController::class);
-Route::post('/update-status', [CategoryController::class, 'updateStatus'])->name('update.status');
-Route::get('/footer-about-us', [FooterController::class, 'about_us'])->name('about');
-Route::get('/footer-blog', [FooterController::class, 'blog'])->name('blog');
-Route::get('/footer-contact', [FooterController::class, 'contact'])->name('contact');
-Route::get('/admin-homepage', [AdminController::class, 'homepage'])->name('admin_page');
+Route::middleware('auth')->group(function () {
+    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+
+    Route::controller(UserController::class)->group(function () {
+        Route::get('/user', 'index')->name('user.index')->middleware('can:user-list');
+        Route::get('/user/create', 'create')->name('user.create')->middleware('can:user-create');
+        Route::post('/user', 'store')->name('user.store')->middleware('can:user-create');
+        Route::get('/user/{user}/edit', 'edit')->name('user.edit')->middleware('can:user-edit');
+        Route::patch('/user/update/{user}', 'update')->name('update.user')->middleware('can:user-edit');
+        Route::post('/user/{user}', 'show')->name('user.show')->middleware('can:user-show');
+        Route::delete('/user/{user}', 'destroy')->name('user.destroy')->middleware('can:user-delete');
+    });
+
+    Route::get('/dashboard', [AdminController::class, 'homepage'])->name('admin_page');
+    Route::resource('categories', CategoryController::class);
+    Route::post('/category-status', [CategoryController::class, 'categoryStatus'])->name('categories.status');
+
+    Route::resource('subcategories', SubCategoryController::class);
+    Route::post('/sub-category-status', [SubCategoryController::class, 'subCategoryStatus'])->name('subcategories.status');
+
+    Route::resource('/menus', MenuController::class);
+    Route::post('/menu-status', [MenuController::class, 'menuStatus'])->name('menu.status');
+});
+
+// Route::get('/category-listing', function () {
+//     return view('frontend.categories');
+// })->name('categories.listing');
+
+// Route::get('/booking', function () {
+//     return view('frontend.booking');
+// })->name('booking');
+
+
+
+require __DIR__.'/auth.php';

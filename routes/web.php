@@ -69,7 +69,10 @@ Route::resource('/meta-title', MetaTitleController::class);
 Route::resource('/service-detail', ServiceDetailController::class);
 
 Route::resource('/enquiry', EnquiryController::class);
-Route::post('/fetch-subcategory/{id}', [EnquiryController::class, 'fetchsubcategory']);
+// Route::post('/fetch-subcategory/{id}', [EnquiryController::class, 'fetchsubcategory']);
+// Fetch subcategories based on category ID
+Route::get('/fetch-subcategory/{category_id}', [EnquiryController::class, 'fetchSubcategories'])->name('enquiry.subcategories');
+
 
 Route::resource('/menus', MenuController::class);
 Route::post('/update-subcategorystatus', [MenuController::class, 'updateStatus'])->name('update.subcategorystatus');

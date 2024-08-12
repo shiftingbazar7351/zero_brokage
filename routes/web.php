@@ -26,6 +26,23 @@ Route::get('/service-details', function () {
     return view('frontend.service-details');
 })->name('service-details');
 
+Route::get('/preview-details', function () {
+    return view('frontend.preview_details');
+})->name('service-details');
+
+Route::get('/pricing-details', function () {
+    return view('frontend.pricing');
+})->name('pricing');
+
+Route::get('/privacy-policy', function () {
+    return view('frontend.privacy-policy');
+})->name('privacy');
+
+Route::get('/term-condition', function () {
+    return view('frontend.term-condition');
+})->name('term-condition');
+
+
 Route::get('/', [FrontendController::class, 'home'])->name('home');
 Route::get('/service-details', [FrontendController::class, 'serviceDetails'])->name('service-details');
 Route::get('/service-grid/{slug}', [FrontendController::class, 'subCategory'])->name('service.grid');
@@ -52,7 +69,12 @@ Route::resource('/meta-title', MetaTitleController::class);
 Route::resource('/service-detail', ServiceDetailController::class);
 
 Route::resource('/enquiry', EnquiryController::class);
-Route::post('/fetch-subcategory/{id}', [EnquiryController::class, 'fetchsubcategory']);
+Route::put('/enquiry/{id}', [EnquiryController::class, 'update'])->name('enquiry.update');
+
+// Route::post('/fetch-subcategory/{id}', [EnquiryController::class, 'fetchsubcategory']);
+// Fetch subcategories based on category ID
+Route::get('/fetch-subcategory/{category_id}', [EnquiryController::class, 'fetchSubcategories'])->name('enquiry.subcategories');
+
 
 Route::resource('/menus', MenuController::class);
 Route::post('/update-subcategorystatus', [MenuController::class, 'updateStatus'])->name('update.subcategorystatus');

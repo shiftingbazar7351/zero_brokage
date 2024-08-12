@@ -23,8 +23,8 @@ class SubCategoryController extends Controller
         $categories = Category::orderByDesc('created_at')->get();
         $countryId = Country::where('name', 'India')->value('id');
         $states = State::where('country_id', $countryId)->get(['name', 'id']);
-        $cities = City::get();
-        return view('backend.sub-category.index', compact('subcategories', 'categories', 'states','cities'));
+        // $cities = City::get();
+        return view('backend.sub-category.index', compact('subcategories', 'categories', 'states'));
     }
 
     /**
@@ -65,7 +65,7 @@ class SubCategoryController extends Controller
         if ($request->hasFile('image')) {
             $image = $request->file('image');
             $imageName = time() . '_' . $image->getClientOriginalName();
-            $image->storeAs('assets/menu', $imageName, 'public');
+            $image->storeAs('assets/subcategory', $imageName, 'public');
             $subcategory->image = $imageName;
         }
 
@@ -92,21 +92,23 @@ class SubCategoryController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
+    // Example controller method in Laravel
     public function edit($id)
     {
-        $record = SubCategory::find($id);
-        $states = State::all();
-        $selectedCity = $record->city_id;
-        $selectedState = City::where('id', $selectedCity)->pluck('state_id')->first();
-        $cities = City::where('state_id', $selectedState)->get()->map(function ($city) {
-            $city->name = ucwords($city->name);
-            return $city;
-        });
+        $subcategory = Subcategory::with('category', 'state', 'city')->find($id);
 
-        return view('backend.sub-category.index', compact('record', 'states', 'selectedState', 'selectedCity', 'cities'));
+        return response()->json([
+            'name' => $subcategory->name,
+            'category_id' => $subcategory->category_id,
+            'state_id' => $subcategory->state_id,
+            'city_id' => $subcategory->city_id,
+            'cities' => $subcategory->state->cities, // Assuming 'cities' relationship exists in the State model
+            'price' => $subcategory->total_price,
+            'discount' => $subcategory->discount,
+            'final_price' => $subcategory->edit_final_price,
+            'image_url' => $subcategory->image ? Storage::url('assets/subcategory/' . $subcategory->image) : asset('admin/assets/img/icons/upload.svg'),
+        ]);
     }
-
-
 
     /**
      * Update the specified resource in storage.
@@ -207,5 +209,5 @@ class SubCategoryController extends Controller
         return response()->json(['success' => false, 'message' => 'Item not found.']);
     }
 
-    
+
 }

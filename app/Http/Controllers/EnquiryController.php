@@ -17,10 +17,9 @@ class EnquiryController extends Controller
     {
         $subcategories = SubCategory::orderByDesc('created_at')->get();
         $categories = Category::orderByDesc('created_at')->get();
-        $enquiries = Enquiry::orderByDesc('created_at')->get();
-        return view('backend.enquiry_list', compact('enquiries', 'subcategories', 'categories'));
+        $enquiries = Enquiry::with('subcategory.category')->orderByDesc('created_at')->get();
+        return view('backend.enquiry.enquiry_list', compact('enquiries', 'subcategories', 'categories'));
     }
-
 
     public function store(Request $request)
     {
@@ -48,35 +47,43 @@ class EnquiryController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit($id)
+    public function edit(Enquiry $enquiry)
     {
-        $enquiry = Enquiry::findOrFail($id);
-        return view('backend.enquiry_list', compact('enquiry'));
+        return response()->json(['enquiry' => $enquiry]);
+
     }
 
     /**
      * Update the specified resource in storage.
      */
 
-    public function update(Request $request, $id)
-    {
-        $validator = Validator::make($request->all(), [
-            'category' => 'required|string',
-            'subcategory_id' => 'required|string',
-            'move_from_origin' => 'required|string|max:255',
-            'date_time' => 'required|string|max:255',
-            'name' => 'required|string|max:255',
-            'email' => 'required|email|max:255',
-            'mobile_number' => 'required|string|max:255',
-        ]);
-        if ($validator->fails()) {
-            return response()->json(['errors' => $validator->errors()], 422);
-        }
-        $enquiry = new Enquiry($request->all());
-        $enquiry->update();
-        session()->flash('success', 'Updated Successfully');
-        return response()->json(['redirect' => url()->previous()]);
-    }
+     public function update(Request $request, $id)
+     {
+         $validator = Validator::make($request->all(), [
+            //  'category' => 'required|string',
+             'subcategory_id' => 'required|string',
+             'move_from_origin' => 'required|string|max:255',
+             'date_time' => 'required|string|max:255',
+             'name' => 'required|string|max:255',
+             'email' => 'required|email|max:255',
+             'mobile_number' => 'required|string|max:255',
+         ]);
+     
+         if ($validator->fails()) {
+             return response()->json(['errors' => $validator->errors()], 422);
+         }
+     
+         $enquiry = Enquiry::find($id);
+         if (!$enquiry) {
+             return response()->json(['error' => 'Enquiry not found'], 404);
+         }
+     
+         $enquiry->update($request->all());
+     
+        //  session()->flash('success', 'Updated Successfully');
+         return redirect()->back()->with('success','Updated Successfully');
+     }
+     
 
     /**
      * Remove the specified resource from storage.
@@ -98,7 +105,6 @@ class EnquiryController extends Controller
             $subcategory->name = ucwords($subcategory->name);
             return $subcategory;
         });
-
         if ($subcategories->isEmpty()) {
             return response()->json(['status' => 0, 'message' => 'No subcategory found']);
         }

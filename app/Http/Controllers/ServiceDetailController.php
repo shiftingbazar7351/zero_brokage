@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Menu;
 use App\Models\Category;
 use App\Models\ServiceDetail;
 use App\Models\SubCategory;
@@ -14,19 +15,22 @@ class ServiceDetailController extends Controller
      */
     public function index()
     {
+        $subcategories = SubCategory::orderByDesc('created_at')->get();
+        $categories = Category::orderByDesc('created_at')->get();
+        $menusCat = Menu::orderByDesc('created_at')->get();
         $serviceDetails = ServiceDetail::with('subCategory')->orderByDesc('created_by')->get();
-        return view('backend.service-detail.index', compact('serviceDetails'));
+        return view('backend.service-detail.index', compact('serviceDetails','subcategories','categories','menusCat'));
     }
 
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
-    {
-        $subcategories = SubCategory::orderByDesc('created_at')->get();
-        $categories = Category::orderByDesc('created_at')->get();
-        return view('backend.service-detail.create', compact('subcategories', 'categories'));
-    }
+    // public function create()
+    // {
+    //     $subcategories = SubCategory::orderByDesc('created_at')->get();
+    //     $categories = Category::orderByDesc('created_at')->get();
+    //     return view('backend.service-detail.create', compact('subcategories', 'categories'));
+    // }
 
     /**
      * Store a newly created resource in storage.
@@ -42,13 +46,6 @@ class ServiceDetailController extends Controller
         return redirect(route('service-detail.index'))->with('success', 'Enquiry submitted successfully!');
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
-    }
 
     /**
      * Show the form for editing the specified resource.

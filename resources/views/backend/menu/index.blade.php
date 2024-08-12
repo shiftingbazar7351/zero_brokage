@@ -260,61 +260,38 @@
         }
     });
 
-    // Handle Edit Menu form submission
-    // $('#editMenuForm').on('submit', function(e) {
-    //     e.preventDefault();
-        
-    //     var formData = new FormData(this);
-    //     var menuId = $('#editMenuForm').data('menu-id');
-
-    //     $.ajax({
-    //         url: '/menus/' + menuId,
-    //         type: 'POST',
-    //         data: formData,
-    //         processData: false,
-    //         contentType: false,
-    //         success: function(response) {
-    //             if (response.status === 1) {
-    //                 $('#edit-category').modal('hide');
-    //                 location.reload(); // Reload the page to reflect the changes
-    //             } else {
-    //                 console.log(response.errors);
-    //             }
-    //         },
-    //         error: function(response) {
-    //             console.error(response);
-    //             // Handle error
-    //         }
-    //     });
-    // });
-
-    // Open the edit modal with existing data
-    // $('.edit-subcategory').on('click', function() {
-    //     var menuId = $(this).data('id');
-    //     $.ajax({
-    //         url: '/menus/' + menuId + '/edit',
-    //         type: 'GET',
-    //         success: function(response) {
-    //             // Populate the modal with existing data
-    //             $('#editMenuForm').data('menu-id', response.menu.id);
-    //             $('#editMenuName').val(response.menu.name);
-    //             $('#editCategory').val(response.menu.category_id);
-    //             $('#editSubcategory').val(response.menu.subcategory_id);
-    //             $('#edit-category').modal('show');
-    //         }
-    //     });
-    // });
+    // edit data comming
 
     function editCategory(id) {
             $.ajax({
-                url: '/menus/' + id + '/edit',
+                url: `/menus/${id}/edit`,
                 method: 'GET',
                 success: function(response) {
-                    $('#editCategoryId').val(response.menu.id);
-                    $('#editName').val(response.menu.name);
-                    $('#editCategory').val(response.menu.category_id);
-                    $('#editImage').val(response.menu.image);
-                    $('#editCategoryForm').attr('action', '/menus/' + id);
+                    const {
+                        id,
+                        name,
+                        subcategory_id,
+                        image
+                    } = response.category;
+
+                    // Set form action and category details
+                    $('#editCategoryId').val(id);
+                    $('#editName').val(name);
+                    $('#editeditSubcategory').val(subcategory_id);
+                    $('#editCategoryForm').attr('action', `/menus/${id}`);
+
+                    // Helper function to update image previews
+                    const updateImagePreview = (selector, filePath, defaultPath) => {
+                        const imageUrl = filePath ? `{{ Storage::url('assets/') }}/${filePath}` :
+                            `{{ asset('admin/assets/img/menu/upload.svg') }}`;
+                        $(selector).attr('src', imageUrl);
+                    };
+
+                    // Update icon and background image previews
+                    updateImagePreview('#icon-preview', `icon/${icon}`, 'icons/upload.svg');
+                    updateImagePreview('#background-preview', `category/${image}`, 'icons/upload.svg');
+
+                    // Show the modal
                     $('#edit-category').modal('show');
                 }
             });

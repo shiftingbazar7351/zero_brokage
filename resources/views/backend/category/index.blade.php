@@ -9,6 +9,7 @@
     </style>
 @endsection
 @section('content')
+
     <div class="page-wrapper page-settings">
         <div class="content">
             <div class="content-page-header content-page-headersplit mb-0">
@@ -98,7 +99,7 @@
             </div>
         </div>
     </div>
-
+    </div>
 
     <!-- Add Category Modal -->
     <div class="modal fade" id="add-category">
@@ -175,7 +176,7 @@
                     </button>
                 </div>
                 <div class="modal-body pt-0">
-                    <form id="editCategoryForm" action="{{ route('categories.update', ['category' => $category->id]) }}" method="POST" enctype="multipart/form-data">
+                    <form id="editCategoryForm" method="POST" enctype="multipart/form-data">
                         @csrf
                         @method('PUT')
                         <input type="hidden" id="editCategoryId" name="category_id">
@@ -187,7 +188,8 @@
                             <label class="form-label">Category Image</label>
                             <div class="form-uploads">
                                 <div class="form-uploads-path">
-                                    <img id="icon-preview" src="{{ isset($category->icon) ? Storage::url('assets/icon/' . $category->icon) : asset('admin/assets/img/icons/upload.svg') }}"
+                                    <img id="icon-preview"
+                                        src="{{ isset($category->icon) ? Storage::url('assets/icon/' . $category->icon) : asset('admin/assets/img/icons/upload.svg') }}"
                                         alt="img" width="100px" height="100px">
                                     <div class="file-browse">
                                         <h6>Drag & drop image or </h6>
@@ -206,7 +208,8 @@
                             <label class="form-label">Category Background-Image</label>
                             <div class="form-uploads">
                                 <div class="form-uploads-path">
-                                    <img id="background-preview" src="{{ isset($category->image) ? Storage::url('assets/category/' . $category->image) : asset('admin/assets/img/icons/upload.svg') }}"
+                                    <img id="background-preview"
+                                        src="{{ isset($category->image) ? Storage::url('assets/category/' . $category->image) : asset('admin/assets/img/icons/upload.svg') }}"
                                         alt="img" width="100px" height="100px">
                                     <div class="file-browse">
                                         <h6>Drag & drop image or </h6>
@@ -221,6 +224,7 @@
                             </div>
                         </div>
 
+
                         <div class="text-end">
                             <button type="button" class="btn btn-secondary me-2" data-bs-dismiss="modal">Cancel</button>
                             <button type="submit" class="btn btn-primary">Save Changes</button>
@@ -234,21 +238,41 @@
 @endsection
 
 @section('scripts')
-<script src="{{ asset('admin/assets/js/preview-img.js') }}"></script>
     <script>
         function editCategory(id) {
             $.ajax({
-                url: '/categories/' + id + '/edit',
+                url: `/categories/${id}/edit`,
                 method: 'GET',
                 success: function(response) {
-                    $('#editCategoryId').val(response.category.id);
-                    $('#editName').val(response.category.name);
-                    $('#editImage').val(response.category.image);
-                    $('#editCategoryForm').attr('action', '/categories/' + id);
+                    const {
+                        id,
+                        name,
+                        icon,
+                        image
+                    } = response.category;
+
+                    // Set form action and category details
+                    $('#editCategoryId').val(id);
+                    $('#editName').val(name);
+                    $('#editCategoryForm').attr('action', `/categories/${id}`);
+
+                    // Helper function to update image previews
+                    const updateImagePreview = (selector, filePath, defaultPath) => {
+                        const imageUrl = filePath ? `{{ Storage::url('assets/') }}/${filePath}` :
+                            `{{ asset('admin/assets/img/icons/upload.svg') }}`;
+                        $(selector).attr('src', imageUrl);
+                    };
+
+                    // Update icon and background image previews
+                    updateImagePreview('#icon-preview', `icon/${icon}`, 'icons/upload.svg');
+                    updateImagePreview('#background-preview', `category/${image}`, 'icons/upload.svg');
+
+                    // Show the modal
                     $('#edit-category').modal('show');
                 }
             });
         }
+
 
         function toggleStatus(checkbox, categoryId) {
             var form = checkbox.closest('form');
@@ -259,7 +283,28 @@
             form.submit();
         }
 
+        document.addEventListener('DOMContentLoaded', function() {
+            function handleImagePreview(inputId, previewId) {
+                document.getElementById(inputId).addEventListener('change', function(event) {
+                    const file = event.target.files[0];
+                    const preview = document.getElementById(previewId);
 
+                    if (file) {
+                        const reader = new FileReader();
+                        reader.onload = function(e) {
+                            preview.src = e.target.result;
+                            preview.classList.add('preview-img');
+                        }
+                        reader.readAsDataURL(file);
+                    } else {
+                        preview.src = "{{ asset('admin/assets/img/icons/upload.svg') }}";
+                        preview.classList.remove('preview-img');
+                    }
+                });
+            }
+            handleImagePreview('image-input-icon', 'image-preview-icon');
+            handleImagePreview('image-input-bg', 'image-preview-bg');
+        });
 
         // for updating the status through ajax request
         document.addEventListener('DOMContentLoaded', function() {
@@ -296,30 +341,30 @@
         });
 
         // preview image for edit page
-        // document.addEventListener('DOMContentLoaded', function() {
-        //     function previewImage(inputId, previewId) {
-        //         const inputElement = document.getElementById(inputId);
-        //         const previewElement = document.getElementById(previewId);
+        document.addEventListener('DOMContentLoaded', function() {
+            function previewImage(inputId, previewId) {
+                const inputElement = document.getElementById(inputId);
+                const previewElement = document.getElementById(previewId);
 
-        //         inputElement.addEventListener('change', function(event) {
-        //             const file = event.target.files[0];
+                inputElement.addEventListener('change', function(event) {
+                    const file = event.target.files[0];
 
-        //             if (file) {
-        //                 const reader = new FileReader();
-        //                 reader.onload = function(e) {
-        //                     previewElement.src = e.target.result;
-        //                     previewElement.classList.add('preview-img');
-        //                 }
-        //                 reader.readAsDataURL(file);
-        //             } else {
-        //                 previewElement.src = "{{ asset('admin/assets/img/icons/upload.svg') }}";
-        //                 previewElement.classList.remove('preview-img');
-        //             }
-        //         });
-        //     }
+                    if (file) {
+                        const reader = new FileReader();
+                        reader.onload = function(e) {
+                            previewElement.src = e.target.result;
+                            previewElement.classList.add('preview-img');
+                        }
+                        reader.readAsDataURL(file);
+                    } else {
+                        previewElement.src = "{{ asset('admin/assets/img/icons/upload.svg') }}";
+                        previewElement.classList.remove('preview-img');
+                    }
+                });
+            }
 
-        //     previewImage('editIcon', 'icon-preview');
-        //     previewImage('editImage', 'background-preview');
-        // });
+            previewImage('editIcon', 'icon-preview');
+            previewImage('editImage', 'background-preview');
+        });
     </script>
 @endsection

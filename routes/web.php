@@ -1,19 +1,16 @@
 <?php
 
+use App\Http\Controllers\AdminController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\FrontendController;
-use Illuminate\Support\Facades\Route;
-
-use App\Http\Controllers\AdminController;
-use App\Http\Controllers\SubCategoryController;
-use App\Http\Controllers\MenuController;
-use App\Http\Controllers\SubmenuController;
-use App\Http\Controllers\FooterController;
-use App\Http\Controllers\UserController;
 use App\Http\Controllers\MetaDescripConroller;
-use App\Http\Controllers\MetaUrlController;
 use App\Http\Controllers\MetaTitleController;
-
+use App\Http\Controllers\MetaUrlController;
+use App\Http\Controllers\ServiceDetailController;
+use App\Http\Controllers\SubCategoryController;
+use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\EnquiryController;
+use App\Http\Controllers\MenuController;
 
 // frontend
 // These routes are handled by the FrontendController
@@ -25,13 +22,13 @@ Route::get('/booking', function () {
     return view('frontend.booking');
 })->name('booking');
 
-Route::get('/service-details', function () {
-    return view('frontend.service-details');
-})->name('service-details');
+// Route::get('/service-details', function () {
+//     return view('frontend.service-details');
+// })->name('service-details');
 
 Route::get('/preview-details', function () {
     return view('frontend.preview_details');
-})->name('service-details');
+})->name('preview-details');
 
 Route::get('/pricing-details', function () {
     return view('frontend.pricing');
@@ -47,6 +44,7 @@ Route::get('/term-condition', function () {
 
 
 Route::get('/', [FrontendController::class, 'home'])->name('home');
+Route::get('/service-details', [FrontendController::class, 'serviceDetails'])->name('service-details');
 Route::get('/service-grid/{slug}', [FrontendController::class, 'subCategory'])->name('service.grid');
 
 // Backend Routes
@@ -68,8 +66,14 @@ Route::post('/update-subcategorystatus', [SubCategoryController::class, 'updateS
 Route::resource('/meta', MetaDescripConroller::class);
 Route::resource('/meta-url', MetaUrlController::class);
 Route::resource('/meta-title', MetaTitleController::class);
-Route::get('/editor', [AdminController::class, 'editor'])->name('editor');
+Route::resource('/service-detail', ServiceDetailController::class);
 
+Route::resource('/enquiry', EnquiryController::class);
+Route::post('/fetch-subcategory/{id}', [EnquiryController::class, 'fetchsubcategory']);
+
+Route::resource('/menus', MenuController::class);
+Route::post('/update-subcategorystatus', [MenuController::class, 'updateStatus'])->name('update.subcategorystatus');
+Route::post('/fetch-subcategory/{id}', [MenuController::class, 'fetchsubcategory']);
 
 // Route::post('/services-submenu', [SubmenuController::class, 'store'])->name('submenu.store');
 // Route::get('/services_subcategory', [UserController::class, 'sub_category'])->name('subcategory');

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Category;
 use App\Models\Menu;
+use App\Models\ServiceDetail;
 use App\Models\SubCategory;
 use Illuminate\Http\Request;
 
@@ -35,4 +36,13 @@ class FrontendController extends Controller
             ->paginate(20);
         return view('frontend.service-grid', compact('subcategories', 'category','categories'));
     }
+    public function serviceDetails()
+    {
+        // $menus = Menu::where('status', 1)->orderByDesc('created_at')->get();
+        $subcategories = SubCategory::orderByDesc('created_at')->get();
+        $categories = Category::orderByDesc('created_at')->get();
+        $services = ServiceDetail::orderByDesc('created_at')->first();
+        return view('frontend.service-details',compact('subcategories','categories','services'));
+    }
+
 }

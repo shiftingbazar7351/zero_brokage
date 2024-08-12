@@ -1,13 +1,5 @@
 @extends('backend.layouts.main')
-@section('styles')
-    <style>
-        .preview-img {
-            width: 100px;
-            height: 100px;
-            object-fit: cover;
-        }
-    </style>
-@endsection
+
 @section('content')
 <div class="page-wrapper page-settings">
     <div class="content">

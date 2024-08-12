@@ -1,4 +1,4 @@
-<div class="modal fade" id="editEnquiryModal" tabindex="-1" aria-labelledby="editEnquiryModalLabel" aria-hidden="true">
+<div class="modal fade" id="edit-enquiry" tabindex="-1" aria-labelledby="editEnquiryModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -8,11 +8,12 @@
                 </button>
             </div>
             <div class="modal-body">
-                <form action="{{ route('enquiry.update', $enquiry->id ?? '') }}" method="POST"
+                <form id="editCategoryForm" action="{{ route('enquiry.update', $enquiry->id ?? '') }}" method="POST"
                     enctype="multipart/form-data">
                     @csrf
                     @method('PUT')
                     @csrf
+                    <input type="hidden" id="editSubCategoryId" name="subcategory_id">
                     <div class="mb-3">
                         <label for="name" class="form-label">Name</label>
                         <input type="text" id="name" name="name" class="form-control"
@@ -38,7 +39,7 @@
                             <option value="" disabled>Select Category</option>
                             @foreach ($categories as $category)
                             <option value="{{ $category->id }}"
-                                {{ $category->id == old('category', $enquiry->subcategory->category->id) ? 'selected' : '' }}>
+                                {{ $category->id == old('category', $enquiry->subcategory->category->id ??'') ? 'selected' : '' }}>
                                 {{ $category->name }}
                             </option>
                         @endforeach

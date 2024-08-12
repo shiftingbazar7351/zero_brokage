@@ -21,7 +21,6 @@ class EnquiryController extends Controller
         return view('backend.enquiry.enquiry_list', compact('enquiries', 'subcategories', 'categories'));
     }
 
-
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
@@ -50,7 +49,7 @@ class EnquiryController extends Controller
      */
     public function edit(Enquiry $enquiry)
     {
-        return response()->json(['category' => $enquiry]);
+        return response()->json(['enquiry' => $enquiry]);
 
     }
 

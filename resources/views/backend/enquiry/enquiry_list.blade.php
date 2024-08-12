@@ -60,11 +60,11 @@
                                             <td>{{ $enquiry->mobile_number }}</td>
                                             <td>
                                                 <div class="d-flex">
-                                                    <a class="btn delete-table me-2 edit-enquiry"
-                                                        data-id="{{ $enquiry->id }}" data-bs-toggle="modal"
-                                                        data-bs-target="#editEnquiryModal">
+                                                    <button class="btn delete-table me-2"
+                                                        onclick="editEnquiry({{ $enquiry->id }})" type="button"
+                                                        data-bs-toggle="modal" data-bs-target="#edit-enquiry">
                                                         <i class="fe fe-edit"></i>
-                                                    </a>
+                                                    </button>
                                                     <form action="{{ route('enquiry.destroy', $enquiry->id) }}"
                                                         method="POST" style="display:inline;">
                                                         @csrf
@@ -96,6 +96,28 @@
 
 @section('scripts')
     <script>
+        function editCategory(id) {
+            $.ajax({
+                url: `/enquiry/${id}/edit`,
+                method: 'GET',
+                success: function(response) {
+                    const {
+                        id,
+                        name,
+
+                    } = response.category;
+
+                    // Set form action and category details
+                    $('#editCategoryId').val(id);
+                    $('#name').val(name);
+                    $('#editCategoryForm').attr('action', `/enquiry/${id}`);
+
+                    // Show the modal
+                    $('#edit-category').modal('show');
+                }
+            });
+        }
+
         $(document).ready(function() {
             $('#category').off('change').on('change', function() {
                 var categoryId = $(this).val();
@@ -109,7 +131,7 @@
                         success: function(response) {
                             $('#subcategory').empty().append(
                                 '<option value="" selected disabled>Select Subcategory</option>'
-                            ); 
+                            );
 
                             if (response.status === 1 && response.data.length > 0) {
                                 var subcategory = response.data;

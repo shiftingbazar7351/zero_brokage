@@ -30,14 +30,15 @@ class MenuController extends Controller
     {
         $request->validate([
             'name' => 'required|string|max:255',
-            'category' => 'required',
-            'subcategory' => 'nullable',
-            'icon' => 'nullable|image|mimes:jpeg,png|max:2048',
+            // 'category' => 'required',
+            // 'subcategory' => 'nullable',
+            // 'icon' => 'nullable|image|mimes:jpeg,png|max:2048',
         ]);
-
+        
+        // dd( $request->input('name'));
         $menu = new Menu();
         $menu->name = $request->input('name');
-        $menu->subcategory_id = $request->input('subcategory_id');
+        $menu->subcategory_id = $request->input('subcategory');
         $menu->slug = $this->generateSlug($request->name);
 
         if ($request->hasFile('image')) {
@@ -49,7 +50,8 @@ class MenuController extends Controller
 
         $menu->save();
     
-        return response()->json(['status' => 1, 'message' => 'Menu added successfully!']);
+        // return response()->json(['status' => 1, 'message' => 'Menu added successfully!']);
+        return redirect()->back()->with('success', 'Menu created successfully.');
     }
     protected function generateSlug($name)
     {

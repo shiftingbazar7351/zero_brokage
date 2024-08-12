@@ -8,7 +8,7 @@
                 </button>
             </div>
             <div class="modal-body pt-0">
-                <form id="editMenuForm" action="{{ route('menus.update',['menu' => $menu->id]) }}" method="POST"
+                <form  action="{{ route('menus.update',['menu' => $menu->id]) }}" method="POST"
                     enctype="multipart/form-data">
                     @csrf
                     @method('PATCH')

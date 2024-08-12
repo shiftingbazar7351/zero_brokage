@@ -73,10 +73,19 @@
                                             <td>
                                                 <div class="d-flex">
                                                     <a class="btn delete-table me-2 edit-subcategory"
-                                                        data-id="{{ $subcategory->id }}" data-bs-toggle="modal"
-                                                        data-bs-target="#editCategoryModal">
-                                                        <i class="fe fe-edit"></i>
-                                                    </a>
+                                                    data-id="{{ $subcategory->id }}"
+                                                    data-name="{{ $subcategory->name }}"
+                                                    data-category="{{ $subcategory->category_id }}"
+                                                    data-state="{{ $subcategory->state_id }}"
+                                                    data-city="{{ $subcategory->city_id }}"
+                                                    data-price="{{ $subcategory->price }}"
+                                                    data-discount="{{ $subcategory->discount }}"
+                                                    data-image="{{ Storage::url('assets/subcategory/' . $subcategory->image) }}"
+                                                    data-bs-toggle="modal"
+                                                    data-bs-target="#editCategoryModal">
+                                                    <i class="fe fe-edit"></i>
+                                                </a>
+
 
                                                     <!-- Delete Button -->
                                                     <form action="{{ route('subcategories.destroy', $subcategory->id) }}"
@@ -307,7 +316,100 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <script src="{{ asset('admin/assets/js/preview-img.js') }}"></script>
     <script>
-        
+        document.addEventListener('DOMContentLoaded', function() {
+    // When the modal is shown, populate the form fields with the subcategory data
+    $('#editCategoryModal').on('show.bs.modal', function(event) {
+        var button = $(event.relatedTarget); // Button that triggered the modal
+        // Extract info from data-* attributes
+        var id = button.data('id');
+        var name = button.data('name');
+        var category = button.data('category_id');
+        var state = button.data('state');
+        var city = button.data('city');
+        var price = button.data('price');
+        var discount = button.data('discount');
+        var image = button.data('image');
+
+        // Update the modal's form action
+        var formAction = '{{ url('subcategories') }}/' + id;
+        $(this).find('form').attr('action', formAction);
+
+        // Populate the form fields
+        $(this).find('#edit-name').val(name);
+        $(this).find('#edit-category').val(category);
+        $(this).find('#editstate').val(state);
+        $(this).find('#editcity').val(city);
+        $(this).find('#edit-price').val(price);
+        $(this).find('#edit-discount').val(discount);
+
+        // Update the image preview
+        if (image) {
+            $(this).find('#icon-preview').attr('src', image);
+        } else {
+            $(this).find('#icon-preview').attr('src', '{{ asset('admin/assets/img/icons/upload.svg') }}');
+        }
+
+        // Trigger change event on state dropdown to fetch cities (if applicable)
+        $('#editstate').trigger('change');
+    });
+
+    // Function to calculate final price in the edit modal
+    function calculateFinalPrice() {
+        const price = parseFloat(document.getElementById('edit-price').value);
+        const discountPercentage = parseFloat(document.getElementById('edit-discount').value);
+
+        if (!isNaN(price) && !isNaN(discountPercentage)) {
+            const discountAmount = (price * discountPercentage) / 100;
+            const finalPrice = price - discountAmount;
+
+            document.getElementById('edit-final-price').value = finalPrice.toFixed(2);
+        } else {
+            document.getElementById('edit-final-price').value = '';
+        }
+    }
+
+    document.getElementById('edit-price').addEventListener('input', calculateFinalPrice);
+    document.getElementById('edit-discount').addEventListener('input', calculateFinalPrice);
+});
+
+
+$(document).ready(function() {
+    $('#editstate').on('change', function() {
+        var stateId = $(this).val();
+        if (stateId) {
+            $.ajax({
+                url: '/fetch-city/' + stateId,
+                type: 'POST',
+                data: {
+                    _token: '{{ csrf_token() }}'
+                },
+                success: function(response) {
+                    if (response.status === 1) {
+                        var cities = response.data;
+                        $('#editcity').find('option').remove(); // Clear existing options
+                        var options = '<option value="">Select city</option>'; // Default option
+                        $.each(cities, function(key, city) {
+                            options += "<option value='" + city.id + "'>" + city.name + "</option>";
+                        });
+                        $('#editcity').append(options);
+                        $('#editcity').val(city);
+                    }
+                }
+            });
+        } else {
+            $('#editcity').find('option').remove(); // Clear options if no state is selected
+            $('#editcity').append('<option value="">Select city</option>');
+        }
+    });
+
+    // Trigger change event to load cities when the modal is shown
+    $('#editCategoryModal').on('show.bs.modal', function(event) {
+        $('#editstate').trigger('change');
+    });
+});
+
+
+
         document.addEventListener('DOMContentLoaded', function() {
             // Function to calculate final price
             function calculateFinalPrice() {
@@ -335,7 +437,7 @@
             form.submit();
         }
 
-        // for updating the status through ajax request
+        // // for updating the status through ajax request
         document.addEventListener('DOMContentLoaded', function() {
             document.querySelectorAll('.status-toggle').forEach(function(toggle) {
                 toggle.addEventListener('change', function() {
@@ -368,9 +470,9 @@
                 });
             });
         });
-        // -----------------------fetch city name--------------------------------------//
+        // // -----------------------fetch city name--------------------------------------//
 
-        // <script type="text/javascript" src="js/jquery.js">
+        // // <script type="text/javascript" src="js/jquery.js">
 
 
         $(document).ready(function() {
@@ -405,37 +507,37 @@
             });
         });
 
-        $(document).ready(function() {
-            $('#editstate').on('change', function() {
-                var stateId = $(this).val();
-                if (stateId) {
-                    $.ajax({
-                        url: '/fetch-city/' + stateId, // Adjusted URL based on route
-                        type: 'POST',
-                        data: {
-                            _token: '{{ csrf_token() }}' // Include CSRF token for security
-                        },
-                        success: function(response) {
-                            if (response.status === 1) {
-                                var cities = response.data;
-                                console.log(cities);
-                                $('#city').find('option').remove(); // Clear existing options
-                                var options =
-                                    '<option value="">Select city</option>'; // Default option
-                                $.each(cities, function(key, city) {
-                                    options += "<option value='" + city.id + "'>" + city
-                                        .name + "</option>";
-                                    // alert(response.stateId);
-                                });
-                                $('#editcity').append(options);
-                            }
-                        }
-                    });
-                } else {
-                    $('#editcity').find('option').remove(); // Clear options if no state is selected
-                    $('#editcity').append('<option value="">Select city</option>');
-                }
-            });
-        });
+        // $(document).ready(function() {
+        //     $('#editstate').on('change', function() {
+        //         var stateId = $(this).val();
+        //         if (stateId) {
+        //             $.ajax({
+        //                 url: '/fetch-city/' + stateId, // Adjusted URL based on route
+        //                 type: 'POST',
+        //                 data: {
+        //                     _token: '{{ csrf_token() }}' // Include CSRF token for security
+        //                 },
+        //                 success: function(response) {
+        //                     if (response.status === 1) {
+        //                         var cities = response.data;
+        //                         console.log(cities);
+        //                         $('#city').find('option').remove(); // Clear existing options
+        //                         var options =
+        //                             '<option value="">Select city</option>'; // Default option
+        //                         $.each(cities, function(key, city) {
+        //                             options += "<option value='" + city.id + "'>" + city
+        //                                 .name + "</option>";
+        //                             // alert(response.stateId);
+        //                         });
+        //                         $('#editcity').append(options);
+        //                     }
+        //                 }
+        //             });
+        //         } else {
+        //             $('#editcity').find('option').remove(); // Clear options if no state is selected
+        //             $('#editcity').append('<option value="">Select city</option>');
+        //         }
+        //     });
+        // });
     </script>
 @endsection

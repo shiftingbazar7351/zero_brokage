@@ -47,7 +47,6 @@ class MenuController extends Controller
         }
 
         $menu->save();
-
         return redirect()->back()->with('success', 'Menu added successfully!');
     }
 

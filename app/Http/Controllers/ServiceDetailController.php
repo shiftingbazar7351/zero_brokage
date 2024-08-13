@@ -25,12 +25,12 @@ class ServiceDetailController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    // public function create()
-    // {
-    //     $subcategories = SubCategory::orderByDesc('created_at')->get();
-    //     $categories = Category::orderByDesc('created_at')->get();
-    //     return view('backend.service-detail.create', compact('subcategories', 'categories'));
-    // }
+    public function create()
+    {
+        $subcategories = SubCategory::orderByDesc('created_at')->get();
+        $categories = Category::orderByDesc('created_at')->get();
+        return view('backend.service-detail.create', compact('subcategories', 'categories'));
+    }
 
     /**
      * Store a newly created resource in storage.
@@ -50,18 +50,28 @@ class ServiceDetailController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit($id)
     {
-        //
+        $serviceDetail = ServiceDetail::findOrFail($id);
+        $subcategories = SubCategory::orderByDesc('created_at')->get();
+        $categories = Category::orderByDesc('created_at')->get();
+        return view('backend.service-detail.edit', compact('serviceDetail', 'subcategories', 'categories'));
     }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
+    
+    public function update(Request $request, $id)
     {
-        //
+        $validatedData = $request->validate([
+            'subcategory_id' => 'required|string',
+            'description' => 'required|string',
+            'summery' => 'nullable',
+        ]);
+    
+        $serviceDetail = ServiceDetail::findOrFail($id);
+        $serviceDetail->update($validatedData);
+    
+        return redirect(route('service-detail.index'))->with('success', 'Service detail updated successfully!');
     }
+    
 
     /**
      * Remove the specified resource from storage.

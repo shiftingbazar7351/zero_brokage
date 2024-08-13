@@ -23,8 +23,9 @@
                                 Add Service Detail
                             </a> --}}
 
-                            <button class="btn btn-primary" type="button" data-toggle="modal"
-                            data-target="#addCategoryModal"><i class="fa fa-plus me-2"></i>Add Service details</button>
+                            <button class="btn btn-primary" type="button" onclick="window.location='{{ route('service-detail.create') }}'">
+                                <i class="fa fa-plus me-2"></i>Add Service details
+                            </button>
                         </li>
                     </ul>
                 </div>
@@ -61,11 +62,10 @@
 
                                             <td>
                                                 <div class="d-flex">
-                                                    <a class="btn delete-table me-2 edit-service"
-                                                        data-id="{{ $service->id }}" data-bs-toggle="modal"
-                                                        data-bs-target="#editCategoryModal">
+                                                    <a class="btn delete-table me-2 edit-service" href="{{ route('service-detail.edit', $service->id) }}">
                                                         <i class="fe fe-edit"></i>
                                                     </a>
+                                                    
 
                                                     <!-- Delete Button -->
                                                     <form action="{{ route('service-detail.destroy', $service->id) }}"
@@ -91,121 +91,7 @@
         </div>
     </div>
 
-    <div class="modal fade" id="addCategoryModal">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">Add Service detail</h5>
-                    <button type="button" class="btn-close close-modal" data-bs-dismiss="modal" aria-label="Close">
-                        <i class="fe fe-x"></i>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <form action="{{ route('subcategories.store') }}" method="POST" enctype="multipart/form-data">
-                        @csrf
 
-                        <div class="mb-3">
-                            <label for="category">Category</label>
-                            <select class="form-control" id="category" name="category">
-                                <option value="">Select Category</option>
-                                @foreach ($categories as $category)
-                                    <option value="{{ $category->id }}">{{ $category->name }}</option>
-                                @endforeach
-                            </select>
-                        </div>
-
-                        <div class="mb-3">
-                            <label for="category">Subcategory</label>
-                            <select class="form-control" id="subcategory" name="subcategory_id">
-                                <option value="">Select Subcategory</option>
-                            </select>
-                        </div>
-
-                        <div class="mb-3">
-                            <label for="description" class="col-form-label">description <span
-                                    class="text-danger">*</span></label>
-                            <textarea class="form-control" id="description" name="description">{{ old('description') }}</textarea>
-                            @error('description')
-                                <span class="text-danger">{{ $message }}</span>
-                            @enderror
-                        </div>
-                        <div class="mb-3">
-                            <label for="summery" class="col-form-label">Desription <span
-                                    class="text-danger">*</span></label>
-                            <textarea class="form-control" id="summery" name="summery">{{ old('summery') }}</textarea>
-                            @error('summery')
-                                <span class="text-danger">{{ $message }}</span>
-                            @enderror
-                        </div>
-                        <div class="text-end">
-                            <button type="button" class="btn btn-secondary me-2" data-bs-dismiss="modal">Cancel</button>
-                            <button type="submit" class="btn btn-primary">Save Changes</button>
-                        </div>
-
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    {{-- @include('backend.service-detail.create') --}}
-
-    <div class="modal fade" id="editCategoryModal" tabindex="-1" aria-labelledby="editCategoryModalLabel"
-        aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">Edit Subcategory</h5>
-                    <button type="button" class="btn-close close-modal" data-bs-dismiss="modal" aria-label="Close">
-                        <i class="fe fe-x"></i>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <form action="{{ route('subcategories.update', $subcategory->id ?? '') }}" method="POST"
-                        enctype="multipart/form-data">
-                        @csrf
-                        @method('PUT')
-
-                        <div class="mb-3">
-                            <label for="category">Category</label>
-                            <select class="form-control" id="category" name="category">
-                                <option value="">Select Category</option>
-                                @foreach ($categories as $category)
-                                    <option value="{{ $category->id }}">{{ $category->name }}</option>
-                                @endforeach
-                            </select>
-                        </div>
-
-                        <div class="mb-3">
-                            <label for="category">Subcategory</label>
-                            <select class="form-control" id="subcategory" name="subcategory_id">
-                                <option value="">Select Subcategory</option>
-                            </select>
-                        </div>
-                        
-                        <div class="mb-3">
-                            <label for="description" class="col-form-label">description <span
-                                    class="text-danger">*</span></label>
-                            <textarea class="form-control" id="description" name="description">{{ old('description') }}</textarea>
-                            @error('description')
-                                <span class="text-danger">{{ $message }}</span>
-                            @enderror
-                        </div>
-                        <div class="mb-3">
-                            <label for="summery" class="col-form-label">Desription <span
-                                    class="text-danger">*</span></label>
-                            <textarea class="form-control" id="summery" name="summery">{{ old('summery') }}</textarea>
-                            @error('summery')
-                                <span class="text-danger">{{ $message }}</span>
-                            @enderror
-                        </div>
-
-                        <button type="submit" class="btn btn-primary">Save Changes</button>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
 @endsection
 @section('scripts')
     <script src="{{ asset('admin/summernote/summernote.min.js') }}"></script>

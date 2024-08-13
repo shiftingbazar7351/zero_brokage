@@ -57,25 +57,33 @@ class EnquiryController extends Controller
      * Update the specified resource in storage.
      */
 
-    public function update(Request $request, $id)
-    {
-        $validator = Validator::make($request->all(), [
-            'category' => 'required|string',
-            'subcategory_id' => 'required|string',
-            'move_from_origin' => 'required|string|max:255',
-            'date_time' => 'required|string|max:255',
-            'name' => 'required|string|max:255',
-            'email' => 'required|email|max:255',
-            'mobile_number' => 'required|string|max:255',
-        ]);
-        if ($validator->fails()) {
-            return response()->json(['errors' => $validator->errors()], 422);
-        }
-        $enquiry = new Enquiry($request->all());
-        $enquiry->update();
-        session()->flash('success', 'Updated Successfully');
-        return response()->json(['redirect' => url()->previous()]);
-    }
+     public function update(Request $request, $id)
+     {
+         $validator = Validator::make($request->all(), [
+            //  'category' => 'required|string',
+             'subcategory_id' => 'required|string',
+             'move_from_origin' => 'required|string|max:255',
+             'date_time' => 'required|string|max:255',
+             'name' => 'required|string|max:255',
+             'email' => 'required|email|max:255',
+             'mobile_number' => 'required|string|max:255',
+         ]);
+     
+         if ($validator->fails()) {
+             return response()->json(['errors' => $validator->errors()], 422);
+         }
+     
+         $enquiry = Enquiry::find($id);
+         if (!$enquiry) {
+             return response()->json(['error' => 'Enquiry not found'], 404);
+         }
+     
+         $enquiry->update($request->all());
+     
+        //  session()->flash('success', 'Updated Successfully');
+         return redirect()->back()->with('success','Updated Successfully');
+     }
+     
 
     /**
      * Remove the specified resource from storage.

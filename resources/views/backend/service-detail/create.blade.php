@@ -13,11 +13,11 @@
     <div class="page-wrapper page-settings">
         <div class="content">
             <div class="row">
-                <div class="col-12">
+                <div>
                     {{-- <h1> Paragraph</h1> --}}
-                    <form action="{{ route('service-detail.store') }}" method="POST">
+                    <form id="addCategoryModal" action="{{ route('service-detail.store') }}" method="POST">
                         @csrf
-                        <div class="mb-3">
+                        <div class="mb-3 col-md-6">
                             <label for="category">Category</label>
                             <select class="form-control" id="category" name="category">
                                 <option value="">Select Category</option>
@@ -27,14 +27,14 @@
                             </select>
                         </div>
 
-                        <div class="mb-3">
+                        <div class="mb-3 col-md-6">
                             <label for="category">Subcategory</label>
                             <select class="form-control" id="subcategory" name="subcategory_id">
                                 <option value="">Select Subcategory</option>
                             </select>
                         </div>
 
-                        <div class="mb-3">
+                        <div class="mb-3 col-md-6">
                             <label for="description" class="col-form-label">description <span
                                     class="text-danger">*</span></label>
                             <textarea class="form-control" id="description" name="description">{{ old('description') }}</textarea>
@@ -42,7 +42,7 @@
                                 <span class="text-danger">{{ $message }}</span>
                             @enderror
                         </div>
-                        <div class="mb-3">
+                        <div class="mb-3 col-md-6">
                             <label for="summery" class="col-form-label">Desription <span
                                     class="text-danger">*</span></label>
                             <textarea class="form-control" id="summery" name="summery">{{ old('summery') }}</textarea>
@@ -70,7 +70,7 @@
             $('#description').summernote({
                 placeholder: "Write short description.....",
                 tabsize: 2,
-                height: 200
+                height: 330
             });
         });
     </script>
@@ -79,7 +79,7 @@
             $('#summery').summernote({
                 placeholder: "Write short description.....",
                 tabsize: 2,
-                height: 200
+                height: 330
             });
         });
     </script>

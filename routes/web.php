@@ -42,6 +42,10 @@ Route::get('/term-condition', function () {
     return view('frontend.term-condition');
 })->name('term-condition');
 
+Route::get('/services-in-india', function () {
+    return view('frontend.services-in-india');
+})->name('services-in-india');
+
 
 Route::get('/', [FrontendController::class, 'home'])->name('home');
 Route::get('/service-details', [FrontendController::class, 'serviceDetails'])->name('service-details');
@@ -67,9 +71,17 @@ Route::resource('/meta', MetaDescripConroller::class);
 Route::resource('/meta-url', MetaUrlController::class);
 Route::resource('/meta-title', MetaTitleController::class);
 Route::resource('/service-detail', ServiceDetailController::class);
+Route::resource('service-detail', ServiceDetailController::class);
+// Route::post('/fetch-subcategory/{categoryId}', [SubCategoryController::class, 'fetchSubcategory'])->name('fetch-subcategory');
+
 
 Route::resource('/enquiry', EnquiryController::class);
-Route::post('/fetch-subcategory/{id}', [EnquiryController::class, 'fetchsubcategory']);
+Route::put('/enquiry/{id}', [EnquiryController::class, 'update'])->name('enquiry.update');
+
+// Route::post('/fetch-subcategory/{id}', [EnquiryController::class, 'fetchsubcategory']);
+// Fetch subcategories based on category ID
+Route::get('/fetch-subcategory/{category_id}', [EnquiryController::class, 'fetchSubcategories'])->name('enquiry.subcategories');
+
 
 Route::resource('/menus', MenuController::class);
 Route::post('/update-subcategorystatus', [MenuController::class, 'updateStatus'])->name('update.subcategorystatus');

@@ -1,4 +1,4 @@
-<div class="modal fade" id="editCategoryModal">
+<div class="modal fade" id="edit-category">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header">  
@@ -8,7 +8,7 @@
                 </button>
             </div>
             <div class="modal-body pt-0">
-                <form id="editMenuForm" action="{{ route('menus.update', $menu->id ?? '') }}" method="POST"
+                <form  action="{{ route('menus.update',['menu' => $menu->id]) }}" method="POST"
                     enctype="multipart/form-data">
                     @csrf
                     @method('PATCH')
@@ -35,14 +35,17 @@
                         <div class="text-danger subcategory_id-error"></div>
                     </div>
                     <div class="mb-3">
-                        <label class="form-label">Menu Image</label>
+                        <label class="form-label">Category Image</label>
                         <div class="form-uploads">
                             <div class="form-uploads-path">
-                                <img id="image-preview-icon" src="{{ asset('admin/assets/img/menu/upload.svg') }}" alt="img" class="default-img">
+                                <img id="icon-preview"
+                                    src="{{ isset($menu->image) ? Storage::url('assets/menu/' .$menu->image) : asset('admin/assets/img/icons/upload.svg') }}"
+                                    alt="img" width="100px" height="100px">
                                 <div class="file-browse">
                                     <h6>Drag & drop image or </h6>
                                     <div class="file-browse-path">
-                                        <input type="file" name="image" id="image-input-icon" accept="image/jpeg, image/png">
+                                        <input type="file" id="editIcon" name="icon"
+                                            accept="image/jpeg, image/png">
                                         <a href="javascript:void(0);"> Browse</a>
                                     </div>
                                 </div>

@@ -629,7 +629,7 @@ label {
 	background: #fff;
 	border: 2px solid #EBEDF0;
 	border-radius: 6px;
-	margin-bottom: 24px;
+	margin: 24px;
 }
 .card .card-body {
 	padding: 20px;
@@ -4897,10 +4897,13 @@ html.menu-opened body {
     font-weight: 600;
 }
 .breadcrumb-bar {
-	background-image: url('../img/bg/b.png');
+	background-image: url('../img/bg/sunset.jpg');
 	text-align: center;
 	position: relative;
 	padding: 53px 0;
+	background-repeat: no-repeat;
+	background-position: center;
+	background-size: cover;
 }
 .breadcrumb-bar:before {
 	position: absolute;
@@ -4915,6 +4918,7 @@ html.menu-opened body {
 .breadcrumb-title {
 	font-size: 42px;
     margin-bottom: 15px;
+	color: white;
 }
 .breadcrumb-bar .page-breadcrumb ol {
 	justify-content: center;

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Menu;
 use App\Models\Category;
 use App\Models\ServiceDetail;
 use App\Models\SubCategory;
@@ -14,8 +15,11 @@ class ServiceDetailController extends Controller
      */
     public function index()
     {
+        $subcategories = SubCategory::orderByDesc('created_at')->get();
+        $categories = Category::orderByDesc('created_at')->get();
+        $menusCat = Menu::orderByDesc('created_at')->get();
         $serviceDetails = ServiceDetail::with('subCategory')->orderByDesc('created_by')->get();
-        return view('backend.service-detail.index', compact('serviceDetails'));
+        return view('backend.service-detail.index', compact('serviceDetails','subcategories','categories','menusCat'));
     }
 
     /**
@@ -42,29 +46,32 @@ class ServiceDetailController extends Controller
         return redirect(route('service-detail.index'))->with('success', 'Enquiry submitted successfully!');
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
-    }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit($id)
     {
-        //
+        $serviceDetail = ServiceDetail::findOrFail($id);
+        $subcategories = SubCategory::orderByDesc('created_at')->get();
+        $categories = Category::orderByDesc('created_at')->get();
+        return view('backend.service-detail.edit', compact('serviceDetail', 'subcategories', 'categories'));
     }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
+    
+    public function update(Request $request, $id)
     {
-        //
+        $validatedData = $request->validate([
+            'subcategory_id' => 'required|string',
+            'description' => 'required|string',
+            'summery' => 'nullable',
+        ]);
+    
+        $serviceDetail = ServiceDetail::findOrFail($id);
+        $serviceDetail->update($validatedData);
+    
+        return redirect(route('service-detail.index'))->with('success', 'Service detail updated successfully!');
     }
+    
 
     /**
      * Remove the specified resource from storage.

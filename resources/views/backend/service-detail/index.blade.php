@@ -1,4 +1,15 @@
 @extends('backend.layouts.main')
+@section('styles')
+    <link rel="stylesheet" href="{{ asset('admin/summernote/summernote.min.css') }}">
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
+
+    <!-- include summernote css/js -->
+    <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css" rel="stylesheet">
+@endsection
+
 @section('content')
 
     <div class="page-wrapper page-settings">
@@ -12,8 +23,9 @@
                                 Add Service Detail
                             </a> --}}
 
-                            <button class="btn btn-primary" type="button" data-toggle="modal"
-                            data-target="#addCategoryModal"><i class="fa fa-plus me-2"></i>Add Service details</button>
+                            <button class="btn btn-primary" type="button" onclick="window.location='{{ route('service-detail.create') }}'">
+                                <i class="fa fa-plus me-2"></i>Add Service details
+                            </button>
                         </li>
                     </ul>
                 </div>
@@ -50,11 +62,10 @@
 
                                             <td>
                                                 <div class="d-flex">
-                                                    <a class="btn delete-table me-2 edit-service"
-                                                        data-id="{{ $service->id }}" data-bs-toggle="modal"
-                                                        data-bs-target="#editCategoryModal">
+                                                    <a class="btn delete-table me-2 edit-service" href="{{ route('service-detail.edit', $service->id) }}">
                                                         <i class="fe fe-edit"></i>
                                                     </a>
+                                                    
 
                                                     <!-- Delete Button -->
                                                     <form action="{{ route('service-detail.destroy', $service->id) }}"
@@ -80,48 +91,5 @@
         </div>
     </div>
 
-    <div class="modal fade" id="addCategoryModal">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">Add Service detail</h5>
-                    <button type="button" class="btn-close close-modal" data-bs-dismiss="modal" aria-label="Close">
-                        <i class="fe fe-x"></i>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <form action="{{ route('subcategories.store') }}" method="POST" enctype="multipart/form-data">
-                        @csrf
 
-
-                        <button type="submit" class="btn btn-primary">Save</button>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="modal fade" id="editCategoryModal" tabindex="-1" aria-labelledby="editCategoryModalLabel"
-        aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">Edit Subcategory</h5>
-                    <button type="button" class="btn-close close-modal" data-bs-dismiss="modal" aria-label="Close">
-                        <i class="fe fe-x"></i>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <form action="{{ route('subcategories.update', $subcategory->id ?? '') }}" method="POST"
-                        enctype="multipart/form-data">
-                        @csrf
-                        @method('PUT')
-
-
-                        <button type="submit" class="btn btn-primary">Save Changes</button>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
 @endsection

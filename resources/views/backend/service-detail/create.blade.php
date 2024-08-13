@@ -15,7 +15,7 @@
             <div class="row">
                 <div class="col-12">
                     {{-- <h1> Paragraph</h1> --}}
-                    <form action="{{ route('service-detail.store') }}" method="POST">
+                    <form id="addCategoryModal" action="{{ route('service-detail.store') }}" method="POST">
                         @csrf
                         <div class="mb-3">
                             <label for="category">Category</label>

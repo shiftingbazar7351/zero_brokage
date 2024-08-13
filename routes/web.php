@@ -49,6 +49,7 @@ Route::middleware('auth')->group(function () {
 
     Route::resource('/menus', MenuController::class);
     Route::post('/menu-status', [MenuController::class, 'menuStatus'])->name('menu.status');
+    Route::post('/fetch-subcategory/{id}', [MenuController::class, 'fetchsubcategory']);
 });
 
 // Route::get('/category-listing', function () {
@@ -61,4 +62,4 @@ Route::middleware('auth')->group(function () {
 
 
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';

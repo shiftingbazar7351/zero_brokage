@@ -36,6 +36,7 @@ class MenuController extends Controller
         $menu = new Menu();
         $menu->name = $request->name;
         $menu->subcategory_id = $request->subcategory;
+        $menu->category_id = $request->category_id;
         $menu->slug = $this->generateSlug($request->name);
 
         if ($request->hasFile('image')) {

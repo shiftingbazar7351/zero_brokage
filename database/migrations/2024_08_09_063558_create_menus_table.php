@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('name')->nullable();
             $table->string('image')->nullable();
             $table->string('slug')->nullable();
+            $table->string('category_id')->nullable();
             $table->integer('subcategory_id')->nullable();
             $table->boolean('status')->default(1)->comment('0=>inactive,1=>active');
             $table->string('created_by')->nullable();

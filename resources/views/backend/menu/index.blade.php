@@ -8,7 +8,6 @@
         }
     </style>
 @endsection
-
 @section('content')
     <div class="page-wrapper page-settings">
         <div class="content">
@@ -115,7 +114,7 @@
                         </div>
                         <div class="mb-3">
                             <label for="category" class="form-label">Category</label>
-                            <select class="form-control" id="category" name="category">
+                            <select class="form-control" id="category" name="category_id">
                                 <option value="" disabled selected>Select Category</option>
                                 @foreach ($categories as $category)
                                     <option value="{{ $category->id }}">{{ $category->name }}</option>
@@ -173,6 +172,8 @@
                         @csrf
                         @method('PUT')
                         <input type="hidden" id="editCategoryId" name="category_id">
+                        <input type="hidden" id="editSubcategoryId" name="subcategory_id">
+
                         <div class="mb-3">
                             <label class="form-label">Menu Name</label>
                             <input type="text" class="form-control" id="editName" name="name">
@@ -224,36 +225,87 @@
 
 @section('scripts')
     <script>
-        $('#category').on('change', function() {
-            var categoryId = $(this).val();
-            if (categoryId) {
-                $.ajax({
-                    url: '/fetch-subcategory/' + categoryId,
-                    type: 'POST',
-                    data: {
-                        _token: '{{ csrf_token() }}'
-                    },
-                    success: function(response) {
-                        if (response.status === 1) {
-                            var subcategory = response.data;
+        var statusRoute = `{{ route('subcategories.status') }}`;
+    </script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="{{ asset('admin/assets/js/status-update.js') }}"></script>
+    <script src="{{ asset('admin/assets/js/preview-img.js') }}"></script>
+    <script>
+        $(document).ready(function() {
+            $('#category').off('change').on('change', function() {
+                var categoryId = $(this).val();
+                if (categoryId) {
+                    $.ajax({
+                        url: '/fetch-subcategory/' + categoryId,
+                        type: 'POST',
+                        data: {
+                            _token: '{{ csrf_token() }}'
+                        },
+                        success: function(response) {
                             $('#subcategory').empty().append(
                                 '<option value="" selected disabled>Select Subcategory</option>'
                             );
-                            $.each(subcategory, function(key, subcateg) {
-                                $('#subcategory').append('<option value="' +
-                                    subcateg.id + '">' + subcateg.name +
-                                    '</option>');
-                            });
+
+                            if (response.status === 1 && response.data.length > 0) {
+                                var subcategory = response.data;
+                                $.each(subcategory, function(key, subcateg) {
+                                    $('#subcategory').append('<option value="' +
+                                        subcateg.id + '">' + subcateg.name +
+                                        '</option>');
+                                });
+                            }
+                        },
+                        error: function() {
+                            // Handle the error scenario
+                            $('#subcategory').empty().append(
+                                '<option value="" disabled>Error loading subcategories</option>'
+                            );
                         }
+                    });
+                } else {
+                    $('#subcategory').empty().append(
+                        '<option value="" selected disabled>Select Subcategory</option>');
+                }
+            });
+
+            $('#addEnquiryModal').on('hidden.bs.modal', function() {
+                $('#enquiryForm')[0].reset();
+                $('#subcategory').empty().append(
+                    '<option value="" selected disabled>Select Subcategory</option>');
+            });
+
+
+            // for store the data
+            $('#enquiryForm').off('submit').on('submit', function(event) {
+                event.preventDefault();
+                var formData = $(this).serialize();
+                var url = $(this).attr('action');
+
+                $.ajax({
+                    url: url,
+                    method: 'POST',
+                    data: formData,
+                    success: function(response) {
+
+                        var message = response.message === 'Submitted Successfully';
+                        $('#addEnquiryModal').modal(message ? 'hide' : 'show');
+                        $("#addEnquiryModal .success-msg").toggle(message).delay(3000).hide(0);
+                        setTimeout(function() {
+                            window.location.reload();
+                        }, message ? 3000 : 0);
+                    },
+                    error: function(xhr) {
+                        var errors = xhr.responseJSON.errors;
+                        $('.text-danger').text('');
+
+                        $.each(errors, function(key, value) {
+                            var errorElement = $('.' + key + '-error');
+                            errorElement.text(value[0]);
+
+                        });
                     }
                 });
-            } else {
-                $('#subcategory').empty().append('<option value="">Select Subcategory</option>');
-            }
-        });
-        $('#addEnquiryModal').on('hidden.bs.modal', function() {
-            $('#enquiryForm')[0].reset();
-            $('#subcategory').empty().append('<option value="">Select Subcategory</option>');
+            });
         });
 
         function editCategory(id) {
@@ -321,6 +373,5 @@
                 $('#editSubcategorySelect').empty().append('<option value="">Select Subcategory</option>');
             }
         });
-
     </script>
 @endsection

@@ -36,7 +36,9 @@ class CategoryController extends Controller
             $slug = generateSlug($request->name);
             $data = array_merge($request->validated(), ['slug' => $slug]);
             Category::create($data);
-            return redirect(route('categories.index'))->with('success', 'Added Successfully');
+            toastr()->success('Added Successfully');
+            return redirect(route('categories.index'));
+            // ->with('success', 'Added Successfully');
         } catch (Exception $e) {
             return back()->with(['status' => false, 'error' => $e->getMessage()]);
         }

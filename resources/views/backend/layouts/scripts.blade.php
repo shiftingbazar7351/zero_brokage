@@ -56,43 +56,45 @@
     data-cf-settings="c1f77b0a2c00ef20b2ebccd6-|49" defer></script>
 
 
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+    {{-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <script>
         @if (Session::has('message'))
-            var type = "{{ Session::get('alert-type', 'info') }}"
-            switch (type) {
-                case 'info':
-
-                    toastr.options.timeOut = 10000;
-                    toastr.info("{{ Session::get('message') }}");
-                    var audio = new Audio('audio.mp3');
-                    audio.play();
-                    break;
-                case 'success':
-
-                    toastr.options.timeOut = 10000;
-                    toastr.success("{{ Session::get('message') }}");
-                    var audio = new Audio('audio.mp3');
-                    audio.play();
-
-                    break;
-                case 'warning':
-
-                    toastr.options.timeOut = 10000;
-                    toastr.warning("{{ Session::get('message') }}");
-                    var audio = new Audio('audio.mp3');
-                    audio.play();
-
-                    break;
-                case 'error':
-
-                    toastr.options.timeOut = 10000;
-                    toastr.error("{{ Session::get('message') }}");
-                    var audio = new Audio('audio.mp3');
-                    audio.play();
-
-                    break;
+            toastr.options = {
+                "closeButton": true,
+                "progressBar": true
             }
+            toastr.success("{{ session('message') }}");
         @endif
-    </script>
+
+        @if (Session::has('success'))
+            toastr.options = {
+                "closeButton": true,
+                "progressBar": true
+            }
+            toastr.success("{{ session('success') }}");
+        @endif
+
+        @if (Session::has('error'))
+            toastr.options = {
+                "closeButton": true,
+                "progressBar": true
+            }
+            toastr.error("{{ session('error') }}");
+        @endif
+
+        @if (Session::has('info'))
+            toastr.options = {
+                "closeButton": true,
+                "progressBar": true
+            }
+            toastr.info("{{ session('info') }}");
+        @endif
+
+        @if (Session::has('warning'))
+            toastr.options = {
+                "closeButton": true,
+                "progressBar": true
+            }
+            toastr.warning("{{ session('warning') }}");
+        @endif
+    </script> --}}

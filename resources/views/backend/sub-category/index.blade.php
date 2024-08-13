@@ -29,7 +29,9 @@
                             <thead>
                                 <tr>
                                     <th>#</th>
-                                    <th>Category</th>
+                                    <th>Image</th>
+                                    <th>Category Name</th>
+                                    <th>SubCategory Name</th>
                                     <th>Status</th>
                                     <th>Action</th>
                                 </tr>
@@ -40,27 +42,33 @@
                                         <td colspan="4" class="text-center">No data found</td>
                                     </tr>
                                 @else
-                                    @foreach ($subcategories as $category)
+                                    @foreach ($subcategories as $subcategory)
                                         <tr>
-                                            <td>{{ $category->id }}</td>
+                                            <td>{{ $subcategory->id }}</td>
                                             <td>
                                                 <div class="table-imgname">
-                                                    @if ($category->icon)
-                                                        <img src="{{ Storage::url('icon/' . $category->icon) }}"
+                                                    @if ($subcategory->icon)
+                                                        <img src="{{ Storage::url('icon/' . $subcategory->icon) }}"
                                                             class="me-2" alt="img">
                                                     @else
                                                         No Image
                                                     @endif
-                                                    <span>{{ $category->name }}</span>
+
                                                 </div>
+                                            </td>
+                                            <td>
+                                                <span>{{ $subcategory->categoryName->name ??'' }}</span>
+                                            </td>
+                                            <td>
+                                                <span>{{ $subcategory->name ??'' }}</span>
                                             </td>
 
                                             <td>
                                                 <div class="active-switch">
                                                     <label class="switch">
                                                         <input type="checkbox" class="status-toggle"
-                                                            data-id="{{ $category->id }}"
-                                                            {{ $category->status ? 'checked' : '' }}>
+                                                            data-id="{{ $subcategory->id }}"
+                                                            {{ $subcategory->status ? 'checked' : '' }}>
                                                         <span class="sliders round"></span>
                                                     </label>
                                                 </div>
@@ -68,11 +76,11 @@
                                             <td>
                                                 <div class="table-actions d-flex justify-content-center">
                                                     <button class="btn delete-table me-2"
-                                                        onclick="editCategory({{ $category->id }})" type="button"
+                                                        onclick="editCategory({{ $subcategory->id }})" type="button"
                                                         data-bs-toggle="modal" data-bs-target="#edit-category">
                                                         <i class="fe fe-edit"></i>
                                                     </button>
-                                                    <form action="{{ route('subcategories.destroy', $category->id) }}"
+                                                    <form action="{{ route('subcategories.destroy', $subcategory->id) }}"
                                                         method="POST" style="display:inline;">
                                                         @csrf
                                                         @method('DELETE')
@@ -109,7 +117,7 @@
                     <form action="{{ route('subcategories.store') }}" method="POST" enctype="multipart/form-data">
                         @csrf
                         <div class="form-group">
-                            <label for="category">Category</label>
+                            <label for="category">Category Name</label>
                             <select class="form-control" id="category" name="category_id" required>
                                 <option value="">Select a category</option>
                                 @foreach($categories as $category)
@@ -123,7 +131,7 @@
                                 value="{{ old('name') }}">
                         </div>
                         <div class="mb-3">
-                            <label class="form-label">Category Image</label>
+                            <label class="form-label">Sub Category Image</label>
                             <div class="form-uploads">
                                 <div class="form-uploads-path">
                                     <img id="image-preview-icon" src="{{ asset('admin/assets/img/icons/upload.svg') }}"
@@ -141,7 +149,7 @@
                             </div>
                         </div>
                         <div class="mb-3">
-                            <label class="form-label">Category Background-Image</label>
+                            <label class="form-label">sub Category Background-Image</label>
                             <div class="form-uploads">
                                 <div class="form-uploads-path">
                                     <img id="image-preview-bg" src="{{ asset('admin/assets/img/icons/upload.svg') }}"
@@ -184,7 +192,7 @@
                         @method('PUT')
                         <input type="hidden" id="editCategoryId" name="subcategory_id">
                         <div class="form-group">
-                            <label for="category">Category</label>
+                            <label for="category">Category Name</label>
                             <select class="form-control" id="category_id" name="category_id" required>
                                 <option value="">Select a category</option>
                                 @foreach($subcategories as $category)
@@ -193,11 +201,11 @@
                             </select>
                         </div>
                         <div class="mb-3">
-                            <label class="form-label">Category Name</label>
+                            <label class="form-label">Sub Category Name</label>
                             <input type="text" class="form-control" id="editName" name="name">
                         </div>
                         <div class="mb-3">
-                            <label class="form-label">Category Image</label>
+                            <label class="form-label">SUb Category Image</label>
                             <div class="form-uploads">
                                 <div class="form-uploads-path">
                                     <img id="icon-preview"
@@ -216,7 +224,7 @@
                             </div>
                         </div>
                         <div class="mb-3">
-                            <label class="form-label">Category Background-Image</label>
+                            <label class="form-label">SUb Category Background-Image</label>
                             <div class="form-uploads">
                                 <div class="form-uploads-path">
                                     <img id="background-preview"

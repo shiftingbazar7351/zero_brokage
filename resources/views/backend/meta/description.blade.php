@@ -16,6 +16,15 @@
                     </ul>
                 </div>
             </div>
+
+            <div class="row">
+                <div class="input-group border border-gray">
+                    <div class="form-outline ml-auto border border-danger">
+                        <input type="search" id="form1" class="form-control" placeholder="Search" />
+                    </div>
+                </div>
+            </div>
+
             <div class="row">
                 <div class="col-12">
                     <div class="table-responsive table-div">
@@ -42,9 +51,9 @@
                                                     <i class="fe fe-edit"></i>
                                                 </button>
                                             </td>
-                                            
-                                            
-                                            
+
+
+
                                         </tr>
 
                                         <!-- Edit Category Modal -->

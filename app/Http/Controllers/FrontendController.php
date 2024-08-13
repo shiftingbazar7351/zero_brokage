@@ -45,4 +45,10 @@ class FrontendController extends Controller
         return view('frontend.service-details',compact('subcategories','categories','services'));
     }
 
+    public function serviceList()
+    {
+        $categories = Category::get();
+        return view('frontend.service-list',compact('categories'));
+    }
+
 }

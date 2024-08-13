@@ -87,9 +87,10 @@ updateSliderPosition();
 // ...............FILTER CLEAR Function.apply................
 
 function resetVal(){
+    // alert();
     document.getElementById('input-keyword').value='';
     document.getElementById('location-val').value='';
-    // document.getElementById('mySelect').value = 'AllSubCategory';
+    document.getElementById('mySelect').value = 'AllSubCategory';
     $('#mySelect').val('AllSubCategory').trigger('change');
 
     const checkboxes = document.querySelectorAll('.toggleCheckbox');

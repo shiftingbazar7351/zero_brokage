@@ -56,7 +56,7 @@ class SubCategoryController extends Controller
         $subcategory->name = $request->input('name');
         $subcategory->category_id = $request->input('category');
         $subcategory->slug = $this->generateSlug($request->name);
-        $subcategory->city_id = $request->input('subcategory');
+        // $subcategory->city_id = $request->input('subcategory');
         $subcategory->total_price = $request->input('price');
         $subcategory->discount = $request->input('discount');
         $subcategory->discounted_price = $finalPrice;

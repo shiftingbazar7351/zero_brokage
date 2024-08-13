@@ -42,6 +42,10 @@ Route::get('/term-condition', function () {
     return view('frontend.term-condition');
 })->name('term-condition');
 
+Route::get('/services-in-india', function () {
+    return view('frontend.services-in-india');
+})->name('services-in-india');
+
 
 Route::get('/', [FrontendController::class, 'home'])->name('home');
 Route::get('/service-details', [FrontendController::class, 'serviceDetails'])->name('service-details');

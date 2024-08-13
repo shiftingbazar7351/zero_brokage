@@ -48,12 +48,12 @@
                     </a>
                 </li>
 
-                {{-- <li class="{{ Route::currentRouteName() === 'service-detail.index' ? 'active' : '' }}">
+                <li class="{{ Route::currentRouteName() === 'service-detail.index' ? 'active' : '' }}">
                     <a href="{{ route('service-detail.index') }}">
                         <i class="fe fe-file-text"></i>
                         <span>Service details</span>
                     </a>
-                </li> --}}
+                </li>
 
                 {{-- <li class="{{ Route::currentRouteName() === 'enquiry.index' ? 'active' : '' }}">
                     <a href="{{ route('enquiry.index') }}">

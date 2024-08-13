@@ -4,9 +4,11 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\MenuController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\ServiceDetailController;
 use App\Http\Controllers\SubCategoryController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
+
 
 
 
@@ -50,6 +52,8 @@ Route::middleware('auth')->group(function () {
     Route::resource('/menus', MenuController::class);
     Route::post('/menu-status', [MenuController::class, 'menuStatus'])->name('menu.status');
     Route::post('/fetch-subcategory/{id}', [MenuController::class, 'fetchsubcategory']);
+
+    Route::resource('service-detail', ServiceDetailController::class);
 });
 
 // Route::get('/category-listing', function () {

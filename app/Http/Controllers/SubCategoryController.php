@@ -8,6 +8,7 @@ use App\Services\FileUploadService;
 use Exception;
 use Illuminate\Http\RedirectRedirectResponse;
 use Illuminate\Http\Request;
+use App\Models\State;
 
 class SubCategoryController extends Controller
 {
@@ -48,7 +49,7 @@ class SubCategoryController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'name' => 'required|unique:categories,name',
+            'name' => 'required|unique:sub_categories,name',
             'background_image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:5048',
             'icon' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:5048',
         ]);
@@ -89,10 +90,19 @@ class SubCategoryController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\RedirectResponse
      */
-    // public function edit($id)
-    // {
-    //     //
-    // }
+    public function edit(SubCategory $subcategory)
+    {
+        return response()->json([
+            'subcategory' => [
+                'id' => $subcategory->id,
+                'category_id' => $subcategory->category_id,
+                'name' => $subcategory->name,
+                'icon' => $subcategory->icon,
+                'background_image' => $subcategory->background_image,
+            ]
+        ]);
+    }
+
 
     /**
      * Update the specified resource in storage.

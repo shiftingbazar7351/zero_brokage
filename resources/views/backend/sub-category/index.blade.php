@@ -12,7 +12,7 @@
     <div class="page-wrapper page-settings">
         <div class="content">
             <div class="content-page-header content-page-headersplit mb-0">
-                <h5>subCategories</h5>
+                <h5>Categories</h5>
                 <div class="list-btn">
                     <ul>
                         <li>
@@ -31,7 +31,7 @@
                                     <th>#</th>
                                     <th>Image</th>
                                     <th>Category Name</th>
-                                    <th>SubCategory Name</th>
+                                    <th>Sub Category Name</th>
                                     <th>Status</th>
                                     <th>Action</th>
                                 </tr>
@@ -53,21 +53,19 @@
                                                     @else
                                                         No Image
                                                     @endif
-
                                                 </div>
                                             </td>
                                             <td>
-                                                <span>{{ $subcategory->categoryName->name ??'' }}</span>
+                                                <span>{{ $subcategory->categoryName->name ?? '' }}</span>
                                             </td>
                                             <td>
-                                                <span>{{ $subcategory->name ??'' }}</span>
+                                                <span>{{ $subcategory->name ?? '' }}</span>
                                             </td>
-
                                             <td>
                                                 <div class="active-switch">
                                                     <label class="switch">
                                                         <input type="checkbox" class="status-toggle"
-                                                            data-id="{{ $subcategory->id }}"
+                                                            data-id="{{ $subcategory->id }}" onclick="return confirm('Are you sure want to change status?')"
                                                             {{ $subcategory->status ? 'checked' : '' }}>
                                                         <span class="sliders round"></span>
                                                     </label>
@@ -76,7 +74,7 @@
                                             <td>
                                                 <div class="table-actions d-flex justify-content-center">
                                                     <button class="btn delete-table me-2"
-                                                        onclick="editCategory({{ $subcategory->id }})" type="button"
+                                                        onclick="editSubCategory({{ $subcategory->id }})" type="button"
                                                         data-bs-toggle="modal" data-bs-target="#edit-category">
                                                         <i class="fe fe-edit"></i>
                                                     </button>
@@ -84,7 +82,7 @@
                                                         method="POST" style="display:inline;">
                                                         @csrf
                                                         @method('DELETE')
-                                                        <button class="btn delete-table" type="submit"
+                                                        <button class="btn delete-table" type="submit" onclick="return confirm('Are you sure want to delete this?')"
                                                             data-bs-toggle="modal" data-bs-target="#delete-category">
                                                             <i class="fe fe-trash-2"></i>
                                                         </button>
@@ -101,7 +99,6 @@
             </div>
         </div>
     </div>
-    </div>
 
     <!-- Add Category Modal -->
     <div class="modal fade" id="add-category">
@@ -116,11 +113,11 @@
                 <div class="modal-body pt-0">
                     <form action="{{ route('subcategories.store') }}" method="POST" enctype="multipart/form-data">
                         @csrf
-                        <div class="form-group">
+                        <div class="mb-3">
                             <label for="category">Category Name</label>
-                            <select class="form-control" id="category" name="category_id" required>
-                                <option value="">Select a category</option>
-                                @foreach($categories as $category)
+                            <select class="form-control" id="category" name="category_id">
+                                <option value="">Select Category</option>
+                                @foreach ($categories as $category)
                                     <option value="{{ $category->id }}">{{ $category->name }}</option>
                                 @endforeach
                             </select>
@@ -149,7 +146,7 @@
                             </div>
                         </div>
                         <div class="mb-3">
-                            <label class="form-label">sub Category Background-Image</label>
+                            <label class="form-label">Sub Category Background-Image</label>
                             <div class="form-uploads">
                                 <div class="form-uploads-path">
                                     <img id="image-preview-bg" src="{{ asset('admin/assets/img/icons/upload.svg') }}"
@@ -157,7 +154,7 @@
                                     <div class="file-browse">
                                         <h6>Drag & drop image or </h6>
                                         <div class="file-browse-path">
-                                            <input type="file" name="background_image" id="image-input-bg"
+                                            <input type="file" name="image" id="image-input-bg"
                                                 accept="image/jpeg, image/png">
                                             <a href="javascript:void(0);"> Browse</a>
                                         </div>
@@ -187,15 +184,15 @@
                     </button>
                 </div>
                 <div class="modal-body pt-0">
-                    <form id="editCategoryForm" method="POST" enctype="multipart/form-data">
+                    <form id="editSubCategoryForm" method="POST" enctype="multipart/form-data">
                         @csrf
                         @method('PUT')
-                        <input type="hidden" id="editCategoryId" name="subcategory_id">
-                        <div class="form-group">
+                        <input type="hidden" id="editSubCategoryId" name="category">
+                        <div class="mb-3">
                             <label for="category">Category Name</label>
-                            <select class="form-control" id="category_id" name="category_id" required>
-                                <option value="">Select a category</option>
-                                @foreach($subcategories as $category)
+                            <select class="form-control" id="categoryName" name="category_id">
+                                <option value="">Select Category</option>
+                                @foreach ($categories as $category)
                                     <option value="{{ $category->id }}">{{ $category->name }}</option>
                                 @endforeach
                             </select>
@@ -205,17 +202,17 @@
                             <input type="text" class="form-control" id="editName" name="name">
                         </div>
                         <div class="mb-3">
-                            <label class="form-label">SUb Category Image</label>
+                            <label class="form-label">Sub Category Image</label>
                             <div class="form-uploads">
                                 <div class="form-uploads-path">
                                     <img id="icon-preview"
-                                        src="{{ isset($category->icon) ? Storage::url('icon/' . $category->icon) : asset('admin/assets/img/icons/upload.svg') }}"
-                                        alt="img" width="100px" height="100px">
+                                         src="{{ isset($category->icon) ? Storage::url('icon/' . $category->icon) : asset('admin/assets/img/icons/upload.svg') }}"
+                                         alt="img" width="100px" height="100px">
                                     <div class="file-browse">
                                         <h6>Drag & drop image or </h6>
                                         <div class="file-browse-path">
                                             <input type="file" id="editIcon" name="icon"
-                                                accept="image/jpeg, image/png">
+                                                   accept="image/jpeg, image/png">
                                             <a href="javascript:void(0);"> Browse</a>
                                         </div>
                                     </div>
@@ -223,18 +220,19 @@
                                 </div>
                             </div>
                         </div>
+
                         <div class="mb-3">
-                            <label class="form-label">SUb Category Background-Image</label>
+                            <label class="form-label">Sub Category Background-Image</label>
                             <div class="form-uploads">
                                 <div class="form-uploads-path">
                                     <img id="background-preview"
-                                        src="{{ isset($category->background_image) ? Storage::url('background_image/' . $category->background_image) : asset('admin/assets/img/icons/upload.svg') }}"
-                                        alt="img" width="100px" height="100px">
+                                         src="{{ isset($category->background_image) ? Storage::url('background_image/' . $category->background_image) : asset('admin/assets/img/icons/upload.svg') }}"
+                                         alt="img" width="100px" height="100px">
                                     <div class="file-browse">
                                         <h6>Drag & drop image or </h6>
                                         <div class="file-browse-path">
-                                            <input type="file" id="editImage" name="background_image"
-                                                accept="image/jpeg, image/png">
+                                            <input type="file" id="editImage" name="image"
+                                                   accept="image/jpeg, image/png">
                                             <a href="javascript:void(0);"> Browse</a>
                                         </div>
                                     </div>
@@ -242,6 +240,7 @@
                                 </div>
                             </div>
                         </div>
+
                         <div class="text-end">
                             <button type="button" class="btn btn-secondary me-2" data-bs-dismiss="modal">Cancel</button>
                             <button type="submit" class="btn btn-primary">Save Changes</button>
@@ -252,76 +251,51 @@
         </div>
     </div>
 @endsection
+
 @section('scripts')
-<script src="{{ asset('admin/assets/js/preview-img.js') }}"></script>
 <script>
     var statusRoute = `{{ route('subcategories.status') }}`;
 </script>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="{{ asset('admin/assets/js/status-update.js') }}"></script>
-    <script>
-        function editCategory(id) {
-            $.ajax({
-                url: `/subcategories/${id}/edit`,
-                method: 'GET',
-                success: function(response) {
-                    const {
-                        id,
-                        // category_id,
-                        name,
-                        icon,
-                        background_image
-                    } = response.category;
-
-                    // Set form action and category details
-                    $('#editCategoryId').val(id);
-                    $('#editName').val(name);
-                    $('#editCategoryForm').attr('action', `/subcategories/${id}`);
-
-                    // Helper function to update image previews
-                    const updateImagePreview = (selector, filePath, defaultPath) => {
-                        const imageUrl = filePath ? `{{ Storage::url('assets/') }}/${filePath}` :
-                            `{{ asset('admin/assets/img/icons/upload.svg') }}`;
-                        $(selector).attr('src', imageUrl);
-                    };
-
-                    // Update icon and background image previews
-                    updateImagePreview('#icon-preview', `icon/${icon}`, 'icons/upload.svg');
-                    updateImagePreview('#background-preview', `category/${background_image}`, 'icons/upload.svg');
-
-                    // Show the modal
-                    $('#edit-category').modal('show');
+<script src="{{ asset('admin/assets/js/preview-img.js') }}"></script>
+<script>
+    function editSubCategory(id) {
+        $.ajax({
+            url: `/subcategories/${id}/edit`,
+            method: 'GET',
+            success: function(response) {
+                const subcategory = response.subcategory;
+                if (!subcategory) {
+                    alert('Category not found');
+                    return;
                 }
-            });
-        }
 
+                // Set form action and category details
+                $('#editSubCategoryId').val(subcategory.id);
+                $('#editName').val(subcategory.name);
+                $('#categoryName').val(subcategory.category_id);
+                $('#editSubCategoryForm').attr('action', `/subcategories/${subcategory.id}`);
 
+                // Helper function to update image previews
+                const updateImagePreview = (selector, filePath, defaultPath) => {
+                    const imageUrl = filePath ? `{{ Storage::url('') }}/${filePath}` :
+                        `{{ asset('admin/assets/img/icons/upload.svg') }}`;
+                    $(selector).attr('src', imageUrl);
+                };
 
-        // preview image for edit page
-        document.addEventListener('DOMContentLoaded', function() {
-            function previewImage(inputId, previewId) {
-                const inputElement = document.getElementById(inputId);
-                const previewElement = document.getElementById(previewId);
+                // Update icon and background image previews
+                updateImagePreview('#icon-preview', `icon/${subcategory.icon}`, 'icons/upload.svg');
+                updateImagePreview('#background-preview', `background_image/${subcategory.background_image}`, 'icons/upload.svg');
 
-                inputElement.addEventListener('change', function(event) {
-                    const file = event.target.files[0];
-
-                    if (file) {
-                        const reader = new FileReader();
-                        reader.onload = function(e) {
-                            previewElement.src = e.target.result;
-                            previewElement.classList.add('preview-img');
-                        }
-                        reader.readAsDataURL(file);
-                    } else {
-                        previewElement.src = "{{ asset('admin/assets/img/icons/upload.svg') }}";
-                        previewElement.classList.remove('preview-img');
-                    }
-                });
+                // Show the modal
+                $('#edit-category').modal('show');
+            },
+            error: function() {
+                alert('An error occurred while fetching category details.');
             }
-
-            previewImage('editIcon', 'icon-preview');
-            previewImage('editImage', 'background-preview');
         });
-    </script>
+    }
+</script>
+
 @endsection

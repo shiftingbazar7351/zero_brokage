@@ -12175,7 +12175,7 @@ fieldset#first-field {
 }
 .service-cont-info .item-cat {
 	display: inline-block;
-	margin-bottom: 12px;
+	margin-bottom: 5px;
 }
 .service-cont-info h3 {
 	font-size: 20px;
@@ -12185,7 +12185,7 @@ fieldset#first-field {
     text-overflow: ellipsis;
 }
 .service-cont-info p {
-	margin-bottom: 10px;
+	margin-bottom: 2px;
 	font-size: 12px;
 }
 .service-cont-info p i {

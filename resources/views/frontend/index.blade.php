@@ -63,7 +63,7 @@
                 <div class="row">
                     @foreach ($categories as $category)
                         <div class="col-md-2 col-lg-3">
-                            <a href="{{ route('service.grid', ['slug' => $category->slug]) }}" class="feature-box aos"
+                            <a href="{{ route('service-list', ['slug' => $category->slug]) }}" class="feature-box aos"
                                 data-aos="fade-up">
                                 <div class="feature-icon">
                                     <span>

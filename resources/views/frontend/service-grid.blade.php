@@ -1,18 +1,18 @@
-@extends('frontend.layouts.main')
-@section('content')
-    <link rel="stylesheet" href="{{ asset('assets/css/booking_infoPopup.css') }}">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/css/intlTelInput.min.css">
+{{-- <!-- @extends('frontend.layouts.main') --}}
+{{-- @section('content') --}}
+    {{-- <link rel="stylesheet" href="{{ asset('assets/css/booking_infoPopup.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/css/intlTelInput.min.css"> --> --}}
 
-    <div class="bg-img">
+    <!-- <div class="bg-img">
         <img src="{{ asset('assets/img/bg/work-bg-03.png') }}" alt="img" class="bgimg1">
         <img src="{{ asset('assets/img/bg/work-bg-03.png') }}" alt="img" class="bgimg2">
         <img src="{{ asset('assets/img/bg/feature-bg-03.png') }}" alt="img" class="bgimg3">
-    </div>
+    </div> -->
 
 
 
 
-    <div class="breadcrumb-bar">
+    <!-- <div class="breadcrumb-bar">
         <div class="container">
             <div class="row">
                 <div class="col-md-12 col-12">
@@ -26,10 +26,10 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div> -->
 
     <!-- .....................Slider............................... -->
-    <div class="row">
+    <!-- <div class="row">
         <div class="slider-container">
             <button class="prev" onclick="slideLeft()">&#10094;</button>
             <div class="slider-wrapper">
@@ -142,7 +142,7 @@
                                                                     <i class="feather-map-pin"></i>
                                                                 </div>
                                                             </div> -->
-                        <div class="filter-content">
+                        <!-- <div class="filter-content">
                             <h2 class="mb-4">Price Range</h2>
                             <div class="filter-range">
                                 <input type="text" id="range_03">
@@ -246,9 +246,9 @@
                                         <option>Price High to Low</option>
                                     </select>
                                 </div>
-                            </div>
-                            <div class="grid-listview">
-                                <ul>
+                            </div> -->
+                            <!-- <div class="grid-listview"> -->
+                                <!-- <ul>
                                     <li>
                                         <a href="service-grid.html" class="active">
                                             <i class="feather-grid"></i>
@@ -275,16 +275,16 @@
                                 required>
                             <div id="res-booking1"></div>
                             <button id="saveChanges-booking1" class="btn">Continue</button>
-                            <!-- <button id="closePopupBtn" class="btn">Close</button> -->
-                            <div class="term-condition">
+                            <button id="closePopupBtn" class="btn">Close</button> -->
+                            <!-- <div class="term-condition">
                                 <input type="checkbox" class="checkbox" id="checkbox-login-booking1">
                                 <p>By Continuing, you agree to our <span class="term">Term and Condition</span>
                                 </p>
                             </div>
                         </div>
-                    </div>
+                    </div> -->
 
-                    <div id="myPopup-booking" class="popup">
+                    <!-- <div id="myPopup-booking" class="popup">
                         <div class="popup-content">
                             <span class="close" id="closePopup-booking">&times;</span>
                             <h3>Enter Your Details</h3>
@@ -307,8 +307,8 @@
                                 </p>
                             </div>
                         </div>
-                    </div>
-                    <div id="myPopup2-booking" class="popup">
+                    </div> -->
+                    <!-- <div id="myPopup2-booking" class="popup">
                         <div class="popup-content">
                             <span class="close" id="closePopup2-booking">&times;</span>
                             <h3>Verify OTP</h3>
@@ -335,17 +335,17 @@
                             <button type="button" class="btn btn-primary btn-lg" id="verify-otp-booking">Verify
                                 OTP</button>
 
-                            <!-- <button id="closePopupBtn" class="btn">Close</button> -->
+
                             <div class="term-condition">
                                 <input type="checkbox" class="checkbox">
                                 <p>By Continuing, you agree to our <span class="term">Term and Condition</span>
                                 </p>
                             </div>
                         </div>
-                    </div>
+                    </div> -->
 
 
-                    <div class="row">
+                    <!-- <div class="row">
                         <div class="row">
                             @foreach ($subcategories as $subcategory)
                                 <div class="col-xl-4 col-md-4">
@@ -422,12 +422,12 @@
                             </div>
                         </div>
 
-                    </div>
+                    </div> -->
 
-                </div>
+                <!-- </div>
             </div>
-        </div>
-        <section class="service-section">
+        </div> -->
+        <!-- <section class="service-section">
             <div class="container">
                 <div class="section-heading">
                     <div class="row align-items-center">
@@ -556,8 +556,8 @@
                     </div>
                 </div>
             </div>
-        </section>
-        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        </section> -->
+        <!-- <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
 
         <script src="{{ asset('assets/js/booking_infoPopup.js') }}"></script>
@@ -569,4 +569,4 @@
                 separateDialCode: true
             });
         </script>
-    @endsection
+    @endsection -->

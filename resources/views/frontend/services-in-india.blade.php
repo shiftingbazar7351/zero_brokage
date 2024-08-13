@@ -11,6 +11,8 @@
     <link rel="shortcut icon" href="assets/img/favicon.png">
 
     <link rel="stylesheet" href="assets/css/bootstrap.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 
     <link rel="stylesheet" href="assets/plugins/fontawesome/css/fontawesome.min.css">
     <link rel="stylesheet" href="assets/plugins/fontawesome/css/all.min.css">
@@ -22,24 +24,27 @@
     <link rel="stylesheet" href="assets/css/style.css">
 </head>
 <style>
-    .work-box {
-        border: 2px solid red;
-        box-shadow: 0 0 15px rgba(31, 29, 29, 0.8);
-        transition: box-shadow 0.3s ease;
-    }
-    .work-box:hover{
-        cursor: pointer;
-        box-shadow: 0 0 15px rgba(255, 0, 0, 0.8);
-    }
-    .city-card {
-        border: 2px solid red;
-        box-shadow: 0 0 15px rgba(31, 29, 29, 0.8);
-        transition: box-shadow 0.3s ease;
-    }
-    .city-card:hover{
-        cursor: pointer;
-        box-shadow: 0 0 15px rgba(255, 0, 0, 0.8);
-    }
+.work-box {
+    border: 2px solid red;
+    box-shadow: 0 0 15px rgba(31, 29, 29, 0.8);
+    transition: box-shadow 0.3s ease;
+}
+
+.work-box:hover {
+    cursor: pointer;
+    box-shadow: 0 0 15px rgba(255, 0, 0, 0.8);
+}
+
+.city-card {
+    border: 2px solid red;
+    box-shadow: 0 0 15px rgba(31, 29, 29, 0.8);
+    transition: box-shadow 0.3s ease;
+}
+
+.city-card:hover {
+    cursor: pointer;
+    box-shadow: 0 0 15px rgba(255, 0, 0, 0.8);
+}
 </style>
 
 
@@ -335,7 +340,7 @@
             <div class="container">
                 <div class="row">
                     <div class="col-md-12 col-12 my-4"">
-                        <h2 class="breadcrumb-title text-white">Top Service Provider City</h2>
+                        <h2 class=" breadcrumb-title text-white">Top Service Provider City</h2>
                         <div class="d-flex justify-content-center gap-3 col-12 col-md-6 mx-auto mt-5">
 
                             <select class="form-select" aria-label="Default select example">
@@ -372,8 +377,8 @@
                 </div>
                 <div class="col-md-4">
                     <div class="card text-center align-items-center city-card" style="width: 100%;">
-                        <img src="{{ asset('assets/img/icons/verified.png') }}" class="card-img-top"
-                            style="width: 65px" alt="...">
+                        <img src="{{ asset('assets/img/icons/verified.png') }}" class="card-img-top" style="width: 65px"
+                            alt="...">
                         <div class="card-body">
                             <h5 class="card-title">4500+</h5>
                             <p class="card-text">Verified Service Provider</p>
@@ -383,8 +388,8 @@
                 </div>
                 <div class="col-md-4">
                     <div class="card text-center align-items-center city-card" style="width: 100%;">
-                        <img src="{{ asset('assets/img/icons/trophy.svg') }}" class="card-img-top"
-                            style="width: 65px" alt="...">
+                        <img src="{{ asset('assets/img/icons/trophy.svg') }}" class="card-img-top" style="width: 65px"
+                            alt="...">
                         <div class="card-body">
                             <h5 class="card-title">2500+</h5>
                             <p class="card-text">Daily Customer</p>
@@ -459,78 +464,184 @@
                 </div>
             </div>
         </section>
-       {{-- ..................How it work End............. --}}
+        {{-- ..................How it work End............. --}}
 
 
-<div class="container mt-4">
-    <div class="row">
-        <div class="col-md-12">
-            <div class="serviceIndiaContainer">
-                <p>If you are planning to shift your belongings, and you have no clue how to shift and search for the best company with a reasonable price in India. ShiftingBazar is here to suggest to you the </p>
-                <h1 class="text-center">Here are Top 10 Packers and Movers Companies in India</h1>
-                <h4 class="mt-3">Gati Logistics Packers and Movers</h4>
-                <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Possimus aperiam sit repellat quis perferendis iusto suscipit deserunt enim tempora, in, beatae eligendi vero ut sed esse, mollitia soluta eaque? Sint?20</p>
-                <h4 class="mt-3">Express India Packers and Movers</h4>
-                <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Possimus aperiam sit repellat quis perferendis iusto suscipit deserunt enim tempora, in, beatae eligendi vero ut sed esse, mollitia soluta eaque? Sint?20</p>
-                <h4 class="mt-3">Gati Logistics Packers and Movers</h4>
-                <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Possimus aperiam sit repellat quis perferendis iusto suscipit deserunt enim tempora, in, beatae eligendi vero ut sed esse, mollitia soluta eaque? Sint?20</p>
-                <h4>Top Factors That Affect Charges of Movers </h4>
-                <p><span class="text-dark">Delivery Type :</span>Lorem ipsum dolor sit amet consectetur adipisicing elit. Iste, harum quas molestias commodi voluptate tempora rem voluptatem quam quidem</p>
-                <p><span class="text-dark">Delivery Type :</span>Lorem ipsum dolor sit amet consectetur adipisicing elit. Iste, harum quas molestias commodi voluptate tempora rem voluptatem quam quidem</p>
-                <p><span class="text-dark">Delivery Type :</span>Lorem ipsum dolor sit amet consectetur adipisicing elit. Iste, harum quas molestias commodi voluptate tempora rem voluptatem quam quidem</p>
-                <p><span class="text-dark">Delivery Type :</span>Lorem ipsum dolor sit amet consectetur adipisicing elit. Iste, harum quas molestias commodi voluptate tempora rem voluptatem quam quidem</p>
-               <h4>Tips to Find a Shifting Company in India?</h4>
-               <p>Tips to Find a Shifting Company in India?Tips to Find a Shifting Company in India?Tips to Find a Shifting Company in India?</p>
-               <p>Tips to Find a Shifting Company in India?Tips to Find a Shifting Company in India?Tips to Find a Shifting Company in India?</p>
-               <p>Tips to Find a Shifting Company in India?Tips to Find a Shifting Company in India?Tips to Find a Shifting Company in India?</p>
-               <p>Tips to Find a Shifting Company in India?Tips to Find a Shifting Company in India?Tips to Find a Shifting Company in India?</p>
+        <div class="container mt-4">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="serviceIndiaContainer">
+                        <p>If you are planning to shift your belongings, and you have no clue how to shift and search
+                            for the best company with a reasonable price in India. ShiftingBazar is here to suggest to
+                            you the </p>
+                        <h1 class="text-center">Here are Top 10 Packers and Movers Companies in India</h1>
+                        <h4 class="mt-3">Gati Logistics Packers and Movers</h4>
+                        <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Possimus aperiam sit repellat quis
+                            perferendis iusto suscipit deserunt enim tempora, in, beatae eligendi vero ut sed esse,
+                            mollitia soluta eaque? Sint?20</p>
+                        <h4 class="mt-3">Express India Packers and Movers</h4>
+                        <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Possimus aperiam sit repellat quis
+                            perferendis iusto suscipit deserunt enim tempora, in, beatae eligendi vero ut sed esse,
+                            mollitia soluta eaque? Sint?20</p>
+                        <h4 class="mt-3">Gati Logistics Packers and Movers</h4>
+                        <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Possimus aperiam sit repellat quis
+                            perferendis iusto suscipit deserunt enim tempora, in, beatae eligendi vero ut sed esse,
+                            mollitia soluta eaque? Sint?20</p>
+                        <h4>Top Factors That Affect Charges of Movers </h4>
+                        <p><span class="text-dark">Delivery Type :</span>Lorem ipsum dolor sit amet consectetur
+                            adipisicing elit. Iste, harum quas molestias commodi voluptate tempora rem voluptatem quam
+                            quidem</p>
+                        <p><span class="text-dark">Delivery Type :</span>Lorem ipsum dolor sit amet consectetur
+                            adipisicing elit. Iste, harum quas molestias commodi voluptate tempora rem voluptatem quam
+                            quidem</p>
+                        <p><span class="text-dark">Delivery Type :</span>Lorem ipsum dolor sit amet consectetur
+                            adipisicing elit. Iste, harum quas molestias commodi voluptate tempora rem voluptatem quam
+                            quidem</p>
+                        <p><span class="text-dark">Delivery Type :</span>Lorem ipsum dolor sit amet consectetur
+                            adipisicing elit. Iste, harum quas molestias commodi voluptate tempora rem voluptatem quam
+                            quidem</p>
+                        <h4>Tips to Find a Shifting Company in India?</h4>
+                        <p>Tips to Find a Shifting Company in India?Tips to Find a Shifting Company in India?Tips to
+                            Find a Shifting Company in India?</p>
+                        <p>Tips to Find a Shifting Company in India?Tips to Find a Shifting Company in India?Tips to
+                            Find a Shifting Company in India?</p>
+                        <p>Tips to Find a Shifting Company in India?Tips to Find a Shifting Company in India?Tips to
+                            Find a Shifting Company in India?</p>
+                        <p>Tips to Find a Shifting Company in India?Tips to Find a Shifting Company in India?Tips to
+                            Find a Shifting Company in India?</p>
 
 
+                    </div>
+                </div>
             </div>
         </div>
-    </div>
-</div>
 
-<div class="container-fluid border border-danger w-75 mx-auto mt-5"></div>
 
-<div class="section mt-4">
-    <div class="container">
-        <h1 class="text-center">Top Packer and Mover In India</h1>
-        <div class="row mt-4">
-            <div class="col-md-6">
-            <div class="bangalore-con border-3 border-bottom border-danger mb-4">
-                <a href=""><h4>packers-and-movers Bangalore</h4></a>
-                <p>Lorem ipo c d optio! Quos, commodi Lorem ipsum dolor, sit amet consectetur adipisicing elit. Quas, consectetur. ! Dolorum, enim porro. Nesciunt?</p>
-            </div>
-            <div class="bangalore-con border-3 border-bottom border-danger mb-4">
-                <a href=""><h4>packers-and-movers Bangalore</h4></a>
-                <p>Lorem ipo c d optio! Quos, commodi Lorem ipsum dolor, sit amet consectetur adipisicing elit. Quas, consectetur. ! Dolorum, enim porro. Nesciunt?</p>
-            </div>
-            <div class="bangalore-con border-3 border-bottom border-danger mb-4">
-                <a href=""><h4>packers-and-movers Bangalore</h4></a>
-                <p>Lorem ipo c d optio! Quos, commodi Lorem ipsum dolor, sit amet consectetur adipisicing elit. Quas, consectetur. ! Dolorum, enim porro. Nesciunt?</p>
-            </div>
-            </div>
-            <div class="col-md-6 ">
-                <div class="bangalore-con border-3 border-bottom border-danger mb-4">
-                    <a href=""><h4>packers-and-movers Bangalore</h4></a>
-                    <p>Lorem ipsummodi nesciunt iuatur, sequi aut perferendis optio! Dignissimos quod fuga totam beatae at adipisci! Quos, commodi! Dolorum, enim porro. Nesciunt?</p>
-                </div>
-                <div class="bangalore-con border-3 border-bottom border-danger mb-4">
-                    <h4>packers-and-movers Bangalore</h4>
-                    <p>Lorem ipsummodi nesciunt iuatur, sequi aut perferendis optio! Dignissimos quod fuga totam beatae at adipisci! Quos, commodi! Dolorum, enim porro. Nesciunt?</p>
-                </div>
-                <div class="bangalore-con border-3 border-bottom border-danger mb-4">
-                    <a href=""><h4>packers-and-movers Bangalore</h4></a>
-                    <p>Lorem ipsummodi nesciunt iuatur, sequi aut perferendis optio! Dignissimos quod fuga totam beatae at adipisci! Quos, commodi! Dolorum, enim porro. Nesciunt?</p>
-                </div>
 
+        <div class="container-fluid border border-danger w-75 mx-auto mt-5"></div>
+
+        <div class="section mt-4">
+            <div class="container">
+                <h1 class="text-center">Top Packer and Mover In India</h1>
+                <div class="row mt-4">
+                    <div class="col-md-6">
+                        <div class="bangalore-con border-3 border-bottom border-danger mb-4">
+                            <a href="">
+                                <h4>packers-and-movers Bangalore</h4>
+                            </a>
+                            <p>Lorem ipo c d optio! Quos, commodi Lorem ipsum dolor, sit amet consectetur adipisicing
+                                elit. Quas, consectetur. ! Dolorum, enim porro. Nesciunt?</p>
+                        </div>
+                        <div class="bangalore-con border-3 border-bottom border-danger mb-4">
+                            <a href="">
+                                <h4>packers-and-movers Bangalore</h4>
+                            </a>
+                            <p>Lorem ipo c d optio! Quos, commodi Lorem ipsum dolor, sit amet consectetur adipisicing
+                                elit. Quas, consectetur. ! Dolorum, enim porro. Nesciunt?</p>
+                        </div>
+                        <div class="bangalore-con border-3 border-bottom border-danger mb-4">
+                            <a href="">
+                                <h4>packers-and-movers Bangalore</h4>
+                            </a>
+                            <p>Lorem ipo c d optio! Quos, commodi Lorem ipsum dolor, sit amet consectetur adipisicing
+                                elit. Quas, consectetur. ! Dolorum, enim porro. Nesciunt?</p>
+                        </div>
+                    </div>
+                    <div class="col-md-6 ">
+                        <div class="bangalore-con border-3 border-bottom border-danger mb-4">
+                            <a href="">
+                                <h4>packers-and-movers Bangalore</h4>
+                            </a>
+                            <p>Lorem ipsummodi nesciunt iuatur, sequi aut perferendis optio! Dignissimos quod fuga totam
+                                beatae at adipisci! Quos, commodi! Dolorum, enim porro. Nesciunt?</p>
+                        </div>
+                        <div class="bangalore-con border-3 border-bottom border-danger mb-4">
+                            <h4>packers-and-movers Bangalore</h4>
+                            <p>Lorem ipsummodi nesciunt iuatur, sequi aut perferendis optio! Dignissimos quod fuga totam
+                                beatae at adipisci! Quos, commodi! Dolorum, enim porro. Nesciunt?</p>
+                        </div>
+                        <div class="bangalore-con border-3 border-bottom border-danger mb-4">
+                            <a href="">
+                                <h4>packers-and-movers Bangalore</h4>
+                            </a>
+                            <p>Lorem ipsummodi nesciunt iuatur, sequi aut perferendis optio! Dignissimos quod fuga totam
+                                beatae at adipisci! Quos, commodi! Dolorum, enim porro. Nesciunt?</p>
+                        </div>
+
+                    </div>
+                </div>
             </div>
         </div>
-    </div>
-</div>
 
 
+
+        <!-- ..............................FAQ section............................ -->
+
+        <div class="container my-4">
+            <h1 class="text-center my-4">FAQ </h1>
+            <div class="row">
+                <div class="accordion" id="accordionExample">
+                    <div class="accordion-item">
+                        <h2 class="accordion-header" id="headingOne">
+                            <button class="accordion-button" type="button" data-bs-toggle="collapse"
+                                data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                Accordion Item #1
+                            </button>
+                        </h2>
+                        <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne"
+                            data-bs-parent="#accordionExample">
+                            <div class="accordion-body">
+                                <strong>This is the first item's accordion body.</strong> It is shown by default, until
+                                the collapse plugin adds the appropriate classes that we use to style each element.
+                                These classes control the overall appearance, as well as the showing and hiding via CSS
+                                transitions. You can modify any of this with custom CSS or overriding our default
+                                variables. It's also worth noting that just about any HTML can go within the
+                                <code>.accordion-body</code>, though the transition does limit overflow.
+                            </div>
+                        </div>
+                    </div>
+                    <div class="accordion-item">
+                        <h2 class="accordion-header" id="headingTwo">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                                Accordion Item #2
+                            </button>
+                        </h2>
+                        <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo"
+                            data-bs-parent="#accordionExample">
+                            <div class="accordion-body">
+                                <strong>This is the second item's accordion body.</strong> It is hidden by default,
+                                until the collapse plugin adds the appropriate classes that we use to style each
+                                element. These classes control the overall appearance, as well as the showing and hiding
+                                via CSS transitions. You can modify any of this with custom CSS or overriding our
+                                default variables. It's also worth noting that just about any HTML can go within the
+                                <code>.accordion-body</code>, though the transition does limit overflow.
+                            </div>
+                        </div>
+                    </div>
+                    <div class="accordion-item">
+                        <h2 class="accordion-header" id="headingThree">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                                Accordion Item #3
+                            </button>
+                        </h2>
+                        <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree"
+                            data-bs-parent="#accordionExample">
+                            <div class="accordion-body">
+                                <strong>This is the third item's accordion body.</strong> It is hidden by default, until
+                                the collapse plugin adds the appropriate classes that we use to style each element.
+                                These classes control the overall appearance, as well as the showing and hiding via CSS
+                                transitions. You can modify any of this with custom CSS or overriding our default
+                                variables. It's also worth noting that just about any HTML can go within the
+                                <code>.accordion-body</code>, though the transition does limit overflow.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
 
 
 
@@ -658,6 +769,7 @@
             </div>
 
 
+
             <div class="footer-bottom">
                 <div class="container">
 
@@ -723,6 +835,9 @@
     <script src="assets/js/jquery-3.7.0.min.js" type="7db8b12444c9592ace2cf678-text/javascript"></script>
 
     <script src="assets/js/bootstrap.bundle.min.js" type="7db8b12444c9592ace2cf678-text/javascript"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous">
+    </script>
 
     <script src="assets/js/feather.min.js" type="7db8b12444c9592ace2cf678-text/javascript"></script>
 

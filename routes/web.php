@@ -67,6 +67,9 @@ Route::resource('/meta', MetaDescripConroller::class);
 Route::resource('/meta-url', MetaUrlController::class);
 Route::resource('/meta-title', MetaTitleController::class);
 Route::resource('/service-detail', ServiceDetailController::class);
+Route::resource('service-detail', ServiceDetailController::class);
+// Route::post('/fetch-subcategory/{categoryId}', [SubCategoryController::class, 'fetchSubcategory'])->name('fetch-subcategory');
+
 
 Route::resource('/enquiry', EnquiryController::class);
 Route::put('/enquiry/{id}', [EnquiryController::class, 'update'])->name('enquiry.update');

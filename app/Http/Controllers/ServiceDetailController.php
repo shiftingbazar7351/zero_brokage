@@ -18,33 +18,33 @@ class ServiceDetailController extends Controller
         $subcategories = SubCategory::orderByDesc('created_at')->get();
         $categories = Category::orderByDesc('created_at')->get();
         $menusCat = Menu::orderByDesc('created_at')->get();
-        $serviceDetails = ServiceDetail::with('subCategory')->orderByDesc('created_at')->get();
+        $serviceDetails = ServiceDetail::with('subCategory')->orderByDesc('created_by')->get();
         return view('backend.service-detail.index', compact('serviceDetails','subcategories','categories','menusCat'));
     }
 
     /**
+     * Show the form for creating a new resource.
+     */
+    public function create()
+    {
+        $subcategories = SubCategory::orderByDesc('created_at')->get();
+        $categories = Category::orderByDesc('created_at')->get();
+        return view('backend.service-detail.create', compact('subcategories', 'categories'));
+    }
+
+    /**
      * Store a newly created resource in storage.
-     */public function store(Request $request)
-{
-    $request->validate([
-        'description' => 'required',
-        'summary' => 'required',
-        // other validation rules
-    ]);
-
-    $serviceDetail = new ServiceDetail();
-    $serviceDetail->subcategory_id = $request->subcategory_id;
-    $serviceDetail->description = $request->description;
-    $serviceDetail->summery = $request->summary;
-    // other fields
-    $serviceDetail->save();
-
-    return redirect()->route('service-detail.index')->with('success', 'Service detail added successfully.');
-}
-
-
-
-
+     */
+    public function store(Request $request)
+    {
+        $validatedData = $request->validate([
+            'subcategory_id' => 'required|string',
+            'description' => 'required|string',
+            'summery' => 'nullable',
+        ]);
+        ServiceDetail::create($validatedData);
+        return redirect(route('service-detail.index'))->with('success', 'Enquiry submitted successfully!');
+    }
 
 
     /**
@@ -53,52 +53,36 @@ class ServiceDetailController extends Controller
     public function edit($id)
     {
         $serviceDetail = ServiceDetail::findOrFail($id);
-        $categories = Category::all();
-        $subcategories = SubCategory::where('category_id', $serviceDetail->subcategory->category_id)->get();
-    
-        return response()->json([
-            'status' => 1,
-            'data' => [
-                'serviceDetail' => $serviceDetail,
-                'categories' => $categories,
-                'subcategories' => $subcategories,
-            ]
-        ]);
+        $subcategories = SubCategory::orderByDesc('created_at')->get();
+        $categories = Category::orderByDesc('created_at')->get();
+        return view('backend.service-detail.edit', compact('serviceDetail', 'subcategories', 'categories'));
     }
     
-
-    /**
-     * Update the specified resource in storage.
-     */
     public function update(Request $request, $id)
     {
-        $request->validate([
-            'description' => 'required',
-            'summary' => 'required',
-            // other validation rules
+        $validatedData = $request->validate([
+            'subcategory_id' => 'required|string',
+            'description' => 'required|string',
+            'summery' => 'nullable',
         ]);
     
-        $serviceDetail = ServiceDetail::find($id);
-        $serviceDetail->subcategory_id = $request->subcategory_id;
-        $serviceDetail->description = $request->description;
-        $serviceDetail->summery = $request->summary;
-        // other fields
-        $serviceDetail->save();
+        $serviceDetail = ServiceDetail::findOrFail($id);
+        $serviceDetail->update($validatedData);
     
-        return redirect()->route('service-detail.index')->with('success', 'Service detail updated successfully.');
+        return redirect(route('service-detail.index'))->with('success', 'Service detail updated successfully!');
     }
     
 
     /**
      * Remove the specified resource from storage.
-     */public function destroy($id)
-{
-    $service = ServiceDetail::findOrFail($id);
-    if ($service) {
-        $service->delete();
-        return redirect()->back()->with('success', 'Deleted Successfully');
+     */
+    public function destroy(string $id)
+    {
+        $service = ServiceDetail::findOrFail($id);
+        if ($service) {
+            $service->delete();
+            return redirect()->back()->with('success', 'Deleted Successfully');
+        }
+        return redirect()->back()->with('error', 'Something went wrong');
     }
-    return redirect()->back()->with('error', 'Something went wrong');
-}
-
 }

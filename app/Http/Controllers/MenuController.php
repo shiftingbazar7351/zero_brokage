@@ -6,10 +6,18 @@ use App\Models\Menu;
 use App\Models\SubCategory;
 use App\Models\Category;
 use Illuminate\Http\Request;
+use App\Services\FileUploadService;
 use Illuminate\Support\Facades\Storage;
+use Exception;
 
 class MenuController extends Controller
 {
+    protected $fileUploadService;
+
+    public function __construct(FileUploadService $fileUploadService)
+    {
+        $this->fileUploadService = $fileUploadService;
+    }
     /**
      * Display a listing of the resource.
      */
@@ -40,10 +48,8 @@ class MenuController extends Controller
         $menu->slug = $this->generateSlug($request->name);
 
         if ($request->hasFile('image')) {
-            $image = $request->file('image');
-            $imageName = time() . '_' . $image->getClientOriginalName();
-            $image->storeAs('assets/menu', $imageName, 'public');
-            $menu->image = $imageName;
+            $filename = $this->fileUploadService->uploadImage('menu/', $request->file('image'));
+            $menu['image'] = $filename;
         }
 
         $menu->save();
@@ -77,12 +83,8 @@ class MenuController extends Controller
         $menu->slug = $this->generateSlug($request->name);
 
         if ($request->hasFile('image')) {
-            // Delete old image if exists
-            if ($menu->image) {
-                Storage::delete('public/assets/menu/' . $menu->image);
-            }
-            $filePath = $request->file('image')->store('assets/menu', 'public');
-            $menu->image = basename($filePath);
+            $filename = $this->fileUploadService->uploadImage('menu/', $request->file('image'));
+            $menu['image'] = $filename;
         }
 
         $menu->save();
@@ -94,16 +96,21 @@ class MenuController extends Controller
 
     public function destroy($id)
     {
+        try {
         $menu = Menu::findOrFail($id);
 
-        if ($menu->image) {
-            Storage::disk('public')->delete('assets/menu/' . $menu->image);
+        $img = $menu->image;
+        $menu->forceDelete();
+        if ($img) {
+        $this->fileUploadService->removeImage('menu/', $img);
         }
 
         $menu->delete();
-
-        // return response()->json(['status' => 1, 'message' => 'Menu deleted successfully!']);
         return redirect()->back()->with('success', 'Menu Deleted.');
+
+        } catch (Exception $e) {
+            return redirect()->back()->with('error', 'Something went wrong');
+        }
     }
 
 
@@ -121,7 +128,7 @@ class MenuController extends Controller
     }
 
 
-    public function updateStatus(Request $request)
+    public function menuStatus(Request $request)
     {
         $item = Menu::find($request->id);
         if ($item) {

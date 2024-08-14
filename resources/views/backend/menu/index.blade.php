@@ -48,7 +48,7 @@
                                             <td>
                                                 <div class="table-imgname">
                                                     @if ($menu->image)
-                                                        <img src="{{ Storage::url('assets/menu/' . $menu->image) }}"
+                                                        <img src="{{ Storage::url('menu/' . $menu->image) }}"
                                                             class="me-2" alt="img">
                                                     @else
                                                         No Image
@@ -193,17 +193,19 @@
                                 <option value="" selected>Select Subcategory</option>
                             </select>
                         </div>
+
                         <div class="mb-3">
                             <label class="form-label">Menu Image</label>
                             <div class="form-uploads">
                                 <div class="form-uploads-path">
-                                    <img id="icon-preview" src="{{ asset('admin/assets/img/icons/upload.svg') }}"
-                                        alt="img" width="100px" height="100px" class="preview-img">
+                                    <img id="background-preview"
+                                         src="{{ isset($menu->image) ? Storage::url('menu/' .$menu->image) : asset('admin/assets/img/icons/upload.svg') }}"
+                                         alt="img" width="100px" height="100px">
                                     <div class="file-browse">
                                         <h6>Drag & drop image or </h6>
                                         <div class="file-browse-path">
-                                            <input type="file" id="editIcon" name="image"
-                                                accept="image/jpeg, image/png">
+                                            <input type="file" id="editImage" name="image"
+                                                   accept="image/jpeg, image/png">
                                             <a href="javascript:void(0);"> Browse</a>
                                         </div>
                                     </div>
@@ -211,6 +213,7 @@
                                 </div>
                             </div>
                         </div>
+
                         <div class="text-end">
                             <button type="button" class="btn btn-secondary me-2" data-bs-dismiss="modal">Cancel</button>
                             <button type="submit" class="btn btn-primary">Save Changes</button>
@@ -225,7 +228,7 @@
 
 @section('scripts')
     <script>
-        var statusRoute = `{{ route('subcategories.status') }}`;
+        var statusRoute = `{{ route('menu.status') }}`;
     </script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="{{ asset('admin/assets/js/status-update.js') }}"></script>

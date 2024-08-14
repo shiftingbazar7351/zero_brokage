@@ -17,7 +17,8 @@
                 <div class="list-btn">
                     <ul>
                         <li>
-                            <button class="btn btn-primary" type="button" data-bs-toggle="modal" data-bs-target="#add-category">
+                            <button class="btn btn-primary" type="button" data-bs-toggle="modal"
+                                data-bs-target="#add-category">
                                 <i class="fa fa-plus me-2"></i>Add Menu
                             </button>
                         </li>
@@ -48,7 +49,8 @@
                                             <td>
                                                 <div class="table-imgname">
                                                     @if ($menu->image)
-                                                        <img src="{{ Storage::url('assets/menu/' . $menu->image) }}" class="me-2" alt="img">
+                                                        <img src="{{ Storage::url('assets/menu/' . $menu->image) }}"
+                                                            class="me-2" alt="img">
                                                     @else
                                                         No Image
                                                     @endif
@@ -67,13 +69,17 @@
                                             </td>
                                             <td>
                                                 <div class="table-actions d-flex justify-content-center">
-                                                    <button class="btn delete-table me-2" onclick="editCategory({{ $menu->id }})" type="button" data-bs-toggle="modal" data-bs-target="#edit-category">
+                                                    <button class="btn delete-table me-2"
+                                                        onclick="editCategory({{ $menu->id }})" type="button"
+                                                        data-bs-toggle="modal" data-bs-target="#edit-category">
                                                         <i class="fe fe-edit"></i>
                                                     </button>
-                                                    <form action="{{ route('menus.destroy', $menu->id) }}" method="POST" style="display:inline;">
+                                                    <form action="{{ route('menus.destroy', $menu->id) }}" method="POST"
+                                                        style="display:inline;">
                                                         @csrf
                                                         @method('DELETE')
-                                                        <button class="btn delete-table" type="submit" data-bs-toggle="modal" data-bs-target="#delete-category">
+                                                        <button class="btn delete-table" type="submit"
+                                                            data-bs-toggle="modal" data-bs-target="#delete-category">
                                                             <i class="fe fe-trash-2"></i>
                                                         </button>
                                                     </form>
@@ -128,11 +134,13 @@
                             <label class="form-label">Menu Image</label>
                             <div class="form-uploads">
                                 <div class="form-uploads-path">
-                                    <img id="image-preview-icon" src="{{ asset('admin/assets/img/icons/upload.svg') }}" alt="img" class="default-img">
+                                    <img id="image-preview-icon" src="{{ asset('admin/assets/img/icons/upload.svg') }}"
+                                        alt="img" class="default-img">
                                     <div class="file-browse">
                                         <h6>Drag & drop image or </h6>
                                         <div class="file-browse-path">
-                                            <input type="file" name="image" id="image-input-icon" accept="image/jpeg, image/png">
+                                            <input type="file" name="image" id="image-input-icon"
+                                                accept="image/jpeg, image/png">
                                             <a href="javascript:void(0);"> Browse</a>
                                         </div>
                                     </div>
@@ -188,11 +196,13 @@
                             <label class="form-label">Menu Image</label>
                             <div class="form-uploads">
                                 <div class="form-uploads-path">
-                                    <img id="icon-preview" src="{{ asset('admin/assets/img/icons/upload.svg') }}" alt="img" width="100px" height="100px" class="preview-img">
+                                    <img id="icon-preview" src="{{ asset('admin/assets/img/icons/upload.svg') }}"
+                                        alt="img" width="100px" height="100px" class="preview-img">
                                     <div class="file-browse">
                                         <h6>Drag & drop image or </h6>
                                         <div class="file-browse-path">
-                                            <input type="file" id="editIcon" name="image" accept="image/jpeg, image/png">
+                                            <input type="file" id="editIcon" name="image"
+                                                accept="image/jpeg, image/png">
                                             <a href="javascript:void(0);"> Browse</a>
                                         </div>
                                     </div>
@@ -214,59 +224,67 @@
 
 @section('scripts')
     <script>
-
-$('#category').on('change', function() {
-                var categoryId = $(this).val();
-                if (categoryId) {
-                    $.ajax({
-                        url: '/fetch-subcategory/' + categoryId,
-                        type: 'POST',
-                        data: {
-                            _token: '{{ csrf_token() }}'
-                        },
-                        success: function(response) {
-                            if (response.status === 1) {
-                                var subcategory = response.data;
-                                $('#subcategory').empty().append(
-                                    '<option value="" selected disabled>Select Subcategory</option>'
-                                );
-                                $.each(subcategory, function(key, subcateg) {
-                                    $('#subcategory').append('<option value="' +
-                                        subcateg.id + '">' + subcateg.name +
-                                        '</option>');
-                                });
-                            }
+        $('#category').on('change', function() {
+            var categoryId = $(this).val();
+            if (categoryId) {
+                $.ajax({
+                    url: '/fetch-subcategory/' + categoryId,
+                    type: 'POST',
+                    data: {
+                        _token: '{{ csrf_token() }}'
+                    },
+                    success: function(response) {
+                        if (response.status === 1) {
+                            var subcategory = response.data;
+                            $('#subcategory').empty().append(
+                                '<option value="" selected disabled>Select Subcategory</option>'
+                            );
+                            $.each(subcategory, function(key, subcateg) {
+                                $('#subcategory').append('<option value="' +
+                                    subcateg.id + '">' + subcateg.name +
+                                    '</option>');
+                            });
                         }
-                    });
-                } else {
-                    $('#subcategory').empty().append('<option value="">Select Subcategory</option>');
-                }
-            });
-            $('#addEnquiryModal').on('hidden.bs.modal', function() {
-                $('#enquiryForm')[0].reset();
+                    }
+                });
+            } else {
                 $('#subcategory').empty().append('<option value="">Select Subcategory</option>');
-            });
+            }
+        });
+        $('#addEnquiryModal').on('hidden.bs.modal', function() {
+            $('#enquiryForm')[0].reset();
+            $('#subcategory').empty().append('<option value="">Select Subcategory</option>');
+        });
 
         function editCategory(id) {
             $.ajax({
                 url: `/menus/${id}/edit`,
                 method: 'GET',
                 success: function(response) {
-                    const { id, name, category_id, subcategory_id, image } = response.category;
+                    const {
+                        id,
+                        name,
+                        category_id,
+                        subcategory_id,
+                        image
+                    } = response.category;
 
                     $('#editCategoryId').val(id);
                     $('#editName').val(name);
                     $('#editCategoryForm').attr('action', `/menus/${id}`);
 
                     $('#editCategorySelect').val(category_id).trigger('change');
-                    $('#editSubcategorySelect').empty().append('<option value="" selected>Select Subcategory</option>');
+                    $('#editSubcategorySelect').empty().append(
+                        '<option value="" selected>Select Subcategory</option>');
 
                     if (subcategory_id) {
-                        $('#editSubcategorySelect').append(`<option value="${subcategory_id}" selected>Selected Subcategory</option>`);
+                        $('#editSubcategorySelect').append(
+                            `<option value="${subcategory_id}" selected>Selected Subcategory</option>`);
                     }
 
                     const updateImagePreview = (selector, filePath) => {
-                        const imageUrl = filePath ? `{{ Storage::url('assets/menu/') }}/${filePath}` : `{{ asset('admin/assets/img/icons/upload.svg') }}`;
+                        const imageUrl = filePath ? `{{ Storage::url('assets/menu/') }}/${filePath}` :
+                            `{{ asset('admin/assets/img/icons/upload.svg') }}`;
                         $(selector).attr('src', imageUrl);
                     };
 
@@ -290,9 +308,11 @@ $('#category').on('change', function() {
                     success: function(response) {
                         if (response.status === 1) {
                             var subcategories = response.data;
-                            $('#editSubcategorySelect').empty().append('<option value="" selected>Select Subcategory</option>');
+                            $('#editSubcategorySelect').empty().append(
+                                '<option value="" selected>Select Subcategory</option>');
                             $.each(subcategories, function(key, subcategory) {
-                                $('#editSubcategorySelect').append('<option value="' + subcategory.id + '">' + subcategory.name + '</option>');
+                                $('#editSubcategorySelect').append('<option value="' +
+                                    subcategory.id + '">' + subcategory.name + '</option>');
                             });
                         }
                     }
@@ -333,24 +353,28 @@ $('#category').on('change', function() {
                     const status = this.checked ? 1 : 0;
 
                     fetch('{{ route('update.subcategorystatus') }}', {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json',
-                            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
-                        },
-                        body: JSON.stringify({ id: itemId, status: status })
-                    })
-                    .then(response => response.json())
-                    .then(data => {
-                        if (data.success) {
-                            console.log(data.message);
-                        } else {
-                            console.error(data.message);
-                        }
-                    })
-                    .catch(error => {
-                        console.error('Error:', error);
-                    });
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'X-CSRF-TOKEN': document.querySelector(
+                                    'meta[name="csrf-token"]').getAttribute('content')
+                            },
+                            body: JSON.stringify({
+                                id: itemId,
+                                status: status
+                            })
+                        })
+                        .then(response => response.json())
+                        .then(data => {
+                            if (data.success) {
+                                console.log(data.message);
+                            } else {
+                                console.error(data.message);
+                            }
+                        })
+                        .catch(error => {
+                            console.error('Error:', error);
+                        });
                 });
             });
 

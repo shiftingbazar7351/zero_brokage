@@ -12,7 +12,6 @@ class FrontendController extends Controller
 {
     public function home()
     {
-        // $menus = Menu::where('status', 1)->orderByDesc('created_at')->get();
         $subcategories = Category::where('status', 1)->orderByDesc('created_at')->get();
         $categories = Category::where('status', 1)->orderByDesc('created_at')->get();
         return view('frontend.index', compact('subcategories','categories'));

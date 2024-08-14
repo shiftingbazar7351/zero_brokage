@@ -21,13 +21,13 @@ class SubMenuController extends Controller
      */
     public function index()
     {
-        $menus =  Menu::where('status',1)->orderBydesc('created_at')->get();
-        $categories = Category::where('status',1)->orderByDesc('created_at')->get();
-        $subcategories = Subcategory::where('status',1)->orderByDesc('created_at')->get();
+        $menus = Menu::where('status', 1)->orderBydesc('created_at')->get();
+        $categories = Category::where('status', 1)->orderByDesc('created_at')->get();
+        $subcategories = Subcategory::where('status', 1)->orderByDesc('created_at')->get();
         $countryId = Country::where('name', 'India')->value('id');
         $states = State::where('country_id', $countryId)->get(['name', 'id']);
         $submenus = SubMenu::orderByDesc('created_at')->get();
-        return view('backend.sub-menu.index', compact('submenus', 'categories', 'states','menus','subcategories'));
+        return view('backend.sub-menu.index', compact('submenus', 'categories', 'states', 'menus', 'subcategories'));
     }
 
     /**
@@ -49,7 +49,7 @@ class SubMenuController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'name' => 'required|unique:sub_categories,name',
+            'name' => 'required|unique:sub_menus,name',
             'state' => 'nullable|exists:states,id',
             'city' => 'nullable|exists:cities,id',
             'total_price' => 'nullable|numeric',
@@ -68,10 +68,10 @@ class SubMenuController extends Controller
             $finalPrice = $request->input('price');
         }
 
-        $subcategory = new SubCategory();
+        $subcategory = new SubMenu();
         $subcategory->name = $request->input('name');
         $subcategory->category_id = $request->input('category');
-        $subcategory->slug = $this->generateSlug($request->name);
+        $subcategory->slug = generateSlug($request->name);
         // $subcategory->city_id = $request->input('subcategory');
         $subcategory->total_price = $request->input('price');
         $subcategory->discount = $request->input('discount');
@@ -79,12 +79,11 @@ class SubMenuController extends Controller
         if ($request->hasFile('image')) {
             $image = $request->file('image');
             $imageName = time() . '_' . $image->getClientOriginalName();
-            $image->storeAs('assets/subcategory', $imageName, 'public');
+            $image->storeAs('submenu', $imageName, 'public');
             $subcategory->image = $imageName;
         }
 
         $subcategory->save();
-
         return redirect()->back()->with('success', 'Sub-menu created successfully.');
     }
 
@@ -187,7 +186,7 @@ class SubMenuController extends Controller
     }
     public function fetchsubcategory($category_id = null)
     {
-        $data = SubMenu::where('category_id', $category_id)->get();
+        $data = SubCategory::where('category_id', $category_id)->get();
         return response()->json([
             'status' => 1,
             'data' => $data,
@@ -225,5 +224,18 @@ class SubMenuController extends Controller
         }
 
         return response()->json(['success' => false, 'message' => 'Item not found.']);
+    }
+
+
+    public function getSubcategories($categoryId)
+    {
+        $subcategories = Subcategory::where('category_id', $categoryId)->get();
+        return response()->json($subcategories);
+    }
+
+    public function getMenus($subcategoryId)
+    {
+        $menus = Menu::where('subcategory_id', $subcategoryId)->get();
+        return response()->json($menus);
     }
 }

@@ -52,7 +52,7 @@
 
                                             <td>
                                                 @if ($subcategory->image)
-                                                    <img src="{{ Storage::url('assets/subcategory/' . $subcategory->image) }}"
+                                                    <img src="{{ Storage::url('subcategory/' . $subcategory->image) }}"
                                                         class="img-thumbnail" width="50px">
                                                 @else
                                                     No Image
@@ -118,7 +118,7 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    <form action="{{ route('subcategories.store') }}" method="POST" enctype="multipart/form-data">
+                    <form action="{{ route('submenu.store') }}" method="POST" enctype="multipart/form-data">
                         @csrf
 
                         <div class="form-group">
@@ -137,24 +137,67 @@
                         </div>
 
                         <div class="form-group">
-                            <label for="category">Sub Category</label>
+                            <label for="subcategory">Sub Category</label>
                             <select class="form-control" id="subcategory" name="subcategory_id" required>
-                                <option value="">Select category</option>
-                                @foreach ($subcategories as $subcategory)
-                                    <option value="{{ $subcategory->id }}">{{ $subcategory->name }}</option>
-                                @endforeach
+                                <option value="">Select subcategory</option>
                             </select>
                         </div>
 
                         <div class="form-group">
-                            <label for="category">Menu</label>
+                            <label for="menu">Menu</label>
                             <select class="form-control" id="menu" name="menu_id" required>
-                                <option value="">Select category</option>
-                                @foreach ($menus as $menu)
-                                    <option value="{{ $menu->id }}">{{ $menu->name }}</option>
-                                @endforeach
+                                <option value="">Select menu</option>
                             </select>
                         </div>
+
+                        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+                        <script>
+                            $(document).ready(function() {
+                                $('#category').on('change', function() {
+                                    var categoryId = $(this).val();
+                                    if (categoryId) {
+                                        $.ajax({
+                                            url: '/getSubcategories/' + categoryId,
+                                            type: 'GET',
+                                            success: function(data) {
+                                                $('#subcategory').empty();
+                                                $('#subcategory').append(
+                                                    '<option value="">Select subcategory</option>');
+                                                $.each(data, function(key, value) {
+                                                    $('#subcategory').append('<option value="' + value.id +
+                                                        '">' + value.name + '</option>');
+                                                });
+                                            }
+                                        });
+                                    } else {
+                                        $('#subcategory').empty();
+                                        $('#subcategory').append('<option value="">Select subcategory</option>');
+                                    }
+                                });
+
+                                $('#subcategory').on('change', function() {
+                                    var subcategoryId = $(this).val();
+                                    if (subcategoryId) {
+                                        $.ajax({
+                                            url: '/getMenus/' + subcategoryId,
+                                            type: 'GET',
+                                            success: function(data) {
+                                                $('#menu').empty();
+                                                $('#menu').append('<option value="">Select menu</option>');
+                                                $.each(data, function(key, value) {
+                                                    $('#menu').append('<option value="' + value.id + '">' +
+                                                        value.name + '</option>');
+                                                });
+                                            }
+                                        });
+                                    } else {
+                                        $('#menu').empty();
+                                        $('#menu').append('<option value="">Select menu</option>');
+                                    }
+                                });
+                            });
+                        </script>
+
 
                         <div class="form-group">
                             <label for="category">State</label>
@@ -341,8 +384,10 @@
     <script src="{{ asset('admin/assets/js/preview-img.js') }}"></script>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
+            // When the modal is shown, populate the form fields with the subcategory data
             $('#editCategoryModal').on('show.bs.modal', function(event) {
                 var button = $(event.relatedTarget); // Button that triggered the modal
+                // Extract info from data-* attributes
                 var id = button.data('id');
                 var name = button.data('name');
                 var category = button.data('category_id');
@@ -371,6 +416,7 @@
                     $(this).find('#icon-preview').attr('src',
                         '{{ asset('admin/assets/img/icons/upload.svg') }}');
                 }
+
                 // Trigger change event on state dropdown to fetch cities (if applicable)
                 $('#editstate').trigger('change');
             });
@@ -395,6 +441,134 @@
         });
 
 
+        $(document).ready(function() {
+            $('#editstate').on('change', function() {
+                var stateId = $(this).val();
+                if (stateId) {
+                    $.ajax({
+                        url: '/fetch-city/' + stateId,
+                        type: 'POST',
+                        data: {
+                            _token: '{{ csrf_token() }}'
+                        },
+                        success: function(response) {
+                            if (response.status === 1) {
+                                var cities = response.data;
+                                $('#editcity').find('option')
+                            .remove(); // Clear existing options
+                                var options =
+                                '<option value="">Select city</option>'; // Default option
+                                $.each(cities, function(key, city) {
+                                    options += "<option value='" + city.id + "'>" + city
+                                        .name + "</option>";
+                                });
+                                $('#editcity').append(options);
+                                $('#editcity').val(city);
+                            }
+                        }
+                    });
+                } else {
+                    $('#editcity').find('option').remove(); // Clear options if no state is selected
+                    $('#editcity').append('<option value="">Select city</option>');
+                }
+            });
 
+            // Trigger change event to load cities when the modal is shown
+            $('#editCategoryModal').on('show.bs.modal', function(event) {
+                $('#editstate').trigger('change');
+            });
+        });
+
+        document.addEventListener('DOMContentLoaded', function() {
+            // Function to calculate final price
+            function calculateFinalPrice() {
+                const price = parseFloat(document.getElementById('price').value);
+                const discountPercentage = parseFloat(document.getElementById('discount').value);
+
+                if (!isNaN(price) && !isNaN(discountPercentage)) {
+                    const discountAmount = (price * discountPercentage) / 100;
+                    const finalPrice = price - discountAmount;
+
+                    document.getElementById('final-price').value = finalPrice.toFixed(2);
+                } else {
+                    document.getElementById('final-price').value = '';
+                }
+            }
+            document.getElementById('price').addEventListener('input', calculateFinalPrice);
+            document.getElementById('discount').addEventListener('input', calculateFinalPrice);
+
+        });
+
+        function toggleStatus(checkbox, categoryId) {
+            var form = checkbox.closest('form');
+            var hiddenInput = form.querySelector('.status-input');
+            hiddenInput.value = checkbox.checked ? 1 : 0;
+            form.submit();
+        }
+
+        $(document).ready(function() {
+            $('#state').on('change', function() {
+                var stateId = $(this).val();
+                if (stateId) {
+                    $.ajax({
+                        url: '/fetch-city/' + stateId, // Adjusted URL based on route
+                        type: 'POST',
+                        data: {
+                            _token: '{{ csrf_token() }}' // Include CSRF token for security
+                        },
+                        success: function(response) {
+                            if (response.status === 1) {
+                                var cities = response.data;
+                                console.log(cities);
+                                $('#city').find('option').remove(); // Clear existing options
+                                var options =
+                                    '<option value="">Select city</option>'; // Default option
+                                $.each(cities, function(key, city) {
+                                    options += "<option value='" + city.id + "'>" + city
+                                        .name + "</option>";
+                                });
+                                $('#city').append(options);
+                            }
+                        }
+                    });
+                } else {
+                    $('#city').find('option').remove(); // Clear options if no state is selected
+                    $('#city').append('<option value="">Select city</option>');
+                }
+            });
+        });
+
+        // $(document).ready(function() {
+        //     $('#editstate').on('change', function() {
+        //         var stateId = $(this).val();
+        //         if (stateId) {
+        //             $.ajax({
+        //                 url: '/fetch-city/' + stateId, // Adjusted URL based on route
+        //                 type: 'POST',
+        //                 data: {
+        //                     _token: '{{ csrf_token() }}' // Include CSRF token for security
+        //                 },
+        //                 success: function(response) {
+        //                     if (response.status === 1) {
+        //                         var cities = response.data;
+        //                         console.log(cities);
+        //                         $('#city').find('option').remove(); // Clear existing options
+        //                         var options =
+        //                             '<option value="">Select city</option>'; // Default option
+        //                         $.each(cities, function(key, city) {
+        //                             options += "<option value='" + city.id + "'>" + city
+        //                                 .name + "</option>";
+        //                             // alert(response.stateId);
+        //                         });
+        //                         $('#editcity').append(options);
+        //                     }
+        //                 }
+        //             });
+        //         } else {
+        //             $('#editcity').find('option').remove(); // Clear options if no state is selected
+        //             $('#editcity').append('<option value="">Select city</option>');
+        //         }
+        //     });
+        // });
     </script>
 @endsection

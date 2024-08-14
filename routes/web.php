@@ -61,11 +61,13 @@ Route::middleware('auth')->group(function () {
 
     Route::resource('/menus', MenuController::class);
     Route::post('/menu-status', [MenuController::class, 'menuStatus'])->name('menu.status');
-    Route::post('/fetch-subcategory/{id}', [MenuController::class, 'fetchsubcategory']);
 
     Route::resource('/submenu', SubMenuController::class);
     Route::post('/submenu-status', [SubMenuController::class, 'subSenuStatus'])->name('submenu.status');
     Route::post('/fetch-subcategory/{id}', [SubMenuController::class, 'fetchsubcategory']);
+    Route::get('/getSubcategories/{categoryId}', [SubMenuController::class, 'getSubcategories']);
+    Route::get('/getMenus/{subcategoryId}', [SubMenuController::class, 'getMenus']);
+    Route::post('/fetch-city/{stateId}', [SubMenuController::class, 'fetchCity']);
 
     Route::resource('service-detail', ServiceDetailController::class);
     Route::resource('/enquiry', EnquiryController::class);

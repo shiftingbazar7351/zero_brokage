@@ -2,14 +2,17 @@
 
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\EnquiryController;
+use App\Http\Controllers\FrontendController;
 use App\Http\Controllers\MenuController;
+use App\Http\Controllers\MetaDescripConroller;
+use App\Http\Controllers\MetaTitleController;
+use App\Http\Controllers\MetaUrlController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\ServiceDetailController;
 use App\Http\Controllers\SubCategoryController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
-
-
-
 
 
 
@@ -24,6 +27,13 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+
+Route::get('/service-list', [FrontendController::class, 'serviceList'])->name('service-list');
+
+
+Route::get('/', [FrontendController::class, 'home'])->name('home');
+Route::get('/service-details', [FrontendController::class, 'serviceDetails'])->name('service-details');
+Route::get('/service-grid/{slug}', [FrontendController::class, 'subCategory'])->name('service.grid');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -50,16 +60,16 @@ Route::middleware('auth')->group(function () {
     Route::resource('/menus', MenuController::class);
     Route::post('/menu-status', [MenuController::class, 'menuStatus'])->name('menu.status');
     Route::post('/fetch-subcategory/{id}', [MenuController::class, 'fetchsubcategory']);
+
+    Route::resource('service-detail', ServiceDetailController::class);
+    Route::resource('/enquiry', EnquiryController::class);
+    Route::post('/enquiry-status', [EnquiryController::class, 'enquiryStatus'])->name('enquiry.status');
+
+    Route::resource('/meta', MetaDescripConroller::class);
+    Route::resource('/meta-url', MetaUrlController::class);
+    Route::resource('/meta-title', MetaTitleController::class);
+
 });
-
-// Route::get('/category-listing', function () {
-//     return view('frontend.categories');
-// })->name('categories.listing');
-
-// Route::get('/booking', function () {
-//     return view('frontend.booking');
-// })->name('booking');
-
 
 
 require __DIR__ . '/auth.php';

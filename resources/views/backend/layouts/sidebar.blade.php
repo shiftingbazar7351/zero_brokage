@@ -8,12 +8,12 @@
                 <img src="{{ asset('admin/assets/img/logo-small.svg') }}" class="img-fluid logo-small" alt="Logo">
             </a>
         </div>
-        <!-- <div class="siderbar-toggle">
+        <div class="siderbar-toggle">
             <label class="switch" id="toggle_btn">
                 <input type="checkbox">
                 <span class="slider round"></span>
             </label>
-        </div> -->
+        </div>
     </div>
     <div class="sidebar-inner slimscroll">
         <div id="sidebar-menu" class="sidebar-menu">
@@ -48,21 +48,21 @@
                     </a>
                 </li>
 
-                {{-- <li class="{{ Route::currentRouteName() === 'service-detail.index' ? 'active' : '' }}">
+                <li class="{{ Route::currentRouteName() === 'service-detail.index' ? 'active' : '' }}">
                     <a href="{{ route('service-detail.index') }}">
                         <i class="fe fe-file-text"></i>
                         <span>Service details</span>
                     </a>
-                </li> --}}
+                </li>
 
-                {{-- <li class="{{ Route::currentRouteName() === 'enquiry.index' ? 'active' : '' }}">
+                <li class="{{ Route::currentRouteName() === 'enquiry.index' ? 'active' : '' }}">
                     <a href="{{ route('enquiry.index') }}">
                         <i class="fe fe-file-text"></i>
                         <span>Enquiry</span>
                     </a>
-                </li> --}}
+                </li>
 
-                {{-- <li class="submenu">
+                <li class="submenu">
                     <a href="javascript:void(0);"><i class="fe fe-briefcase"></i>
                         <span>Meta</span>
                         <span class="menu-arrow"><i class="fe fe-chevron-right"></i></span>
@@ -87,7 +87,7 @@
                             </a>
                         </li>
                     </ul>
-                </li> --}}
+                </li>
 
             </ul>
         </div>

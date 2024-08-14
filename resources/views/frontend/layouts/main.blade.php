@@ -125,6 +125,11 @@
         </style>
 
         @include('frontend.layouts.header')
+        <div class="bg-img">
+            <img src="{{ asset('assets/img/bg/work-bg-03.png') }}" alt="img" class="bgimg1">
+            <img src="{{ asset('assets/img/bg/work-bg-03.png') }}" alt="img" class="bgimg2">
+            <img src="{{ asset('assets/img/bg/feature-bg-03.png') }}" alt="img" class="bgimg3">
+        </div>
 
         @yield('content')
 

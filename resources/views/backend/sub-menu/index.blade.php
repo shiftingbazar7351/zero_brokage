@@ -52,7 +52,7 @@
 
                                             <td>
                                                 @if ($subcategory->image)
-                                                    <img src="{{ Storage::url('subcategory/' . $subcategory->image) }}"
+                                                    <img src="{{ Storage::url('submenu/' . $subcategory->image) }}"
                                                         class="img-thumbnail" width="50px">
                                                 @else
                                                     No Image

@@ -28,7 +28,37 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
+Route::get('/category-listing', function () {
+    return view('frontend.categories');
+})->name('categories.listing');
 
+Route::get('/booking', function () {
+    return view('frontend.booking');
+})->name('booking');
+
+// Route::get('/service-details', function () {
+//     return view('frontend.service-details');
+// })->name('service-details');
+
+Route::get('/preview-details', function () {
+    return view('frontend.preview_details');
+})->name('preview-details');
+
+Route::get('/pricing-details', function () {
+    return view('frontend.pricing');
+})->name('pricing');
+
+Route::get('/privacy-policy', function () {
+    return view('frontend.privacy-policy');
+})->name('privacy');
+
+Route::get('/term-condition', function () {
+    return view('frontend.term-condition');
+})->name('term-condition');
+
+Route::get('/services-in-india', function () {
+    return view('frontend.services-in-india');
+})->name('services-in-india');
 
 Route::get('/service-list', [FrontendController::class, 'serviceList'])->name('service-list');
 

@@ -42,7 +42,7 @@
                                     @foreach ($serviceDetails as $service)
                                         <tr class="text-wrap">
                                             <td>{{ $loop->iteration }}</td>
-                                            <td>{{ $service->category->name ?? '' }}</td>
+                                            {{-- <td>{{ $service->category->name ?? '' }}</td> --}}
                                             <td>{{ $service->subCategory->name ?? '' }}</td>
                                             <td title="{{ $service->description }}">
                                                 {!! truncateCharacters($service->description, 500) !!}

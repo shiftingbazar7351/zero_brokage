@@ -68,7 +68,6 @@ class ServiceDetailController extends Controller
 
         $serviceDetail = ServiceDetail::findOrFail($id);
         $serviceDetail->update($validatedData);
-
         return redirect(route('service-detail.index'))->with('success', 'Service detail updated successfully!');
     }
 

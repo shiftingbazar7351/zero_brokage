@@ -11,8 +11,10 @@ use App\Http\Controllers\MetaUrlController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ServiceDetailController;
 use App\Http\Controllers\SubCategoryController;
+use App\Http\Controllers\SubMenuController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
+
 
 
 
@@ -60,6 +62,10 @@ Route::middleware('auth')->group(function () {
     Route::resource('/menus', MenuController::class);
     Route::post('/menu-status', [MenuController::class, 'menuStatus'])->name('menu.status');
     Route::post('/fetch-subcategory/{id}', [MenuController::class, 'fetchsubcategory']);
+
+    Route::resource('/submenus', SubMenuController::class);
+    Route::post('/submenu-status', [SubMenuController::class, 'subSenuStatus'])->name('submenu.status');
+    Route::post('/fetch-subcategory/{id}', [SubMenuController::class, 'fetchsubcategory']);
 
     Route::resource('service-detail', ServiceDetailController::class);
     Route::resource('/enquiry', EnquiryController::class);

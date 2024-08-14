@@ -154,7 +154,7 @@
                                     <div class="file-browse">
                                         <h6>Drag & drop image or </h6>
                                         <div class="file-browse-path">
-                                            <input type="file" name="image" id="image-input-bg"
+                                            <input type="file" name="background_image" id="image-input-bg"
                                                 accept="image/jpeg, image/png">
                                             <a href="javascript:void(0);"> Browse</a>
                                         </div>

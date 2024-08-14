@@ -48,6 +48,13 @@
                     </a>
                 </li>
 
+                <li class="{{ Route::currentRouteName() === 'submenu.index' ? 'active' : '' }}">
+                    <a href="{{ route('submenu.index') }}">
+                        <i class="fe fe-file-text"></i>
+                        <span>Sub-menu</span>
+                    </a>
+                </li>
+
                 <li class="{{ Route::currentRouteName() === 'service-detail.index' ? 'active' : '' }}">
                     <a href="{{ route('service-detail.index') }}">
                         <i class="fe fe-file-text"></i>
@@ -61,6 +68,7 @@
                         <span>Enquiry</span>
                     </a>
                 </li>
+
 
                 <li class="submenu">
                     <a href="javascript:void(0);"><i class="fe fe-briefcase"></i>

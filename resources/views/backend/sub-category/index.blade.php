@@ -39,7 +39,7 @@
                             <tbody>
                                 @if ($subcategories->isEmpty())
                                     <tr>
-                                        <td colspan="6" class="text-center">No data found</td>
+                                        <td colspan="4" class="text-center">No data found</td>
                                     </tr>
                                 @else
                                     @foreach ($subcategories as $subcategory)

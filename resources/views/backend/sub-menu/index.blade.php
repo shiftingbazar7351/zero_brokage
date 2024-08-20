@@ -72,18 +72,11 @@
 
                                             <td>
                                                 <div class="d-flex">
-                                                    <a class="btn delete-table me-2 edit-subcategory"
-                                                        data-id="{{ $subcategory->id }}"
-                                                        data-name="{{ $subcategory->name }}"
-                                                        data-category="{{ $subcategory->category_id }}"
-                                                        data-state="{{ $subcategory->state_id }}"
-                                                        data-city="{{ $subcategory->city_id }}"
-                                                        data-price="{{ $subcategory->price }}"
-                                                        data-discount="{{ $subcategory->discount }}"
-                                                        data-image="{{ Storage::url('assets/subcategory/' . $subcategory->image) }}"
-                                                        data-bs-toggle="modal" data-bs-target="#editCategoryModal">
+                                                    <button class="btn delete-table me-2"
+                                                        onclick="editCategory({{ $subcategory->id }})" type="button"
+                                                        data-bs-toggle="modal" data-bs-target="#edit-category">
                                                         <i class="fe fe-edit"></i>
-                                                    </a>
+                                                    </button>
 
 
                                                     <!-- Delete Button -->
@@ -258,7 +251,7 @@
         </div>
     </div>
 
-    <div class="modal fade" id="editCategoryModal" tabindex="-1" aria-labelledby="editCategoryModalLabel"
+    <div class="modal fade" id="edit-category" tabindex="-1" aria-labelledby="editCategoryModalLabel"
         aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -269,25 +262,39 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    <form action="{{ route('subcategories.update', $subcategory->id ?? '') }}" method="POST"
-                        enctype="multipart/form-data">
+                    <form id="editCategoryForm" method="POST" enctype="multipart/form-data">
                         @csrf
                         @method('PUT')
+                        <input type="hidden" id="editCategoryId" name="category_id">
+                        <input type="hidden" id="editSubcategoryId" name="subcategory_id">
+                        <input type="hidden" id="editMenuId" name="menu_id">
+
                         <div class="form-group">
                             <label for="edit-name">Name</label>
-                            <input type="text" class="form-control" id="edit-name" name="name"
-                                value="{{ $subcategory->name ?? '' }}" required>
+                            <input type="text" class="form-control" id="editName" name="name"
+                                placeholder="Enter Submenu-Name">
                         </div>
-                        <div class="form-group">
-                            <label for="edit-category">Category</label>
-                            <select class="form-control" id="edit-category" name="category" required>
-                                <option value="">Select category</option>
+                        <div class="mb-3">
+                            <label for="editCategory" class="form-label">Category</label>
+                            <select class="form-control" id="editCategorySelect" name="category_id">
+                                <option value="" disabled>Select Category</option>
                                 @foreach ($categories as $category)
-                                    <option value="{{ $category->id }}"
-                                        {{ ($subcategory->category_id ?? '') == $category->id ? 'selected' : '' }}>
-                                        {{ $category->name }}
-                                    </option>
+                                    <option value="{{ $category->id }}">{{ $category->name }}</option>
                                 @endforeach
+                            </select>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="editSubcategory" class="form-label">Subcategory</label>
+                            <select class="form-control" id="editSubcategorySelect" name="subcategory">
+                                <option value="" selected>Select Subcategory</option>
+                            </select>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="editMenu" class="form-label">Menu</label>
+                            <select class="form-control" id="editSubcategorySelect" name="menu">
+                                <option value="" selected>Select Menu</option>
                             </select>
                         </div>
 
@@ -308,25 +315,6 @@
                             </select>
                         </div>
 
-                        {{-- <div class="form-group">
-                            <label for="category">State</label>
-                            <select class="form-control" id="editstate" name="state">
-                                <option value="">Select State</option>
-                                @foreach ($states as $state)
-                                    <option value="{{ $state->id }}">{{ ucwords($state->name) }}</option>
-                                @endforeach
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label for="category">City</label>
-                            <select class="form-control" id="editcity" name="city">
-                                @foreach ($cities as $city)
-                                    <option value="{{ $city->id }}" {{ $city->id == $subcategory->city_id ? 'selected' : '' }}>
-                                        {{ ucwords($city->name) }}
-                                    </option>
-                                @endforeach
-                            </select>
-                        </div> --}}
 
                         <div class="form-group">
                             <label for="price">Price(INR)</label>
@@ -347,17 +335,18 @@
                                 value="{{ old('edit_final_price', $subcategory->edit_final_price ?? '') }}" readonly
                                 disabled>
                         </div>
+
                         <div class="mb-3">
                             <label class="form-label">Sub Menu Image</label>
                             <div class="form-uploads">
                                 <div class="form-uploads-path">
-                                    <img id="icon-preview"
-                                        src="{{ isset($subcategory->image) ? Storage::url('assets/subcategory/' . $subcategory->image) : asset('admin/assets/img/icons/upload.svg') }}"
+                                    <img id="background-preview"
+                                        src="{{ isset($subcategory->image) ? Storage::url('submenu/' . $subcategory->image) : asset('admin/assets/img/icons/upload.svg') }}"
                                         alt="img" width="100px" height="100px">
                                     <div class="file-browse">
                                         <h6>Drag & drop image or </h6>
                                         <div class="file-browse-path">
-                                            <input type="file" id="editIcon" name="image"
+                                            <input type="file" id="editImage" name="image"
                                                 accept="image/jpeg, image/png">
                                             <a href="javascript:void(0);"> Browse</a>
                                         </div>
@@ -366,6 +355,7 @@
                                 </div>
                             </div>
                         </div>
+
 
                         <button type="submit" class="btn btn-primary">Save Changes</button>
                     </form>
@@ -396,7 +386,7 @@
                 var price = button.data('price');
                 var discount = button.data('discount');
                 var image = button.data('image');
-
+                n
                 // Update the modal's form action
                 var formAction = '{{ url('subcategories') }}/' + id;
                 $(this).find('form').attr('action', formAction);
@@ -455,9 +445,9 @@
                             if (response.status === 1) {
                                 var cities = response.data;
                                 $('#editcity').find('option')
-                            .remove(); // Clear existing options
+                                    .remove(); // Clear existing options
                                 var options =
-                                '<option value="">Select city</option>'; // Default option
+                                    '<option value="">Select city</option>'; // Default option
                                 $.each(cities, function(key, city) {
                                     options += "<option value='" + city.id + "'>" + city
                                         .name + "</option>";
@@ -479,32 +469,6 @@
             });
         });
 
-        document.addEventListener('DOMContentLoaded', function() {
-            // Function to calculate final price
-            function calculateFinalPrice() {
-                const price = parseFloat(document.getElementById('price').value);
-                const discountPercentage = parseFloat(document.getElementById('discount').value);
-
-                if (!isNaN(price) && !isNaN(discountPercentage)) {
-                    const discountAmount = (price * discountPercentage) / 100;
-                    const finalPrice = price - discountAmount;
-
-                    document.getElementById('final-price').value = finalPrice.toFixed(2);
-                } else {
-                    document.getElementById('final-price').value = '';
-                }
-            }
-            document.getElementById('price').addEventListener('input', calculateFinalPrice);
-            document.getElementById('discount').addEventListener('input', calculateFinalPrice);
-
-        });
-
-        function toggleStatus(checkbox, categoryId) {
-            var form = checkbox.closest('form');
-            var hiddenInput = form.querySelector('.status-input');
-            hiddenInput.value = checkbox.checked ? 1 : 0;
-            form.submit();
-        }
 
         $(document).ready(function() {
             $('#state').on('change', function() {
@@ -538,37 +502,95 @@
             });
         });
 
-        // $(document).ready(function() {
-        //     $('#editstate').on('change', function() {
-        //         var stateId = $(this).val();
-        //         if (stateId) {
-        //             $.ajax({
-        //                 url: '/fetch-city/' + stateId, // Adjusted URL based on route
-        //                 type: 'POST',
-        //                 data: {
-        //                     _token: '{{ csrf_token() }}' // Include CSRF token for security
-        //                 },
-        //                 success: function(response) {
-        //                     if (response.status === 1) {
-        //                         var cities = response.data;
-        //                         console.log(cities);
-        //                         $('#city').find('option').remove(); // Clear existing options
-        //                         var options =
-        //                             '<option value="">Select city</option>'; // Default option
-        //                         $.each(cities, function(key, city) {
-        //                             options += "<option value='" + city.id + "'>" + city
-        //                                 .name + "</option>";
-        //                             // alert(response.stateId);
-        //                         });
-        //                         $('#editcity').append(options);
-        //                     }
-        //                 }
-        //             });
-        //         } else {
-        //             $('#editcity').find('option').remove(); // Clear options if no state is selected
-        //             $('#editcity').append('<option value="">Select city</option>');
-        //         }
-        //     });
-        // });
+        function editCategory(id) {
+            $.ajax({
+                url: `/submenu/${id}/edit`,
+                method: 'GET',
+                success: function(response) {
+                    console.log(response);
+                    const {
+                        id,
+                        name,
+                        category_id,
+                        state_id,
+                        city_id,
+                        price,
+                        discount,
+                        final_price,
+                        image_url
+                    } = response;
+
+                    // Populate the form fields in the edit modal
+                    $('#editCategoryId').val(id);
+                    $('#editName').val(name);
+                    $('#editCategorySelect').val(category_id).trigger('change');
+                    $('#edit-state').val(state_id).trigger('change');
+                    $('#edit-city').val(city_id).trigger('change');
+                    $('#edit-price').val(price);
+                    $('#edit-discount').val(discount);
+                    $('#edit-final-price').val(final_price);
+
+                     $.ajax({
+                        url: '/fetch-subcategory/' + category_id,
+                        type: 'POST',
+                        data: {
+                            _token: '{{ csrf_token() }}'
+                        },
+                        success: function(response) {
+                            $('#editSubcategorySelect').empty().append(
+                                '<option value="" selected>Select Subcategory</option>'
+                            );
+
+                            if (response.status === 1 && response.data.length > 0) {
+                                var subcategory = response.data;
+                                $.each(subcategory, function(key, subcateg) {
+                                    $('#editSubcategorySelect').append(
+                                        `<option value="${subcateg.id}" ${subcateg.id == subcategory_id ? 'selected' : ''}>${subcateg.name}</option>`
+                                    );
+                                });
+                            }
+                        }
+                    });
+
+                    // Update the image preview
+                    if (image) {
+                        $('#background-preview').attr('src', `/storage/submenu/${image}`);
+                    } else {
+                        $('#background-preview').attr('src',
+                            '{{ asset('admin/assets/img/icons/upload.svg') }}');
+                    }
+                },
+                error: function(xhr, status, error) {
+                    console.error('Error fetching category:', error);
+                    alert('There was an error fetching the submenu details.');
+                }
+            });
+        }
+
+        $('#editCategorySelect').on('change', function() {
+            var categoryId = $(this).val();
+            if (categoryId) {
+                $.ajax({
+                    url: '/fetch-subcategory/' + categoryId,
+                    type: 'POST',
+                    data: {
+                        _token: '{{ csrf_token() }}'
+                    },
+                    success: function(response) {
+                        if (response.status === 1) {
+                            var subcategories = response.data;
+                            $('#editSubcategorySelect').empty().append(
+                                '<option value="" selected>Select Subcategory</option>');
+                            $.each(subcategories, function(key, subcategory) {
+                                $('#editSubcategorySelect').append('<option value="' +
+                                    subcategory.id + '">' + subcategory.name + '</option>');
+                            });
+                        }
+                    }
+                });
+            } else {
+                $('#editSubcategorySelect').empty().append('<option value="">Select Subcategory</option>');
+            }
+        });
     </script>
 @endsection

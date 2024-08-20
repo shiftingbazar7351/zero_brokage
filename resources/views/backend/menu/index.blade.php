@@ -173,6 +173,7 @@
                         @method('PUT')
                         <input type="hidden" id="editCategoryId" name="category_id">
                         <input type="hidden" id="editSubcategoryId" name="subcategory_id">
+                        <input type="hidden" id="editSubcategoryId" name="menu_id">
 
                         <div class="mb-3">
                             <label class="form-label">Menu Name</label>

@@ -6,7 +6,7 @@
 
         <!-- Email Address -->
         <div>
-            <x-input-label for="email" :value="__('Email')" />
+            <x-input-label for="email" :value="__('Email')" style="font-size: 18px"/>
             <x-text-input id="email" class=" mt-1 w-full form-control" type="email" name="email" :value="old('email')"
                 required autofocus autocomplete="username" />
             <x-input-error :messages="$errors->get('email')" class="mt-2" />
@@ -14,7 +14,7 @@
 
         <!-- Password -->
         <div class="mt-4">
-            <x-input-label for="password" :value="__('Password')" />
+            <x-input-label for="password" :value="__('Password')"  style="font-size: 18px" />
 
             <x-text-input id="password" class="block mt-1 w-full form-control" type="password" name="password" required
                 autocomplete="current-password" />
@@ -30,7 +30,7 @@
 
 
             @if (Route::has('password.request'))
-                <a class="underline text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 dark:focus:ring-offset-gray-800 "
+                <a class="underline text-sm text-danger-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 dark:focus:ring-offset-gray-800 "
                     href="{{ route('password.request') }}">
                     {{ __('Forgot your password?') }}
                 </a>
@@ -40,7 +40,7 @@
 
         <div class="flex items-center justify-end mt-4 ">
 
-            <x-primary-button class="ml-3 form-control" style="background:#00acac !important">
+            <x-primary-button class="ml-3 form-control" style="background:#00acac !important; font-size: 18px;">
                 {{ __('Log in') }}
             </x-primary-button>
             {{-- <div class="block mt-4">

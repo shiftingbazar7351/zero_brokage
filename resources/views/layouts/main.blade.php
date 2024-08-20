@@ -22,7 +22,7 @@
 </head>
 
 <body class="login-body">
-    <div class="main-wrapper">
+    <div class="main-wrapper h-100" style="background: radial-gradient(circle at 18.7% 37.8%, rgb(250, 250, 250) 0%, rgb(225, 234, 238) 90%);">
 
         {{-- <header class="header">
             <div class="container">
@@ -64,13 +64,13 @@
             </div>
         </header> --}}
 
-        <div class="content">
-            <div class="container">
-                <div class="row">
+        <div class="content mt-4">
+            <div class="container mt-4">
+                <div class="row admin-login-row">
                     <div class="col-md-6 col-lg-6 mx-auto">
                         <div class="login-wrap">
-                            <div class="login-header">
-                                <h3>Login</h3>
+                            <div class="login-header text-center">
+                                <h3 style="background-color: rgb(230, 241, 252)" class="rounded">Login</h3>
                                 {{-- <p>Please enter your Phone Number</p>
                                 <h6>Sign in with <a href="login-phone.html">Phone Number</a></h6> --}}
                             </div>

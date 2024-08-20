@@ -45,7 +45,7 @@
         </div>
     </section>
 
-    @if (count($categories) != 0)
+    @if (count($subcategories) != 0)
         <section class="feature-section">
             <div class="container">
                 <div class="section-heading">
@@ -61,19 +61,19 @@
                     </div>
                 </div>
                 <div class="row">
-                    @foreach ($categories as $category)
+                    @foreach ($subcategories as $subcategory)
                         <div class="col-md-2 col-lg-3">
-                            <a href="{{ route('service.grid', ['slug' => $category->slug]) }}" class="feature-box aos"
+                            <a href="{{ route('service.grid', ['slug' => $subcategory->slug]) }}" class="feature-box aos"
                                 data-aos="fade-up">
                                 <div class="feature-icon">
                                     <span>
-                                        <img src="{{ asset('storage/assets/icon/' . $category->icon ?? '') }}"
+                                        <img src="{{ asset('storage/icon/' . $subcategory->icon ?? '') }}"
                                             class="rounded-circle" alt="img">
                                     </span>
                                 </div>
-                                <h5>{{ $category->name ?? '' }}</h5>
+                                <h5>{{ $subcategory->name ?? '' }}</h5>
                                 <div class="feature-overlay">
-                                    <img src="{{ asset('storage/assets/category/' . $category->image ?? '') }}"
+                                    <img src="{{ asset('storage/background_image/' . $subcategory->background_image ?? '') }}"
                                         alt="img">
                                 </div>
                             </a>

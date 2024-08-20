@@ -8,12 +8,7 @@
                 <img src="{{ asset('admin/assets/img/logo-small.svg') }}" class="img-fluid logo-small" alt="Logo">
             </a>
         </div>
-        <div class="siderbar-toggle">
-            <label class="switch" id="toggle_btn">
-                <input type="checkbox">
-                <span class="slider round"></span>
-            </label>
-        </div>
+     
     </div>
     <div class="sidebar-inner slimscroll">
         <div id="sidebar-menu" class="sidebar-menu">

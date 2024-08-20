@@ -65,12 +65,15 @@
         </header> --}}
 
         <div class="content mt-4">
-            <div class="container mt-4">
+            <div class="container ">
                 <div class="row admin-login-row">
                     <div class="col-md-6 col-lg-6 mx-auto">
                         <div class="login-wrap">
-                            <div class="login-header text-center">
-                                <h3 style="background-color: rgb(230, 241, 252)" class="rounded">Login</h3>
+                            <div class="text-center mb-4">
+                                <img src="assets/img/logofinal.png" alt="" style="width: 185px;">
+                            </div>
+                            <div class="login-header">
+                                <h3 >Login</h3>
                                 {{-- <p>Please enter your Phone Number</p>
                                 <h6>Sign in with <a href="login-phone.html">Phone Number</a></h6> --}}
                             </div>

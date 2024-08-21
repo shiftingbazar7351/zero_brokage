@@ -113,78 +113,103 @@
                 <div class="modal-body pt-0">
                     <form action="{{ route('subcategories.store') }}" method="POST" enctype="multipart/form-data">
                         @csrf
+                    
+                        <!-- Category Name -->
                         <div class="mb-3">
                             <label for="category">Category Name</label>
                             <select class="form-control" id="category" name="category_id">
                                 <option value="">Select Category</option>
                                 @foreach ($categories as $category)
-                                    <option value="{{ $category->id }}">{{ $category->name }}</option>
+                                    <option value="{{ $category->id }}" {{ old('category_id') == $category->id ? 'selected' : '' }}>
+                                        {{ $category->name }}
+                                    </option>
                                 @endforeach
                             </select>
+                            @error('category_id')
+                                <div class="text-danger">{{ $message }}</div>
+                            @enderror
                         </div>
+                    
+                        <!-- Sub Category Name -->
                         <div class="mb-3">
                             <label class="form-label">Sub Category Name</label>
                             <input type="text" class="form-control" name="name" placeholder="Enter Category Name"
-                                value="{{ old('name') }}">
+                                   value="{{ old('name') }}">
+                            @error('name')
+                                <div class="text-danger">{{ $message }}</div>
+                            @enderror
                         </div>
+                    
+                        <!-- Type Checkboxes -->
                         <div class="mb-3">
                             <label class="form-label">Type</label>
                             <div class="form-check">
-                                <input class="form-check-input" type="checkbox" name="trending" id="trending" value="">
+                                <input class="form-check-input" type="checkbox" name="trending" id="trending" value="1"
+                                       {{ old('trending') ? 'checked' : '' }}>
                                 <label class="form-check-label" for="trending">
                                     Is Trending
                                 </label>
                             </div>
                             <div class="form-check">
-                                <input class="form-check-input" type="checkbox" name="featured" id="featured" value="">
+                                <input class="form-check-input" type="checkbox" name="featured" id="featured" value="1"
+                                       {{ old('featured') ? 'checked' : '' }}>
                                 <label class="form-check-label" for="featured">
                                     Is Featured
                                 </label>
                             </div>
                         </div>
-                        
-
+                    
+                        <!-- Sub Category Image -->
                         <div class="mb-3">
                             <label class="form-label">Sub Category Image</label>
                             <div class="form-uploads">
                                 <div class="form-uploads-path">
-                                    <img id="image-preview-icon" src="{{ asset('admin/assets/img/icons/upload.svg') }}"
-                                        alt="img" class="default-img">
+                                    <img id="image-preview-icon" src="{{ asset('admin/assets/img/icons/upload.svg') }}" alt="img"
+                                         class="default-img">
                                     <div class="file-browse">
                                         <h6>Drag & drop image or </h6>
                                         <div class="file-browse-path">
-                                            <input type="file" name="icon" id="image-input-icon"
-                                                accept="image/jpeg, image/png">
+                                            <input type="file" name="icon" id="image-input-icon" accept="image/jpeg, image/png">
                                             <a href="javascript:void(0);"> Browse</a>
                                         </div>
                                     </div>
                                     <h5>Supported formats: JPEG, PNG</h5>
                                 </div>
                             </div>
+                            @error('icon')
+                                <div class="text-danger">{{ $message }}</div>
+                            @enderror
                         </div>
+                    
+                        <!-- Sub Category Background Image -->
                         <div class="mb-3">
-                            <label class="form-label">Sub Category Background-Image</label>
+                            <label class="form-label">Sub Category Background Image</label>
                             <div class="form-uploads">
                                 <div class="form-uploads-path">
-                                    <img id="image-preview-bg" src="{{ asset('admin/assets/img/icons/upload.svg') }}"
-                                        alt="img" class="default-img">
+                                    <img id="image-preview-bg" src="{{ asset('admin/assets/img/icons/upload.svg') }}" alt="img"
+                                         class="default-img">
                                     <div class="file-browse">
                                         <h6>Drag & drop image or </h6>
                                         <div class="file-browse-path">
-                                            <input type="file" name="background_image" id="image-input-bg"
-                                                accept="image/jpeg, image/png">
+                                            <input type="file" name="background_image" id="image-input-bg" accept="image/jpeg, image/png">
                                             <a href="javascript:void(0);"> Browse</a>
                                         </div>
                                     </div>
                                     <h5>Supported formats: JPEG, PNG</h5>
                                 </div>
                             </div>
+                            @error('background_image')
+                                <div class="text-danger">{{ $message }}</div>
+                            @enderror
                         </div>
+                    
+                        <!-- Submit Button -->
                         <div class="text-end">
                             <button type="button" class="btn btn-secondary me-2" data-bs-dismiss="modal">Cancel</button>
                             <button type="submit" class="btn btn-primary">Save</button>
                         </div>
                     </form>
+                    
                 </div>
             </div>
         </div>
@@ -213,10 +238,16 @@
                                     <option value="{{ $category->id }}">{{ $category->name }}</option>
                                 @endforeach
                             </select>
+                            @error('category_id')
+                            <div class="text-danger">{{ $message }}</div>
+                            @enderror
                         </div>
                         <div class="mb-3">
                             <label class="form-label">Sub Category Name</label>
                             <input type="text" class="form-control" id="editName" name="name">
+                            @error('name')
+                            <div class="text-danger">{{ $message }}</div>
+                            @enderror
                         </div>
 
                         <div class="mb-3">
@@ -253,6 +284,9 @@
                                     <h5>Supported formats: JPEG, PNG</h5>
                                 </div>
                             </div>
+                            @error('icon')
+                            <div class="text-danger">{{ $message }}</div>
+                            @enderror
                         </div>
 
                         <div class="mb-3">
@@ -273,6 +307,9 @@
                                     <h5>Supported formats: JPEG, PNG</h5>
                                 </div>
                             </div>
+                            @error('image')
+                            <div class="text-danger">{{ $message }}</div>
+                            @enderror
                         </div>
 
                         <div class="text-end">

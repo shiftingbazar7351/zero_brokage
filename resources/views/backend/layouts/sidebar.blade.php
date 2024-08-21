@@ -8,7 +8,7 @@
                 <img src="{{ asset('admin/assets/img/logo-small.svg') }}" class="img-fluid logo-small" alt="Logo">
             </a>
         </div>
-     
+
     </div>
     <div class="sidebar-inner slimscroll">
         <div id="sidebar-menu" class="sidebar-menu">
@@ -64,6 +64,7 @@
                     </a>
                 </li>
 
+                
 
                 <li class="submenu">
                     <a href="javascript:void(0);"><i class="fe fe-briefcase"></i>

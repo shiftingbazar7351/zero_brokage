@@ -138,7 +138,7 @@
 
                         <div class="form-group">
                             <label for="menu">Menu</label>
-                            <select class="form-control" id="menu" name="menu_id" required>
+                            <select class="form-control" id="menu" name="menu" required>
                                 <option value="">Select menu</option>
                             </select>
                         </div>
@@ -256,7 +256,7 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title">Edit Subcategory</h5>
+                    <h5 class="modal-title">Edit Sub-Menu</h5>
                     <button type="button" class="btn-close close-modal" data-bs-dismiss="modal" aria-label="Close">
                         <i class="fe fe-x"></i>
                     </button>
@@ -293,7 +293,7 @@
 
                         <div class="mb-3">
                             <label for="editMenu" class="form-label">Menu</label>
-                            <select class="form-control" id="editSubcategorySelect" name="menu">
+                            <select class="form-control" id="editmenuSelect" name="menu">
                                 <option value="" selected>Select Menu</option>
                             </select>
                         </div>
@@ -501,6 +501,7 @@
                     $('#city').append('<option value="">Select city</option>');
                 }
             });
+
         });
 
         function editCategory(id) {
@@ -518,7 +519,9 @@
                         price,
                         discount,
                         final_price,
-                        image_url
+                        image_url,
+                        subcategory_id,
+                        menu_id
                     } = response;
 
                     // Populate the form fields in the edit modal
@@ -527,9 +530,12 @@
                     $('#editCategorySelect').val(category_id).trigger('change');
                     $('#edit-state').val(state_id).trigger('change');
                     $('#edit-city').val(city_id).trigger('change');
+                    $('#editmenuSelect').val(menu_id).trigger('change');
                     $('#edit-price').val(price);
                     $('#edit-discount').val(discount);
                     $('#edit-final-price').val(final_price);
+
+                    console.log("Trending:", subcategory.trending, "Featured:", subcategory.featured);
 
                     $('#editCategoryForm').attr('action', `/submenu/${id}`);
 
@@ -552,6 +558,29 @@
                                     );
                                 });
                             }
+                        }
+                    });
+                    $.ajax({
+                        
+                        url: '/getMenus/' + subcategory_id,
+                        type: 'GET',
+                        success: function(response) {
+                            console.log( response)
+                            $('#editmenuSelect').empty().append(
+                                '<option value="" selected>Select Menu</option>'
+                            );
+
+                            if (response.status === 1 && response.data.length > 0) {
+                                var menus = response.data;
+                                $.each(menus, function(key, menu) {
+                                    $('#editmenuSelect').append(
+                                        `<option value="${menu.id}" ${menu.id == menu_id ? 'selected' : ''}>${menu.name}</option>`
+                                    );
+                                });
+                            }
+                        },
+                        error: function(xhr, status, error) {
+                            console.error('Error fetching menus:', error);
                         }
                     });
 

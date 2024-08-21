@@ -59,6 +59,8 @@ class SubCategoryController extends Controller
         $category->background_image = $request->background_image;
         $category->icon = $request->icon;
         $category->slug = generateSlug($request->name);
+        $category->trending = $request->has('trending') ? 1 : 0;
+        $category->featured = $request->has('featured') ? 1 : 0;
 
         if ($request->hasFile('background_image')) {
             $filename = $this->fileUploadService->uploadImage('background_image/', $request->file('background_image'));
@@ -99,9 +101,12 @@ class SubCategoryController extends Controller
                 'name' => $subcategory->name,
                 'icon' => $subcategory->icon,
                 'background_image' => $subcategory->background_image,
+                'trending' => $subcategory->trending, 
+                'featured' => $subcategory->featured, 
             ]
         ]);
     }
+    
 
 
     /**
@@ -119,6 +124,8 @@ class SubCategoryController extends Controller
             'icon' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:5048',
         ]);
         $subcategory->name = $request->name;
+        $subcategory->trending = $request->has('trending') ? 1 : 0;
+        $subcategory->featured = $request->has('featured') ? 1 : 0;
         $subcategory->slug = generateSlug($request->name);
         if ($request->hasFile('background_image')) {
             $filename = $this->fileUploadService->uploadImage('background_image/', $request->file('background_image'));

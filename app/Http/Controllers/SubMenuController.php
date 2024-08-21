@@ -78,9 +78,10 @@ class SubMenuController extends Controller
         }
 
         $subcategory = new SubMenu();
-        $subcategory->subcategory_id = $request->subcategory;
+        $subcategory->subcategory_id = $request->subcategory_id;
+        $subcategory->menu_id = $request->menu;
         $subcategory->category_id = $request->category_id;
-        $subcategory->menu_id = $request->menu_id;
+        $subcategory->city_id = $request->input('city');
         $subcategory->name = $request->input('name');
         $subcategory->category_id = $request->input('category');
         $subcategory->slug = generateSlug($request->name);
@@ -122,18 +123,23 @@ class SubMenuController extends Controller
         if (!$submenu) {
             return response()->json(['error' => 'SubMenu not found'], 404);
         }
-    
         return response()->json([
-            'id' => $submenu->id,
-            'name' => $submenu->name,
-            'category_id' => $submenu->category_id,
-            'state_id' => $submenu->state_id,
-            'city_id' => $submenu->city_id,
-            'price' => $submenu->total_price,
-            'discount' => $submenu->discount,
-            'final_price' => $submenu->edit_final_price,
-            'image_url' => $submenu->image ? Storage::url('assets/submenu/' . $submenu->image) : asset('admin/assets/img/icons/upload.svg'),
+            // 'submenu' => [
+                'subcategory_id'=>$submenu->subcategory_id,
+                'menu_id'=>$submenu->menu,
+                'id' => $submenu->id,
+                'name' => $submenu->name,
+                'category_id' => $submenu->category_id,
+                'menu_id' => $submenu->menu_id,
+                'state_id' => $submenu->state_id,
+                'city_id' => $submenu->city_id,
+                'price' => $submenu->total_price,
+                'discount' => $submenu->discount,
+                'final_price' => $submenu->edit_final_price,
+                'image_url' => $submenu->image ? Storage::url('assets/submenu/' . $submenu->image) : asset('admin/assets/img/icons/upload.svg'),
+            // ]
         ]);
+    
     }
     
     
@@ -223,6 +229,7 @@ class SubMenuController extends Controller
 
     public function fetchmenu($menu_id = null)
     {
+
         $data = Menu::where('subcategory_id', $menu_id)->get();
         return response()->json([
             'status' => 1,

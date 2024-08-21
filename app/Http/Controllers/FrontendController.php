@@ -13,10 +13,17 @@ class FrontendController extends Controller
 {
     public function home()
     {
-        // $menus = Menu::where('status', 1)->orderByDesc('created_at')->get();
-        $subcategories = Subcategory::where('status', 1)->orderByDesc('created_at')->get();
-        return view('frontend.home', compact('subcategories'));
+        // Fetch all subcategories with status = 1, trending subcategories, and featured subcategories
+        $subcategories = Subcategory::where('status', 1)
+                                    ->orderByDesc('created_at')
+                                    ->get();
+    
+        $trendingsubcat = $subcategories->where('trending', 1);
+        $featuresubcat = $subcategories->where('featured', 1);
+    
+        return view('frontend.home', compact('subcategories', 'trendingsubcat', 'featuresubcat'));
     }
+    
     public function subCategory($slug)
     {
         $subcategories = SubCategory::select('id', 'name','icon')->get();

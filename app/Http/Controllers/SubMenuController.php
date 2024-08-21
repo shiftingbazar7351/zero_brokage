@@ -193,12 +193,25 @@ class SubMenuController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(string $id)
-    {
-        $subcategory = SubMenu::findOrFail($id);
-        $subcategory->delete();
-        return redirect()->back()->with('success', 'Sub-menu deleted successfully.');
-    }
+
+    public function destroy($id)
+        {
+                try {
+                    $submenu = SubMenu::findOrFail($id);
+        
+                $img = $submenu->image;
+                $submenu->forceDelete();
+                if ($img) {
+                $this->fileUploadService->removeImage('submenu/', $img);
+                }
+        
+                $submenu->delete();
+                return redirect()->back()->with('success', 'Menu Deleted.');
+        
+                } catch (Exception $e) {
+                    return redirect()->back()->with('error', 'Something went wrong');
+                }
+        }
     public function fetchsubcategory($category_id = null)
     {
         $data = SubCategory::where('category_id', $category_id)->get();

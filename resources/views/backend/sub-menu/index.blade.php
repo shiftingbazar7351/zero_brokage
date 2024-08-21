@@ -80,7 +80,7 @@
 
 
                                                     <!-- Delete Button -->
-                                                    <form action="{{ route('subcategories.destroy', $subcategory->id) }}"
+                                                    <form action="{{ route('submenu.destroy', $subcategory->id) }}"
                                                         method="POST" style="display:inline;">
                                                         @csrf
                                                         @method('DELETE')

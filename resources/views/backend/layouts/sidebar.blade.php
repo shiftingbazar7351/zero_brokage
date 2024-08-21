@@ -19,6 +19,7 @@
                 <li class ="{{ Route::currentRouteName() === 'admin_page' ? 'active' : '' }}">
                     <a href="{{ route('admin_page') }}"><i class="fe fe-grid"></i> <span>Dashboard</span></a>
                 </li>
+                
                 <li class="menu-title">
                     <h6>Services</h6>
                 </li>
@@ -29,6 +30,7 @@
                         <span>Category</span>
                     </a>
                 </li>
+
                 <li class="{{ Route::currentRouteName() === 'subcategories.index' ? 'active' : '' }}">
                     <a href="{{ route('subcategories.index') }}">
                         <i class="fe fe-file-text"></i>
@@ -64,7 +66,7 @@
                     </a>
                 </li>
 
-                
+
 
                 <li class="submenu">
                     <a href="javascript:void(0);"><i class="fe fe-briefcase"></i>

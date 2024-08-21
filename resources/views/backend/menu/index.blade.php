@@ -312,43 +312,61 @@
         });
 
         function editCategory(id) {
+    $.ajax({
+        url: `/menus/${id}/edit`,
+        method: 'GET',
+        success: function(response) {
+            const {
+                id,
+                name,
+                category_id,
+                subcategory_id,
+                image
+            } = response.category;
+
+            $('#editCategoryId').val(id);
+            $('#editName').val(name);
+            $('#editCategoryForm').attr('action', `/menus/${id}`);
+
+            // Set the category and trigger the change event to load subcategories
+            $('#editCategorySelect').val(category_id).trigger('change');
+
+            // Fetch subcategories based on the selected category
             $.ajax({
-                url: `/menus/${id}/edit`,
-                method: 'GET',
+                url: '/fetch-subcategory/' + category_id,
+                type: 'POST',
+                data: {
+                    _token: '{{ csrf_token() }}'
+                },
                 success: function(response) {
-                    const {
-                        id,
-                        name,
-                        category_id,
-                        subcategory_id,
-                        image
-                    } = response.category;
-
-                    $('#editCategoryId').val(id);
-                    $('#editName').val(name);
-                    $('#editCategoryForm').attr('action', `/menus/${id}`);
-
-                    $('#editCategorySelect').val(category_id).trigger('change');
                     $('#editSubcategorySelect').empty().append(
-                        '<option value="" selected>Select Subcategory</option>');
+                        '<option value="" selected>Select Subcategory</option>'
+                    );
 
-                    if (subcategory_id) {
-                        $('#editSubcategorySelect').append(
-                            `<option value="${subcategory_id}" selected>Selected Subcategory</option>`);
+                    if (response.status === 1 && response.data.length > 0) {
+                        var subcategory = response.data;
+                        $.each(subcategory, function(key, subcateg) {
+                            $('#editSubcategorySelect').append(
+                                `<option value="${subcateg.id}" ${subcateg.id == subcategory_id ? 'selected' : ''}>${subcateg.name}</option>`
+                            );
+                        });
                     }
-
-                    const updateImagePreview = (selector, filePath) => {
-                        const imageUrl = filePath ? `{{ Storage::url('assets/menu/') }}/${filePath}` :
-                            `{{ asset('admin/assets/img/icons/upload.svg') }}`;
-                        $(selector).attr('src', imageUrl);
-                    };
-
-                    updateImagePreview('#icon-preview', image);
-
-                    $('#edit-category').modal('show');
                 }
             });
+
+            const updateImagePreview = (selector, filePath) => {
+                const imageUrl = filePath ? `{{ Storage::url('menu/') }}/${filePath}` :
+                    `{{ asset('admin/assets/img/icons/upload.svg') }}`;
+                $(selector).attr('src', imageUrl);
+            };
+
+            updateImagePreview('#background-preview', image);
+
+            $('#edit-category').modal('show');
         }
+    });
+}
+
 
         // Fetch subcategories based on category selection in the Edit form
         $('#editCategorySelect').on('change', function() {

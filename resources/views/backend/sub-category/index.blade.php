@@ -128,6 +128,23 @@
                                 value="{{ old('name') }}">
                         </div>
                         <div class="mb-3">
+                            <label class="form-label">Type</label>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" name="trending" id="trending" value="">
+                                <label class="form-check-label" for="trending">
+                                    Is Trending
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" name="featured" id="featured" value="">
+                                <label class="form-check-label" for="featured">
+                                    Is Featured
+                                </label>
+                            </div>
+                        </div>
+                        
+
+                        <div class="mb-3">
                             <label class="form-label">Sub Category Image</label>
                             <div class="form-uploads">
                                 <div class="form-uploads-path">
@@ -201,6 +218,23 @@
                             <label class="form-label">Sub Category Name</label>
                             <input type="text" class="form-control" id="editName" name="name">
                         </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Type</label>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" name="trending" id="is_trending" value="">
+                                <label class="form-check-label" for="trending">
+                                    Is Trending
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" name="featured" id="is_featured" value="">
+                                <label class="form-check-label" for="featured">
+                                    Is Featured
+                                </label>
+                            </div>
+                        </div>
+
                         <div class="mb-3">
                             <label class="form-label">Sub Category Image</label>
                             <div class="form-uploads">
@@ -260,42 +294,49 @@
 <script src="{{ asset('admin/assets/js/status-update.js') }}"></script>
 <script src="{{ asset('admin/assets/js/preview-img.js') }}"></script>
 <script>
-    function editSubCategory(id) {
-        $.ajax({
-            url: `/subcategories/${id}/edit`,
-            method: 'GET',
-            success: function(response) {
-                const subcategory = response.subcategory;
-                if (!subcategory) {
-                    alert('Category not found');
-                    return;
-                }
-
-                // Set form action and category details
-                $('#editSubCategoryId').val(subcategory.id);
-                $('#editName').val(subcategory.name);
-                $('#categoryName').val(subcategory.category_id);
-                $('#editSubCategoryForm').attr('action', `/subcategories/${subcategory.id}`);
-
-                // Helper function to update image previews
-                const updateImagePreview = (selector, filePath, defaultPath) => {
-                    const imageUrl = filePath ? `{{ Storage::url('') }}/${filePath}` :
-                        `{{ asset('admin/assets/img/icons/upload.svg') }}`;
-                    $(selector).attr('src', imageUrl);
-                };
-
-                // Update icon and background image previews
-                updateImagePreview('#icon-preview', `icon/${subcategory.icon}`, 'icons/upload.svg');
-                updateImagePreview('#background-preview', `background_image/${subcategory.background_image}`, 'icons/upload.svg');
-
-                // Show the modal
-                $('#edit-category').modal('show');
-            },
-            error: function() {
-                alert('An error occurred while fetching category details.');
+function editSubCategory(id) {
+    $.ajax({
+        url: `/subcategories/${id}/edit`,
+        method: 'GET',
+        success: function(response) {
+            const subcategory = response.subcategory;
+            if (!subcategory) {
+                alert('Category not found');
+                return;
             }
-        });
-    }
+
+            // Set form action and category details
+            $('#editSubCategoryId').val(subcategory.id);
+            $('#editName').val(subcategory.name);
+            $('#categoryName').val(subcategory.category_id);
+            $('#editSubCategoryForm').attr('action', `/subcategories/${subcategory.id}`);
+
+            // Correctly set the checkboxes for 'trending' and 'featured'
+            $('#is_trending').prop('checked', subcategory.trending == 1);
+            $('#is_featured').prop('checked', subcategory.featured == 1);
+
+            // Helper function to update image previews
+            const updateImagePreview = (selector, filePath, defaultPath) => {
+                const imageUrl = filePath ? `{{ Storage::url('') }}/${filePath}` :
+                    `{{ asset('admin/assets/img/icons/upload.svg') }}`;
+                $(selector).attr('src', imageUrl);
+            };
+
+            // Update icon and background image previews
+            updateImagePreview('#icon-preview', `icon/${subcategory.icon}`, 'icons/upload.svg');
+            updateImagePreview('#background-preview', `background_image/${subcategory.background_image}`, 'icons/upload.svg');
+
+            // Show the modal
+            $('#edit-category').modal('show');
+        },
+        error: function() {
+            alert('An error occurred while fetching category details.');
+        }
+    });
+}
+
+
+
 </script>
 
 @endsection

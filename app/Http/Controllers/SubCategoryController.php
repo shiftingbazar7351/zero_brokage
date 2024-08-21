@@ -49,9 +49,13 @@ class SubCategoryController extends Controller
     public function store(Request $request)
     {
         $request->validate([
+            
+            'category_id' => 'required',
             'name' => 'required|unique:sub_categories,name',
-            'background_image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:5048',
-            'icon' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:5048',
+            'background_image' => 'required|image|mimes:jpeg,png,jpg,gif|max:5048',
+            'icon' => 'required|image|mimes:jpeg,png,jpg,gif|max:5048',
+            // 'trending' => 'required',
+            // 'featured' => 'required',
         ]);
         $category = new SubCategory();
         $category->name = $request->name;
@@ -118,10 +122,11 @@ class SubCategoryController extends Controller
      */
     public function update(Request $request, SubCategory $subcategory)
     {
-        $request->validate([
+        $request->validate([     
+            'category_id' => 'required',
             'name' => 'required|unique:categories,name,' . $subcategory->id,
-            'background_image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:5048',
-            'icon' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:5048',
+            'background_image' => 'required|image|mimes:jpeg,png,jpg,gif|max:5048',
+            'icon' => 'required|image|mimes:jpeg,png,jpg,gif|max:5048',
         ]);
         $subcategory->name = $request->name;
         $subcategory->trending = $request->has('trending') ? 1 : 0;

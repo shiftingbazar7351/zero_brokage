@@ -360,7 +360,7 @@
             </div>
         </div>
     </section>
-
+    @if (count($subcategories) != 0)
     <section class="feature-section">
         <div class="container">
             <div class="section-heading">
@@ -376,76 +376,25 @@
                 </div>
             </div>
             <div class="row">
+                @foreach ($subcategories as $subcategory)
                 <div class="col-md-2">
-                    <a href="service-list1-All.html" class="feature-box aos" data-aos="fade-up">
+                    <a href="{{ route('service.grid', ['slug' => $subcategory->slug]) }}" class="feature-box aos" data-aos="fade-up">
                         <div class="feature-icon">
                             <span>
-                                <img src="assets/img/icons/trendin-01.svg" alt="img">
+                                <img src="{{ asset('storage/icon/' . $subcategory->icon ?? '') }}"
+                                     alt="img">
                             </span>
                         </div>
-                        <h5>Catering Service</h5>
+                        <h5>{{ $subcategory->name ?? '' }}</h5>
 
                     </a>
                 </div>
-                <div class="col-md-2">
-                    <a href="service-list1-All.html" class="feature-box aos" data-aos="fade-up">
-                        <div class="feature-icon">
-                            <span>
-                                <img src="assets/img/icons/feature-icon-04.svg" alt="img">
-                            </span>
-                        </div>
-                        <h5>Deep Cleaning Service</h5>
-                    </a>
-                </div>
-                <div class="col-md-2">
-                    <a href="service-list1-All.html" class="feature-box aos" data-aos="fade-up">
-                        <div class="feature-icon">
-                            <span>
-                                <img src="assets/img/icons/trending-03.svg" alt="img">
-                            </span>
-                        </div>
-                        <h5>Painting Service</h5>
-
-                    </a>
-                </div>
-                <div class="col-md-2">
-                    <a href="service-list1-All.html" class="feature-box aos" data-aos="fade-up">
-                        <div class="feature-icon">
-                            <span>
-                                <img src="assets/img/icons/feature-icon-02.svg" alt="img">
-                            </span>
-                        </div>
-                        <h5>Car Cleaning</h5>
-
-                    </a>
-                </div>
-                <div class="col-md-2">
-                    <a href="service-list1-All.html" class="feature-box aos" data-aos="fade-up">
-                        <div class="feature-icon">
-                            <span>
-                                <img src="assets/img/icons/camera.svg" alt="img">
-                            </span>
-                        </div>
-                        <h5>Photographer</h5>
-
-                    </a>
-                </div>
-                <div class="col-md-2">
-                    <a href="service-list1-All.html" class="feature-box aos" data-aos="fade-up">
-                        <div class="feature-icon">
-                            <span>
-                                <img src="assets/img/icons/feature-icon-01.svg" alt="img">
-                            </span>
-                        </div>
-                        <h5>Construction</h5>
-
-                    </a>
-                </div>
+                @endforeach   
 
             </div>
         </div>
     </section>
-
+    @endif
     <section class="client-section">
         <div class="container">
             <div class="row">

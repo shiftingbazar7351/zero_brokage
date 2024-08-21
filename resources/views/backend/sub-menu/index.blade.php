@@ -363,6 +363,7 @@
             </div>
         </div>
     </div>
+
 @endsection
 @section('scripts')
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
@@ -530,7 +531,9 @@
                     $('#edit-discount').val(discount);
                     $('#edit-final-price').val(final_price);
 
-                     $.ajax({
+                    $('#editCategoryForm').attr('action', `/submenu/${id}`);
+
+                    $.ajax({
                         url: '/fetch-subcategory/' + category_id,
                         type: 'POST',
                         data: {

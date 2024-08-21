@@ -54,10 +54,10 @@
                             <h2>Service Categories</h2>
                             <p>What do you need to find?</p>
                         </div>
-                        <div class="col-md-6 text-md-end aos" data-aos="fade-up">
+                        {{-- <div class="col-md-6 text-md-end aos" data-aos="fade-up">
                             <a href="search-list.html" class="btn btn-primary btn-view">View All<i
                                     class="feather-arrow-right-circle"></i></a>
-                        </div>
+                        </div> --}}
                     </div>
                 </div>
                 <div class="row">
@@ -92,10 +92,10 @@
                         <h2>Trending Categories</h2>
                         <p>What do you like most?</p>
                     </div>
-                    <div class="col-md-6 text-md-end aos" data-aos="fade-up">
+                    {{-- <div class="col-md-6 text-md-end aos" data-aos="fade-up">
                         <a href="categories.html" class="btn btn-primary btn-view">View All<i
                                 class="feather-arrow-right-circle"></i></a>
-                    </div>
+                    </div> --}}
                 </div>
             </div>
             <div class="row">
@@ -164,10 +164,10 @@
                         <h2>Top Providers</h2>
                         <p>Meet Our Experts</p>
                     </div>
-                    <div class="col-md-6 text-md-end aos" data-aos="fade-up">
+                    {{-- <div class="col-md-6 text-md-end aos" data-aos="fade-up">
                         <a href="providers.html" class="btn btn-primary btn-view">View All<i
                                 class="feather-arrow-right-circle"></i></a>
-                    </div>
+                    </div> --}}
                 </div>
             </div>
             <div class="row  aos" data-aos="fade-up">
@@ -369,10 +369,10 @@
                         <h2>Most Popular Services</h2>
                         <p>What do you like most?</p>
                     </div>
-                    <div class="col-md-6 text-md-end aos" data-aos="fade-up">
+                    {{-- <div class="col-md-6 text-md-end aos" data-aos="fade-up">
                         <a href="service-list1-All.html" class="btn btn-primary btn-view">View All<i
                                 class="feather-arrow-right-circle"></i></a>
-                    </div>
+                    </div> --}}
                 </div>
             </div>
             <div class="row">

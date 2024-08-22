@@ -131,7 +131,7 @@
                                         <i class="feather-map-pin"></i>
                                     </div>
                                 </div> -->
-                        <div class="filter-content">
+                        {{-- <div class="filter-content">
                             <h2 class="mb-4">Price Range</h2>
                             <div class="filter-range">
                                 <input type="text" id="range_03">
@@ -139,7 +139,7 @@
                             <div class="filter-range-amount">
                                 <h5>Price: <span>$5 - $210</span></h5>
                             </div>
-                        </div>
+                        </div> --}}
                         <div class="filter-content">
                             <h2>By Rating <span><i class="feather-chevron-down"></i></span></h2>
                             <ul class="rating-set">
@@ -254,13 +254,13 @@
                     </div>
                     <div class="row">
                         <div class="col-md-12">
-
+                            @foreach ($submenus as $menu)
                             <div class="service-list">
                                 <div class="service-cont">
                                     <div class="service-cont-img">
                                         <a href="service-details.html">
                                             <img class="img-fluid serv-img" alt="Service Image"
-                                                src="{{ asset('assets/img/services/service-04.jpg') }}">
+                                                src="{{ asset('storage/submenu/' . $menu->image ?? '') }}">
                                         </a>
                                         <div class="fav-item">
                                             <a href="javascript:void(0)" class="fav-icon">
@@ -287,6 +287,7 @@
                                     <a class="btn btn-secondary book-Now-btn">Book Now</a>
                                 </div>
                             </div>
+                            @endforeach
                             <div id="myPopup-booking1" class="popup">
                                 <div class="popup-content">
                                     <span class="close" id="closePopup-booking1">&times;</span>
@@ -375,7 +376,7 @@
                                 </div>
                             </div>
 
-
+{{--
                             <div class="service-list">
                                 <div class="service-cont">
                                     <div class="service-cont-img">
@@ -542,12 +543,12 @@
                                     <h6>25.00<span class="old-price">35.00</span></h6>
                                     <a href="booking.html" class="btn btn-secondary">Book Now</a>
                                 </div>
-                            </div>
+                            </div> --}}
 
                         </div>
                     </div>
 
-                    <div class="row">
+                    {{-- <div class="row">
                         <div class="col-sm-12">
                             <div class="blog-pagination rev-page">
                                 <nav>
@@ -573,7 +574,7 @@
                                 </nav>
                             </div>
                         </div>
-                    </div>
+                    </div> --}}
 
                 </div>
 

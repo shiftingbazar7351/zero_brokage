@@ -39,7 +39,7 @@
                             <tbody>
                                 @if ($subcategories->isEmpty())
                                     <tr>
-                                        <td colspan="4" class="text-center">No data found</td>
+                                        <td colspan="6" class="text-center">No data found</td>
                                     </tr>
                                 @else
                                     @foreach ($subcategories as $subcategory)
@@ -113,7 +113,7 @@
                 <div class="modal-body pt-0">
                     <form action="{{ route('subcategories.store') }}" method="POST" enctype="multipart/form-data">
                         @csrf
-                    
+
                         <!-- Category Name -->
                         <div class="mb-3">
                             <label for="category">Category Name</label>
@@ -129,7 +129,7 @@
                                 <div class="text-danger">{{ $message }}</div>
                             @enderror
                         </div>
-                    
+
                         <!-- Sub Category Name -->
                         <div class="mb-3">
                             <label class="form-label">Sub Category Name</label>
@@ -139,7 +139,7 @@
                                 <div class="text-danger">{{ $message }}</div>
                             @enderror
                         </div>
-                    
+
                         <!-- Type Checkboxes -->
                         <div class="mb-3">
                             <label class="form-label">Type</label>
@@ -158,7 +158,7 @@
                                 </label>
                             </div>
                         </div>
-                    
+
                         <!-- Sub Category Image -->
                         <div class="mb-3">
                             <label class="form-label">Sub Category Image</label>
@@ -180,7 +180,7 @@
                                 <div class="text-danger">{{ $message }}</div>
                             @enderror
                         </div>
-                    
+
                         <!-- Sub Category Background Image -->
                         <div class="mb-3">
                             <label class="form-label">Sub Category Background Image</label>
@@ -202,14 +202,14 @@
                                 <div class="text-danger">{{ $message }}</div>
                             @enderror
                         </div>
-                    
+
                         <!-- Submit Button -->
                         <div class="text-end">
                             <button type="button" class="btn btn-secondary me-2" data-bs-dismiss="modal">Cancel</button>
                             <button type="submit" class="btn btn-primary">Save</button>
                         </div>
                     </form>
-                    
+
                 </div>
             </div>
         </div>

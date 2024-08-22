@@ -117,30 +117,42 @@
                         <div class="form-group">
                             <label for="name">Name</label>
                             <input type="text" class="form-control" id="name" name="name"
-                                placeholder="Enter Name" required>
+                                placeholder="Enter Name" >
+                                @error('name')
+                                <div class="text-danger">{{ $message }}</div>
+                                @enderror
                         </div>
                         <div class="form-group">
                             <label for="category">Category</label>
-                            <select class="form-control" id="category" name="category" required>
+                            <select class="form-control" id="category" name="category" >
                                 <option value="">Select category</option>
                                 @foreach ($categories as $category)
                                     <option value="{{ $category->id }}">{{ $category->name }}</option>
                                 @endforeach
                             </select>
+                            @error('category')
+                            <div class="text-danger">{{ $message }}</div>
+                            @enderror
                         </div>
 
                         <div class="form-group">
                             <label for="subcategory">Sub Category</label>
-                            <select class="form-control" id="subcategory" name="subcategory_id" required>
+                            <select class="form-control" id="subcategory" name="subcategory_id" >
                                 <option value="">Select subcategory</option>
                             </select>
+                            @error('subcategory_id')
+                            <div class="text-danger">{{ $message }}</div>
+                            @enderror
                         </div>
 
                         <div class="form-group">
                             <label for="menu">Menu</label>
-                            <select class="form-control" id="menu" name="menu" required>
+                            <select class="form-control" id="menu" name="menu" >
                                 <option value="">Select menu</option>
                             </select>
+                            @error('menu')
+                            <div class="text-danger">{{ $message }}</div>
+                            @enderror
                         </div>
 
                         <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -200,6 +212,9 @@
                                     <option value="{{ $state->id }}">{{ ucwords($state->name) }}</option>
                                 @endforeach
                             </select>
+                            @error('state')
+                            <div class="text-danger">{{ $message }}</div>
+                            @enderror
                         </div>
 
                         <div class="form-group">
@@ -207,24 +222,36 @@
                             <select class="form-control" id="city" name="city">
                                 <option value="">Select City</option>
                             </select>
+                            @error('city')
+                            <div class="text-danger">{{ $message }}</div>
+                            @enderror
                         </div>
 
                         <div class="form-group">
                             <label for="price">Price(INR)</label>
                             <input type="text" class="form-control" id="price" name="price"
                                 placeholder="Enter Ammount">
+                                @error('price')
+                                <div class="text-danger">{{ $message }}</div>
+                                @enderror
                         </div>
 
                         <div class="form-group">
                             <label for="price">Discount(%)</label>
                             <input type="text" class="form-control" id="discount" name="discount"
                                 placeholder="Enter Discount percentage">
+                                @error('discount')
+                                <div class="text-danger">{{ $message }}</div>
+                                @enderror
                         </div>
 
                         <div class="form-group">
                             <label for="final-price">Final Price (INR)</label>
                             <input type="text" class="form-control" id="final-price" name="final_price" readonly
                                 disabled>
+                                @error('final_price')
+                                <div class="text-danger">{{ $message }}</div>
+                                @enderror
                         </div>
                         <div class="mb-3">
                             <label class="form-label">Sub Menu Image</label>
@@ -243,6 +270,9 @@
                                     <h5>Supported formats: JPEG, PNG</h5>
                                 </div>
                             </div>
+                            @error('image')
+                            <div class="text-danger">{{ $message }}</div>
+                            @enderror
                         </div>
                         <button type="submit" class="btn btn-primary">Save</button>
                     </form>
@@ -273,6 +303,9 @@
                             <label for="edit-name">Name</label>
                             <input type="text" class="form-control" id="editName" name="name"
                                 placeholder="Enter Submenu-Name">
+                                @error('name')
+                                <div class="text-danger">{{ $message }}</div>
+                                @enderror
                         </div>
                         <div class="mb-3">
                             <label for="editCategory" class="form-label">Category</label>
@@ -282,6 +315,9 @@
                                     <option value="{{ $category->id }}">{{ $category->name }}</option>
                                 @endforeach
                             </select>
+                            @error('category_id')
+                            <div class="text-danger">{{ $message }}</div>
+                            @enderror
                         </div>
 
                         <div class="mb-3">
@@ -289,6 +325,9 @@
                             <select class="form-control" id="editSubcategorySelect" name="subcategory">
                                 <option value="" selected>Select Subcategory</option>
                             </select>
+                            @error('subcategory')
+                            <div class="text-danger">{{ $message }}</div>
+                            @enderror
                         </div>
 
                         <div class="mb-3">
@@ -296,6 +335,9 @@
                             <select class="form-control" id="editmenuSelect" name="menu">
                                 <option value="" selected>Select Menu</option>
                             </select>
+                            @error('menu')
+                            <div class="text-danger">{{ $message }}</div>
+                            @enderror
                         </div>
 
                         <div class="form-group">
@@ -306,6 +348,9 @@
                                     <option value="{{ $state->id }}">{{ ucwords($state->name) }}</option>
                                 @endforeach
                             </select>
+                            @error('state')
+                            <div class="text-danger">{{ $message }}</div>
+                            @enderror
                         </div>
 
                         <div class="form-group">
@@ -313,6 +358,9 @@
                             <select class="form-control" id="city" name="city">
                                 <option value="">Select City</option>
                             </select>
+                            @error('city')
+                            <div class="text-danger">{{ $message }}</div>
+                            @enderror
                         </div>
 
 
@@ -320,6 +368,9 @@
                             <label for="price">Price(INR)</label>
                             <input type="text" class="form-control" id="edit-price" name="price"
                                 placeholder="Enter Ammount" value="{{ old('price', $subcategory->total_price ?? '') }}">
+                                @error('price')
+                                <div class="text-danger">{{ $message }}</div>
+                                @enderror
                         </div>
 
                         <div class="form-group">
@@ -327,6 +378,9 @@
                             <input type="text" class="form-control" id="edit-discount" name="discount"
                                 placeholder="Enter Discount percentage"
                                 value="{{ old('discount', $subcategory->discount ?? '') }}">
+                                @error('discount')
+                                <div class="text-danger">{{ $message }}</div>
+                                @enderror
                         </div>
 
                         <div class="form-group">
@@ -334,6 +388,9 @@
                             <input type="text" class="form-control" id="edit-final-price" name="edit_final_price"
                                 value="{{ old('edit_final_price', $subcategory->edit_final_price ?? '') }}" readonly
                                 disabled>
+                                @error('edit_final_price')
+                                <div class="text-danger">{{ $message }}</div>
+                                @enderror
                         </div>
 
                         <div class="mb-3">
@@ -354,6 +411,9 @@
                                     <h5>Supported formats: JPEG, PNG</h5>
                                 </div>
                             </div>
+                            @error('image')
+                            <div class="text-danger">{{ $message }}</div>
+                            @enderror
                         </div>
 
 
@@ -509,7 +569,6 @@
                 url: `/submenu/${id}/edit`,
                 method: 'GET',
                 success: function(response) {
-                    console.log(response);
                     const {
                         id,
                         name,

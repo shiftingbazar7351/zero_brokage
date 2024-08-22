@@ -36,9 +36,10 @@ class MenuController extends Controller
     {
         // Validate and store the new menu category
         $request->validate([
-            'name' => 'required|string|max:255',
-            // 'subcategory' => 'required|integer|exists:categories,id',
-            // 'image' => 'nullable|image|mimes:jpeg,png|max:2048',
+            'name' => 'required|unique:menus,name',
+            'category_id' => 'required',
+            'subcategory' => 'required|integer|exists:categories,id',
+            'image' => 'required|image|mimes:jpeg,png|max:2048',
         ]);
 
         $menu = new Menu();
@@ -72,9 +73,10 @@ class MenuController extends Controller
     {
         // Validate and update the menu category
         $request->validate([
-            'name' => 'required|string|max:255',
-            // 'subcategory' => 'required|integer|exists:subcategories,id',
-            // 'image' => 'nullable|image|mimes:jpeg,png|max:2048',
+            'name' => 'required',
+            'category_id' => 'required',
+            'subcategory' => 'required|integer|exists:menus,subcategory_id',
+            // 'image' => 'required|image|mimes:jpeg,png|max:2048',
         ]);
 
         $menu = Menu::find($id);

@@ -124,7 +124,7 @@ class SubCategoryController extends Controller
     {
         $request->validate([     
             'category_id' => 'required',
-            'name' => 'required|unique:categories,name,' . $subcategory->id,
+            'name' => 'required|unique:sub_categories,name,' . $subcategory->id,
             'background_image' => 'required|image|mimes:jpeg,png,jpg,gif|max:5048',
             'icon' => 'required|image|mimes:jpeg,png,jpg,gif|max:5048',
         ]);

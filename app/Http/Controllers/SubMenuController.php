@@ -59,12 +59,12 @@ class SubMenuController extends Controller
     {
         $request->validate([
             'name' => 'required|unique:sub_menus,name',
-            'state' => 'nullable|exists:states,id',
-            'city' => 'nullable|exists:cities,id',
-            'total_price' => 'nullable|numeric',
-            'discount' => 'nullable|numeric',
-            'discounted_price' => 'nullable|numeric',
-            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'state' => 'required|exists:states,id',
+            'city' => 'required|exists:cities,id',
+            'total_price' => 'required|numeric',
+            'discount' => 'required|numeric',
+            'discounted_price' => 'required|numeric',
+            'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
 
         $finalPrice = $request->input('price');
@@ -154,13 +154,13 @@ class SubMenuController extends Controller
     public function update(Request $request, $id)
     {
         $request->validate([
-            'name' => 'required|unique:sub_categories,name,' . $request->id,
-            'state_id' => 'nullable|exists:states,id',
-            'city_id' => 'nullable|exists:cities,id',
-            'price' => 'nullable|numeric',
-            'discount' => 'nullable|numeric',
-            'final_price' => 'nullable|numeric',
-            'images.*' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048', // Allow multiple images
+            'name' => 'required|unique:sub_menus,name,' . $request->id,
+            'state_id' => 'required|exists:states,id',
+            'city_id' => 'required|exists:cities,id',
+            'price' => 'required|numeric',
+            'discount' => 'required|numeric',
+            'final_price' => 'required|numeric',
+            'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048', // Allow multiple images
         ]);
 
         $finalPrice = $request->input('price');

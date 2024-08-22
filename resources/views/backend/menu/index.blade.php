@@ -111,6 +111,9 @@
                         <div class="mb-3">
                             <label class="form-label">Menu Name</label>
                             <input type="text" class="form-control" name="name" placeholder="Enter Menu Name">
+                            @error('name')
+                            <div class="text-danger">{{ $message }}</div>
+                            @enderror
                         </div>
                         <div class="mb-3">
                             <label for="category" class="form-label">Category</label>
@@ -120,14 +123,18 @@
                                     <option value="{{ $category->id }}">{{ $category->name }}</option>
                                 @endforeach
                             </select>
-                            <div class="text-danger category-error"></div>
+                            @error('category_id')
+                            <div class="text-danger">{{ $message }}</div>
+                            @enderror
                         </div>
                         <div class="mb-3">
                             <label for="subcategory" class="form-label">Subcategory</label>
                             <select class="form-control" id="subcategory" name="subcategory">
                                 <option value="" selected>Select Subcategory</option>
                             </select>
-                            <div class="text-danger subcategory_id-error"></div>
+                            @error('subcategory')
+                            <div class="text-danger">{{ $message }}</div>
+                            @enderror
                         </div>
                         <div class="mb-3">
                             <label class="form-label">Menu Image</label>
@@ -146,6 +153,9 @@
                                     <h5>Supported formats: JPEG, PNG</h5>
                                 </div>
                             </div>
+                            @error('image')
+                            <div class="text-danger">{{ $message }}</div>
+                            @enderror
                         </div>
                         <div class="text-end">
                             <button type="button" class="btn btn-secondary me-2" data-bs-dismiss="modal">Cancel</button>
@@ -177,6 +187,9 @@
                         <div class="mb-3">
                             <label class="form-label">Menu Name</label>
                             <input type="text" class="form-control" id="editName" name="name">
+                            @error('name')
+                            <div class="text-danger">{{ $message }}</div>
+                            @enderror
                         </div>
                         <div class="mb-3">
                             <label for="editCategory" class="form-label">Category</label>
@@ -186,12 +199,18 @@
                                     <option value="{{ $category->id }}">{{ $category->name }}</option>
                                 @endforeach
                             </select>
+                            @error('category_id')
+                            <div class="text-danger">{{ $message }}</div>
+                            @enderror
                         </div>
                         <div class="mb-3">
                             <label for="editSubcategory" class="form-label">Subcategory</label>
                             <select class="form-control" id="editSubcategorySelect" name="subcategory">
                                 <option value="" selected>Select Subcategory</option>
                             </select>
+                            @error('subcategory')
+                            <div class="text-danger">{{ $message }}</div>
+                            @enderror
                         </div>
 
                         <div class="mb-3">
@@ -212,6 +231,9 @@
                                     <h5>Supported formats: JPEG, PNG</h5>
                                 </div>
                             </div>
+                            @error('image')
+                            <div class="text-danger">{{ $message }}</div>
+                            @enderror
                         </div>
 
                         <div class="text-end">

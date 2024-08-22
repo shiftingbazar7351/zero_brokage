@@ -13,11 +13,7 @@ class FrontendController extends Controller
 {
     public function home()
     {
-        // Fetch all subcategories with status = 1, trending subcategories, and featured subcategories
-        $subcategories = Subcategory::where('status', 1)
-                                    ->orderByDesc('created_at')
-                                    ->get();
-    
+        $subcategories = Subcategory::where('status', 1)->orderByDesc('created_at') ->get();                                                           
         $trendingsubcat = $subcategories->where('trending', 1);
         $featuresubcat = $subcategories->where('featured', 1);
     

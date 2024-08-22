@@ -248,7 +248,7 @@ class SubMenuController extends Controller
         }
         return response()->json(['status' => 1, 'data' => $cities]);
     }
-    public function updateStatus(Request $request)
+    public function subMenuStatus(Request $request)
     {
         $item = SubMenu::find($request->id);
         if ($item) {

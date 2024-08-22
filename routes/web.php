@@ -93,7 +93,7 @@ Route::middleware('auth')->group(function () {
     Route::post('/menu-status', [MenuController::class, 'menuStatus'])->name('menu.status');
 
     Route::resource('/submenu', SubMenuController::class);
-    Route::post('/submenu-status', [SubMenuController::class, 'subSenuStatus'])->name('submenu.status');
+    Route::post('/submenu-status', [SubMenuController::class, 'subMenuStatus'])->name('submenu.status');
     Route::post('/fetch-subcategory/{id}', [SubMenuController::class, 'fetchsubcategory']);
     Route::get('/getSubcategories/{categoryId}', [SubMenuController::class, 'getSubcategories']);
     Route::get('/getMenus/{subcategoryId}', [SubMenuController::class, 'getMenus']);

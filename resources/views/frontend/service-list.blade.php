@@ -25,9 +25,9 @@
             <div class="slider-wrapper">
                 <div class="slider">
                     {{-- {{ dd($subcategories) }} --}}
-                    @foreach ($subcategories as $subcategory)
+                    @foreach ($menus as $subcategory)
                         <div class="slide">
-                            <a href=""><img src="{{ Storage::url('icon/' . $subcategory->icon) }}"
+                            <a href=""><img src="{{ Storage::url('menu/' . $subcategory->image ??'') }}"
                                     alt="Quick Booking"><span>{{ $subcategory->name ?? '' }}</span></a>
                         </div>
                     @endforeach
@@ -236,20 +236,6 @@
                                     </select>
                                 </div>
                             </div>
-                            {{-- <div class="grid-listview">
-                                <ul>
-                                    <li>
-                                        <a href="service-grid.html">
-                                            <i class="feather-grid"></i>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="service-list.html" class="active">
-                                            <i class="feather-list"></i>
-                                        </a>
-                                    </li>
-                                </ul>
-                            </div> --}}
                         </div>
                     </div>
                     <div class="row">

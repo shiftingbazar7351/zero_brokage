@@ -9,7 +9,7 @@
         <h4> Create Vendor</h4>
     </div>
     <div class="container mt-4 border p-5 rounded shadow">
-        <form>
+        <form id="addCategoryModal" action="{{ route('vendors.store') }}" method="POST"  enctype="multipart/form-data" >
             <div class="row mx-auto">
                 <div class="col-2">
                    <label for="formManager" class="form-label">Manager</label>
@@ -83,7 +83,7 @@
                 <div class="col-4">
                     <label for="pinnumber" class="form-label">PIN Code</label>
                     <input id="pinnumber" class="form-control bg-light-subtle" type="text"
-                        placeholder="PIN code number" maxlength="6" onkeyup="validateField(this)" aria-label="default input example" required>
+                        placeholder="PIN code number" maxlength="6"  aria-label="default input example" required>
                     <div id="pinnumberError" class="errorMessage text-danger"></div>
                 </div>
             </div>
@@ -101,7 +101,7 @@
                     <label for="emailAddressVender" class="form-label">Email Address</label>
                     <input class="form-control bg-light-subtle" id="emailAddressVender" type="text"
                         placeholder="Email address" aria-label="default input example"
-                        onkeyup="validateField(this)">
+                        >
                     <div id="emailError" class="text-danger"></div>
                 </div>
 
@@ -112,7 +112,7 @@
                         checked>
                     <input class="form-control bg-light-subtle" id="whatsappNumVender" type="text"
                         placeholder="Whatsapp number" aria-label="default input example"
-                        onkeyup="validateField(this)" maxlength="10">
+                         maxlength="10">
                     <div id="whatsappError" class="text-danger"></div>
                 </div>
                 <div class="col-4">
@@ -122,7 +122,7 @@
                         checked>
                     <input class="form-control bg-light-subtle" id="phoneNumVender" type="text"
                         placeholder="Phone number" aria-label="default input example"
-                        onkeyup="validateField(this)" maxlength="10" required>
+                         maxlength="10" required>
                     <div id="phoneError" class="text-danger"></div>
                 </div>
             </div>
@@ -145,7 +145,7 @@
                 </div>
 
                 <div class="col-4">
-                    <label for="formFile" class="form-label">Choose vehicle type</label>
+                    <label for="formFile" class="form-label">Select Sub-menu</label>
                     <select class="form-select bg-light-subtle" aria-label="Default select example"
                         style="box-shadow: none">
                         <option selected>Own</option>
@@ -181,7 +181,7 @@
                 <div class="col-3">
                     <label for="gstNumber" class="form-label">GST Number</label>
                     <input class="form-control bg-light-subtle" id="gstNumber" type="text"
-                        placeholder="GST number" aria-label="default input example" onkeyup="validateField(this)"
+                        placeholder="GST number" aria-label="default input example" 
                         maxlength="15">
                     <div id="gstError" class="text-danger"></div>
                 </div>
@@ -195,14 +195,14 @@
                     <label for="panCard" class="form-label">PAN Card Number</label>
                     <input class="form-control bg-light-subtle" id="panCard" type="text"
                         placeholder="PAN Card number" aria-label="default input example"
-                        onkeyup="validateField(this)" maxlength="10">
+                         maxlength="10">
                     <div id="panError" class="text-danger"></div>
                 </div>
             </div>
             <div class="row mt-3">
                 <div class="col-3">
                     <label for="adharvender" class="form-label">Adhar Number</label>
-                    <input class="form-control bg-light-subtle" id="adharvender" onkeyup="validateField(this)"
+                    <input class="form-control bg-light-subtle" id="adharvender" 
                         type="text" placeholder="Adhar Number" aria-label="default input example"
                         maxlength="12" required>
                     <div id="adharError" class="text-danger"></div>
@@ -255,7 +255,7 @@
 @endsection
 
 @section('scripts')
-<script src="{{ asset('assets/js/vendor-validation.js') }}"></script>
+{{-- <script src="{{ asset('assets/js/vendor-validation.js') }}"></script> --}}
 
 <script data-cfasync="false" src="../../cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script>
 <script src="assets/js/jquery-3.7.0.min.js" type="d201ebf644b4d6dc0fc8d5c5-text/javascript"></script>

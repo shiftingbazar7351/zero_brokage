@@ -1,6 +1,10 @@
 <?php
 
 namespace App\Http\Controllers;
+use App\Models\Menu;
+use App\Models\Vendor;
+use App\Models\ServiceDetail;
+use App\Models\SubCategory;
 
 use Illuminate\Http\Request;
 
@@ -34,7 +38,14 @@ class VendorController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validatedData = $request->validate([
+            // 'subcategory_id' => 'required|string',
+            // 'description' => 'required|string',
+            // 'summery' => 'nullable',
+        ]);
+        Vendor::create($validatedData);
+
+        return redirect(route('vendors.index'))->with('success', 'Vendor Created Successfully!');
     }
 
     /**

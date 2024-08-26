@@ -27,15 +27,12 @@ class FrontendController extends Controller
         if (!$subcategory) {
             abort(404, 'Category not found');
         }
-        $submenus = SubMenu::with([
-            'category' => function ($query) {
-                $query->select('id', 'name');
-            },
-        ])
-            ->where('subcategory_id', $subcategory->id) // Filter by category_id
-            ->where('status', 1)
+
+
+        $submenus = SubMenu::with(['subCategory', 'menu'])
+            ->where('subcategory_id', $subcategory->id ?? '')->where('status', 1)
             ->orderByDesc('created_at')
-            ->select('id', 'name', 'image', 'slug', 'total_price', 'discounted_price', 'discount', 'category_id')
+            ->select('id', 'name', 'image', 'slug', 'total_price', 'discounted_price', 'discount', 'subcategory_id', 'menu_id')
             ->get();
         return view('frontend.service-list', compact('submenus', 'subcategory', 'menus'));
     }

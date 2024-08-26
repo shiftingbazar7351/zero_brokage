@@ -248,28 +248,27 @@
                                             <img class="img-fluid serv-img" alt="Service Image"
                                                 src="{{ asset('storage/submenu/' . $menu->image ?? '') }}">
                                         </a>
-                                        <div class="fav-item">
+                                        {{-- <div class="fav-item">
                                             <a href="javascript:void(0)" class="fav-icon">
                                                 <i class="feather-heart"></i>
                                             </a>
-                                        </div>
+                                        </div> --}}
                                     </div>
                                     <div class="service-cont-info">
-                                        <span class="item-cat">Car Wash</span>
+                                        <span class="item-cat">{{ $menu->menu->name ??'' }}</span>
                                         <h5 class="title">
-                                            <a href="service-details.html">Car Repair Services</a>
+                                            <a href="service-details.html">{{ $menu->name ??'' }}</a>
                                         </h5>
                                         <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. At, quisquam.</p>
-                                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. At, quisquam.</p>
-                                        <a href="" class="text-primary">Read more </a>
+                                        {{-- <a href="" class="text-primary">Read more </a> --}}
                                         <div class="service-pro-img d-flex gap-4">
-                                            <p><i class="feather-map-pin"></i>Maryland City, MD, USA</p>
-                                            <span><i class="fas fa-star filled"></i>4.9</span>
+                                            <p><i class="feather-map-pin"></i>{{ $menu->city_id ??'' }}</p>
+                                            {{-- <span><i class="fas fa-star filled"></i>4.9</span> --}}
                                         </div>
                                     </div>
                                 </div>
                                 <div class="service-action">
-                                    <h6>&#8377;25.00<span class="old-price">&#8377;35.00</span></h6>
+                                    <h6>&#8377;{{ $menu->discounted_price ??'' }}<span class="old-price">&#8377; {{ $menu->total_price ??'' }}</span></h6>
                                     <a class="btn btn-secondary book-Now-btn">Book Now</a>
                                 </div>
                             </div>

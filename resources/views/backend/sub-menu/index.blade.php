@@ -777,7 +777,7 @@
             $('#editCategoryForm').on('submit', function(e) {
                 e.preventDefault();
 
-                let id = $('#editCategoryId').val();
+                let id = $('#editSubmenuId').val();
                 let formData = new FormData(this);
 
                 $.ajax({

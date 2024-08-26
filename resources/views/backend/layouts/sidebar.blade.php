@@ -95,6 +95,33 @@
                     </ul>
                 </li>
 
+                <li class="vendor">
+                    <a href="javascript:void(0);"><i class="fe fe-briefcase"></i>
+                        <span>Vendors</span>
+                        <span class="menu-arrow"><i class="fe fe-chevron-right"></i></span>
+                    </a>
+                    <ul>
+                        <li>
+                            <a href="{{ route('vendors.index') }}" class="{{ Route::currentRouteName() === 'vendors.index' ? 'active' : '' }}">
+                                <i class="fe fe-file-text"></i>
+                                <span>Services</span>
+                            </a>
+                        </li>
+                        {{-- <li>
+                            <a href="{{ route('meta-url.index') }}" class="{{ Route::currentRouteName() === 'meta-url.index' ? 'active' : '' }}">
+                                <i class="fe fe-file-text"></i>
+                                <span>Meta Url</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{{ route('meta-title.index') }}" class="{{ Route::currentRouteName() === 'meta-title.index' ? 'active' : '' }}">
+                                <i class="fe fe-file-text"></i>
+                                <span>Meta Title</span>
+                            </a>
+                        </li> --}}
+                    </ul>
+                </li>
+
             </ul>
         </div>
     </div>

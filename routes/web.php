@@ -58,6 +58,14 @@ Route::get('/services-in-india', function () {
     return view('frontend.services-in-india');
 })->name('services-in-india');
 
+Route::get('/create-vendor', function () {
+    return view('frontend.create-vendor');
+})->name('create-vendor');
+
+Route::get('/vender-profile', function () {
+    return view('frontend.vender-profile');
+})->name('vender-profile');
+
 Route::get('/service-list', [FrontendController::class, 'serviceList'])->name('service-list');
 
 

@@ -27,8 +27,6 @@ class FrontendController extends Controller
         if (!$subcategory) {
             abort(404, 'Category not found');
         }
-
-
         $submenus = SubMenu::with(['subCategory', 'menu'])
             ->where('subcategory_id', $subcategory->id ?? '')->where('status', 1)
             ->orderByDesc('created_at')

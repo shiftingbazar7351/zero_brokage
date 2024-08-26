@@ -264,6 +264,7 @@
                                         <div class="service-pro-img d-flex gap-4">
                                             <p><i class="feather-map-pin"></i>{{ $menu->city_id ??'' }}</p>
                                             {{-- <span><i class="fas fa-star filled"></i>4.9</span> --}}
+                                            {{-- {{ dd($menu) }} --}}
                                         </div>
                                     </div>
                                 </div>

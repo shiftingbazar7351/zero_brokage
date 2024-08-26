@@ -41,84 +41,14 @@
         <div class="wrapper">
             <i id="left" class="fa-solid fas fa-angle-left"></i>
             <ul class="carousel">
+                @foreach ($menus as $menu)
                 <li class="card">
                     <div class="img">
-                        <img src="assets/img/services/service-01.jpg" alt="" draggable="false" />
+                        <img src="{{ Storage::url('menu/' . $menu->image ??'') }}" alt="" draggable="false" />
                     </div>
-                    <h5 style="font-weight: bold" class="pt-1">SERVICES</h5>
+                    <h5 style="font-weight: bold" class="pt-1">{{ $menu->name ??'' }}</h5>
                 </li>
-                <li class="card">
-                    <div class="img">
-                        <img src="assets/img/services/service-01.jpg" alt="" draggable="false" />
-                    </div>
-                    <h5 style="font-weight: bold" class="pt-1">SERVICES</h5>
-                </li>
-                <li class="card">
-                    <div class="img">
-                        <img src="assets/img/services/service-01.jpg" alt="" draggable="false" />
-                    </div>
-                    <h5 style="font-weight: bold" class="pt-1">SERVICES</h5>
-                </li>
-                <li class="card">
-                    <div class="img">
-                        <img src="assets/img/services/service-01.jpg" alt="" draggable="false" />
-                    </div>
-                    <h5 style="font-weight: bold" class="pt-1">SERVICES</h5>
-                </li>
-                <li class="card">
-                    <div class="img">
-                        <img src="assets/img/services/service-01.jpg" alt="" draggable="false" />
-                    </div>
-                    <h5 style="font-weight: bold" class="pt-1">SERVICES</h5>
-                </li>
-                <li class="card">
-                    <div class="img">
-                        <img src="assets/img/services/service-01.jpg" alt="" draggable="false" />
-                    </div>
-                    <h5 style="font-weight: bold" class="pt-1">SERVICES</h5>
-                </li>
-                <li class="card">
-                    <div class="img">
-                        <img src="assets/img/services/service-01.jpg" alt="" draggable="false" />
-                    </div>
-                    <h5 style="font-weight: bold" class="pt-1">SERVICES</h5>
-                </li>
-                <li class="card">
-                    <div class="img">
-                        <img src="assets/img/services/service-01.jpg" alt="" draggable="false" />
-                    </div>
-                    <h5 style="font-weight: bold" class="pt-1">SERVICES</h5>
-                </li>
-                <li class="card">
-                    <div class="img">
-                        <img src="assets/img/services/service-01.jpg" alt="" draggable="false" />
-                    </div>
-                    <h5 style="font-weight: bold" class="pt-1">SERVICES</h5>
-                </li>
-                <li class="card">
-                    <div class="img">
-                        <img src="assets/img/services/service-01.jpg" alt="" draggable="false" />
-                    </div>
-                    <h5 style="font-weight: bold" class="pt-1">SERVICES</h5>
-                </li>
-                <li class="card">
-                    <div class="img">
-                        <img src="assets/img/services/service-01.jpg" alt="" draggable="false" />
-                    </div>
-                    <h5 style="font-weight: bold" class="pt-1">SERVICES</h5>
-                </li>
-                <li class="card">
-                    <div class="img">
-                        <img src="assets/img/services/service-01.jpg" alt="" draggable="false" />
-                    </div>
-                    <h5 style="font-weight: bold" class="pt-1">SERVICES</h5>
-                </li>
-                <li class="card">
-                    <div class="img">
-                        <img src="assets/img/services/service-01.jpg" alt="" draggable="false" />
-                    </div>
-                    <h5 style="font-weight: bold" class="pt-1">SERVICES</h5>
-                </li>
+                @endforeach
             </ul>
             <i id="right" class="fa-solid fas fa-angle-right"></i>
         </div>
@@ -311,7 +241,7 @@
                     <div class="row sorting-div">
                         <div class="col-lg-4 col-sm-12 ">
                             <div class="count-search">
-                                <h6>Found 6 Services</h6>
+                                <h6>Found {{ count($menus) }} Services</h6>
                             </div>
                         </div>
                         <div class="col-lg-8 col-sm-12 d-flex justify-content-end ">
@@ -328,74 +258,42 @@
                     </div>
                     <div class="row">
                         <div class="col-md-12">
-
+                            @foreach ($submenus as $menu)
                             <div class="service-list">
                                 <div class="service-cont">
                                     <div class="service-cont-img">
                                         <a href="service-details.html">
                                             <img class="img-fluid serv-img" alt="Service Image"
-                                                src="assets/img/services/service-04.jpg">
+                                                src="{{ asset('storage/submenu/' . $menu->image ?? '') }}">
                                         </a>
-                                        <div class="fav-item">
+                                        {{-- <div class="fav-item">
                                             <a href="javascript:void(0)" class="fav-icon">
                                                 <i class="feather-heart"></i>
                                             </a>
-                                        </div>
+                                        </div> --}}
                                     </div>
                                     <div class="service-cont-info">
-                                        <span class="item-cat">Car Wash</span>
+                                        <span class="item-cat">{{ $menu->menu->name ??'' }}</span>
                                         <h5 class="title">
-                                            <a href="service-details.html">Car Repair Services</a>
+                                            <a href="service-details.html">{{ $menu->name ??'' }}</a>
                                         </h5>
-                                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. At, quisquam.</p>
-                                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. At, quisquam.</p>
-
-                                        <a href="" class="text-primary text-decoration-underline"
-                                            data-bs-toggle="modal" data-bs-target="#exampleModal">View Details </a>
-
-                                        <div class="modal fade " id="exampleModal" tabindex="-1"
-                                            aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                            <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
-                                                <div class="modal-content">
-                                                    <div class="modal-header">
-                                                        <h5 class="modal-title" id="exampleModalLabel">Service Details
-                                                        </h5>
-                                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                                            aria-label="Close"></button>
-                                                    </div>
-                                                    <div class="modal-body">
-                                                        <h5>Included</h5>
-                                                        <p class="mb-2">Lorem ipsum dolor sit amet consectetur
-                                                            adipisicing elit. Optio, ad?</p>
-                                                        <h5>Excluded</h5>
-                                                        <p class="mb-2">Lorem ipsum dolor sit amet consectetur
-                                                            adipisicing elit. Optio, ad?</p>
-                                                        <h5>Topic</h5>
-                                                        <p class="mb-2">Lorem ipsum dolor sit amet consectetur
-                                                            adipisicing elit. Optio, ad?</p>
-                                                        <h5>Frequently asked question</h5>
-                                                        <p class="mb-2">Lorem ipsum dolor sit amet consectetur
-                                                            adipisicing elit. Optio, ad?</p>
-                                                        <p class="mb-2">Lorem ipsum dolor sit amet consectetur
-                                                            adipisicing elit. Optio, ad?</p>
-                                                        <p class="mb-2">Lorem ipsum dolor sit amet consectetur
-                                                            adipisicing elit. Optio, ad?</p>
-                                                    </div>
-
-                                                </div>
-                                            </div>
-                                        </div>
+                                        <p>{{ $menu->description ??'' }}</p>
+                                        {{-- <a href="" class="text-primary">Read more </a> --}}
                                         <div class="service-pro-img d-flex gap-4">
-                                            <p><i class="feather-map-pin"></i>Maryland City, MD, USA</p>
-                                            <span><i class="fas fa-star filled"></i>4.9</span>
+                                            <p><i class="feather-map-pin"></i>
+                                                {{ ucwords($menu->cityName->name ?? '') }},
+                                                {{ ucwords($states->s ?? '') }}
+                                            </p>
                                         </div>
+
                                     </div>
                                 </div>
                                 <div class="service-action">
-                                    <h6>&#8377;25.00<span class="old-price">&#8377;35.00</span></h6>
+                                    <h6>&#8377;{{ $menu->discounted_price ??'' }}<span class="old-price">&#8377; {{ $menu->total_price ??'' }}</span></h6>
                                     <a class="btn btn-secondary book-Now-btn">Book Now</a>
                                 </div>
                             </div>
+                            @endforeach
                             <div id="myPopup-booking1" class="popup">
                                 <div class="popup-content" style="width:36%">
                                     <span class="close" id="closePopup-booking1">&times;</span>
@@ -492,214 +390,10 @@
                                     </div>
                                 </div>
                             </div>
-
-
-                            <div class="service-list">
-                                <div class="service-cont">
-                                    <div class="service-cont-img">
-                                        <a href="service-details.html">
-                                            <img class="img-fluid serv-img" alt="Service Image"
-                                                src="assets/img/services/service-04.jpg">
-                                        </a>
-                                        <div class="fav-item">
-                                            <a href="javascript:void(0)" class="fav-icon">
-                                                <i class="feather-heart"></i>
-                                            </a>
-                                        </div>
-                                    </div>
-                                    <div class="service-cont-info">
-                                        <span class="item-cat">Car Wash</span>
-                                        <h5 class="title">
-                                            <a href="service-details.html">Car Repair Services</a>
-                                        </h5>
-                                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. At, quisquam.</p>
-                                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. At, quisquam.</p>
-                                        <a href="" class="text-primary text-decoration-underline"
-                                            data-bs-toggle="modal" data-bs-target="#exampleModal">View Details </a>
-
-                                        <div class="modal fade" id="exampleModal" tabindex="-1"
-                                            aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                            <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
-                                                <div class="modal-content">
-                                                    <div class="modal-header">
-                                                        <h5 class="modal-title" id="exampleModalLabel">Service Details
-                                                        </h5>
-                                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                                            aria-label="Close"></button>
-                                                    </div>
-                                                    <div class="modal-body">
-                                                        <h5>Included</h5>
-                                                        <p class="mb-2">Lorem ipsum dolor sit amet consectetur
-                                                            adipisicing elit. Optio, ad?</p>
-                                                        <h5>Excluded</h5>
-                                                        <p class="mb-2">Lorem ipsum dolor sit amet consectetur
-                                                            adipisicing elit. Optio, ad?</p>
-                                                        <h5>Topic</h5>
-                                                        <p class="mb-2">Lorem ipsum dolor sit amet consectetur
-                                                            adipisicing elit. Optio, ad?</p>
-                                                        <h5>Frequently asked question</h5>
-                                                        <p class="mb-2">Lorem ipsum dolor sit amet consectetur
-                                                            adipisicing elit. Optio, ad?</p>
-                                                        <p class="mb-2">Lorem ipsum dolor sit amet consectetur
-                                                            adipisicing elit. Optio, ad?</p>
-                                                        <p class="mb-2">Lorem ipsum dolor sit amet consectetur
-                                                            adipisicing elit. Optio, ad?</p>
-                                                    </div>
-
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="service-pro-img d-flex gap-4">
-                                            <p><i class="feather-map-pin"></i>Maryland City, MD, USA</p>
-                                            <span><i class="fas fa-star filled"></i>4.9</span>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="service-action">
-                                    <h6>&#8377;25.00<span class="old-price">&#8377;35.00</span></h6>
-                                    <a class="btn btn-secondary book-Now-btn">Book Now</a>
-                                </div>
-                            </div>
-
-                            <div class="service-list">
-                                <div class="service-cont">
-                                    <div class="service-cont-img">
-                                        <a href="service-details.html">
-                                            <img class="img-fluid serv-img" alt="Service Image"
-                                                src="assets/img/services/service-04.jpg">
-                                        </a>
-                                        <div class="fav-item">
-                                            <a href="javascript:void(0)" class="fav-icon">
-                                                <i class="feather-heart"></i>
-                                            </a>
-                                        </div>
-                                    </div>
-                                    <div class="service-cont-info">
-                                        <span class="item-cat">Car Wash</span>
-                                        <h5 class="title">
-                                            <a href="service-details.html">Car Repair Services</a>
-                                        </h5>
-                                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. At, quisquam.</p>
-                                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. At, quisquam.</p>
-                                        <a href="" class="text-primary text-decoration-underline">View Details </a>
-                                        <div class="service-pro-img d-flex gap-4">
-                                            <p><i class="feather-map-pin"></i>Maryland City, MD, USA</p>
-                                            <span><i class="fas fa-star filled"></i>4.9</span>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="service-action">
-                                    <h6>&#8377;25.00<span class="old-price">&#8377;35.00</span></h6>
-                                    <a href="booking.html" class="btn btn-secondary">Book Now</a>
-                                </div>
-                            </div>
-
-
-                            <div class="service-list">
-                                <div class="service-cont">
-                                    <div class="service-cont-img">
-                                        <a href="service-details.html">
-                                            <img class="img-fluid serv-img" alt="Service Image"
-                                                src="assets/img/services/service-04.jpg">
-                                        </a>
-                                        <div class="fav-item">
-                                            <a href="javascript:void(0)" class="fav-icon">
-                                                <i class="feather-heart"></i>
-                                            </a>
-                                        </div>
-                                    </div>
-                                    <div class="service-cont-info">
-                                        <span class="item-cat">Car Wash</span>
-                                        <h5 class="title">
-                                            <a href="service-details.html">Car Repair Services</a>
-                                        </h5>
-                                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. At, quisquam.</p>
-                                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. At, quisquam.</p>
-                                        <a href="" class="text-primary">View Details</a>
-                                        <div class="service-pro-img d-flex gap-4">
-                                            <p><i class="feather-map-pin"></i>Maryland City, MD, USA</p>
-                                            <span><i class="fas fa-star filled"></i>4.9</span>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="service-action">
-                                    <h6>25.00<span class="old-price">35.00</span></h6>
-                                    <a href="booking.html" class="btn btn-secondary">Book Now</a>
-                                </div>
-                            </div>
-
-
-                            <div class="service-list">
-                                <div class="service-cont">
-                                    <div class="service-cont-img">
-                                        <a href="service-details.html">
-                                            <img class="img-fluid serv-img" alt="Service Image"
-                                                src="assets/img/services/service-04.jpg">
-                                        </a>
-                                        <div class="fav-item">
-                                            <a href="javascript:void(0)" class="fav-icon">
-                                                <i class="feather-heart"></i>
-                                            </a>
-                                        </div>
-                                    </div>
-                                    <div class="service-cont-info">
-                                        <span class="item-cat">Car Wash</span>
-                                        <h5 class="title">
-                                            <a href="service-details.html">Car Repair Services</a>
-                                        </h5>
-                                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. At, quisquam.</p>
-                                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. At, quisquam.</p>
-                                        <a href="" class="text-primary">View Details </a>
-                                        <div class="service-pro-img d-flex gap-4">
-                                            <p><i class="feather-map-pin"></i>Maryland City, MD, USA</p>
-                                            <span><i class="fas fa-star filled"></i>4.9</span>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="service-action">
-                                    <h6>25.00<span class="old-price">35.00</span></h6>
-                                    <a href="booking.html" class="btn btn-secondary">Book Now</a>
-                                </div>
-                            </div>
-
-
-                            <div class="service-list">
-                                <div class="service-cont">
-                                    <div class="service-cont-img">
-                                        <a href="service-details.html">
-                                            <img class="img-fluid serv-img" alt="Service Image"
-                                                src="assets/img/services/service-04.jpg">
-                                        </a>
-                                        <div class="fav-item">
-                                            <a href="javascript:void(0)" class="fav-icon">
-                                                <i class="feather-heart"></i>
-                                            </a>
-                                        </div>
-                                    </div>
-                                    <div class="service-cont-info">
-                                        <span class="item-cat">Car Wash</span>
-                                        <h5 class="title">
-                                            <a href="service-details.html">Car Repair Services</a>
-                                        </h5>
-                                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. At, quisquam.</p>
-                                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. At, quisquam.</p>
-                                        <a href="" class="text-primary">View Details </a>
-                                        <div class="service-pro-img d-flex gap-4">
-                                            <p><i class="feather-map-pin"></i>Maryland City, MD, USA</p>
-                                            <span><i class="fas fa-star filled"></i>4.9</span>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="service-action">
-                                    <h6>25.00<span class="old-price">35.00</span></h6>
-                                    <a href="booking.html" class="btn btn-secondary">Book Now</a>
-                                </div>
-                            </div>
-
                         </div>
                     </div>
 
-                    <div class="row">
+                    {{-- <div class="row">
                         <div class="col-sm-12">
                             <div class="blog-pagination rev-page">
                                 <nav>
@@ -725,7 +419,7 @@
                                 </nav>
                             </div>
                         </div>
-                    </div>
+                    </div> --}}
 
                 </div>
 

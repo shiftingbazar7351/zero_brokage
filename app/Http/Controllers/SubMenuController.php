@@ -86,6 +86,7 @@ class SubMenuController extends Controller
         $subcategory->subcategory_id = $request->subcategory_id;
         $subcategory->menu_id = $request->menu;
         $subcategory->city_id =$request->city;
+        $subcategory->description =$request->description;
         $subcategory->slug = generateSlug($request->name);
         $subcategory->total_price = $request->total_price;
         $subcategory->discount =  $request->discount;
@@ -97,7 +98,7 @@ class SubMenuController extends Controller
         }
 
         $subcategory->save();
-        return response()->json(['success' => true, 'message' => 'Sub-Menu added successfully!']);  
+        return response()->json(['success' => true, 'message' => 'Sub-Menu added successfully!']);
         // return redirect()->back()->with('success', 'Sub-menu created successfully.');
     }
 
@@ -117,10 +118,10 @@ class SubMenuController extends Controller
             'data' => $submenu,
         ]);
         // return response()->json(['submenu' => $submenu]);
-    
+
     }
-    
-    
+
+
 
     /**
      * Update the specified resource in storage.
@@ -181,16 +182,16 @@ class SubMenuController extends Controller
         {
                 try {
                     $submenu = SubMenu::findOrFail($id);
-        
+
                 $img = $submenu->image;
                 $submenu->forceDelete();
                 if ($img) {
                 $this->fileUploadService->removeImage('submenu/', $img);
                 }
-        
+
                 $submenu->delete();
                 return redirect()->back()->with('success', 'Menu Deleted.');
-        
+
                 } catch (Exception $e) {
                     return redirect()->back()->with('error', 'Something went wrong');
                 }
@@ -252,5 +253,5 @@ class SubMenuController extends Controller
             'data' => $menus
         ]);
     }
-    
+
 }

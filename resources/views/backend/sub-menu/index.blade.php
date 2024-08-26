@@ -204,6 +204,12 @@
                             </div>
                             <div id="image-error" class="text-danger"></div>
                         </div>
+                        <div class="form-group">
+                            <label for="description">Description</label>
+                            <textarea type="text" class="form-control" id="description" name="description"
+                                placeholder="Enter Ammount"></textarea>
+                            <div id="description-error" class="text-danger"></div>
+                        </div>
                         <button type="submit" class="btn btn-primary">Save</button>
                     </form>
                 </div>
@@ -335,6 +341,12 @@
                             </div>
                             <div id="image-error" class="text-danger"></div>
                         </div>
+                        <div class="form-group">
+                            <label for="description">Description</label>
+                            <textarea type="text" class="form-control" id="edit-description" name="description"
+                                placeholder="Enter Ammount"></textarea>
+                            <div id="description-error" class="text-danger"></div>
+                        </div>
 
                         <!-- Submit Button -->
                         <button type="submit" class="btn btn-primary">Save Changes</button>
@@ -367,6 +379,7 @@
                 var city = button.data('city');
                 var price = button.data('price');
                 var discount = button.data('discount');
+                var description = button.data('description');
                 var image = button.data('image');
 
                 // Update the modal's form action
@@ -435,6 +448,7 @@
                         $('#discount-error').text('');
                         $('#final_price-error').text('');
                         $('#image-error').text('');
+                        $('#description-error').text('');
 
                         // Display new error messages
                         if (xhr.responseJSON.errors) {
@@ -460,6 +474,9 @@
                                 .discounted_price[0] : '');
                             $('#image-error').text(xhr.responseJSON.errors.image ? xhr
                                 .responseJSON.errors.image[0] : '');
+                                $('#description_error').text(xhr.responseJSON.errors.description ? xhr
+                                .responseJSON.errors.description[0] : '');
+
                         }
                     }
                 });

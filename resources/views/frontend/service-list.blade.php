@@ -241,7 +241,7 @@
                     <div class="row sorting-div">
                         <div class="col-lg-4 col-sm-12 ">
                             <div class="count-search">
-                                <h6>Found 6 Services</h6>
+                                <h6>Found {{ count($menus) }} Services</h6>
                             </div>
                         </div>
                         <div class="col-lg-8 col-sm-12 d-flex justify-content-end ">
@@ -277,13 +277,15 @@
                                         <h5 class="title">
                                             <a href="service-details.html">{{ $menu->name ??'' }}</a>
                                         </h5>
-                                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. At, quisquam.</p>
+                                        <p>{{ $menu->description ??'' }}</p>
                                         {{-- <a href="" class="text-primary">Read more </a> --}}
                                         <div class="service-pro-img d-flex gap-4">
-                                            <p><i class="feather-map-pin"></i>{{ ucwords($menu->cityName->name) ??'' }}</p>
-                                            {{-- <span><i class="fas fa-star filled"></i>4.9</span> --}}
-                                            {{-- {{ dd($menu) }} --}}
+                                            <p><i class="feather-map-pin"></i>
+                                                {{ ucwords($menu->cityName->name ?? '') }},
+                                                {{ ucwords($states->s ?? '') }}
+                                            </p>
                                         </div>
+
                                     </div>
                                 </div>
                                 <div class="service-action">

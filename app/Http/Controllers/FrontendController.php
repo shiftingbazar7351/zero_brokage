@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\Category;
+use App\Models\City;
 use App\Models\Menu;
 use App\Models\ServiceDetail;
+use App\Models\State;
 use App\Models\SubCategory;
 use App\Models\SubMenu;
 
@@ -22,21 +24,30 @@ class FrontendController extends Controller
 
     public function subCategory($slug)
     {
-         $menus = Menu::select('id','name','image','slug','category_id','subcategory_id')->where('status',1)->get();
+        $menus = Menu::select('id', 'name', 'image', 'slug', 'category_id', 'subcategory_id')->where('status', 1)->get();
         $subcategory = SubCategory::where('slug', $slug)->select('id', 'slug', 'name', 'background_image')->first();
         if (!$subcategory) {
             abort(404, 'Category not found');
         }
         $submenus = SubMenu::with(['subCategory', 'menu'])
-            ->where('subcategory_id', $subcategory->id ?? '')->where('status', 1)
+            ->where('subcategory_id', $subcategory->id ?? '')
+            ->where('status', 1)
             ->orderByDesc('created_at')
-            ->select('id', 'name', 'image', 'slug', 'total_price', 'discounted_price', 'discount', 'subcategory_id', 'menu_id','city_id')
+            ->select('id', 'name', 'image', 'slug', 'total_price', 'discounted_price', 'discount', 'subcategory_id', 'menu_id', 'city_id')
             ->get();
+
+
+        foreach ($submenus as $submenu) {
+            $city = City::find($submenu->city_id);
+        }
+
+        $states = State::where('status', 'active')
+        ->where('id',$city->state_id)
+        ->get();
         return view('frontend.service-list', compact('submenus', 'subcategory', 'menus'));
     }
     public function serviceDetails()
     {
-        // $menus = Menu::where('status', 1)->orderByDesc('created_at')->get();
         $subcategories = SubCategory::orderByDesc('created_at')->get();
         $categories = Category::orderByDesc('created_at')->get();
         $services = ServiceDetail::orderByDesc('created_at')->first();

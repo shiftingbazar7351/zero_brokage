@@ -22,7 +22,7 @@ class FrontendController extends Controller
 
     public function subCategory($slug)
     {
-        $menus = Menu::get();
+         $menus = Menu::select('id','name','image','slug','category_id','subcategory_id')->where('status',1)->get();
         $subcategory = SubCategory::where('slug', $slug)->select('id', 'slug', 'name', 'background_image')->first();
         if (!$subcategory) {
             abort(404, 'Category not found');
@@ -30,7 +30,7 @@ class FrontendController extends Controller
         $submenus = SubMenu::with(['subCategory', 'menu'])
             ->where('subcategory_id', $subcategory->id ?? '')->where('status', 1)
             ->orderByDesc('created_at')
-            ->select('id', 'name', 'image', 'slug', 'total_price', 'discounted_price', 'discount', 'subcategory_id', 'menu_id')
+            ->select('id', 'name', 'image', 'slug', 'total_price', 'discounted_price', 'discount', 'subcategory_id', 'menu_id','city_id')
             ->get();
         return view('frontend.service-list', compact('submenus', 'subcategory', 'menus'));
     }

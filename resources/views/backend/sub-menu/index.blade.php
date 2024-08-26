@@ -561,7 +561,7 @@
                         }
                     });
                     $.ajax({
-                        
+
                         url: '/getMenus/' + subcategory_id,
                         type: 'GET',
                         success: function(response) {

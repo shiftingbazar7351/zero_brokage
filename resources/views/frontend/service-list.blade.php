@@ -1,42 +1,128 @@
 @extends('frontend.layouts.main')
 @section('content')
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/css/intlTelInput.min.css">
+    <div class="bg-img">
+        <img src="assets/img/bg/work-bg-03.png" alt="img" class="bgimg1">
+        <img src="assets/img/bg/work-bg-03.png" alt="img" class="bgimg2">
+        <img src="assets/img/bg/feature-bg-03.png" alt="img" class="bgimg3">
+    </div>
 
     <div class="breadcrumb-bar">
         <div class="container">
             <div class="row">
-                <div class="col-md-12 col-12">
-                    <h2 class="breadcrumb-title">Services</h2>
-                    <nav aria-label="breadcrumb" class="page-breadcrumb">
-                        <ol class="breadcrumb">
-                            <li class="breadcrumb-item"><a href="index.html">Home</a></li>
-                            <li class="breadcrumb-item active" aria-current="page">Service List</li>
-                        </ol>
-                    </nav>
-                </div>
-            </div>
-        </div>
-    </div>
+                <div class="col-md-12 col-12 text-start">
+                    <h1 class="breadcrumb-title">Best AC Services in Delhi, just start at @299</h1>
+                    <div>
 
+                        <ul class="text-light" style="list-style-type: disc; font-size:20px;">
+                            <li class="mb-2"> Door step repair in within 100 minutes</li>
+                            <li class="mb-2">Door step repair in within 100 minutes</li>
+                            <li class="mb-2">Door step repair in within 100 minutes</li>
+                        </ul>
 
-    <div class="row">
-        <div class="slider-container">
-            <button class="prev" onclick="slideLeft()">&#10094;</button>
-            <div class="slider-wrapper">
-                <div class="slider">
-                    {{-- {{ dd($subcategories) }} --}}
-                    @foreach ($menus as $subcategory)
-                        <div class="slide">
-                            <a href=""><img src="{{ Storage::url('menu/' . $subcategory->image ??'') }}"
-                                    alt="Quick Booking"><span>{{ $subcategory->name ?? '' }}</span></a>
                         </div>
-                    @endforeach
+                    </div>
+                    <div class="rating-img mt-4 d-flex align-items-center gap-3">
+                        <img src="{{ asset('assets/img/icons/stars.png') }}" style="width: 65px" alt=""> <span
+                            style="font-weight: bold; font-size: 2.9rem; color: #f0d32f;">
+                            4.5
+                        </span>
+                    </div>
+
                 </div>
             </div>
-            <button class="next" onclick="slideRight()">&#10095;</button>
         </div>
     </div>
 
+
+    {{-- .................................Slider...................................... --}}
+
+    <div class="row-check d-flex justify-content-center p-2">
+        <div class="wrapper">
+            <i id="left" class="fa-solid fas fa-angle-left"></i>
+            <ul class="carousel">
+                <li class="card">
+                    <div class="img">
+                        <img src="assets/img/services/service-01.jpg" alt="" draggable="false" />
+                    </div>
+                    <h5 style="font-weight: bold" class="pt-1">SERVICES</h5>
+                </li>
+                <li class="card">
+                    <div class="img">
+                        <img src="assets/img/services/service-01.jpg" alt="" draggable="false" />
+                    </div>
+                    <h5 style="font-weight: bold" class="pt-1">SERVICES</h5>
+                </li>
+                <li class="card">
+                    <div class="img">
+                        <img src="assets/img/services/service-01.jpg" alt="" draggable="false" />
+                    </div>
+                    <h5 style="font-weight: bold" class="pt-1">SERVICES</h5>
+                </li>
+                <li class="card">
+                    <div class="img">
+                        <img src="assets/img/services/service-01.jpg" alt="" draggable="false" />
+                    </div>
+                    <h5 style="font-weight: bold" class="pt-1">SERVICES</h5>
+                </li>
+                <li class="card">
+                    <div class="img">
+                        <img src="assets/img/services/service-01.jpg" alt="" draggable="false" />
+                    </div>
+                    <h5 style="font-weight: bold" class="pt-1">SERVICES</h5>
+                </li>
+                <li class="card">
+                    <div class="img">
+                        <img src="assets/img/services/service-01.jpg" alt="" draggable="false" />
+                    </div>
+                    <h5 style="font-weight: bold" class="pt-1">SERVICES</h5>
+                </li>
+                <li class="card">
+                    <div class="img">
+                        <img src="assets/img/services/service-01.jpg" alt="" draggable="false" />
+                    </div>
+                    <h5 style="font-weight: bold" class="pt-1">SERVICES</h5>
+                </li>
+                <li class="card">
+                    <div class="img">
+                        <img src="assets/img/services/service-01.jpg" alt="" draggable="false" />
+                    </div>
+                    <h5 style="font-weight: bold" class="pt-1">SERVICES</h5>
+                </li>
+                <li class="card">
+                    <div class="img">
+                        <img src="assets/img/services/service-01.jpg" alt="" draggable="false" />
+                    </div>
+                    <h5 style="font-weight: bold" class="pt-1">SERVICES</h5>
+                </li>
+                <li class="card">
+                    <div class="img">
+                        <img src="assets/img/services/service-01.jpg" alt="" draggable="false" />
+                    </div>
+                    <h5 style="font-weight: bold" class="pt-1">SERVICES</h5>
+                </li>
+                <li class="card">
+                    <div class="img">
+                        <img src="assets/img/services/service-01.jpg" alt="" draggable="false" />
+                    </div>
+                    <h5 style="font-weight: bold" class="pt-1">SERVICES</h5>
+                </li>
+                <li class="card">
+                    <div class="img">
+                        <img src="assets/img/services/service-01.jpg" alt="" draggable="false" />
+                    </div>
+                    <h5 style="font-weight: bold" class="pt-1">SERVICES</h5>
+                </li>
+                <li class="card">
+                    <div class="img">
+                        <img src="assets/img/services/service-01.jpg" alt="" draggable="false" />
+                    </div>
+                    <h5 style="font-weight: bold" class="pt-1">SERVICES</h5>
+                </li>
+            </ul>
+            <i id="right" class="fa-solid fas fa-angle-right"></i>
+        </div>
+    </div>
 
 
     <div class="content">
@@ -57,7 +143,8 @@
                         <div class="filter-content">
                             <h2>Location</h2>
                             <div class="group-img">
-                                <input type="text" class="form-control" placeholder="Select Location" id="location-val">
+                                <input type="text" class="form-control" placeholder="Select Location"
+                                    id="location-val">
                                 <i class="feather-map-pin"></i>
                             </div>
                         </div>
@@ -131,7 +218,7 @@
                                         <i class="feather-map-pin"></i>
                                     </div>
                                 </div> -->
-                        {{-- <div class="filter-content">
+                        <div class="filter-content">
                             <h2 class="mb-4">Price Range</h2>
                             <div class="filter-range">
                                 <input type="text" id="range_03">
@@ -139,7 +226,7 @@
                             <div class="filter-range-amount">
                                 <h5>Price: <span>$5 - $210</span></h5>
                             </div>
-                        </div> --}}
+                        </div>
                         <div class="filter-content">
                             <h2>By Rating <span><i class="feather-chevron-down"></i></span></h2>
                             <ul class="rating-set">
@@ -236,46 +323,81 @@
                                     </select>
                                 </div>
                             </div>
+
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-md-12">
-                            @foreach ($submenus as $menu)
+
                             <div class="service-list">
                                 <div class="service-cont">
                                     <div class="service-cont-img">
                                         <a href="service-details.html">
                                             <img class="img-fluid serv-img" alt="Service Image"
-                                                src="{{ asset('storage/submenu/' . $menu->image ?? '') }}">
+                                                src="assets/img/services/service-04.jpg">
                                         </a>
-                                        {{-- <div class="fav-item">
+                                        <div class="fav-item">
                                             <a href="javascript:void(0)" class="fav-icon">
                                                 <i class="feather-heart"></i>
                                             </a>
-                                        </div> --}}
+                                        </div>
                                     </div>
                                     <div class="service-cont-info">
-                                        <span class="item-cat">{{ $menu->menu->name ??'' }}</span>
+                                        <span class="item-cat">Car Wash</span>
                                         <h5 class="title">
-                                            <a href="service-details.html">{{ $menu->name ??'' }}</a>
+                                            <a href="service-details.html">Car Repair Services</a>
                                         </h5>
                                         <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. At, quisquam.</p>
-                                        {{-- <a href="" class="text-primary">Read more </a> --}}
+                                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. At, quisquam.</p>
+
+                                        <a href="" class="text-primary text-decoration-underline"
+                                            data-bs-toggle="modal" data-bs-target="#exampleModal">View Details </a>
+
+                                        <div class="modal fade " id="exampleModal" tabindex="-1"
+                                            aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                            <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h5 class="modal-title" id="exampleModalLabel">Service Details
+                                                        </h5>
+                                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                            aria-label="Close"></button>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        <h5>Included</h5>
+                                                        <p class="mb-2">Lorem ipsum dolor sit amet consectetur
+                                                            adipisicing elit. Optio, ad?</p>
+                                                        <h5>Excluded</h5>
+                                                        <p class="mb-2">Lorem ipsum dolor sit amet consectetur
+                                                            adipisicing elit. Optio, ad?</p>
+                                                        <h5>Topic</h5>
+                                                        <p class="mb-2">Lorem ipsum dolor sit amet consectetur
+                                                            adipisicing elit. Optio, ad?</p>
+                                                        <h5>Frequently asked question</h5>
+                                                        <p class="mb-2">Lorem ipsum dolor sit amet consectetur
+                                                            adipisicing elit. Optio, ad?</p>
+                                                        <p class="mb-2">Lorem ipsum dolor sit amet consectetur
+                                                            adipisicing elit. Optio, ad?</p>
+                                                        <p class="mb-2">Lorem ipsum dolor sit amet consectetur
+                                                            adipisicing elit. Optio, ad?</p>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                        </div>
                                         <div class="service-pro-img d-flex gap-4">
-                                            <p><i class="feather-map-pin"></i>{{ $menu->city_id ??'' }}</p>
-                                            {{-- <span><i class="fas fa-star filled"></i>4.9</span> --}}
-                                            {{-- {{ dd($menu) }} --}}
+                                            <p><i class="feather-map-pin"></i>Maryland City, MD, USA</p>
+                                            <span><i class="fas fa-star filled"></i>4.9</span>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="service-action">
-                                    <h6>&#8377;{{ $menu->discounted_price ??'' }}<span class="old-price">&#8377; {{ $menu->total_price ??'' }}</span></h6>
+                                    <h6>&#8377;25.00<span class="old-price">&#8377;35.00</span></h6>
                                     <a class="btn btn-secondary book-Now-btn">Book Now</a>
                                 </div>
                             </div>
-                            @endforeach
                             <div id="myPopup-booking1" class="popup">
-                                <div class="popup-content">
+                                <div class="popup-content" style="width:36%">
                                     <span class="close" id="closePopup-booking1">&times;</span>
                                     <h3>To Book a Service</h3>
                                     <img src="{{ asset('assets/img/icons/signup.png') }}" alt="">
@@ -285,47 +407,45 @@
                                         onkeyup="validateNumBookingg(this)" maxlength="10"
                                         placeholder="Enter Mobile Number" required>
                                     <div id="res-booking1"></div>
-                                    <button id="saveChanges-booking1" class="btn">Continue</button>
+                                    <button id="saveChanges-booking1" class="btn mb-4">Continue</button>
                                     {{-- <button id="closePopupBtn" class="btn">Close</button> --}}
-                                    <div class="term-condition">
+                                    {{-- <div class="term-condition">
                                         <input type="checkbox" class="checkbox" id="checkbox-login-booking1">
                                         <p>By Continuing, you agree to our <span class="term">Term and Condition</span>
                                         </p>
-                                    </div>
+                                    </div> --}}
                                 </div>
                             </div>
 
 
                             <div id="myPopup-booking" class="popup">
-                                <div class="popup-content">
+                                <div class="popup-content" style="width: 39%;">
                                     <span class="close" id="closePopup-booking">&times;</span>
                                     <h3>Enter Your Details</h3>
 
                                     <img src="{{ asset('assets/img/icons/write-icons.svg') }}" alt=""
-                                        width="75px">
-                                    <div class="row w-75 mx-auto detail-input">
+                                        width="75px" class="mb-4">
 
-                                        <input type="text" class="form-control text-center mb-3 input-detailss"
-                                            id="exampleInputEmail1" aria-describedby="emailHelp"
-                                            placeholder="Enter Your Location">
-                                        <input type="text" class="form-control text-center mb-3 input-detailss"
-                                            id="exampleInputEmail1" aria-describedby="emailHelp"
-                                            placeholder="Enter your Name">
-                                        <input type="email" class="form-control text-center mb-3 input-detailss"
-                                            id="exampleInputEmail1" aria-describedby="emailHelp"
-                                            placeholder="Enter your email">
-                                    </div>
-                                    <button id="saveChanges-booking" class="btn">Get OTP</button>
-                                    <div class="term-condition">
-                                        <input type="checkbox" class="checkbox" id="checkbox-login-booking">
-                                        <p>By Continuing, you agree to our <span class="term">Term and Condition</span>
-                                        </p>
-                                    </div>
+
+                                        <div class="row px-5">
+                                            <div class="col-md-6">
+                                                <input type="text" class="input-detailss form-control mb-4" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" placeholder="Enter your name">
+                                                <input type="text" class="form-control  mb-4 input-detailss" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" placeholder="Enter your Location">
+
+                                            </div>
+                                            <div class="col-md-6">
+                                                <input type="text" class="form-control mb-4 input-detailss" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" placeholder="Enter your email">
+                                                <input type="date" class="form-control  mb-4 input-detailss" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" >
+                                            </div>
+                                        </div>
+
+                                    <button id="saveChanges-booking" class="btn mt-4">Continue</button>
+
                                 </div>
                             </div>
 
                             <div id="myPopup2-booking" class="popup">
-                                <div class="popup-content">
+                                <div class="popup-content" style="width: 39%">
                                     <span class="close" id="closePopup2-booking">&times;</span>
                                     <h3>Verify OTP</h3>
                                     <img src="{{ asset('assets/img/icons/lock-icon.png') }}" alt="">
@@ -338,8 +458,19 @@
                                                 src="{{ asset('assets/img/icons/edit-icon.svg') }}" alt="">Edit
                                         </div>
                                     </div>
-                                    <input type="text" class="text-center rounded p-1" id="phone2-booking"
-                                        maxlength="4" placeholder="Enter your OTP">
+                                    <div class="main-div">
+                                        <div class="input-div"><input type="text" value="4" maxlength="1" />
+                                        </div>
+
+                                        <div class="input-div"><input type="text" value="4" maxlength="1" />
+                                        </div>
+
+                                        <div class="input-div"><input type="text" value="4" maxlength="1" />
+                                        </div>
+
+                                        <div class="input-div"><input type="text" value="4" maxlength="1" />
+                                        </div>
+                                    </div>
                                     <div class="resend">
                                         <div class="get-otp">Don't get OTP?</div>
                                         <div id="counter-booking" class="text-danger"></div>
@@ -355,20 +486,20 @@
 
 
                                     <div class="term-condition">
-                                        <input type="checkbox" class="checkbox">
+                                        <input type="checkbox" class="checkbox" id="checkbox-login-booking">
                                         <p>By Continuing, you agree to our <span class="term">Term and Condition</span>
                                         </p>
                                     </div>
                                 </div>
                             </div>
 
-{{--
+
                             <div class="service-list">
                                 <div class="service-cont">
                                     <div class="service-cont-img">
                                         <a href="service-details.html">
                                             <img class="img-fluid serv-img" alt="Service Image"
-                                                src="{{ asset('assets/img/services/service-04.jpg') }}">
+                                                src="assets/img/services/service-04.jpg">
                                         </a>
                                         <div class="fav-item">
                                             <a href="javascript:void(0)" class="fav-icon">
@@ -383,7 +514,41 @@
                                         </h5>
                                         <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. At, quisquam.</p>
                                         <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. At, quisquam.</p>
-                                        <a href="" class="text-primary">Read more </a>
+                                        <a href="" class="text-primary text-decoration-underline"
+                                            data-bs-toggle="modal" data-bs-target="#exampleModal">View Details </a>
+
+                                        <div class="modal fade" id="exampleModal" tabindex="-1"
+                                            aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                            <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h5 class="modal-title" id="exampleModalLabel">Service Details
+                                                        </h5>
+                                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                            aria-label="Close"></button>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        <h5>Included</h5>
+                                                        <p class="mb-2">Lorem ipsum dolor sit amet consectetur
+                                                            adipisicing elit. Optio, ad?</p>
+                                                        <h5>Excluded</h5>
+                                                        <p class="mb-2">Lorem ipsum dolor sit amet consectetur
+                                                            adipisicing elit. Optio, ad?</p>
+                                                        <h5>Topic</h5>
+                                                        <p class="mb-2">Lorem ipsum dolor sit amet consectetur
+                                                            adipisicing elit. Optio, ad?</p>
+                                                        <h5>Frequently asked question</h5>
+                                                        <p class="mb-2">Lorem ipsum dolor sit amet consectetur
+                                                            adipisicing elit. Optio, ad?</p>
+                                                        <p class="mb-2">Lorem ipsum dolor sit amet consectetur
+                                                            adipisicing elit. Optio, ad?</p>
+                                                        <p class="mb-2">Lorem ipsum dolor sit amet consectetur
+                                                            adipisicing elit. Optio, ad?</p>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                        </div>
                                         <div class="service-pro-img d-flex gap-4">
                                             <p><i class="feather-map-pin"></i>Maryland City, MD, USA</p>
                                             <span><i class="fas fa-star filled"></i>4.9</span>
@@ -401,7 +566,7 @@
                                     <div class="service-cont-img">
                                         <a href="service-details.html">
                                             <img class="img-fluid serv-img" alt="Service Image"
-                                                src="{{ asset('assets/img/services/service-04.jpg') }}">
+                                                src="assets/img/services/service-04.jpg">
                                         </a>
                                         <div class="fav-item">
                                             <a href="javascript:void(0)" class="fav-icon">
@@ -416,7 +581,7 @@
                                         </h5>
                                         <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. At, quisquam.</p>
                                         <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. At, quisquam.</p>
-                                        <a href="" class="text-primary">Read more </a>
+                                        <a href="" class="text-primary text-decoration-underline">View Details </a>
                                         <div class="service-pro-img d-flex gap-4">
                                             <p><i class="feather-map-pin"></i>Maryland City, MD, USA</p>
                                             <span><i class="fas fa-star filled"></i>4.9</span>
@@ -435,7 +600,7 @@
                                     <div class="service-cont-img">
                                         <a href="service-details.html">
                                             <img class="img-fluid serv-img" alt="Service Image"
-                                                src="{{ asset('assets/img/services/service-04.jpg') }}">
+                                                src="assets/img/services/service-04.jpg">
                                         </a>
                                         <div class="fav-item">
                                             <a href="javascript:void(0)" class="fav-icon">
@@ -450,7 +615,7 @@
                                         </h5>
                                         <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. At, quisquam.</p>
                                         <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. At, quisquam.</p>
-                                        <a href="" class="text-primary">Read more </a>
+                                        <a href="" class="text-primary">View Details</a>
                                         <div class="service-pro-img d-flex gap-4">
                                             <p><i class="feather-map-pin"></i>Maryland City, MD, USA</p>
                                             <span><i class="fas fa-star filled"></i>4.9</span>
@@ -469,7 +634,7 @@
                                     <div class="service-cont-img">
                                         <a href="service-details.html">
                                             <img class="img-fluid serv-img" alt="Service Image"
-                                                src="{{ asset('assets/img/services/service-04.jpg') }}">
+                                                src="assets/img/services/service-04.jpg">
                                         </a>
                                         <div class="fav-item">
                                             <a href="javascript:void(0)" class="fav-icon">
@@ -484,7 +649,7 @@
                                         </h5>
                                         <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. At, quisquam.</p>
                                         <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. At, quisquam.</p>
-                                        <a href="" class="text-primary">Read more </a>
+                                        <a href="" class="text-primary">View Details </a>
                                         <div class="service-pro-img d-flex gap-4">
                                             <p><i class="feather-map-pin"></i>Maryland City, MD, USA</p>
                                             <span><i class="fas fa-star filled"></i>4.9</span>
@@ -503,7 +668,7 @@
                                     <div class="service-cont-img">
                                         <a href="service-details.html">
                                             <img class="img-fluid serv-img" alt="Service Image"
-                                                src="{{ asset('assets/img/services/service-04.jpg') }}">
+                                                src="assets/img/services/service-04.jpg">
                                         </a>
                                         <div class="fav-item">
                                             <a href="javascript:void(0)" class="fav-icon">
@@ -518,7 +683,7 @@
                                         </h5>
                                         <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. At, quisquam.</p>
                                         <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. At, quisquam.</p>
-                                        <a href="" class="text-primary">Read more </a>
+                                        <a href="" class="text-primary">View Details </a>
                                         <div class="service-pro-img d-flex gap-4">
                                             <p><i class="feather-map-pin"></i>Maryland City, MD, USA</p>
                                             <span><i class="fas fa-star filled"></i>4.9</span>
@@ -529,12 +694,12 @@
                                     <h6>25.00<span class="old-price">35.00</span></h6>
                                     <a href="booking.html" class="btn btn-secondary">Book Now</a>
                                 </div>
-                            </div> --}}
+                            </div>
 
                         </div>
                     </div>
 
-                    {{-- <div class="row">
+                    <div class="row">
                         <div class="col-sm-12">
                             <div class="blog-pagination rev-page">
                                 <nav>
@@ -560,7 +725,7 @@
                                 </nav>
                             </div>
                         </div>
-                    </div> --}}
+                    </div>
 
                 </div>
 

@@ -22,59 +22,87 @@
 
 
 
-let currentIndex = 0;
-const slides = document.querySelectorAll('.slide');
-const totalSlides = slides.length;
-let slideWidth = slides[0].offsetWidth + 10; // Adjust for margin
+document.addEventListener("DOMContentLoaded", function() {
+    const carousel = document.querySelector(".carousel");
+    const arrowBtns = document.querySelectorAll(".wrapper i");
+    const wrapper = document.querySelector(".wrapper");
 
-const prevButton = document.querySelector('.prev');
-const nextButton = document.querySelector('.next');
+    const firstCard = carousel.querySelector(".card");
+    const firstCardWidth = firstCard.offsetWidth;
 
-function updateSliderPosition() {
-    const slider = document.querySelector('.slider');
-    const newTransform = -currentIndex * slideWidth;
-    slider.style.transform = `translateX(${newTransform}px)`;
-    updateButtonState();
-}
+    let isDragging = false,
+        startX,
+        startScrollLeft,
+        timeoutId;
 
-function slideRight() {
-    if (currentIndex < totalSlides - 1) {
-        currentIndex++;
-        updateSliderPosition();
-    }
-}
+    const dragStart = (e) => {
+        isDragging = true;
+        carousel.classList.add("dragging");
+        startX = e.pageX;
+        startScrollLeft = carousel.scrollLeft;
+    };
 
-function slideLeft() {
-    if (currentIndex > 0) {
-        currentIndex--;
-        updateSliderPosition();
-    }
-}
+    const dragging = (e) => {
+        if (!isDragging) return;
 
-function updateButtonState() {
-    const sliderWrapper = document.querySelector('.slider-wrapper');
-    const sliderWrapperWidth = sliderWrapper.offsetWidth;
+        // Calculate the new scroll position
+        const newScrollLeft = startScrollLeft - (e.pageX - startX);
 
-    // Calculate the total width of all slides
-    const totalWidth = totalSlides * slideWidth;
+        // Check if the new scroll position exceeds
+        // the carousel boundaries
+        if (newScrollLeft <= 0 || newScrollLeft >=
+            carousel.scrollWidth - carousel.offsetWidth) {
 
-    // Check if the last slide is fully visible
-    const lastSlideVisible = (currentIndex + 2) * slideWidth <= sliderWrapperWidth;
-    // Check if the first slide is fully visible
-    const firstSlideVisible = currentIndex === 0;
+            // If so, prevent further dragging
+            isDragging = false;
+            return;
+        }
 
-    prevButton.disabled = firstSlideVisible;
-    nextButton.disabled = !lastSlideVisible;
-}
+        // Otherwise, update the scroll position of the carousel
+        carousel.scrollLeft = newScrollLeft;
+    };
 
-window.addEventListener('resize', () => {
-    slideWidth = slides[0].offsetWidth + 10; // Adjust for margin
-    updateSliderPosition();
+    const dragStop = () => {
+        isDragging = false;
+        carousel.classList.remove("dragging");
+    };
+
+    const autoPlay = () => {
+
+        // Return if window is smaller than 800
+        if (window.innerWidth < 800) return;
+
+        // Calculate the total width of all cards
+        const totalCardWidth = carousel.scrollWidth;
+
+        // Calculate the maximum scroll position
+        const maxScrollLeft = totalCardWidth - carousel.offsetWidth;
+
+        // If the carousel is at the end, stop autoplay
+        if (carousel.scrollLeft >= maxScrollLeft) return;
+
+        // Autoplay the carousel after every 2500ms
+        timeoutId = setTimeout(() =>
+            carousel.scrollLeft += firstCardWidth, 2500);
+    };
+
+    carousel.addEventListener("mousedown", dragStart);
+    carousel.addEventListener("mousemove", dragging);
+    document.addEventListener("mouseup", dragStop);
+    wrapper.addEventListener("mouseenter", () =>
+        clearTimeout(timeoutId));
+    // wrapper.addEventListener("mouseleave", autoPlay);
+
+    // Add event listeners for the arrow buttons to
+    // scroll the carousel left and right
+    arrowBtns.forEach(btn => {
+        btn.addEventListener("click", () => {
+            carousel.scrollLeft += btn.id === "left" ?
+                -firstCardWidth : firstCardWidth;
+        });
+    });
 });
 
-// Initialize button state and position
-updateButtonState();
-updateSliderPosition();
 
 
 
@@ -87,9 +115,10 @@ updateSliderPosition();
 // ...............FILTER CLEAR Function.apply................
 
 function resetVal(){
+    // alert();
     document.getElementById('input-keyword').value='';
     document.getElementById('location-val').value='';
-    // document.getElementById('mySelect').value = 'AllSubCategory';
+    document.getElementById('mySelect').value = 'AllSubCategory';
     $('#mySelect').val('AllSubCategory').trigger('change');
 
     const checkboxes = document.querySelectorAll('.toggleCheckbox');
@@ -100,18 +129,18 @@ function resetVal(){
    }
 
 
+
 document.addEventListener('DOMContentLoaded', () => {
     const allCategoriesCheckbox = document.querySelector('#allCategories');
     const categoryCheckboxes = document.querySelectorAll('.categoryCheckbox');
 
     // Update all category checkboxes when "All Categories" is toggled
     allCategoriesCheckbox.addEventListener('change', () => {
-        // const isChecked = allCategoriesCheckbox.checked;
+        const isChecked = allCategoriesCheckbox.checked; // Debug log
         categoryCheckboxes.forEach(checkbox => {
-            checkbox.checked = true;
+            checkbox.checked = isChecked;
         });
     });
-
 });
 
 

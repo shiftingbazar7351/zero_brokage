@@ -67,7 +67,7 @@
         <div class="content mt-4">
             <div class="container ">
                 <div class="row admin-login-row">
-                    <div class="col-md-6 col-lg-6 mx-auto">
+                    <div class="login-card col-md-6 col-lg-6 mx-auto">
                         <div class="login-wrap">
                             <div class="text-center mb-4">
                                 <img src="assets/img/logofinal.png" alt="" style="width: 185px;">

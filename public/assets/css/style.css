@@ -637,8 +637,13 @@ label {
 .card {
     background: #fff;
     border: 2px solid #ebedf0;
-    border-radius: 6px;
-    margin-bottom: 24px;
+    border-radius: 10px;
+    margin: 24px;
+    background-image: url("../img/bg/wave.svg");
+    background-repeat: no-repeat;
+    background-position: bottom;
+    object-fit: contain;
+    width: 100%;
 }
 .card .card-body {
     padding: 20px;
@@ -765,9 +770,9 @@ label {
 .avatar-lg.avatar-online::before {
     border-width: 3px;
 }
-textarea {
+/* textarea {
     resize: none;
-}
+} */
 
 /*-----------------
 	4. Nav Tabs
@@ -1093,9 +1098,9 @@ table.dataTable thead .sorting_desc_disabled:after {
 -----------------------*/
 
 .header {
-    background: #bdfaf2;
+    background: #e4e5e5;
     position: sticky;
-    box-shadow: 14px 7px 23px 3px rgba(17, 216, 223, 0.27);
+    box-shadow: 14px 7px 23px 3px rgba(43, 44, 44, 0.27);
     left: 0;
     top: 0;
     display: flex;
@@ -1108,8 +1113,8 @@ table.dataTable thead .sorting_desc_disabled:after {
 }
 .header.fixed {
     position: fixed;
-    background-color: var(--header-color);
-    box-shadow: 0px 3px 53px rgba(14, 209, 216, 0.27);
+    background-color: #e4e5e5;
+    box-shadow: 14px 7px 23px 3px rgba(43, 44, 44, 0.27);
     transition: ease all 0.5s;
     -webkit-transition: ease all 0.5s;
     -ms-transition: ease all 0.5s;
@@ -2387,9 +2392,9 @@ html.menu-opened body {
 .search-box {
     width: 100%;
     /* background: var(--header-color); */
-    background-color: #ddf8a8;
+    background-color: #f4f5f3;
     border: 1px solid #f0f0f0;
-    box-shadow: 14px 7px 23px 3px rgba(17, 216, 223, 0.27);
+    box-shadow: 14px 7px 23px 3px rgba(43, 44, 44, 0.27);
     border-radius: 10px;
     padding: 15px;
     margin-top: 15px;
@@ -3109,7 +3114,7 @@ html.menu-opened body {
         #f7f7ff;
     background-repeat: no-repeat;
     background-position: left center, right 0 bottom 25%;
-    padding: 80px 0 66px;
+    padding: 20px 0 35px;
 }
 .work-box {
     background: #fff;
@@ -4977,10 +4982,13 @@ html.menu-opened body {
     font-weight: 600;
 }
 .breadcrumb-bar {
-    background-image: url("../img/bg/b.png");
+    background-image: url("../img/bg/sunset.jpg");
     text-align: center;
     position: relative;
     padding: 53px 0;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
 }
 .breadcrumb-bar:before {
     position: absolute;
@@ -4995,6 +5003,7 @@ html.menu-opened body {
 .breadcrumb-title {
     font-size: 42px;
     margin-bottom: 15px;
+    color: white;
 }
 .breadcrumb-bar .page-breadcrumb ol {
     justify-content: center;
@@ -5638,7 +5647,6 @@ img.bgimg2 {
 .contact-queries .btn {
     font-weight: 500;
     padding: 12px 22px;
-    margin-top: 22px;
     display: inline-flex;
     display: -webkit-inline-flex;
     -webkit-box-align: center;
@@ -12282,7 +12290,7 @@ fieldset#first-field {
     z-index: -1;
 }
 .provider-details {
-    margin-bottom: 60px;
+    margin-bottom: 20px;
 }
 .provider-details.provide-area {
     margin-bottom: 40px;
@@ -12316,11 +12324,11 @@ fieldset#first-field {
 .construct-box {
     background: #fff;
     box-shadow: 0px 10px 20px -5px rgba(76, 64, 237, 0.08);
-    padding: 25px;
-    margin-bottom: 20px;
+    padding: 8px;
+    margin-bottom: 14px;
 }
 .construct-box img {
-    margin-bottom: 19px;
+    margin-bottom: 12px;
 }
 .construct-box h6 {
     font-size: 18px;
@@ -12380,7 +12388,7 @@ fieldset#first-field {
 }
 .service-cont-info .item-cat {
     display: inline-block;
-    margin-bottom: 12px;
+    margin-bottom: 5px;
 }
 .service-cont-info h3 {
     font-size: 20px;
@@ -12390,7 +12398,7 @@ fieldset#first-field {
     text-overflow: ellipsis;
 }
 .service-cont-info p {
-    margin-bottom: 10px;
+    margin-bottom: 2px;
     font-size: 12px;
 }
 .service-cont-info p i {
@@ -22400,9 +22408,6 @@ address {
     position: absolute;
     width: 80px;
 }
-.provider-details {
-    margin-left: 100px;
-}
 .provider-details p.last-seen {
     margin-bottom: 0px;
 }
@@ -26502,11 +26507,12 @@ td.ant-table-column-sort {
         width: 900px;
     }
     .popup-content {
-        width: 65%;
+        width: 75%;
     }
-    .input-number {
-        width: 70%;
+    .input-div{
+        width: 14%;
     }
+
 }
 
 @media only screen and (max-width: 767.98px) {
@@ -28070,6 +28076,13 @@ td.ant-table-column-sort {
     .popup-content {
         width: 85% !important;
     }
+    #div2{
+        flex-direction: column !important;
+    }
+    .inputOTP{
+        width: 50% !important;
+        margin: auto;
+    }
 }
 @media only screen and (max-width: 485.98px) {
     #progressbar li {
@@ -28210,6 +28223,9 @@ td.ant-table-column-sort {
     .search-box-list {
         width: 80%;
         margin: auto !important;
+    }
+    .input-div{
+        width: 14%;
     }
 }
 @media only screen and (max-width: 320.98px) {
@@ -28413,9 +28429,9 @@ td.ant-table-column-sort {
 .sell {
     color: green;
 }
-.btn {
+/* .btn {
     background-color: #31c944;
-}
+} */
 .popular:hover {
     background-color: #4c40ed;
     color: white;
@@ -28466,7 +28482,7 @@ td.ant-table-column-sort {
     color: black;
 }
 .popup-content img {
-    margin: 3% 0%;
+    margin-bottom: 2%;
 }
 .input-number {
     width: 50%;
@@ -28490,12 +28506,19 @@ td.ant-table-column-sort {
     margin-bottom: 1rem;
     width: 18px;
 }
+#phoneNumberInput {
+    border-radius: 8px;
+    padding: 7px;
+    box-shadow: 0px 0px 4px -1px rgba(32, 32, 32, 0.25);
+    border: none;
+    border-bottom: 2px solid black;
+}
 #phoneNumberInput-booking {
     border-radius: 8px;
     padding: 7px;
     box-shadow: 0px 0px 4px -1px rgba(32, 32, 32, 0.25);
     border: none;
-    border-bottom: 2px solid gray;
+    border-bottom: 2px solid black;
 }
 #phone2-booking {
     /* background-color: #007bff; */
@@ -28506,7 +28529,7 @@ td.ant-table-column-sort {
 }
 
 #iti-1__country-listbox {
-    width: 610%;
+    width: 360%;
 }
 #iti-0__country-listbox {
     width: 360%;
@@ -28531,13 +28554,13 @@ td.ant-table-column-sort {
 #phone2 {
     padding: 3px;
     border-radius: 7px;
-    text-align: center;
 }
 .resend {
     display: flex;
     justify-content: space-around;
     color: black;
-    margin-bottom: 3%;
+    width: 70%;
+    margin: auto;
 }
 .resend-otp {
     color: red;
@@ -28546,6 +28569,8 @@ td.ant-table-column-sort {
 .resend-container {
     display: flex;
     justify-content: space-around;
+    width: 70%;
+    margin: auto;;
 }
 .whatsapp-otp {
     cursor: pointer;
@@ -28586,23 +28611,63 @@ td.ant-table-column-sort {
     margin-top: 4%;
 }
 
-#phoneNumberInput-booking {
-    border-radius: 8px;
-    padding: 7px;
-}
 
-.admin-login-row {
-    /* border: 2px solid gray; */
-    border-radius: 7px;
-    padding: 4% 0%;
-    /* background-color:white; */
-}
-.login-wrap{
-        border: 2px solid gray;
-        padding: 3%;
+
+    /* .input-detailss {
         border-radius: 8px;
-        background-color: white;
-        box-shadow: 0 6px 8px 4px rgba(128, 128, 128, 0.5)
-
+        padding: 7px;
+        box-shadow: 0px 0px 4px 2px rgba(32, 32, 32, 0.25);
+        border: none;
+        border-bottom: 2px solid gray;
+    } */
+    .input-detailss {
+        border-radius: 8px;
+        padding: 7px;
+        box-shadow: 0px 0px 4px -1px rgba(32, 32, 32, 0.25);
+        border: none;
+        border-bottom: 2px solid black;
     }
+    .input-detailss:focus {
+        border: 2px solid black; /* Changes the bottom border to black on focus */
+        outline: none; /* Removes the default outline */
+    }
+    .main-div{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        /* border: 2px solid rgb(85, 184, 60); */
+        margin: 5px;
+        gap: 8px;
+        margin: auto;
+    }
+    .input-div{
+        width: 10%;
+        /* border-radius: 2px solid rgb(18, 163, 107); */
+        /* background-color: blue; */
+        display: flex;
+        gap: 10px;
+    }
+    .input-div input{
+        width: 100%;
+        text-align: center;
+        padding: 5px;
+        font-size: 22px;
+        border-radius: 15px;
+        gap: 4px;
+    }
+    .accordion-item{
+        margin: 1rem;
+        border: 2px solid #0d6efd;
+    }
+
+.accordion-button:focus {
+    box-shadow: none;
+    outline: none;
+}
+.login-card{
+    background-color: white;
+    border-radius: 7px;
+    padding: 3% 0% 4% 0%;
+    box-shadow: 0px 5px 5px 4px #d6d3d3;
+}
 

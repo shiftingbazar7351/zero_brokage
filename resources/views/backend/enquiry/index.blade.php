@@ -10,7 +10,7 @@
                         <li>
                             <button type="button" class="btn btn-primary mb-3" data-bs-toggle="modal"
                                 data-bs-target="#addEnquiryModal">
-                                Add Enquiry
+                                + Add Enquiry
                             </button>
                         </li>
                     </ul>

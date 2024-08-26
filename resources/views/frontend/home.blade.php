@@ -54,10 +54,10 @@
                             <h2>Service Categories</h2>
                             <p>What do you need to find?</p>
                         </div>
-                        <div class="col-md-6 text-md-end aos" data-aos="fade-up">
+                        {{-- <div class="col-md-6 text-md-end aos" data-aos="fade-up">
                             <a href="search-list.html" class="btn btn-primary btn-view">View All<i
                                     class="feather-arrow-right-circle"></i></a>
-                        </div>
+                        </div> --}}
                     </div>
                 </div>
                 <div class="row">
@@ -83,7 +83,7 @@
             </div>
         </section>
     @endif
-
+    @if (count($subcategories) != 0)
     <section class="feature-section">
         <div class="container">
             <div class="section-heading">
@@ -92,83 +92,33 @@
                         <h2>Trending Categories</h2>
                         <p>What do you like most?</p>
                     </div>
-                    <div class="col-md-6 text-md-end aos" data-aos="fade-up">
+                    {{-- <div class="col-md-6 text-md-end aos" data-aos="fade-up">
                         <a href="categories.html" class="btn btn-primary btn-view">View All<i
                                 class="feather-arrow-right-circle"></i></a>
-                    </div>
+                    </div> --}}
                 </div>
             </div>
             <div class="row">
+                @foreach ($trendingsubcat as $subcategory)
                 <div class="col-md-2">
-                    <a href="service-list1-All.html" class="feature-box aos" data-aos="fade-up">
+                    <a href="{{ route('service.grid', ['slug' => $subcategory->slug]) }}" class="feature-box aos" data-aos="fade-up">
                         <div class="feature-icon">
                             <span>
-                                <img src="assets/img/icons/trendin-01.svg" alt="img">
+                                <img src="{{ asset('storage/icon/' . $subcategory->icon ?? '') }}"
+                                    class="rounded-circle" alt="img">
                             </span>
                         </div>
-                        <h6>Catering Service</h6>
+                        <h6>{{ $subcategory->name ?? '' }}</h6>
 
                     </a>
                 </div>
-                <div class="col-md-2">
-                    <a href="service-list1-All.html" class="feature-box aos" data-aos="fade-up">
-                        <div class="feature-icon">
-                            <span>
-                                <img src="assets/img/icons/feature-icon-04.svg" alt="img">
-                            </span>
-                        </div>
-                        <h6>Deep Cleaning Service</h6>
-                    </a>
-                </div>
-                <div class="col-md-2">
-                    <a href="service-list1-All.html" class="feature-box aos" data-aos="fade-up">
-                        <div class="feature-icon">
-                            <span>
-                                <img src="assets/img/icons/trending-03.svg" alt="img">
-                            </span>
-                        </div>
-                        <h6>Painting Service</h6>
-
-                    </a>
-                </div>
-                <div class="col-md-2">
-                    <a href="service-list1-All.html" class="feature-box aos" data-aos="fade-up">
-                        <div class="feature-icon">
-                            <span>
-                                <img src="assets/img/icons/feature-icon-02.svg" alt="img">
-                            </span>
-                        </div>
-                        <h6>Car Cleaning</h6>
-
-                    </a>
-                </div>
-                <div class="col-md-2">
-                    <a href="service-list1-All.html" class="feature-box aos" data-aos="fade-up">
-                        <div class="feature-icon">
-                            <span>
-                                <img src="assets/img/icons/camera.svg" alt="img">
-                            </span>
-                        </div>
-                        <h6>Photographer</h6>
-                    </a>
-                </div>
-                <div class="col-md-2">
-                    <a href="service-list1-All.html" class="feature-box aos" data-aos="fade-up">
-                        <div class="feature-icon">
-                            <span>
-                                <img src="assets/img/icons/feature-icon-01.svg" alt="img">
-                            </span>
-                        </div>
-                        <h6>Construction</h6>
-
-                    </a>
-                </div>
+                @endforeach
 
             </div>
         </div>
     </section>
-
-
+    @endif
+    @if (count($subcategories) != 0)
     <section class="service-section">
         <div class="container">
             <div class="section-heading">
@@ -186,55 +136,25 @@
             <div class="row">
                 <div class="col-md-12">
                     <div class="owl-carousel service-slider">
-                        <div class="service-widget aos featured-cont" data-aos="fade-up">
-                            <div class="service-img feat-img">
-                                <a href="service-details.html">
-                                    <img class="img-fluid serv-img" alt="Service Image"
-                                        src="assets/img/icons/feature-icon-01.svg">
-                                </a>
-                                <p style="text-align: center">Construction</p>
-
+                        @foreach ($featuresubcat as $subcategory)
+                            <div class="service-widget aos featured-cont" data-aos="fade-up">
+                                <div class="service-img feat-img">
+                                    <a href="{{ route('service.grid', ['slug' => $subcategory->slug]) }}">
+                                        <img src="{{ asset('storage/icon/' . $subcategory->icon ?? '') }}"
+                                             class="img-fluid serv-img" alt="Service Image">
+                                    </a>
+                                    <p style="text-align: center">{{ $subcategory->name ?? '' }}</p>
+                                </div>
                             </div>
-                        </div>
-                        <div class="service-widget aos featured-cont" data-aos="fade-up">
-                            <div class="service-img feat-img">
-                                <a href="service-details.html">
-                                    <img class="img-fluid serv-img" alt="Service Image"
-                                        src="assets/img/icons/feature-icon-02.svg">
-                                </a>
-                                <p style="text-align: center">Car Washing</p>
-                            </div>
-
-                        </div>
-                        <div class="service-widget aos featured-cont" data-aos="fade-up">
-                            <div class="service-img feat-img">
-                                <a href="service-details.html">
-                                    <img class="img-fluid serv-img" alt="Service Image"
-                                        src="assets/img/icons/feature-icon-03.svg">
-                                </a>
-                                <p style="text-align: center">Electric</p>
-                            </div>
-
-                        </div>
-                        <div class="service-widget aos featured-cont" data-aos="fade-up">
-                            <div class="service-img feat-img">
-                                <a href="service-details.html">
-                                    <img class="img-fluid serv-img" alt="Service Image"
-                                        src="assets/img/icons/feature-icon-04.svg">
-                                </a>
-                                <p style="text-align: center">Cleaning</p>
-                            </div>
-                        </div>
-
+                        @endforeach
                     </div>
                 </div>
-
-            </div>
+            </div>            
 
         </div>
 
     </section>
-
+    @endif
 
     <section class="providers-section">
         <div class="container">
@@ -244,10 +164,10 @@
                         <h2>Top Providers</h2>
                         <p>Meet Our Experts</p>
                     </div>
-                    <div class="col-md-6 text-md-end aos" data-aos="fade-up">
+                    {{-- <div class="col-md-6 text-md-end aos" data-aos="fade-up">
                         <a href="providers.html" class="btn btn-primary btn-view">View All<i
                                 class="feather-arrow-right-circle"></i></a>
-                    </div>
+                    </div> --}}
                 </div>
             </div>
             <div class="row  aos" data-aos="fade-up">
@@ -440,7 +360,7 @@
             </div>
         </div>
     </section>
-
+    @if (count($subcategories) != 0)
     <section class="feature-section">
         <div class="container">
             <div class="section-heading">
@@ -449,83 +369,32 @@
                         <h2>Most Popular Services</h2>
                         <p>What do you like most?</p>
                     </div>
-                    <div class="col-md-6 text-md-end aos" data-aos="fade-up">
+                    {{-- <div class="col-md-6 text-md-end aos" data-aos="fade-up">
                         <a href="service-list1-All.html" class="btn btn-primary btn-view">View All<i
                                 class="feather-arrow-right-circle"></i></a>
-                    </div>
+                    </div> --}}
                 </div>
             </div>
             <div class="row">
+                @foreach ($subcategories as $subcategory)
                 <div class="col-md-2">
-                    <a href="service-list1-All.html" class="feature-box aos" data-aos="fade-up">
+                    <a href="{{ route('service.grid', ['slug' => $subcategory->slug]) }}" class="feature-box aos" data-aos="fade-up">
                         <div class="feature-icon">
                             <span>
-                                <img src="assets/img/icons/trendin-01.svg" alt="img">
+                                <img src="{{ asset('storage/icon/' . $subcategory->icon ?? '') }}"
+                                     alt="img">
                             </span>
                         </div>
-                        <h5>Catering Service</h5>
+                        <h5>{{ $subcategory->name ?? '' }}</h5>
 
                     </a>
                 </div>
-                <div class="col-md-2">
-                    <a href="service-list1-All.html" class="feature-box aos" data-aos="fade-up">
-                        <div class="feature-icon">
-                            <span>
-                                <img src="assets/img/icons/feature-icon-04.svg" alt="img">
-                            </span>
-                        </div>
-                        <h5>Deep Cleaning Service</h5>
-                    </a>
-                </div>
-                <div class="col-md-2">
-                    <a href="service-list1-All.html" class="feature-box aos" data-aos="fade-up">
-                        <div class="feature-icon">
-                            <span>
-                                <img src="assets/img/icons/trending-03.svg" alt="img">
-                            </span>
-                        </div>
-                        <h5>Painting Service</h5>
-
-                    </a>
-                </div>
-                <div class="col-md-2">
-                    <a href="service-list1-All.html" class="feature-box aos" data-aos="fade-up">
-                        <div class="feature-icon">
-                            <span>
-                                <img src="assets/img/icons/feature-icon-02.svg" alt="img">
-                            </span>
-                        </div>
-                        <h5>Car Cleaning</h5>
-
-                    </a>
-                </div>
-                <div class="col-md-2">
-                    <a href="service-list1-All.html" class="feature-box aos" data-aos="fade-up">
-                        <div class="feature-icon">
-                            <span>
-                                <img src="assets/img/icons/camera.svg" alt="img">
-                            </span>
-                        </div>
-                        <h5>Photographer</h5>
-
-                    </a>
-                </div>
-                <div class="col-md-2">
-                    <a href="service-list1-All.html" class="feature-box aos" data-aos="fade-up">
-                        <div class="feature-icon">
-                            <span>
-                                <img src="assets/img/icons/feature-icon-01.svg" alt="img">
-                            </span>
-                        </div>
-                        <h5>Construction</h5>
-
-                    </a>
-                </div>
+                @endforeach   
 
             </div>
         </div>
     </section>
-
+    @endif
     <section class="client-section">
         <div class="container">
             <div class="row">

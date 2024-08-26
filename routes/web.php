@@ -16,8 +16,6 @@ use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
 
-
-
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -60,6 +58,14 @@ Route::get('/services-in-india', function () {
     return view('frontend.services-in-india');
 })->name('services-in-india');
 
+Route::get('/create-vendor', function () {
+    return view('frontend.create-vendor');
+})->name('create-vendor');
+
+Route::get('/vender-profile', function () {
+    return view('frontend.vender-profile');
+})->name('vender-profile');
+
 Route::get('/service-list', [FrontendController::class, 'serviceList'])->name('service-list');
 
 
@@ -93,10 +99,9 @@ Route::middleware('auth')->group(function () {
     Route::post('/menu-status', [MenuController::class, 'menuStatus'])->name('menu.status');
 
     Route::resource('/submenu', SubMenuController::class);
-    Route::post('/submenu-status', [SubMenuController::class, 'subSenuStatus'])->name('submenu.status');
+    Route::post('/submenu-status', [SubMenuController::class, 'subMenuStatus'])->name('submenu.status');
     Route::post('/fetch-subcategory/{id}', [SubMenuController::class, 'fetchsubcategory']);
-    Route::get('/getSubcategories/{categoryId}', [SubMenuController::class, 'getSubcategories']);
-    Route::get('/getMenus/{subcategoryId}', [SubMenuController::class, 'getMenus']);
+    Route::post('/getMenus/{subcategoryId}', [SubMenuController::class, 'getMenus']);
     Route::post('/fetch-city/{stateId}', [SubMenuController::class, 'fetchCity']);
 
     Route::resource('service-detail', ServiceDetailController::class);

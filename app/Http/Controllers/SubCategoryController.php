@@ -30,66 +30,40 @@ class SubCategoryController extends Controller
         return view('backend.sub-category.index', compact('subcategories','categories'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\RedirectResponse
-     */
-    // public function create()
-    // {
-    //     //
-    // }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\RedirectResponse
-     */
     public function store(Request $request)
     {
         $request->validate([
+            'category_id' => 'required',
             'name' => 'required|unique:sub_categories,name',
-            'background_image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:5048',
-            'icon' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:5048',
+            'background_image' => 'required|image|mimes:jpeg,png,jpg,gif|max:5048',
+            'icon' => 'required|image|mimes:jpeg,png,jpg,gif|max:5048',
         ]);
-        $category = new SubCategory();
-        $category->name = $request->name;
-        $category->category_id = $request->category_id;
-        $category->background_image = $request->background_image;
-        $category->icon = $request->icon;
-        $category->slug = generateSlug($request->name);
-
+    
+        $subcategory = new SubCategory();
+        $subcategory->name = $request->name;
+        $subcategory->category_id = $request->category_id;
+        $subcategory->slug = generateSlug($request->name);
+        $subcategory->trending = $request->has('trending') ? 1 : 0;
+        $subcategory->featured = $request->has('featured') ? 1 : 0;
+    
         if ($request->hasFile('background_image')) {
             $filename = $this->fileUploadService->uploadImage('background_image/', $request->file('background_image'));
-            $category['background_image'] = $filename;
+            $subcategory->background_image = $filename;
         }
-
+    
         if ($request->hasFile('icon')) {
             $filename = $this->fileUploadService->uploadImage('icon/', $request->file('icon'));
-            $category['icon'] = $filename;
+            $subcategory->icon = $filename;
         }
-        $category->save();
-        return redirect()->back()->with('success', 'Category created successfully.');
+    
+        $subcategory->save();
+    
+        return response()->json(['success' => true, 'message' => 'Subcategory created successfully.']);
     }
+    
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\RedirectResponse
-     */
-    // public function show($id)
-    // {
-    //     //
-    // }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\RedirectResponse
-     */
+ 
     public function edit(SubCategory $subcategory)
     {
         return response()->json([
@@ -99,9 +73,12 @@ class SubCategoryController extends Controller
                 'name' => $subcategory->name,
                 'icon' => $subcategory->icon,
                 'background_image' => $subcategory->background_image,
+                'trending' => $subcategory->trending, 
+                'featured' => $subcategory->featured, 
             ]
         ]);
     }
+    
 
 
     /**
@@ -114,23 +91,33 @@ class SubCategoryController extends Controller
     public function update(Request $request, SubCategory $subcategory)
     {
         $request->validate([
-            'name' => 'required|unique:categories,name,' . $subcategory->id,
-            'background_image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:5048',
-            'icon' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:5048',
+            'category_id' => 'required',
+            'name' => 'required|unique:sub_categories,name,' . $subcategory->id,
+            'background_image' => 'image|mimes:jpeg,png,jpg,gif|max:5048',
+            'icon' => 'image|mimes:jpeg,png,jpg,gif|max:5048',
         ]);
+    
         $subcategory->name = $request->name;
+        $subcategory->category_id = $request->category_id;
         $subcategory->slug = generateSlug($request->name);
+        $subcategory->trending = $request->has('trending') ? 1 : 0;
+        $subcategory->featured = $request->has('featured') ? 1 : 0;
+    
         if ($request->hasFile('background_image')) {
             $filename = $this->fileUploadService->uploadImage('background_image/', $request->file('background_image'));
-            $subcategory['background_image'] = $filename;
+            $subcategory->background_image = $filename;
         }
+    
         if ($request->hasFile('icon')) {
             $filename = $this->fileUploadService->uploadImage('icon/', $request->file('icon'));
-            $subcategory['icon'] = $filename;
+            $subcategory->icon = $filename;
         }
+    
         $subcategory->save();
-        return redirect()->back()->with('success', 'Category updated successfully.');
+    
+        return response()->json(['success' => true, 'message' => 'Subcategory updated successfully.']);
     }
+    
 
     /**
      * Remove the specified resource from storage.

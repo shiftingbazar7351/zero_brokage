@@ -8,7 +8,7 @@
                 <img src="{{ asset('admin/assets/img/logo-small.svg') }}" class="img-fluid logo-small" alt="Logo">
             </a>
         </div>
-     
+
     </div>
     <div class="sidebar-inner slimscroll">
         <div id="sidebar-menu" class="sidebar-menu">
@@ -19,6 +19,7 @@
                 <li class ="{{ Route::currentRouteName() === 'admin_page' ? 'active' : '' }}">
                     <a href="{{ route('admin_page') }}"><i class="fe fe-grid"></i> <span>Dashboard</span></a>
                 </li>
+                
                 <li class="menu-title">
                     <h6>Services</h6>
                 </li>
@@ -29,6 +30,7 @@
                         <span>Category</span>
                     </a>
                 </li>
+
                 <li class="{{ Route::currentRouteName() === 'subcategories.index' ? 'active' : '' }}">
                     <a href="{{ route('subcategories.index') }}">
                         <i class="fe fe-file-text"></i>
@@ -63,6 +65,7 @@
                         <span>Enquiry</span>
                     </a>
                 </li>
+
 
 
                 <li class="submenu">

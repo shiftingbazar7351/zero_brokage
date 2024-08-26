@@ -36,25 +36,31 @@ class MenuController extends Controller
     {
         // Validate and store the new menu category
         $request->validate([
-            'name' => 'required|string|max:255',
-            // 'subcategory' => 'required|integer|exists:categories,id',
-            // 'image' => 'nullable|image|mimes:jpeg,png|max:2048',
+            'name' => 'required|unique:menus,name',
+            'category_id' => 'required',
+            'subcategory' => 'required|integer|exists:categories,id',
+            'image' => 'required|image|mimes:jpeg,png|max:2048',
         ]);
-
-        $menu = new Menu();
-        $menu->name = $request->name;
-        $menu->subcategory_id = $request->subcategory;
-        $menu->category_id = $request->category_id;
-        $menu->slug = $this->generateSlug($request->name);
-
-        if ($request->hasFile('image')) {
-            $filename = $this->fileUploadService->uploadImage('menu/', $request->file('image'));
-            $menu['image'] = $filename;
-        }
-
-        $menu->save();
-        return redirect()->back()->with('success', 'Menu added successfully!');
+    
+       
+    
+       
+            $menu = new Menu();
+            $menu->name = $request->name;
+            $menu->subcategory_id = $request->subcategory;
+            $menu->category_id = $request->category_id;
+            $menu->slug = $this->generateSlug($request->name);
+    
+            if ($request->hasFile('image')) {
+                $filename = $this->fileUploadService->uploadImage('menu/', $request->file('image'));
+                $menu->image = $filename;
+            }
+    
+            $menu->save();
+    
+            return response()->json(['success' => true, 'message' => 'Menu added successfully!']);      
     }
+    
 
     protected function generateSlug($name)
     {
@@ -64,36 +70,36 @@ class MenuController extends Controller
     }
     public function edit($id)
     {
-        $category = Menu::find($id);
-        return response()->json(['category' => $category]);
+        $menus = Menu::find($id);
+        return response()->json(['menu' => $menus]);
     }
 
-    public function update(Request $request, $id)
+    public function update(Request $request, Menu $menu)
     {
-        // Validate and update the menu category
         $request->validate([
-            'name' => 'required|string|max:255',
-            // 'subcategory' => 'required|integer|exists:subcategories,id',
-            // 'image' => 'nullable|image|mimes:jpeg,png|max:2048',
+            'name' => 'required|unique:menus,name,' . $menu->id,
+            'category_id' => 'required',
+            'subcategory' => 'required|integer|exists:menus,subcategory_id',
+            'image' => 'required|image|mimes:jpeg,png|max:2048',
         ]);
-
-        $menu = Menu::find($id);
-        $menu->name = $request->name;
-        $menu->subcategory_id = $request->subcategory;
-        $menu->slug = $this->generateSlug($request->name);
-
-        if ($request->hasFile('image')) {
-            $filename = $this->fileUploadService->uploadImage('menu/', $request->file('image'));
-            $menu['image'] = $filename;
+    
+    
+            $menu->name = $request->name;
+            $menu->subcategory_id = $request->subcategory;
+            $menu->slug = $this->generateSlug($request->name);
+    
+            if ($request->hasFile('image')) {
+                $filename = $this->fileUploadService->uploadImage('menu/', $request->file('image'));
+                $menu->image = $filename;
+            }
+    
+            $menu->save();
+    
+            return response()->json(['success' => true, 'message' => 'Menu updated successfully!']);
+        
         }
-
-        $menu->save();
-
-        return redirect()->back()->with('success', 'Menu updated successfully!');
-    }
-
-
-
+    
+    
     public function destroy($id)
     {
         try {
@@ -114,18 +120,7 @@ class MenuController extends Controller
     }
 
 
-    public function fetchsubcategory($categoryId)
-    {
-        $subcategories = SubCategory::where('category_id', $categoryId)->get()->map(function ($subcategory) {
-            $subcategory->name = ucwords($subcategory->name);
-            return $subcategory;
-        });
-
-        if ($subcategories->isEmpty()) {
-            return response()->json(['status' => 0, 'message' => 'No subcategory found']);
-        }
-        return response()->json(['status' => 1, 'data' => $subcategories]);
-    }
+  
 
 
     public function menuStatus(Request $request)

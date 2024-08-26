@@ -36,11 +36,9 @@ class CategoryController extends Controller
             $slug = generateSlug($request->name);
             $data = array_merge($request->validated(), ['slug' => $slug]);
             Category::create($data);
-            toastr()->success('Added Successfully');
-            return redirect(route('categories.index'));
-            // ->with('success', 'Added Successfully');
+            return response()->json(['success' => true, 'message' => 'Category added successfully']);
         } catch (Exception $e) {
-            return back()->with(['status' => false, 'error' => $e->getMessage()]);
+            return response()->json(['success' => false, 'message' => $e->getMessage()], 500);
         }
     }
 
@@ -71,9 +69,9 @@ class CategoryController extends Controller
             $slug = generateSlug($request->name);
             $data = array_merge($request->validated(), ['slug' => $slug]);
             $category->update($data);
-            return redirect()->route('categories.index')->with('success', 'Updated Successfully');
+            return response()->json(['success' => true, 'message' => 'Category updated successfully']);
         } catch (Exception $e) {
-            return back()->with(['status' => false, 'error' => $e->getMessage()]);
+            return response()->json(['success' => false, 'message' => $e->getMessage()], 500);
         }
     }
 

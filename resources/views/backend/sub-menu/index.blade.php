@@ -230,6 +230,7 @@
                         <input type="hidden" id="editCategoryId" name="category_id">
                         <input type="hidden" id="editSubcategoryId" name="subcategory_id">
                         <input type="hidden" id="editMenuId" name="menu_id">
+                        <input type="hidden" id="editSubmenuId" name="id">
 
                         <!-- Name Field -->
                         <div class="form-group">
@@ -660,7 +661,7 @@
                     url: `/submenu/${id}/edit`,
                     method: 'GET',
                     success: function(response) {
-                        $('#editCategoryId').val(response.data.id);
+                        $('#editSubmenuId').val(response.data.id);
                         $('#editName').val(response.data.name);
                         $('#edit-price').val(response.data.total_price);
                         $('#edit-discount').val(response.data.discount);
@@ -704,10 +705,12 @@
                                 _token: '{{ csrf_token() }}'
                             },
                             success: function(menuResponse) {
+                                console.log(menuResponse)
                                 $('#editmenuSelect').empty().append(
                                     '<option value="" selected>Select Menu</option>'
                                 );
                                 menuResponse.data.forEach(menu => {
+                                    console.log(menu.name)
                                     $('#editmenuSelect')
                                         .append(
                                             `<option value="${menu.id}" ${menu.id == response.data.menu_id ? 'selected' : ''}>${menu.name}</option>`
@@ -735,7 +738,42 @@
                 });
             };
 
+            
+
             // Function to handle form submission for editing a menu
+            // $('#editCategoryForm').on('submit', function(e) {
+            //     e.preventDefault();
+
+            //     let id = $('#editCategoryId').val();
+            //     let formData = new FormData(this);
+
+            //     $.ajax({
+            //         type: 'POST',
+            //         url: `/submenu/${id}`,
+            //         data: formData,
+            //         contentType: false,
+            //         processData: false,
+            //         success: function(response) {
+            //             if (response.success) {
+            //                 // Reload the page to reflect the updated data
+            //                 location.reload();
+            //             }
+            //         },
+            //         error: function(xhr) {
+            //             let errors = xhr.responseJSON.errors;
+
+            //             // Clear any previous error messages
+            //             $('.error-message').text('');
+
+            //             // Loop through the errors and display them
+            //             $.each(errors, function(key, value) {
+            //                 $(`#${key}-error`).text(value[0]);
+            //             });
+            //         }
+            //     });
+            // });
+
+
             $('#editCategoryForm').on('submit', function(e) {
                 e.preventDefault();
 
@@ -743,30 +781,39 @@
                 let formData = new FormData(this);
 
                 $.ajax({
-                    type: 'POST',
+                    method: 'POST',
                     url: `/submenu/${id}`,
                     data: formData,
                     contentType: false,
                     processData: false,
                     success: function(response) {
                         if (response.success) {
-                            // Reload the page to reflect the updated data
-                            location.reload();
+                            if (response.success) {
+                                location.reload(); // Refresh page to show updated data
+                            }
                         }
                     },
                     error: function(xhr) {
                         let errors = xhr.responseJSON.errors;
-
-                        // Clear any previous error messages
-                        $('.error-message').text('');
-
-                        // Loop through the errors and display them
-                        $.each(errors, function(key, value) {
-                            $(`#${key}-error`).text(value[0]);
-                        });
+                        $('#editCategoryForm .name-error').text(errors.name ? errors.name[0] :
+                            '');
+                        $('#editCategoryForm .category_id-error').text(errors.category_id ?
+                            errors.category_id[0] : '');
+                        $('#editCategoryForm .subcategory-error').text(errors.subcategory ?
+                            errors.subcategory[0] : '');
+                        $('#editCategoryForm .image-error').text(errors.image ? errors.image[
+                            0] : '');
                     }
                 });
             });
+
+            // Function to display validation errors (optional helper function)
+            function displayErrors(errors) {
+                for (let field in errors) {
+                    $(`.${field}-error`).text(errors[field][0]);
+                }
+            }
+            
 
         });
     </script>

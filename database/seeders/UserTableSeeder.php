@@ -27,7 +27,6 @@ class UserTableSeeder extends Seeder
                 'status' => 'active',
             ],
 
-
         ];
         foreach ($users as $key => $value) {
             $user = User::create($value);

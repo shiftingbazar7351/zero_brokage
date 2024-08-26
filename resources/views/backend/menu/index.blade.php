@@ -280,7 +280,7 @@
             $('#addMenuForm').submit(function(e) {
                 e.preventDefault();
                 let formData = new FormData(this);
-
+            
                 $.ajax({
                     url: "{{ route('menus.store') }}",
                     method: 'POST',
@@ -362,7 +362,6 @@
                 e.preventDefault();
 
                 let id = $('#editCategoryId').val();
-                // alert(id)
                 let formData = new FormData(this);
 
                 $.ajax({

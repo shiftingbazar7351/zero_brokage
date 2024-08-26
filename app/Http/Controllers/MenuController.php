@@ -77,10 +77,10 @@ class MenuController extends Controller
     public function update(Request $request, Menu $menu)
     {
         $request->validate([
-            'name' => 'required',
+            'name' => 'required|unique:menus,name,' . $menu->id,
             'category_id' => 'required',
             'subcategory' => 'required|integer|exists:menus,subcategory_id',
-            'image' => 'nullable|image|mimes:jpeg,png|max:2048',
+            'image' => 'required|image|mimes:jpeg,png|max:2048',
         ]);
     
     
@@ -120,18 +120,7 @@ class MenuController extends Controller
     }
 
 
-    public function fetchsubcategory($categoryId)
-    {
-        $subcategories = SubCategory::where('category_id', $categoryId)->get()->map(function ($subcategory) {
-            $subcategory->name = ucwords($subcategory->name);
-            return $subcategory;
-        });
-
-        if ($subcategories->isEmpty()) {
-            return response()->json(['status' => 0, 'message' => 'No subcategory found']);
-        }
-        return response()->json(['status' => 1, 'data' => $subcategories]);
-    }
+  
 
 
     public function menuStatus(Request $request)

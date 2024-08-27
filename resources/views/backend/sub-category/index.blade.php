@@ -19,7 +19,7 @@
                     <ul>
                         <li>
                             <button class="btn btn-primary" type="button" data-bs-toggle="modal" data-bs-target="#add-category">
-                                <i class="fa fa-plus me-2"></i>Add Category
+                                <i class="fa fa-plus me-2"></i>Add Sub-Category
                             </button>
                         </li>
                     </ul>

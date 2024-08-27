@@ -35,7 +35,7 @@ class SubCategoryController extends Controller
     {
         $request->validate([
             'category_id' => 'required',
-            'name' => 'required|unique:sub_categories,name',
+            'name' => 'required',
             'background_image' => 'required|image|mimes:jpeg,png,jpg,gif|max:5048',
             'icon' => 'required|image|mimes:jpeg,png,jpg,gif|max:5048',
         ]);
@@ -92,7 +92,7 @@ class SubCategoryController extends Controller
     {
         $request->validate([
             'category_id' => 'required',
-            'name' => 'required|unique:sub_categories,name,' . $subcategory->id,
+            'name' => 'required',
             'background_image' => 'image|mimes:jpeg,png,jpg,gif|max:5048',
             'icon' => 'image|mimes:jpeg,png,jpg,gif|max:5048',
         ]);

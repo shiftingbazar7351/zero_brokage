@@ -21,7 +21,6 @@ class FrontendController extends Controller
         $featuresubcat = $subcategories->where('featured', 1);
         return view('frontend.home', compact('subcategories', 'trendingsubcat', 'featuresubcat'));
     }
-
     public function subCategory($slug)
     {
         $menus = Menu::select('id', 'name', 'image', 'slug', 'category_id', 'subcategory_id')->where('status', 1)->get();
@@ -45,11 +44,9 @@ class FrontendController extends Controller
         $services = ServiceDetail::orderByDesc('created_at')->first();
         return view('frontend.service-details', compact('subcategories', 'categories', 'services'));
     }
-
     public function serviceList()
     {
         $categories = Category::get();
         return view('frontend.service-list', compact('categories'));
     }
-
 }

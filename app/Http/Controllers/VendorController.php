@@ -3,7 +3,8 @@
 namespace App\Http\Controllers;
 use App\Models\Menu;
 use App\Models\Vendor;
-use App\Models\ServiceDetail;
+use App\Models\Category;
+use App\Models\SubMenu;
 use App\Models\SubCategory;
 use App\Services\FileUploadService;
 
@@ -25,7 +26,10 @@ class VendorController extends Controller
      */
     public function index()
     {
-        return view("backend.vendor.index");
+        $subcategories = SubCategory::orderByDesc('created_at')->get();
+        $submenu = SubMenu::orderByDesc('created_at')->get();
+        $vendors = Vendor::orderByDesc('created_at')->get();
+        return view("backend.vendor.index" , compact('subcategories','submenu','vendors') );
     }
 
     /**
@@ -35,7 +39,9 @@ class VendorController extends Controller
      */
     public function create()
     {
-        return view("backend.vendor.create");
+        $subcategories = SubCategory::orderByDesc('created_at')->get();
+        $submenu = SubMenu::orderByDesc('created_at')->get();
+        return view("backend.vendor.create" , compact('subcategories','submenu'));
     }
 
     /**
@@ -53,22 +59,23 @@ class VendorController extends Controller
             'company_name' => 'required|string|max:255',
             'legal_company_name' => 'required|string|max:255',
             'city' => 'required|string|max:255',
+            'state' => 'required|string|max:255',
             'pincode' => 'required|string|max:6',
             'address' => 'required|string|max:500',
-            // 'email' => 'required|email',
+            'email' => 'required|email',
             // 'whatsapp' => 'nullable|string|max:10',
             // 'number' => 'required|string|max:10',
-            // 'website' => 'nullable|url',
-            // 'verified' => 'required|integer',
+            'website' => 'nullable|url',
+            'verified' => 'required|integer',
             // 'submenu_id' => 'required|integer',
-            // 'logo' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-            // 'owner_name' => 'required|string|max:255',
-            // 'vendor_image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-            // 'gst_image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-            // 'gst_number' => 'required|string|max:15',
-            // 'pan_image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-            // 'pan_number' => 'required|string|max:10',
-            // 'adhar_image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'logo' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'owner_name' => 'required|string|max:255',
+            'vendor_image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'gst_image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'gst_number' => 'required|string|max:15',
+            'pan_image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'pan_number' => 'required|string|max:10',
+            'adhar_image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
             // 'adhar_numbere' => 'required|string|max:12',
             // 'visiting_card' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
             // 'client_sign' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
@@ -76,45 +83,38 @@ class VendorController extends Controller
             // 'location_lat' => 'nullable|numeric',
             // 'location_lang' => 'nullable|numeric',
         ]);
+        // return $request->all();
 
         // Save vendor data
-        $vendor = Vendor::create($validatedData);
+        $vendor = Vendor::create( $validatedData);
 
-        // if ($request->hasFile('vendor_image')) {
-        //     $filename = $this->fileUploadService->uploadImage('vendor/', $request->file('vendor_image'));
-        //     $vendor['vendor_image'] = $filename;
-        // }
+        if ($request->hasFile('vendor_image')) {
+            $filename = $this->fileUploadService->uploadImage('vendor/', $request->file('vendor_image'));
+            $vendor->vendor_image = $filename;
+        }
 
-        // if ($request->hasFile('gst_image')) {
-        //     $filename = $this->fileUploadService->uploadImage('vendor/', $request->file('gst_image'));
-        //     $vendor['gst_image'] = $filename;
-        // }
+        if ($request->hasFile('gst_image')) {
+            $filename = $this->fileUploadService->uploadImage('vendor/', $request->file('gst_image'));
+            $vendor->gst_image = $filename;
+        }
 
-        // if ($request->hasFile('pan_image')) {
-        //     $filename = $this->fileUploadService->uploadImage('vendor/', $request->file('pan_image'));
-        //     $vendor['pan_image'] = $filename;
-        // }
-
-        // if ($request->hasFile('adhar_image')) {
-        //     $filename = $this->fileUploadService->uploadImage('vendor/', $request->file('adhar_image'));
-        //     $vendor['adhar_image'] = $filename;
-        // }
-
-        // if ($request->hasFile('adhar_image')) {
-        //     $filename = $this->fileUploadService->uploadImage('vendor/', $request->file('adhar_image'));
-        //     $vendor['adhar_image'] = $filename;
-        // }
-
-        // if ($request->hasFile('visiting_card')) {
-        //     $filename = $this->fileUploadService->uploadImage('vendor/', $request->file('visiting_card'));
-        //     $vendor['visiting_card'] = $filename;
-        // }
-
-        // if ($request->hasFile('client_sign')) {
-        //     $filename = $this->fileUploadService->uploadImage('vendor/', $request->file('client_sign'));
-        //     $vendor['client_sign'] = $filename;
-        // }
-
+        if ($request->hasFile('pan_image')) {
+            $filename = $this->fileUploadService->uploadImage('vendor/', $request->file('pan_image'));
+            $vendor->pan_image = $filename;
+        }
+        if ($request->hasFile('adhar_image')) {
+            $filename = $this->fileUploadService->uploadImage('vendor/', $request->file('adhar_image'));
+            $vendor->adhar_image = $filename;
+        }
+        if ($request->hasFile('visiting_card')) {
+            $filename = $this->fileUploadService->uploadImage('vendor/', $request->file('visiting_card'));
+            $vendor->visiting_card = $filename;
+        }
+        if ($request->hasFile('client_sign')) {
+            $filename = $this->fileUploadService->uploadImage('vendor/', $request->file('client_sign'));
+            $vendor->client_sign = $filename;
+        }
+        
 
         return redirect(route('vendors.index'))->with('success', 'Vendor Created Successfully!');
     }
@@ -138,9 +138,13 @@ class VendorController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
-    {
-        //
-    }
+{
+    $vendor = Vendor::findOrFail($id); // Find the vendor by ID or fail if not found
+    $subcategories = SubCategory::orderByDesc('created_at')->get();
+    $submenu = SubMenu::orderByDesc('created_at')->get();
+    return view('backend.vendor.edit', compact('vendor', 'subcategories', 'submenu')); // Pass the vendor data to the view
+}
+
 
     /**
      * Update the specified resource in storage.
@@ -151,8 +155,58 @@ class VendorController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $validatedData = $request->validate([
+            'manager_id' => 'required|integer',
+            'employee_id' => 'required|integer',
+            'sub_category' => 'required|string|max:255',
+            'company_name' => 'required|string|max:255',
+            'legal_company_name' => 'required|string|max:255',
+            'city' => 'required|string|max:255',
+            'state' => 'required|string|max:255',
+            'pincode' => 'required|string|max:6',
+            'address' => 'required|string|max:500',
+            'email' => 'required|email',
+            'website' => 'nullable|url',
+            'verified' => 'required|integer',
+            'logo' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'owner_name' => 'required|string|max:255',
+            'vendor_image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'gst_image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'gst_number' => 'required|string|max:15',
+            'pan_image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'pan_number' => 'required|string|max:10',
+            'adhar_image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+        ]);
+    
+        $vendor = Vendor::findOrFail($id); // Find the vendor by ID or fail if not found
+        $vendor->update($validatedData); // Update the vendor data
+    
+        // Handle file uploads
+        if ($request->hasFile('vendor_image')) {
+            $filename = $this->fileUploadService->uploadImage('vendor/', $request->file('vendor_image'));
+            $vendor->vendor_image = $filename;
+        }
+    
+        if ($request->hasFile('gst_image')) {
+            $filename = $this->fileUploadService->uploadImage('vendor/', $request->file('gst_image'));
+            $vendor->gst_image = $filename;
+        }
+    
+        if ($request->hasFile('pan_image')) {
+            $filename = $this->fileUploadService->uploadImage('vendor/', $request->file('pan_image'));
+            $vendor->pan_image = $filename;
+        }
+    
+        if ($request->hasFile('adhar_image')) {
+            $filename = $this->fileUploadService->uploadImage('vendor/', $request->file('adhar_image'));
+            $vendor->adhar_image = $filename;
+        }
+    
+        $vendor->save(); // Save the changes
+    
+        return redirect(route('vendors.index'))->with('success', 'Vendor Updated Successfully!');
     }
+    
 
     /**
      * Remove the specified resource from storage.
@@ -160,8 +214,12 @@ class VendorController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+        public function destroy($id)
     {
-        //
+        $vendor = Vendor::findOrFail($id); // Find the vendor by ID or fail if not found
+        $vendor->delete(); // Delete the vendor
+
+        return redirect(route('vendors.index'))->with('success', 'Vendor Deleted Successfully!');
     }
+
 }

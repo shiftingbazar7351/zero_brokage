@@ -210,6 +210,14 @@
                                 placeholder="Enter Ammount"></textarea>
                             <div id="description-error" class="text-danger"></div>
                         </div>
+                        <div class="mb-3 col-md-6">
+                            <label for="details" class="col-form-label">Details <span
+                                    class="text-danger">*</span></label>
+                            <textarea class="form-control" id="details" name="details">{{ old('details') }}</textarea>
+                            @error('details')
+                                <span class="text-danger">{{ $message }}</span>
+                            @enderror
+                        </div>
                         <button type="submit" class="btn btn-primary">Save</button>
                     </form>
                 </div>

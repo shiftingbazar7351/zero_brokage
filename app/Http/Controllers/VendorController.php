@@ -141,8 +141,8 @@ class VendorController extends Controller
 {
     $vendor = Vendor::findOrFail($id); // Find the vendor by ID or fail if not found
     $subcategories = SubCategory::orderByDesc('created_at')->get();
-    $submenu = SubMenu::orderByDesc('created_at')->get();
-    return view('backend.vendor.edit', compact('vendor', 'subcategories', 'submenu')); // Pass the vendor data to the view
+    $submenus = SubMenu::orderByDesc('created_at')->get();
+    return view('backend.vendor.edit', compact('vendor', 'subcategories', 'submenus')); // Pass the vendor data to the view
 }
 
 
@@ -156,9 +156,9 @@ class VendorController extends Controller
     public function update(Request $request, $id)
     {
         $validatedData = $request->validate([
-            'manager_id' => 'required|integer',
-            'employee_id' => 'required|integer',
-            'sub_category' => 'required|string|max:255',
+            'manager_id' => 'required',
+            'employee_id' => 'required',
+            // 'sub_category' => 'required|string|max:255',
             'company_name' => 'required|string|max:255',
             'legal_company_name' => 'required|string|max:255',
             'city' => 'required|string|max:255',
@@ -167,7 +167,7 @@ class VendorController extends Controller
             'address' => 'required|string|max:500',
             'email' => 'required|email',
             'website' => 'nullable|url',
-            'verified' => 'required|integer',
+            'verified' => 'required',
             'logo' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
             'owner_name' => 'required|string|max:255',
             'vendor_image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
@@ -180,6 +180,7 @@ class VendorController extends Controller
     
         $vendor = Vendor::findOrFail($id); // Find the vendor by ID or fail if not found
         $vendor->update($validatedData); // Update the vendor data
+        // return $vendor;
     
         // Handle file uploads
         if ($request->hasFile('vendor_image')) {

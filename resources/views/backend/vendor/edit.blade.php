@@ -8,12 +8,13 @@
                 <div class="main-wrapper">
 
                     <div class="container border p-2 shadow-sm mt-2">
-                        <h4> Create Vendor</h4>
+                        <h4> Edit Vendor</h4>
                     </div>
                     <div class="container mt-4 border p-5 rounded shadow">
                         <form id="addCategoryModal" action="{{ route('vendors.update',$vendor->id ??'', $vendor->company_name ??'') }}" method="POST"
                             enctype="multipart/form-data">
                             @csrf
+                            @method('PUT')
                             <div class="row mx-auto">
                                 <div class="col-2">
                                     <label for="formManager" class="form-label">Manager</label>
@@ -49,6 +50,9 @@
                                         <option value="2"{{ old('sub_category') == '2' ? 'selected' : '' }}>Two</option>
                                         <option value="3"{{ old('sub_category') == '3' ? 'selected' : '' }}>Three</option>
                                     </select>
+                                    @error('sub_category')
+                                    <div class="error text-danger ">{{ $message }}</div>
+                                    @enderror
                                 </div>
                                 <div class="col-md-3">
                                     <label for="companyname" class="form-label">Company Name</label><span> (if same
@@ -63,7 +67,7 @@
                                 </div>
                                 <div class="col-md-2">
                                     <label for="lcompanyname" class="form-label">Legal Company Name</label>
-                                    <input name="legal_company_name"  value="{{ old('legal_company_name', $vendor->company_name ??'') }}" id="lcompanyname" class="form-control bg-light-subtle"
+                                    <input name="legal_company_name"  value="{{ old('legal_company_name', $vendor->legal_company_name ??'') }}" id="lcompanyname" class="form-control bg-light-subtle"
                                         type="text" placeholder="Company name" aria-label="default input example">
                                     @error('legal_company_name')
                                     <div class="error text-danger ">{{ $message }}</div>
@@ -82,9 +86,7 @@
                                         <option value="2"{{ old('state') == '3' ? 'selected' : '' }}>Two</option>
                                         <option value="3"{{ old('state') == '3' ? 'selected' : '' }}>Three</option>
                                     </select>
-                                    @error('state')
-                                    <div class="error text-danger ">{{ $message }}</div>
-                                    @enderror
+                                   
                                 </div>
 
                                 <div class="col-4">
@@ -102,7 +104,7 @@
                                 </div>
                                 <div class="col-4">
                                     <label for="pinnumber" class="form-label">PIN Code</label>
-                                    <input name="pincode" value="{{ old('pincode', $vendor->company_name ??'') }}" id="pinnumber" class="form-control bg-light-subtle"
+                                    <input name="pincode" value="{{ old('pincode', $vendor->pincode ??'') }}" id="pinnumber" class="form-control bg-light-subtle"
                                         type="text" placeholder="PIN code number" maxlength="6"
                                         onkeyup="validateField(this)" aria-label="default input example">
                                     <div id="pinnumberError" class="errorMessage text-danger"></div>
@@ -114,14 +116,14 @@
 
                             <div class="row mt-4">
                                 <div class="mb-3">
-                                    <label for="exampleFormControlTextarea1" class="form-label text-dark">Example
-                                        textarea</label>
-                                    <textarea name="address" value="{{ old('address', $vendor->address ??'') }}" class="form-control bg-light-subtle" id="exampleFormControlTextarea1" rows="3"></textarea>
+                                    <label for="exampleFormControlTextarea1" class="form-label text-dark">Address</label>
+                                    <textarea name="address" class="form-control bg-light-subtle" id="exampleFormControlTextarea1" rows="3">{{ old('address', isset($vendor) ? $vendor->address : '') }}</textarea>
+                                    @error('address')
+                                        <div class="error text-danger">{{ $message }}</div>
+                                    @enderror
                                 </div>
-                                @error('address')
-                                <div class="error text-danger ">{{ $message }}</div>
-                                @enderror
                             </div>
+                            
 
 
                             <div class="row mt-4">
@@ -137,18 +139,26 @@
                                 </div>
 
                                 <div class="col-4">
-                                    <label for="formFile" class="form-label">Whatsapp</label><span class="mx-3">(Get
-                                        notification)</span>
-                                    <input name="whatsapp"  value="{{ old('whatsapp', $vendor->whatsapp ??'') }}" class="form-check-input mx-2" type="checkbox" value=""
-                                        id="flexCheckChecked" checked>
-                                    <input name="whatsapp" value="{{ old('whatsapp', $vendor->whatsapp ??'') }}" class="form-control bg-light-subtle" id="whatsappNumVender"
+                                    <label for="formFile" class="form-label">Whatsapp</label><span class="mx-3">(Get notification)</span>
+                                
+                                    <!-- Checkbox for notification -->
+                                    <input name="whatsapp_notification" class="form-check-input mx-2" type="checkbox"
+                                        id="flexCheckChecked"
+                                        {{ old('whatsapp_notification', isset($vendor) && $vendor->whatsapp ? 'checked' : '') }}>
+                                
+                                    <!-- Input field for WhatsApp number -->
+                                    <input name="whatsapp" value="{{ old('whatsapp', $vendor->whatsapp ?? '') }}"
+                                        class="form-control bg-light-subtle" id="whatsappNumVender"
                                         type="text" placeholder="Whatsapp number" aria-label="default input example"
                                         onkeyup="validateField(this)" maxlength="10">
+                                
+                                    <!-- Error message for WhatsApp -->
                                     <div id="whatsappError" class="text-danger"></div>
                                     @error('whatsapp')
-                                    <div class="error text-danger ">{{ $message }}</div>
+                                        <div class="error text-danger">{{ $message }}</div>
                                     @enderror
                                 </div>
+                                
                                 <div class="col-4">
                                     <label for="phoneNumVender" class="form-label">Phone Number</label><span
                                         class="mx-3">(Get
@@ -192,10 +202,10 @@
                                     <label for="formFile" class="form-label">Select Sub-Menu</label>
                                     <select name="submenu_id" class="form-select bg-light-subtle"
                                         aria-label="Default select example" style="box-shadow: none">
-                                        <option selected>Own</option>
-                                        <option value="1">One</option>
-                                        <option value="2">Two</option>
-                                        <option value="3">Three</option>
+                                        <option selected disabled value="">Select Option</option>
+                                        @foreach($submenus as $submenu)
+                                            <option value="{{ $submenu->id }}">{{ $submenu->name }}</option>
+                                        @endforeach
                                     </select>
                                     @error('submenu_id')
                                     <div class="error text-danger ">{{ $message }}</div>

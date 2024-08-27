@@ -87,6 +87,7 @@ class SubMenuController extends Controller
         $subcategory->menu_id = $request->menu;
         $subcategory->city_id = $request->city;
         $subcategory->description = $request->description;
+        $subcategory->details = $request->details;
         $subcategory->slug = generateSlug($request->name);
         $subcategory->total_price = $request->total_price;
         $subcategory->discount = $request->discount;
@@ -155,6 +156,8 @@ class SubMenuController extends Controller
         $sub_menu->subcategory_id = $request->subcategory;
         $sub_menu->category_id = $request->category_id;
         $sub_menu->menu_id = $request->menu_id;
+        $sub_menu->description = $request->description;
+        $sub_menu->details = $request->details;
         $sub_menu->name = $request->input('name');
         $sub_menu->category_id = $request->input('category');
         $sub_menu->city_id = $request->input('city_id');

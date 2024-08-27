@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Category;
 use App\Models\City;
 use App\Models\Faq;
+use App\Models\IndiaServiceDescription;
 use App\Models\Menu;
 use App\Models\ServiceDetail;
 use App\Models\State;
@@ -33,7 +34,7 @@ class FrontendController extends Controller
             ->where('subcategory_id', $subcategory->id ?? '')
             ->where('status', 1)
             ->orderByDesc('created_at')
-            ->select('id', 'name', 'image', 'slug', 'total_price', 'discounted_price', 'discount', 'subcategory_id', 'menu_id', 'city_id')
+            ->select('id', 'name', 'image', 'slug', 'total_price', 'discounted_price', 'discount', 'subcategory_id', 'menu_id', 'city_id' ,'description','details')
             ->get();
 
         return view('frontend.service-list', compact('submenus', 'subcategory', 'menus'));
@@ -41,7 +42,13 @@ class FrontendController extends Controller
     public function servicesInIndia()
     {
         $faqs = Faq::where('status',1)->select('question','answer')->get();
-        return view('frontend.services-in-india',compact('faqs'));
+        $description = IndiaServiceDescription::first();
+        $submenus = SubMenu::with(['subCategory', 'menu','cityName.state'])
+        ->where('status', 1)
+        ->orderByDesc('created_at')
+        ->select('id', 'name', 'image', 'slug', 'total_price', 'discounted_price', 'discount', 'subcategory_id', 'menu_id', 'city_id' ,'description','details')
+        ->get();
+        return view('frontend.services-in-india',compact('faqs','submenus','description'));
     }
 
 

@@ -5,6 +5,7 @@ use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\EnquiryController;
 use App\Http\Controllers\FaqController;
 use App\Http\Controllers\FrontendController;
+use App\Http\Controllers\IndiaServiceController;
 use App\Http\Controllers\MenuController;
 use App\Http\Controllers\MetaDescripConroller;
 use App\Http\Controllers\MetaTitleController;
@@ -117,6 +118,7 @@ Route::middleware('auth')->group(function () {
     Route::resource('/faq', FaqController::class);
     Route::post('/faq-status', [FaqController::class, 'faqStatus'])->name('faq.status');
 
+    Route::resource('/india-services', IndiaServiceController::class);
 
 });
 

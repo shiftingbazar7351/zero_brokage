@@ -12,16 +12,16 @@
     </a>
     <div class="header-split">
         <div class="page-headers">
-            <div class="search-bar">
+            {{-- <div class="search-bar">
                 <span><i class="fe fe-search"></i></span>
                 <input type="text" placeholder="Search" class="form-control">
-            </div>
+            </div> --}}
         </div>
         <ul class="nav user-menu">
             <li class="nav-item">
-                <a href="../index.html" class="viewsite"><i class="fe fe-globe me-2"></i>View Site</a>
+                <a href="{{ route('home') }}" class="viewsite"><i class="fe fe-globe me-2"></i>View Site</a>
             </li>
-            <li class="nav-item dropdown has-arrow dropdown-heads flag-nav">
+            {{-- <li class="nav-item dropdown has-arrow dropdown-heads flag-nav">
                 <a class="nav-link" data-bs-toggle="dropdown" href="javascript:void(0);" role="button">
                     <img src="assets/img/flags/us1.png" alt="Flag" height="20">
                 </a>
@@ -39,13 +39,13 @@
                         <img src="assets/img/flags/de.png" class="me-2" alt="Flag" height="16"> German
                     </a>
                 </div>
-            </li>
-            <li class="nav-item  has-arrow dropdown-heads ">
+            </li> --}}
+            {{-- <li class="nav-item  has-arrow dropdown-heads ">
                 <a href="javascript:void(0);" class="toggle-switch">
                     <i class="fe fe-moon"></i>
                 </a>
-            </li>
-            <li class="nav-item dropdown has-arrow dropdown-heads ">
+            </li> --}}
+            {{-- <li class="nav-item dropdown has-arrow dropdown-heads ">
                 <a href="javascript:void(0);" data-bs-toggle="dropdown">
                     <i class="fe fe-bell"></i>
                 </a>
@@ -194,7 +194,7 @@
                         <a href="notifications.html">View all Notifications</a>
                     </div>
                 </div>
-            </li>
+            </li> --}}
             <li class="nav-item  has-arrow dropdown-heads ">
                 <a href="javascript:void(0);" class="win-maximize">
                     <i class="fe fe-maximize"></i>
@@ -231,9 +231,9 @@
                                 <li>
                                     <a href="account-settings.html">Profile</a>
                                 </li>
-                                <li>
+                                {{-- <li>
                                     <a href="localization.html">Settings</a>
-                                </li>
+                                </li> --}}
                             </ul>
                         </div>
                         <div class="subscription-logout">

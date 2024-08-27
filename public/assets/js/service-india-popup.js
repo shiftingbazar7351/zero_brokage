@@ -66,7 +66,7 @@ otpOnWhatsappBookingg.onclick = function(){
 
 
 
- let interval;
+//  let interval;
 function startCountdownBooking(seconds) {
     let counter = seconds;
     var countdownElement = document.getElementById("counter-booking-india");

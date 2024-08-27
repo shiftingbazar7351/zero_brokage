@@ -3,7 +3,9 @@
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\EnquiryController;
+use App\Http\Controllers\FaqController;
 use App\Http\Controllers\FrontendController;
+use App\Http\Controllers\IndiaServiceController;
 use App\Http\Controllers\MenuController;
 use App\Http\Controllers\MetaDescripConroller;
 use App\Http\Controllers\MetaTitleController;
@@ -55,19 +57,25 @@ Route::get('/term-condition', function () {
     return view('frontend.term-condition');
 })->name('term-condition');
 
-Route::get('/services-in-india', function () {
-    return view('frontend.services-in-india');
-})->name('services-in-india');
-
-// Route::get('/create-vendor', function () {
-//     return view('frontend.create-vendor');
-// })->name('create-vendor');
+// Route::get('/services-in-india', function () {
+//     return view('frontend.services-in-india');
+// })->name('services-in-india');
 
 Route::get('/vender-profile', function () {
     return view('frontend.vender-profile');
 })->name('vender-profile');
 
+// Route::get('/service-in-india-city', function () {
+//     return view('frontend.service-in-india-city');
+// })->name('service-in-india-city');
+
+Route::get('/create-vendor', function () {
+    return view('frontend.create-vendor');
+})->name('create-vendor');
+
 Route::get('/service-list', [FrontendController::class, 'serviceList'])->name('service-list');
+Route::get('/services-in-india', [FrontendController::class, 'servicesInIndia'])->name('services-in-india');
+Route::get('/service-in-india-city', [FrontendController::class, 'servicesInIndiaCity'])->name('services-in-india');
 
 
 Route::get('/', [FrontendController::class, 'home'])->name('home');
@@ -115,6 +123,11 @@ Route::middleware('auth')->group(function () {
 
 
     Route::resource('/vendors', VendorController::class);
+
+    Route::resource('/faq', FaqController::class);
+    Route::post('/faq-status', [FaqController::class, 'faqStatus'])->name('faq.status');
+
+    Route::resource('/india-services', IndiaServiceController::class);
 
 });
 

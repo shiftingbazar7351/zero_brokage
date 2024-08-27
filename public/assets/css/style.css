@@ -3174,7 +3174,7 @@ html.menu-opened body {
     color: #ffbc35;
 }
 .client-section {
-    padding: 50px 0 66px;
+    padding: 28px 0 35px;
 }
 .client-widget {
     background: #fff;
@@ -28081,6 +28081,10 @@ td.ant-table-column-sort {
     }
     .inputOTP{
         width: 50% !important;
+        margin: auto;
+    }
+    .city-select{
+        width: 80% !important;
         margin: auto;
     }
 }

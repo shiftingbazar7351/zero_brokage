@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Category;
 use App\Models\City;
+use App\Models\Faq;
+use App\Models\IndiaServiceDescription;
 use App\Models\Menu;
 use App\Models\ServiceDetail;
 use App\Models\State;
@@ -21,7 +23,6 @@ class FrontendController extends Controller
         $featuresubcat = $subcategories->where('featured', 1);
         return view('frontend.home', compact('subcategories', 'trendingsubcat', 'featuresubcat'));
     }
-
     public function subCategory($slug)
     {
         $menus = Menu::select('id', 'name', 'image', 'slug', 'category_id', 'subcategory_id')->where('status', 1)->get();
@@ -33,23 +34,34 @@ class FrontendController extends Controller
             ->where('subcategory_id', $subcategory->id ?? '')
             ->where('status', 1)
             ->orderByDesc('created_at')
-            ->select('id', 'name', 'image', 'slug', 'total_price', 'discounted_price', 'discount', 'subcategory_id', 'menu_id', 'city_id')
+            ->select('id', 'name', 'image', 'slug', 'total_price', 'discounted_price', 'discount', 'subcategory_id', 'menu_id', 'city_id' ,'description','details')
             ->get();
 
         return view('frontend.service-list', compact('submenus', 'subcategory', 'menus'));
     }
-    public function serviceDetails()
+    public function servicesInIndia()
     {
-        $subcategories = SubCategory::orderByDesc('created_at')->get();
-        $categories = Category::orderByDesc('created_at')->get();
-        $services = ServiceDetail::orderByDesc('created_at')->first();
-        return view('frontend.service-details', compact('subcategories', 'categories', 'services'));
+        $faqs = Faq::where('status',1)->select('question','answer')->get();
+        $description = IndiaServiceDescription::first();
+        $submenus = SubMenu::with(['subCategory', 'menu','cityName.state'])
+        ->where('status', 1)
+        ->orderByDesc('created_at')
+        ->select('id', 'name', 'image', 'slug', 'total_price', 'discounted_price', 'discount', 'subcategory_id', 'menu_id', 'city_id' ,'description','details')
+        ->get();
+        return view('frontend.services-in-india',compact('faqs','submenus','description'));
     }
 
-    public function serviceList()
+    public function servicesInIndiaCity()
     {
-        $categories = Category::get();
-        return view('frontend.service-list', compact('categories'));
+        $faqs = Faq::where('status',1)->select('question','answer')->get();
+        $description = IndiaServiceDescription::first();
+        $submenus = SubMenu::with(['subCategory', 'menu','cityName.state'])
+        ->where('status', 1)
+        ->orderByDesc('created_at')
+        ->select('id', 'name', 'image', 'slug', 'total_price', 'discounted_price', 'discount', 'subcategory_id', 'menu_id', 'city_id' ,'description','details')
+        ->get();
+        return view('frontend.service-in-india-city',compact('faqs','submenus','description'));
     }
+
 
 }

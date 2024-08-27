@@ -22,12 +22,12 @@ class SubMenuController extends Controller
      * @return \Illuminate\Http\Response
      */
 
-     protected $fileUploadService;
+    protected $fileUploadService;
 
-     public function __construct(FileUploadService $fileUploadService)
-     {
-         $this->fileUploadService = $fileUploadService;
-     }
+    public function __construct(FileUploadService $fileUploadService)
+    {
+        $this->fileUploadService = $fileUploadService;
+    }
     public function index()
     {
         $menus = Menu::where('status', 1)->orderBydesc('created_at')->get();
@@ -85,11 +85,12 @@ class SubMenuController extends Controller
         $subcategory->category_id = $request->category;
         $subcategory->subcategory_id = $request->subcategory_id;
         $subcategory->menu_id = $request->menu;
-        $subcategory->city_id =$request->city;
-        $subcategory->description =$request->description;
+        $subcategory->city_id = $request->city;
+        $subcategory->description = $request->description;
+        $subcategory->details = $request->details;
         $subcategory->slug = generateSlug($request->name);
         $subcategory->total_price = $request->total_price;
-        $subcategory->discount =  $request->discount;
+        $subcategory->discount = $request->discount;
         $subcategory->discounted_price = $finalPrice;
 
         if ($request->hasFile('image')) {
@@ -130,7 +131,7 @@ class SubMenuController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request,SubMenu $sub_menu)
+    public function update(Request $request, SubMenu $sub_menu)
     {
         $request->validate([
             // 'name' => 'required|unique:sub_menus,name,' . $sub_menu->id,
@@ -155,6 +156,8 @@ class SubMenuController extends Controller
         $sub_menu->subcategory_id = $request->subcategory;
         $sub_menu->category_id = $request->category_id;
         $sub_menu->menu_id = $request->menu_id;
+        $sub_menu->description = $request->description;
+        $sub_menu->details = $request->details;
         $sub_menu->name = $request->input('name');
         $sub_menu->category_id = $request->input('category');
         $sub_menu->city_id = $request->input('city_id');
@@ -179,23 +182,23 @@ class SubMenuController extends Controller
      */
 
     public function destroy($id)
-        {
-                try {
-                    $submenu = SubMenu::findOrFail($id);
+    {
+        try {
+            $submenu = SubMenu::findOrFail($id);
 
-                $img = $submenu->image;
-                $submenu->forceDelete();
-                if ($img) {
+            $img = $submenu->image;
+            $submenu->forceDelete();
+            if ($img) {
                 $this->fileUploadService->removeImage('submenu/', $img);
-                }
+            }
 
-                $submenu->delete();
-                return redirect()->back()->with('success', 'Menu Deleted.');
+            $submenu->delete();
+            return redirect()->back()->with('success', 'Menu Deleted.');
 
-                } catch (Exception $e) {
-                    return redirect()->back()->with('error', 'Something went wrong');
-                }
+        } catch (Exception $e) {
+            return redirect()->back()->with('error', 'Something went wrong');
         }
+    }
     public function fetchsubcategory($category_id = null)
     {
         $data = SubCategory::where('category_id', $category_id)->get();

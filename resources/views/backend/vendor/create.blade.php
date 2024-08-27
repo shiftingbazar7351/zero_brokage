@@ -7,12 +7,12 @@
 
                 <div class="main-wrapper">
 
-                    <div class="container border p-2 shadow-sm mt-2">
+                    <div class="container border p-5 shadow-sm mt-2">
                         <h4> Create Vendor</h4>
                     </div>
                     <div class="container mt-4 border p-5 rounded shadow">
                         <form id="addCategoryModal" action="{{ route('vendors.store') }}" method="POST"
-                            enctype="multipart/form-data">
+                                          enctype="multipart/form-data">
                             @csrf
                             <div class="row mx-auto">
                                 <div class="col-2">
@@ -64,8 +64,7 @@
                                     @error('legal_company_name')
                                     <div class="error text-danger ">{{ $message }}</div>
                                 @enderror
-                                </div>
-                               
+
                             </div>
 
                             <div class="row mt-3">
@@ -257,16 +256,7 @@
                                             placeholder="Enter location" aria-label="default input example">
                                         <button type="button" class="btn btn-primary">Add</button>
                                     </div>
-                                </div>
-
-
-                            </div>
-                            <div class="row mt-3">
-                                <div class="">
-
-                                    <button type="submit" class="btn btn-success">Submit</button>
-                                </div>
-                            </div>
+       </div>
 
                         </form>
                     </div>

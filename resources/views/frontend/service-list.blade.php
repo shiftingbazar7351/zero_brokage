@@ -1,11 +1,7 @@
 @extends('frontend.layouts.main')
 @section('content')
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/css/intlTelInput.min.css">
-    <div class="bg-img">
-        <img src="assets/img/bg/work-bg-03.png" alt="img" class="bgimg1">
-        <img src="assets/img/bg/work-bg-03.png" alt="img" class="bgimg2">
-        <img src="assets/img/bg/feature-bg-03.png" alt="img" class="bgimg3">
-    </div>
+
 
     <div class="breadcrumb-bar">
         <div class="container">
@@ -20,18 +16,18 @@
                             <li class="mb-2">Door step repair in within 100 minutes</li>
                         </ul>
 
-                        </div>
                     </div>
-                    <div class="rating-img mt-4 d-flex align-items-center gap-3">
-                        <img src="{{ asset('assets/img/icons/stars.png') }}" style="width: 65px" alt=""> <span
-                            style="font-weight: bold; font-size: 2.9rem; color: #f0d32f;">
-                            4.5
-                        </span>
-                    </div>
-
                 </div>
+                <div class="rating-img mt-4 d-flex align-items-center gap-3">
+                    <img src="{{ asset('assets/img/icons/stars.png') }}" style="width: 65px" alt=""> <span
+                        style="font-weight: bold; font-size: 2.9rem; color: #f0d32f;">
+                        4.5
+                    </span>
+                </div>
+
             </div>
         </div>
+    </div>
     </div>
 
 
@@ -42,12 +38,12 @@
             <i id="left" class="fa-solid fas fa-angle-left"></i>
             <ul class="carousel">
                 @foreach ($menus as $menu)
-                <li class="card">
-                    <div class="img">
-                        <img src="{{ Storage::url('menu/' . $menu->image ??'') }}" alt="" draggable="false" />
-                    </div>
-                    <h5 style="font-weight: bold" class="pt-1">{{ $menu->name ??'' }}</h5>
-                </li>
+                    <li class="card">
+                        <div class="img">
+                            <img src="{{ Storage::url('menu/' . $menu->image ?? '') }}" alt="" draggable="false" />
+                        </div>
+                        <h5 style="font-weight: bold" class="pt-1">{{ $menu->name ?? '' }}</h5>
+                    </li>
                 @endforeach
             </ul>
             <i id="right" class="fa-solid fas fa-angle-right"></i>
@@ -73,8 +69,7 @@
                         <div class="filter-content">
                             <h2>Location</h2>
                             <div class="group-img">
-                                <input type="text" class="form-control" placeholder="Select Location"
-                                    id="location-val">
+                                <input type="text" class="form-control" placeholder="Select Location" id="location-val">
                                 <i class="feather-map-pin"></i>
                             </div>
                         </div>
@@ -142,13 +137,13 @@
                         </div>
 
                         <!-- <div class="filter-content">
-                                    <h2>Location</h2>
-                                    <div class="group-img">
-                                        <input type="text" class="form-control" placeholder="Select Location">
-                                        <i class="feather-map-pin"></i>
-                                    </div>
-                                </div> -->
-                        <div class="filter-content">
+                                        <h2>Location</h2>
+                                        <div class="group-img">
+                                            <input type="text" class="form-control" placeholder="Select Location">
+                                            <i class="feather-map-pin"></i>
+                                        </div>
+                                    </div> -->
+                        {{-- <div class="filter-content">
                             <h2 class="mb-4">Price Range</h2>
                             <div class="filter-range">
                                 <input type="text" id="range_03">
@@ -156,7 +151,7 @@
                             <div class="filter-range-amount">
                                 <h5>Price: <span>$5 - $210</span></h5>
                             </div>
-                        </div>
+                        </div> --}}
                         <div class="filter-content">
                             <h2>By Rating <span><i class="feather-chevron-down"></i></span></h2>
                             <ul class="rating-set">
@@ -259,40 +254,75 @@
                     <div class="row">
                         <div class="col-md-12">
                             @foreach ($submenus as $menu)
-                            <div class="service-list">
-                                <div class="service-cont">
-                                    <div class="service-cont-img">
-                                        <a href="service-details.html">
-                                            <img class="img-fluid serv-img" alt="Service Image"
-                                                src="{{ asset('storage/submenu/' . $menu->image ?? '') }}">
-                                        </a>
-                                        {{-- <div class="fav-item">
+                                <div class="service-list">
+                                    <div class="service-cont">
+                                        <div class="service-cont-img">
+                                            <a href="service-details.html">
+                                                <img class="img-fluid serv-img" alt="Service Image"
+                                                    src="{{ asset('storage/submenu/' . $menu->image ?? '') }}">
+                                            </a>
+                                            {{-- <div class="fav-item">
                                             <a href="javascript:void(0)" class="fav-icon">
                                                 <i class="feather-heart"></i>
                                             </a>
                                         </div> --}}
-                                    </div>
-                                    <div class="service-cont-info">
-                                        <span class="item-cat">{{ $menu->menu->name ??'' }}</span>
-                                        <h5 class="title">
-                                            <a href="service-details.html">{{ $menu->name ??'' }}</a>
-                                        </h5>
-                                        <p>{{ $menu->description ??'' }}</p>
-                                        {{-- <a href="" class="text-primary">Read more </a> --}}
-                                        <div class="service-pro-img d-flex gap-4">
-                                            <p><i class="feather-map-pin"></i>
-                                                {{ ucwords($menu->cityName->name ?? '') }},
-                                                {{ ucwords($states->s ?? '') }}
-                                            </p>
                                         </div>
+                                        <div class="service-cont-info">
+                                            <span class="item-cat">{{ $menu->menu->name ?? '' }}</span>
+                                            <h5 class="title">
+                                                <a href="service-details.html">{{ $menu->name ?? '' }}</a>
+                                            </h5>
+                                            <p>{{ $menu->description ?? '' }}</p>
+                                            <a href="" class="text-primary text-decoration-underline"
+                                                data-bs-toggle="modal" data-bs-target="#exampleModal">View Details </a>
+                                            <div class="modal fade" id="exampleModal" tabindex="-1"
+                                                aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                                <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                            <h5 class="modal-title" id="exampleModalLabel">Service Details
+                                                            </h5>
+                                                            <button type="button" class="btn-close"
+                                                                data-bs-dismiss="modal" aria-label="Close"></button>
+                                                        </div>
+                                                        <div class="modal-body">
+                                                            <h5>Included</h5>
+                                                            <p class="mb-2">Lorem ipsum dolor sit amet consectetur
+                                                                adipisicing elit. Optio, ad?</p>
+                                                            <h5>Excluded</h5>
+                                                            <p class="mb-2">Lorem ipsum dolor sit amet consectetur
+                                                                adipisicing elit. Optio, ad?</p>
+                                                            <h5>Topic</h5>
+                                                            <p class="mb-2">Lorem ipsum dolor sit amet consectetur
+                                                                adipisicing elit. Optio, ad?</p>
+                                                            <h5>Frequently asked question</h5>
+                                                            <p class="mb-2">Lorem ipsum dolor sit amet consectetur
+                                                                adipisicing elit. Optio, ad?</p>
+                                                            <p class="mb-2">Lorem ipsum dolor sit amet consectetur
+                                                                adipisicing elit. Optio, ad?</p>
+                                                            <p class="mb-2">Lorem ipsum dolor sit amet consectetur
+                                                                adipisicing elit. Optio, ad?</p>
+                                                        </div>
 
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="service-pro-img d-flex gap-4">
+                                                <p><i class="feather-map-pin"></i>
+                                                    {{ ucwords($menu->cityName->name ?? '') }},
+                                                    {{ ucwords($menu->cityName->state->name ?? '') }}
+                                                </p>
+                                            </div>
+
+
+                                        </div>
+                                    </div>
+                                    <div class="service-action">
+                                        <h6>&#8377;{{ $menu->discounted_price ?? '' }}<span class="old-price">&#8377;
+                                                {{ $menu->total_price ?? '' }}</span></h6>
+                                        <a class="btn btn-secondary book-Now-btn">Book Now</a>
                                     </div>
                                 </div>
-                                <div class="service-action">
-                                    <h6>&#8377;{{ $menu->discounted_price ??'' }}<span class="old-price">&#8377; {{ $menu->total_price ??'' }}</span></h6>
-                                    <a class="btn btn-secondary book-Now-btn">Book Now</a>
-                                </div>
-                            </div>
                             @endforeach
                             <div id="myPopup-booking1" class="popup">
                                 <div class="popup-content" style="width:36%">
@@ -325,17 +355,28 @@
                                         width="75px" class="mb-4">
 
 
-                                        <div class="row px-5">
-                                            <div class="col-md-6">
-                                                <input type="text" class="input-detailss form-control mb-4" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" placeholder="Enter your name">
-                                                <input type="text" class="form-control  mb-4 input-detailss" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" placeholder="Enter your Location">
+                                    <div class="row px-5">
+                                        <div class="col-md-6">
+                                            <input type="text" class="input-detailss form-control mb-4"
+                                                aria-label="Sizing example input"
+                                                aria-describedby="inputGroup-sizing-default"
+                                                placeholder="Enter your name">
+                                            <input type="text" class="form-control  mb-4 input-detailss"
+                                                aria-label="Sizing example input"
+                                                aria-describedby="inputGroup-sizing-default"
+                                                placeholder="Enter your Location">
 
-                                            </div>
-                                            <div class="col-md-6">
-                                                <input type="text" class="form-control mb-4 input-detailss" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" placeholder="Enter your email">
-                                                <input type="date" class="form-control  mb-4 input-detailss" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" >
-                                            </div>
                                         </div>
+                                        <div class="col-md-6">
+                                            <input type="text" class="form-control mb-4 input-detailss"
+                                                aria-label="Sizing example input"
+                                                aria-describedby="inputGroup-sizing-default"
+                                                placeholder="Enter your email">
+                                            <input type="date" class="form-control  mb-4 input-detailss"
+                                                aria-label="Sizing example input"
+                                                aria-describedby="inputGroup-sizing-default">
+                                        </div>
+                                    </div>
 
                                     <button id="saveChanges-booking" class="btn mt-4">Continue</button>
 

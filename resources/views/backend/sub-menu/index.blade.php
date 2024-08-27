@@ -106,7 +106,7 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title">Add Sub Menu</h5>
-                    <button type="button" class="btn-close close-modal" data-bs-dismiss="modal" aria-label="Close">
+                    <button type="button" class="btn-close close-modal" data-dismiss="modal" aria-label="Close">
                         <i class="fe fe-x"></i>
                     </button>
                 </div>
@@ -213,6 +213,14 @@
                             <label for="description">Description</label>
                             <textarea type="text" class="form-control" id="description" name="description" placeholder="Enter Ammount"></textarea>
                             <div id="description-error" class="text-danger"></div>
+                        </div>
+                        <div class="mb-3 col-md-6">
+                            <label for="details" class="col-form-label">Details <span
+                                    class="text-danger">*</span></label>
+                            <textarea class="form-control" id="details" name="details">{{ old('details') }}</textarea>
+                            @error('details')
+                                <span class="text-danger">{{ $message }}</span>
+                            @enderror
                         </div>
                         <button type="submit" class="btn btn-primary">Save</button>
                     </form>

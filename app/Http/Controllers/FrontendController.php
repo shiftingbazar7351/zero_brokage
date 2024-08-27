@@ -29,21 +29,13 @@ class FrontendController extends Controller
         if (!$subcategory) {
             abort(404, 'Category not found');
         }
-        $submenus = SubMenu::with(['subCategory', 'menu'])
+        $submenus = SubMenu::with(['subCategory', 'menu','cityName.state'])
             ->where('subcategory_id', $subcategory->id ?? '')
             ->where('status', 1)
             ->orderByDesc('created_at')
             ->select('id', 'name', 'image', 'slug', 'total_price', 'discounted_price', 'discount', 'subcategory_id', 'menu_id', 'city_id')
             ->get();
 
-
-        foreach ($submenus as $submenu) {
-            $city = City::find($submenu->city_id);
-        }
-
-        $states = State::where('status', 'active')
-        // ->where('id',$city->state_id)
-        ->get();
         return view('frontend.service-list', compact('submenus', 'subcategory', 'menus'));
     }
     public function serviceDetails()

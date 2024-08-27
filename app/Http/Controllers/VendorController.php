@@ -5,11 +5,19 @@ use App\Models\Menu;
 use App\Models\Vendor;
 use App\Models\ServiceDetail;
 use App\Models\SubCategory;
+use App\Services\FileUploadService;
 
 use Illuminate\Http\Request;
 
 class VendorController extends Controller
 {
+
+    protected $fileUploadService;
+
+    public function __construct(FileUploadService $fileUploadService)
+    {
+        $this->fileUploadService = $fileUploadService;
+    }
     /**
      * Display a listing of the resource.
      *
@@ -39,15 +47,78 @@ class VendorController extends Controller
     public function store(Request $request)
     {
         $validatedData = $request->validate([
-            // 'subcategory_id' => 'required|string',
-            // 'description' => 'required|string',
-            // 'summery' => 'nullable',
+            'manager_id' => 'required|integer',
+            'employee_id' => 'required|integer',
+            'sub_category' => 'required|string|max:255',
+            'company_name' => 'required|string|max:255',
+            'legal_company_name' => 'required|string|max:255',
+            'city' => 'required|string|max:255',
+            'pincode' => 'required|string|max:6',
+            'address' => 'required|string|max:500',
+            // 'email' => 'required|email',
+            // 'whatsapp' => 'nullable|string|max:10',
+            // 'number' => 'required|string|max:10',
+            // 'website' => 'nullable|url',
+            // 'verified' => 'required|integer',
+            // 'submenu_id' => 'required|integer',
+            // 'logo' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            // 'owner_name' => 'required|string|max:255',
+            // 'vendor_image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            // 'gst_image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            // 'gst_number' => 'required|string|max:15',
+            // 'pan_image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            // 'pan_number' => 'required|string|max:10',
+            // 'adhar_image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            // 'adhar_numbere' => 'required|string|max:12',
+            // 'visiting_card' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            // 'client_sign' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            // 'video' => 'nullable|mimetypes:video/mp4,video/avi,video/mpeg|max:10000',
+            // 'location_lat' => 'nullable|numeric',
+            // 'location_lang' => 'nullable|numeric',
         ]);
-        $data = Vendor::create($validatedData);
-        dd($data);
+
+        // Save vendor data
+        $vendor = Vendor::create($validatedData);
+
+        // if ($request->hasFile('vendor_image')) {
+        //     $filename = $this->fileUploadService->uploadImage('vendor/', $request->file('vendor_image'));
+        //     $vendor['vendor_image'] = $filename;
+        // }
+
+        // if ($request->hasFile('gst_image')) {
+        //     $filename = $this->fileUploadService->uploadImage('vendor/', $request->file('gst_image'));
+        //     $vendor['gst_image'] = $filename;
+        // }
+
+        // if ($request->hasFile('pan_image')) {
+        //     $filename = $this->fileUploadService->uploadImage('vendor/', $request->file('pan_image'));
+        //     $vendor['pan_image'] = $filename;
+        // }
+
+        // if ($request->hasFile('adhar_image')) {
+        //     $filename = $this->fileUploadService->uploadImage('vendor/', $request->file('adhar_image'));
+        //     $vendor['adhar_image'] = $filename;
+        // }
+
+        // if ($request->hasFile('adhar_image')) {
+        //     $filename = $this->fileUploadService->uploadImage('vendor/', $request->file('adhar_image'));
+        //     $vendor['adhar_image'] = $filename;
+        // }
+
+        // if ($request->hasFile('visiting_card')) {
+        //     $filename = $this->fileUploadService->uploadImage('vendor/', $request->file('visiting_card'));
+        //     $vendor['visiting_card'] = $filename;
+        // }
+
+        // if ($request->hasFile('client_sign')) {
+        //     $filename = $this->fileUploadService->uploadImage('vendor/', $request->file('client_sign'));
+        //     $vendor['client_sign'] = $filename;
+        // }
+
 
         return redirect(route('vendors.index'))->with('success', 'Vendor Created Successfully!');
     }
+
 
     /**
      * Display the specified resource.

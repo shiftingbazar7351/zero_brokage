@@ -43,7 +43,8 @@ class VendorController extends Controller
             // 'description' => 'required|string',
             // 'summery' => 'nullable',
         ]);
-        Vendor::create($validatedData);
+        $data = Vendor::create($validatedData);
+        dd($data);
 
         return redirect(route('vendors.index'))->with('success', 'Vendor Created Successfully!');
     }

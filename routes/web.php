@@ -13,6 +13,7 @@ use App\Http\Controllers\ServiceDetailController;
 use App\Http\Controllers\SubCategoryController;
 use App\Http\Controllers\SubMenuController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\VendorController;
 use Illuminate\Support\Facades\Route;
 
 
@@ -58,9 +59,9 @@ Route::get('/services-in-india', function () {
     return view('frontend.services-in-india');
 })->name('services-in-india');
 
-Route::get('/create-vendor', function () {
-    return view('frontend.create-vendor');
-})->name('create-vendor');
+// Route::get('/create-vendor', function () {
+//     return view('frontend.create-vendor');
+// })->name('create-vendor');
 
 Route::get('/vender-profile', function () {
     return view('frontend.vender-profile');
@@ -111,6 +112,9 @@ Route::middleware('auth')->group(function () {
     Route::resource('/meta', MetaDescripConroller::class);
     Route::resource('/meta-url', MetaUrlController::class);
     Route::resource('/meta-title', MetaTitleController::class);
+
+
+    Route::resource('/vendors', VendorController::class);
 
 });
 

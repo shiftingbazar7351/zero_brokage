@@ -1,5 +1,14 @@
 @extends('backend.layouts.main')
-@section('content')
+
+@section('styles')
+    <link rel="stylesheet" href="{{ asset('admin/summernote/summernote.min.css') }}">
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
+
+    <!-- include summernote css/js -->
+    <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css" rel="stylesheet">
     <style>
         .default-img {
             width: auto;
@@ -11,6 +20,9 @@
             object-fit: cover;
         }
     </style>
+@endsection
+
+@section('content')
     <div class="page-wrapper page-settings">
         <div class="content">
             <div class="content-page-header content-page-headersplit mb-0">
@@ -209,19 +221,23 @@
                             </div>
                             <div id="image-error" class="text-danger"></div>
                         </div>
+
                         <div class="form-group">
-                            <label for="description">Description</label>
-                            <textarea type="text" class="form-control" id="description" name="description" placeholder="Enter Ammount"></textarea>
-                            <div id="description-error" class="text-danger"></div>
-                        </div>
-                        <div class="mb-3 col-md-6">
-                            <label for="details" class="col-form-label">Details <span
+                            <label for="description" class="col-form-label">Details <span
                                     class="text-danger">*</span></label>
                             <textarea class="form-control" id="details" name="details">{{ old('details') }}</textarea>
                             @error('details')
                                 <span class="text-danger">{{ $message }}</span>
                             @enderror
                         </div>
+    
+
+                        <div class="form-group">
+                            <label for="description">Description</label>
+                            <textarea type="text" class="form-control" id="description" name="description" placeholder="Enter Ammount"></textarea>
+                            <div id="description-error" class="text-danger"></div>
+                        </div>
+                       
                         <button type="submit" class="btn btn-primary">Save</button>
                     </form>
                 </div>
@@ -377,6 +393,19 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="{{ asset('admin/assets/js/status-update.js') }}"></script>
     <script src="{{ asset('admin/assets/js/preview-img.js') }}"></script>
+    <script src="{{ asset('admin/summernote/summernote.min.js') }}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.1/js/bootstrap-select.min.js"></script>
+
+    <script>
+        $(document).ready(function() {
+            $('#details').summernote({
+                placeholder: "Write short description.....",
+                tabsize: 2,
+                height: 120
+            });
+        });
+    </script>
+
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             // When the modal is shown, populate the form fields with the subcategory data
@@ -806,7 +835,7 @@
             $('#editCategoryForm').on('submit', function(e) {
                 e.preventDefault();
 
-                let id = $('#editCategoryId').val();
+                let id = $('#editSubmenuId').val();
                 let formData = new FormData(this);
 
                 $.ajax({

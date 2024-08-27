@@ -42,9 +42,6 @@ class MenuController extends Controller
             'image' => 'required|image|mimes:jpeg,png|max:2048',
         ]);
     
-       
-    
-       
             $menu = new Menu();
             $menu->name = $request->name;
             $menu->subcategory_id = $request->subcategory;

@@ -11138,7 +11138,7 @@ fieldset#first-field {
   background: white;
 }
 .table-actions {
-  align-items: center;
+  /* align-items: center; */
   justify-content: flex-end;
 }
 .action-language .active-switch {

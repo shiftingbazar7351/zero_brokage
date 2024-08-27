@@ -125,40 +125,43 @@
                 <div class="modal-body">
                     <form id="addSubMenuForm" method="POST" enctype="multipart/form-data">
                         @csrf
-                        <div class="form-group">
-                            <label for="name">Name</label>
-                            <input type="text" class="form-control" id="name" name="name"
-                                placeholder="Enter Name">
-                            <div id="name_error" class="text-danger"></div>
+                        <div class="row">
+                            <div class="form-group col-md-6">
+                                <label for="name">Name</label>
+                                <input type="text" class="form-control" id="name" name="name"
+                                    placeholder="Enter Name">
+                                <div id="name_error" class="text-danger"></div>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label for="category">Category</label>
+                                <select class="form-control" id="category" name="category">
+                                    <option value="">Select category</option>
+                                    @foreach ($categories as $category)
+                                        <option value="{{ $category->id }}">{{ $category->name }}</option>
+                                    @endforeach
+                                </select>
+                                <div id="category-error" class="text-danger"></div>
+                            </div>
                         </div>
-                        <div class="form-group">
-                            <label for="category">Category</label>
-                            <select class="form-control" id="category" name="category">
-                                <option value="">Select category</option>
-                                @foreach ($categories as $category)
-                                    <option value="{{ $category->id }}">{{ $category->name }}</option>
-                                @endforeach
-                            </select>
-                            <div id="category-error" class="text-danger"></div>
-                        </div>
+                        <div class="row">
+                            <div class="form-group col-md-6">
+                                <label for="subcategory">Sub Category</label>
+                                <select class="form-control" id="subcategory" name="subcategory_id">
+                                    <option value="">Select subcategory</option>
+                                </select>
+                                <div id="subcategory_id-error" class="text-danger"></div>
+                            </div>
 
-                        <div class="form-group">
-                            <label for="subcategory">Sub Category</label>
-                            <select class="form-control" id="subcategory" name="subcategory_id">
-                                <option value="">Select subcategory</option>
-                            </select>
-                            <div id="subcategory_id-error" class="text-danger"></div>
+                            <div class="form-group col-md-6">
+                                <label for="menu">Menu</label>
+                                <select class="form-control" id="menu" name="menu">
+                                    <option value="">Select menu</option>
+                                </select>
+                                <div id="menu-error" class="text-danger"></div>
+                            </div>
                         </div>
-
-                        <div class="form-group">
-                            <label for="menu">Menu</label>
-                            <select class="form-control" id="menu" name="menu">
-                                <option value="">Select menu</option>
-                            </select>
-                            <div id="menu-error" class="text-danger"></div>
-                        </div>
-
-                        <div class="form-group">
+                    <div class="row">
+                        <div class="form-group col-md-6">
                             <label for="category">State</label>
                             <select class="form-control" id="state" name="state">
                                 <option value="">Select state</option>
@@ -169,28 +172,30 @@
                             <div id="state-error" class="text-danger"></div>
                         </div>
 
-                        <div class="form-group">
+                        <div class="form-group col-md-6">
                             <label for="category">City</label>
                             <select class="form-control" id="city" name="city">
                                 <option value="">Select City</option>
                             </select>
                             <div id="city-error" class="text-danger"></div>
                         </div>
+                    </div>
 
-                        <div class="form-group">
+                    <div class="row">
+                        <div class="form-group col-md-6">
                             <label for="price">Price(INR)</label>
                             <input type="text" class="form-control" id="price" name="total_price"
                                 placeholder="Enter Ammount">
                             <div id="price-error" class="text-danger"></div>
                         </div>
 
-                        <div class="form-group">
+                        <div class="form-group col-md-6">
                             <label for="price">Discount(%)</label>
                             <input type="text" class="form-control" id="discount" name="discount"
                                 placeholder="Enter Discount percentage">
                             <div id="discount-error" class="text-danger"></div>
                         </div>
-
+                    </div>
                         <div class="form-group">
                             <label for="final-price">Final Price (INR)</label>
                             <input type="text" class="form-control" id="final-price" name="final_price" readonly
@@ -230,6 +235,14 @@
                             <label for="description">Description</label>
                             <textarea type="text" class="form-control" id="description" name="description" placeholder="Enter Ammount"></textarea>
                             <div id="description-error" class="text-danger"></div>
+                        </div>
+                        <div class="mb-3 col-md-6">
+                            <label for="details" class="col-form-label">Details <span
+                                    class="text-danger">*</span></label>
+                            <textarea class="form-control" id="details" name="details">{{ old('details') }}</textarea>
+                            @error('details')
+                                <span class="text-danger">{{ $message }}</span>
+                            @enderror
                         </div>
                         <button type="submit" class="btn btn-primary">Save</button>
                     </form>
@@ -362,13 +375,10 @@
                             </div>
                             <div id="image-error" class="text-danger"></div>
                         </div>
-                        <div class="mb-3">
-                            <label for="description" class="col-form-label">description <span
-                                    class="text-danger">*</span></label>
-                            <textarea class="form-control" id="description" name="description">{{ old('description') }}</textarea>
-                            @error('description')
-                                <span class="text-danger">{{ $message }}</span>
-                            @enderror
+                        <div class="form-group">
+                            <label for="description">Description</label>
+                            <textarea type="text" class="form-control" id="edit-description" name="description" placeholder="Enter Ammount"></textarea>
+                            <div id="description-error" class="text-danger"></div>
                         </div>
 
                         <!-- Submit Button -->

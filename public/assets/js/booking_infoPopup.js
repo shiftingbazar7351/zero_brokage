@@ -129,7 +129,7 @@ function resetBookingDetails(){
 function validateNumBookingg(elemm){
     document.getElementById("res-booking1").style.color = "red";
     if (isNaN(elemm.value)) {
-        document.getElementById("res-booking1").innerText = "please enter number only";
+        document.getElementById("res-booking1").innerText = "Please enter number only";
         document.getElementById("saveChanges-booking1").classList.add("unclickable");
     } else {
         document.getElementById("res-booking1").innerText = "";

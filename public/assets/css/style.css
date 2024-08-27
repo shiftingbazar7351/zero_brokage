@@ -22408,7 +22408,6 @@ address {
     position: absolute;
     width: 80px;
 }
-
 .provider-details p.last-seen {
     margin-bottom: 0px;
 }
@@ -28665,3 +28664,10 @@ td.ant-table-column-sort {
     box-shadow: none;
     outline: none;
 }
+.login-card{
+    background-color: white;
+    border-radius: 7px;
+    padding: 3% 0% 4% 0%;
+    box-shadow: 0px 5px 5px 4px #d6d3d3;
+}
+

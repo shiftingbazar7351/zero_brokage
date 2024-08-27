@@ -222,28 +222,22 @@
                             <div id="image-error" class="text-danger"></div>
                         </div>
 
-                        <div class="mb-3 col-md-6">
-                            <label for="description" class="col-form-label">description <span
-                                    class="text-danger">*</span></label>
-                            <textarea class="form-control" id="description" name="description">{{ old('description') }}</textarea>
-                            @error('description')
-                                <span class="text-danger">{{ $message }}</span>
-                            @enderror
-                        </div>
-
                         <div class="form-group">
-                            <label for="description">Description</label>
-                            <textarea type="text" class="form-control" id="description" name="description" placeholder="Enter Ammount"></textarea>
-                            <div id="description-error" class="text-danger"></div>
-                        </div>
-                        <div class="mb-3 col-md-6">
-                            <label for="details" class="col-form-label">Details <span
+                            <label for="description" class="col-form-label">Details <span
                                     class="text-danger">*</span></label>
                             <textarea class="form-control" id="details" name="details">{{ old('details') }}</textarea>
                             @error('details')
                                 <span class="text-danger">{{ $message }}</span>
                             @enderror
                         </div>
+    
+
+                        <div class="form-group">
+                            <label for="description">Description</label>
+                            <textarea type="text" class="form-control" id="description" name="description" placeholder="Enter Ammount"></textarea>
+                            <div id="description-error" class="text-danger"></div>
+                        </div>
+                       
                         <button type="submit" class="btn btn-primary">Save</button>
                     </form>
                 </div>
@@ -404,7 +398,7 @@
 
     <script>
         $(document).ready(function() {
-            $('#description').summernote({
+            $('#details').summernote({
                 placeholder: "Write short description.....",
                 tabsize: 2,
                 height: 120

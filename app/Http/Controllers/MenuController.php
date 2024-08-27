@@ -36,9 +36,9 @@ class MenuController extends Controller
     {
         // Validate and store the new menu category
         $request->validate([
-            'name' => 'required|unique:menus,name',
+            'name' => 'required',
             'category_id' => 'required',
-            'subcategory' => 'required|integer|exists:categories,id',
+            'subcategory' => 'required',
             'image' => 'required|image|mimes:jpeg,png|max:2048',
         ]);
     

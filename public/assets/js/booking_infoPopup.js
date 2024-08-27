@@ -93,9 +93,7 @@ function startCountdownBooking(seconds) {
 function resetBookingDetails(){
     document.getElementById('res-booking1').innerHTML='';
     document.getElementById('checkbox-login-booking').checked=false;
-    document.getElementById('checkbox-login-booking1').checked=false;
 
-    document.getElementById('res-booking').innerHTML='';
     const inputdetails = document.querySelectorAll('.input-details');
     inputdetails.forEach(inputdetail => {
         inputdetail.value ='';

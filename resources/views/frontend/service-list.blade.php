@@ -84,7 +84,7 @@
                             </select>
                         </div>
                         <div class="filter-content">
-                            <h2>Categories <span><i class="feather-chevron-down"></i></span></h2>
+                            <h2>Categories</h2>
                             <div class="filter-checkbox" id="fill-more">
                                 <ul>
                                     <li>
@@ -153,7 +153,7 @@
                             </div>
                         </div> --}}
                         <div class="filter-content">
-                            <h2>By Rating <span><i class="feather-chevron-down"></i></span></h2>
+                            <h2>By Rating</h2>
                             <ul class="rating-set">
                                 <li>
                                     <label class="checkboxs d-inline-flex">

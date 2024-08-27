@@ -40,15 +40,16 @@
                                 </div>
                                 
                                 <div class="col-2">
-                                    <label for="formFileCategory" class="form-label">Category</label>
-                                    <select name="sub_category" id="formFileCategory" class="form-select  bg-light-subtle"
+                                    <label for="formFileCategory" class="form-label">Sub-Category</label>
+                                    <select name="sub_category" id="formFileCategory" class="form-select bg-light-subtle"
                                         aria-label="Default select example" style="box-shadow: none">
                                         <option selected disabled value="">Select Option</option>
-                                        <option value="1">One</option>
-                                        <option value="2">Two</option>
-                                        <option value="3">Three</option>
+                                        @foreach($subcategories as $subcategory)
+                                            <option value="{{ $subcategory->id }}">{{ $subcategory->name }}</option>
+                                        @endforeach
                                     </select>
                                 </div>
+                                
                                 <div class="col-md-3">
                                     <label for="companyname" class="form-label">Company Name</label><span> (if same
                                         name)</span>
@@ -173,28 +174,29 @@
                                         <div class="error text-danger ">{{ $message }}</div>
                                         @enderror
                                 </div>
-                                <div class="col-4">
+                                {{-- <div class="col-4">
                                     <label for="formFile" class="form-label">Verified or Approved By Team</label>
                                     <select name="verified" class="form-select bg-light-subtle"
                                         aria-label="Default select example" style="box-shadow: none">
-                                        <option selected>Industry Leader</option>
-                                        <option value="1">One</option>
-                                        <option value="2">Two</option>
-                                        <option value="3">Three</option>
+                                        <option selected disabled value="">Select Option</option>
+                                        @foreach($verifieds as $verified)
+                                            <option value="{{ $verified->id }}">{{ $verified->name }}</option>
+                                        @endforeach
                                     </select>
                                     @error('verified')
                                     <div class="error text-danger ">{{ $message }}</div>
                                     @enderror
-                                </div>
+                                </div> --}}
+
 
                                 <div class="col-4">
                                     <label for="formFile" class="form-label">Select Sub-Menu</label>
                                     <select name="submenu_id" class="form-select bg-light-subtle"
                                         aria-label="Default select example" style="box-shadow: none">
-                                        <option selected>Own</option>
-                                        <option value="1">One</option>
-                                        <option value="2">Two</option>
-                                        <option value="3">Three</option>
+                                        <option selected disabled value="">Select Option</option>
+                                        @foreach($submenus as $submenu)
+                                            <option value="{{ $submenu->id }}">{{ $submenu->name }}</option>
+                                        @endforeach
                                     </select>
                                     @error('submenu_id')
                                     <div class="error text-danger ">{{ $message }}</div>
@@ -349,7 +351,7 @@
 @endsection
 
 @section('scripts')
-    {{-- <script src="{{ asset('assets/js/vendor-validation.js') }}"></script> --}}
+    <script src="{{ asset('assets/js/vendor-validation.js') }}"></script>
 
     <script>
         const inputvender = document.querySelector("#phoneNumVender");

@@ -109,31 +109,7 @@ function resetBookingDetails(){
    }
 
 
-// Example of how to use the function
-// Call resetInputFields() whenever you want to reset the fields
 
-
-
-//    function validateNumBooking(elem){
-//     document.getElementById("res-booking").style.color = "red";
-//     document.getElementById("res-booking").style.marginTop = "-15px";
-//      if(isNaN(elem.value)){
-//         document.getElementById('res-booking').innerText="please enter a Number Only"
-//      }
-
-//     else {
-//         document.getElementById("res-booking").innerText = "";
-
-//         if (elem.value.length < 10) {
-//             document.getElementById("res-booking").innerText = "Enter 10 digit number";
-//         }
-
-//         if (elem.value[0] == 0) {
-//             document.getElementById("res-booking").innerText =
-//                 "First character should not be zero";
-//         }
-//     }
-// }
 
 
 function validateNumBookingg(elemm){

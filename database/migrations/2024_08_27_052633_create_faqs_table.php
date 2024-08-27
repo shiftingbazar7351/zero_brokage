@@ -15,9 +15,10 @@ return new class extends Migration
     {
         Schema::create('faqs', function (Blueprint $table) {
             $table->id();
-            $table->string('question');
-            $table->text('answer');
+            $table->longText('question')->nullable();
+            $table->longText('answer')->nullable();
             $table->string('created_by')->nullable();
+            $table->boolean('status')->default(1)->comment('0=>inactive,1=>active');
             $table->softDeletes();
             $table->timestamps();
         });

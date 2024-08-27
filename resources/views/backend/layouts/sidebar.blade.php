@@ -19,7 +19,7 @@
                 <li class ="{{ Route::currentRouteName() === 'admin_page' ? 'active' : '' }}">
                     <a href="{{ route('admin_page') }}"><i class="fe fe-grid"></i> <span>Dashboard</span></a>
                 </li>
-                
+
                 <li class="menu-title">
                     <h6>Services</h6>
                 </li>
@@ -65,7 +65,12 @@
                         <span>Enquiry</span>
                     </a>
                 </li>
-
+                <li class="{{ Route::currentRouteName() === 'faq.index' ? 'active' : '' }}">
+                    <a href="{{ route('faq.index') }}">
+                        <i class="fe fe-file-text"></i>
+                        <span>FAQ</span>
+                    </a>
+                </li>
 
 
                 <li class="submenu">

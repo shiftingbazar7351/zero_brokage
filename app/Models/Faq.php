@@ -8,7 +8,15 @@ use Illuminate\Database\Eloquent\Model;
 class Faq extends Model
 {
     use HasFactory;
-     protected $fillable = [
-        'questions',
-     ];
+    protected $fillable = [
+        'question',
+        'answer',
+        'status',
+        'created_by'
+    ];
+
+    public function createdBy()
+    {
+        return $this->belongsTo(User::class,'created_by','id');
+    }
 }

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Category;
 use App\Models\City;
+use App\Models\Faq;
 use App\Models\Menu;
 use App\Models\ServiceDetail;
 use App\Models\State;
@@ -37,16 +38,11 @@ class FrontendController extends Controller
 
         return view('frontend.service-list', compact('submenus', 'subcategory', 'menus'));
     }
-    public function serviceDetails()
+    public function servicesInIndia()
     {
-        $subcategories = SubCategory::orderByDesc('created_at')->get();
-        $categories = Category::orderByDesc('created_at')->get();
-        $services = ServiceDetail::orderByDesc('created_at')->first();
-        return view('frontend.service-details', compact('subcategories', 'categories', 'services'));
+        $faqs = Faq::where('status',1)->select('question','answer')->get();
+        return view('frontend.services-in-india',compact('faqs'));
     }
-    public function serviceList()
-    {
-        $categories = Category::get();
-        return view('frontend.service-list', compact('categories'));
-    }
+
+
 }

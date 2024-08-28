@@ -18,7 +18,8 @@
                 <div class="list-btn">
                     <ul>
                         <li>
-                            <button class="btn btn-primary" type="button" data-bs-toggle="modal" data-bs-target="#add-category">
+                            <button class="btn btn-primary" type="button" data-bs-toggle="modal"
+                                data-bs-target="#add-category">
                                 <i class="fa fa-plus me-2"></i>Add Sub-Category
                             </button>
                         </li>
@@ -46,7 +47,8 @@
                                         <td>
                                             <div class="table-imgname">
                                                 @if ($subcategory->icon)
-                                                    <img src="{{ Storage::url('icon/' . $subcategory->icon) }}" class="me-2 preview-img" alt="img">
+                                                    <img src="{{ Storage::url('icon/' . $subcategory->icon) }}"
+                                                        class="me-2 preview-img" alt="img">
                                                 @else
                                                     No Image
                                                 @endif
@@ -57,20 +59,27 @@
                                         <td>
                                             <div class="active-switch">
                                                 <label class="switch">
-                                                    <input type="checkbox" class="status-toggle" data-id="{{ $subcategory->id }}" onclick="return confirm('Are you sure want to change status?')" {{ $subcategory->status ? 'checked' : '' }}>
+                                                    <input type="checkbox" class="status-toggle"
+                                                        data-id="{{ $subcategory->id }}"
+                                                        onclick="return confirm('Are you sure want to change status?')"
+                                                        {{ $subcategory->status ? 'checked' : '' }}>
                                                     <span class="sliders round"></span>
                                                 </label>
                                             </div>
                                         </td>
                                         <td>
                                             <div class="table-actions d-flex justify-content-center">
-                                                <button class="btn delete-table me-2" onclick="editSubCategory({{ $subcategory->id }})" type="button" data-bs-toggle="modal" data-bs-target="#edit-category">
+                                                <button class="btn delete-table me-2"
+                                                    onclick="editSubCategory({{ $subcategory->id }})" type="button"
+                                                    data-bs-toggle="modal" data-bs-target="#edit-category">
                                                     <i class="fe fe-edit"></i>
                                                 </button>
-                                                <form action="{{ route('subcategories.destroy', $subcategory->id) }}" method="POST" style="display:inline;">
+                                                <form action="{{ route('subcategories.destroy', $subcategory->id) }}"
+                                                    method="POST" style="display:inline;">
                                                     @csrf
                                                     @method('DELETE')
-                                                    <button class="btn delete-table" type="submit" onclick="return confirm('Are you sure want to delete this?')">
+                                                    <button class="btn delete-table" type="submit"
+                                                        onclick="return confirm('Are you sure want to delete this?')">
                                                         <i class="fe fe-trash-2"></i>
                                                     </button>
                                                 </form>
@@ -99,7 +108,8 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body pt-0">
-                    <form id="addSubCategoryForm" action="{{ route('subcategories.store') }}" method="POST" enctype="multipart/form-data">
+                    <form id="addSubCategoryForm" action="{{ route('subcategories.store') }}" method="POST"
+                        enctype="multipart/form-data">
                         @csrf
                         <div class="mb-3">
                             <label for="category">Category Name</label>
@@ -119,11 +129,13 @@
                         <div class="mb-3">
                             <label class="form-label">Type</label>
                             <div class="form-check">
-                                <input class="form-check-input" type="checkbox" name="trending" id="trending" value="1">
+                                <input class="form-check-input" type="checkbox" name="trending" id="trending"
+                                    value="1">
                                 <label class="form-check-label" for="trending">Is Trending</label>
                             </div>
                             <div class="form-check">
-                                <input class="form-check-input" type="checkbox" name="featured" id="featured" value="1">
+                                <input class="form-check-input" type="checkbox" name="featured" id="featured"
+                                    value="1">
                                 <label class="form-check-label" for="featured">Is Featured</label>
                             </div>
                         </div>
@@ -131,9 +143,11 @@
                             <label class="form-label">Sub Category Image</label>
                             <div class="form-uploads">
                                 <div class="form-uploads-path">
-                                    <img id="image-preview-icon" src="{{ asset('admin/assets/img/icons/upload.svg') }}" alt="img" class="default-img">
+                                    <img id="image-preview-icon" src="{{ asset('admin/assets/img/icons/upload.svg') }}"
+                                        alt="img" class="default-img">
                                     <div class="file-browse">
-                                        <input type="file" name="icon" id="image-input-icon" accept="image/jpeg, image/png">
+                                        <input type="file" name="icon" id="image-input-icon"
+                                            accept="image/jpeg, image/png">
                                         <a href="javascript:void(0);"> Browse</a>
                                     </div>
                                     <div id="icon_error" class="text-danger"></div>
@@ -144,9 +158,11 @@
                             <label class="form-label">Sub Category Background Image</label>
                             <div class="form-uploads">
                                 <div class="form-uploads-path">
-                                    <img id="image-preview-bg" src="{{ asset('admin/assets/img/icons/upload.svg') }}" alt="img" class="default-img">
+                                    <img id="image-preview-bg" src="{{ asset('admin/assets/img/icons/upload.svg') }}"
+                                        alt="img" class="default-img">
                                     <div class="file-browse">
-                                        <input type="file" name="background_image" id="image-input-bg" accept="image/jpeg, image/png">
+                                        <input type="file" name="background_image" id="image-input-bg"
+                                            accept="image/jpeg, image/png">
                                         <a href="javascript:void(0);"> Browse</a>
                                     </div>
                                     <div id="background_image_error" class="text-danger"></div>
@@ -194,11 +210,13 @@
                         <div class="mb-3">
                             <label class="form-label">Type</label>
                             <div class="form-check">
-                                <input class="form-check-input" type="checkbox" name="trending" id="is_trending" value="">
+                                <input class="form-check-input" type="checkbox" name="trending" id="is_trending"
+                                    value="">
                                 <label class="form-check-label" for="is_trending">Is Trending</label>
                             </div>
                             <div class="form-check">
-                                <input class="form-check-input" type="checkbox" name="featured" id="is_featured" value="">
+                                <input class="form-check-input" type="checkbox" name="featured" id="is_featured"
+                                    value="">
                                 <label class="form-check-label" for="is_featured">Is Featured</label>
                             </div>
                         </div>
@@ -206,9 +224,12 @@
                             <label class="form-label">Sub Category Image</label>
                             <div class="form-uploads">
                                 <div class="form-uploads-path">
-                                    <img id="edit-image-preview-icon" src="{{ asset('admin/assets/img/icons/upload.svg') }}" alt="img" class="default-img preview-img">
+                                    <img id="edit-image-preview-icon"
+                                        src="{{ asset('admin/assets/img/icons/upload.svg') }}" alt="img"
+                                        class="default-img preview-img">
                                     <div class="file-browse">
-                                        <input type="file" name="icon" id="edit-image-input-icon" accept="image/jpeg, image/png">
+                                        <input type="file" name="icon" id="edit-image-input-icon"
+                                            accept="image/jpeg, image/png">
                                         <a href="javascript:void(0);"> Browse</a>
                                     </div>
                                     <div id="icon_error_edit" class="text-danger"></div>
@@ -219,9 +240,12 @@
                             <label class="form-label">Sub Category Background Image</label>
                             <div class="form-uploads">
                                 <div class="form-uploads-path">
-                                    <img id="edit-image-preview-bg" src="{{ asset('admin/assets/img/icons/upload.svg') }}" alt="img" class="default-img preview-img">
+                                    <img id="edit-image-preview-bg"
+                                        src="{{ asset('admin/assets/img/icons/upload.svg') }}" alt="img"
+                                        class="default-img preview-img">
                                     <div class="file-browse">
-                                        <input type="file" name="background_image" id="edit-image-input-bg" accept="image/jpeg, image/png">
+                                        <input type="file" name="background_image" id="edit-image-input-bg"
+                                            accept="image/jpeg, image/png">
                                         <a href="javascript:void(0);"> Browse</a>
                                     </div>
                                     <div id="background_image_error_edit" class="text-danger"></div>
@@ -240,44 +264,51 @@
 @endsection
 
 @section('scripts')
-<script>
-    var statusRoute = `{{ route('subcategories.status') }}`;
-</script>
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script src="{{ asset('admin/assets/js/status-update.js') }}"></script>
-<script src="{{ asset('admin/assets/js/preview-img.js') }}"></script>
-<script>
-
-        // Add Subcategory
-        $('#addSubCategoryForm').submit(function (e) {
-            e.preventDefault();
-            let formData = new FormData(this);
-            $.ajax({
-                url: $(this).attr('action'),
-                method: 'POST',
-                data: formData,
-                contentType: false,
-                processData: false,
-                success: function (response) {
-                    if (response.success) {
-                        location.reload(); // Refresh page to show new data
+    <script>
+        var statusRoute = `{{ route('subcategories.status') }}`;
+    </script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="{{ asset('admin/assets/js/status-update.js') }}"></script>
+    <script src="{{ asset('admin/assets/js/preview-img.js') }}"></script>
+    <script>
+        $(document).ready(function() {
+            $('#addSubCategoryForm').off('submit').on('submit', function(e) {
+                e.preventDefault();
+                let formData = new FormData(this);
+                $.ajax({
+                    url: $(this).attr('action'),
+                    method: 'POST',
+                    data: formData,
+                    contentType: false,
+                    processData: false,
+                    success: function(response) {
+                        if (response.success) {
+                            location.reload(); // Refresh page to show new data
+                        }
+                    },
+                    error: function(xhr) {
+                        $('#category_id_error').text(xhr.responseJSON.errors.category_id ? xhr
+                            .responseJSON.errors.category_id[0] : '');
+                        $('#name_error').text(xhr.responseJSON.errors.name ? xhr.responseJSON
+                            .errors.name[0] : '');
+                        $('#icon_error').text(xhr.responseJSON.errors.icon ? xhr.responseJSON
+                            .errors.icon[0] : '');
+                        $('#background_image_error').text(xhr.responseJSON.errors
+                            .background_image ? xhr.responseJSON.errors.background_image[
+                            0] : '');
                     }
-                },
-                error: function (xhr) {
-                    $('#category_id_error').text(xhr.responseJSON.errors.category_id ? xhr.responseJSON.errors.category_id[0] : '');
-                    $('#name_error').text(xhr.responseJSON.errors.name ? xhr.responseJSON.errors.name[0] : '');
-                    $('#icon_error').text(xhr.responseJSON.errors.icon ? xhr.responseJSON.errors.icon[0] : '');
-                    $('#background_image_error').text(xhr.responseJSON.errors.background_image ? xhr.responseJSON.errors.background_image[0] : '');
-                }
+                });
             });
         });
+
+
 
         // Edit Subcategory
         window.editSubCategory = function(id) {
             $.ajax({
                 url: `/subcategories/${id}/edit`,
                 method: 'GET',
-                success: function (response) {
+                success: function(response) {
                     console.log(response)
                     $('#editSubCategoryId').val(response.subcategory.id);
                     $('#categoryName').val(response.subcategory.category_id);
@@ -285,17 +316,19 @@
                     $('#is_trending').prop('checked', response.subcategory.trending);
                     $('#is_featured').prop('checked', response.subcategory.featured);
                     if (response.subcategory.icon) {
-                        $('#edit-image-preview-icon').attr('src', `/storage/icon/${response.subcategory.icon}`);
+                        $('#edit-image-preview-icon').attr('src',
+                            `/storage/icon/${response.subcategory.icon}`);
                     }
                     if (response.subcategory.background_image) {
-                        $('#edit-image-preview-bg').attr('src', `/storage/background_image/${response.subcategory.background_image}`);
+                        $('#edit-image-preview-bg').attr('src',
+                            `/storage/background_image/${response.subcategory.background_image}`);
                     }
                 }
             });
         }
 
         // Update Subcategory
-        $('#editSubCategoryForm').on('submit', function (e)  {
+        $('#editSubCategoryForm').on('submit', function(e) {
             e.preventDefault();
             let formData = new FormData(this);
             let id = $('#editSubCategoryId').val();
@@ -307,20 +340,22 @@
                 data: formData,
                 contentType: false,
                 processData: false,
-                success: function (response) {
+                success: function(response) {
                     if (response.success) {
                         location.reload(); // Refresh page to show updated data
                     }
                 },
-                error: function (xhr) {
-                    $('#category_id_error_edit').text(xhr.responseJSON.errors.category_id ? xhr.responseJSON.errors.category_id[0] : '');
-                    $('#name_error_edit').text(xhr.responseJSON.errors.name ? xhr.responseJSON.errors.name[0] : '');
-                    $('#icon_error_edit').text(xhr.responseJSON.errors.icon ? xhr.responseJSON.errors.icon[0] : '');
-                    $('#background_image_error_edit').text(xhr.responseJSON.errors.background_image ? xhr.responseJSON.errors.background_image[0] : '');
+                error: function(xhr) {
+                    $('#category_id_error_edit').text(xhr.responseJSON.errors.category_id ? xhr
+                        .responseJSON.errors.category_id[0] : '');
+                    $('#name_error_edit').text(xhr.responseJSON.errors.name ? xhr.responseJSON.errors
+                        .name[0] : '');
+                    $('#icon_error_edit').text(xhr.responseJSON.errors.icon ? xhr.responseJSON.errors
+                        .icon[0] : '');
+                    $('#background_image_error_edit').text(xhr.responseJSON.errors.background_image ?
+                        xhr.responseJSON.errors.background_image[0] : '');
                 }
             });
         });
-
-</script>
-
+    </script>
 @endsection

@@ -198,183 +198,189 @@
                                     {{-- @foreach ($verifieds as $verified)
                                         <option value="{{ $verified->id }}">{{ $verified->name }}</option>
                                         @endforeach --}}
-                        </select>
-                        @error('verified')
-                            <div class="error text-danger ">{{ $message }}</div>
-                        @enderror
-                    </div>
+                                </select>
+                                @error('verified')
+                                    <div class="error text-danger ">{{ $message }}</div>
+                                @enderror
+                            </div>
 
-                    <div class="col-md-4">
-                        <label for="formFile" class="form-label">Select Sub-Menu<b style="color: red;">*</b></label>
-                        <select name="submenu_id" class="form-select bg-light-subtle" aria-label="Default select example"
-                            style="box-shadow: none" required>
-                            <option selected disabled value="">Select Option</option>
-                            @foreach ($submenus as $submenu)
-                                <option value="{{ $submenu->id }}">{{ $submenu->name }}</option>
-                            @endforeach
-                        </select>
-                        @error('submenu_id')
-                            <div class="error text-danger ">{{ $message }}</div>
-                        @enderror
-                    </div>
+                            <div class="col-md-4">
+                                <label for="formFile" class="form-label">Select Sub-Menu<b
+                                        style="color: red;">*</b></label>
+                                <select name="submenu_id" class="form-select bg-light-subtle"
+                                    aria-label="Default select example" style="box-shadow: none" required>
+                                    <option selected disabled value="">Select Option</option>
+                                    @foreach ($submenus as $submenu)
+                                        <option value="{{ $submenu->id }}">{{ $submenu->name }}</option>
+                                    @endforeach
+                                </select>
+                                @error('submenu_id')
+                                    <div class="error text-danger ">{{ $message }}</div>
+                                @enderror
+                            </div>
 
-                </div>
-
-                <div class="row mt-3">
-                    <div class="col-4 mb-3">
-                        <label for="formFile" class="form-label">Vender Logo<b style="color: red;">*</b></label>
-                        <input name="logo" value="{{ old('logo') }}" class="form-control bg-light-subtle"
-                            type="file" id="formFile" required>
-                        @error('logo')
-                            <div class="error text-danger ">{{ $message }}</div>
-                        @enderror
-                    </div>
-                    <div class="col-4">
-                        <label for="formFile" class="form-label">Owner name<b style="color: red;">*</b></label>
-                        <input name="owner_name" value="{{ old('owner_name') }}" class="form-control bg-light-subtle"
-                            type="text" placeholder="Enter owner name" aria-label="default input example" required>
-                        @error('owner_name')
-                            <div class="error text-danger ">{{ $message }}</div>
-                        @enderror
-                    </div>
-                    <div class="col-4 mb-3">
-                        <label for="formFile" class="form-label">Vendor Image<b style="color: red;">*</b></label>
-                        <input name="vendor_image" value="{{ old('vendor_image') }}"
-                            class="form-control bg-light-subtle" type="file" id="formFile" accept="image/*" required>
-                        @error('vendor_image')
-                            <div class="error text-danger ">{{ $message }}</div>
-                        @enderror
-                    </div>
-
-                </div>
-                <div class="row mt-3">
-                    <div class="col-md-3 mb-3">
-                        <label for="GSTimage" class="form-label">GST Image<b
-                            style="color: red;">*</b></label>
-                    <input name="gst_image" value="{{ old('gst_image') }}"
-                        class="form-control bg-light-subtle" type="file" id="GSTimage" accept="image/*" required>
-                    <div id="gstImageError" class="text-danger"></div>
-                    @error('gst_image')
-                    <div class="error text-danger ">{{ $message }}</div>
-                    @enderror
-                    </div>
-                    <div class="col-md-3">
-                        <label for="gstNumber" class="form-label">GST Number<b
-                            style="color: red;">*</b></label>
-                    <input name="gst_number" value="{{ old('gst_number') }}"
-                        class="form-control bg-light-subtle" id="gstNumber" type="text"
-                        placeholder="GST number" aria-label="default input example"
-                        onkeyup="validateField(this)" maxlength="15" required>
-                    <div id="gstError" class="text-danger"></div>
-                    @error('gst_number')
-                    <div class="error text-danger ">{{ $message }}</div>
-                    @enderror
-                    </div>
-                    <div class="col-md-3 mb-3">
-                        <label for="PanImage" class="form-label">PAN Image<b
-                            style="color: red;">*</b></label>
-                    <input name="pan_image" value="{{ old('pan_image') }}"
-                        class="form-control bg-light-subtle" type="file" accept="image/*" id="PanImage" required>
-                    <div id="PanImageError" class="text-danger"></div>
-                    @error('pan_image')
-                    <div class="error text-danger ">{{ $message }}</div>
-                    @enderror
-                    </div>
-
-                    <div class="col-md-3">
-                        <label for="panCard" class="form-label">PAN Card Number<b
-                            style="color: red;">*</b></label>
-                    <input name="pan_number" value="{{ old('pan_number') }}"
-                        class="form-control bg-light-subtle" id="panCard" type="text"
-                        placeholder="PAN Card number" aria-label="default input example"
-                        onkeyup="validateField(this)" maxlength="10" required>
-                    <div id="panError" class="text-danger"></div>
-                    @error('pan_number')
-                    <div class="error text-danger ">{{ $message }}</div>
-                    @enderror
-                    </div>
-                </div>
-                <div class="row mt-md-3">
-                    <div class="col-md-3">
-                        <label for="adharvender" class="form-label">Adhar Number<b
-                            style="color: red;">*</b></label>
-                    <input name="adhar_numbere" value="{{ old('adhar_numbere') }}"
-                        class="form-control bg-light-subtle" id="adharvender"
-                        onkeyup="validateField(this)" type="text" placeholder="Adhar Number"
-                        aria-label="default input example" maxlength="12" required>
-                    <div id="adharError" class="text-danger"></div>
-                    @error('adhar_numbere')
-                    <div class="error text-danger ">{{ $message }}</div>
-                    @enderror
-
-                    </div>
-
-                    <div class="col-md-3 mb-3">
-                        <label for="adharImage" class="form-label">Adhar Image<b
-                            style="color: red;">*</b></label>
-                    <input name="adhar_image" value="{{ old('adhar_image') }}"
-                        class="form-control bg-light-subtle" type="file" accept="image/*" id="adharImage" required>
-                    <div id="adharImageError" class="text-danger" required></div>
-                    @error('adhar_image')
-                    <div class="error text-danger ">{{ $message }}</div>
-                    @enderror
-                    </div>
-                    <div class="col-md-3 mb-3">
-                        <label for="formFile" class="form-label">Visiting Card Image<b
-                            style="color: red;">*</b></label>
-                    <input name="visiting_card" value="{{ old('visiting_card') }}"
-                        class="form-control bg-light-subtle" type="file" accept="image/*" id="formFile" required>
-                    @error('visiting_card')
-                    <div class="error text-danger ">{{ $message }}</div>
-                    @enderror
-                    </div>
-                    <div class="col-md-3 mb-3">
-                        <label for="formFile" class="form-label">Client signature<b
-                            style="color: red;">*</b></label>
-                    <input name="client_sign" class="form-control bg-light-subtle" type="file" accept="image/*"
-                        id="formFile" required>
-                    @error('client_sign')
-                    <div class="error text-danger ">{{ $message }}</div>
-                    @enderror
-                    </div>
-                </div>
-
-                <div class="row mt-3">
-                    <div class="col-md-3 mb-3">
-                        <label for="formFile" class="form-label">Official video<b style="color: red;">*</b></label>
-                        <input name="video" class="form-control bg-light-subtle" type="file"
-                            id="formFile">
-                            @error('video')
-                            <div class="error text-danger ">{{ $message }}</div>
-                            @enderror
-                    </div>
-
-                    <div class="col-md-4">
-                        <label for="formFile" class="form-label">Location<b style="color: red;">*</b></label>
-                        <div class="d-flex gap-4">
-                            <input class="form-control bg-light-subtle" type="text"
-                                placeholder="Enter location" aria-label="default input example">
-                            <button type="button" id="addlocation" class="btn btn-primary">Add</button>
                         </div>
-                        @error('video')
-                        <div class="error text-danger ">{{ $message }}</div>
-                        @enderror
-                    </div>
-                    <div class="col-md-4 d-none" id="longitude">
-                        <label for="formFile" class="form-label">Longitude Location<b style="color: red;">*</b></label>
-                        <div class="d-flex gap-4">
-                            <input class="form-control bg-light-subtle" type="text" placeholder="Enter longitude location"
-                                aria-label="default input example">
+
+                        <div class="row mt-3">
+                            <div class="col-4 mb-3">
+                                <label for="formFile" class="form-label">Vender Logo<b style="color: red;">*</b></label>
+                                <input name="logo" value="{{ old('logo') }}" class="form-control bg-light-subtle"
+                                    type="file" id="formFile" required>
+                                @error('logo')
+                                    <div class="error text-danger ">{{ $message }}</div>
+                                @enderror
+                            </div>
+                            <div class="col-4">
+                                <label for="formFile" class="form-label">Owner name<b style="color: red;">*</b></label>
+                                <input name="owner_name" value="{{ old('owner_name') }}"
+                                    class="form-control bg-light-subtle" type="text" placeholder="Enter owner name"
+                                    aria-label="default input example" required>
+                                @error('owner_name')
+                                    <div class="error text-danger ">{{ $message }}</div>
+                                @enderror
+                            </div>
+                            <div class="col-4 mb-3">
+                                <label for="formFile" class="form-label">Vender Image<b style="color: red;">*</b></label>
+                                <input name="vendor_image" value="{{ old('vendor_image') }}"
+                                    class="form-control bg-light-subtle" type="file" id="formFile" required>
+                                @error('vendor_image')
+                                    <div class="error text-danger ">{{ $message }}</div>
+                                @enderror
+                            </div>
                         </div>
-                    </div>
+                        <div class="row mt-3">
+                            <div class="col-md-3 mb-3">
+                                <label for="GSTimage" class="form-label">GST Image<b style="color: red;">*</b></label>
+                                <input name="gst_image" value="{{ old('gst_image') }}"
+                                    class="form-control bg-light-subtle" type="file" id="GSTimage" required>
+                                <div id="gstImageError" class="text-danger"></div>
+                                @error('gst_image')
+                                    <div class="error text-danger ">{{ $message }}</div>
+                                @enderror
+                            </div>
+                            <div class="col-md-3">
+                                <label for="gstNumber" class="form-label">GST Number<b style="color: red;">*</b></label>
+                                <input name="gst_number" value="{{ old('gst_number') }}"
+                                    class="form-control bg-light-subtle" id="gstNumber" type="text"
+                                    placeholder="GST number" aria-label="default input example"
+                                    onkeyup="validateField(this)" maxlength="15" required>
+                                <div id="gstError" class="text-danger"></div>
+                                @error('gst_number')
+                                    <div class="error text-danger ">{{ $message }}</div>
+                                @enderror
+                            </div>
+                            <div class="col-md-3 mb-3">
+                                <label for="PanImage" class="form-label">PAN Image<b style="color: red;">*</b></label>
+                                <input name="pan_image" value="{{ old('pan_image') }}"
+                                    class="form-control bg-light-subtle" type="file" id="PanImage" required>
+                                <div id="PanImageError" class="text-danger"></div>
+                                @error('pan_image')
+                                    <div class="error text-danger ">{{ $message }}</div>
+                                @enderror
+                            </div>
+
+                            <div class="col-md-3">
+                                <label for="panCard" class="form-label">PAN Card Number<b
+                                        style="color: red;">*</b></label>
+                                <input name="pan_number" value="{{ old('pan_number') }}"
+                                    class="form-control bg-light-subtle" id="panCard" type="text"
+                                    placeholder="PAN Card number" aria-label="default input example"
+                                    onkeyup="validateField(this)" maxlength="10" required>
+                                <div id="panError" class="text-danger"></div>
+                                @error('pan_number')
+                                    <div class="error text-danger ">{{ $message }}</div>
+                                @enderror
+                            </div>
+                        </div>
+                        <div class="row mt-md-3">
+                            <div class="col-md-3">
+                                <label for="adharvender" class="form-label">Adhar Number<b
+                                        style="color: red;">*</b></label>
+                                <input name="adhar_numbere" value="{{ old('adhar_numbere') }}"
+                                    class="form-control bg-light-subtle" id="adharvender" onkeyup="validateField(this)"
+                                    type="text" placeholder="Adhar Number" aria-label="default input example"
+                                    maxlength="12" required>
+                                <div id="adharError" class="text-danger"></div>
+                                @error('adhar_numbere')
+                                    <div class="error text-danger ">{{ $message }}</div>
+                                @enderror
+
+                            </div>
+
+                            <div class="col-md-3 mb-3">
+                                <label for="adharImage" class="form-label">Adhar Image<b
+                                        style="color: red;">*</b></label>
+                                <input name="adhar_image" value="{{ old('adhar_image') }}"
+                                    class="form-control bg-light-subtle" type="file" id="adharImage" required>
+                                <div id="adharImageError" class="text-danger" required></div>
+                                @error('adhar_image')
+                                    <div class="error text-danger ">{{ $message }}</div>
+                                @enderror
+                            </div>
+                            <div class="col-md-3 mb-3">
+                                <label for="formFile" class="form-label">Visiting Card Image<b
+                                        style="color: red;">*</b></label>
+                                <input name="visiting_card" value="{{ old('visiting_card') }}"
+                                    class="form-control bg-light-subtle" type="file" id="formFile" required>
+                                @error('visiting_card')
+                                    <div class="error text-danger ">{{ $message }}</div>
+                                @enderror
+                            </div>
+                            <div class="col-md-3 mb-3">
+                                <label for="formFile" class="form-label">Client signature<b
+                                        style="color: red;">*</b></label>
+                                <input name="client_sign" class="form-control bg-light-subtle" type="file"
+                                    id="formFile" required>
+                                @error('client_sign')
+                                    <div class="error text-danger ">{{ $message }}</div>
+                                @enderror
+                            </div>
+                        </div>
+
+                        <div class="row mt-3">
+                            <div class="col-md-3">
+                                <label for="formFile" class="form-label">Official video<b
+                                        style="color: red;">*</b></label>
+                                <input name="video" class="form-control bg-light-subtle" type="file" id="formFile"
+                                    required>
+                                @error('video')
+                                    <div class="error text-danger ">{{ $message }}</div>
+                                @enderror
+                            </div>
+
+                            <div class="col-md-4">
+                                <label for="formFile" class="form-label">Location<b style="color: red;">*</b></label>
+                                {{-- <div class="d-flex gap-4"> --}}
+                                    <input class="form-control bg-light-subtle" type="text"
+                                        placeholder="Enter location" aria-label="default input example" required>
+
+                                    @error('video')
+                                        <div class="error text-danger ">{{ $message }}</div>
+                                    @enderror
+                                {{-- </div> --}}
+
+                            </div>
+                            <div class="col-md-1 d-flex" style="align-items: flex-end">
+                                    <button type="button" id="addlocation" class="btn btn-primary">Add</button>
+
+                            </div>
+                            <div class="col-md-4 d-none" id="longitude">
+                                <label for="formFile" class="form-label">Longitude Location<b
+                                        style="color: red;">*</b></label>
+                                <div class="d-flex gap-4">
+                                    <input class="form-control bg-light-subtle" type="text"
+                                        placeholder="Enter longitude location" aria-label="default input example">
+                                </div>
+                            </div>
 
 
-                </div>
-                <div class="row mt-3">
-                    <div class="">
+                        </div>
+                        <div class="row mt-3">
+                            <div class="">
 
-                        <button type="submit" id="submitbutton" class="btn btn-success">Submit</button>
-                    </div>
+                                <button type="submit" id="submitbutton" class="btn btn-success">Submit</button>
+                            </div>
+                        </div>
                 </div>
                 </form>
             </div>

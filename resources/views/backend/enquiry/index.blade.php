@@ -34,7 +34,7 @@
                             <tbody>
                                 @if ($enquiries->isEmpty())
                                     <tr>
-                                        <td colspan="6" class="text-center">No data found</td>
+                                        <td colspan="7" class="text-center">No data found</td>
                                     </tr>
                                 @else
                                     @foreach ($enquiries as $enquiry)

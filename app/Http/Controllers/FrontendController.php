@@ -22,7 +22,10 @@ class FrontendController extends Controller
             ->get();
         $trendingsubcat = $subcategories->where('trending', 1);
         $featuresubcat = $subcategories->where('featured', 1);
-         $providers = Vendor::with('subCategory')->where('status',1)->select('id','vendor_name','sub_category','vendor_image')->get();
+        $providers = Vendor::with(['subCategory:id,name'])->where('status',1)
+        ->select('id','vendor_name','sub_category','vendor_image','price','review_count')
+        ->orderByDesc('created_at')
+        ->get();
         return view('frontend.home', compact('subcategories', 'trendingsubcat', 'featuresubcat','providers'));
     }
     public function subCategory($slug)

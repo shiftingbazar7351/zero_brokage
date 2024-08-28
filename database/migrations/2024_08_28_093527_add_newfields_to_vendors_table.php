@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('review_count')->nullable();
             $table->boolean('status')->default(1)->comment('0=>inactive,1=>active');
             $table->integer('created_by')->nullable();
+            $table->string('price')->nullable();
         });
     }
 

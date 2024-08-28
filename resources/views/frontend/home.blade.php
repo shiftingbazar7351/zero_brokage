@@ -176,7 +176,7 @@
                     <div class="providerset">
                         <div class="providerset-img">
                             <a href="provider-details.html">
-                                <img src="assets/img/provider/provider-11.jpg" alt="img">
+                                <img src="{{ asset('storage/vendor/vendor_image/' . $provider->vendor_image ?? '') }}" alt="img">
                             </a>
                         </div>
                         <div class="providerset-content">
@@ -184,10 +184,10 @@
                                 <div class="providerset-name">
                                     <h4><a href="provider-details.html">{{ $provider->vendor_name ??'' }}</a><i class="fa fa-check-circle"
                                             aria-hidden="true"></i></h4>
-                                    <span>Electrician</span>
+                                    <span>{{ $provider->subCategory->name ??'' }}</span>
                                 </div>
                                 <div class="providerset-prices">
-                                    <h6>$20.00<span>/hr</span></h6>
+                                    {{-- <h6>&#8377;{{ $provider->price ??'' }}<span>/hr</span></h6> --}}
                                 </div>
                             </div>
                             <div class="provider-rating">
@@ -196,7 +196,7 @@
                                     <i class="fas fa-star filled"></i>
                                     <i class="fas fa-star filled"></i>
                                     <i class="fas fa-star filled"></i>
-                                    <i class="fa-solid fa-star-half-stroke filled"></i><span>(320)</span>
+                                    <i class="fa-solid fa-star-half-stroke filled"></i><span>({{ $provider->review_count ?? '0' }})</span>
                                 </div>
                             </div>
                         </div>

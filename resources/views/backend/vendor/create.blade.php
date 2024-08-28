@@ -311,7 +311,7 @@
                                 </div>
                             </div>
                             <div class="row mt-3">
-                                <div class="col-5 mb-3">
+                                <div class="col-md-3 mb-3">
                                     <label for="formFile" class="form-label">Official video<b style="color: red;">*</b></label>
                                     <input name="video" class="form-control bg-light-subtle" type="file"
                                         id="formFile">
@@ -320,16 +320,23 @@
                                         @enderror
                                 </div>
 
-                                <div class="col-5">
+                                <div class="col-md-4">
                                     <label for="formFile" class="form-label">Location<b style="color: red;">*</b></label>
                                     <div class="d-flex gap-4">
                                         <input class="form-control bg-light-subtle" type="text"
                                             placeholder="Enter location" aria-label="default input example">
-                                        <button type="button" class="btn btn-primary">Add</button>
+                                        <button type="button" id="addlocation" class="btn btn-primary">Add</button>
                                     </div>
                                     @error('video')
                                     <div class="error text-danger ">{{ $message }}</div>
                                     @enderror
+                                </div>
+                                <div class="col-md-4 d-none" id="longitude">
+                                    <label for="formFile" class="form-label">Longitude Location<b style="color: red;">*</b></label>
+                                    <div class="d-flex gap-4">
+                                        <input class="form-control bg-light-subtle" type="text" placeholder="Enter longitude location"
+                                            aria-label="default input example">
+                                    </div>
                                 </div>
 
 
@@ -351,7 +358,13 @@
 
 @section('scripts')
     {{-- <script src="{{ asset('assets/js/vendor-validation.js') }}"></script> --}}
+    <script>
+        document.getElementById('addlocation').addEventListener('click', function() {
 
+            document.getElementById('longitude').classList.remove('d-none');
+            document.getElementById('addlocation').classList.add('d-none');
+        });
+    </script>
     <script>
         const inputvender = document.querySelector("#phoneNumVender");
         window.intlTelInput(inputvender, {

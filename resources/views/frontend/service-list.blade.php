@@ -33,11 +33,12 @@
 
     {{-- .................................Slider...................................... --}}
 
-    <div class="row-check d-flex justify-content-center p-2">
+    <div class="row-check d-flex justify-content-center p-4">
         <div class="wrapper">
             <i id="left" class="fa-solid fas fa-angle-left"></i>
             <ul class="carousel">
                 @foreach ($menus as $menu)
+                <input type="hidden" name="menu_id" value="{{ $menu->id }}">
                     <li class="card">
                         <div class="img">
                             <img src="{{ Storage::url('menu/' . $menu->image ?? '') }}" alt="" draggable="false" />
@@ -254,6 +255,7 @@
                     <div class="row">
                         <div class="col-md-12">
                             @foreach ($submenus as $menu)
+                            <input type="hidden" name="submenu_id" {{ $menu->menu_id }}>
                                 <div class="service-list">
                                     <div class="service-cont">
                                         <div class="service-cont-img">

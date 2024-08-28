@@ -4,8 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Menu;
 use App\Models\Category;
-use App\Models\ServiceDetail;
 use App\Models\SubCategory;
+use App\Models\ServiceDetail;
 use Illuminate\Http\Request;
 
 class ServiceDetailController extends Controller

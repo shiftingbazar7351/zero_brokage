@@ -133,6 +133,9 @@ Route::middleware('auth')->group(function () {
 
     Route::resource('/india-services', IndiaServiceController::class);
 
+    Route::post('/user/enquiry/store', [FrontendController::class, 'enquiryStore'])->name('enquirystore');
+    Route::post('/user/enquiry/update', [FrontendController::class, 'enquiryUpdate'])->name('enquiryupdate');
+
 });
 
 

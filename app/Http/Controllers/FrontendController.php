@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Category;
 use App\Models\City;
+use App\Models\Enquiry;
 use App\Models\Faq;
 use App\Models\IndiaServiceDescription;
 use App\Models\Menu;
@@ -12,6 +13,8 @@ use App\Models\State;
 use App\Models\SubCategory;
 use App\Models\SubMenu;
 use App\Models\Vendor;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class FrontendController extends Controller
 {
@@ -69,6 +72,51 @@ class FrontendController extends Controller
         ->select('id', 'name', 'image', 'slug', 'total_price', 'discounted_price', 'discount', 'subcategory_id', 'menu_id', 'city_id' ,'description','details')
         ->get();
         return view('frontend.service-in-india-city',compact('faqs','submenus','description'));
+    }
+
+    public function enquiryStore(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'mobile_number' => 'required|string|max:10',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json(['errors' => $validator->errors()], 422);
+        }
+
+        $enquiry = new Enquiry();
+        $enquiry->mobile_number = $request->mobile_number;
+        $enquiry->save();
+
+        return response()->json(['success' => 'Mobile number saved successfully']);
+    }
+
+    public function enquiryUpdate(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'name' => 'required|string|max:255',
+            // 'move_from_origin' => 'required|string|max:255',
+            'email' => 'required|string|email|max:255',
+            'date' => 'required|date',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json(['errors' => $validator->errors()], 422);
+        }
+
+        // Assuming you're updating the enquiry based on mobile number or some other identifier
+        $enquiry = Enquiry::where('mobile_number', $request->mobile_number)->first();
+        if ($enquiry) {
+            $enquiry->name = $request->name;
+            $enquiry->move_from_origin = $request->move_from_origin;
+            $enquiry->email = $request->email;
+            $enquiry->date = $request->date;
+            $enquiry->save();
+
+            return response()->json(['success' => 'Details updated successfully']);
+        }
+
+        return response()->json(['error' => 'Enquiry not found'], 404);
     }
 
 

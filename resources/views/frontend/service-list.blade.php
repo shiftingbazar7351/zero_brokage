@@ -47,6 +47,7 @@
         </div>
     @endif
 
+
     <div class="content">
         <div class="container-fluid">
             <div class="row">
@@ -315,12 +316,6 @@
                                         placeholder="Enter Mobile Number" required>
                                     <div id="res-booking1"></div>
                                     <button id="saveChanges-booking1" class="btn mb-4">Continue</button>
-                                    {{-- <button id="closePopupBtn" class="btn">Close</button> --}}
-                                    {{-- <div class="term-condition">
-                                        <input type="checkbox" class="checkbox" id="checkbox-login-booking1">
-                                        <p>By Continuing, you agree to our <span class="term">Term and Condition</span>
-                                        </p>
-                                    </div> --}}
                                 </div>
                             </div>
 
@@ -341,7 +336,7 @@
                                                 aria-describedby="inputGroup-sizing-default"
                                                 placeholder="Enter your name">
                                             <input type="text" class="form-control  mb-4 input-detailss"
-                                                aria-label="Sizing example input"
+                                                aria-label="Sizing example input" name="move_from_origin"
                                                 aria-describedby="inputGroup-sizing-default"
                                                 placeholder="Enter your Location">
 
@@ -410,6 +405,74 @@
                                     </div>
                                 </div>
                             </div>
+
+                            <script>
+                                $(document).ready(function() {
+    $('#saveChanges-booking1').click(function(e) {
+        e.preventDefault();
+        let mobileNumber = $('#phoneNumberInput-booking').val();
+
+        $.ajax({
+            url: '/user/enquiry/store', // The route that handles storing the mobile number
+            type: 'POST',
+            data: {
+                mobile_number: mobileNumber,
+                _token: '{{ csrf_token() }}'
+            },
+            success: function(response) {
+                // Handle success, such as displaying a success message or closing the popup
+                alert('Mobile number saved successfully');
+                // Optionally open the next popup
+                // $('#myPopup-booking1').hide();
+                // $('#myPopup-booking').show();
+            },
+            error: function(xhr) {
+                // Handle error, such as displaying validation errors
+                let errors = xhr.responseJSON.errors;
+                if(errors.mobile_number) {
+                    $('#res-booking1').text(errors.mobile_number[0]);
+                }
+            }
+        });
+    });
+});
+
+
+$(document).ready(function() {
+    $('#saveChanges-booking').click(function(e) {
+        e.preventDefault();
+        let name = $('input[placeholder="Enter your name"]').val();
+        let location = $('input[placeholder="Enter your Location"]').val();
+        let email = $('input[placeholder="Enter your email"]').val();
+        let date = $('input[type="date"]').val();
+
+        $.ajax({
+            url: '/user/enquiry/update',
+            type: 'POST',
+            data: {
+                name: name,
+                location: location,
+                email: email,
+                date: date,
+                _token: '{{ csrf_token() }}'
+            },
+            success: function(response) {
+                // Handle success, such as displaying a success message or closing the popup
+                alert('Details updated successfully');
+                // Optionally open the next popup
+                // $('#myPopup-booking').hide();
+                // $('#myPopup2-booking').show();
+            },
+            error: function(xhr) {
+                // Handle error, such as displaying validation errors
+                let errors = xhr.responseJSON.errors;
+                // Display the errors accordingly
+            }
+        });
+    });
+});
+
+                            </script>
                         </div>
                     </div>
 

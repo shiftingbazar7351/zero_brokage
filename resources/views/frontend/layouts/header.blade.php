@@ -189,7 +189,7 @@
                                     <li><a href="choose-signup.html">Signup Choose </a></li>
                                     <li><a href="user-signup.html">Customer Signup</a></li>
                                     <li><a href="provider-signup.html">Provider Signup</a></li>
-                                    <li><a href="login.html">Login</a></li>
+                                    {{-- <li><a href="login.html">Login</a></li> --}}
                                     <li><a href="reset-password.html">Reset Password</a></li>
                                     <li><a href="password-recovery.html">Password Update</a></li>
                                     <li><a href="phone-otp.html">Phone OTP</a></li>

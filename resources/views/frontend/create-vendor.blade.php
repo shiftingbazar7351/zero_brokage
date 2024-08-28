@@ -251,17 +251,24 @@
                     </div>
                 </div>
                 <div class="row mt-3">
-                    <div class="col-md-5 mb-3">
+                    <div class="col-md-3 mb-3">
                         <label for="formFile" class="form-label">Official video</label>
                         <input class="form-control bg-light-subtle" type="file" id="formFile">
                     </div>
 
-                    <div class="col-md-5">
+                    <div class="col-md-4">
                         <label for="formFile" class="form-label">Location</label>
                         <div class="d-flex gap-4">
                             <input class="form-control bg-light-subtle" type="text" placeholder="Enter location"
                                 aria-label="default input example">
-                            <button type="button" class="btn btn-primary">Add</button>
+                            <button type="button" id="addlocation" class="btn btn-primary">Add</button>
+                        </div>
+                    </div>
+                    <div class="col-md-4 d-none" id="longitude">
+                        <label for="formFile" class="form-label">Longitude Location</label>
+                        <div class="d-flex gap-4">
+                            <input class="form-control bg-light-subtle" type="text" placeholder="Enter location"
+                                aria-label="default input example">
                         </div>
                     </div>
 
@@ -288,6 +295,13 @@
 
 
     </div>
+    <script>
+        document.getElementById('addlocation').addEventListener('click', function() {
+
+            document.getElementById('longitude').classList.remove('d-none');
+            document.getElementById('addlocation').classList.add('d-none');
+        });
+    </script>
     <script src="{{ asset('assets/js/vendor-validation.js') }}"></script>
 
     <script data-cfasync="false" src="../../cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script>

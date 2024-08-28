@@ -1,8 +1,6 @@
 @extends('frontend.layouts.main')
 @section('content')
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/css/intlTelInput.min.css">
-
-
     <div class="breadcrumb-bar">
         <div class="container">
             <div class="row">
@@ -28,28 +26,26 @@
             </div>
         </div>
     </div>
-    </div>
-
-
     {{-- .................................Slider...................................... --}}
-
-    <div class="row-check d-flex justify-content-center p-2">
-        <div class="wrapper">
-            <i id="left" class="fa-solid fas fa-angle-left"></i>
-            <ul class="carousel">
-                @foreach ($menus as $menu)
-                    <li class="card">
-                        <div class="img">
-                            <img src="{{ Storage::url('menu/' . $menu->image ?? '') }}" alt="" draggable="false" />
-                        </div>
-                        <h5 style="font-weight: bold" class="pt-1">{{ $menu->name ?? '' }}</h5>
-                    </li>
-                @endforeach
-            </ul>
-            <i id="right" class="fa-solid fas fa-angle-right"></i>
+    @if (count($menus) > 0)
+        <div class="row-check d-flex justify-content-center p-2">
+            <div class="wrapper">
+                <i id="left" class="fa-solid fas fa-angle-left"></i>
+                <ul class="carousel">
+                    @foreach ($menus as $menu)
+                        <li class="card">
+                            <div class="img">
+                                <img src="{{ Storage::url('menu/' . $menu->image ?? '') }}" alt=""
+                                    draggable="false" />
+                            </div>
+                            <h5 style="font-weight: bold" class="pt-1">{{ $menu->name ?? '' }}</h5>
+                        </li>
+                    @endforeach
+                </ul>
+                <i id="right" class="fa-solid fas fa-angle-right"></i>
+            </div>
         </div>
-    </div>
-
+    @endif
 
     <div class="content">
         <div class="container-fluid">
@@ -137,12 +133,12 @@
                         </div>
 
                         <!-- <div class="filter-content">
-                                            <h2>Location</h2>
-                                            <div class="group-img">
-                                                <input type="text" class="form-control" placeholder="Select Location">
-                                                <i class="feather-map-pin"></i>
-                                            </div>
-                                        </div> -->
+                                                        <h2>Location</h2>
+                                                        <div class="group-img">
+                                                            <input type="text" class="form-control" placeholder="Select Location">
+                                                            <i class="feather-map-pin"></i>
+                                                        </div>
+                                                    </div> -->
                         {{-- <div class="filter-content">
                             <h2 class="mb-4">Price Range</h2>
                             <div class="filter-range">
@@ -239,17 +235,18 @@
                                 <h6>Found {{ count($menus) }} Services</h6>
                             </div>
                         </div>
-                        <div class="col-lg-8 col-sm-12 d-flex justify-content-end ">
-                            <div class="sortbyset">
-                                <div class="sorting-select">
-                                    <select class="form-control select">
-                                        <option>Price Low to High</option>
-                                        <option>Price High to Low</option>
-                                    </select>
+                        @if (count($menus) > 0)
+                            <div class="col-lg-8 col-sm-12 d-flex justify-content-end ">
+                                <div class="sortbyset">
+                                    <div class="sorting-select">
+                                        <select class="form-control select">
+                                            <option>Price Low to High</option>
+                                            <option>Price High to Low</option>
+                                        </select>
+                                    </div>
                                 </div>
                             </div>
-
-                        </div>
+                        @endif
                     </div>
                     <div class="row">
                         <div class="col-md-12">

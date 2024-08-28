@@ -438,7 +438,7 @@
     </section>
 
 
-    <section class="blog-section">
+    {{-- <section class="blog-section">
         <div class="container">
             <div class="row">
                 <div class="col-md-12 text-center aos" data-aos="fade-up">
@@ -515,41 +515,5 @@
                 </div>
             </div>
         </div>
-    </section>
-
-
-    <section class="blog-section pt-0">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-12 text-center aos " data-aos="fade-up">
-                    <div class="section-heading">
-                        <h2>Our Partners</h2>
-                        <p>Lorem ipsum dolor sit amet, consectetur elit</p>
-                    </div>
-                </div>
-                <div class="owl-carousel partners-slider aos " data-aos="fade-up">
-                    <div class="partner-img">
-                        <img src="assets/img/partner/partner1.svg" alt="img">
-                    </div>
-                    <div class="partner-img">
-                        <img src="assets/img/partner/partner2.svg" alt="img">
-                    </div>
-                    <div class="partner-img">
-                        <img src="assets/img/partner/partner3.svg" alt="img">
-                    </div>
-                    <div class="partner-img">
-                        <img src="assets/img/partner/partner4.svg" alt="img">
-                    </div>
-                    <div class="partner-img">
-                        <img src="assets/img/partner/partner5.svg" alt="img">
-                    </div>
-                    <div class="partner-img">
-                        <img src="assets/img/partner/partner6.svg" alt="img">
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-
+    </section> --}}
 @endsection

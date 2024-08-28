@@ -25,8 +25,11 @@ class FrontendController extends Controller
     }
     public function subCategory($slug)
     {
-        $menus = Menu::select('id', 'name', 'image', 'slug', 'category_id', 'subcategory_id')->where('status', 1)->get();
         $subcategory = SubCategory::where('slug', $slug)->select('id', 'slug', 'name', 'background_image')->first();
+        $menus = Menu::select('id', 'name', 'image', 'slug', 'category_id', 'subcategory_id')
+        ->where('subcategory_id',$subcategory->id)
+        ->where('status', 1)
+        ->get();
         if (!$subcategory) {
             abort(404, 'Category not found');
         }

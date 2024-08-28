@@ -154,10 +154,10 @@
                     <div class="copyright-menu">
                         <ul class="policy-menu">
                             <li>
-                                <a href="privacy-policy.html">Privacy Policy</a>
+                                <a href="{{ route('privacy-policy') }}">Privacy Policy</a>
                             </li>
                             <li>
-                                <a href="terms-condition.html">Terms & Conditions</a>
+                                <a href="{{ route('term-condition') }}">Terms & Conditions</a>
                             </li>
                         </ul>
                     </div>

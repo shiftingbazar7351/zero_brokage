@@ -54,7 +54,7 @@ Route::get('/privacy-policy', function () {
 })->name('privacy');
 
 Route::get('/term-condition', function () {
-    return view('frontend.term-condition');
+    return view('frontend.term-and-condition');
 })->name('term-condition');
 
 // Route::get('/services-in-india', function () {
@@ -72,6 +72,10 @@ Route::get('/vender-profile', function () {
 Route::get('/create-vendor', function () {
     return view('frontend.create-vendor');
 })->name('create-vendor');
+
+Route::get('/privacy-policy', function () {
+    return view('frontend.privacy-policy');
+})->name('privacy-policy');
 
 Route::get('/service-list', [FrontendController::class, 'serviceList'])->name('service-list');
 Route::get('/services-in-india', [FrontendController::class, 'servicesInIndia'])->name('services-in-india');

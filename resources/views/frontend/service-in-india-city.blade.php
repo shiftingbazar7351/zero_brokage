@@ -242,7 +242,7 @@
                     <h2 class="text-center">Here are Top 10 Packers and Movers Companies in India</h1>
                         {!! $description->description ?? '' !!}
 
-                        <h4 class="mt-3">Gati Logistics Packers and Movers</h4>
+                        {{-- <h4 class="mt-3">Gati Logistics Packers and Movers</h4>
                         <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Possimus aperiam sit repellat quis
                             perferendis iusto suscipit deserunt enim tempora, in, beatae eligendi vero ut sed esse,
                             mollitia soluta eaque? Sint?20</p>
@@ -277,7 +277,7 @@
                         <p>Tips to Find a Shifting Company in India?Tips to Find a Shifting Company in India?Tips to
                             Find a Shifting Company in India?</p>
 
-
+ --}}
 
 
                 </div>

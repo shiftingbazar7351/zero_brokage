@@ -137,11 +137,11 @@
                 <div class="col-md-12">
                     <div class="owl-carousel service-slider">
                         @foreach ($featuresubcat as $subcategory)
-                            <div class="service-widget aos featured-cont" data-aos="fade-up">
-                                <div class="service-img feat-img">
+                            <div class="service-widget aos featured-cont" data-aos="fade-up" style="width: 300px">
+                                <div class="service-img feat-img mt-2">
                                     <a href="{{ route('service.grid', ['slug' => $subcategory->slug]) }}">
                                         <img src="{{ asset('storage/icon/' . $subcategory->icon ?? '') }}"
-                                             class="img-fluid serv-img" alt="Service Image">
+                                             class="img-fluid serv-img" alt="Service Image" style="width: 250px; height:120px">
                                     </a>
                                     <p style="text-align: center">{{ $subcategory->name ?? '' }}</p>
                                 </div>
@@ -149,7 +149,7 @@
                         @endforeach
                     </div>
                 </div>
-            </div>            
+            </div>
 
         </div>
 
@@ -389,7 +389,7 @@
 
                     </a>
                 </div>
-                @endforeach   
+                @endforeach
 
             </div>
         </div>

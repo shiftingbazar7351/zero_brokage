@@ -112,18 +112,29 @@
                                 <span>Services</span>
                             </a>
                         </li>
-                        {{-- <li>
-                            <a href="{{ route('meta-url.index') }}" class="{{ Route::currentRouteName() === 'meta-url.index' ? 'active' : '' }}">
+                        <li>
+                            <a href="#">
                                 <i class="fe fe-file-text"></i>
-                                <span>Meta Url</span>
+                                <span>Approved</span>
                             </a>
                         </li>
+                     
+                    </ul>
+                </li>
+
+                <li class="review">
+                    <a href="javascript:void(0);"><i class="fe fe-briefcase"></i>
+                        <span>Review</span>
+                        <span class="menu-arrow"><i class="fe fe-chevron-right"></i></span>
+                    </a>
+                    <ul>
                         <li>
-                            <a href="{{ route('meta-title.index') }}" class="{{ Route::currentRouteName() === 'meta-title.index' ? 'active' : '' }}">
+                            <a href="{{ route('reviews.index') }}" class="{{ Route::currentRouteName() === 'reviews.index' ? 'active' : '' }}">
                                 <i class="fe fe-file-text"></i>
-                                <span>Meta Title</span>
+                                <span>Services</span>
                             </a>
-                        </li> --}}
+                        </li>
+                     
                     </ul>
                 </li>
 

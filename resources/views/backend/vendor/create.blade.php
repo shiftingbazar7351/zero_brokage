@@ -338,7 +338,7 @@
                         </div>
 
                         <div class="row mt-3">
-                            <div class="col-md-4 mb-3">
+                            <div class="col-md-3">
                                 <label for="formFile" class="form-label">Official video<b
                                         style="color: red;">*</b></label>
                                 <input name="video" class="form-control bg-light-subtle" type="file" id="formFile"
@@ -353,11 +353,15 @@
                                 {{-- <div class="d-flex gap-4"> --}}
                                     <input class="form-control bg-light-subtle" type="text"
                                         placeholder="Enter location" aria-label="default input example" required>
-                                    <button type="button" id="addlocation" class="btn btn-primary">Add</button>
+
                                     @error('video')
                                         <div class="error text-danger ">{{ $message }}</div>
                                     @enderror
                                 {{-- </div> --}}
+
+                            </div>
+                            <div class="col-md-1 d-flex" style="align-items: flex-end">
+                                    <button type="button" id="addlocation" class="btn btn-primary">Add</button>
 
                             </div>
                             <div class="col-md-4 d-none" id="longitude">

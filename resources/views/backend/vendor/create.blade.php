@@ -350,14 +350,14 @@
 
                             <div class="col-md-4">
                                 <label for="formFile" class="form-label">Location<b style="color: red;">*</b></label>
-                                <div class="d-flex gap-4">
+                                {{-- <div class="d-flex gap-4"> --}}
                                     <input class="form-control bg-light-subtle" type="text"
                                         placeholder="Enter location" aria-label="default input example" required>
                                     <button type="button" id="addlocation" class="btn btn-primary">Add</button>
                                     @error('video')
                                         <div class="error text-danger ">{{ $message }}</div>
                                     @enderror
-                                </div>
+                                {{-- </div> --}}
 
                             </div>
                             <div class="col-md-4 d-none" id="longitude">

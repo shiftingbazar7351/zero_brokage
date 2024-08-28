@@ -11,6 +11,7 @@ use App\Models\ServiceDetail;
 use App\Models\State;
 use App\Models\SubCategory;
 use App\Models\SubMenu;
+use App\Models\Vendor;
 
 class FrontendController extends Controller
 {
@@ -21,7 +22,8 @@ class FrontendController extends Controller
             ->get();
         $trendingsubcat = $subcategories->where('trending', 1);
         $featuresubcat = $subcategories->where('featured', 1);
-        return view('frontend.home', compact('subcategories', 'trendingsubcat', 'featuresubcat'));
+         $providers = Vendor::with('subCategory')->where('status',1)->select('id','vendor_name','sub_category','vendor_image')->get();
+        return view('frontend.home', compact('subcategories', 'trendingsubcat', 'featuresubcat','providers'));
     }
     public function subCategory($slug)
     {

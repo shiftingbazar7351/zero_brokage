@@ -92,32 +92,32 @@ class VendorController extends Controller
 
         // Check if the request has any image files and update the vendor model
         if ($request->hasFile('vendor_image')) {
-            $filename = $this->fileUploadService->uploadImage('vendor/', $request->file('vendor_image'));
+            $filename = $this->fileUploadService->uploadImage('vendor/vendor_image/', $request->file('vendor_image'));
             $vendor->vendor_image = $filename;
         }
 
         if ($request->hasFile('gst_image')) {
-            $filename = $this->fileUploadService->uploadImage('vendor/', $request->file('gst_image'));
+            $filename = $this->fileUploadService->uploadImage('vendor/gst_image/', $request->file('gst_image'));
             $vendor->gst_image = $filename;
         }
 
         if ($request->hasFile('pan_image')) {
-            $filename = $this->fileUploadService->uploadImage('vendor/', $request->file('pan_image'));
+            $filename = $this->fileUploadService->uploadImage('vendor/pan_image/', $request->file('pan_image'));
             $vendor->pan_image = $filename;
         }
 
         if ($request->hasFile('adhar_image')) {
-            $filename = $this->fileUploadService->uploadImage('vendor/', $request->file('adhar_image'));
+            $filename = $this->fileUploadService->uploadImage('vendor/adhar_image/', $request->file('adhar_image'));
             $vendor->adhar_image = $filename;
         }
 
         if ($request->hasFile('visiting_card')) {
-            $filename = $this->fileUploadService->uploadImage('vendor/', $request->file('visiting_card'));
+            $filename = $this->fileUploadService->uploadImage('vendor/visiting_card/', $request->file('visiting_card'));
             $vendor->visiting_card = $filename;
         }
 
         if ($request->hasFile('client_sign')) {
-            $filename = $this->fileUploadService->uploadImage('vendor/', $request->file('client_sign'));
+            $filename = $this->fileUploadService->uploadImage('vendor/client_sign/', $request->file('client_sign'));
             $vendor->client_sign = $filename;
         }
 
@@ -193,22 +193,22 @@ class VendorController extends Controller
 
         // Handle file uploads
         if ($request->hasFile('vendor_image')) {
-            $filename = $this->fileUploadService->uploadImage('vendor/', $request->file('vendor_image'));
+            $filename = $this->fileUploadService->uploadImage('vendor/vendor_image/', $request->file('vendor_image'));
             $vendor->vendor_image = $filename;
         }
 
         if ($request->hasFile('gst_image')) {
-            $filename = $this->fileUploadService->uploadImage('vendor/', $request->file('gst_image'));
+            $filename = $this->fileUploadService->uploadImage('vendor/gst_image/', $request->file('gst_image'));
             $vendor->gst_image = $filename;
         }
 
         if ($request->hasFile('pan_image')) {
-            $filename = $this->fileUploadService->uploadImage('vendor/', $request->file('pan_image'));
+            $filename = $this->fileUploadService->uploadImage('vendor/pan_image/', $request->file('pan_image'));
             $vendor->pan_image = $filename;
         }
 
         if ($request->hasFile('adhar_image')) {
-            $filename = $this->fileUploadService->uploadImage('vendor/', $request->file('adhar_image'));
+            $filename = $this->fileUploadService->uploadImage('vendor/adhar_image/', $request->file('adhar_image'));
             $vendor->adhar_image = $filename;
         }
 
@@ -225,36 +225,38 @@ class VendorController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
-{
-    try {
-        $vendor = Vendor::findOrFail($id);
+    {
+        try {
+            $vendor = Vendor::findOrFail($id);
 
-        // Collect image fields
-        $imageFields = [
-            'vendor_image' => $vendor->vendor_image,
-            'gst_image' => $vendor->gst_image,
-            'pan_image' => $vendor->pan_image,
-            'adhar_image' => $vendor->adhar_image,
-            'visiting_card' => $vendor->visiting_card,
-            'client_sign' => $vendor->client_sign
-        ];
+            // Collect image fields with their respective paths
+            $imageFields = [
+                'vendor_image' => 'vendor/vendor_image/',
+                'gst_image' => 'vendor/gst_image/',
+                'pan_image' => 'vendor/pan_image/',
+                'adhar_image' => 'vendor/adhar_image/',
+                'visiting_card' => 'vendor/visiting_card/',
+                'client_sign' => 'vendor/client_sign/'
+            ];
 
-        // Delete the vendor
-        $vendor->delete();
+            // Delete the vendor
+            $vendor->delete();
 
-        // Remove associated images
-        foreach ($imageFields as $field => $image) {
-            if ($image) {
-                $this->fileUploadService->removeImage('vendor/', $image);
+            // Remove associated images
+            foreach ($imageFields as $field => $path) {
+                $image = $vendor->$field; // Get the image name from the vendor object
+                if ($image) {
+                    $this->fileUploadService->removeImage($path, $image);
+                }
             }
+
+            return redirect(route('vendors.index'))->with('success', 'Vendor Deleted Successfully!');
+
+        } catch (Exception $e) {
+            return redirect()->back()->with('error', 'Something went wrong');
         }
-
-        return redirect(route('vendors.index'))->with('success', 'Vendor Deleted Successfully!');
-
-    } catch (Exception $e) {
-        return redirect()->back()->with('error', 'Something went wrong');
     }
-}
+
 
 
 }

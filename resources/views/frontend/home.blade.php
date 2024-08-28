@@ -171,6 +171,7 @@
                 </div>
             </div>
             <div class="row  aos" data-aos="fade-up">
+                @foreach ($providers as $provider)
                 <div class="col-lg-3 col-sm-3">
                     <div class="providerset">
                         <div class="providerset-img">
@@ -181,7 +182,7 @@
                         <div class="providerset-content">
                             <div class="providerset-price">
                                 <div class="providerset-name">
-                                    <h4><a href="provider-details.html">John Smith</a><i class="fa fa-check-circle"
+                                    <h4><a href="provider-details.html">{{ $provider->vendor_name ??'' }}</a><i class="fa fa-check-circle"
                                             aria-hidden="true"></i></h4>
                                     <span>Electrician</span>
                                 </div>
@@ -201,7 +202,8 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-lg-3 col-sm-3">
+                @endforeach
+                {{-- <div class="col-lg-3 col-sm-3">
                     <div class="providerset">
                         <div class="providerset-img">
                             <a href="provider-details.html">
@@ -290,7 +292,7 @@
                             </div>
                         </div>
                     </div>
-                </div>
+                </div> --}}
 
             </div>
         </div>

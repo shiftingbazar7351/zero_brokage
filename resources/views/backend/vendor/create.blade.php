@@ -371,7 +371,13 @@
 
 @section('scripts')
     {{-- <script src="{{ asset('assets/js/vendor-validation.js') }}"></script> --}}
+    <script>
+        document.getElementById('addlocation').addEventListener('click', function() {
 
+            document.getElementById('longitude').classList.remove('d-none');
+            document.getElementById('addlocation').classList.add('d-none');
+        });
+    </script>
     <script>
         const inputvender = document.querySelector("#phoneNumVender");
         window.intlTelInput(inputvender, {

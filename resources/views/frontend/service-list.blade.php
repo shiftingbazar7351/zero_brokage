@@ -84,7 +84,7 @@
                             </select>
                         </div>
                         <div class="filter-content">
-                            <h2>Categories <span><i class="feather-chevron-down"></i></span></h2>
+                            <h2>Categories</h2>
                             <div class="filter-checkbox" id="fill-more">
                                 <ul>
                                     <li>
@@ -137,12 +137,12 @@
                         </div>
 
                         <!-- <div class="filter-content">
-                                        <h2>Location</h2>
-                                        <div class="group-img">
-                                            <input type="text" class="form-control" placeholder="Select Location">
-                                            <i class="feather-map-pin"></i>
-                                        </div>
-                                    </div> -->
+                                            <h2>Location</h2>
+                                            <div class="group-img">
+                                                <input type="text" class="form-control" placeholder="Select Location">
+                                                <i class="feather-map-pin"></i>
+                                            </div>
+                                        </div> -->
                         {{-- <div class="filter-content">
                             <h2 class="mb-4">Price Range</h2>
                             <div class="filter-range">
@@ -153,7 +153,7 @@
                             </div>
                         </div> --}}
                         <div class="filter-content">
-                            <h2>By Rating <span><i class="feather-chevron-down"></i></span></h2>
+                            <h2>By Rating</h2>
                             <ul class="rating-set">
                                 <li>
                                     <label class="checkboxs d-inline-flex">
@@ -261,11 +261,6 @@
                                                 <img class="img-fluid serv-img" alt="Service Image"
                                                     src="{{ asset('storage/submenu/' . $menu->image ?? '') }}">
                                             </a>
-                                            {{-- <div class="fav-item">
-                                            <a href="javascript:void(0)" class="fav-icon">
-                                                <i class="feather-heart"></i>
-                                            </a>
-                                        </div> --}}
                                         </div>
                                         <div class="service-cont-info">
                                             <span class="item-cat">{{ $menu->menu->name ?? '' }}</span>
@@ -273,37 +268,24 @@
                                                 <a href="service-details.html">{{ $menu->name ?? '' }}</a>
                                             </h5>
                                             <p>{{ $menu->description ?? '' }}</p>
-                                            <a href="" class="text-primary text-decoration-underline"
-                                                data-bs-toggle="modal" data-bs-target="#exampleModal">View Details </a>
-                                            <div class="modal fade" id="exampleModal" tabindex="-1"
-                                                aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                            <a href="#" class="text-primary text-decoration-underline"
+                                                data-bs-toggle="modal" data-bs-target="#modal-{{ $menu->id }}">View
+                                                Details</a>
+
+                                            <!-- Modal -->
+                                            <div class="modal fade" id="modal-{{ $menu->id }}" tabindex="-1"
+                                                aria-labelledby="modalLabel-{{ $menu->id }}" aria-hidden="true">
                                                 <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
                                                     <div class="modal-content">
                                                         <div class="modal-header">
-                                                            <h5 class="modal-title" id="exampleModalLabel">Service Details
-                                                            </h5>
+                                                            <h5 class="modal-title" id="modalLabel-{{ $menu->id }}">
+                                                                Service Details</h5>
                                                             <button type="button" class="btn-close"
                                                                 data-bs-dismiss="modal" aria-label="Close"></button>
                                                         </div>
                                                         <div class="modal-body">
-                                                            <h5>Included</h5>
-                                                            <p class="mb-2">Lorem ipsum dolor sit amet consectetur
-                                                                adipisicing elit. Optio, ad?</p>
-                                                            <h5>Excluded</h5>
-                                                            <p class="mb-2">Lorem ipsum dolor sit amet consectetur
-                                                                adipisicing elit. Optio, ad?</p>
-                                                            <h5>Topic</h5>
-                                                            <p class="mb-2">Lorem ipsum dolor sit amet consectetur
-                                                                adipisicing elit. Optio, ad?</p>
-                                                            <h5>Frequently asked question</h5>
-                                                            <p class="mb-2">Lorem ipsum dolor sit amet consectetur
-                                                                adipisicing elit. Optio, ad?</p>
-                                                            <p class="mb-2">Lorem ipsum dolor sit amet consectetur
-                                                                adipisicing elit. Optio, ad?</p>
-                                                            <p class="mb-2">Lorem ipsum dolor sit amet consectetur
-                                                                adipisicing elit. Optio, ad?</p>
+                                                            <p>{{ $menu->details ?? 'No Data Found' }}</p>
                                                         </div>
-
                                                     </div>
                                                 </div>
                                             </div>

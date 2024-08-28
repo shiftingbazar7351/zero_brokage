@@ -1,14 +1,6 @@
 @extends('backend.layouts.main')
 
 @section('styles')
-    <link rel="stylesheet" href="{{ asset('admin/summernote/summernote.min.css') }}">
-    <link href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" rel="stylesheet">
-    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
-
-    <!-- include summernote css/js -->
-    <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css" rel="stylesheet">
     <style>
         .default-img {
             width: auto;
@@ -30,10 +22,12 @@
                 <div class="list-btn">
                     <ul>
                         <li>
+                            <a href="{{ route('india-services.index') }}" class="btn btn-primary mb-3"> <i class="fa fa-plus" title="Add India services description"></i></a>
                             <button type="button" class="btn btn-primary mb-3" data-toggle="modal"
                                 data-target="#addCategoryModal">
                                 Add Sub Menu
                             </button>
+
                         </li>
                     </ul>
                 </div>
@@ -118,7 +112,7 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title">Add Sub Menu</h5>
-                    <button type="button" class="btn-close close-modal" data-bs-dismiss="modal" aria-label="Close">
+                    <button type="button" class="btn-close close-modal" data-dismiss="modal" aria-label="Close">
                         <i class="fe fe-x"></i>
                     </button>
                 </div>
@@ -230,14 +224,14 @@
                                 <span class="text-danger">{{ $message }}</span>
                             @enderror
                         </div>
-    
+
 
                         <div class="form-group">
                             <label for="description">Description</label>
                             <textarea type="text" class="form-control" id="description" name="description" placeholder="Enter Ammount"></textarea>
                             <div id="description-error" class="text-danger"></div>
                         </div>
-                       
+
                         <button type="submit" class="btn btn-primary">Save</button>
                     </form>
                 </div>
@@ -393,19 +387,6 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="{{ asset('admin/assets/js/status-update.js') }}"></script>
     <script src="{{ asset('admin/assets/js/preview-img.js') }}"></script>
-    <script src="{{ asset('admin/summernote/summernote.min.js') }}"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.1/js/bootstrap-select.min.js"></script>
-
-    <script>
-        $(document).ready(function() {
-            $('#details').summernote({
-                placeholder: "Write short description.....",
-                tabsize: 2,
-                height: 120
-            });
-        });
-    </script>
-
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             // When the modal is shown, populate the form fields with the subcategory data

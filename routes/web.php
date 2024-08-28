@@ -16,6 +16,7 @@ use App\Http\Controllers\SubCategoryController;
 use App\Http\Controllers\SubMenuController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\VendorController;
+use App\Http\Controllers\ReviewController;
 use Illuminate\Support\Facades\Route;
 
 
@@ -127,6 +128,9 @@ Route::middleware('auth')->group(function () {
 
 
     Route::resource('/vendors', VendorController::class);
+    Route::resource('/reviews', ReviewController::class);
+    Route::post('/reviews-status', [SubMenuController::class, 'subMenuStatus'])->name('reviews.status');
+
 
     Route::resource('/faq', FaqController::class);
     Route::post('/faq-status', [FaqController::class, 'faqStatus'])->name('faq.status');

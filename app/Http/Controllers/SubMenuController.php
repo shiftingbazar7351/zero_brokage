@@ -114,11 +114,11 @@ class SubMenuController extends Controller
     public function edit($id)
     {
         $submenu = SubMenu::find($id);
-        return response()->json([
-            'status' => 1,
-            'data' => $submenu,
-        ]);
-        // return response()->json(['submenu' => $submenu]);
+        // return response()->json([
+        //     'status' => 1,
+        //     'data' => $submenu,
+        // ]);
+        return response()->json(['data' => $submenu]);
 
     }
 
@@ -133,45 +133,53 @@ class SubMenuController extends Controller
      */
     public function update(Request $request, SubMenu $sub_menu)
     {
+        // Validate the input data
         $request->validate([
-            // 'name' => 'required|unique:sub_menus,name,' . $sub_menu->id,
-            // 'state_id' => 'required|exists:states,id',
+            'name' => 'required',
+            // 'category_id' => 'required|exists:categories,id',
+            // 'subcategory_id' => 'required|exists:subcategories,id',
+            // 'menu_id' => 'required|exists:menus,id',
+            // 'state' => 'required|exists:states,id',
             // 'city_id' => 'required|exists:cities,id',
-            // 'price' => 'required|numeric',
-            // 'discount' => 'required|numeric',
+            'total_price' => 'required|numeric',
+            'discount' => 'required|numeric',
             // 'final_price' => 'required|numeric',
-            // 'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048', // Allow multiple images
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048', // Image is optional
         ]);
-
+    
         $finalPrice = $request->input('price');
         $discountPercentage = $request->input('discount');
-
         if (!empty($finalPrice) && !empty($discountPercentage)) {
             $discountAmount = ($finalPrice * $discountPercentage) / 100;
             $finalPrice -= $discountAmount;
         } else {
             $finalPrice = $request->input('price');
         }
-
-        $sub_menu->subcategory_id = $request->subcategory;
-        $sub_menu->category_id = $request->category_id;
-        $sub_menu->menu_id = $request->menu_id;
-        $sub_menu->description = $request->description;
-        $sub_menu->details = $request->details;
+    
+  
         $sub_menu->name = $request->input('name');
-        $sub_menu->category_id = $request->input('category');
+        $sub_menu->slug = generateSlug($request->name);
+        $sub_menu->category_id = $request->input('category_id');
+        $sub_menu->subcategory_id = $request->input('subcategory_id');
+        $sub_menu->menu_id = $request->input('menu_id');
+        // $sub_menu->state = $request->input('state');
         $sub_menu->city_id = $request->input('city_id');
-        $sub_menu->total_price = $request->input('price');
+        $sub_menu->total_price = $request->input('total_price');
         $sub_menu->discount = $request->input('discount');
         $sub_menu->discounted_price = $finalPrice;
-
+        $sub_menu->description = $request->input('description');
+    
+        // Handle image upload
         if ($request->hasFile('image')) {
             $filename = $this->fileUploadService->uploadImage('submenu/', $request->file('image'));
             $sub_menu->image = $filename;
         }
+    
         $sub_menu->save();
+    
         return response()->json(['success' => true, 'message' => 'Sub-Menu updated successfully!']);
     }
+    
 
 
     /**

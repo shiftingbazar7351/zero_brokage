@@ -65,8 +65,17 @@ Route::get('/vender-profile', function () {
     return view('frontend.vender-profile');
 })->name('vender-profile');
 
+// Route::get('/service-in-india-city', function () {
+//     return view('frontend.service-in-india-city');
+// })->name('service-in-india-city');
+
+Route::get('/create-vendor', function () {
+    return view('frontend.create-vendor');
+})->name('create-vendor');
+
 Route::get('/service-list', [FrontendController::class, 'serviceList'])->name('service-list');
 Route::get('/services-in-india', [FrontendController::class, 'servicesInIndia'])->name('services-in-india');
+Route::get('/service-in-india-city', [FrontendController::class, 'servicesInIndiaCity'])->name('services-in-india');
 
 
 Route::get('/', [FrontendController::class, 'home'])->name('home');

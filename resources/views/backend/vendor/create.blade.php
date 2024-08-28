@@ -68,8 +68,7 @@
                                         type="text" placeholder="Company name" aria-label="default input example" required>
                                     @error('legal_company_name')
                                     <div class="error text-danger ">{{ $message }}</div>
-                                    @enderror
-                                </div>
+                                @enderror
 
                             </div>
 

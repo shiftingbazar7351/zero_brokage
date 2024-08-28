@@ -51,5 +51,17 @@ class FrontendController extends Controller
         return view('frontend.services-in-india',compact('faqs','submenus','description'));
     }
 
+    public function servicesInIndiaCity()
+    {
+        $faqs = Faq::where('status',1)->select('question','answer')->get();
+        $description = IndiaServiceDescription::first();
+        $submenus = SubMenu::with(['subCategory', 'menu','cityName.state'])
+        ->where('status', 1)
+        ->orderByDesc('created_at')
+        ->select('id', 'name', 'image', 'slug', 'total_price', 'discounted_price', 'discount', 'subcategory_id', 'menu_id', 'city_id' ,'description','details')
+        ->get();
+        return view('frontend.service-in-india-city',compact('faqs','submenus','description'));
+    }
+
 
 }

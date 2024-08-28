@@ -348,29 +348,36 @@
             <div class="col-md-6">
                 <div class="row text-center">
                     <div class="col-md-10 mx-auto">
-                        <div class="service-img d-flex text-center mb-4" style="width: 400px">
+                        <div class="service-img mb-4 text-center" style="width: 400px; margin: 0 auto;">
                             <img class="w-100" src="{{ asset('assets/img/serviceImage.png') }}" alt="">
                         </div>
                         <h3>Schedule your Appointment Today</h3>
-                        <h3> Call : +91-9481998354</h3>
+                        <h3>Call: +91-9481998354</h3>
                         <p>
-                            Experience an easy way to connectwith our professional logostic expert and get best deals instantly 
-                            on services like packer and mover,car transportation,cargo, transport and warehouse.
+                            Experience an easy way to connect with our professional logistic experts and get the best deals
+                            instantly
+                            on services like packing and moving, car transportation, cargo, transport, and warehousing.
                         </p>
-
                     </div>
                 </div>
-
             </div>
+
 
             <div class="col-md-6">
                 <div class="row text-center">
-                <div class="col-md-10 mx-auto">
-                    <h3>Download the zerobrokage App</h3>
-                    <p>Fill your shifting details, Check quotation within 5-10 minutes,check moving company and reviews Rating score</p>
+                    <div class="col-md-10 mx-auto">
+                        <div class="service-img mb-4 text-center" style="width: 300px; margin: 0 auto;">
+                            <img class="w-100" src="{{ asset('assets/img/app-img.png') }}" alt="">
+                        </div>
+                        <h3>Download the zerobrokage App</h3>
+                        <p>Fill your shifting details, Check quotation within 5-10 minutes,check moving company and reviews
+                            Rating score</p>
+                            <div class="service-img text-center" style="width: 150px; margin: 0 auto;">
+                                <img class="w-100" src="{{ asset('assets/img/playstore.png') }}" alt="">
+                            </div>
 
+                    </div>
                 </div>
-            </div>
             </div>
         </div>
 

@@ -166,7 +166,7 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title">Edit Menu</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">                        
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
                     </button>
                 </div>
                 <div class="modal-body pt-0">
@@ -277,19 +277,20 @@
             });
 
             // Handle Add Menu Form Submission
-            $('#addMenuForm').submit(function(e) {
-                e.preventDefault();
+            $('#addMenuForm').off('submit').on('submit', function(e) {
+                e.preventDefault(); // Prevent the default form submission
+
                 let formData = new FormData(this);
-            
+
                 $.ajax({
-                    url: "{{ route('menus.store') }}",
+                    url: $(this).attr('action'), // Use the action attribute of the form
                     method: 'POST',
                     data: formData,
                     contentType: false,
                     processData: false,
                     success: function(response) {
                         if (response.success) {
-                            location.reload();
+                            location.reload(); // Refresh the page to show new data
                         }
                     },
                     error: function(xhr) {

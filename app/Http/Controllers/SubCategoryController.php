@@ -62,6 +62,7 @@ class SubCategoryController extends Controller
         return response()->json(['success' => true, 'message' => 'Subcategory created successfully.']);
     }
     
+    
 
  
     public function edit(SubCategory $subcategory)

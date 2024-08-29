@@ -143,7 +143,7 @@
                                         <img src="{{ asset('storage/icon/' . $subcategory->icon ?? '') }}"
                                              class="img-fluid serv-img" alt="Service Image" style="width: 250px; height:120px">
                                     </a>
-                                    <p class="text-dark" style="text-align: center">{{ $subcategory->name ?? '' }}</p>
+                                    <p class="text-dark" style="text-align: center; paddibg:0px; margin:5px">{{ $subcategory->name ?? '' }}</p>
                                 </div>
                             </div>
                         @endforeach

@@ -402,7 +402,7 @@
             </div>
         </section>
     @endif
-    @if ($reviews > 0)
+    @if (count($reviews) > 0)
         <section class="client-section">
             <div class="container">
                 <div class="row">

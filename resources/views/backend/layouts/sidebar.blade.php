@@ -100,31 +100,25 @@
                     </ul>
                 </li>
 
-                <li class="vendor">
-                    <a href="javascript:void(0);"><i class="fe fe-briefcase"></i>
-                        <span>Vendors</span>
-                        <span class="menu-arrow"><i class="fe fe-chevron-right"></i></span>
+                <li class="{{ Route::currentRouteName() === 'vendors.index' ? 'active' : '' }}">
+                    <a href="{{ route('vendors.index') }}">
+                        <i class="fe fe-file-text"></i>
+                        <span>Vendor</span>
                     </a>
-                    <ul>
-                        <li>
-                            <a href="{{ route('vendors.index') }}" class="{{ Route::currentRouteName() === 'vendors.index' ? 'active' : '' }}">
-                                <i class="fe fe-file-text"></i>
-                                <span>Services</span>
-                            </a>
-                        </li>
-                        {{-- <li>
-                            <a href="{{ route('meta-url.index') }}" class="{{ Route::currentRouteName() === 'meta-url.index' ? 'active' : '' }}">
-                                <i class="fe fe-file-text"></i>
-                                <span>Meta Url</span>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="{{ route('meta-title.index') }}" class="{{ Route::currentRouteName() === 'meta-title.index' ? 'active' : '' }}">
-                                <i class="fe fe-file-text"></i>
-                                <span>Meta Title</span>
-                            </a>
-                        </li> --}}
-                    </ul>
+                </li>
+
+                <li class="{{ Route::currentRouteName() === 'reviews.index' ? 'active' : '' }}">
+                    <a href="{{ route('reviews.index') }}">
+                        <i class="fe fe-file-text"></i>
+                        <span>Review</span>
+                    </a>
+                </li>
+
+                <li class="{{ Route::currentRouteName() === 'newsletter.index' ? 'active' : '' }}">
+                    <a href="{{ route('newsletter.index') }}">
+                        <i class="fe fe-file-text"></i>
+                        <span>Newsletter</span>
+                    </a>
                 </li>
 
             </ul>

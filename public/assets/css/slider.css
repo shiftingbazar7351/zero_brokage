@@ -75,9 +75,7 @@
     box-sizing: border-box;
 }
 
-.row-check {
-    background: rgb(228, 220, 220);
-}
+
 
 .wrapper {
     max-width: 1450px;
@@ -86,12 +84,8 @@
     margin: 0px 10px;
 
 }
-.sticky-slider{
-    position: -webkit-sticky;
-    position: sticky;
-    top: 98px;
-    z-index:1999999;
-}
+
+
 .wrapper i {
     height: 50px;
     width: 50px;
@@ -124,7 +118,6 @@
     display: grid;
     grid-auto-flow: column;
     grid-auto-columns: calc((100% / 8) - 12px);
-    /* gap: 13px; */
     overflow-x: auto;
     scroll-snap-type: x mandatory;
     scroll-behavior: smooth;
@@ -158,14 +151,13 @@
 
 .carousel .card {
     scroll-snap-align: start;
-    height: 121px;
+    height: 125px;
     list-style: none;
     background: #fff;
     border-radius: 8px;
     display: flex;
     cursor: pointer;
-    width: 82%;
-    margin: 10px 0px;
+    width: 83%;
     /* padding-bottom: 15px; */
     align-items: center;
     justify-content: center;
@@ -175,34 +167,17 @@
 
 .card .img {
     /* background: green; */
-    /* width: 48px; */
-    height: 102px;
+    width: 112px;
+    height: 100px;
     /* border-radius: 50%; */
 }
 
 .card .img img {
-    width: 115px;
-    height: 85px;
+    width: 112px;
+    height: 88px;
     object-fit: cover;
     border-radius: 7%;
     border: 4px solid #fff;
-}
-
-.card h2 {
-    font-weight: 500;
-    font-size: 1.56rem;
-    /* margin: 30px 0 5px; */
-}
-
-.card span {
-    color: #6a6d78;
-    font-size: 1.31rem;
-
-}
-
-.card:hover {
-    transform: scale(1.03);
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 @media screen and (max-width: 1300px) {
     .wrapper .carousel {

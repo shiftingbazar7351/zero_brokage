@@ -84,66 +84,67 @@
         </section>
     @endif
     @if (count($subcategories) != 0)
-    <section class="feature-section">
-        <div class="container">
-            <div class="section-heading">
-                <div class="row align-items-center">
-                    <div class="col-md-6 aos" data-aos="fade-up">
-                        <h2>Trending Categories</h2>
-                        <p>What do you like most?</p>
-                    </div>
-                    {{-- <div class="col-md-6 text-md-end aos" data-aos="fade-up">
+        <section class="feature-section">
+            <div class="container">
+                <div class="section-heading">
+                    <div class="row align-items-center">
+                        <div class="col-md-6 aos" data-aos="fade-up">
+                            <h2>Trending Categories</h2>
+                            <p>What do you like most?</p>
+                        </div>
+                        {{-- <div class="col-md-6 text-md-end aos" data-aos="fade-up">
                         <a href="categories.html" class="btn btn-primary btn-view">View All<i
                                 class="feather-arrow-right-circle"></i></a>
                     </div> --}}
+                    </div>
                 </div>
-            </div>
-            <div class="row">
-                @foreach ($trendingsubcat as $subcategory)
-                <div class="col-md-2">
-                    <a href="{{ route('service.grid', ['slug' => $subcategory->slug]) }}" class="feature-box aos" data-aos="fade-up">
-                        <div class="feature-icon">
-                            <span>
-                                <img src="{{ asset('storage/icon/' . $subcategory->icon ?? '') }}"
-                                    class="rounded-circle" alt="img">
-                            </span>
+                <div class="row">
+                    @foreach ($trendingsubcat as $subcategory)
+                        <div class="col-md-2">
+                            <a href="{{ route('service.grid', ['slug' => $subcategory->slug]) }}" class="feature-box aos"
+                                data-aos="fade-up">
+                                <div class="feature-icon">
+                                    <span>
+                                        <img src="{{ asset('storage/icon/' . $subcategory->icon ?? '') }}"
+                                            class="rounded-circle" alt="img">
+                                    </span>
+                                </div>
+                                <h6>{{ $subcategory->name ?? '' }}</h6>
+
+                            </a>
                         </div>
-                        <h6>{{ $subcategory->name ?? '' }}</h6>
+                    @endforeach
 
-                    </a>
                 </div>
-                @endforeach
-
             </div>
-        </div>
-    </section>
+        </section>
     @endif
     @if (count($subcategories) != 0)
-    <section class="service-section">
-        <div class="container">
-            <div class="section-heading">
-                <div class="row align-items-center">
-                    <div class="col-md-6 aos" data-aos="fade-up">
-                        <h2>Featured Services</h2>
-                        <p>Explore the greates our services. You won’t be disappointed</p>
-                    </div>
-                    <div class="col-md-6 text-md-end aos" data-aos="fade-up">
-                        <div class="owl-nav mynav"></div>
+        <section class="service-section">
+            <div class="container">
+                <div class="section-heading">
+                    <div class="row align-items-center">
+                        <div class="col-md-6 aos" data-aos="fade-up">
+                            <h2>Featured Services</h2>
+                            <p>Explore the greates our services. You won’t be disappointed</p>
+                        </div>
+                        <div class="col-md-6 text-md-end aos" data-aos="fade-up">
+                            <div class="owl-nav mynav"></div>
+                        </div>
                     </div>
                 </div>
-            </div>
 
             <div class="row">
                 <div class="col-md-12">
                     <div class="owl-carousel service-slider">
                         @foreach ($featuresubcat as $subcategory)
-                            <div class="service-widget aos featured-cont" data-aos="fade-up" style="width: 280px">
+                            <div class="service-widget aos featured-cont" data-aos="fade-up" style="width: 300px">
                                 <div class="service-img feat-img mt-2">
                                     <a href="{{ route('service.grid', ['slug' => $subcategory->slug]) }}">
                                         <img src="{{ asset('storage/icon/' . $subcategory->icon ?? '') }}"
                                              class="img-fluid serv-img" alt="Service Image" style="width: 250px; height:120px">
                                     </a>
-                                    <p class="text-dark" style="text-align: center; paddibg:0px; margin:5px">{{ $subcategory->name ?? '' }}</p>
+                                    <p style="text-align: center; margin:5px 0px" class="text-dark">{{ $subcategory->name ?? '' }}</p>
                                 </div>
                             </div>
                         @endforeach
@@ -151,9 +152,9 @@
                 </div>
             </div>
 
-        </div>
+            </div>
 
-    </section>
+        </section>
     @endif
 
     <section class="providers-section">
@@ -171,37 +172,41 @@
                 </div>
             </div>
             <div class="row  aos" data-aos="fade-up">
-                <div class="col-lg-3 col-sm-3">
-                    <div class="providerset">
-                        <div class="providerset-img">
-                            <a href="provider-details.html">
-                                <img src="assets/img/provider/provider-11.jpg" alt="img">
-                            </a>
-                        </div>
-                        <div class="providerset-content">
-                            <div class="providerset-price">
-                                <div class="providerset-name">
-                                    <h4><a href="provider-details.html">John Smith</a><i class="fa fa-check-circle"
-                                            aria-hidden="true"></i></h4>
-                                    <span>Electrician</span>
-                                </div>
-                                <div class="providerset-prices">
-                                    <h6>$20.00<span>/hr</span></h6>
-                                </div>
+                @foreach ($providers as $provider)
+                    <div class="col-lg-3 col-sm-3">
+                        <div class="providerset">
+                            <div class="providerset-img">
+                                <a href="provider-details.html">
+                                    <img src="{{ asset('storage/vendor/vendor_image/' . $provider->vendor_image ?? '') }}"
+                                        alt="img" style="height: 194px">
+                                </a>
                             </div>
-                            <div class="provider-rating">
-                                <div class="rating">
-                                    <i class="fas fa-star filled"></i>
-                                    <i class="fas fa-star filled"></i>
-                                    <i class="fas fa-star filled"></i>
-                                    <i class="fas fa-star filled"></i>
-                                    <i class="fa-solid fa-star-half-stroke filled"></i><span>(320)</span>
+                            <div class="providerset-content">
+                                <div class="providerset-price">
+                                    <div class="providerset-name">
+                                        <h4><a href="provider-details.html">{{ $provider->vendor_name ?? '' }}</a><i
+                                                class="fa fa-check-circle" aria-hidden="true"></i></h4>
+                                        <span>{{ $provider->subCategory->name ?? '' }}</span>
+                                    </div>
+                                    <div class="providerset-prices">
+                                        {{-- <h6>&#8377;{{ $provider->price ??'' }}<span>/hr</span></h6> --}}
+                                    </div>
+                                </div>
+                                <div class="provider-rating">
+                                    <div class="rating">
+                                        <i class="fas fa-star filled"></i>
+                                        <i class="fas fa-star filled"></i>
+                                        <i class="fas fa-star filled"></i>
+                                        <i class="fas fa-star filled"></i>
+                                        <i
+                                            class="fa-solid fa-star-half-stroke filled"></i><span>({{ $provider->review_count ?? '0' }})</span>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
-                <div class="col-lg-3 col-sm-3">
+                @endforeach
+                {{-- <div class="col-lg-3 col-sm-3">
                     <div class="providerset">
                         <div class="providerset-img">
                             <a href="provider-details.html">
@@ -290,7 +295,7 @@
                             </div>
                         </div>
                     </div>
-                </div>
+                </div> --}}
 
             </div>
         </div>
@@ -361,15 +366,15 @@
         </div>
     </section>
     @if (count($subcategories) != 0)
-    <section class="feature-section">
-        <div class="container">
-            <div class="section-heading">
-                <div class="row align-items-center">
-                    <div class="col-md-6 aos" data-aos="fade-up">
-                        <h2>Most Popular Services</h2>
-                        <p>What do you like most?</p>
-                    </div>
-                    {{-- <div class="col-md-6 text-md-end aos" data-aos="fade-up">
+        <section class="feature-section">
+            <div class="container">
+                <div class="section-heading">
+                    <div class="row align-items-center">
+                        <div class="col-md-6 aos" data-aos="fade-up">
+                            <h2>Most Popular Services</h2>
+                            <p>What do you like most?</p>
+                        </div>
+                        {{-- <div class="col-md-6 text-md-end aos" data-aos="fade-up">
                         <a href="service-list1-All.html" class="btn btn-primary btn-view">View All<i
                                 class="feather-arrow-right-circle"></i></a>
                     </div> --}}
@@ -387,169 +392,39 @@
                         </div>
                         <h5>{{ $subcategory->name ?? '' }}</h5>
 
-                    </a>
-                </div>
-                @endforeach
+                            </a>
+                        </div>
+                    @endforeach
 
+                </div>
             </div>
-        </div>
-    </section>
+        </section>
     @endif
-    <section class="client-section">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-12 text-center">
-                    <div class="section-heading aos" data-aos="fade-up">
-                        <h2>What our client says</h2>
-                        <p>Lorem ipsum dolor sit amet, consectetur elit</p>
+    @if (count($reviews) > 0)
+        <section class="client-section">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12 text-center">
+                        <div class="section-heading aos" data-aos="fade-up">
+                            <h2>What our client says</h2>
+                            {{-- <p>Lorem ipsum dolor sit amet, consectetur elit</p> --}}
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="owl-carousel testimonial-slider">
-                        <div class="client-widget aos" data-aos="fade-up">
-                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
-                                incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis
-                                nostrud exercitation ullamco laboris nisi </p>
-                            <h5>Sophie Moore</h5>
-                            <h6>Director</h6>
-                        </div>
-                        <div class="client-widget aos" data-aos="fade-up">
-
-                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
-                                incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis
-                                nostrud exercitation ullamco laboris nisi </p>
-                            <h5>Mike Hussy</h5>
-                            <h6>Lead</h6>
-                        </div>
-                        <div class="client-widget aos" data-aos="fade-up">
-
-                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
-                                incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis
-                                nostrud exercitation ullamco laboris nisi </p>
-                            <h5>John Doe</h5>
-                            <h6>CEO</h6>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="owl-carousel testimonial-slider">
+                            @foreach ($reviews as $review)
+                                <div class="client-widget aos" data-aos="fade-up">
+                                    <p>{{ $review->description ?? '' }}</p>
+                                    <h5>{{ $review->name }}</h5>
+                                    <h6>{{ $review->profession ?? '' }}</h6>
+                                </div>
+                            @endforeach
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
-    </section>
-
-
-    <section class="blog-section">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-12 text-center aos" data-aos="fade-up">
-                    <div class="section-heading">
-                        <h2>Latest Blog</h2>
-                        <p>Lorem ipsum dolor sit amet, consectetur elit</p>
-                    </div>
-                </div>
-            </div>
-            <div class="row justify-content-between">
-                <div class="col-lg-4 col-md-6 d-flex">
-                    <div class="blog flex-fill aos" data-aos="fade-up">
-                        <div class="blog-image">
-                            <a href="blog-details.html"><img class="img-fluid" src="assets/img/blog/blog-01.jpg"
-                                    alt="Post Image"></a>
-                        </div>
-                        <div class="blog-content">
-                            <ul class="blog-item">
-                                <li><i class="feather-calendar"></i>09 Aug 2023</li>
-                                <li>
-                                    <div class="post-author">
-                                        <a href="#"><i class="feather-user"></i><span>Hal Lewis</span></a>
-                                    </div>
-                                </li>
-                            </ul>
-                            <h3 class="blog-title">
-                                <a href="blog-details.html">How to Choose a Electrical ServiceProvider?</a>
-                            </h3>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-md-6 d-flex">
-                    <div class="blog flex-fill aos" data-aos="fade-up">
-                        <div class="blog-image">
-                            <a href="blog-details.html"><img class="img-fluid" src="assets/img/blog/blog-02.jpg"
-                                    alt="Post Image"></a>
-                        </div>
-                        <div class="blog-content">
-                            <ul class="blog-item">
-                                <li><i class="feather-calendar"></i>09 Aug 2023</li>
-                                <li>
-                                    <div class="post-author">
-                                        <a href="#"><i class="feather-user"></i><span>JohnDoe</span></a>
-                                    </div>
-                                </li>
-                            </ul>
-                            <h3 class="blog-title">
-                                <a href="blog-details.html">Lorem ipsum dolor sit amet, consectetur adipiscing
-                                    elit</a>
-                            </h3>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-md-6 d-flex">
-                    <div class="blog flex-fill aos" data-aos="fade-up">
-                        <div class="blog-image">
-                            <a href="blog-details.html"><img class="img-fluid" src="assets/img/blog/blog-03.jpg"
-                                    alt="Post Image"></a>
-                        </div>
-                        <div class="blog-content">
-                            <ul class="blog-item">
-                                <li><i class="feather-calendar"></i>09 Aug 2023</li>
-                                <li>
-                                    <div class="post-author">
-                                        <a href="#"><i class="feather-user"></i><span>Greg Avery</span></a>
-                                    </div>
-                                </li>
-                            </ul>
-                            <h3 class="blog-title">
-                                <a href="blog-details.html">Construction Service Scams: How to Avoid Them</a>
-                            </h3>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-
-    <section class="blog-section pt-0">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-12 text-center aos " data-aos="fade-up">
-                    <div class="section-heading">
-                        <h2>Our Partners</h2>
-                        <p>Lorem ipsum dolor sit amet, consectetur elit</p>
-                    </div>
-                </div>
-                <div class="owl-carousel partners-slider aos " data-aos="fade-up">
-                    <div class="partner-img">
-                        <img src="assets/img/partner/partner1.svg" alt="img">
-                    </div>
-                    <div class="partner-img">
-                        <img src="assets/img/partner/partner2.svg" alt="img">
-                    </div>
-                    <div class="partner-img">
-                        <img src="assets/img/partner/partner3.svg" alt="img">
-                    </div>
-                    <div class="partner-img">
-                        <img src="assets/img/partner/partner4.svg" alt="img">
-                    </div>
-                    <div class="partner-img">
-                        <img src="assets/img/partner/partner5.svg" alt="img">
-                    </div>
-                    <div class="partner-img">
-                        <img src="assets/img/partner/partner6.svg" alt="img">
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-
+        </section>
+    @endif
 @endsection

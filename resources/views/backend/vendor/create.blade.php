@@ -1,4 +1,7 @@
 @extends('backend.layouts.main')
+@section('styles')
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/css/intlTelInput.min.css">
+@endsection
 
 @section('content')
     <div class="page-wrapper page-settings">
@@ -193,7 +196,7 @@
                             <div class="col-md-4">
                                 <label for="formFile" class="form-label">Verified or Approved By Team</label>
                                 <select name="verified" class="form-select bg-light-subtle"
-                                    aria-label="Default select example" style="box-shadow: none" required>
+                                    aria-label="Default select example" style="box-shadow: none" >
                                     <option selected disabled value="">Select Option</option>
                                     {{-- @foreach ($verifieds as $verified)
                                         <option value="{{ $verified->id }}">{{ $verified->name }}</option>
@@ -391,13 +394,7 @@
 
 @section('scripts')
     {{-- <script src="{{ asset('assets/js/vendor-validation.js') }}"></script> --}}
-    <script>
-        document.getElementById('addlocation').addEventListener('click', function() {
-
-            document.getElementById('longitude').classList.remove('d-none');
-            document.getElementById('addlocation').classList.add('d-none');
-        });
-    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/intlTelInput.min.js"></script>
     <script>
         const inputvender = document.querySelector("#phoneNumVender");
         window.intlTelInput(inputvender, {

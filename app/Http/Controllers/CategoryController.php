@@ -36,6 +36,7 @@ class CategoryController extends Controller
             $slug = generateSlug($request->name);
             $data = array_merge($request->validated(), ['slug' => $slug]);
             Category::create($data);
+            session()->flash('success', 'Added Successfully');
             return response()->json(['success' => true, 'message' => 'Category added successfully']);
         } catch (Exception $e) {
             return response()->json(['success' => false, 'message' => $e->getMessage()], 500);

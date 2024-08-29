@@ -1,8 +1,6 @@
 @extends('frontend.layouts.main')
 @section('content')
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/css/intlTelInput.min.css">
-
-
     <div class="breadcrumb-bar">
         <div class="container">
             <div class="row">
@@ -28,17 +26,13 @@
             </div>
         </div>
     </div>
-    </div>
-
-
     {{-- .................................Slider...................................... --}}
 
-    <div class="row-check d-flex justify-content-center px-4 sticky-slider">
+    <div class="row-check d-flex justify-content-center px-4" >
         <div class="wrapper">
             <i id="left" class="fa-solid fas fa-angle-left"></i>
             <ul class="carousel">
                 @foreach ($menus as $menu)
-                <input type="hidden" name="menu_id" value="{{ $menu->id }}">
                     <li class="card">
                         <div class="img">
                             <img src="{{ Storage::url('menu/' . $menu->image ?? '') }}" alt="" draggable="false" />
@@ -138,12 +132,12 @@
                         </div>
 
                         <!-- <div class="filter-content">
-                                            <h2>Location</h2>
-                                            <div class="group-img">
-                                                <input type="text" class="form-control" placeholder="Select Location">
-                                                <i class="feather-map-pin"></i>
-                                            </div>
-                                        </div> -->
+                                                        <h2>Location</h2>
+                                                        <div class="group-img">
+                                                            <input type="text" class="form-control" placeholder="Select Location">
+                                                            <i class="feather-map-pin"></i>
+                                                        </div>
+                                                    </div> -->
                         {{-- <div class="filter-content">
                             <h2 class="mb-4">Price Range</h2>
                             <div class="filter-range">
@@ -240,17 +234,18 @@
                                 <h6>Found {{ count($menus) }} Services</h6>
                             </div>
                         </div>
-                        <div class="col-lg-8 col-sm-12 d-flex justify-content-end ">
-                            <div class="sortbyset">
-                                <div class="sorting-select">
-                                    <select class="form-control select">
-                                        <option>Price Low to High</option>
-                                        <option>Price High to Low</option>
-                                    </select>
+                        @if (count($menus) > 0)
+                            <div class="col-lg-8 col-sm-12 d-flex justify-content-end ">
+                                <div class="sortbyset">
+                                    <div class="sorting-select">
+                                        <select class="form-control select">
+                                            <option>Price Low to High</option>
+                                            <option>Price High to Low</option>
+                                        </select>
+                                    </div>
                                 </div>
                             </div>
-
-                        </div>
+                        @endif
                     </div>
                     <div class="row">
                         <div class="col-md-12">
@@ -320,12 +315,6 @@
                                         placeholder="Enter Mobile Number" required>
                                     <div id="res-booking1"></div>
                                     <button id="saveChanges-booking1" class="btn mb-4">Continue</button>
-                                    {{-- <button id="closePopupBtn" class="btn">Close</button> --}}
-                                    {{-- <div class="term-condition">
-                                        <input type="checkbox" class="checkbox" id="checkbox-login-booking1">
-                                        <p>By Continuing, you agree to our <span class="term">Term and Condition</span>
-                                        </p>
-                                    </div> --}}
                                 </div>
                             </div>
 
@@ -346,7 +335,7 @@
                                                 aria-describedby="inputGroup-sizing-default"
                                                 placeholder="Enter your name">
                                             <input type="text" class="form-control  mb-4 input-detailss"
-                                                aria-label="Sizing example input"
+                                                aria-label="Sizing example input" name="move_from_origin"
                                                 aria-describedby="inputGroup-sizing-default"
                                                 placeholder="Enter your Location">
 
@@ -415,6 +404,74 @@
                                     </div>
                                 </div>
                             </div>
+
+                            <script>
+                                $(document).ready(function() {
+    $('#saveChanges-booking1').click(function(e) {
+        e.preventDefault();
+        let mobileNumber = $('#phoneNumberInput-booking').val();
+
+        $.ajax({
+            url: '/user/enquiry/store', // The route that handles storing the mobile number
+            type: 'POST',
+            data: {
+                mobile_number: mobileNumber,
+                _token: '{{ csrf_token() }}'
+            },
+            success: function(response) {
+                // Handle success, such as displaying a success message or closing the popup
+                alert('Mobile number saved successfully');
+                // Optionally open the next popup
+                // $('#myPopup-booking1').hide();
+                // $('#myPopup-booking').show();
+            },
+            error: function(xhr) {
+                // Handle error, such as displaying validation errors
+                let errors = xhr.responseJSON.errors;
+                if(errors.mobile_number) {
+                    $('#res-booking1').text(errors.mobile_number[0]);
+                }
+            }
+        });
+    });
+});
+
+
+$(document).ready(function() {
+    $('#saveChanges-booking').click(function(e) {
+        e.preventDefault();
+        let name = $('input[placeholder="Enter your name"]').val();
+        let location = $('input[placeholder="Enter your Location"]').val();
+        let email = $('input[placeholder="Enter your email"]').val();
+        let date = $('input[type="date"]').val();
+
+        $.ajax({
+            url: '/user/enquiry/update',
+            type: 'POST',
+            data: {
+                name: name,
+                location: location,
+                email: email,
+                date: date,
+                _token: '{{ csrf_token() }}'
+            },
+            success: function(response) {
+                // Handle success, such as displaying a success message or closing the popup
+                alert('Details updated successfully');
+                // Optionally open the next popup
+                // $('#myPopup-booking').hide();
+                // $('#myPopup2-booking').show();
+            },
+            error: function(xhr) {
+                // Handle error, such as displaying validation errors
+                let errors = xhr.responseJSON.errors;
+                // Display the errors accordingly
+            }
+        });
+    });
+});
+
+                            </script>
                         </div>
                     </div>
 

@@ -24,13 +24,13 @@ class CategoryRequest extends FormRequest
      */
     public function rules()
     {
+        $categoryId = $this->route('category'); // Fetch the category ID from the route
 
-        $canteenId = $this->route('categories') ? $this->route('categories') : null;
         return [
             'name' => [
                 'required',
                 'max:255',
-                Rule::unique('categories')->ignore($canteenId),
+                Rule::unique('categories')->ignore($categoryId),
             ],
         ];
     }

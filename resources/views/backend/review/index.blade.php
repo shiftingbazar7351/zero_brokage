@@ -3,7 +3,7 @@
     <div class="page-wrapper page-settings">
         <div class="content">
             <div class="content-page-header content-page-headersplit mb-0">
-                <h5>FAQs</h5>
+                <h5>Reviews</h5>
                 <div class="list-btn d-flex gap-3">
 
                     <div class="page-headers">
@@ -15,9 +15,8 @@
 
                     <ul>
                         <li>
-                            <button class="btn btn-primary" type="button" data-bs-toggle="modal"
-                                data-bs-target="#add-faqs">
-                                <i class="fa fa-plus me-2"></i>Add FAQ
+                            <button class="btn btn-primary" type="button" data-bs-toggle="modal" data-bs-target="#add-review">
+                                <i class="fa fa-plus me-2"></i>Add Review
                             </button>
                         </li>
                     </ul>
@@ -30,40 +29,43 @@
                             <thead>
                                 <tr>
                                     <th>#</th>
-                                    <th>Question</th>
-                                    <th>Answer</th>
+                                    <th>Name</th>
+                                    <th>Description</th>
+                                    <th>Profession</th>
+                                    <th>Status</th>
                                     <th>Date</th>
                                     <th>Created by</th>
-                                    <th>Status</th>
                                     <th>Action</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                @forelse ($faqs as $faq)
+                                @forelse ($reviews as $review)
                                     <tr>
                                         <td>{{ $loop->iteration }}</td>
-                                        <td>{{ $faq->question ?? '' }}</td>
-                                        <td>{{ $faq->answer ?? '' }}</td>
-                                        <td>{{ $faq->created_at ? $faq->created_at->format('d M Y') : '' }}</td>
-                                        <td>{{ $faq->createdBy->name ?? '' }}</td>
+                                        <td>{{ $review->name ?? '' }}</td>
+                                        <td>{{ $review->description ?? '' }}</td>
+                                        <td>{{ $review->profession ?? '' }}</td>
+
 
                                         <td>
                                             <div class="active-switch">
                                                 <label class="switch">
                                                     <input type="checkbox" class="status-toggle"
-                                                        data-id="{{ $faq->id }}" {{ $faq->status ? 'checked' : '' }}>
+                                                        data-id="{{ $review->id }}" {{ $review->status ? 'checked' : '' }}>
                                                     <span class="sliders round"></span>
                                                 </label>
                                             </div>
                                         </td>
+                                        <td>{{ $review->created_at ? $review->created_at->format('d M Y') : '' }}</td>
+                                        <td>{{ $review->createdBy->name ?? '' }}</td>
                                         <td>
                                             <div class="table-actions d-flex justify-content-center">
                                                 <button class="btn delete-table me-2"
-                                                    onclick="editCategory({{ $faq->id }})" type="button"
-                                                    data-bs-toggle="modal" data-bs-target="#edit-faq">
+                                                    onclick="editCategory({{ $review->id }})" type="button"
+                                                    data-bs-toggle="modal" data-bs-target="#edit-review">
                                                     <i class="fe fe-edit"></i>
                                                 </button>
-                                                <form action="{{ route('faq.destroy', $faq->id) }}" method="POST"
+                                                <form action="{{ route('reviews.destroy', $review->id) }}" method="POST"
                                                     style="display:inline;">
                                                     @csrf
                                                     @method('DELETE')
@@ -88,28 +90,34 @@
         </div>
     </div>
 
-    <div class="modal fade" id="add-faqs">
+    <div class="modal fade" id="add-review">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title">Add Faq</h5>
+                    <h5 class="modal-title">Add Review</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
                         <i class="fe fe-x"></i>
                     </button>
                 </div>
                 <div class="modal-body pt-0">
-                    <form id="addFaqForm" method="POST" data-parsley-validate="true">
+                    <form id="addreviewForm" method="POST">
                         @csrf
                         <div class="mb-3">
-                            <label class="form-label">Question</label>
-                            <textarea type="text" class="form-control" name="question" placeholder="Enter question" required>{{ old('question') }}</textarea>
-                            <div id="question_error" class="text-danger"></div>
+                            <label class="form-label">Name</label>
+                            <input type="text" class="form-control" name="name" placeholder="Enter name">{{ old('name') }}</input>
+                            <div id="name_error" class="text-danger"></div>
                         </div>
 
                         <div class="mb-3">
-                            <label class="form-label">Answer</label>
-                            <textarea type="text" class="form-control" name="answer" placeholder="Enter answer" required>{{ old('answer') }}</textarea>
-                            <div id="answer_error" class="text-danger"></div>
+                            <label class="form-label">Description</label>
+                            <textarea type="text" class="form-control" name="description" placeholder="Enter description">{{ old('description') }}</textarea>
+                            <div id="description_error" class="text-danger"></div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Profession</label>
+                            <input type="text" class="form-control" name="profession" placeholder="Enter profession">{{ old('profession') }}</input>
+                            <div id="profession_error" class="text-danger"></div>
                         </div>
 
                         <div class="text-end">
@@ -125,31 +133,38 @@
 
 
     <!-- Edit Menu Modal -->
-    <div class="modal fade" id="edit-faq">
+    <div class="modal fade" id="edit-review">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title">Edit Faq</h5>
+                    <h5 class="modal-title">Edit Review</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
                         <i class="fe fe-x"></i>
                     </button>
                 </div>
                 <div class="modal-body pt-0">
-                    <form id="editFaqForm" method="POST" action="{{ route('faq.update', 'faq_id') }}"
-                        enctype="multipart/form-data" data-parsley-validate="true">
+                    <form id="editreviewForm" method="POST" action="{{ route('reviews.update', 'review_id') }}"
+                        enctype="multipart/form-data">
                         @csrf
                         @method('PUT')
-                        <input type="hidden" id="editFaqId" name="faq_id">
+                        <input type="hidden" id="editReviewId" name="review_id">
                         <div class="mb-3">
-                            <label class="form-label">Question</label>
-                            <textarea type="text" class="form-control" id="editQuestion" name="question" placeholder="Enter question" required></textarea>
-                            <div id="editQuestion_error" class="text-danger"></div>
+                            <label class="form-label">Name</label>
+                            <input type="text" class="form-control" id="editname" name="name" placeholder="Enter name"></input>
+                            <div id="editName_error" class="text-danger"></div>
+                        </div>
+
+
+                        <div class="mb-3">
+                            <label class="form-label">Description</label>
+                            <textarea type="text" class="form-control" id="editdescription" name="description" placeholder="Enter description"></textarea>
+                            <div id="editDescription_error" class="text-danger"></div>
                         </div>
 
                         <div class="mb-3">
-                            <label class="form-label">Answer</label>
-                            <textarea type="text" class="form-control" id="editAnswer" name="answer" placeholder="Enter answer" required></textarea>
-                            <div id="editAnswer_error" class="text-danger"></div>
+                            <label class="form-label">Profession</label>
+                            <input type="text" class="form-control" id="editprofession" name="profession" placeholder="Enter profession"></input>
+                            <div id="editProfession_error" class="text-danger"></div>
                         </div>
 
                         <div class="text-end">
@@ -165,28 +180,29 @@
 
 @section('scripts')
     <script>
-        var statusRoute = `{{ route('faq.status') }}`;
+        var statusRoute = `{{ route('reviews.status') }}`;
     </script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="{{ asset('admin/assets/js/status-update.js') }}"></script>
     <script>
         function editCategory(id) {
             $.ajax({
-                url: `/faq/${id}/edit`,
+                url: `/reviews/${id}/edit`,
                 method: 'GET',
                 success: function(data) {
-                    $('#editFaqId').val(data.id);
-                    $('#editQuestion').val(data.question);
-                    $('#editAnswer').val(data.answer);
+                    $('#editReviewId').val(data.id);
+                    $('#editname').val(data.name);
+                    $('#editdescription').val(data.description);
+                    $('#editprofession').val(data.profession);
 
                     // Update form action URL
-                    $('#editFaqForm').attr('action', `/faq/${data.id}`);
+                    $('#editreviewForm').attr('action', `/reviews/${data.id}`);
 
                     // Show the modal
-                    $('#edit-faq').modal('show');
+                    $('#edit-review').modal('show');
                 },
                 error: function() {
-                    alert('Error fetching FAQ data.');
+                    alert('Error fetching review data.');
                 }
             });
         }
@@ -194,69 +210,39 @@
         // for validation in addition
 
         $(document).ready(function() {
-    $('#add-faqs').on('shown.bs.modal', function() {
-        $('#addFaqForm').off('submit').on('submit', function(event) {
-            console.log("Form submitted"); // Debugging message
-            event.preventDefault(); // Prevent the default form submission
+            $('#addreviewForm').off('submit').on('submit', function(event) {
+                event.preventDefault(); // Prevent the default form submission
 
-            $.ajax({
-                url: $(this).attr('action'), // Form action URL
-                method: 'POST',
-                data: $(this).serialize(), // Serialize form data
-                success: function(response) {
-                    $('#add-faqs').modal('hide'); // Hide the modal
-                    window.location.reload(); // Reload the page
-                },
-                error: function(xhr) {
-                    console.log(xhr.responseJSON); // Debugging message for error response
-                    var errors = xhr.responseJSON.errors;
-                    if (errors) {
-                        $('#question_error').text('');
-                        $('#answer_error').text('');
-                        if (errors.question) {
-                            $('#question_error').text(errors.question[0]);
+                $.ajax({
+                    url: $(this).attr('action'), // Form action URL
+                    method: 'POST',
+                    data: $(this).serialize(), // Serialize form data
+                    success: function(response) {
+                        alert('Review added successfully!');
+                        $('#add-review').modal('hide'); // Hide the modal
+                        if (response) {
+                        location.reload(); // Refresh page to show updated data
                         }
-                        if (errors.answer) {
-                            $('#answer_error').text(errors.answer[0]);
+                    },
+                    error: function(xhr) {
+                        var errors = xhr.responseJSON.errors;
+                        if (errors) {
+                            $('#name_error').text('');
+                            $('#description_error').text('');
+                            $('#profession_error').text('');
+                            if (errors.name) {
+                                $('#name_error').text(errors.name[0]);
+                            }
+                            if (errors.description) {
+                                $('#description_error').text(errors.description[0]);
+                            }
+                            if (errors.profession) {
+                                $('#profession_error').text(errors.profession[0]);
+                            }
                         }
                     }
-                }
+                });
             });
         });
-    });
-});
-
-
-
-        // $(document).ready(function() {
-        //     $('#addFaqForm').on('submit').on('submit', function(event) {
-        //         event.preventDefault(); // Prevent the default form submission
-
-        //         $.ajax({
-        //             url: $(this).attr('action'), // Form action URL
-        //             method: 'POST',
-        //             data: $(this).serialize(), // Serialize form data
-        //             success: function(response) {
-        //                 // Handle successful form submission
-        //                 // alert('FAQ added successfully!');
-        //                 $('#add-faqs').modal('hide'); // Hide the modal
-        //                 window.location.reload();
-        //             },
-        //             error: function(xhr) {
-        //                 var errors = xhr.responseJSON.errors;
-        //                 if (errors) {
-        //                     $('#question_error').text('');
-        //                     $('#answer_error').text('');
-        //                     if (errors.question) {
-        //                         $('#question_error').text(errors.question[0]);
-        //                     }
-        //                     if (errors.answer) {
-        //                         $('#answer_error').text(errors.answer[0]);
-        //                     }
-        //                 }
-        //             }
-        //         });
-        //     });
-        // });
     </script>
 @endsection

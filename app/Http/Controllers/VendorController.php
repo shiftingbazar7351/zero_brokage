@@ -1,13 +1,14 @@
 <?php
 
 namespace App\Http\Controllers;
-use App\Models\Menu;
-use App\Models\Vendor;
 use App\Models\Category;
-use App\Models\SubMenu;
+use App\Models\Menu;
 use App\Models\SubCategory;
+use App\Models\SubMenu;
+use App\Models\Vendor;
 use App\Services\FileUploadService;
 
+use Exception;
 use Illuminate\Http\Request;
 
 class VendorController extends Controller
@@ -29,7 +30,7 @@ class VendorController extends Controller
         $subcategories = SubCategory::orderByDesc('created_at')->get();
         $submenus = SubMenu::orderByDesc('created_at')->get();
         $vendors = Vendor::orderByDesc('created_at')->get();
-        return view("backend.vendor.index" , compact('subcategories','submenus','vendors') );
+        return view("backend.vendor.index", compact('subcategories', 'submenus', 'vendors'));
     }
 
     /**
@@ -41,7 +42,7 @@ class VendorController extends Controller
     {
         $subcategories = SubCategory::orderByDesc('created_at')->get();
         $submenus = SubMenu::orderByDesc('created_at')->get();
-        return view("backend.vendor.create" , compact('subcategories','submenus'));
+        return view("backend.vendor.create", compact('subcategories', 'submenus'));
     }
 
     /**
@@ -66,7 +67,7 @@ class VendorController extends Controller
             // 'whatsapp' => 'nullable|string|max:10',
             // 'number' => 'required|string|max:10',
             'website' => 'nullable|url',
-            'verified' => 'required|integer',
+            // 'verified' => 'required|integer',
             // 'submenu_id' => 'required|integer',
             'logo' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
             'owner_name' => 'required|string|max:255',
@@ -86,37 +87,45 @@ class VendorController extends Controller
         // return $request->all();
 
         // Save vendor data
-        $vendor = Vendor::create( $validatedData);
+        // Create the vendor record
+        $vendor = Vendor::create($request->all());
 
+        // Check if the request has any image files and update the vendor model
         if ($request->hasFile('vendor_image')) {
-            $filename = $this->fileUploadService->uploadImage('vendor/', $request->file('vendor_image'));
+            $filename = $this->fileUploadService->uploadImage('vendor/vendor_image/', $request->file('vendor_image'));
             $vendor->vendor_image = $filename;
         }
 
         if ($request->hasFile('gst_image')) {
-            $filename = $this->fileUploadService->uploadImage('vendor/', $request->file('gst_image'));
+            $filename = $this->fileUploadService->uploadImage('vendor/gst_image/', $request->file('gst_image'));
             $vendor->gst_image = $filename;
         }
 
         if ($request->hasFile('pan_image')) {
-            $filename = $this->fileUploadService->uploadImage('vendor/', $request->file('pan_image'));
+            $filename = $this->fileUploadService->uploadImage('vendor/pan_image/', $request->file('pan_image'));
             $vendor->pan_image = $filename;
         }
+
         if ($request->hasFile('adhar_image')) {
-            $filename = $this->fileUploadService->uploadImage('vendor/', $request->file('adhar_image'));
+            $filename = $this->fileUploadService->uploadImage('vendor/adhar_image/', $request->file('adhar_image'));
             $vendor->adhar_image = $filename;
         }
+
         if ($request->hasFile('visiting_card')) {
-            $filename = $this->fileUploadService->uploadImage('vendor/', $request->file('visiting_card'));
+            $filename = $this->fileUploadService->uploadImage('vendor/visiting_card/', $request->file('visiting_card'));
             $vendor->visiting_card = $filename;
         }
+
         if ($request->hasFile('client_sign')) {
-            $filename = $this->fileUploadService->uploadImage('vendor/', $request->file('client_sign'));
+            $filename = $this->fileUploadService->uploadImage('vendor/client_sign/', $request->file('client_sign'));
             $vendor->client_sign = $filename;
         }
-        
+
+        // Save the vendor model with the updated image fields
+        $vendor->save();
 
         return redirect(route('vendors.index'))->with('success', 'Vendor Created Successfully!');
+
     }
 
 
@@ -138,12 +147,12 @@ class VendorController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
-{
-    $vendor = Vendor::findOrFail($id); // Find the vendor by ID or fail if not found
-    $subcategories = SubCategory::orderByDesc('created_at')->get();
-    $submenus = SubMenu::orderByDesc('created_at')->get();
-    return view('backend.vendor.edit', compact('vendor', 'subcategories', 'submenus')); // Pass the vendor data to the view
-}
+    {
+        $vendor = Vendor::findOrFail($id); // Find the vendor by ID or fail if not found
+        $subcategories = SubCategory::orderByDesc('created_at')->get();
+        $submenus = SubMenu::orderByDesc('created_at')->get();
+        return view('backend.vendor.edit', compact('vendor', 'subcategories', 'submenus')); // Pass the vendor data to the view
+    }
 
 
     /**
@@ -177,37 +186,37 @@ class VendorController extends Controller
             'pan_number' => 'required|string|max:10',
             'adhar_image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ]);
-    
+
         $vendor = Vendor::findOrFail($id); // Find the vendor by ID or fail if not found
         $vendor->update($validatedData); // Update the vendor data
         // return $vendor;
-    
+
         // Handle file uploads
         if ($request->hasFile('vendor_image')) {
-            $filename = $this->fileUploadService->uploadImage('vendor/', $request->file('vendor_image'));
+            $filename = $this->fileUploadService->uploadImage('vendor/vendor_image/', $request->file('vendor_image'));
             $vendor->vendor_image = $filename;
         }
-    
+
         if ($request->hasFile('gst_image')) {
-            $filename = $this->fileUploadService->uploadImage('vendor/', $request->file('gst_image'));
+            $filename = $this->fileUploadService->uploadImage('vendor/gst_image/', $request->file('gst_image'));
             $vendor->gst_image = $filename;
         }
-    
+
         if ($request->hasFile('pan_image')) {
-            $filename = $this->fileUploadService->uploadImage('vendor/', $request->file('pan_image'));
+            $filename = $this->fileUploadService->uploadImage('vendor/pan_image/', $request->file('pan_image'));
             $vendor->pan_image = $filename;
         }
-    
+
         if ($request->hasFile('adhar_image')) {
-            $filename = $this->fileUploadService->uploadImage('vendor/', $request->file('adhar_image'));
+            $filename = $this->fileUploadService->uploadImage('vendor/adhar_image/', $request->file('adhar_image'));
             $vendor->adhar_image = $filename;
         }
-    
+
         $vendor->save(); // Save the changes
-    
+
         return redirect(route('vendors.index'))->with('success', 'Vendor Updated Successfully!');
     }
-    
+
 
     /**
      * Remove the specified resource from storage.
@@ -215,12 +224,39 @@ class VendorController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-        public function destroy($id)
+    public function destroy($id)
     {
-        $vendor = Vendor::findOrFail($id); // Find the vendor by ID or fail if not found
-        $vendor->delete(); // Delete the vendor
+        try {
+            $vendor = Vendor::findOrFail($id);
 
-        return redirect(route('vendors.index'))->with('success', 'Vendor Deleted Successfully!');
+            // Collect image fields with their respective paths
+            $imageFields = [
+                'vendor_image' => 'vendor/vendor_image/',
+                'gst_image' => 'vendor/gst_image/',
+                'pan_image' => 'vendor/pan_image/',
+                'adhar_image' => 'vendor/adhar_image/',
+                'visiting_card' => 'vendor/visiting_card/',
+                'client_sign' => 'vendor/client_sign/'
+            ];
+
+            // Delete the vendor
+            $vendor->delete();
+
+            // Remove associated images
+            foreach ($imageFields as $field => $path) {
+                $image = $vendor->$field; // Get the image name from the vendor object
+                if ($image) {
+                    $this->fileUploadService->removeImage($path, $image);
+                }
+            }
+
+            return redirect(route('vendors.index'))->with('success', 'Vendor Deleted Successfully!');
+
+        } catch (Exception $e) {
+            return redirect()->back()->with('error', 'Something went wrong');
+        }
     }
+
+
 
 }

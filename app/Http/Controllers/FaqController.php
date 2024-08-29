@@ -80,10 +80,10 @@ class FaqController extends Controller
      /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Faq $category)
+    public function destroy($id)
     {
-        $category->delete();
-
+        $faq = Faq::findOrFail($id);
+        $faq->delete();
         return redirect()->back()->with('success', 'Faq Deleted successfully.');
     }
 

@@ -15,7 +15,8 @@
 
                     <ul>
                         <li>
-                            <button class="btn btn-primary" type="button" data-bs-toggle="modal" data-bs-target="#add-faqs">
+                            <button class="btn btn-primary" type="button" data-bs-toggle="modal"
+                                data-bs-target="#add-faqs">
                                 <i class="fa fa-plus me-2"></i>Add FAQ
                             </button>
                         </li>
@@ -202,8 +203,8 @@
                     data: $(this).serialize(), // Serialize form data
                     success: function(response) {
                         // Handle successful form submission
-                        alert('FAQ added successfully!');
                         $('#add-faqs').modal('hide'); // Hide the modal
+                        window.location.reload(); // Reload the page
                     },
                     error: function(xhr) {
                         var errors = xhr.responseJSON.errors;

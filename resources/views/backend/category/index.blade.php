@@ -93,7 +93,7 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body pt-0">
-                <form id="addCategoryForm" enctype="multipart/form-data">
+                <form id="addCategoryForm" enctype="multipart/form-data" >
                     @csrf
                     <div class="mb-3">
                         <label class="form-label">Category Name</label>
@@ -149,7 +149,7 @@
         $('#editName').val(categoryName);
         $('#editCategoryForm').attr('action', `/categories/${categoryId}`);
     }
-    
+
 
 
     function editCategory(categoryId, categoryName) {
@@ -180,7 +180,7 @@
                 success: function (response) {
                     if (response.success) {
                         $('#add_category').modal('hide');
-                        alert(response.message);
+                        // alert(response.message);
                         location.reload(); // Reload the page to see the new category
                     } else {
                         alert(response.message);
@@ -215,7 +215,7 @@
                 success: function (response) {
                     if (response.success) {
                         $('#edit-category').modal('hide');
-                        alert(response.message);
+                        // alert(response.message);
                         location.reload(); // Reload the page to see the updated category
                     } else {
                         alert(response.message);
@@ -233,6 +233,6 @@
                 }
             });
         });
-    
+
     });
 </script>

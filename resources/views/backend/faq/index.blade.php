@@ -98,17 +98,17 @@
                     </button>
                 </div>
                 <div class="modal-body pt-0">
-                    <form id="addFaqForm" method="POST">
+                    <form id="addFaqForm" method="POST" data-parsley-validate="true">
                         @csrf
                         <div class="mb-3">
                             <label class="form-label">Question</label>
-                            <textarea type="text" class="form-control" name="question" placeholder="Enter question">{{ old('question') }}</textarea>
+                            <textarea type="text" class="form-control" name="question" placeholder="Enter question" required>{{ old('question') }}</textarea>
                             <div id="question_error" class="text-danger"></div>
                         </div>
 
                         <div class="mb-3">
                             <label class="form-label">Answer</label>
-                            <textarea type="text" class="form-control" name="answer" placeholder="Enter answer">{{ old('answer') }}</textarea>
+                            <textarea type="text" class="form-control" name="answer" placeholder="Enter answer" required>{{ old('answer') }}</textarea>
                             <div id="answer_error" class="text-danger"></div>
                         </div>
 
@@ -136,19 +136,19 @@
                 </div>
                 <div class="modal-body pt-0">
                     <form id="editFaqForm" method="POST" action="{{ route('faq.update', 'faq_id') }}"
-                        enctype="multipart/form-data">
+                        enctype="multipart/form-data" data-parsley-validate="true">
                         @csrf
                         @method('PUT')
                         <input type="hidden" id="editFaqId" name="faq_id">
                         <div class="mb-3">
                             <label class="form-label">Question</label>
-                            <textarea type="text" class="form-control" id="editQuestion" name="question" placeholder="Enter question"></textarea>
+                            <textarea type="text" class="form-control" id="editQuestion" name="question" placeholder="Enter question" required></textarea>
                             <div id="editQuestion_error" class="text-danger"></div>
                         </div>
 
                         <div class="mb-3">
                             <label class="form-label">Answer</label>
-                            <textarea type="text" class="form-control" id="editAnswer" name="answer" placeholder="Enter answer"></textarea>
+                            <textarea type="text" class="form-control" id="editAnswer" name="answer" placeholder="Enter answer" required></textarea>
                             <div id="editAnswer_error" class="text-danger"></div>
                         </div>
 
@@ -194,33 +194,69 @@
         // for validation in addition
 
         $(document).ready(function() {
-            $('#addFaqForm').on('submit', function(event) {
-                event.preventDefault(); // Prevent the default form submission
+    $('#add-faqs').on('shown.bs.modal', function() {
+        $('#addFaqForm').off('submit').on('submit', function(event) {
+            console.log("Form submitted"); // Debugging message
+            event.preventDefault(); // Prevent the default form submission
 
-                $.ajax({
-                    url: $(this).attr('action'), // Form action URL
-                    method: 'POST',
-                    data: $(this).serialize(), // Serialize form data
-                    success: function(response) {
-                        // Handle successful form submission
-                        $('#add-faqs').modal('hide'); // Hide the modal
-                        window.location.reload(); // Reload the page
-                    },
-                    error: function(xhr) {
-                        var errors = xhr.responseJSON.errors;
-                        if (errors) {
-                            $('#question_error').text('');
-                            $('#answer_error').text('');
-                            if (errors.question) {
-                                $('#question_error').text(errors.question[0]);
-                            }
-                            if (errors.answer) {
-                                $('#answer_error').text(errors.answer[0]);
-                            }
+            $.ajax({
+                url: $(this).attr('action'), // Form action URL
+                method: 'POST',
+                data: $(this).serialize(), // Serialize form data
+                success: function(response) {
+                    $('#add-faqs').modal('hide'); // Hide the modal
+                    window.location.reload(); // Reload the page
+                },
+                error: function(xhr) {
+                    console.log(xhr.responseJSON); // Debugging message for error response
+                    var errors = xhr.responseJSON.errors;
+                    if (errors) {
+                        $('#question_error').text('');
+                        $('#answer_error').text('');
+                        if (errors.question) {
+                            $('#question_error').text(errors.question[0]);
+                        }
+                        if (errors.answer) {
+                            $('#answer_error').text(errors.answer[0]);
                         }
                     }
-                });
+                }
             });
         });
+    });
+});
+
+
+
+        // $(document).ready(function() {
+        //     $('#addFaqForm').on('submit').on('submit', function(event) {
+        //         event.preventDefault(); // Prevent the default form submission
+
+        //         $.ajax({
+        //             url: $(this).attr('action'), // Form action URL
+        //             method: 'POST',
+        //             data: $(this).serialize(), // Serialize form data
+        //             success: function(response) {
+        //                 // Handle successful form submission
+        //                 // alert('FAQ added successfully!');
+        //                 $('#add-faqs').modal('hide'); // Hide the modal
+        //                 window.location.reload();
+        //             },
+        //             error: function(xhr) {
+        //                 var errors = xhr.responseJSON.errors;
+        //                 if (errors) {
+        //                     $('#question_error').text('');
+        //                     $('#answer_error').text('');
+        //                     if (errors.question) {
+        //                         $('#question_error').text(errors.question[0]);
+        //                     }
+        //                     if (errors.answer) {
+        //                         $('#answer_error').text(errors.answer[0]);
+        //                     }
+        //                 }
+        //             }
+        //         });
+        //     });
+        // });
     </script>
 @endsection

@@ -33,7 +33,7 @@
 
     {{-- .................................Slider...................................... --}}
 
-    <div class="row-check d-flex justify-content-center p-4">
+    <div class="row-check d-flex justify-content-center px-4 sticky-slider">
         <div class="wrapper">
             <i id="left" class="fa-solid fas fa-angle-left"></i>
             <ul class="carousel">

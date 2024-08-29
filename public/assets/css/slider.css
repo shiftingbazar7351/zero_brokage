@@ -86,7 +86,11 @@
     margin: 0px 10px;
 
 }
-
+.sticky-slider{
+    position: sticky;
+    top: 98px;
+    z-index:2;
+}
 .wrapper i {
     height: 50px;
     width: 50px;
@@ -119,7 +123,7 @@
     display: grid;
     grid-auto-flow: column;
     grid-auto-columns: calc((100% / 8) - 12px);
-    gap: 13px;
+    /* gap: 13px; */
     overflow-x: auto;
     scroll-snap-type: x mandatory;
     scroll-behavior: smooth;
@@ -153,13 +157,14 @@
 
 .carousel .card {
     scroll-snap-align: start;
-    height: 190px;
+    height: 121px;
     list-style: none;
     background: #fff;
     border-radius: 8px;
     display: flex;
     cursor: pointer;
-    width: 98%;
+    width: 82%;
+    margin: 10px 0px;
     /* padding-bottom: 15px; */
     align-items: center;
     justify-content: center;
@@ -169,15 +174,14 @@
 
 .card .img {
     /* background: green; */
-    width: 145px;
-    height: 145px;
+    /* width: 48px; */
+    height: 102px;
     /* border-radius: 50%; */
-
 }
 
 .card .img img {
-    width: 140px;
-    height: 140px;
+    width: 115px;
+    height: 85px;
     object-fit: cover;
     border-radius: 7%;
     border: 4px solid #fff;

@@ -8,6 +8,7 @@ use App\Models\Enquiry;
 use App\Models\Faq;
 use App\Models\IndiaServiceDescription;
 use App\Models\Menu;
+use App\Models\Review;
 use App\Models\ServiceDetail;
 use App\Models\State;
 use App\Models\SubCategory;
@@ -29,7 +30,10 @@ class FrontendController extends Controller
         ->select('id','vendor_name','sub_category','vendor_image','price','review_count')
         ->orderByDesc('created_at')
         ->get();
-        return view('frontend.home', compact('subcategories', 'trendingsubcat', 'featuresubcat','providers'));
+        $reviews = Review::where('status',1)
+       ->select('id','description','name','profession','status')
+       ->get();
+        return view('frontend.home', compact('subcategories', 'trendingsubcat', 'featuresubcat','providers','reviews'));
     }
     public function subCategory($slug)
     {

@@ -10,6 +10,7 @@ use App\Http\Controllers\MenuController;
 use App\Http\Controllers\MetaDescripConroller;
 use App\Http\Controllers\MetaTitleController;
 use App\Http\Controllers\MetaUrlController;
+use App\Http\Controllers\NewsletterController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ServiceDetailController;
 use App\Http\Controllers\SubCategoryController;
@@ -86,6 +87,8 @@ Route::get('/service-in-india-city', [FrontendController::class, 'servicesInIndi
 Route::get('/', [FrontendController::class, 'home'])->name('home');
 Route::get('/service-details', [FrontendController::class, 'serviceDetails'])->name('service-details');
 Route::get('/service-grid/{slug}', [FrontendController::class, 'subCategory'])->name('service.grid');
+Route::post('/user/enquiry/store', [FrontendController::class, 'enquiryStore'])->name('enquirystore');
+Route::post('/user/enquiry/update', [FrontendController::class, 'enquiryUpdate'])->name('enquiryupdate');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -137,9 +140,9 @@ Route::middleware('auth')->group(function () {
 
     Route::resource('/india-services', IndiaServiceController::class);
 
-    Route::post('/user/enquiry/store', [FrontendController::class, 'enquiryStore'])->name('enquirystore');
-    Route::post('/user/enquiry/update', [FrontendController::class, 'enquiryUpdate'])->name('enquiryupdate');
 
+
+    Route::resource('/newsletter', NewsletterController::class);
 });
 
 

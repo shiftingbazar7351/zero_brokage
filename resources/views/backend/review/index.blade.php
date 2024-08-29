@@ -45,7 +45,7 @@
                                         <td>{{ $review->name ?? '' }}</td>
                                         <td>{{ $review->description ?? '' }}</td>
                                         <td>{{ $review->profession ?? '' }}</td>
-                                      
+
 
                                         <td>
                                             <div class="active-switch">
@@ -116,7 +116,7 @@
 
                         <div class="mb-3">
                             <label class="form-label">Profession</label>
-                            <input type="text" class="form-control" name="profrssion" placeholder="Enter profession">{{ old('profrssion') }}</input>
+                            <input type="text" class="form-control" name="profession" placeholder="Enter profession">{{ old('profession') }}</input>
                             <div id="profession_error" class="text-danger"></div>
                         </div>
 
@@ -163,7 +163,7 @@
 
                         <div class="mb-3">
                             <label class="form-label">Profession</label>
-                            <input type="text" class="form-control" id="editprofrssion" name="profrssion" placeholder="Enter profession"></input>
+                            <input type="text" class="form-control" id="editprofession" name="profession" placeholder="Enter profession"></input>
                             <div id="editProfession_error" class="text-danger"></div>
                         </div>
 
@@ -193,7 +193,7 @@
                     $('#editReviewId').val(data.id);
                     $('#editname').val(data.name);
                     $('#editdescription').val(data.description);
-                    $('#editprofrssion').val(data.profrssion);
+                    $('#editprofession').val(data.profession);
 
                     // Update form action URL
                     $('#editreviewForm').attr('action', `/reviews/${data.id}`);
@@ -237,7 +237,7 @@
                                 $('#description_error').text(errors.description[0]);
                             }
                             if (errors.profession) {
-                                $('#profession_error').text(errors.profrssion[0]);
+                                $('#profession_error').text(errors.profession[0]);
                             }
                         }
                     }

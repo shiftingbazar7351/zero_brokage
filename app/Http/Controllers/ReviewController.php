@@ -39,7 +39,7 @@ class ReviewController extends Controller
         $request->validate([
             'name' => 'required',
             'description' => 'required',
-            'profrssion' => 'required',
+            'profession' => 'required',
         ]);
 
         $review = new Review($request->all());
@@ -48,7 +48,7 @@ class ReviewController extends Controller
         return redirect()->back()->with('success', 'Review Added Successfully');
     }
 
-   
+
 
     /**
      * Show the form for editing the specified resource.
@@ -71,17 +71,17 @@ class ReviewController extends Controller
      */
     public function update(Request $request, $id)
     {
-        
+
         $request->validate([
             'name' => 'required',
             'description' => 'required',
-            'profrssion' => 'required',
+            'profession' => 'required',
         ]);
         // Find the FAQ by ID
         $review = Review::findOrFail($id);
 
         // Update the FAQ with the new data
-        $review->update($request->only(['name', 'description','profrssion']));
+        $review->update($request->only(['name', 'description','profession']));
 
         // Redirect back with a success message
         return redirect()->back()->with('success', 'Updated Successfully');

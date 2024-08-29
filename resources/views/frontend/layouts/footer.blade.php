@@ -104,12 +104,13 @@
                         </div>
                         <h2 class="footer-subtitle">Newsletter Signup</h2>
                         <div class="subscribe-form">
-                            {{-- <form action="{{ route('newsletter.store') }}" method="POST"> --}}
-                                <input type="email" class="form-control" placeholder="Enter Email Address">
+                            <form action="{{ route('newsletter.store') }}" method="POST">
+                            @csrf
+                                <input type="email" class="form-control" name="email" placeholder="Enter Email Address">
                                 <button type="submit" class="btn footer-btn">
                                     <i class="feather-send"></i>
                                 </button>
-                            {{-- </form> --}}
+                            </form>
                         </div>
                     </div>
 

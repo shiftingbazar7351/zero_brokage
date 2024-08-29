@@ -13,16 +13,14 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('reviews', function (Blueprint $table) {
+        Schema::create('newsletters', function (Blueprint $table) {
             $table->id();
-            $table->longText('description')->nullable();
-            $table->string('name')->nullable();
-            $table->string('profession')->nullable();
-            $table->boolean('status')->default(1)->comment('0=>inactive,1=>active');
-            $table->integer('created_by')->nullable();
+            $table->string('email')->unique();
+            $table->boolean('subscribed')->default(true);
             $table->softDeletes();
             $table->timestamps();
         });
+
     }
 
     /**
@@ -32,6 +30,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('reviews');
+        Schema::dropIfExists('newsletters');
     }
 };

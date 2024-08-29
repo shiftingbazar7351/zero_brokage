@@ -3,7 +3,7 @@
     <div class="page-wrapper page-settings">
         <div class="content">
             <div class="content-page-header content-page-headersplit mb-0">
-                <h5>Categories</h5>
+                <h5>FAQs</h5>
                 <div class="list-btn d-flex gap-3">
 
                     <div class="page-headers">

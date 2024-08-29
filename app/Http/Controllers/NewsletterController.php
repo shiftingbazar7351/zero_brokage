@@ -17,14 +17,6 @@ class NewsletterController extends Controller
         return view('backend.newsletter.index',compact('newsletters'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     */
-    public function create()
-    {
-        //
-    }
 
     /**
      * Store a newly created resource in storage.
@@ -35,37 +27,6 @@ class NewsletterController extends Controller
     {
         Newsletter::create($request->all());
         return redirect()->back()->with('success','Email saved successfully');
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     */
-    public function update(Request $request, $id)
-    {
-        //
     }
 
     /**

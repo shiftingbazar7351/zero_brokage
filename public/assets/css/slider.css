@@ -87,9 +87,10 @@
 
 }
 .sticky-slider{
+    position: -webkit-sticky;
     position: sticky;
     top: 98px;
-    z-index:2;
+    z-index:1999999;
 }
 .wrapper i {
     height: 50px;

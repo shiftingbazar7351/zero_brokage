@@ -90,7 +90,7 @@
     position: -webkit-sticky;
     position: sticky;
     top: 98px;
-    z-index:1999999;
+    z-index:99;
 }
 .wrapper i {
     height: 50px;

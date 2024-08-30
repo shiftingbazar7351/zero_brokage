@@ -95,26 +95,27 @@ class FrontendController extends Controller
         return response()->json(['success' => 'Mobile number saved successfully']);
     }
 
+
     public function enquiryUpdate(Request $request)
     {
         $validator = Validator::make($request->all(), [
             'name' => 'required|string|max:255',
-            // 'move_from_origin' => 'required|string|max:255',
             'email' => 'required|string|email|max:255',
-            'date' => 'required|date',
+            'date_time' => 'required|date',
+            'location' => 'required|string|max:255',  // Add validation for location
         ]);
 
         if ($validator->fails()) {
             return response()->json(['errors' => $validator->errors()], 422);
         }
 
-        // Assuming you're updating the enquiry based on mobile number or some other identifier
+        // Update the enquiry based on mobile number
         $enquiry = Enquiry::where('mobile_number', $request->mobile_number)->first();
         if ($enquiry) {
             $enquiry->name = $request->name;
-            $enquiry->move_from_origin = $request->move_from_origin;
+            $enquiry->move_from_origin = $request->location;
             $enquiry->email = $request->email;
-            $enquiry->date = $request->date;
+            $enquiry->date_time = $request->date_time;
             $enquiry->save();
 
             return response()->json(['success' => 'Details updated successfully']);
@@ -122,6 +123,7 @@ class FrontendController extends Controller
 
         return response()->json(['error' => 'Enquiry not found'], 404);
     }
+
 
 
 }

@@ -4985,7 +4985,7 @@ html.menu-opened body {
     background-image: url("../img/bg/sunset.jpg");
     text-align: center;
     position: relative;
-    padding: 53px 0;
+    padding: 48px 0px 10px 0px;
     background-repeat: no-repeat;
     background-position: center;
     background-size: cover;

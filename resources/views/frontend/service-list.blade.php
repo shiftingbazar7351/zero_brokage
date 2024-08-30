@@ -28,28 +28,29 @@
             </div>
         </div>
     </div>
-    </div>
+<div></div>
 
 
     {{-- .................................Slider...................................... --}}
 
-    <div class="row-check d-flex justify-content-center px-4 sticky-slider">
-        <div class="wrapper">
-            <i id="left" class="fa-solid fas fa-angle-left"></i>
-            <ul class="carousel">
-                @foreach ($menus as $menu)
+
+        <div class="justify-content-center px-4 sticky-slider" style="background-color: rgb(229, 230, 233)">
+            <div class="wrapper">
+                <i id="left" class="fa-solid fas fa-angle-left"></i>
+                <ul class="carousel">
+                    @foreach ($menus as $menu)
                     <input type="hidden" name="menu_id" value="{{ $menu->id }}">
-                    <li class="card">
-                        <div class="img">
-                            <img src="{{ Storage::url('menu/' . $menu->image ?? '') }}" alt="" draggable="false" />
-                        </div>
-                        <h5 style="font-weight: bold" class="pt-1">{{ $menu->name ?? '' }}</h5>
-                    </li>
-                @endforeach
-            </ul>
-            <i id="right" class="fa-solid fas fa-angle-right"></i>
+                        <li class="card">
+                            <div class="img">
+                                <img src="{{ Storage::url('menu/' . $menu->image ?? '') }}" alt="" draggable="false" />
+                            </div>
+                            <h5 style="font-weight: bold" class="pt-1">{{ $menu->name ?? '' }}</h5>
+                        </li>
+                    @endforeach
+                </ul>
+                <i id="right" class="fa-solid fas fa-angle-right"></i>
+            </div>
         </div>
-    </div>
 
 
     <div class="content">
@@ -416,6 +417,24 @@
             </div>
         </div>
     </div>
+   <script>
+     window.addEventListener('scroll', function() {
+        var stickySlider = document.querySelector('.sticky-slider');
+        var offsetTop = stickySlider.offsetTop;
+
+        if (window.pageYOffset > offsetTop - 98) {
+            stickySlider.style.position = 'fixed';
+            stickySlider.style.top = '98px';
+            stickySlider.style.zIndex = '99';
+            stickySlider.style.width = '100%'; // Ensures the width doesn't collapse
+        } else {
+            stickySlider.style.position = 'relative';
+            stickySlider.style.top = 'auto';
+        }
+    });
+
+   </script>
+
     <script src="{{ asset('assets/js/booking_infoPopup.js') }}"></script>
 
 

@@ -1,46 +1,46 @@
-$(document).ready(function () {
+$(document).ready(function() {
     // Open the popup when .btn-book is clicked
 
-    $(".book-Now-btn").click(function () {
+    $(".book-Now-btn").click(function() {
         $("#myPopup-booking1").addClass("show");
         resetBookingDetails();
     });
 
     // close the popup
 
-    $("#closePopup-booking1").click(function () {
+    $("#closePopup-booking1").click(function() {
         // alert("dfsaj");
         $("#myPopup-booking1").removeClass("show");
     });
 
-    $("#saveChanges-booking1").click(function () {
+    $("#saveChanges-booking1").click(function() {
         if (document.getElementById("phoneNumberInput-booking").value == "") {
 
         } else {
             $("#myPopup-booking").addClass("show");
-        resetBookingDetails();
+            resetBookingDetails();
         }
     });
 
-    $("#saveChanges-booking").click(function () {
-        
+    $("#saveChanges-booking").click(function() {
+
         $("#myPopup2-booking").addClass("show");
         $("#myPopup-booking").removeClass("show");
         $("#myPopup-booking1").removeClass("show");
         startCountdownBooking(60);
     });
 
-    $("#closePopup-booking").click(function () {
+    $("#closePopup-booking").click(function() {
         $("#myPopup-booking").removeClass("show");
         $("#myPopup-booking1").removeClass("show");
     });
 
-    $("#closePopup2-booking").click(function () {
+    $("#closePopup2-booking").click(function() {
         $("#myPopup2-booking").removeClass("show");
         $("#myPopup-booking1").removeClass("show");
     });
 
-    $("#editnumber-booking").click(function () {
+    $("#editnumber-booking").click(function() {
         $("#myPopup2-booking").removeClass("show");
         $("#myPopup-booking").removeClass("show");
         $("#myPopup-booking1").addClass("show");
@@ -51,10 +51,10 @@ $(document).ready(function () {
     // });
 });
 
-resendOtpTextBooking.onclick = function () {
+resendOtpTextBooking.onclick = function() {
     startCountdownBooking(60);
 };
-otpOnWhatsappBooking.onclick = function () {
+otpOnWhatsappBooking.onclick = function() {
     startCountdownBooking(60);
 };
 
@@ -68,7 +68,7 @@ function startCountdownBooking(seconds) {
     // Clear any existing interval before starting a new one
     clearInterval(interval);
 
-    interval = setInterval(function () {
+    interval = setInterval(function() {
         counter--;
         countdownElement.innerHTML = " : " + counter;
 

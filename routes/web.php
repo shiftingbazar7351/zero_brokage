@@ -131,6 +131,11 @@ Route::middleware('auth')->group(function () {
 
 
     Route::resource('/vendors', VendorController::class);
+    Route::resource('/vendors/verified', VendorController::class);
+    Route::post('/fetch-city-vendor/{stateId}', [VendorController::class, 'fetchCity']);
+    Route::post('/fetch-subcategory/{id}', [VendorController::class, 'fetchsubcategory']);
+    Route::post('/getMenus/{subcategoryId}', [VendorController::class, 'getMenus']);
+    Route::post('/getsubMenus/{menuId}', [VendorController::class, 'getsubMenus']);
     Route::resource('/reviews', ReviewController::class);
     Route::post('/reviews-status', [SubMenuController::class, 'subMenuStatus'])->name('reviews.status');
 
@@ -139,7 +144,6 @@ Route::middleware('auth')->group(function () {
     Route::post('/faq-status', [FaqController::class, 'faqStatus'])->name('faq.status');
 
     Route::resource('/india-services', IndiaServiceController::class);
-
 
 
     Route::resource('/newsletter', NewsletterController::class);

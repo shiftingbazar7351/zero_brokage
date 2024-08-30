@@ -253,11 +253,6 @@ class SubMenuController extends Controller
     }
 
 
-    public function getSubcategories($categoryId)
-    {
-        $subcategories = Subcategory::where('category_id', $categoryId)->get();
-        return response()->json($subcategories);
-    }
     public function getMenus(Request $request, $subcategoryId)
     {
         $menus = Menu::where('subcategory_id', $subcategoryId)->get();

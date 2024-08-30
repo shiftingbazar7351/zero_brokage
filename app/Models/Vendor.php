@@ -40,7 +40,13 @@ class Vendor extends Model
         'client_sign',
         'video',
         'location_lat',
-        'location_lang'
+        'location_lang',
+        'vendor_name',
+        'menu_id',
+        'review_count',
+        'status',
+        'created_by',
+        'price',
     ];
 
 

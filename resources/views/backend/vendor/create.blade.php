@@ -1,6 +1,6 @@
 @extends('backend.layouts.main')
 @section('styles')
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/css/intlTelInput.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/css/intlTelInput.min.css">
 @endsection
 
 @section('content')
@@ -55,8 +55,6 @@
                                     @endforeach
                                 </select>
                             </div>
-
-
                         </div>
                         <div class="row mx-auto mt-3">
                             <div class="col-md-6">
@@ -196,7 +194,7 @@
                             <div class="col-md-4">
                                 <label for="formFile" class="form-label">Verified or Approved By Team</label>
                                 <select name="verified" class="form-select bg-light-subtle"
-                                    aria-label="Default select example" style="box-shadow: none" >
+                                    aria-label="Default select example" style="box-shadow: none">
                                     <option selected disabled value="">Select Option</option>
                                     {{-- @foreach ($verifieds as $verified)
                                         <option value="{{ $verified->id }}">{{ $verified->name }}</option>
@@ -341,7 +339,7 @@
                         </div>
 
                         <div class="row mt-3">
-                            <div class="col-md-3">
+                            <div class="col-md-4">
                                 <label for="formFile" class="form-label">Official video<b
                                         style="color: red;">*</b></label>
                                 <input name="video" class="form-control bg-light-subtle" type="file" id="formFile"
@@ -350,28 +348,52 @@
                                     <div class="error text-danger ">{{ $message }}</div>
                                 @enderror
                             </div>
+                            <div class="col-md-4">
+                                <label for="formFile" class="form-label">Vendor Name<b style="color: red;">*</b></label>
+                                <input class="form-control bg-light-subtle" type="text" name="vendor_name"
+                                    placeholder="Enter Vendor Name" aria-label="default input example" required>
+                                @error('video')
+                                    <div class="error text-danger ">{{ $message }}</div>
+                                @enderror
+                            </div>
+
+                            <div class="col-md-4">
+                                <label for="formFile" class="form-label">Review Count<b style="color: red;">*</b></label>
+                                <input class="form-control bg-light-subtle" type="text" name="review_count"
+                                    placeholder="Enter Review Count" aria-label="default input example" required>
+                                @error('video')
+                                    <div class="error text-danger ">{{ $message }}</div>
+                                @enderror
+                            </div>
+
+                        </div>
+                        <div class="row mt-3">
+                            {{-- <div class="col-md-4">
+                                <label for="formFile" class="form-label">price<b style="color: red;">*</b></label>
+                                <input class="form-control bg-light-subtle" type="text" name="price"
+                                    placeholder="Enter price" aria-label="default input example" required>
+                                @error('video')
+                                    <div class="error text-danger ">{{ $message }}</div>
+                                @enderror
+                            </div> --}}
 
                             <div class="col-md-4">
                                 <label for="formFile" class="form-label">Location<b style="color: red;">*</b></label>
-                                {{-- <div class="d-flex gap-4"> --}}
-                                    <input class="form-control bg-light-subtle" type="text"
-                                        placeholder="Enter location" aria-label="default input example" required>
-
-                                    @error('video')
-                                        <div class="error text-danger ">{{ $message }}</div>
-                                    @enderror
-                                {{-- </div> --}}
-
+                                <input class="form-control bg-light-subtle" type="text" name="location_lat"
+                                    placeholder="Enter location" aria-label="default input example" required>
+                                @error('video')
+                                    <div class="error text-danger ">{{ $message }}</div>
+                                @enderror
                             </div>
                             <div class="col-md-1 d-flex" style="align-items: flex-end">
-                                    <button type="button" id="addlocation" class="btn btn-primary">Add</button>
+                                <button type="button" id="addlocation" class="btn btn-primary">Add</button>
 
                             </div>
                             <div class="col-md-4 d-none" id="longitude">
                                 <label for="formFile" class="form-label">Longitude Location<b
                                         style="color: red;">*</b></label>
                                 <div class="d-flex gap-4">
-                                    <input class="form-control bg-light-subtle" type="text"
+                                    <input class="form-control bg-light-subtle" type="text" name="location_lang"
                                         placeholder="Enter longitude location" aria-label="default input example">
                                 </div>
                             </div>

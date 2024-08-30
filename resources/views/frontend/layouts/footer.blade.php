@@ -6,36 +6,13 @@
 
                     <div class="footer-widget">
                         <div class="footer-logo">
-                            <a href="index.html"><img src="{{ asset('assets/img/logofinal.png') }}" alt="logo"></a>
+                            <a href="{{ route('home') }}"><img src="{{ asset('assets/img/logofinal.png') }}" alt="logo"></a>
                         </div>
                         <div class="footer-content">
                             <p>Lorem ipsum dolor sit consectetur adipiscing elit, sed do eiusmod tempor commodo
                                 consequat. </p>
                         </div>
-                        {{-- <div class="footer-selects">
-                            <h2 class="footer-title">Language & Currency</h2>
-                            <div class="row">
-                                <div class="col-lg-12 d-flex">
-                                    <div class="footer-select">
-                                        <img src="{{ asset('assets/img/icons/global.svg') }}" alt="img">
-                                        <select class="select">
-                                            <option>English</option>
-                                            <option>France</option>
-                                            <option>Spanish</option>
-                                        </select>
-                                    </div>
-                                    <div class="footer-select">
-                                        <img src="{{ asset('assets/img/icons/dropdown.svg') }}" class="footer-dropdown"
-                                            alt="img">
-                                        <select class="select">
-                                            <option>US Dollars</option>
-                                            <option>INR</option>
-                                            <option>Kuwait</option>
-                                        </select>
-                                    </div>
-                                </div>
-                            </div>
-                        </div> --}}
+                        
                     </div>
 
                 </div>

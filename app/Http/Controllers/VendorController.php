@@ -89,6 +89,7 @@ class VendorController extends Controller
         // Save vendor data
         // Create the vendor record
         $vendor = Vendor::create($request->all());
+        $vendor->created_by = auth()->user()->id;
 
         // Check if the request has any image files and update the vendor model
         if ($request->hasFile('vendor_image')) {

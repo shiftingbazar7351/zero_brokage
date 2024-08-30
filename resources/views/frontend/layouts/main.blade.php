@@ -10,7 +10,7 @@
 
     <link rel="shortcut icon" href="{{ asset('assets/img/favicon.png') }}">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
-    integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <link rel="stylesheet" href="{{ asset('assets/css/bootstrap.min.css') }}">
 
     <link rel="stylesheet" href="{{ asset('assets/plugins/fontawesome/css/fontawesome.min.css') }}">
@@ -122,6 +122,11 @@
             .btn:hover {
                 background-color: #1573d6;
                 /* Darker blue on hover */
+            }
+
+            .input-div input:focus {
+                border-color: #238af8;
+                box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
             }
         </style>
 

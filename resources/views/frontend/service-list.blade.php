@@ -138,6 +138,7 @@
                                     class="feather-arrow-down-circle ms-1"></i></a>
                         </div>
 
+
                         <div class="filter-content">
                             <h2>By Rating</h2>
                             <ul class="rating-set">
@@ -296,7 +297,7 @@
                                 </div>
                             @endforeach
                             {{-- {{ dd($menu) }} --}}
-                             <div id="myPopup-booking1" class="popup">
+                            <div id="myPopup-booking1" class="popup">
                                 <div class="popup-content" style="width:36%">
                                     <span class="close" id="closePopup-booking1">&times;</span>
                                     <h3>To Book a Service</h3>
@@ -527,9 +528,11 @@
                         _token: '{{ csrf_token() }}'
                     },
                     success: function(response) {
-                        alert('OTP verified successfully');
+                        // alert('OTP verified successfully');
+                        console.log(mobile_number)
                         $('#myPopup2-booking').hide();
                         // Proceed with the next step, e.g., redirect or show a success message
+                        locatin.reload();
                     },
                     error: function(xhr) {
                         let errors = xhr.responseJSON.errors;
@@ -541,6 +544,4 @@
             });
         });
     </script>
->
-
 @endsection

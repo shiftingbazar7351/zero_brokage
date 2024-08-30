@@ -89,6 +89,8 @@ Route::get('/service-details', [FrontendController::class, 'serviceDetails'])->n
 Route::get('/service-grid/{slug}', [FrontendController::class, 'subCategory'])->name('service.grid');
 Route::post('/user/enquiry/store', [FrontendController::class, 'enquiryStore'])->name('enquirystore');
 Route::post('/user/enquiry/update', [FrontendController::class, 'enquiryUpdate'])->name('enquiryupdate');
+Route::post('/verify-otp', [FrontendController::class, 'verifyOtp'])->name('user.verifyOtp');
+
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

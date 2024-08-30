@@ -157,6 +157,7 @@
         </section>
     @endif
 
+    @if(count($providers) > 0)
     <section class="providers-section">
         <div class="container">
             <div class="section-heading">
@@ -300,7 +301,7 @@
             </div>
         </div>
     </section>
-
+    @endif
 
     <section class="work-section pt-0">
 

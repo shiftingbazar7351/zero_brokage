@@ -138,7 +138,6 @@
                                     class="feather-arrow-down-circle ms-1"></i></a>
                         </div>
 
-
                         <div class="filter-content">
                             <h2>By Rating</h2>
                             <ul class="rating-set">
@@ -303,7 +302,7 @@
                                     <h3>To Book a Service</h3>
                                     <img src="{{ asset('assets/img/icons/signup.png') }}" alt="">
                                     <h5 class="sign-up-text">Enter your Mobile Number</h5>
-                                    <input type="tel" id="phoneNumberInput-booking"
+                                    <input type="tel" id="phoneNumberInput-booking" name="mobile_number"
                                         class="phone-number-field form-group input-detailss"
                                         onkeyup="validateNumBookingg(this)" maxlength="10"
                                         placeholder="Enter Mobile Number" required>
@@ -365,16 +364,20 @@
                                         </div>
                                     </div>
                                     <div class="main-div">
-                                        <div class="input-div"><input type="text" maxlength="1" />
+                                        <div class="input-div"><input type="text" value="" class="otp-input"
+                                                maxlength="1" />
                                         </div>
 
-                                        <div class="input-div"><input type="text" maxlength="1" />
+                                        <div class="input-div"><input type="text" value="" class="otp-input"
+                                                maxlength="1" />
                                         </div>
 
-                                        <div class="input-div"><input type="text" maxlength="1" />
+                                        <div class="input-div"><input type="text" value="" class="otp-input"
+                                                maxlength="1" />
                                         </div>
 
-                                        <div class="input-div"><input type="text" maxlength="1" />
+                                        <div class="input-div"><input type="text" value="" class="otp-input"
+                                                maxlength="1" />
                                         </div>
                                     </div>
                                     <div class="resend">
@@ -406,6 +409,30 @@
             </div>
         </div>
     </div>
+
+
+    <script>
+        const otpInputs = document.querySelectorAll('.otp-input');
+
+        otpInputs.forEach((input, index) => {
+            input.addEventListener('input', () => {
+                if (input.value.length === 1) {
+                    // Move to the next input field if it exists
+                    if (index < otpInputs.length - 1) {
+                        otpInputs[index + 1].focus();
+                    }
+                }
+            });
+
+            input.addEventListener('keydown', (e) => {
+                // Handle the backspace key to move to the previous input
+                if (e.key === 'Backspace' && input.value.length === 0 && index > 0) {
+                    otpInputs[index - 1].focus();
+                }
+            });
+        });
+    </script>
+
     <script>
         window.addEventListener('scroll', function() {
             var stickySlider = document.querySelector('.sticky-slider');
@@ -435,113 +462,114 @@
         });
     </script>
 
-    <script>
-        $(document).ready(function() {
-            // Handle mobile number submission
-            $('#saveChanges-booking1').click(function(e) {
-                e.preventDefault();
-                let mobileNumber = $('#phoneNumberInput-booking').val();
 
-                $.ajax({
-                    url: '/user/enquiry/store', // The route for storing the mobile number
-                    type: 'POST',
-                    data: {
-                        mobile_number: mobileNumber,
-                        _token: '{{ csrf_token() }}'
-                    },
-                    success: function(response) {
-                        alert('Mobile number saved successfully');
-                        // Open the next popup
-                        $('#myPopup-booking1').hide();
-                        $('#myPopup-booking').show();
-                    },
-                    error: function(xhr) {
-                        let errors = xhr.responseJSON.errors;
-                        if (errors && errors.mobile_number) {
-                            $('#res-booking1').text(errors.mobile_number[0]);
-                        }
+<script>
+    $(document).ready(function() {
+        // Handle mobile number submission
+        $('#saveChanges-booking1').click(function(e) {
+            e.preventDefault();
+            let mobileNumber = $('#phoneNumberInput-booking').val();
+
+            $.ajax({
+                url: '/user/enquiry/store', // The route for storing the mobile number
+                type: 'POST',
+                data: {
+                    mobile_number: mobileNumber,
+                    _token: '{{ csrf_token() }}'
+                },
+                success: function(response) {
+                    alert('Mobile number saved successfully');
+                    // Open the next popup
+                    $('#myPopup-booking1').hide();
+                    $('#myPopup-booking').show();
+                },
+                error: function(xhr) {
+                    let errors = xhr.responseJSON.errors;
+                    if (errors && errors.mobile_number) {
+                        $('#res-booking1').text(errors.mobile_number[0]);
                     }
-                });
-            });
-
-            // Handle details submission
-            $('#saveChanges-booking').click(function(e) {
-                e.preventDefault();
-                let name = $('input[placeholder="Enter your name"]').val();
-                let move_from_origin = $('input[placeholder="Enter your Location"]').val();
-                let email = $('input[placeholder="Enter your email"]').val();
-                let subcategory_id = $('#subcategory_id').val();
-                let date_time = $('input[type="date"]').val(); // Using date_time to match controller
-
-                $.ajax({
-                    url: '/user/enquiry/update',
-                    type: 'POST',
-                    data: {
-                        mobile_number: $('#phoneNumberInput-booking')
-                    .val(), // Assuming mobile number is being used as identifier
-                        name: name,
-                        move_from_origin: move_from_origin,
-                        email: email,
-                        date_time: date_time,
-                        subcategory_id: subcategory_id,
-                        _token: '{{ csrf_token() }}'
-                    },
-                    success: function(response) {
-                        alert('Details updated successfully');
-                        $('#myPopup-booking').hide();
-                        $('#myPopup2-booking').show(); // Show the OTP verification popup
-                    },
-                    error: function(xhr) {
-                        let errors = xhr.responseJSON.errors;
-                        // Display the errors accordingly
-                        if (errors) {
-                            if (errors.name) {
-                                alert(errors.name[0]);
-                            }
-                            if (errors.email) {
-                                alert(errors.email[0]);
-                            }
-                            if (errors.date_time) {
-                                alert(errors.date_time[0]);
-                            }
-                        }
-                    }
-                });
-            });
-
-
-            $('#verify-otp-booking').click(function(e) {
-                e.preventDefault();
-
-                let otp = '';
-                $('.main-div input').each(function() {
-                    otp += $(this).val();
-                });
-
-                $.ajax({
-                    url: '{{ route('user.verifyOtp') }}',
-                    type: 'POST',
-                    data: {
-                        mobile_number: $('.Phone-Number').text()
-                    .trim(), // Assuming phone number is in this div
-                        otp: otp,
-                        _token: '{{ csrf_token() }}'
-                    },
-                    success: function(response) {
-                        // alert('OTP verified successfully');
-                        console.log(mobile_number)
-                        $('#myPopup2-booking').hide();
-                        // Proceed with the next step, e.g., redirect or show a success message
-                        locatin.reload();
-                    },
-                    error: function(xhr) {
-                        let errors = xhr.responseJSON.errors;
-                        if (errors && errors.error) {
-                            alert(errors.error[0]);
-                        }
-                    }
-                });
+                }
             });
         });
-    </script>
+
+        // Handle details submission
+        $('#saveChanges-booking').click(function(e) {
+            e.preventDefault();
+            let name = $('input[placeholder="Enter your name"]').val();
+            let move_from_origin = $('input[placeholder="Enter your Location"]').val();
+            let email = $('input[placeholder="Enter your email"]').val();
+            let subcategory_id = $('#subcategory_id').val();
+            let date_time = $('input[type="date"]').val(); // Using date_time to match controller
+
+            $.ajax({
+                url: '/user/enquiry/update',
+                type: 'POST',
+                data: {
+                    mobile_number: $('#phoneNumberInput-booking')
+                .val(), // Assuming mobile number is being used as identifier
+                    name: name,
+                    move_from_origin: move_from_origin,
+                    email: email,
+                    date_time: date_time,
+                    subcategory_id: subcategory_id,
+                    _token: '{{ csrf_token() }}'
+                },
+                success: function(response) {
+                    alert('Details updated successfully');
+                    $('#myPopup-booking').hide();
+                    $('#myPopup2-booking').show(); // Show the OTP verification popup
+                },
+                error: function(xhr) {
+                    let errors = xhr.responseJSON.errors;
+                    // Display the errors accordingly
+                    if (errors) {
+                        if (errors.name) {
+                            alert(errors.name[0]);
+                        }
+                        if (errors.email) {
+                            alert(errors.email[0]);
+                        }
+                        if (errors.date_time) {
+                            alert(errors.date_time[0]);
+                        }
+                    }
+                }
+            });
+        });
+
+
+        $('#verify-otp-booking').click(function(e) {
+            e.preventDefault();
+
+            let otp = '';
+            $('.main-div input').each(function() {
+                otp += $(this).val();
+            });
+
+            $.ajax({
+                url: '{{ route('user.verifyOtp') }}',
+                type: 'POST',
+                data: {
+                    mobile_number: $('.Phone-Number').text()
+                .trim(), // Assuming phone number is in this div
+                    otp: otp,
+                    _token: '{{ csrf_token() }}'
+                },
+                success: function(response) {
+                    // alert('OTP verified successfully');
+                    console.log(mobile_number)
+                    $('#myPopup2-booking').hide();
+                    // Proceed with the next step, e.g., redirect or show a success message
+                    locatin.reload();
+                },
+                error: function(xhr) {
+                    let errors = xhr.responseJSON.errors;
+                    if (errors && errors.error) {
+                        alert(errors.error[0]);
+                    }
+                }
+            });
+        });
+    });
+</script>
 @endsection

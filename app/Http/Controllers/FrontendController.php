@@ -41,6 +41,7 @@ class FrontendController extends Controller
         $menus = Menu::select('id', 'name', 'image', 'slug', 'category_id', 'subcategory_id')
             ->where('subcategory_id', $subcategory->id ?? '')
             ->where('status', 1)
+            ->orderByDesc('created_at')
             ->get();
         if (!$subcategory) {
             abort(404, 'Category not found');
@@ -49,7 +50,7 @@ class FrontendController extends Controller
         ->with(['subCategory', 'menu', 'cityName.state']) // Eager load relationships
         ->where('sub_menus.subcategory_id', $subcategory->id ?? '') // Specify the table for subcategory_id
         ->where('sub_menus.status', 1) // Specify the table for status
-        ->orderByDesc('menus.name') // Order by a field from the menus table
+        ->orderByDesc('menus.created_at') // Order by a field from the menus table
         ->select(
             'sub_menus.id as submenu_id',
             'sub_menus.name',

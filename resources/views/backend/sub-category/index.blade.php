@@ -104,13 +104,18 @@
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title">Add Category</h5>
+                    <h5 class="modal-title">Add Sub Category</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body pt-0">
                     <form id="addSubCategoryForm" action="{{ route('subcategories.store') }}" method="POST"
                         enctype="multipart/form-data">
                         @csrf
+                        <div class="mb-3">
+                            <label class="form-label">Sub Category Name</label>
+                            <input type="text" class="form-control" name="name" placeholder="Enter Category Name">
+                            <div id="name_error" class="text-danger"></div>
+                        </div>
                         <div class="mb-3">
                             <label for="category">Category Name</label>
                             <select class="form-control" id="category" name="category_id">
@@ -121,11 +126,7 @@
                             </select>
                             <div id="category_id_error" class="text-danger"></div>
                         </div>
-                        <div class="mb-3">
-                            <label class="form-label">Sub Category Name</label>
-                            <input type="text" class="form-control" name="name" placeholder="Enter Category Name">
-                            <div id="name_error" class="text-danger"></div>
-                        </div>
+
                         <div class="mb-3">
                             <label class="form-label">Type</label>
                             <div class="form-check">

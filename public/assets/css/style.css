@@ -638,7 +638,7 @@ label {
     background: #fff;
     border: 2px solid #ebedf0;
     border-radius: 10px;
-    margin: 24px;
+    margin: 5px;
     background-image: url("../img/bg/wave.svg");
     background-repeat: no-repeat;
     background-position: bottom;
@@ -28457,7 +28457,7 @@ td.ant-table-column-sort {
     width: 105px !important;
 } */
 .feat-img {
-    width: 115px;
+    width: 230px;
 }
 .full-btn {
     width: 100%;

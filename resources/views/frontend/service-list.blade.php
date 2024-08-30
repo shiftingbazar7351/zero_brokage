@@ -359,7 +359,7 @@
                                     <h5 class="sign-up-text">We've Sent you a 4 Digit Pin On Your Number</h5>
 
                                     <div class="edit-phone-cont">
-                                        <div class="Phone-Number">8303361853</div>
+                                        <div class="Phone-Number"></div>
                                         <div class="edit-icon" id="editnumber-booking"><img
                                                 src="{{ asset('assets/img/icons/edit-icon.svg') }}" alt="">Edit
                                         </div>
@@ -389,7 +389,6 @@
                                     </div>
                                     <button type="button" class="btn btn-primary btn-lg" id="verify-otp-booking">Verify
                                         OTP</button>
-
 
 
                                     <div class="term-condition">
@@ -478,7 +477,7 @@
                     type: 'POST',
                     data: {
                         mobile_number: $('#phoneNumberInput-booking')
-                    .val(), // Assuming mobile number is being used as identifier
+                            .val(), // Assuming mobile number is being used as identifier
                         name: name,
                         move_from_origin: move_from_origin,
                         email: email,
@@ -513,35 +512,57 @@
             $('#verify-otp-booking').click(function(e) {
                 e.preventDefault();
 
-                let otp = '';
-                $('.main-div input').each(function() {
-                    otp += $(this).val();
+                var otp = '';
+                var allFilled = true;
+
+                // Combine the OTP input values
+                $('.input-div input').each(function() {
+                    var value = $(this).val().trim(); // Trim any whitespace
+                    if (value === '' || value.length !== 1) {
+                        allFilled = false;
+                        return false; // Exit loop if any field is empty or not a single digit
+                    }
+                    otp += value;
                 });
 
+                if (!allFilled || otp.length !== 4) {
+                    toastr.error('Please enter a valid 4-digit OTP.');
+                    return; // Exit if OTP is not valid
+                }
+
+                var mobileNumber = $('.Phone-Number').text(); // Get mobile number from the popup
+
                 $.ajax({
-                    url: '{{ route('user.verifyOtp') }}',
+                    url: '/verify-otp', // Adjust the URL to your route if needed
                     type: 'POST',
                     data: {
-                        mobile_number: $('.Phone-Number').text()
-                    .trim(), // Assuming phone number is in this div
+                        mobile_number: mobileNumber,
                         otp: otp,
-                        _token: '{{ csrf_token() }}'
+                        _token: '{{ csrf_token() }}' // Make sure to include CSRF token
                     },
                     success: function(response) {
-                        // alert('OTP verified successfully');
-                        console.log(mobile_number)
-                        $('#myPopup2-booking').hide();
-                        // Proceed with the next step, e.g., redirect or show a success message
-                        locatin.reload();
+                        if (response.success) {
+                            // Show success message using toastr
+                            toastr.success(response.success);
+
+                            // Close the modal
+                            $('#myPopup2-booking').hide();
+                        }
                     },
                     error: function(xhr) {
-                        let errors = xhr.responseJSON.errors;
-                        if (errors && errors.error) {
-                            alert(errors.error[0]);
+                        if (xhr.status === 422) {
+                            var errors = xhr.responseJSON.errors;
+                            $.each(errors, function(key, value) {
+                                toastr.error(value);
+                            });
+                        } else if (xhr.status === 400) {
+                            toastr.error(xhr.responseJSON.error);
                         }
                     }
                 });
             });
+
+
         });
     </script>
 @endsection

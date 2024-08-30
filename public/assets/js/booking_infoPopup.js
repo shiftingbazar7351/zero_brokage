@@ -45,9 +45,9 @@ $(document).ready(function() {
         $('#myPopup-booking1').addClass('show');
     });
 
-    $('#verify-otp-booking').click(function() {
-        alert("otp verified Succesfully");
-    });
+    // $('#verify-otp-booking').click(function() {
+    //     alert("otp verified Succesfully");
+    // });
 
 
 

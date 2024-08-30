@@ -23,6 +23,7 @@ $(document).ready(function () {
     });
 
     $("#saveChanges-booking").click(function () {
+        
         $("#myPopup2-booking").addClass("show");
         $("#myPopup-booking").removeClass("show");
         $("#myPopup-booking1").removeClass("show");
@@ -45,9 +46,9 @@ $(document).ready(function () {
         $("#myPopup-booking1").addClass("show");
     });
 
-    $("#verify-otp-booking").click(function () {
-        alert("otp verified Succesfully");
-    });
+    // $("#verify-otp-booking").click(function () {
+    //     alert("otp verified Succesfully");
+    // });
 });
 
 resendOtpTextBooking.onclick = function () {
@@ -82,7 +83,7 @@ function resetBookingDetails() {
     document.getElementById("res-booking1").innerHTML = "";
     document.getElementById("checkbox-login-booking").checked = false;
 
-    const inputdetails = document.querySelectorAll(".input-details");
+    const inputdetails = document.querySelectorAll(".input-detailss");
     inputdetails.forEach((inputdetail) => {
         inputdetail.value = "";
     });

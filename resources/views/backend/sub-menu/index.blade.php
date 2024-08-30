@@ -22,7 +22,8 @@
                 <div class="list-btn">
                     <ul>
                         <li>
-                            <a href="{{ route('india-services.index') }}" class="btn btn-primary mb-3"> <i class="fa fa-plus" title="Add India services description"></i></a>
+                            <a href="{{ route('india-services.index') }}" class="btn btn-primary mb-3"> <i class="fa fa-plus"
+                                    title="Add India services description"></i></a>
                             <button type="button" class="btn btn-primary mb-3" data-toggle="modal"
                                 data-target="#addCategoryModal">
                                 Add Sub Menu
@@ -124,7 +125,7 @@
                                 <label for="name">Name</label>
                                 <input type="text" class="form-control" id="name" name="name"
                                     placeholder="Enter Name">
-                                <div id="name_error" class="text-danger"></div>
+                                <div id="name-error" class="text-danger"></div>
                             </div>
                             <div class="form-group col-md-6">
                                 <label for="category">Category</label>
@@ -154,42 +155,42 @@
                                 <div id="menu-error" class="text-danger"></div>
                             </div>
                         </div>
-                    <div class="row">
-                        <div class="form-group col-md-6">
-                            <label for="category">State</label>
-                            <select class="form-control" id="state" name="state">
-                                <option value="">Select state</option>
-                                @foreach ($states as $state)
-                                    <option value="{{ $state->id }}">{{ ucwords($state->name) }}</option>
-                                @endforeach
-                            </select>
-                            <div id="state-error" class="text-danger"></div>
+                        <div class="row">
+                            <div class="form-group col-md-6">
+                                <label for="category">State</label>
+                                <select class="form-control" id="state" name="state">
+                                    <option value="">Select state</option>
+                                    @foreach ($states as $state)
+                                        <option value="{{ $state->id }}">{{ ucwords($state->name) }}</option>
+                                    @endforeach
+                                </select>
+                                <div id="state-error" class="text-danger"></div>
+                            </div>
+
+                            <div class="form-group col-md-6">
+                                <label for="category">City</label>
+                                <select class="form-control" id="city" name="city">
+                                    <option value="">Select City</option>
+                                </select>
+                                <div id="city-error" class="text-danger"></div>
+                            </div>
                         </div>
 
-                        <div class="form-group col-md-6">
-                            <label for="category">City</label>
-                            <select class="form-control" id="city" name="city">
-                                <option value="">Select City</option>
-                            </select>
-                            <div id="city-error" class="text-danger"></div>
-                        </div>
-                    </div>
+                        <div class="row">
+                            <div class="form-group col-md-6">
+                                <label for="price">Price(INR)</label>
+                                <input type="text" class="form-control" id="price" name="total_price"
+                                    placeholder="Enter Ammount">
+                                <div id="price-error" class="text-danger"></div>
+                            </div>
 
-                    <div class="row">
-                        <div class="form-group col-md-6">
-                            <label for="price">Price(INR)</label>
-                            <input type="text" class="form-control" id="price" name="total_price"
-                                placeholder="Enter Ammount">
-                            <div id="price-error" class="text-danger"></div>
+                            <div class="form-group col-md-6">
+                                <label for="price">Discount(%)</label>
+                                <input type="text" class="form-control" id="discount" name="discount"
+                                    placeholder="Enter Discount percentage">
+                                <div id="discount-error" class="text-danger"></div>
+                            </div>
                         </div>
-
-                        <div class="form-group col-md-6">
-                            <label for="price">Discount(%)</label>
-                            <input type="text" class="form-control" id="discount" name="discount"
-                                placeholder="Enter Discount percentage">
-                            <div id="discount-error" class="text-danger"></div>
-                        </div>
-                    </div>
                         <div class="form-group">
                             <label for="final-price">Final Price (INR)</label>
                             <input type="text" class="form-control" id="final-price" name="final_price" readonly
@@ -219,12 +220,9 @@
                         <div class="form-group">
                             <label for="description" class="col-form-label">Details <span
                                     class="text-danger">*</span></label>
-                            <textarea class="form-control" id="details" name="details">{{ old('details') }}</textarea>
-                            @error('details')
-                                <span class="text-danger">{{ $message }}</span>
-                            @enderror
+                            <textarea class="form-control" id="details" placeholder="Enter Details" name="details">{{ old('details') }}</textarea>
+                            <div id="details-error" class="text-danger"></div>
                         </div>
-
 
                         <div class="form-group">
                             <label for="description">Description</label>
@@ -261,79 +259,88 @@
                         <input type="hidden" id="editSubmenuId" name="id">
 
                         <!-- Name Field -->
-                        <div class="form-group">
-                            <label for="editName">Name</label>
-                            <input type="text" class="form-control" id="editName" name="name"
-                                placeholder="Enter Submenu-Name">
-                            <div id="name-error" class="text-danger"></div>
+                        <div class="row">
+                            <div class="form-group col-md-6">
+                                <label for="editName">Name</label>
+                                <input type="text" class="form-control" id="editName" name="name"
+                                    placeholder="Enter Submenu-Name">
+                                <div id="editname-error" class="text-danger"></div>
+                            </div>
+
+                            <!-- Category Field -->
+                            <div class="form-group col-md-6">
+                                <label for="editCategorySelect" class="form-label">Category</label>
+                                <select class="form-control" id="editCategorySelect" name="category_id">
+                                    <option value="" disabled>Select Category</option>
+                                    @foreach ($categories as $category)
+                                        <option value="{{ $category->id }}">{{ $category->name }}</option>
+                                    @endforeach
+                                </select>
+                                <div id="category_id-error" class="text-danger"></div>
+                            </div>
                         </div>
 
-                        <!-- Category Field -->
-                        <div class="mb-3">
-                            <label for="editCategorySelect" class="form-label">Category</label>
-                            <select class="form-control" id="editCategorySelect" name="category_id">
-                                <option value="" disabled>Select Category</option>
-                                @foreach ($categories as $category)
-                                    <option value="{{ $category->id }}">{{ $category->name }}</option>
-                                @endforeach
-                            </select>
-                            <div id="category_id-error" class="text-danger"></div>
-                        </div>
+                        <div class="row">
+                            <!-- Subcategory Field -->
+                            <div class="form-group col-md-6">
+                                <label for="editSubcategorySelect" class="form-label">Subcategory</label>
+                                <select class="form-control" id="editSubcategorySelect" name="subcategory_id">
+                                    <option value="" selected>Select Subcategory</option>
+                                </select>
+                                <div id="subcategory_id-error" class="text-danger"></div>
+                            </div>
 
-                        <!-- Subcategory Field -->
-                        <div class="mb-3">
-                            <label for="editSubcategorySelect" class="form-label">Subcategory</label>
-                            <select class="form-control" id="editSubcategorySelect" name="subcategory_id">
-                                <option value="" selected>Select Subcategory</option>
-                            </select>
-                            <div id="subcategory_id-error" class="text-danger"></div>
-                        </div>
+                            <!-- Menu Field -->
+                            <div class="form-group col-md-6">
+                                <label for="editMenuSelect" class="form-label">Menu</label>
+                                <select class="form-control" id="editMenuSelect" name="menu">
+                                    <option value="" selected>Select Menu</option>
+                                </select>
+                                <div id="menu_id-error" class="text-danger"></div>
+                            </div>
 
-                        <!-- Menu Field -->
-                        <div class="mb-3">
-                            <label for="editMenuSelect" class="form-label">Menu</label>
-                            <select class="form-control" id="editMenuSelect" name="menu">
-                                <option value="" selected>Select Menu</option>
-                            </select>
-                            <div id="menu_id-error" class="text-danger"></div>
                         </div>
+                        <div class="row">
+                            <div class="form-group col-md-6">
+                                <label for="editState">State</label>
+                                <select class="form-control" id="edit-state" name="state">
+                                    <option value="">Select state</option>
+                                    @foreach ($states as $state)
+                                        <option value="{{ $state->id }}">{{ ucwords($state->name) }}</option>
+                                    @endforeach
+                                </select>
+                                <div id="state-error" class="text-danger"></div>
+                            </div>
 
+                            <!-- City Field -->
+                            <div class="form-group col-md-6">
+                                <label for="editCity">City</label>
+                                <select class="form-control" id="edit-city" name="city">
+                                    <option value="">Select City</option>
+                                </select>
+                                <div id="city-error" class="text-danger"></div>
+                            </div>
+                        </div>
                         <!-- State Field -->
-                        <div class="form-group">
-                            <label for="editState">State</label>
-                            <select class="form-control" id="edit-state" name="state">
-                                <option value="">Select state</option>
-                                @foreach ($states as $state)
-                                    <option value="{{ $state->id }}">{{ ucwords($state->name) }}</option>
-                                @endforeach
-                            </select>
-                            <div id="state-error" class="text-danger"></div>
-                        </div>
 
-                        <!-- City Field -->
-                        <div class="form-group">
-                            <label for="editCity">City</label>
-                            <select class="form-control" id="edit-city" name="city">
-                                <option value="">Select City</option>
-                            </select>
-                            <div id="city-error" class="text-danger"></div>
-                        </div>
+                        <div class="row">
+                            <div class="form-group col-md-6">
+                                <label for="editPrice">Price (INR)</label>
+                                <input type="text" class="form-control" id="edit-price" name="total_price"
+                                    placeholder="Enter Amount">
+                                <div id="price-error" class="text-danger"></div>
+                            </div>
 
+                            <!-- Discount Field -->
+                            <div class="form-group col-md-6">
+                                <label for="editDiscount">Discount (%)</label>
+                                <input type="text" class="form-control" id="edit-discount" name="discount"
+                                    placeholder="Enter Discount percentage">
+                                <div id="discount-error" class="text-danger"></div>
+                            </div>
+                        </div>
                         <!-- Price Field -->
-                        <div class="form-group">
-                            <label for="editPrice">Price (INR)</label>
-                            <input type="text" class="form-control" id="edit-price" name="total_price"
-                                placeholder="Enter Amount">
-                            <div id="price-error" class="text-danger"></div>
-                        </div>
 
-                        <!-- Discount Field -->
-                        <div class="form-group">
-                            <label for="editDiscount">Discount (%)</label>
-                            <input type="text" class="form-control" id="edit-discount" name="discount"
-                                placeholder="Enter Discount percentage">
-                            <div id="discount-error" class="text-danger"></div>
-                        </div>
 
                         <!-- Final Price Field -->
                         <div class="form-group">
@@ -363,6 +370,13 @@
                             </div>
                             <div id="image-error" class="text-danger"></div>
                         </div>
+                        <div class="form-group">
+                            <label for="description" class="col-form-label">Details <span
+                                    class="text-danger">*</span></label>
+                            <textarea class="form-control" id="edit-details" placeholder="Enter Details" name="details">{{ old('details') }}</textarea>
+                            <div id="details-error" class="text-danger"></div>
+                        </div>
+
                         <div class="form-group">
                             <label for="description">Description</label>
                             <textarea type="text" class="form-control" id="edit-description" name="description" placeholder="Enter Ammount"></textarea>
@@ -423,8 +437,27 @@
                 $('#edit-state').trigger('change');
             });
 
-            // Function to calculate final price in the edit modal
+            //----------------Add form final price ---------------------------------//
             function calculateFinalPrice() {
+                const price = parseFloat($('#price').val());
+                const discountPercentage = parseFloat($('#discount').val());
+
+                if (!isNaN(price) && !isNaN(discountPercentage)) {
+                    const discountAmount = (price * discountPercentage) / 100;
+                    const finalPrice = price - discountAmount;
+
+                    $('#final-price').val(finalPrice.toFixed(2)); // Update the final price field
+                } else {
+                    $('#final-price').val(''); // Clear the final price field if inputs are invalid
+                }
+            }
+
+            $('#price').on('input', calculateFinalPrice);
+            $('#discount').on('input', calculateFinalPrice);
+
+
+            //----------------Edit form final price ---------------------------------//
+            function editcalculateFinalPrice() {
                 const price = parseFloat($('#edit-price').val());
                 const discountPercentage = parseFloat($('#edit-discount').val());
 
@@ -438,13 +471,20 @@
                 }
             }
 
-            $('#edit-price').on('input', calculateFinalPrice);
-            $('#edit-discount').on('input', calculateFinalPrice);
+            $('#edit-price').on('input', editcalculateFinalPrice);
+            $('#edit-discount').on('input', editcalculateFinalPrice);
 
-            // Handle form submission
-            $('#addSubMenuForm').submit(function(e) {
+
+
+        });
+
+        $(document).ready(function() {
+
+            // Handle Add-SubMenu-form submission
+            $('#addSubMenuForm').off('submit').submit(function(e) {
                 e.preventDefault();
                 let formData = new FormData(this);
+
                 $.ajax({
                     url: "{{ route('submenu.store') }}",
                     method: 'POST',
@@ -459,7 +499,7 @@
                     },
                     error: function(xhr) {
                         // Clear previous error messages
-                        $('#name_error').text('');
+                        $('#name-error').text('');
                         $('#category-error').text('');
                         $('#subcategory_id-error').text('');
                         $('#menu-error').text('');
@@ -469,11 +509,12 @@
                         $('#discount-error').text('');
                         $('#final_price-error').text('');
                         $('#image-error').text('');
+                        $('#details-error').text('');
                         $('#description-error').text('');
 
                         // Display new error messages
                         if (xhr.responseJSON.errors) {
-                            $('#name_error').text(xhr.responseJSON.errors.name ? xhr
+                            $('#name-error').text(xhr.responseJSON.errors.name ? xhr
                                 .responseJSON.errors.name[0] : '');
                             $('#category-error').text(xhr.responseJSON.errors.category ? xhr
                                 .responseJSON.errors.category[0] : '');
@@ -490,23 +531,18 @@
                                 .responseJSON.errors.total_price[0] : '');
                             $('#discount-error').text(xhr.responseJSON.errors.discount ? xhr
                                 .responseJSON.errors.discount[0] : '');
-                            $('#final_price-error').text(xhr.responseJSON.errors
-                                .discounted_price ? xhr.responseJSON.errors
-                                .discounted_price[0] : '');
+                            $('#final_price-error').text(xhr.responseJSON.errors.final_price ?
+                                xhr.responseJSON.errors.final_price[0] : '');
                             $('#image-error').text(xhr.responseJSON.errors.image ? xhr
                                 .responseJSON.errors.image[0] : '');
-                            $('#description_error').text(xhr.responseJSON.errors.description ?
-                                xhr
-                                .responseJSON.errors.description[0] : '');
-
+                            $('#details-error').text(xhr.responseJSON.errors.details ? xhr
+                                .responseJSON.errors.details[0] : '');
+                            $('#description-error').text(xhr.responseJSON.errors.description ?
+                                xhr.responseJSON.errors.description[0] : '');
                         }
                     }
                 });
             });
-
-        });
-
-        $(document).ready(function() {
             // Populate Subcategories
             $('#category').on('change', function() {
                 var categoryId = $(this).val();

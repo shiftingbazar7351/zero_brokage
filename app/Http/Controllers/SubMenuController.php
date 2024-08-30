@@ -66,18 +66,20 @@ class SubMenuController extends Controller
             'city' => 'required',
             'total_price' => 'required|numeric',
             'discount' => 'required|numeric',
-            // 'discounted_price' => 'required|numeric',
+            'details' => 'required|max:200',
+            'description' => 'required|max:200',
             'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
 
-        $finalPrice = $request->input('price');
+        
+        $finalPrice = $request->input('total_price');
         $discountPercentage = $request->input('discount');
 
         if (!empty($finalPrice) && !empty($discountPercentage)) {
             $discountAmount = ($finalPrice * $discountPercentage) / 100;
             $finalPrice -= $discountAmount;
         } else {
-            $finalPrice = $request->input('price');
+            $finalPrice = $request->input('total_price');
         }
 
         $subcategory = new SubMenu();

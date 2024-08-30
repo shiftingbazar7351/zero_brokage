@@ -24,6 +24,7 @@ $(document).ready(function () {
 
     $("#saveChanges-booking").click(function () {
         
+
         $("#myPopup2-booking").addClass("show");
         $("#myPopup-booking").removeClass("show");
         $("#myPopup-booking1").removeClass("show");
@@ -141,3 +142,5 @@ function validateNumBookingg(elemm) {
         }
     }
 }
+
+

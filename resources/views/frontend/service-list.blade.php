@@ -328,14 +328,14 @@
                                                 aria-label="Sizing example input" name="name"
                                                 aria-describedby="inputGroup-sizing-default" placeholder="Enter your name"
                                                 required>
-                                                <p class="text-danger d-none">fdsaf</p>
+                                                <p class="errordiv text-danger d-none"></p>
                                             </div>
                                             <div>
                                                 <input type="text" class="form-control  input-detailss"
                                                 aria-label="Sizing example input" name="location"
                                                 aria-describedby="inputGroup-sizing-default"
                                                 placeholder="Enter your Location" required>
-                                                <p class="text-danger d-none">fdsaf</p>
+                                                <p class="errordiv text-danger d-none"></p>
                                             </div>
 
                                         </div>
@@ -345,12 +345,12 @@
                                                 aria-label="Sizing example input" name="email"
                                                 aria-describedby="inputGroup-sizing-default"
                                                 placeholder="Enter your email" required>
-                                                <p class="text-danger d-none">dsfds</p>
+                                                <p class="errordiv text-danger d-none"></p>
                                             </div>
                                             <input type="date" class="form-control  input-detailss"
                                                 aria-label="Sizing example input" name="date_time"
                                                 aria-describedby="inputGroup-sizing-default" required>
-                                                <p class="text-danger d-none">fdsaf</p>
+                                                <p class="errordiv text-danger"></p>
                                         </div>
                                     </div>
 

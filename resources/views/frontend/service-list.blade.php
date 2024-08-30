@@ -138,22 +138,7 @@
                                     class="feather-arrow-down-circle ms-1"></i></a>
                         </div>
 
-                        <!-- <div class="filter-content">
-                                                            <h2>Location</h2>
-                                                            <div class="group-img">
-                                                                <input type="text" class="form-control" placeholder="Select Location">
-                                                                <i class="feather-map-pin"></i>
-                                                            </div>
-                                                        </div> -->
-                        {{-- <div class="filter-content">
-                            <h2 class="mb-4">Price Range</h2>
-                            <div class="filter-range">
-                                <input type="text" id="range_03">
-                            </div>
-                            <div class="filter-range-amount">
-                                <h5>Price: <span>$5 - $210</span></h5>
-                            </div>
-                        </div> --}}
+
                         <div class="filter-content">
                             <h2>By Rating</h2>
                             <ul class="rating-set">
@@ -258,6 +243,7 @@
                         <div class="col-md-12">
                             @foreach ($submenus as $menu)
                                 <input type="hidden" name="submenu_id" {{ $menu->menu_id }}>
+                                <input type="hidden" name="subcategory_id" id="subcategory_id" {{ $menu->id }}>
                                 <div class="service-list">
                                     <div class="service-cont">
                                         <div class="service-cont-img">
@@ -310,6 +296,7 @@
                                     </div>
                                 </div>
                             @endforeach
+                            {{-- {{ dd($menu) }} --}}
                             <div id="myPopup-booking1" class="popup">
                                 <div class="popup-content" style="width:36%">
                                     <span class="close" id="closePopup-booking1">&times;</span>
@@ -339,22 +326,22 @@
                                         <div class="col-md-6">
                                             <input type="text" class="input-detailss form-control mb-4"
                                                 aria-label="Sizing example input" name="name"
-                                                aria-describedby="inputGroup-sizing-default"
-                                                placeholder="Enter your name">
+                                                aria-describedby="inputGroup-sizing-default" placeholder="Enter your name"
+                                                required>
                                             <input type="text" class="form-control  mb-4 input-detailss"
                                                 aria-label="Sizing example input" name="location"
                                                 aria-describedby="inputGroup-sizing-default"
-                                                placeholder="Enter your Location">
+                                                placeholder="Enter your Location" required>
 
                                         </div>
                                         <div class="col-md-6">
                                             <input type="text" class="form-control mb-4 input-detailss"
                                                 aria-label="Sizing example input" name="email"
                                                 aria-describedby="inputGroup-sizing-default"
-                                                placeholder="Enter your email">
+                                                placeholder="Enter your email" required>
                                             <input type="date" class="form-control  mb-4 input-detailss"
                                                 aria-label="Sizing example input" name="date_time"
-                                                aria-describedby="inputGroup-sizing-default">
+                                                aria-describedby="inputGroup-sizing-default" required>
                                         </div>
                                     </div>
 
@@ -378,16 +365,16 @@
                                         </div>
                                     </div>
                                     <div class="main-div">
-                                        <div class="input-div"><input type="text" value="4" maxlength="1" />
+                                        <div class="input-div"><input type="text" maxlength="1" />
                                         </div>
 
-                                        <div class="input-div"><input type="text" value="4" maxlength="1" />
+                                        <div class="input-div"><input type="text" maxlength="1" />
                                         </div>
 
-                                        <div class="input-div"><input type="text" value="4" maxlength="1" />
+                                        <div class="input-div"><input type="text" maxlength="1" />
                                         </div>
 
-                                        <div class="input-div"><input type="text" value="4" maxlength="1" />
+                                        <div class="input-div"><input type="text" maxlength="1" />
                                         </div>
                                     </div>
                                     <div class="resend">
@@ -402,6 +389,7 @@
                                     </div>
                                     <button type="button" class="btn btn-primary btn-lg" id="verify-otp-booking">Verify
                                         OTP</button>
+
 
 
                                     <div class="term-condition">
@@ -480,8 +468,9 @@
             $('#saveChanges-booking').click(function(e) {
                 e.preventDefault();
                 let name = $('input[placeholder="Enter your name"]').val();
-                let location = $('input[placeholder="Enter your Location"]').val();
+                let move_from_origin = $('input[placeholder="Enter your Location"]').val();
                 let email = $('input[placeholder="Enter your email"]').val();
+                let subcategory_id = $('#subcategory_id').val();
                 let date_time = $('input[type="date"]').val(); // Using date_time to match controller
 
                 $.ajax({
@@ -489,11 +478,12 @@
                     type: 'POST',
                     data: {
                         mobile_number: $('#phoneNumberInput-booking')
-                            .val(), // Assuming mobile number is being used as identifier
+                    .val(), // Assuming mobile number is being used as identifier
                         name: name,
-                        location: location,
+                        move_from_origin: move_from_origin,
                         email: email,
                         date_time: date_time,
+                        subcategory_id: subcategory_id,
                         _token: '{{ csrf_token() }}'
                     },
                     success: function(response) {
@@ -514,6 +504,40 @@
                             if (errors.date_time) {
                                 alert(errors.date_time[0]);
                             }
+                        }
+                    }
+                });
+            });
+
+
+            $('#verify-otp-booking').click(function(e) {
+                e.preventDefault();
+
+                let otp = '';
+                $('.main-div input').each(function() {
+                    otp += $(this).val();
+                });
+
+                $.ajax({
+                    url: '{{ route('user.verifyOtp') }}',
+                    type: 'POST',
+                    data: {
+                        mobile_number: $('.Phone-Number').text()
+                    .trim(), // Assuming phone number is in this div
+                        otp: otp,
+                        _token: '{{ csrf_token() }}'
+                    },
+                    success: function(response) {
+                        // alert('OTP verified successfully');
+                        console.log(mobile_number)
+                        $('#myPopup2-booking').hide();
+                        // Proceed with the next step, e.g., redirect or show a success message
+                        locatin.reload();
+                    },
+                    error: function(xhr) {
+                        let errors = xhr.responseJSON.errors;
+                        if (errors && errors.error) {
+                            alert(errors.error[0]);
                         }
                     }
                 });

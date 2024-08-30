@@ -47,25 +47,25 @@ class FrontendController extends Controller
             abort(404, 'Category not found');
         }
         $submenus = SubMenu::join('menus', 'sub_menus.menu_id', '=', 'menus.id') // Join the menus table
-        ->with(['subCategory', 'menu', 'cityName.state']) // Eager load relationships
-        ->where('sub_menus.subcategory_id', $subcategory->id ?? '') // Specify the table for subcategory_id
-        ->where('sub_menus.status', 1) // Specify the table for status
-        ->orderByDesc('menus.created_at') // Order by a field from the menus table
-        ->select(
-            'sub_menus.id as submenu_id',
-            'sub_menus.name',
-            'sub_menus.image',
-            'sub_menus.slug',
-            'sub_menus.total_price',
-            'sub_menus.discounted_price',
-            'sub_menus.discount',
-            'sub_menus.subcategory_id',
-            'sub_menus.menu_id',
-            'sub_menus.city_id',
-            'sub_menus.description',
-            'sub_menus.details'
-        )
-        ->get();
+            ->with(['subCategory', 'menu', 'cityName.state']) // Eager load relationships
+            ->where('sub_menus.subcategory_id', $subcategory->id ?? '') // Specify the table for subcategory_id
+            ->where('sub_menus.status', 1) // Specify the table for status
+            ->orderByDesc('menus.created_at') // Order by a field from the menus table
+            ->select(
+                'sub_menus.id as submenu_id',
+                'sub_menus.name',
+                'sub_menus.image',
+                'sub_menus.slug',
+                'sub_menus.total_price',
+                'sub_menus.discounted_price',
+                'sub_menus.discount',
+                'sub_menus.subcategory_id',
+                'sub_menus.menu_id',
+                'sub_menus.city_id',
+                'sub_menus.description',
+                'sub_menus.details'
+            )
+            ->get();
 
 
         return view('frontend.service-list', compact('submenus', 'subcategory', 'menus'));
@@ -111,35 +111,64 @@ class FrontendController extends Controller
         return response()->json(['success' => 'Mobile number saved successfully']);
     }
 
-
     public function enquiryUpdate(Request $request)
     {
         $validator = Validator::make($request->all(), [
             'name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255',
             'date_time' => 'required|date',
-            'location' => 'required|string|max:255',  // Add validation for location
+            'move_from_origin' => 'required|string|max:255',
         ]);
 
         if ($validator->fails()) {
             return response()->json(['errors' => $validator->errors()], 422);
         }
 
+        // Generate a random 4-digit OTP
+        $otp = rand(1000, 9999);
+
         // Update the enquiry based on mobile number
         $enquiry = Enquiry::where('mobile_number', $request->mobile_number)->first();
         if ($enquiry) {
             $enquiry->name = $request->name;
-            $enquiry->move_from_origin = $request->location;
+            $enquiry->move_from_origin = $request->move_from_origin;
             $enquiry->email = $request->email;
             $enquiry->date_time = $request->date_time;
+            $enquiry->subcategory_id = $request->subcategory_id;
+            $enquiry->otp = $otp; // Store the generated OTP
             $enquiry->save();
 
-            return response()->json(['success' => 'Details updated successfully']);
+            return response()->json(['success' => 'Details and OTP updated successfully']);
         }
 
         return response()->json(['error' => 'Enquiry not found'], 404);
     }
 
+    public function verifyOtp(Request $request)
+    {
+        // Validate the OTP input
+        $validator = Validator::make($request->all(), [
+            'mobile_number' => 'required|string',
+            'otp' => 'required|digits:4',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json(['errors' => $validator->errors()], 422);
+        }
+
+        // Find the enquiry by mobile number
+        $enquiry = Enquiry::where('mobile_number', $request->mobile_number)->first();
+
+        if ($enquiry && $enquiry->otp == $request->otp) {
+            // OTP is valid
+            $enquiry->otp_verified_at = now();
+            $enquiry->save();
+
+            return response()->json(['success' => 'OTP verified successfully']);
+        }
+
+        return response()->json(['error' => 'Invalid OTP'], 400);
+    }
 
 
 }

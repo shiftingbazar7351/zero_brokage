@@ -72,7 +72,7 @@
                      <div class="col-md-6">
                         <label for="companyname" class="form-label">Company Name</label><span> (if legal company name same)</span>
                         <input class="form-check-input mx-1" type="checkbox" value="" id="flexCheckChecked"
-                             checked>
+                             unchecked>
                         <input id="companyname" class="form-control bg-light-subtle" type="text"
                             placeholder="Company name" aria-label="default input example" required>
                         <div id="companynameError" class="errorMessage text-danger"></div>

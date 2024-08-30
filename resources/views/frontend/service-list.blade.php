@@ -28,29 +28,29 @@
             </div>
         </div>
     </div>
-<div></div>
+    <div></div>
 
 
     {{-- .................................Slider...................................... --}}
 
 
-        <div class="justify-content-center px-4 sticky-slider" style="background-color: rgb(229, 230, 233)">
-            <div class="wrapper">
-                <i id="left" class="fa-solid fas fa-angle-left"></i>
-                <ul class="carousel">
-                    @foreach ($menus as $menu)
+    <div class="justify-content-center px-4 sticky-slider" style="background-color: rgb(229, 230, 233)">
+        <div class="wrapper">
+            <i id="left" class="fa-solid fas fa-angle-left"></i>
+            <ul class="carousel">
+                @foreach ($menus as $menu)
                     <input type="hidden" name="menu_id" value="{{ $menu->id }}">
-                        <li class="card">
-                            <div class="img">
-                                <img src="{{ Storage::url('menu/' . $menu->image ?? '') }}" alt="" draggable="false" />
-                            </div>
-                            <h5 style="font-weight: bold" class="pt-1">{{ $menu->name ?? '' }}</h5>
-                        </li>
-                    @endforeach
-                </ul>
-                <i id="right" class="fa-solid fas fa-angle-right"></i>
-            </div>
+                    <li class="card">
+                        <div class="img">
+                            <img src="{{ Storage::url('menu/' . $menu->image ?? '') }}" alt="" draggable="false" />
+                        </div>
+                        <h5 style="font-weight: bold" class="pt-1">{{ $menu->name ?? '' }}</h5>
+                    </li>
+                @endforeach
+            </ul>
+            <i id="right" class="fa-solid fas fa-angle-right"></i>
         </div>
+    </div>
 
 
     <div class="content">
@@ -139,12 +139,12 @@
                         </div>
 
                         <!-- <div class="filter-content">
-                                                        <h2>Location</h2>
-                                                        <div class="group-img">
-                                                            <input type="text" class="form-control" placeholder="Select Location">
-                                                            <i class="feather-map-pin"></i>
-                                                        </div>
-                                                    </div> -->
+                                                            <h2>Location</h2>
+                                                            <div class="group-img">
+                                                                <input type="text" class="form-control" placeholder="Select Location">
+                                                                <i class="feather-map-pin"></i>
+                                                            </div>
+                                                        </div> -->
                         {{-- <div class="filter-content">
                             <h2 class="mb-4">Price Range</h2>
                             <div class="filter-range">
@@ -244,10 +244,11 @@
                         <div class="col-lg-8 col-sm-12 d-flex justify-content-end ">
                             <div class="sortbyset">
                                 <div class="sorting-select">
-                                    <select class="form-control select">
-                                        <option>Price Low to High</option>
-                                        <option>Price High to Low</option>
+                                    <select class="form-control select" id="sortByPrice">
+                                        <option value="asc">Price Low to High</option>
+                                        <option value="desc">Price High to Low</option>
                                     </select>
+
                                 </div>
                             </div>
 
@@ -266,7 +267,7 @@
                                             </a>
                                         </div>
                                         <div class="service-cont-info">
-                                            <span class="item-cat">{{ $menu->menu->name ?? '' }}</span>
+                                            <span class="item-cat">{{ ucwords($menu->menu->name) ?? '' }}</span>
                                             <h5 class="title">
                                                 <a href="service-details.html">{{ $menu->name ?? '' }}</a>
                                             </h5>
@@ -417,23 +418,22 @@
             </div>
         </div>
     </div>
-   <script>
-     window.addEventListener('scroll', function() {
-        var stickySlider = document.querySelector('.sticky-slider');
-        var offsetTop = stickySlider.offsetTop;
+    <script>
+        window.addEventListener('scroll', function() {
+            var stickySlider = document.querySelector('.sticky-slider');
+            var offsetTop = stickySlider.offsetTop;
 
-        if (window.pageYOffset > offsetTop - 98) {
-            stickySlider.style.position = 'fixed';
-            stickySlider.style.top = '98px';
-            stickySlider.style.zIndex = '99';
-            stickySlider.style.width = '100%'; // Ensures the width doesn't collapse
-        } else {
-            stickySlider.style.position = 'relative';
-            stickySlider.style.top = 'auto';
-        }
-    });
-
-   </script>
+            if (window.pageYOffset > offsetTop - 98) {
+                stickySlider.style.position = 'fixed';
+                stickySlider.style.top = '98px';
+                stickySlider.style.zIndex = '99';
+                stickySlider.style.width = '100%'; // Ensures the width doesn't collapse
+            } else {
+                stickySlider.style.position = 'relative';
+                stickySlider.style.top = 'auto';
+            }
+        });
+    </script>
 
     <script src="{{ asset('assets/js/booking_infoPopup.js') }}"></script>
 
@@ -449,76 +449,75 @@
 
     <script>
         $(document).ready(function() {
-    // Handle mobile number submission
-    $('#saveChanges-booking1').click(function(e) {
-        e.preventDefault();
-        let mobileNumber = $('#phoneNumberInput-booking').val();
+            // Handle mobile number submission
+            $('#saveChanges-booking1').click(function(e) {
+                e.preventDefault();
+                let mobileNumber = $('#phoneNumberInput-booking').val();
 
-        $.ajax({
-            url: '/user/enquiry/store', // The route for storing the mobile number
-            type: 'POST',
-            data: {
-                mobile_number: mobileNumber,
-                _token: '{{ csrf_token() }}'
-            },
-            success: function(response) {
-                alert('Mobile number saved successfully');
-                // Open the next popup
-                $('#myPopup-booking1').hide();
-                $('#myPopup-booking').show();
-            },
-            error: function(xhr) {
-                let errors = xhr.responseJSON.errors;
-                if (errors && errors.mobile_number) {
-                    $('#res-booking1').text(errors.mobile_number[0]);
-                }
-            }
+                $.ajax({
+                    url: '/user/enquiry/store', // The route for storing the mobile number
+                    type: 'POST',
+                    data: {
+                        mobile_number: mobileNumber,
+                        _token: '{{ csrf_token() }}'
+                    },
+                    success: function(response) {
+                        alert('Mobile number saved successfully');
+                        // Open the next popup
+                        $('#myPopup-booking1').hide();
+                        $('#myPopup-booking').show();
+                    },
+                    error: function(xhr) {
+                        let errors = xhr.responseJSON.errors;
+                        if (errors && errors.mobile_number) {
+                            $('#res-booking1').text(errors.mobile_number[0]);
+                        }
+                    }
+                });
+            });
+
+            // Handle details submission
+            $('#saveChanges-booking').click(function(e) {
+                e.preventDefault();
+                let name = $('input[placeholder="Enter your name"]').val();
+                let location = $('input[placeholder="Enter your Location"]').val();
+                let email = $('input[placeholder="Enter your email"]').val();
+                let date_time = $('input[type="date"]').val(); // Using date_time to match controller
+
+                $.ajax({
+                    url: '/user/enquiry/update',
+                    type: 'POST',
+                    data: {
+                        mobile_number: $('#phoneNumberInput-booking')
+                            .val(), // Assuming mobile number is being used as identifier
+                        name: name,
+                        location: location,
+                        email: email,
+                        date_time: date_time,
+                        _token: '{{ csrf_token() }}'
+                    },
+                    success: function(response) {
+                        alert('Details updated successfully');
+                        $('#myPopup-booking').hide();
+                        $('#myPopup2-booking').show(); // Show the OTP verification popup
+                    },
+                    error: function(xhr) {
+                        let errors = xhr.responseJSON.errors;
+                        // Display the errors accordingly
+                        if (errors) {
+                            if (errors.name) {
+                                alert(errors.name[0]);
+                            }
+                            if (errors.email) {
+                                alert(errors.email[0]);
+                            }
+                            if (errors.date_time) {
+                                alert(errors.date_time[0]);
+                            }
+                        }
+                    }
+                });
+            });
         });
-    });
-
-    // Handle details submission
-    $('#saveChanges-booking').click(function(e) {
-        e.preventDefault();
-        let name = $('input[placeholder="Enter your name"]').val();
-        let location = $('input[placeholder="Enter your Location"]').val();
-        let email = $('input[placeholder="Enter your email"]').val();
-        let date_time = $('input[type="date"]').val(); // Using date_time to match controller
-
-        $.ajax({
-            url: '/user/enquiry/update',
-            type: 'POST',
-            data: {
-                mobile_number: $('#phoneNumberInput-booking')
-            .val(), // Assuming mobile number is being used as identifier
-                name: name,
-                location: location,
-                email: email,
-                date_time: date_time,
-                _token: '{{ csrf_token() }}'
-            },
-            success: function(response) {
-                alert('Details updated successfully');
-                $('#myPopup-booking').hide();
-                $('#myPopup2-booking').show(); // Show the OTP verification popup
-            },
-            error: function(xhr) {
-                let errors = xhr.responseJSON.errors;
-                // Display the errors accordingly
-                if (errors) {
-                    if (errors.name) {
-                        alert(errors.name[0]);
-                    }
-                    if (errors.email) {
-                        alert(errors.email[0]);
-                    }
-                    if (errors.date_time) {
-                        alert(errors.date_time[0]);
-                    }
-                }
-            }
-        });
-    });
-});
-
     </script>
 @endsection

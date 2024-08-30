@@ -36,35 +36,35 @@ class SubCategoryController extends Controller
         $request->validate([
             'category_id' => 'required',
             'name' => 'required',
-            'background_image' => 'required|image|mimes:jpeg,png,jpg,gif|max:5048',
-            'icon' => 'required|image|mimes:jpeg,png,jpg,gif|max:5048',
+            'background_image' => 'required|image|mimes:jpeg,png,jpg,gif,webp|max:5048',
+            'icon' => 'required|image|mimes:jpeg,png,jpg,gif,webp|max:5048',
         ]);
-    
+
         $subcategory = new SubCategory();
         $subcategory->name = $request->name;
         $subcategory->category_id = $request->category_id;
         $subcategory->slug = generateSlug($request->name);
         $subcategory->trending = $request->has('trending') ? 1 : 0;
         $subcategory->featured = $request->has('featured') ? 1 : 0;
-    
+
         if ($request->hasFile('background_image')) {
             $filename = $this->fileUploadService->uploadImage('background_image/', $request->file('background_image'));
             $subcategory->background_image = $filename;
         }
-    
+
         if ($request->hasFile('icon')) {
             $filename = $this->fileUploadService->uploadImage('icon/', $request->file('icon'));
             $subcategory->icon = $filename;
         }
-    
+
         $subcategory->save();
-    
+
         return response()->json(['success' => true, 'message' => 'Subcategory created successfully.']);
     }
-    
-    
 
- 
+
+
+
     public function edit(SubCategory $subcategory)
     {
         return response()->json([
@@ -74,12 +74,12 @@ class SubCategoryController extends Controller
                 'name' => $subcategory->name,
                 'icon' => $subcategory->icon,
                 'background_image' => $subcategory->background_image,
-                'trending' => $subcategory->trending, 
-                'featured' => $subcategory->featured, 
+                'trending' => $subcategory->trending,
+                'featured' => $subcategory->featured,
             ]
         ]);
     }
-    
+
 
 
     /**
@@ -97,28 +97,28 @@ class SubCategoryController extends Controller
             'background_image' => 'image|mimes:jpeg,png,jpg,gif|max:5048',
             'icon' => 'image|mimes:jpeg,png,jpg,gif|max:5048',
         ]);
-    
+
         $subcategory->name = $request->name;
         $subcategory->category_id = $request->category_id;
         $subcategory->slug = generateSlug($request->name);
         $subcategory->trending = $request->has('trending') ? 1 : 0;
         $subcategory->featured = $request->has('featured') ? 1 : 0;
-    
+
         if ($request->hasFile('background_image')) {
             $filename = $this->fileUploadService->uploadImage('background_image/', $request->file('background_image'));
             $subcategory->background_image = $filename;
         }
-    
+
         if ($request->hasFile('icon')) {
             $filename = $this->fileUploadService->uploadImage('icon/', $request->file('icon'));
             $subcategory->icon = $filename;
         }
-    
+
         $subcategory->save();
-    
+
         return response()->json(['success' => true, 'message' => 'Subcategory updated successfully.']);
     }
-    
+
 
     /**
      * Remove the specified resource from storage.

@@ -26,56 +26,71 @@ class FrontendController extends Controller
             ->get();
         $trendingsubcat = $subcategories->where('trending', 1);
         $featuresubcat = $subcategories->where('featured', 1);
-        $providers = Vendor::with(['subCategory:id,name'])->where('status',1)
-        ->select('id','vendor_name','sub_category','vendor_image','price','review_count')
-        ->orderByDesc('created_at')
-        ->get();
-        $reviews = Review::where('status',1)
-       ->select('id','description','name','profession','status')
-       ->get();
-        return view('frontend.home', compact('subcategories', 'trendingsubcat', 'featuresubcat','providers','reviews'));
+        $providers = Vendor::with(['subCategory:id,name'])->where('status', 1)
+            ->select('id', 'vendor_name', 'sub_category', 'vendor_image', 'price', 'review_count')
+            ->orderByDesc('created_at')
+            ->get();
+        $reviews = Review::where('status', 1)
+            ->select('id', 'description', 'name', 'profession', 'status')
+            ->get();
+        return view('frontend.home', compact('subcategories', 'trendingsubcat', 'featuresubcat', 'providers', 'reviews'));
     }
     public function subCategory($slug)
     {
         $subcategory = SubCategory::where('slug', $slug)->select('id', 'slug', 'name', 'background_image')->first();
         $menus = Menu::select('id', 'name', 'image', 'slug', 'category_id', 'subcategory_id')
-        ->where('subcategory_id',$subcategory->id)
-        ->where('status', 1)
-        ->get();
+            ->where('subcategory_id', $subcategory->id ?? '')
+            ->where('status', 1)
+            ->get();
         if (!$subcategory) {
             abort(404, 'Category not found');
         }
-        $submenus = SubMenu::with(['subCategory', 'menu','cityName.state'])
-            ->where('subcategory_id', $subcategory->id ?? '')
-            ->where('status', 1)
-            ->orderByDesc('created_at')
-            ->select('id', 'name', 'image', 'slug', 'total_price', 'discounted_price', 'discount', 'subcategory_id', 'menu_id', 'city_id' ,'description','details')
-            ->get();
+        $submenus = SubMenu::join('menus', 'sub_menus.menu_id', '=', 'menus.id') // Join the menus table
+        ->with(['subCategory', 'menu', 'cityName.state']) // Eager load relationships
+        ->where('sub_menus.subcategory_id', $subcategory->id ?? '') // Specify the table for subcategory_id
+        ->where('sub_menus.status', 1) // Specify the table for status
+        ->orderByDesc('menus.name') // Order by a field from the menus table
+        ->select(
+            'sub_menus.id as submenu_id',
+            'sub_menus.name',
+            'sub_menus.image',
+            'sub_menus.slug',
+            'sub_menus.total_price',
+            'sub_menus.discounted_price',
+            'sub_menus.discount',
+            'sub_menus.subcategory_id',
+            'sub_menus.menu_id',
+            'sub_menus.city_id',
+            'sub_menus.description',
+            'sub_menus.details'
+        )
+        ->get();
+
 
         return view('frontend.service-list', compact('submenus', 'subcategory', 'menus'));
     }
     public function servicesInIndia()
     {
-        $faqs = Faq::where('status',1)->select('question','answer')->get();
+        $faqs = Faq::where('status', 1)->select('question', 'answer')->get();
         $description = IndiaServiceDescription::first();
-        $submenus = SubMenu::with(['subCategory', 'menu','cityName.state'])
-        ->where('status', 1)
-        ->orderByDesc('created_at')
-        ->select('id', 'name', 'image', 'slug', 'total_price', 'discounted_price', 'discount', 'subcategory_id', 'menu_id', 'city_id' ,'description','details')
-        ->get();
-        return view('frontend.services-in-india',compact('faqs','submenus','description'));
+        $submenus = SubMenu::with(['subCategory', 'menu', 'cityName.state'])
+            ->where('status', 1)
+            ->orderByDesc('created_at')
+            ->select('id', 'name', 'image', 'slug', 'total_price', 'discounted_price', 'discount', 'subcategory_id', 'menu_id', 'city_id', 'description', 'details')
+            ->get();
+        return view('frontend.services-in-india', compact('faqs', 'submenus', 'description'));
     }
 
     public function servicesInIndiaCity()
     {
-        $faqs = Faq::where('status',1)->select('question','answer')->get();
+        $faqs = Faq::where('status', 1)->select('question', 'answer')->get();
         $description = IndiaServiceDescription::first();
-        $submenus = SubMenu::with(['subCategory', 'menu','cityName.state'])
-        ->where('status', 1)
-        ->orderByDesc('created_at')
-        ->select('id', 'name', 'image', 'slug', 'total_price', 'discounted_price', 'discount', 'subcategory_id', 'menu_id', 'city_id' ,'description','details')
-        ->get();
-        return view('frontend.service-in-india-city',compact('faqs','submenus','description'));
+        $submenus = SubMenu::with(['subCategory', 'menu', 'cityName.state'])
+            ->where('status', 1)
+            ->orderByDesc('created_at')
+            ->select('id', 'name', 'image', 'slug', 'total_price', 'discounted_price', 'discount', 'subcategory_id', 'menu_id', 'city_id', 'description', 'details')
+            ->get();
+        return view('frontend.service-in-india-city', compact('faqs', 'submenus', 'description'));
     }
 
     public function enquiryStore(Request $request)

@@ -257,7 +257,7 @@
                         <div class="col-md-12">
                             @foreach ($submenus as $menu)
                             <input type="hidden" name="submenu_id" {{ $menu->menu_id }}>
-                                <div class="service-list">
+                                <div class="service-list shadow">
                                     <div class="service-cont">
                                         <div class="service-cont-img">
                                             <a href="service-details.html">
@@ -467,8 +467,8 @@
             stickySlider.style.top = 'auto';
         }
     });
-
    </script>
+
 
     <script src="{{ asset('assets/js/booking_infoPopup.js') }}"></script>
 

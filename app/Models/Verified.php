@@ -8,4 +8,12 @@ use Illuminate\Database\Eloquent\Model;
 class Verified extends Model
 {
     use HasFactory;
+    protected $fillable = [
+        'name',
+        'image',
+        'slug',
+        'status',
+        'created_by'
+    ];
+    
 }

@@ -18,6 +18,7 @@ use App\Http\Controllers\SubMenuController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\VendorController;
 use App\Http\Controllers\ReviewController;
+use App\Http\Controllers\VerifiedController;
 use Illuminate\Support\Facades\Route;
 
 
@@ -131,7 +132,7 @@ Route::middleware('auth')->group(function () {
 
 
     Route::resource('/vendors', VendorController::class);
-    Route::resource('/vendors/verified', VendorController::class);
+    Route::resource('/verified', VerifiedController::class);
     Route::post('/fetch-city-vendor/{stateId}', [VendorController::class, 'fetchCity']);
     Route::post('/fetch-subcategory/{id}', [VendorController::class, 'fetchsubcategory']);
     Route::post('/getMenus/{subcategoryId}', [VendorController::class, 'getMenus']);

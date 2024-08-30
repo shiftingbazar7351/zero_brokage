@@ -116,8 +116,8 @@
                             </a>
                         </li>
 
-                         <li class="{{ Route::currentRouteName() === 'vendors.verified' ? 'active' : '' }}">
-                            <a href="{{ route('vendors.index') }}">
+                         <li class="{{ Route::currentRouteName() === 'verified.index' ? 'active' : '' }}">
+                            <a href="{{ route('verified.index') }}">
                                 <i class="fe fe-file-text"></i>
                                 <span>Verified</span>
                             </a>

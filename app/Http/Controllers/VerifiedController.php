@@ -1,11 +1,11 @@
 <?php
 
 namespace App\Http\Controllers;
-use App\Models\Review;
 
 use Illuminate\Http\Request;
+use App\Models\Verified;
 
-class ReviewController extends Controller
+class VerifiedController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,18 +14,8 @@ class ReviewController extends Controller
      */
     public function index()
     {
-        $reviews = Review::orderByDesc('created_at')->get();
-        return view('backend.review.index',compact('reviews'));
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        // return view('backend.review.create');
+        $verifieds = Verified::orderByDesc('created_at')->get();
+        return view("backend.vendor.verified", compact("verifieds"));
     }
 
     /**
@@ -38,17 +28,25 @@ class ReviewController extends Controller
     {
         $request->validate([
             'name' => 'required',
-            'description' => 'required',
-            'profession' => 'required',
+            'image' => 'required',
         ]);
 
-        $review = new Review($request->all());
+        $review = new Verified($request->all());
         $review->created_by = auth()->id();
         $review->save();
-        return redirect()->back()->with('success', 'Review Added Successfully');
+        return redirect()->back()->with('success', ' Added Successfully');
     }
 
-
+    /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function show($id)
+    {
+        //
+    }
 
     /**
      * Show the form for editing the specified resource.
@@ -58,7 +56,7 @@ class ReviewController extends Controller
      */
     public function edit($id)
     {
-        $review = Review::findOrFail($id);
+        $review = Verified::findOrFail($id);
         return response()->json($review);
     }
 
@@ -71,17 +69,15 @@ class ReviewController extends Controller
      */
     public function update(Request $request, $id)
     {
-
         $request->validate([
             'name' => 'required',
-            'description' => 'required',
-            'profession' => 'required',
+            'image' => 'required',
         ]);
-    
-        $review = Review::findOrFail($id);
+
+        $review = Verified::findOrFail($id);
 
         // Update the FAQ with the new data
-        $review->update($request->only(['name', 'description','profession']));
+        $review->update($request->only(['name', 'image']));
 
         // Redirect back with a success message
         return redirect()->back()->with('success', 'Updated Successfully');
@@ -93,23 +89,10 @@ class ReviewController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Review $review)
+    public function destroy(Verified $verified)
     {
-        $review->delete();
+        $verified->delete();
 
-        return redirect()->back()->with('success', 'Review Deleted successfully.');
-    }
-
-    public function reviewStatus(Request $request)
-    {
-        $item = Review::find($request->id);
-        if ($item) {
-            $item->status = $request->status;
-            $item->save();
-
-            return response()->json(['success' => true, 'message' => 'Status updated successfully.']);
-        }
-
-        return response()->json(['success' => false, 'message' => 'Item not found.']);
+        return redirect()->back()->with('success', 'Deleted successfully.');
     }
 }

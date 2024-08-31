@@ -406,78 +406,7 @@
                     <div class="row">
                         <div class="col-md-12">
 
-                            {{-- <div class="service-list">
-                            <div class="service-cont">
-                                <div class="service-cont-img">
-                                    <a href="service-details.html">
-                                        <img class="img-fluid serv-img" alt="Service Image"
-                                            src="assets/img/services/service-04.jpg">
-                                    </a>
-                                    <div class="fav-item">
-                                        <a href="javascript:void(0)" class="fav-icon">
-                                            <i class="feather-heart"></i>
-                                        </a>
-                                    </div>
-                                </div>
-                                <div class="service-cont-info">
-                                    <span class="item-cat">Car Wash</span>
-                                    <h5 class="title">
-                                        <a href="service-details.html">Car Repair Services</a>
-                                    </h5>
-                                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. At, quisquam.
-                                    </p>
-                                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. At, quisquam.
-                                    </p>
 
-                                    <a href="" class="text-primary text-decoration-underline"
-                                        data-bs-toggle="modal" data-bs-target="#exampleModal">View Details
-                                    </a>
-
-                                    <div class="modal fade " id="exampleModal" tabindex="-1"
-                                        aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
-                                            <div class="modal-content">
-                                                <div class="modal-header">
-                                                    <h5 class="modal-title" id="exampleModalLabel">Service
-                                                        Details
-                                                    </h5>
-                                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                                        aria-label="Close"></button>
-                                                </div>
-                                                <div class="modal-body">
-                                                    <h5>Included</h5>
-                                                    <p class="mb-2">Lorem ipsum dolor sit amet consectetur
-                                                        adipisicing elit. Optio, ad?</p>
-                                                    <h5>Excluded</h5>
-                                                    <p class="mb-2">Lorem ipsum dolor sit amet consectetur
-                                                        adipisicing elit. Optio, ad?</p>
-                                                    <h5>Topic</h5>
-                                                    <p class="mb-2">Lorem ipsum dolor sit amet consectetur
-                                                        adipisicing elit. Optio, ad?</p>
-                                                    <h5>Frequently asked question</h5>
-                                                    <p class="mb-2">Lorem ipsum dolor sit amet consectetur
-                                                        adipisicing elit. Optio, ad?</p>
-                                                    <p class="mb-2">Lorem ipsum dolor sit amet consectetur
-                                                        adipisicing elit. Optio, ad?</p>
-                                                    <p class="mb-2">Lorem ipsum dolor sit amet consectetur
-                                                        adipisicing elit. Optio, ad?</p>
-                                                </div>
-
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="service-pro-img d-flex gap-4">
-                                        <p><i class="feather-map-pin"></i>Maryland City, MD, USA</p>
-                                        <span><i class="fas fa-star filled"></i>4.9</span>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="service-action">
-                                <h6>&#8377;25.00<span class="old-price">&#8377;35.00</span></h6>
-                                <a class="btn btn-secondary book-Now-btn">Book Now</a>
-                                <a class="btn btn-secondary">View Profile</a>
-                            </div>
-                        </div> --}}
 
                             @foreach ($submenus as $menu)
                                 <div class="service-list">
@@ -545,12 +474,7 @@
                                         placeholder="Enter Mobile Number" required>
                                     <div id="res-booking1-india"></div>
                                     <button id="saveChanges-booking1-india" class="btn my-4">Continue</button>
-                                    {{-- <button id="closePopupBtn" class="btn">Close</button> --}}
-                                    {{-- <div class="term-condition">
-                                    <input type="checkbox" class="checkbox" id="checkbox-login-booking1">
-                                    <p>By Continuing, you agree to our <span class="term">Term and Condition</span>
-                                    </p>
-                                </div> --}}
+
                                 </div>
                             </div>
 
@@ -755,44 +679,6 @@
 
                     <h2 class="text-center">Here are Top 10 Packers and Movers Companies in India</h1>
                     {!! $description->description ??'' !!}
-
-                   {{-- <h4 class="mt-3">Gati Logistics Packers and Movers</h4>
-                    <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Possimus aperiam sit repellat quis
-                        perferendis iusto suscipit deserunt enim tempora, in, beatae eligendi vero ut sed esse,
-                        mollitia soluta eaque? Sint?20</p>
-                    <h4 class="mt-3">Express India Packers and Movers</h4>
-                    <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Possimus aperiam sit repellat quis
-                        perferendis iusto suscipit deserunt enim tempora, in, beatae eligendi vero ut sed esse,
-                        mollitia soluta eaque? Sint?20</p>
-                    <h4 class="mt-3">Gati Logistics Packers and Movers</h4>
-                    <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Possimus aperiam sit repellat quis
-                        perferendis iusto suscipit deserunt enim tempora, in, beatae eligendi vero ut sed esse,
-                        mollitia soluta eaque? Sint?20</p>
-                    <h4>Top Factors That Affect Charges of Movers </h4>
-                    <p><span class="text-dark">Delivery Type :</span>Lorem ipsum dolor sit amet consectetur
-                        adipisicing elit. Iste, harum quas molestias commodi voluptate tempora rem voluptatem quam
-                        quidem</p>
-                    <p><span class="text-dark">Delivery Type :</span>Lorem ipsum dolor sit amet consectetur
-                        adipisicing elit. Iste, harum quas molestias commodi voluptate tempora rem voluptatem quam
-                        quidem</p>
-                    <p><span class="text-dark">Delivery Type :</span>Lorem ipsum dolor sit amet consectetur
-                        adipisicing elit. Iste, harum quas molestias commodi voluptate tempora rem voluptatem quam
-                        quidem</p>
-                    <p><span class="text-dark">Delivery Type :</span>Lorem ipsum dolor sit amet consectetur
-                        adipisicing elit. Iste, harum quas molestias commodi voluptate tempora rem voluptatem quam
-                        quidem</p>
-                    <h4>Tips to Find a Shifting Company in India?</h4>
-                    <p>Tips to Find a Shifting Company in India?Tips to Find a Shifting Company in India?Tips to
-                        Find a Shifting Company in India?</p>
-                    <p>Tips to Find a Shifting Company in India?Tips to Find a Shifting Company in India?Tips to
-                        Find a Shifting Company in India?</p>
-                    <p>Tips to Find a Shifting Company in India?Tips to Find a Shifting Company in India?Tips to
-                        Find a Shifting Company in India?</p>
-                    <p>Tips to Find a Shifting Company in India?Tips to Find a Shifting Company in India?Tips to
-                        Find a Shifting Company in India?</p>
- --}}
-
-
 
                 </div>
             </div>

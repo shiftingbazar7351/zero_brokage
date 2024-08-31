@@ -533,19 +533,18 @@
                 var mobileNumber = $('.Phone-Number').text(); // Get mobile number from the popup
 
                 $.ajax({
-                    url: '/verify-otp', // Adjust the URL to your route if needed
+                    url: '/verify-otp',
                     type: 'POST',
                     data: {
                         mobile_number: mobileNumber,
                         otp: otp,
-                        _token: '{{ csrf_token() }}' // Make sure to include CSRF token
+                        _token: '{{ csrf_token() }}'
                     },
                     success: function(response) {
                         if (response.success) {
-                            // Show success message using toastr
                             toastr.success(response.success);
 
-                            // Close the modal
+                            // Hide the OTP verification popup or transition to the next step
                             $('#myPopup2-booking').hide();
                         }
                     },
@@ -561,6 +560,7 @@
                     }
                 });
             });
+
 
 
         });

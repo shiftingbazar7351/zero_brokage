@@ -67,9 +67,9 @@ Route::get('/vender-profile', function () {
     return view('frontend.vender-profile');
 })->name('vender-profile');
 
-// Route::get('/service-in-india-city', function () {
-//     return view('frontend.service-in-india-city');
-// })->name('service-in-india-city');
+// Route::get('/services', function () {
+//     return view('frontend.service-detail');
+// })->name('services');
 
 Route::get('/create-vendor', function () {
     return view('frontend.create-vendor');

@@ -145,30 +145,36 @@ class FrontendController extends Controller
     }
 
     public function verifyOtp(Request $request)
-    {
-        // Validate the OTP input
-        $validator = Validator::make($request->all(), [
-            'mobile_number' => 'required|string',
-            'otp' => 'required|digits:4',
-        ]);
+{
+    // Validate the OTP input
+    $validator = Validator::make($request->all(), [
+        'mobile_number' => 'required|string',
+        'otp' => 'required|digits:4',
+    ]);
 
-        if ($validator->fails()) {
-            return response()->json(['errors' => $validator->errors()], 422);
-        }
+    if ($validator->fails()) {
+        return response()->json(['errors' => $validator->errors()], 422);
+    }
 
-        // Find the enquiry by mobile number
-        $enquiry = Enquiry::where('mobile_number', $request->mobile_number)->first();
+    // Find the enquiry by mobile number
+    $enquiry = Enquiry::where('mobile_number', $request->mobile_number)->first();
 
-        if ($enquiry && $enquiry->otp == $request->otp) {
-            // OTP is valid
+    if ($enquiry) {
+        // Check if the OTP matches and is not already verified
+        if ($enquiry->otp == $request->otp && is_null($enquiry->otp_verified_at)) {
+            // OTP is valid, update the verification time
             $enquiry->otp_verified_at = now();
             $enquiry->save();
 
             return response()->json(['success' => 'OTP verified successfully']);
+        } elseif ($enquiry->otp_verified_at) {
+            return response()->json(['error' => 'OTP has already been verified'], 400);
         }
-
-        return response()->json(['error' => 'Invalid OTP'], 400);
     }
+
+    return response()->json(['error' => 'Invalid OTP'], 400);
+}
+
 
 
 

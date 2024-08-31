@@ -15,20 +15,47 @@ $(document).ready(function () {
 
     $("#saveChanges-booking1").click(function () {
         if (document.getElementById("phoneNumberInput-booking").value == "") {
-
         } else {
             $("#myPopup-booking").addClass("show");
-        resetBookingDetails();
+            resetBookingDetails();
         }
     });
 
     $("#saveChanges-booking").click(function () {
-        
+        var isValid = true;
 
-        $("#myPopup2-booking").addClass("show");
-        $("#myPopup-booking").removeClass("show");
-        $("#myPopup-booking1").removeClass("show");
-        startCountdownBooking(60);
+        // Clear previous errors
+        $(".errordiv").text("");
+
+        // Get input values
+        var name = $("#nameVal").val().trim();
+        var email = $("#emailVal").val().trim();
+        var location = $("#locationVal").val().trim();
+
+        // Validate name field
+        if (name === "") {
+            $("#nameerrr").text("Please enter your name.");
+            isValid = false;
+        }
+
+        // Validate email field
+        if (email === "") {
+            $("#emailerrr").text("Please enter your email.");
+            isValid = false;
+        }
+        // Validate location field
+        if (location === "") {
+            $("#loacationerrr").text("Please enter your location.");
+            isValid = false;
+        }
+
+        // If all fields are valid, open the next popup
+        if (isValid) {
+
+            $("#myPopup3_booking").addClass("show");
+            $("#myPopup2_booking").removeClass("show");
+            $("#myPopup_booking").removeClass("show");
+        }
     });
 
     $("#closePopup-booking").click(function () {
@@ -142,5 +169,3 @@ function validateNumBookingg(elemm) {
         }
     }
 }
-
-

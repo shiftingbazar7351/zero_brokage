@@ -184,7 +184,8 @@ class FrontendController extends Controller
 
     public function providerDetails($id)
     {
-        return view('frontend.vender-profile');
+        $vendors = Vendor::where('id', $id)->first();
+        return view('frontend.vender-profile',compact('vendors'));
     }
 
 }

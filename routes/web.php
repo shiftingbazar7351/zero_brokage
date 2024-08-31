@@ -68,9 +68,9 @@ Route::get('/vender-profile', function () {
     return view('frontend.vender-profile');
 })->name('vender-profile');
 
-// Route::get('/service-in-india-city', function () {
-//     return view('frontend.service-in-india-city');
-// })->name('service-in-india-city');
+// Route::get('/services', function () {
+//     return view('frontend.service-detail');
+// })->name('services');
 
 Route::get('/create-vendor', function () {
     return view('frontend.create-vendor');
@@ -80,16 +80,19 @@ Route::get('/privacy-policy', function () {
     return view('frontend.privacy-policy');
 })->name('privacy-policy');
 
-Route::get('/service-list', [FrontendController::class, 'serviceList'])->name('service-list');
-Route::get('/services-in-india', [FrontendController::class, 'servicesInIndia'])->name('services-in-india');
-Route::get('/service-in-india-city', [FrontendController::class, 'servicesInIndiaCity'])->name('services-in-india');
+Route::controller(FrontendController::class)->group(function () {
+    Route::get('/', 'home')->name('home');
+    Route::get('/service-list', 'serviceList')->name('service-list');
+    Route::get('/services-in-india', 'servicesInIndia')->name('services-in-india');
+    Route::get('/service-in-india-city', 'servicesInIndiaCity')->name('services-in-india-city');
+    Route::get('/service-details', 'serviceDetails')->name('service-details');
+    Route::get('/service-grid/{slug}', 'subCategory')->name('service.grid');
 
+    Route::post('/user/enquiry/store', 'enquiryStore')->name('enquirystore');
+    Route::post('/user/enquiry/update', 'enquiryUpdate')->name('enquiryupdate');
+    Route::post('/verify-otp', 'verifyOtp')->name('user.verifyOtp');
+});
 
-Route::get('/', [FrontendController::class, 'home'])->name('home');
-Route::get('/service-details', [FrontendController::class, 'serviceDetails'])->name('service-details');
-Route::get('/service-grid/{slug}', [FrontendController::class, 'subCategory'])->name('service.grid');
-Route::post('/user/enquiry/store', [FrontendController::class, 'enquiryStore'])->name('enquirystore');
-Route::post('/user/enquiry/update', [FrontendController::class, 'enquiryUpdate'])->name('enquiryupdate');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -131,23 +134,20 @@ Route::middleware('auth')->group(function () {
     Route::resource('/meta-title', MetaTitleController::class);
 
 
-    Route::resource('/vendors', VendorController::class);
     Route::resource('/verified', VerifiedController::class);
     Route::post('/verified-status', [VerifiedController::class, 'verifyStatus'])->name('verified.status');
-    Route::post('/fetch-city-vendor/{stateId}', [VendorController::class, 'fetchCity']);
-    Route::post('/fetch-subcategory/{id}', [VendorController::class, 'fetchsubcategory']);
-    Route::post('/getMenus/{subcategoryId}', [VendorController::class, 'getMenus']);
-    Route::post('/getsubMenus/{menuId}', [VendorController::class, 'getsubMenus']);
+    Route::resource('/vendors', VendorController::class);
+    Route::controller(VendorController::class)->group(function () {
+        Route::post('/fetch-city-vendor/{stateId}', 'fetchCity');
+        Route::post('/fetch-subcategory/{id}', 'fetchsubcategory');
+        Route::post('/getMenus/{subcategoryId}', 'getMenus');
+        Route::post('/getsubMenus/{menuId}', 'getsubMenus');
+    });
     Route::resource('/reviews', ReviewController::class);
     Route::post('/reviews-status', [SubMenuController::class, 'subMenuStatus'])->name('reviews.status');
-
-
     Route::resource('/faq', FaqController::class);
     Route::post('/faq-status', [FaqController::class, 'faqStatus'])->name('faq.status');
-
     Route::resource('/india-services', IndiaServiceController::class);
-
-
     Route::resource('/newsletter', NewsletterController::class);
 });
 

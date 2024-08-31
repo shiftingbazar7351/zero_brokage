@@ -1,13 +1,12 @@
-
 $(document).ready(function() {
     // Open the popup when .btn-book is clicked
 
     $('.book-Now-btn').click(function() {
-            $('#myPopup-booking1').addClass('show');
-            resetBookingDetails()
-        });
+        $('#myPopup-booking1').addClass('show');
+        resetBookingDetails()
+    });
 
-   // close the popup
+    // close the popup
 
     $('#closePopup-booking1').click(function() {
         // alert("dfsaj");
@@ -21,11 +20,11 @@ $(document).ready(function() {
     });
 
     $('#saveChanges-booking').click(function() {
-            $('#myPopup2-booking').addClass('show');
-            $('#myPopup-booking').removeClass('show');
-            $('#myPopup-booking1').removeClass('show');
-            startCountdownBooking(60);
-        });
+        $('#myPopup2-booking').addClass('show');
+        $('#myPopup-booking').removeClass('show');
+        $('#myPopup-booking1').removeClass('show');
+        startCountdownBooking(60);
+    });
 
     $('#closePopup-booking').click(function() {
         $('#myPopup-booking').removeClass('show');
@@ -46,9 +45,9 @@ $(document).ready(function() {
         $('#myPopup-booking1').addClass('show');
     });
 
-    $('#verify-otp-booking').click(function() {
-        alert("otp verified Succesfully");
-    });
+    // $('#verify-otp-booking').click(function() {
+    //     alert("otp verified Succesfully");
+    // });
 
 
 
@@ -58,7 +57,7 @@ $(document).ready(function() {
 resendOtpTextBooking.onclick = function() {
     startCountdownBooking(60);
 }
-otpOnWhatsappBooking.onclick = function(){
+otpOnWhatsappBooking.onclick = function() {
     startCountdownBooking(60)
 }
 
@@ -74,7 +73,7 @@ function startCountdownBooking(seconds) {
     // Clear any existing interval before starting a new one
     clearInterval(interval);
 
-    interval = setInterval(function () {
+    interval = setInterval(function() {
         counter--;
         countdownElement.innerHTML = " : " + counter;
 
@@ -90,16 +89,16 @@ function startCountdownBooking(seconds) {
 
 
 
-function resetBookingDetails(){
-    document.getElementById('res-booking1').innerHTML='';
-    document.getElementById('checkbox-login-booking').checked=false;
+function resetBookingDetails() {
+    document.getElementById('res-booking1').innerHTML = '';
+    document.getElementById('checkbox-login-booking').checked = false;
 
     const inputdetails = document.querySelectorAll('.input-details');
     inputdetails.forEach(inputdetail => {
-        inputdetail.value ='';
-        });
+        inputdetail.value = '';
+    });
 
-   }
+}
 
 
 //    function validateNumBooking(elem){
@@ -124,7 +123,7 @@ function resetBookingDetails(){
 // }
 
 
-function validateNumBookingg(elemm){
+function validateNumBookingg(elemm) {
     document.getElementById("res-booking1").style.color = "red";
     if (isNaN(elemm.value)) {
         document.getElementById("res-booking1").innerText = "Please enter number only";

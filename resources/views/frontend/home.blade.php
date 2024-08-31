@@ -139,7 +139,7 @@
                     <div class="owl-carousel service-slider">
                         @foreach ($featuresubcat as $subcategory)
                             <div class="service-widget aos featured-cont" data-aos="fade-up" style="width: 300px">
-                                <div class="service-img feat-img mt-2">
+                                <div class="service-img feat-img mt-2" style="width: 250px">
                                     <a href="{{ route('service.grid', ['slug' => $subcategory->slug]) }}">
                                         <img src="{{ asset('storage/icon/' . $subcategory->icon ?? '') }}"
                                              class="img-fluid serv-img" alt="Service Image" style="width: 250px; height:120px">
@@ -157,6 +157,7 @@
         </section>
     @endif
 
+    @if(count($providers) > 0)
     <section class="providers-section">
         <div class="container">
             <div class="section-heading">
@@ -300,7 +301,7 @@
             </div>
         </div>
     </section>
-
+    @endif
 
     <section class="work-section pt-0">
 

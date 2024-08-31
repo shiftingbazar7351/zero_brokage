@@ -237,7 +237,7 @@
                         </div>
 
                         <div class="row mt-6">
-                            <div class="col-4 mb-3">
+                            <div class="col-md-4 mb-3">
                                 <label for="formFile" class="form-label">Vender Logo<b style="color: red;">*</b></label>
                                 <input name="logo" value="{{ old('logo') }}" class="form-control bg-light-subtle"
                                     type="file" id="formFile" required>
@@ -245,7 +245,7 @@
                                     <div class="error text-danger ">{{ $message }}</div>
                                 @enderror
                             </div>
-                            <div class="col-4">
+                            <div class="col-md-4">
                                 <label for="formFile" class="form-label">Owner name<b style="color: red;">*</b></label>
                                 <input name="owner_name" value="{{ old('owner_name') }}"
                                     class="form-control bg-light-subtle" type="text" placeholder="Enter owner name"
@@ -254,7 +254,7 @@
                                     <div class="error text-danger ">{{ $message }}</div>
                                 @enderror
                             </div>
-                            <div class="col-4 mb-3">
+                            <div class="col-md-4 mb-3">
                                 <label for="formFile" class="form-label">Vender Image<b style="color: red;">*</b></label>
                                 <input name="vendor_image" value="{{ old('vendor_image') }}"
                                     class="form-control bg-light-subtle" type="file" id="formFile" required>

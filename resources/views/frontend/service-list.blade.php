@@ -44,7 +44,7 @@
                         <div class="img">
                             <img src="{{ Storage::url('menu/' . $menu->image ?? '') }}" alt="" draggable="false" />
                         </div>
-                        <h5 style="font-weight: bold" class="pt-1">{{ $menu->name ?? '' }}</h5>
+                        <h5 style="font-weight: bold; text-align:center" class="pt-1">{{ $menu->name ?? '' }}</h5>
                     </li>
                 @endforeach
             </ul>
@@ -243,7 +243,7 @@
                             @foreach ($submenus as $menu)
                                 <input type="hidden" name="submenu_id" value="{{ $menu->menu_id }}">
                                 <input type="hidden" name="subcategory_id" id="subcategory_id" {{ $menu->id }}>
-                                <div class="service-list">
+                                <div class="service-list shadow-sm">
                                     <div class="service-cont">
                                         <div class="service-cont-img">
                                             <a href="service-details.html">

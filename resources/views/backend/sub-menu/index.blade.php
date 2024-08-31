@@ -415,40 +415,6 @@
     <script src="{{ asset('admin/assets/js/preview-img.js') }}"></script>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            // When the modal is shown, populate the form fields with the subcategory data
-            $('#editCategoryModal').on('show.bs.modal', function(event) {
-                var button = $(event.relatedTarget); // Button that triggered the modal
-                // Extract info from data-* attributes
-                var id = button.data('id');
-                var name = button.data('name');
-                var category = button.data('category_id');
-                var state = button.data('state');
-                var city = button.data('city');
-                var price = button.data('price');
-                var discount = button.data('discount');
-                var description = button.data('description');
-                var image = button.data('image');
-
-                // Update the modal's form action
-                var formAction = '{{ url('subcategories') }}/' + id;
-                $(this).find('form').attr('action', formAction);
-
-                // Populate the form fields
-                $(this).find('#edit-name').val(name);
-                $(this).find('#edit-category').val(category);
-                $(this).find('#edit-state').val(state);
-                $(this).find('#edit-city').val(city);
-                $(this).find('#edit-price').val(price);
-                $(this).find('#edit-discount').val(discount);
-
-                // Update the image preview
-                $(this).find('#icon-preview').attr('src', image ||
-                    '{{ asset('admin/assets/img/icons/upload.svg') }}');
-
-                // Trigger change event on state dropdown to fetch cities (if applicable)
-                $('#edit-state').trigger('change');
-            });
-
             //----------------Add form final price ---------------------------------//
             function calculateFinalPrice() {
                 const price = parseFloat($('#price').val());

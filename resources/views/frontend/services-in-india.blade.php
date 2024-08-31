@@ -191,14 +191,7 @@
                             <input type="text" class="form-control" id="input-keyword-india"
                                 placeholder="What are you looking for?">
                         </div>
-                        {{-- <div class="filter-content">
-                        <h2>Location</h2>
-                        <div class="group-img">
-                            <input type="text" class="form-control" placeholder="Select Location"
-                                id="location-val">
-                            <i class="feather-map-pin"></i>
-                        </div>
-                    </div> --}}
+
                         <div class="filter-content">
                             <h2>Sub Category</h2>
                             <select class="form-control select" id="mySelectIndia">
@@ -262,13 +255,7 @@
                                     class="feather-arrow-down-circle ms-1"></i></a>
                         </div>
 
-                        <!-- <div class="filter-content">
-                                        <h2>Location</h2>
-                                        <div class="group-img">
-                                            <input type="text" class="form-control" placeholder="Select Location">
-                                            <i class="feather-map-pin"></i>
-                                        </div>
-                                    </div> -->
+
                         <div class="filter-content">
                             <h2>Price Range <span><i class="feather-chevron-down"></i></span></h2>
                             <div class="filter-checkbox" id="fill-more" style="height: 135px">
@@ -458,7 +445,7 @@
                                         <h6>&#8377;{{ $menu->discounted_price ?? '' }}<span class="old-price">&#8377;
                                                 {{ $menu->total_price ?? '' }}</span></h6>
                                         <a class="btn btn-secondary book-Now-btn">Book Now</a>
-                                        <a class="btn btn-secondary">View Profile</a>
+                                        <a href="{{ route('vender-profile') }}" class="btn btn-secondary">View Profile</a>
                                     </div>
                                 </div>
                             @endforeach

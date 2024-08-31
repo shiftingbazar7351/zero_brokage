@@ -18,6 +18,7 @@ use App\Http\Controllers\SubMenuController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\VendorController;
 use App\Http\Controllers\ReviewController;
+use App\Http\Controllers\VerifiedController;
 use Illuminate\Support\Facades\Route;
 
 
@@ -133,6 +134,12 @@ Route::middleware('auth')->group(function () {
 
 
     Route::resource('/vendors', VendorController::class);
+    Route::resource('/verified', VerifiedController::class);
+    Route::post('/verified-status', [VerifiedController::class, 'verifyStatus'])->name('verified.status');
+    Route::post('/fetch-city-vendor/{stateId}', [VendorController::class, 'fetchCity']);
+    Route::post('/fetch-subcategory/{id}', [VendorController::class, 'fetchsubcategory']);
+    Route::post('/getMenus/{subcategoryId}', [VendorController::class, 'getMenus']);
+    Route::post('/getsubMenus/{menuId}', [VendorController::class, 'getsubMenus']);
     Route::resource('/reviews', ReviewController::class);
     Route::post('/reviews-status', [SubMenuController::class, 'subMenuStatus'])->name('reviews.status');
 
@@ -141,7 +148,6 @@ Route::middleware('auth')->group(function () {
     Route::post('/faq-status', [FaqController::class, 'faqStatus'])->name('faq.status');
 
     Route::resource('/india-services', IndiaServiceController::class);
-
 
 
     Route::resource('/newsletter', NewsletterController::class);

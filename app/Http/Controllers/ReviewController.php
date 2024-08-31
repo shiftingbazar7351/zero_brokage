@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 use App\Models\Review;
-
+use App\Services\FileUploadService;
 use Illuminate\Http\Request;
 
 class ReviewController extends Controller
@@ -77,7 +77,7 @@ class ReviewController extends Controller
             'description' => 'required',
             'profession' => 'required',
         ]);
-        // Find the FAQ by ID
+    
         $review = Review::findOrFail($id);
 
         // Update the FAQ with the new data

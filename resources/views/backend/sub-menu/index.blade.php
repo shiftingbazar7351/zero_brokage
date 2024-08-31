@@ -815,40 +815,6 @@
 
 
 
-            // Function to handle form submission for editing a menu
-            // $('#editCategoryForm').on('submit', function(e) {
-            //     e.preventDefault();
-
-            //     let id = $('#editCategoryId').val();
-            //     let formData = new FormData(this);
-
-            //     $.ajax({
-            //         type: 'POST',
-            //         url: `/submenu/${id}`,
-            //         data: formData,
-            //         contentType: false,
-            //         processData: false,
-            //         success: function(response) {
-            //             if (response.success) {
-            //                 // Reload the page to reflect the updated data
-            //                 location.reload();
-            //             }
-            //         },
-            //         error: function(xhr) {
-            //             let errors = xhr.responseJSON.errors;
-
-            //             // Clear any previous error messages
-            //             $('.error-message').text('');
-
-            //             // Loop through the errors and display them
-            //             $.each(errors, function(key, value) {
-            //                 $(`#${key}-error`).text(value[0]);
-            //             });
-            //         }
-            //     });
-            // });
-
-
             $('#editCategoryForm').on('submit', function(e) {
                 e.preventDefault();
 

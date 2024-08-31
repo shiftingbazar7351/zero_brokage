@@ -445,7 +445,7 @@
                                         <h6>&#8377;{{ $menu->discounted_price ?? '' }}<span class="old-price">&#8377;
                                                 {{ $menu->total_price ?? '' }}</span></h6>
                                         <a class="btn btn-secondary book-Now-btn">Book Now</a>
-                                        <a href="{{ route('vender-profile') }}" class="btn btn-secondary">View Profile</a>
+                                        <a href="{{ route('vender-profile',$menu->id) }}" class="btn btn-secondary">View Profile</a>
                                     </div>
                                 </div>
                             @endforeach
@@ -676,9 +676,10 @@
 
     <div class="container-fluid border border-primary w-75 mx-auto mt-5"></div>
 
+    {{-- @if(count($subcategories) > 0) --}}
     <div class="section mt-4">
         <div class="container">
-            <h1 class="text-center">Top Packer and Mover In India</h1>
+            <h1 class="text-center">Top Packers and movers In India</h1>
             <div class="row mt-4">
                 <div class="col-md-6">
                     <div class="bangalore-con border-3 border-bottom border-primary mb-4">
@@ -728,7 +729,7 @@
             </div>
         </div>
     </div>
-
+    {{-- @endif --}}
 
 
     <!-- ..............................FAQ section............................ -->

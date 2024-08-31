@@ -82,7 +82,7 @@ class FrontendController extends Controller
         return view('frontend.services-in-india', compact('faqs', 'submenus', 'description'));
     }
 
-    public function servicesInIndiaCity()
+    public function servicesInIndiaCity($slug)
     {
         $faqs = Faq::where('status', 1)->select('question', 'answer')->get();
         $description = IndiaServiceDescription::first();
@@ -94,7 +94,11 @@ class FrontendController extends Controller
         $reviews = Review::where('status', 1)
             ->select('id', 'description', 'name', 'profession', 'status')
             ->get();
-        return view('frontend.service-in-india-city', compact('faqs', 'submenus', 'description', 'reviews'));
+        $subcategory = Subcategory::where('status', 1)
+            ->orderByDesc('created_at')
+            ->where('slug',$slug)
+            ->first();
+        return view('frontend.service-in-india-city', compact('faqs', 'submenus', 'description', 'reviews', 'subcategory'));
     }
 
     public function enquiryStore(Request $request)
@@ -178,8 +182,9 @@ class FrontendController extends Controller
         return response()->json(['error' => 'Invalid OTP'], 400);
     }
 
-
-
-
+    public function providerDetails($id)
+    {
+        return view('frontend.vender-profile');
+    }
 
 }

@@ -253,14 +253,15 @@
 
     <div class="container-fluid border border-primary w-75 mx-auto mt-5"></div>
 
+    @if($subcategory)
     <div class="section mt-4">
         <div class="container">
-            <h1 class="text-center">Top Packer and Mover In India</h1>
+            <h1 class="text-center">Top {{ ucwords($subcategory->name) ??'' }} In India</h1>
             <div class="row mt-4">
                 <div class="col-md-6">
                     <div class="bangalore-con border-3 border-bottom border-primary mb-4">
                         <a href="">
-                            <h4>packers-and-movers Bangalore</h4>
+                            <h4>{{ $subcategory->slug ??'' }} Bangalore</h4>
                         </a>
                         <p>Lorem ipo c d optio! Quos, commodi Lorem ipsum dolor, sit amet consectetur adipisicing
                             elit. Quas, consectetur. ! Dolorum, enim porro. Nesciunt?</p>
@@ -305,6 +306,7 @@
             </div>
         </div>
     </div>
+    @endif
 
     <div class="container-fluid bg-light shadow">
 

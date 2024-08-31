@@ -20,44 +20,60 @@
                     <a href="{{ route('admin_page') }}"><i class="fe fe-grid"></i> <span>Dashboard</span></a>
                 </li>
 
-                <li class="menu-title">
-                    <h6>Services</h6>
+                <li class="submenu">
+                    <a href="javascript:void(0);"><i class="fe fe-briefcase"></i>
+                        <span>Services</span>
+                        <span class="menu-arrow"><i class="fe fe-chevron-right"></i></span>
+                    </a>
+                    <ul>
+
+                        <li>
+                            <a href="{{ route('categories.index') }}"
+                                class="{{ Route::currentRouteName() === 'categories.index' ? 'active' : '' }}">
+                                <i class="fe fe-file-text"></i>
+                                <span>Category</span>
+                            </a>
+                        </li>
+
+                        <li>
+                            <a href="{{ route('subcategories.index') }}"
+                                class="{{ Route::currentRouteName() === 'subcategories.index' ? 'active' : '' }}">
+                                <i class="fe fe-file-text"></i>
+                                <span>Sub Category</span>
+                            </a>
+                        </li>
+
+
+                        <li>
+                            <a href="{{ route('menus.index') }}"
+                                class="{{ Route::currentRouteName() === 'menus.index' ? 'active' : '' }}">
+                                <i class="fe fe-file-text"></i>
+                                <span>Menu</span>
+                            </a>
+                        </li>
+
+
+                        <li>
+                            <a href="{{ route('submenu.index') }}"
+                                class="{{ Route::currentRouteName() === 'submenu.index' ? 'active' : '' }}">
+                                <i class="fe fe-file-text"></i>
+                                <span>Sub-Menu</span>
+                            </a>
+                        </li>
+
+
+                        <li>
+                            <a href="{{ route('service-detail.index') }}"
+                                class="{{ Route::currentRouteName() === 'service-detail.index' ? 'active' : '' }}">
+                                <i class="fe fe-file-text"></i>
+                                <span>Service details</span>
+                            </a>
+                        </li>
+                    </ul>
+
                 </li>
 
-                <li class="{{ Route::currentRouteName() === 'categories.index' ? 'active' : '' }}">
-                    <a href="{{ route('categories.index') }}">
-                        <i class="fe fe-file-text"></i>
-                        <span>Category</span>
-                    </a>
-                </li>
 
-                <li class="{{ Route::currentRouteName() === 'subcategories.index' ? 'active' : '' }}">
-                    <a href="{{ route('subcategories.index') }}">
-                        <i class="fe fe-file-text"></i>
-                        <span>Sub Category</span>
-                    </a>
-                </li>
-
-                <li class="{{ Route::currentRouteName() === 'menus.index' ? 'active' : '' }}">
-                    <a href="{{ route('menus.index') }}">
-                        <i class="fe fe-file-text"></i>
-                        <span>Menu</span>
-                    </a>
-                </li>
-
-                <li class="{{ Route::currentRouteName() === 'submenu.index' ? 'active' : '' }}">
-                    <a href="{{ route('submenu.index') }}">
-                        <i class="fe fe-file-text"></i>
-                        <span>Sub-menu</span>
-                    </a>
-                </li>
-
-                <li class="{{ Route::currentRouteName() === 'service-detail.index' ? 'active' : '' }}">
-                    <a href="{{ route('service-detail.index') }}">
-                        <i class="fe fe-file-text"></i>
-                        <span>Service details</span>
-                    </a>
-                </li>
 
                 <li class="{{ Route::currentRouteName() === 'enquiry.index' ? 'active' : '' }}">
                     <a href="{{ route('enquiry.index') }}">
@@ -109,19 +125,23 @@
                         <span class="menu-arrow"><i class="fe fe-chevron-right"></i></span>
                     </a>
                     <ul>
-                        <li class="{{ Route::currentRouteName() === 'vendors.index' ? 'active' : '' }}">
-                            <a href="{{ route('vendors.index') }}">
+
+                        <li>
+                            <a href="{{ route('vendors.index') }}"
+                                class="{{ Route::currentRouteName() === 'vendors.index' ? 'active' : '' }}">
                                 <i class="fe fe-file-text"></i>
-                                <span>Vendor</span>
+                                <span> Vendor</span>
                             </a>
                         </li>
 
-                         <li class="{{ Route::currentRouteName() === 'verified.index' ? 'active' : '' }}">
-                            <a href="{{ route('verified.index') }}">
+                        <li>
+                            <a href="{{ route('verified.index') }}"
+                                class="{{ Route::currentRouteName() === 'verified.index' ? 'active' : '' }}">
                                 <i class="fe fe-file-text"></i>
-                                <span>Verified</span>
+                                <span> Verified</span>
                             </a>
                         </li>
+
                     </ul>
 
                 </li>

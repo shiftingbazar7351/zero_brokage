@@ -733,6 +733,7 @@
 
     <!-- ..............................FAQ section............................ -->
 
+    @if(count($faqs) > 0)
     <div class="container my-4">
         <h1 class="text-center my-4">FAQ </h1>
         <div class="row">
@@ -761,7 +762,7 @@
         </div>
 
     </div>
-
+    @endif
 
 
 

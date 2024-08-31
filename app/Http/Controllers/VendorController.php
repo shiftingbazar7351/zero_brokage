@@ -107,6 +107,11 @@ class VendorController extends Controller
         $vendor->created_by = auth()->user()->id;
 
         // Check if the request has any image files and update the vendor model
+        if ($request->hasFile('logo')) {
+            $filename = $this->fileUploadService->uploadImage('vendor/logo/', $request->file('logo'));
+            $vendor->logo = $filename;
+        }
+
         if ($request->hasFile('vendor_image')) {
             $filename = $this->fileUploadService->uploadImage('vendor/vendor_image/', $request->file('vendor_image'));
             $vendor->vendor_image = $filename;
@@ -212,6 +217,11 @@ class VendorController extends Controller
         // return $vendor;
 
         // Handle file uploads
+        if ($request->hasFile('logo')) {
+            $filename = $this->fileUploadService->uploadImage('vendor/logo/', $request->file('logo'));
+            $vendor->logo = $filename;
+        }
+        
         if ($request->hasFile('vendor_image')) {
             $filename = $this->fileUploadService->uploadImage('vendor/vendor_image/', $request->file('vendor_image'));
             $vendor->vendor_image = $filename;

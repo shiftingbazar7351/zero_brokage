@@ -1,6 +1,9 @@
 @extends('backend.layouts.main')
 
 @section('styles')
+    <script src="https://cdn.ckeditor.com/4.20.1/standard/ckeditor.js"></script>
+    {{-- <script src="https://cdn.jsdelivr.net/npm/ckeditor4@4.25.0/ckeditor.js"></script> --}}
+
     <style>
         .default-img {
             width: auto;
@@ -123,8 +126,7 @@
                         <div class="row">
                             <div class="form-group col-md-6">
                                 <label for="name">Name</label>
-                                <input type="text" class="form-control" id="name" name="name"
-                                    placeholder="Enter Name">
+                                <input type="text" class="form-control" id="name" name="name" placeholder="Enter Name">
                                 <div id="name-error" class="text-danger"></div>
                             </div>
                             <div class="form-group col-md-6">
@@ -146,7 +148,7 @@
                                 </select>
                                 <div id="subcategory_id-error" class="text-danger"></div>
                             </div>
-
+    
                             <div class="form-group col-md-6">
                                 <label for="menu">Menu</label>
                                 <select class="form-control" id="menu" name="menu">
@@ -166,7 +168,7 @@
                                 </select>
                                 <div id="state-error" class="text-danger"></div>
                             </div>
-
+    
                             <div class="form-group col-md-6">
                                 <label for="category">City</label>
                                 <select class="form-control" id="city" name="city">
@@ -175,7 +177,7 @@
                                 <div id="city-error" class="text-danger"></div>
                             </div>
                         </div>
-
+    
                         <div class="row">
                             <div class="form-group col-md-6">
                                 <label for="price">Price(INR)</label>
@@ -183,7 +185,7 @@
                                     placeholder="Enter Ammount">
                                 <div id="price-error" class="text-danger"></div>
                             </div>
-
+    
                             <div class="form-group col-md-6">
                                 <label for="price">Discount(%)</label>
                                 <input type="text" class="form-control" id="discount" name="discount"
@@ -193,8 +195,7 @@
                         </div>
                         <div class="form-group">
                             <label for="final-price">Final Price (INR)</label>
-                            <input type="text" class="form-control" id="final-price" name="final_price" readonly
-                                disabled>
+                            <input type="text" class="form-control" id="final-price" name="final_price" readonly disabled>
                             <div id="final_price-error" class="text-danger"></div>
                         </div>
                         <div class="mb-3">
@@ -216,26 +217,31 @@
                             </div>
                             <div id="image-error" class="text-danger"></div>
                         </div>
-
+    
                         <div class="form-group">
-                            <label for="description" class="col-form-label">Details <span
-                                    class="text-danger">*</span></label>
+                            <label for="details" class="col-form-label">Details <span class="text-danger">*</span></label>
                             <textarea class="form-control" id="details" placeholder="Enter Details" name="details">{{ old('details') }}</textarea>
                             <div id="details-error" class="text-danger"></div>
                         </div>
-
+    
                         <div class="form-group">
                             <label for="description">Description</label>
                             <textarea type="text" class="form-control" id="description" name="description" placeholder="Enter Ammount"></textarea>
                             <div id="description-error" class="text-danger"></div>
                         </div>
-
+    
                         <button type="submit" class="btn btn-primary">Save</button>
                     </form>
                 </div>
             </div>
         </div>
     </div>
+    
+    <script>
+        // Initialize CKEditor for the Details and Description fields
+        CKEDITOR.replace('details');
+    </script>
+    
 
     <div class="modal fade" id="edit-category" tabindex="-1" aria-labelledby="editCategoryModalLabel"
         aria-hidden="true">
@@ -370,12 +376,18 @@
                             </div>
                             <div id="image-error" class="text-danger"></div>
                         </div>
+
                         <div class="form-group">
-                            <label for="description" class="col-form-label">Details <span
-                                    class="text-danger">*</span></label>
+                            <label for="description" class="col-form-label">Details <span class="text-danger">*</span></label>
                             <textarea class="form-control" id="edit-details" placeholder="Enter Details" name="details">{{ old('details') }}</textarea>
                             <div id="details-error" class="text-danger"></div>
                         </div>
+                        
+                        <script>
+                            // Initialize CKEditor for the edit-details field
+                            CKEDITOR.replace('edit-details');
+                        </script>
+                        
 
                         <div class="form-group">
                             <label for="description">Description</label>

@@ -9,10 +9,9 @@
                             <a href="{{ route('home') }}"><img src="{{ asset('assets/img/logofinal.png') }}" alt="logo"></a>
                         </div>
                         <div class="footer-content">
-                            <p>Lorem ipsum dolor sit consectetur adipiscing elit, sed do eiusmod tempor commodo
-                                consequat. </p>
+                            <p>Your satisfaction is our priority. Reach out to us anytime. </p>
                         </div>
-                        
+
                     </div>
 
                 </div>
@@ -46,14 +45,11 @@
                         <h2 class="footer-title">Contact Us</h2>
                         <div class="footer-contact-info">
                             <div class="footer-address">
-                                <p><span><i class="feather-map-pin"></i></span> 367 Hillcrest Lane, Irvine,
-                                    California, United States</p>
+                                <p><span><i class="feather-map-pin"></i></span> VILL HOSHIYARPUR HOSHIYARPUR C/O-SUSHIL YADAV NOIDA Gautam Buddha Nagar UP 201307 IN</p>
                             </div>
-                            <p><span><i class="feather-phone"></i></span> 321 546 8764</p>
-                            <p class="mb-0"><span><i class="feather-mail"></i></span> <a
-                                    href="https://truelysell.dreamstechnologies.com/cdn-cgi/l/email-protection"
-                                    class="__cf_email__"
-                                    data-cfemail="3d494f485851444e5851517d58455c504d5158135e5250">[email&#160;protected]</a>
+                            <p><span><i class="feather-phone"></i></span> 09429690472</p>
+                            <p class="mb-0"><span><i class="feather-mail"></i></span>
+                                zerobrokage@gmail.com
                             </p>
                         </div>
                     </div>
@@ -104,7 +100,7 @@
                 <div class="row align-items-center">
                     <div class="col-md-4">
                         <div class="copyright-text">
-                            <p class="mb-0">Copyright &copy; 2023. All Rights Reserved.</p>
+                            <p class="mb-0"> &copy;2024 Copyright ZeroBrokage.com. All Rights Reserved.</p>
                         </div>
                     </div>
                     <div class="col-md-4">

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Verified;
+use App\Services\FileUploadService;
 
 class VerifiedController extends Controller
 {
@@ -12,6 +13,11 @@ class VerifiedController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+
+     public function __construct(FileUploadService $fileUploadService)
+     {
+         $this->fileUploadService = $fileUploadService;
+     }
     public function index()
     {
         $verifieds = Verified::orderByDesc('created_at')->get();
@@ -28,15 +34,24 @@ class VerifiedController extends Controller
     {
         $request->validate([
             'name' => 'required',
-            'image' => 'required',
+            'image' => 'required|image', // Adding an image validation rule
         ]);
-
+    
         $review = new Verified($request->all());
+        $review->slug = generateSlug($request->name);
         $review->created_by = auth()->id();
+    
+        if ($request->hasFile('image')) {
+            $filename = $this->fileUploadService->uploadImage('verified/', $request->file('image'));
+            $review->image = $filename;
+        }
+        
         $review->save();
-        return redirect()->back()->with('success', ' Added Successfully');
+    
+        // Return a JSON response
+        return response()->json(['success' => true, 'message' => 'Added Successfully']);
     }
-
+    
     /**
      * Display the specified resource.
      *
@@ -54,10 +69,16 @@ class VerifiedController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Verified $verified)
     {
-        $review = Verified::findOrFail($id);
-        return response()->json($review);
+        return response()->json([
+            'verified' => [
+                'id' => $verified->id,
+                'name' => $verified->name,
+                'image' => $verified->image,
+
+            ]
+        ]);
     }
 
     /**
@@ -71,18 +92,26 @@ class VerifiedController extends Controller
     {
         $request->validate([
             'name' => 'required',
-            'image' => 'required',
+            'image' => 'nullable|mimes:jpeg,png,jpg,gif|max:2048', // Make image optional
         ]);
-
+    
         $review = Verified::findOrFail($id);
-
-        // Update the FAQ with the new data
-        $review->update($request->only(['name', 'image']));
-
-        // Redirect back with a success message
-        return redirect()->back()->with('success', 'Updated Successfully');
+    
+        $review->name = $request->name;
+        $review->slug = generateSlug($request->name); 
+        $review->created_by = auth()->id();
+    
+        if ($request->hasFile('image')) {
+            $filename = $this->fileUploadService->uploadImage('verified/', $request->file('image'));
+            $review->image = $filename;
+        }
+    
+        $review->save();
+    
+        return response()->json(['success' => true, 'message' => 'Updated successfully.']);
     }
-
+    
+    
     /**
      * Remove the specified resource from storage.
      *
@@ -94,5 +123,16 @@ class VerifiedController extends Controller
         $verified->delete();
 
         return redirect()->back()->with('success', 'Deleted successfully.');
+    }
+
+    public function verifyStatus(Request $request)
+    {
+        $item = Verified::find($request->id);
+        if ($item) {
+            $item->status = $request->status;
+            $item->save();
+            return response()->json(['success' => true, 'message' => 'Status updated successfully.']);
+        }
+        return response()->json(['success' => false, 'message' => 'Item not found.']);
     }
 }

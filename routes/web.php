@@ -133,6 +133,7 @@ Route::middleware('auth')->group(function () {
 
     Route::resource('/vendors', VendorController::class);
     Route::resource('/verified', VerifiedController::class);
+    Route::post('/verified-status', [VerifiedController::class, 'verifyStatus'])->name('verified.status');
     Route::post('/fetch-city-vendor/{stateId}', [VendorController::class, 'fetchCity']);
     Route::post('/fetch-subcategory/{id}', [VendorController::class, 'fetchsubcategory']);
     Route::post('/getMenus/{subcategoryId}', [VendorController::class, 'getMenus']);

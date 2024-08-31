@@ -97,7 +97,7 @@ class SubMenuController extends Controller
 
         if ($request->hasFile('image')) {
             $filename = $this->fileUploadService->uploadImage('submenu/', $request->file('image'));
-            $subcategory['image'] = $filename;
+            $subcategory->image = $filename;
         }
 
         $subcategory->save();

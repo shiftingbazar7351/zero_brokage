@@ -46,7 +46,7 @@
                                         <td>
                                             <div class="table-imgname">
                                                 @if ($verified->image)
-                                                    <img src="{{ Storage::url('vendor/verified' . $verified->icon) }}"
+                                                    <img src="{{ Storage::url('verified/' . $verified->image) }}"
                                                         class="me-2 preview-img" alt="img">
                                                 @else
                                                     No Image
@@ -68,12 +68,12 @@
                                         <td>
                                             <div class="table-actions d-flex justify-content-center">
                                                 <button class="btn delete-table me-2"
-                                                    onclick="editSubCategory({{ $verified->id }})" type="button"
+                                                    onclick="editVerified({{ $verified->id }})" type="button"
                                                     data-bs-toggle="modal" data-bs-target="#edit-category">
                                                     <i class="fe fe-edit"></i>
                                                 </button>
-                                                <form action="{{ route('verified.destroy', $verified->id) }}"
-                                                    method="POST" style="display:inline;">
+                                                <form action="{{ route('verified.destroy', $verified->id) }}" method="POST"
+                                                    style="display:inline;">
                                                     @csrf
                                                     @method('DELETE')
                                                     <button class="btn delete-table" type="submit"
@@ -111,27 +111,31 @@
                         @csrf
                         <div class="mb-3">
                             <label class="form-label">Name</label>
-                            <input type="text" class="form-control" name="name" placeholder="Enter Category Name">
+                            <input type="text" class="form-control" name="name" placeholder="Enter  Name">
                             <div id="name_error" class="text-danger"></div>
                         </div>
 
-       
                         <div class="mb-3">
-                            <label class="form-label">Image</label>
+                            <label class="form-label"> Image</label>
                             <div class="form-uploads">
                                 <div class="form-uploads-path">
                                     <img id="image-preview-icon" src="{{ asset('admin/assets/img/icons/upload.svg') }}"
-                                        alt="img" class="default-img">
+                                        alt="img" width="100px" height="100px">
                                     <div class="file-browse">
-                                        <input type="file" name="icon" id="image-input-icon"
-                                            accept="image/jpeg, image/png">
-                                        <a href="javascript:void(0);"> Browse</a>
+                                        <h6>Drag & drop image or </h6>
+                                        <div class="file-browse-path">
+                                            <input type="file" id="image-input-icon" name="image"
+                                                accept="image/jpeg, image/png">
+                                            <a href="javascript:void(0);"> Browse</a>
+                                        </div>
                                     </div>
-                                    <div id="icon_error" class="text-danger"></div>
+                                    <h5>Supported formats: JPEG, PNG</h5>
                                 </div>
                             </div>
+                            <div id="image_error" class="text-danger"></div>
                         </div>
-                   
+
+
                         <div class="text-end">
                             <button type="button" class="btn btn-secondary me-2" data-bs-dismiss="modal">Cancel</button>
                             <button type="submit" class="btn btn-primary">Save</button>
@@ -151,33 +155,38 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body pt-0">
-                    <form id="editSubCategoryForm" method="POST" enctype="multipart/form-data">
+                    <form id="editVerifiedForm" method="POST" enctype="multipart/form-data">
                         @csrf
                         @method('PUT')
-                        <input type="hidden" id="editSubCategoryId" name="id">
-  
+                        <input type="hidden" id="verifiedId" name="id">
+
                         <div class="mb-3">
                             <label class="form-label"> Name</label>
-                            <input type="text" class="form-control" id="editName" name="name">
+                            <input type="text" class="form-control" id="editName" name="name" placeholder="Enter  Name" >
                             <div id="name_error_edit" class="text-danger"></div>
                         </div>
-            
+
                         <div class="mb-3">
-                            <label class="form-label">Image</label>
+                            <label class="form-label"> Image</label>
                             <div class="form-uploads">
                                 <div class="form-uploads-path">
-                                    <img id="edit-image-preview-icon"
+                                    <img id="edit-image-preview-image"
                                         src="{{ asset('admin/assets/img/icons/upload.svg') }}" alt="img"
-                                        class="default-img preview-img">
+                                        width="100px" height="100px">
                                     <div class="file-browse">
-                                        <input type="file" name="icon" id="edit-image-input-icon"
-                                            accept="image/jpeg, image/png">
-                                        <a href="javascript:void(0);"> Browse</a>
+                                        <h6>Drag & drop image or </h6>
+                                        <div class="file-browse-path">
+                                            <input type="file" id="editImage" name="image"
+                                                accept="image/jpeg, image/png">
+                                            <a href="javascript:void(0);"> Browse</a>
+                                        </div>
                                     </div>
-                                    <div id="icon_error_edit" class="text-danger"></div>
+                                    <h5>Supported formats: JPEG, PNG</h5>
                                 </div>
                             </div>
+                            <div id="image_error_edit" class="text-danger"></div>
                         </div>
+
                         <div class="text-end">
                             <button type="button" class="btn btn-secondary me-2" data-bs-dismiss="modal">Cancel</button>
                             <button type="submit" class="btn btn-primary">Update</button>
@@ -191,7 +200,7 @@
 
 @section('scripts')
     <script>
-        var statusRoute = `{{ route('subcategories.status') }}`;
+        var statusRoute = `{{ route('verified.status') }}`;
     </script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="{{ asset('admin/assets/js/status-update.js') }}"></script>
@@ -213,15 +222,10 @@
                         }
                     },
                     error: function(xhr) {
-                        $('#category_id_error').text(xhr.responseJSON.errors.category_id ? xhr
-                            .responseJSON.errors.category_id[0] : '');
-                        $('#name_error').text(xhr.responseJSON.errors.name ? xhr.responseJSON
-                            .errors.name[0] : '');
-                        $('#icon_error').text(xhr.responseJSON.errors.icon ? xhr.responseJSON
-                            .errors.icon[0] : '');
-                        $('#background_image_error').text(xhr.responseJSON.errors
-                            .background_image ? xhr.responseJSON.errors.background_image[
-                            0] : '');
+                        $('#name_error').text(xhr.responseJSON.errors.name ? xhr
+                            .responseJSON.errors.name[0] : '');
+                        $('#image_error').text(xhr.responseJSON.errors.image ? xhr.responseJSON
+                            .errors.image[0] : '');
                     }
                 });
             });
@@ -229,57 +233,51 @@
 
 
 
-        // Edit Subcategory
-        window.editSubCategory = function(id) {
+        // Edit Subcategory (Verified)
+        window.editVerified = function(id) {
             $.ajax({
-                url: `/subcategories/${id}/edit`,
+                url: `/verified/${id}/edit`,
                 method: 'GET',
                 success: function(response) {
-                    console.log(response)
-                    $('#editSubCategoryId').val(response.subcategory.id);
-                    $('#categoryName').val(response.subcategory.category_id);
-                    $('#editName').val(response.subcategory.name);
-                    $('#is_trending').prop('checked', response.subcategory.trending);
-                    $('#is_featured').prop('checked', response.subcategory.featured);
-                    if (response.subcategory.icon) {
-                        $('#edit-image-preview-icon').attr('src',
-                            `/storage/icon/${response.subcategory.icon}`);
+                    console.log(response);
+
+                    $('#verifiedId').val(response.verified.id);
+                    $('#editName').val(response.verified.name);
+                    if (response.verified.image) {
+                        $('#edit-image-preview-image').attr('src',
+                            `/storage/verified/${response.verified.image}`);
+
                     }
-                    if (response.subcategory.background_image) {
-                        $('#edit-image-preview-bg').attr('src',
-                            `/storage/background_image/${response.subcategory.background_image}`);
-                    }
+                    $('#edit-category').modal('show'); // Show the modal after loading the data
                 }
             });
         }
 
-        // Update Subcategory
-        $('#editSubCategoryForm').on('submit', function(e) {
+        // Update Subcategory (Verified)
+        $('#editVerifiedForm').on('submit', function(e) {
             e.preventDefault();
             let formData = new FormData(this);
-            let id = $('#editSubCategoryId').val();
-            // alert(id);
-            // false
+            let id = $('#verifiedId').val();
+
             $.ajax({
                 type: 'POST',
-                url: `/subcategories/${id}`,
+                url: `/verified/${id}`,
                 data: formData,
                 contentType: false,
                 processData: false,
+                headers: {
+                    'X-HTTP-Method-Override': 'PUT' // Override POST to PUT for update operation
+                },
                 success: function(response) {
                     if (response.success) {
                         location.reload(); // Refresh page to show updated data
                     }
                 },
                 error: function(xhr) {
-                    $('#category_id_error_edit').text(xhr.responseJSON.errors.category_id ? xhr
-                        .responseJSON.errors.category_id[0] : '');
                     $('#name_error_edit').text(xhr.responseJSON.errors.name ? xhr.responseJSON.errors
                         .name[0] : '');
-                    $('#icon_error_edit').text(xhr.responseJSON.errors.icon ? xhr.responseJSON.errors
-                        .icon[0] : '');
-                    $('#background_image_error_edit').text(xhr.responseJSON.errors.background_image ?
-                        xhr.responseJSON.errors.background_image[0] : '');
+                    $('#image_error_edit').text(xhr.responseJSON.errors.image ? xhr.responseJSON.errors
+                        .image[0] : '');
                 }
             });
         });

@@ -78,27 +78,25 @@
                                 </div>
                                 <div class="col-md-4">
                                     <label for="submenu">Sub-Menu</label>
-                                <select class="form-control" id="submenu" name="submenu_id" required>
-                                    <option value="">Select submenu</option>
-                                </select>
-                                <div id="menu_id-error" class="text-danger"></div>
+                                    <select class="form-control" id="submenu" name="submenu_id" required>
+                                        <option value="">Select submenu</option>
+                                    </select>
+                                    <div id="menu_id-error" class="text-danger"></div>
                                 </div>
                             </div>
 
                             <div class="row mx-auto mt-3">
                                 <div class="col-md-6">
                                     <label for="companyname" class="form-label">Company Name<b
-                                            style="color: red;">*</b></label><span> (if same
-                                        name)</span>
-                                    <input name="company_name" class="form-check-input mx-1" type="checkbox"
-                                        value="{{ old('company_name', $vendor->company_name ?? '') }}"
-                                        id="flexCheckChecked" checked>
+                                            style="color: red;">*</b></label><span> (if same name)</span>
+                                    <input name="company_name_checkbox" class="form-check-input mx-1" type="checkbox"
+                                        id="companyNameCheckbox">
                                     <input name="company_name"
                                         value="{{ old('company_name', $vendor->company_name ?? '') }}" id="companyname"
                                         class="form-control bg-light-subtle" type="text" placeholder="Company name"
                                         aria-label="default input example" required>
                                     @error('company_name')
-                                        <div class="error text-danger ">{{ $message }}</div>
+                                        <div class="error text-danger">{{ $message }}</div>
                                     @enderror
                                 </div>
                                 <div class="col-md-6">
@@ -107,9 +105,9 @@
                                     <input name="legal_company_name"
                                         value="{{ old('legal_company_name', $vendor->legal_company_name ?? '') }}"
                                         id="lcompanyname" class="form-control bg-light-subtle" type="text"
-                                        placeholder="Company name" aria-label="default input example" required>
+                                        placeholder="Legal Company name" aria-label="default input example" required>
                                     @error('legal_company_name')
-                                        <div class="error text-danger ">{{ $message }}</div>
+                                        <div class="error text-danger">{{ $message }}</div>
                                     @enderror
                                 </div>
                             </div>
@@ -453,157 +451,177 @@
 @endsection
 
 @section('scripts')
-<script>
-    $(document).ready(function() {
-        $('#state').on('change', function() {
-            var stateId = $(this).val();
-            if (stateId) {
+    <script>
+        document.getElementById('companyNameCheckbox').addEventListener('change', function() {
+            const companyNameField = document.getElementById('companyname');
+            const legalCompanyNameField = document.getElementById('lcompanyname');
+
+            if (this.checked) {
+                legalCompanyNameField.value = companyNameField.value;
+            } else {
+                legalCompanyNameField.value = ''; // Clear the legal company name if checkbox is unchecked
+            }
+        });
+
+        // Optional: Sync legal company name when company name is typed
+        document.getElementById('companyname').addEventListener('input', function() {
+            const checkbox = document.getElementById('companyNameCheckbox');
+            if (checkbox.checked) {
+                document.getElementById('lcompanyname').value = this.value;
+            }
+        });
+    </script>
+    <script>
+        $(document).ready(function() {
+            $('#state').on('change', function() {
+                var stateId = $(this).val();
+                if (stateId) {
+                    $.ajax({
+                        url: '/fetch-city-vendor/' + stateId,
+                        type: 'POST',
+                        data: {
+                            _token: '{{ csrf_token() }}'
+                        },
+                        success: function(response) {
+                            console.log(response);
+                            $('#city').empty().append('<option value="">Select City</option>');
+                            if (response.status === 1) {
+                                $.each(response.data, function(key, city) {
+                                    $('#city').append("<option value='" + city.id +
+                                        "'>" + city.name + "</option>");
+                                });
+                            } else {
+                                $('#city').append(
+                                    '<option value="" disabled>No cities found</option>');
+                            }
+                        },
+                        error: function(xhr, status, error) {
+                            console.log(error);
+                            $('#city').empty().append(
+                                '<option value="" disabled>Error loading cities</option>');
+                        }
+                    });
+                } else {
+                    $('#city').empty().append('<option value="">Select City</option>');
+                }
+            });
+        });
+
+        $('#category').on('change', function() {
+            var categoryId = $(this).val();
+            if (categoryId) {
                 $.ajax({
-                    url: '/fetch-city-vendor/' + stateId,
+                    url: '/fetch-subcategory/' + categoryId,
                     type: 'POST',
                     data: {
                         _token: '{{ csrf_token() }}'
                     },
                     success: function(response) {
-                        console.log(response);
-                        $('#city').empty().append('<option value="">Select City</option>');
-                        if (response.status === 1) {
-                            $.each(response.data, function(key, city) {
-                                $('#city').append("<option value='" + city.id +
-                                    "'>" + city.name + "</option>");
+                        $('#subcategory').empty().append(
+                            '<option value="" selected disabled>Select Subcategory</option>'
+                        );
+                        if (response.status === 1 && response.data.length > 0) {
+                            $.each(response.data, function(key, subcateg) {
+                                $('#subcategory').append(
+                                    '<option value="' +
+                                    subcateg.id + '">' + subcateg
+                                    .name +
+                                    '</option>');
                             });
                         } else {
-                            $('#city').append(
-                                '<option value="" disabled>No cities found</option>');
+                            $('#subcategory').append(
+                                '<option value="" disabled>No subcategories found</option>'
+                            );
                         }
                     },
-                    error: function(xhr, status, error) {
-                        console.log(error);
-                        $('#city').empty().append(
-                            '<option value="" disabled>Error loading cities</option>');
+                    error: function() {
+                        $('#subcategory').empty().append(
+                            '<option value="" disabled>Error loading subcategories</option>'
+                        );
                     }
                 });
             } else {
-                $('#city').empty().append('<option value="">Select City</option>');
+                $('#subcategory').empty().append(
+                    '<option value="" selected disabled>Select Subcategory</option>');
             }
         });
-    });
 
-    $('#category').on('change', function() {
-        var categoryId = $(this).val();
-        if (categoryId) {
-            $.ajax({
-                url: '/fetch-subcategory/' + categoryId,
-                type: 'POST',
-                data: {
-                    _token: '{{ csrf_token() }}'
-                },
-                success: function(response) {
-                    $('#subcategory').empty().append(
-                        '<option value="" selected disabled>Select Subcategory</option>'
-                    );
-                    if (response.status === 1 && response.data.length > 0) {
-                        $.each(response.data, function(key, subcateg) {
-                            $('#subcategory').append(
-                                '<option value="' +
-                                subcateg.id + '">' + subcateg
-                                .name +
-                                '</option>');
-                        });
-                    } else {
-                        $('#subcategory').append(
-                            '<option value="" disabled>No subcategories found</option>'
+        $('#subcategory').on('change', function() {
+            var subcategoryId = $(this).val();
+            if (subcategoryId) {
+                $.ajax({
+                    url: '/getMenus/' + subcategoryId,
+                    type: 'POST',
+                    data: {
+                        _token: '{{ csrf_token() }}'
+                    },
+                    success: function(response) {
+                        $('#menu').empty().append(
+                            '<option value="" selected disabled>Select Menu</option>'
+                        );
+                        if (response.status === 1 && response.data.length > 0) {
+                            $.each(response.data, function(key, menu) {
+                                $('#menu').append('<option value="' +
+                                    menu.id +
+                                    '">' + menu.name + '</option>');
+                            });
+                        } else {
+                            $('#menu').append(
+                                '<option value="" disabled>No menus available</option>'
+                            );
+                        }
+                    },
+                    error: function(xhr) {
+                        console.error('Error loading menus:', xhr);
+                        $('#menu').empty().append(
+                            '<option value="" disabled>Error loading menus</option>'
                         );
                     }
-                },
-                error: function() {
-                    $('#subcategory').empty().append(
-                        '<option value="" disabled>Error loading subcategories</option>'
-                    );
-                }
-            });
-        } else {
-            $('#subcategory').empty().append(
-                '<option value="" selected disabled>Select Subcategory</option>');
-        }
-    });
+                });
+            } else {
+                $('#menu').empty().append(
+                    '<option value="" selected disabled>Select Menu</option>'
+                );
+            }
+        });
 
-    $('#subcategory').on('change', function() {
-        var subcategoryId = $(this).val();
-        if (subcategoryId) {
-            $.ajax({
-                url: '/getMenus/' + subcategoryId,
-                type: 'POST',
-                data: {
-                    _token: '{{ csrf_token() }}'
-                },
-                success: function(response) {
-                    $('#menu').empty().append(
-                        '<option value="" selected disabled>Select Menu</option>'
-                    );
-                    if (response.status === 1 && response.data.length > 0) {
-                        $.each(response.data, function(key, menu) {
-                            $('#menu').append('<option value="' +
-                                menu.id +
-                                '">' + menu.name + '</option>');
-                        });
-                    } else {
-                        $('#menu').append(
-                            '<option value="" disabled>No menus available</option>'
+        $('#menu').on('change', function() {
+            var submenuId = $(this).val();
+            if (submenuId) {
+                $.ajax({
+                    url: '/getsubMenus/' + submenuId,
+                    type: 'POST',
+                    data: {
+                        _token: '{{ csrf_token() }}'
+                    },
+                    success: function(response) {
+                        $('#submenu').empty().append(
+                            '<option value="" selected disabled>Select SubMenu</option>'
+                        );
+                        if (response.status === 1 && response.data.length > 0) {
+                            $.each(response.data, function(key, submenu) {
+                                $('#submenu').append('<option value="' +
+                                    submenu.id +
+                                    '">' + submenu.name + '</option>');
+                            });
+                        } else {
+                            $('#submenu').append(
+                                '<option value="" disabled>No menus available</option>'
+                            );
+                        }
+                    },
+                    error: function(xhr) {
+                        console.error('Error loading menus:', xhr);
+                        $('#submenu').empty().append(
+                            '<option value="" disabled>Error loading menus</option>'
                         );
                     }
-                },
-                error: function(xhr) {
-                    console.error('Error loading menus:', xhr);
-                    $('#menu').empty().append(
-                        '<option value="" disabled>Error loading menus</option>'
-                    );
-                }
-            });
-        } else {
-            $('#menu').empty().append(
-                '<option value="" selected disabled>Select Menu</option>'
-            );
-        }
-    });
-
-    $('#menu').on('change', function() {
-        var submenuId = $(this).val();
-        if (submenuId) {
-            $.ajax({
-                url: '/getsubMenus/' + submenuId,
-                type: 'POST',
-                data: {
-                    _token: '{{ csrf_token() }}'
-                },
-                success: function(response) {
-                    $('#submenu').empty().append(
-                        '<option value="" selected disabled>Select SubMenu</option>'
-                    );
-                    if (response.status === 1 && response.data.length > 0) {
-                        $.each(response.data, function(key, submenu) {
-                            $('#submenu').append('<option value="' +
-                                submenu.id +
-                                '">' + submenu.name + '</option>');
-                        });
-                    } else {
-                        $('#submenu').append(
-                            '<option value="" disabled>No menus available</option>'
-                        );
-                    }
-                },
-                error: function(xhr) {
-                    console.error('Error loading menus:', xhr);
-                    $('#submenu').empty().append(
-                        '<option value="" disabled>Error loading menus</option>'
-                    );
-                }
-            });
-        } else {
-            $('#menu').empty().append(
-                '<option value="" selected disabled>Select Menu</option>'
-            );
-        }
-    });
-</script>
+                });
+            } else {
+                $('#menu').empty().append(
+                    '<option value="" selected disabled>Select Menu</option>'
+                );
+            }
+        });
+    </script>
 @endsection

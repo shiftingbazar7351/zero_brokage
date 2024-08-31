@@ -7,6 +7,7 @@ use App\Models\SubCategory;
 use App\Models\SubMenu;
 use App\Models\Country;
 use App\Models\State;
+use App\Models\Verified;
 use App\Models\City;
 use App\Models\Vendor;
 use App\Services\FileUploadService;
@@ -48,8 +49,9 @@ class VendorController extends Controller
         $subcategories = SubCategory::orderByDesc('created_at')->get();
         $submenus = SubMenu::orderByDesc('created_at')->get();
         $countryId = Country::where('name', 'India')->value('id');
+        $verifieds = Verified::orderByDesc('created_at')->get();
         $states = State::where('country_id', $countryId)->get(['name', 'id']);
-        return view("backend.vendor.create", compact('subcategories', 'submenus', 'states','categories'));
+        return view("backend.vendor.create", compact('subcategories', 'submenus', 'states','categories','verifieds'));
     }
 
     /**

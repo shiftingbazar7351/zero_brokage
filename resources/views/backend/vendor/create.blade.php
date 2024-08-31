@@ -75,42 +75,41 @@
                                     <option value="">Select menu</option>
                                 </select>
                                 @error('menu_id')
-                                <div class="error text-danger">{{ $message }}</div>
-                            @enderror
+                                    <div class="error text-danger">{{ $message }}</div>
+                                @enderror
                             </div>
                             <div class="col-md-4">
                                 <label for="submenu">Sub-Menu<b style="color: red;">*</b></label>
-                                <select  class="form-control" id="submenu" name="submenu_id" required>
+                                <select class="form-control" id="submenu" name="submenu_id" required>
                                     <option value="">Select submenu</option>
                                 </select>
                                 @error('submenu_id')
-                                <div class="error text-danger">{{ $message }}</div>
-                            @enderror
+                                    <div class="error text-danger">{{ $message }}</div>
+                                @enderror
                             </div>
                         </div>
 
                         <div class="row mx-auto mt-3">
                             <div class="col-md-6">
                                 <label for="companyname" class="form-label">Company Name<b
-                                        style="color: red;">*</b></label><span> (if same
-                                    name)</span>
-                                <input name="company_name" class="form-check-input mx-1" type="checkbox"
-                                    value="{{ old('company_name') }}" id="flexCheckChecked" unchecked>
+                                        style="color: red;">*</b></label><span> (if same name)</span>
+                                <input name="company_name_checkbox" class="form-check-input mx-1" type="checkbox"
+                                    id="companyNameCheckbox">
                                 <input name="company_name" value="{{ old('company_name') }}" id="companyname"
                                     class="form-control bg-light-subtle" type="text" placeholder="Company name"
                                     aria-label="default input example" required>
                                 @error('company_name')
-                                    <div class="error text-danger ">{{ $message }}</div>
+                                    <div class="error text-danger">{{ $message }}</div>
                                 @enderror
                             </div>
                             <div class="col-md-6">
                                 <label for="lcompanyname" class="form-label">Legal Company Name<b
                                         style="color: red;">*</b></label>
                                 <input name="legal_company_name" value="{{ old('legal_company_name') }}" id="lcompanyname"
-                                    class="form-control bg-light-subtle" type="text" placeholder="Company name"
+                                    class="form-control bg-light-subtle" type="text" placeholder="Legal Company name"
                                     aria-label="default input example" required>
                                 @error('legal_company_name')
-                                    <div class="error text-danger ">{{ $message }}</div>
+                                    <div class="error text-danger">{{ $message }}</div>
                                 @enderror
                             </div>
                         </div>
@@ -226,9 +225,9 @@
                                 <select name="verified" class="form-select bg-light-subtle"
                                     aria-label="Default select example" style="box-shadow: none">
                                     <option selected disabled value="">Select Option</option>
-                                    {{-- @foreach ($verifieds as $verified)
+                                    @foreach ($verifieds as $verified)
                                         <option value="{{ $verified->id }}">{{ $verified->name }}</option>
-                                        @endforeach --}}
+                                    @endforeach
                                 </select>
                                 @error('verified')
                                     <div class="error text-danger ">{{ $message }}</div>
@@ -444,6 +443,27 @@
         window.intlTelInput(whatsappvender, {
             initialCountry: "in",
             separateDialCode: true
+        });
+    </script>
+
+    <script>
+        document.getElementById('companyNameCheckbox').addEventListener('change', function() {
+            const companyNameField = document.getElementById('companyname');
+            const legalCompanyNameField = document.getElementById('lcompanyname');
+
+            if (this.checked) {
+                legalCompanyNameField.value = companyNameField.value;
+            } else {
+                legalCompanyNameField.value = ''; // Clear the legal company name if checkbox is unchecked
+            }
+        });
+
+        // Optional: Sync legal company name when company name is typed
+        document.getElementById('companyname').addEventListener('input', function() {
+            const checkbox = document.getElementById('companyNameCheckbox');
+            if (checkbox.checked) {
+                document.getElementById('lcompanyname').value = this.value;
+            }
         });
     </script>
 

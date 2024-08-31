@@ -37,7 +37,7 @@
     <div class="justify-content-center px-4 sticky-slider" style="background-color: rgb(229, 230, 233)">
         <div class="wrapper">
             <i id="left" class="fa-solid fas fa-angle-left"></i>
-            <ul class="carousel">
+            <ul class="carousel" style="justify-content: center">
                 @foreach ($menus as $menu)
                     <input type="hidden" name="menu_id" value="{{ $menu->id }}">
                     <li class="card">
@@ -242,7 +242,7 @@
                     <div class="row">
                         <div class="col-md-12">
                             @foreach ($submenus as $menu)
-                                <input type="hidden" name="submenu_id" {{ $menu->menu_id }}>
+                                <input type="hidden" name="submenu_id" value="{{ $menu->menu_id }}">
                                 <input type="hidden" name="subcategory_id" id="subcategory_id" {{ $menu->id }}>
                                 <div class="service-list">
                                     <div class="service-cont">
@@ -565,4 +565,59 @@
 
         });
     </script>
+
+
+    <script>
+        const otpInputs = document.querySelectorAll('.otp-input');
+
+        otpInputs.forEach((input, index) => {
+            input.addEventListener('input', () => {
+                if (input.value.length === 1) {
+                    // Move to the next input field if it exists
+                    if (index < otpInputs.length - 1) {
+                        otpInputs[index + 1].focus();
+                    }
+                }
+            });
+
+            input.addEventListener('keydown', (e) => {
+                // Handle the backspace key to move to the previous input
+                if (e.key === 'Backspace' && input.value.length === 0 && index > 0) {
+                    otpInputs[index - 1].focus();
+                }
+            });
+        });
+    </script>
+
+    <script>
+        window.addEventListener('scroll', function() {
+            var stickySlider = document.querySelector('.sticky-slider');
+            var offsetTop = stickySlider.offsetTop;
+
+            if (window.pageYOffset > offsetTop - 0) {
+                stickySlider.style.position = 'fixed';
+                stickySlider.style.top = '0px';
+                stickySlider.style.zIndex = '9999999999';
+                stickySlider.style.width = '100%'; // Ensures the width doesn't collapse
+            } else {
+                stickySlider.style.position = 'relative';
+                stickySlider.style.top = 'auto';
+            }
+        });
+    </script>
+
+
+    <script src="{{ asset('assets/js/booking_infoPopup.js') }}"></script>
+
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/intlTelInput.min.js"></script>
+    <script>
+        const inputtestt = document.querySelector("#phoneNumberInput-booking");
+        window.intlTelInput(inputtestt, {
+            initialCountry: "in",
+            separateDialCode: true
+        });
+    </script>
+
+
 @endsection

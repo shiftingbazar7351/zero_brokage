@@ -47,6 +47,7 @@ class Vendor extends Model
         'status',
         'created_by',
         'price',
+        'description',
     ];
 
 

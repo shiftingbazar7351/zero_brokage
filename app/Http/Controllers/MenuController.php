@@ -77,7 +77,7 @@ class MenuController extends Controller
             'name' => 'required|unique:menus,name,' . $menu->id,
             'category_id' => 'required',
             'subcategory' => 'required|integer|exists:menus,subcategory_id',
-            'image' => 'required|image|mimes:jpeg,png|max:2048',
+            'image' => 'nullable|image|mimes:jpeg,png|max:2048',
         ]);
     
     

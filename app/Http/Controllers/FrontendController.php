@@ -188,4 +188,7 @@ class FrontendController extends Controller
         return view('frontend.vender-profile',compact('vendors'));
     }
 
+    
+
+
 }

@@ -128,10 +128,11 @@
 
                         <li>
                             <a href="{{ route('vendors.index') }}"
-                                class="{{ Route::currentRouteName() === 'vendors.index' ? 'active' : '' }}">
+                                class="{{ in_array(Route::currentRouteName(), ['vendors.index', 'vendors.create', 'vendors.edit']) ? 'active' : '' }}">
                                 <i class="fe fe-file-text"></i>
-                                <span> Vendor</span>
+                                <span>Vendor</span>
                             </a>
+
                         </li>
 
                         <li>

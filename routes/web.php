@@ -92,7 +92,8 @@ Route::controller(FrontendController::class)->group(function () {
     Route::post('/verify-otp', 'verifyOtp')->name('user.verifyOtp');
     Route::get('/{slug}-in-india', 'servicesInIndiaCity')->name('services-in-india-city');
     Route::get('/provider-details/{id}', 'providerDetails')->name('vender-profile');
-    Route::post('/path-to-your-endpoint', [YourController::class, 'filterServices'])->name('filter.services');
+    Route::post('/path-to-your-endpoint', 'filterServices')->name('filter.services');
+    Route::post('/user/review/store', 'reviewStore')->name('reviewstore');
 
 });
 

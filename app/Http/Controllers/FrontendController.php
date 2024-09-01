@@ -2,15 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Category;
-use App\Models\City;
 use App\Models\Enquiry;
 use App\Models\Faq;
 use App\Models\IndiaServiceDescription;
 use App\Models\Menu;
 use App\Models\Review;
-use App\Models\ServiceDetail;
-use App\Models\State;
 use App\Models\SubCategory;
 use App\Models\SubMenu;
 use App\Models\Vendor;
@@ -67,7 +63,6 @@ class FrontendController extends Controller
             )
             ->get();
 
-
         return view('frontend.service-list', compact('submenus', 'subcategory', 'menus'));
     }
     public function servicesInIndia()
@@ -96,7 +91,7 @@ class FrontendController extends Controller
             ->get();
         $subcategory = Subcategory::where('status', 1)
             ->orderByDesc('created_at')
-            ->where('slug',$slug)
+            ->where('slug', $slug)
             ->first();
         return view('frontend.service-in-india-city', compact('faqs', 'submenus', 'description', 'reviews', 'subcategory'));
     }
@@ -184,11 +179,39 @@ class FrontendController extends Controller
 
     public function providerDetails($id)
     {
-        $vendors = Vendor::where('id', $id)->first();
-        return view('frontend.vender-profile',compact('vendors'));
+        $subcategories = Subcategory::where('status', 1)
+            ->orderByDesc('created_at')
+            ->get();
+        $faqs = Faq::where('status', 1)->select('question', 'answer')->get();
+        $vendor = Vendor::where('id', $id)->first();
+        return view('frontend.vender-profile', compact('vendor', 'faqs', 'subcategories'));
     }
 
-    
+    public function reviewStore(Request $request)
+    {
+        // Validate request
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|email',
+            'phone_number' => 'required|max:15',
+            'description' => 'required|string',
+            'rating' => 'required',
+        ]);
 
+        // Store review logic here
+        // Example:
+        // return $request->all();
+        Review::create([
+            'name' => $request->name,
+            'email' => $request->email,
+            'phone_number' => $request->phone_number,
+            'description' => $request->description,
+            'rating' => $request->rating,
+            'type' => 1,
+        ]);
+
+        // Return success response
+        return response()->json(['success' => true, 'message' => 'Review submitted successfully!']);
+    }
 
 }

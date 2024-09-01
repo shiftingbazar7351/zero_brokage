@@ -34,7 +34,7 @@ class VendorController extends Controller
         $subcategories = SubCategory::orderByDesc('created_at')->get();
         $submenus = SubMenu::orderByDesc('created_at')->get();
         $vendors = Vendor::orderByDesc('created_at')->get();
-     
+
         return view("backend.vendor.index", compact('subcategories', 'submenus', 'vendors'));
     }
 
@@ -62,7 +62,7 @@ class VendorController extends Controller
      */
     public function store(Request $request)
     {
-      
+
         $validatedData = $request->validate([
             'manager_id' => 'required|integer',
             'employee_id' => 'required|integer',
@@ -102,7 +102,7 @@ class VendorController extends Controller
 
         // Save vendor data
         // Create the vendor record
-        
+
         $vendor = Vendor::create($validatedData);
         // return $vendor;
         $vendor->created_by = auth()->user()->id;
@@ -223,7 +223,7 @@ class VendorController extends Controller
             $filename = $this->fileUploadService->uploadImage('vendor/logo/', $request->file('logo'));
             $vendor->logo = $filename;
         }
-        
+
         if ($request->hasFile('vendor_image')) {
             $filename = $this->fileUploadService->uploadImage('vendor/vendor_image/', $request->file('vendor_image'));
             $vendor->vendor_image = $filename;

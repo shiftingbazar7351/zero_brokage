@@ -132,7 +132,7 @@
         <div class="row">
             <div class="col-md-3 d-flex align-items-center">
                 <div class="img-prof">
-                    <img src="{{ asset('assets/img/profiles/avatar-07.jpg') }}" alt=""
+                    <img src="{{ asset('storage/vendor/vendor_image/' . $vendor->vendor_image ?? '') }}" alt=""
                         class="w-100 object-fit-contain">
                 </div>
 
@@ -140,14 +140,10 @@
             <div class="col-md-9">
 
                 <div class="provider-info">
-                    <h2>Dev Home Packer and Mover</h2>
-                    <h5>Mover</h5>
+                    <h2>{{ $vendor->vendor_name ?? '' }}</h2>
+                    <h5>{{ $vendor->company_name ?? '' }}</h5>
                     <p>
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
-                        do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-                        Ut enim ad minim veniam, quis nostrud exercitation ullamco
-                        laboris nisi ut aliquip ex ea commodo dolor in reprehenderit
-                        in voluptate consequat.
+                        {{ $vendor->address ?? '' }}
                     </p>
                     <div class="row">
                         <div class="col-lg-6 col-md-12">
@@ -157,8 +153,8 @@
                                     <h6>Email</h6>
                                     <p>
                                         <a href="https://truelysell.dreamstechnologies.com/cdn-cgi/l/email-protection"
-                                            class="__cf_email__"
-                                            data-cfemail="baced2d5d7dbc9d2fadfc2dbd7cad6df94d9d5d7">[email&#160;protected]</a>
+                                            {{-- class="__cf_email__" --}}
+                                            data-cfemail="baced2d5d7dbc9d2fadfc2dbd7cad6df94d9d5d7">{{ $vendor->email ?? '' }}</a>
                                     </p>
                                 </div>
                             </div>
@@ -168,7 +164,7 @@
                                 <span><i class="feather-phone"></i></span>
                                 <div class="provide-info">
                                     <h6>Phone</h6>
-                                    <p>+1 888 888 8888</p>
+                                    <p>+91 {{ $vendor->number ?? '' }}</p>
                                 </div>
                             </div>
                         </div>
@@ -177,7 +173,12 @@
                                 <span><i class="feather-map-pin"></i></span>
                                 <div class="provide-info">
                                     <h6>Address</h6>
-                                    <p>Hanover, Maryland</p>
+                                    {{-- <p>Hanover, Maryland</p> --}}
+
+                                    <p>
+                                        {{ ucwords($vendor->cityName->name ?? '') }},
+                                        {{ ucwords($vendor->cityName->state->name ?? '') }}
+                                    </p>
                                 </div>
                             </div>
                         </div>
@@ -186,11 +187,11 @@
                                 <span><i class="feather-globe"></i></span>
                                 <div class="provide-info">
                                     <h6>Website</h6>
-                                    <p>wwww.examplewebsite.com</p>
+                                    <p>{{ $vendor->website ?? '' }}</p>
                                 </div>
                             </div>
                         </div>
-                        <div class="col-lg-6 col-md-12">
+                        {{-- <div class="col-lg-6 col-md-12">
                             <div class="provide-box">
                                 <span><i class="feather-book-open"></i></span>
                                 <div class="provide-info">
@@ -198,7 +199,7 @@
                                     <p>English, Arabic</p>
                                 </div>
                             </div>
-                        </div>
+                        </div> --}}
                         <div class="col-lg-6 col-md-12">
                             <div class="provide-box">
                                 <span></span>
@@ -222,34 +223,7 @@
                 <div class="provider-details">
                     <h5>Service Details</h5>
                     <p>
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
-                        do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-                        Ut enim ad minim veniam, quis nostrud exercitation ullamco
-                        laboris nisi ut aliquip ex ea commodo consequat. Duis aute
-                        irure dolor in reprehenderit in voluptate velit esse cillum
-                        dolore eu fugiat nulla pariatur. Excepteur sint occaecat
-                        cupidatat non proident, sunt in culpa qui officia deserunt
-                        mollit anim id est laborum.
-                    </p>
-                    <p>
-                        Sed ut perspiciatis unde omnis iste natus error sit voluptatem
-                        accusantium doloremque laudantium, totam rem aperiam, eaque
-                        ipsa quae ab illo inventore veritatis et quasi architecto
-                        beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem
-                        quia voluptas sit aspernatur aut odit aut fugit, sed quia
-                        consequuntur magni dolores eos qui ratione voluptatem sequi
-                        nesciunt.
-                    </p>
-                    <p>
-                        At vero eos et accusamus et iusto odio dignissimos ducimus qui
-                        blanditiis praesentium voluptatum deleniti atque corrupti quos
-                        dolores et quas molestias excepturi sint occaecati cupiditate
-                        non provident, similique sunt in culpa qui officia deserunt
-                        mollitia animi, id est laborum et dolorum fuga. Et harum
-                        quidem rerum facilis est et expedita distinctio. Nam libero
-                        tempore, cum soluta nobis est eligendi optio cumque nihil
-                        impedit quo minus id quod maxime placeat facere possimus,
-                        omnis voluptas assumenda est, omnis dolor repellendus.
+                        {{ $vendor->description ?? '' }}
                     </p>
                 </div>
 
@@ -257,43 +231,52 @@
 
                 <div class="contact-queries mb-4">
                     <h2>Give review to this Company</h2>
-                    <form action="https://truelysell.dreamstechnologies.com/html/template/contact-us.html">
+                    <form id="reviewForm" enctype="multipart/form">
+                        @csrf
                         <div class="row p-3">
+                            <!-- Name Field -->
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <label class="col-form-label">Name</label>
                                     <div class="form-icon">
-                                        <input class="form-control" type="text" placeholder="Enter Your Full Name" />
+                                        <input class="form-control" type="text" name="name"
+                                            placeholder="Enter Your Full Name" required />
                                         <span class="cus-icon"><i class="feather-user"></i></span>
                                     </div>
                                 </div>
                             </div>
+                            <!-- Email Field -->
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <label class="col-form-label">Email</label>
                                     <div class="form-icon">
-                                        <input class="form-control" type="email" placeholder="Enter Email Address" />
+                                        <input class="form-control" type="email" name="email"
+                                            placeholder="Enter Email Address" required />
                                         <span class="cus-icon"><i class="feather-mail"></i></span>
                                     </div>
                                 </div>
                             </div>
+                            <!-- Phone Number Field -->
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <label class="col-form-label">Phone Number</label>
                                     <div class="form-icon">
-                                        <input class="form-control" type="text" placeholder="Enter Phone Number" />
+                                        <input class="form-control" type="text" name="phone_number"
+                                            placeholder="Enter Phone Number" maxlength="10" required />
                                         <span class="cus-icon"><i class="feather-phone"></i></span>
                                     </div>
                                 </div>
                             </div>
+                            <!-- Message Field -->
                             <div class="col-md-12">
                                 <div class="form-group">
                                     <label class="col-form-label">Message</label>
                                     <div class="form-icon form-msg">
-                                        <textarea class="form-control" rows="4" placeholder="Enter your Comments"></textarea>
+                                        <textarea class="form-control" name="description" rows="4" placeholder="Enter your Comments" required></textarea>
                                     </div>
                                 </div>
                             </div>
+                            <!-- Rating Field -->
                             <div class="col-md-12">
                                 <h4 class="m-0 p-0">Overall Rating</h4>
                                 <div class="star-rating">
@@ -303,7 +286,10 @@
                                     <span class="star" data-value="4">&#9733;</span>
                                     <span class="star" data-value="5">&#9733;</span>
                                 </div>
+                                <input type="hidden" name="rating" id="ratingValue" value="5">
+
                             </div>
+                            <!-- Submit Button -->
                             <div class="col-md-12 text-center">
                                 <button class="btn btn-primary" type="submit">
                                     Submit<i class="feather-arrow-right-circle ms-2"></i>
@@ -312,6 +298,48 @@
                         </div>
                     </form>
                 </div>
+
+                <script>
+                    $(document).ready(function() {
+                        // Handle star rating selection
+                        $('.star').on('click', function() {
+                            let rating = $(this).data('value');
+                            $('#ratingValue').val(rating);
+                            $('.star').each(function(index) {
+                                if (index < rating) {
+                                    $(this).addClass('selected');
+                                } else {
+                                    $(this).removeClass('selected');
+                                }
+                            });
+                        });
+
+                        // Handle form submission
+                        $('#reviewForm').on('submit', function(e) {
+                            e.preventDefault(); // Prevent the default form submission
+
+                            let formData = $(this).serialize(); // Serialize the form data
+
+                            $.ajax({
+                                url: "{{ route('reviewstore') }}", // Your form action URL
+                                type: "POST",
+                                data: formData,
+                                success: function(response) {
+                                    // Handle success - show a message, reset form, etc.
+                                    // alert('Thank you for your review!');
+                                    toastr.success('Thank you for your review!')
+                                    $('#reviewForm')[0].reset();
+                                    $('.star').removeClass('selected');
+                                },
+                                error: function(xhr, status, error) {
+                                    // Handle error - show a message, log the error, etc.
+                                    alert('There was an error submitting your review. Please try again.');
+                                }
+                            });
+                        });
+                    });
+                </script>
+
             </div>
         </div>
     </div>
@@ -336,7 +364,7 @@
                     <div class="work-box aos" data-aos="fade-up">
                         <div class="work-icon">
                             <span class="first">
-                                <img src="assets/img/icons/work-icon.svg" alt="img">
+                                <img src="{{ asset('assets/img/icons/work-icon.svg') }}" alt="img">
                             </span>
                         </div>
                         <h5>Share Your Requiremen</h5>
@@ -347,7 +375,7 @@
                     <div class="work-box aos" data-aos="fade-up">
                         <div class="work-icon">
                             <span>
-                                <img src="assets/img/icons/find-icon.svg" alt="img">
+                                <img src="{{ asset('assets/img/icons/find-icon.svg') }}" alt="img">
                             </span>
                         </div>
                         <h5>Find the Perfect Matches</h5>
@@ -359,7 +387,7 @@
                     <div class="work-box aos" data-aos="fade-up">
                         <div class="work-icon">
                             <span>
-                                <img src="assets/img/icons/place-icon.svg" alt="img">
+                                <img src="{{ asset('assets/img/icons/place-icon.svg') }}" alt="img">
                             </span>
                         </div>
                         <h5>Compare and Hire</h5>
@@ -371,7 +399,7 @@
                     <div class="work-box aos" data-aos="fade-up">
                         <div class="work-icon">
                             <span>
-                                <img src="assets/img/icons/next-icon.svg" alt="img">
+                                <img src="{{ asset('assets/img/icons/next-icon.svg') }}" alt="img">
                             </span>
                         </div>
                         <h5>Schedule Your Move</h5>
@@ -385,7 +413,7 @@
     {{-- ..............................How it work End......................... --}}
 
 
-    <div class="container mt-4">
+    {{-- <div class="container mt-4">
         <div class="row">
             <div class="col-md-12">
                 <div class="serviceIndiaContainer">
@@ -430,7 +458,7 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div> --}}
 
 
     {{-- ..............................For blue horizontal line..................... --}}
@@ -441,45 +469,15 @@
         <div class="container">
             <h1 class="text-center">Areas of Expertise</h1>
             <div class="row text-center align-items-center">
-                <div class="col-lg-2 col-md-4 col-sm-6 d-flex">
-                    <div class="construct-box flex-fill ">
-                        <img src="assets/img/home-06.jpg" alt="img" style="width: 150px; height:150px;" />
-                        <h6>Construction</h6>
+                @foreach ($subcategories as $subcategory)
+                    <div class="col-lg-2 col-md-4 col-sm-6 d-flex">
+                        <div class="construct-box flex-fill ">
+                            <img src="{{ asset('storage/icon/' . $subcategory->icon ?? '') }}" alt="img"
+                                style="width: 150px; height:150px;" />
+                            <h6>{{ $subcategory->name ?? '' }}</h6>
+                        </div>
                     </div>
-                </div>
-                <div class="col-lg-2 col-md-4 col-sm-6 d-flex">
-                    <div class="construct-box flex-fill">
-                        <img src="assets/img/home-07.jpg" alt="img" style="width: 150px; height:150px;" />
-                        <h6>Car Wash</h6>
-                    </div>
-                </div>
-                <div class="col-lg-2 col-md-4 col-sm-6 d-flex">
-                    <div class="construct-box flex-fill">
-                        <img src="assets/img/mobile.png" alt="img" style="width: 150px; height:150px;" />
-                        <h6>Electrical</h6>
-                    </div>
-                </div>
-                <div class="col-lg-2 col-md-4 col-sm-6 d-flex">
-                    <div class="construct-box flex-fill">
-                        <img src="assets/img/icons/feature-icon-04.svg" alt="img"
-                            style="width: 150px; height:150px;" />
-                        <h6>Cleaning</h6>
-                    </div>
-                </div>
-                <div class="col-lg-2 col-md-4 col-sm-6 d-flex">
-                    <div class="construct-box flex-fill">
-                        <img src="assets/img/icons/feature-icon-05.svg" alt="img"
-                            style="width: 150px; height:150px;" />
-                        <h6>Carpentry</h6>
-                    </div>
-                </div>
-                <div class="col-lg-2 col-md-4 col-sm-6 d-flex">
-                    <div class="construct-box flex-fill">
-                        <img src="assets/img/icons/feature-icon-06.svg" alt="img"
-                            style="width: 150px; height:150px;" />
-                        <h6>Plumbing</h6>
-                    </div>
-                </div>
+                @endforeach
             </div>
         </div>
     </div>
@@ -488,70 +486,36 @@
 
     <!-- ..............................FAQ section............................ -->
 
-    <div class="container my-4">
-        <h1 class="text-center my-4">FAQ </h1>
-        <div class="row">
-            <div class="accordion" id="accordionExample">
-                <div class="accordion-item">
-                    <h2 class="accordion-header" id="headingOne">
-                        <button class="accordion-button" type="button" data-bs-toggle="collapse"
-                            data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                            Accordion Item #1
-                        </button>
-                    </h2>
-                    <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne"
-                        data-bs-parent="#accordionExample">
-                        <div class="accordion-body">
-                            <strong>This is the first item's accordion body.</strong> It is shown by default, until
-                            the collapse plugin adds the appropriate classes that we use to style each element.
-                            These classes control the overall appearance, as well as the showing and hiding via CSS
-                            transitions. You can modify any of this with custom CSS or overriding our default
-                            variables. It's also worth noting that just about any HTML can go within the
-                            <code>.accordion-body</code>, though the transition does limit overflow.
+    @if (count($faqs) > 0)
+        <div class="container my-4">
+            <h1 class="text-center my-4">FAQ </h1>
+            <div class="row">
+                <div class="accordion" id="accordionExample">
+                    @foreach ($faqs as $index => $faq)
+                        <div class="accordion-item">
+                            <h2 class="accordion-header" id="heading{{ $index }}">
+                                <button class="accordion-button" type="button" data-bs-toggle="collapse"
+                                    data-bs-target="#collapse{{ $index }}" aria-expanded="true"
+                                    aria-controls="collapse{{ $index }}">
+                                    {{ $faq->question ?? '' }}
+                                </button>
+                            </h2>
+                            <div id="collapse{{ $index }}"
+                                class="accordion-collapse collapse{{ $index == 0 ? ' show' : '' }}"
+                                aria-labelledby="heading{{ $index }}" data-bs-parent="#accordionExample">
+                                <div class="accordion-body">
+                                    {{ $faq->answer ?? '' }}
+                                </div>
+                            </div>
                         </div>
-                    </div>
-                </div>
-                <div class="accordion-item">
-                    <h2 class="accordion-header" id="headingTwo">
-                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                            data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-                            Accordion Item #2
-                        </button>
-                    </h2>
-                    <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo"
-                        data-bs-parent="#accordionExample">
-                        <div class="accordion-body">
-                            <strong>This is the second item's accordion body.</strong> It is hidden by default,
-                            until the collapse plugin adds the appropriate classes that we use to style each
-                            element. These classes control the overall appearance, as well as the showing and hiding
-                            via CSS transitions. You can modify any of this with custom CSS or overriding our
-                            default variables. It's also worth noting that just about any HTML can go within the
-                            <code>.accordion-body</code>, though the transition does limit overflow.
-                        </div>
-                    </div>
-                </div>
-                <div class="accordion-item">
-                    <h2 class="accordion-header" id="headingThree">
-                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                            data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
-                            Accordion Item #3
-                        </button>
-                    </h2>
-                    <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree"
-                        data-bs-parent="#accordionExample">
-                        <div class="accordion-body">
-                            <strong>This is the third item's accordion body.</strong> It is hidden by default, until
-                            the collapse plugin adds the appropriate classes that we use to style each element.
-                            These classes control the overall appearance, as well as the showing and hiding via CSS
-                            transitions. You can modify any of this with custom CSS or overriding our default
-                            variables. It's also worth noting that just about any HTML can go within the
-                            <code>.accordion-body</code>, though the transition does limit overflow.
-                        </div>
-                    </div>
+                    @endforeach
+
+
                 </div>
             </div>
+
         </div>
-    </div>
+    @endif
 
     {{-- ...........................best quotes form hide........................... --}}
     <script>

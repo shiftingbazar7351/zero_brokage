@@ -179,7 +179,7 @@
                         <div class="col-lg-3 col-sm-3">
                             <div class="providerset">
                                 <div class="providerset-img">
-                                    <a href="provider-details.html">
+                                    <a href="{{ route('vender-profile',$provider->id ??'') }}">
                                         <img src="{{ asset('storage/vendor/vendor_image/' . $provider->vendor_image ?? '') }}"
                                             alt="img" style="height: 194px">
                                     </a>

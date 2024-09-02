@@ -256,7 +256,7 @@
             <div class="col-md-12">
                 <div class="serviceIndiaContainer">
 
-                    <h2 class="text-center">Here are Top 10 Packers and Movers Companies in India</h1>
+                    {{-- <h2 class="text-center">Here are Top 10 Packers and Movers Companies in India</h1> --}}
                         {!! $description->description ?? '' !!}
 
                 </div>
@@ -269,7 +269,7 @@
 
     <div class="container-fluid border border-primary w-75 mx-auto mt-5"></div>
 
-    @if($subcategory)
+    {{-- @if($subcategory)
     <div class="section mt-4">
         <div class="container">
             <h1 class="text-center">Top {{ ucwords($subcategory->name) ??'' }} In India</h1>
@@ -322,7 +322,7 @@
             </div>
         </div>
     </div>
-    @endif
+    @endif --}}
 
     <div class="container-fluid bg-light shadow">
 

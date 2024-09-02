@@ -2,14 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Category;
-use App\Models\City;
 use App\Models\Enquiry;
 use App\Models\Faq;
 use App\Models\IndiaServiceDescription;
 use App\Models\Menu;
 use App\Models\Review;
-use App\Models\ServiceDetail;
 use App\Models\State;
 use App\Models\SubCategory;
 use App\Models\SubMenu;
@@ -23,6 +20,7 @@ class FrontendController extends Controller
     {
         $subcategories = Subcategory::where('status', 1)
             ->orderByDesc('created_at')
+            ->select('id','name','slug','icon')
             ->get();
         $trendingsubcat = $subcategories->where('trending', 1);
         $featuresubcat = $subcategories->where('featured', 1);
@@ -67,7 +65,6 @@ class FrontendController extends Controller
             )
             ->get();
 
-
         return view('frontend.service-list', compact('submenus', 'subcategory', 'menus'));
     }
     public function servicesInIndia()
@@ -82,16 +79,26 @@ class FrontendController extends Controller
         return view('frontend.services-in-india', compact('faqs', 'submenus', 'description'));
     }
 
-    public function servicesInIndiaCity()
+    public function servicesInIndiaCity($slug)
     {
+        $states = State::where('country_id',101)
+       ->select('id','country_id','name','status')
+       ->get();
         $faqs = Faq::where('status', 1)->select('question', 'answer')->get();
-        $description = IndiaServiceDescription::first();
         $submenus = SubMenu::with(['subCategory', 'menu', 'cityName.state'])
             ->where('status', 1)
             ->orderByDesc('created_at')
             ->select('id', 'name', 'image', 'slug', 'total_price', 'discounted_price', 'discount', 'subcategory_id', 'menu_id', 'city_id', 'description', 'details')
             ->get();
-        return view('frontend.service-in-india-city', compact('faqs', 'submenus', 'description'));
+        $reviews = Review::where('status', 1)
+            ->select('id', 'description', 'name', 'profession', 'status')
+            ->get();
+        $subcategory = Subcategory::where('status', 1)
+            ->orderByDesc('created_at')
+            ->where('slug', $slug)
+            ->first();
+        $description = IndiaServiceDescription::where('sub_category_id',$subcategory->id ??'')->first();
+        return view('frontend.service-in-india-city', compact('faqs', 'submenus', 'description', 'reviews', 'subcategory','states'));
     }
 
     public function enquiryStore(Request $request)
@@ -159,16 +166,57 @@ class FrontendController extends Controller
         // Find the enquiry by mobile number
         $enquiry = Enquiry::where('mobile_number', $request->mobile_number)->first();
 
-        if ($enquiry && $enquiry->otp == $request->otp) {
-            // OTP is valid
-            $enquiry->otp_verified_at = now();
-            $enquiry->save();
+        if ($enquiry) {
+            // Check if the OTP matches and is not already verified
+            if ($enquiry->otp == $request->otp && is_null($enquiry->otp_verified_at)) {
+                // OTP is valid, update the verification time
+                $enquiry->otp_verified_at = now();
+                $enquiry->save();
 
-            return response()->json(['success' => 'OTP verified successfully']);
+                return response()->json(['success' => 'OTP verified successfully']);
+            } elseif ($enquiry->otp_verified_at) {
+                return response()->json(['error' => 'OTP has already been verified'], 400);
+            }
         }
 
         return response()->json(['error' => 'Invalid OTP'], 400);
     }
 
+    public function providerDetails($id)
+    {
+        $subcategories = Subcategory::where('status', 1)
+            ->orderByDesc('created_at')
+            ->get();
+        $faqs = Faq::where('status', 1)->select('question', 'answer')->get();
+        $vendor = Vendor::where('id', $id)->first();
+        return view('frontend.vender-profile', compact('vendor', 'faqs', 'subcategories'));
+    }
+
+    public function reviewStore(Request $request)
+    {
+        // Validate request
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|email',
+            'phone_number' => 'required|max:15',
+            'description' => 'required|string',
+            'rating' => 'required',
+        ]);
+
+        // Store review logic here
+        // Example:
+        // return $request->all();
+        Review::create([
+            'name' => $request->name,
+            'email' => $request->email,
+            'phone_number' => $request->phone_number,
+            'description' => $request->description,
+            'rating' => $request->rating,
+            'type' => 1,
+        ]);
+
+        // Return success response
+        return response()->json(['success' => true, 'message' => 'Review submitted successfully!']);
+    }
 
 }

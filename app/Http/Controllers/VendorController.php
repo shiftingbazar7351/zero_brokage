@@ -5,6 +5,10 @@ use App\Models\Category;
 use App\Models\Menu;
 use App\Models\SubCategory;
 use App\Models\SubMenu;
+use App\Models\Country;
+use App\Models\State;
+use App\Models\Verified;
+use App\Models\City;
 use App\Models\Vendor;
 use App\Services\FileUploadService;
 
@@ -23,7 +27,6 @@ class VendorController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
      */
     public function index()
     {
@@ -36,29 +39,35 @@ class VendorController extends Controller
     /**
      * Show the form for creating a new resource.
      *
-     * @return \Illuminate\Http\Response
      */
     public function create()
     {
+        $categories = Category::where('status', 1)->orderByDesc('created_at')->get();
         $subcategories = SubCategory::orderByDesc('created_at')->get();
         $submenus = SubMenu::orderByDesc('created_at')->get();
-        return view("backend.vendor.create", compact('subcategories', 'submenus'));
+        $countryId = Country::where('name', 'India')->value('id');
+        $verifieds = Verified::orderByDesc('created_at')->get();
+        $states = State::where('country_id', $countryId)->get(['name', 'id']);
+        return view("backend.vendor.create", compact('subcategories', 'submenus', 'states','categories','verifieds'));
     }
 
     /**
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
     {
+
         $validatedData = $request->validate([
             'manager_id' => 'required|integer',
             'employee_id' => 'required|integer',
+            'category' => 'required|string|max:255',
             'sub_category' => 'required|string|max:255',
+            'menu_id' => 'required|string|max:255',
+            'submenu_id' => 'required|string|max:255',
             'company_name' => 'required|string|max:255',
-            'legal_company_name' => 'required|string|max:255',
+            'legal_company_name' => '|string|max:255',
             'city' => 'required|string|max:255',
             'state' => 'required|string|max:255',
             'pincode' => 'required|string|max:6',
@@ -67,8 +76,9 @@ class VendorController extends Controller
             // 'whatsapp' => 'nullable|string|max:10',
             // 'number' => 'required|string|max:10',
             'website' => 'nullable|url',
-            // 'verified' => 'required|integer',
+            'verified' => 'required',
             // 'submenu_id' => 'required|integer',
+            // 'description' => 'required',
             'logo' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
             'owner_name' => 'required|string|max:255',
             'vendor_image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
@@ -88,10 +98,17 @@ class VendorController extends Controller
 
         // Save vendor data
         // Create the vendor record
+
         $vendor = Vendor::create($request->all());
+        // return $vendor;
         $vendor->created_by = auth()->user()->id;
 
         // Check if the request has any image files and update the vendor model
+        if ($request->hasFile('logo')) {
+            $filename = $this->fileUploadService->uploadImage('vendor/logo/', $request->file('logo'));
+            $vendor->logo = $filename;
+        }
+
         if ($request->hasFile('vendor_image')) {
             $filename = $this->fileUploadService->uploadImage('vendor/vendor_image/', $request->file('vendor_image'));
             $vendor->vendor_image = $filename;
@@ -134,25 +151,27 @@ class VendorController extends Controller
      * Display the specified resource.
      *
      * @param  int  $id
-     * @return \Illuminate\Http\Response
      */
     public function show($id)
     {
-        //
+        $vendors = Vendor::orderByDesc('created_at')->get();
+        return view("backend.vendor.show",compact('vendors',));
     }
 
     /**
      * Show the form for editing the specified resource.
      *
      * @param  int  $id
-     * @return \Illuminate\Http\Response
      */
     public function edit($id)
     {
+        $countryId = Country::where('name', 'India')->value('id');
+        $states = State::where('country_id', $countryId)->get(['name', 'id']);
+        $categories = Category::where('status', 1)->orderByDesc('created_at')->get();
         $vendor = Vendor::findOrFail($id); // Find the vendor by ID or fail if not found
         $subcategories = SubCategory::orderByDesc('created_at')->get();
         $submenus = SubMenu::orderByDesc('created_at')->get();
-        return view('backend.vendor.edit', compact('vendor', 'subcategories', 'submenus')); // Pass the vendor data to the view
+        return view('backend.vendor.edit', compact('vendor', 'subcategories', 'submenus','categories','states')); // Pass the vendor data to the view
     }
 
 
@@ -161,14 +180,13 @@ class VendorController extends Controller
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
-     * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
     {
         $validatedData = $request->validate([
             'manager_id' => 'required',
             'employee_id' => 'required',
-            // 'sub_category' => 'required|string|max:255',
+            'sub_category' => 'required|string|max:255',
             'company_name' => 'required|string|max:255',
             'legal_company_name' => 'required|string|max:255',
             'city' => 'required|string|max:255',
@@ -178,6 +196,7 @@ class VendorController extends Controller
             'email' => 'required|email',
             'website' => 'nullable|url',
             'verified' => 'required',
+            // 'description' => 'required',
             'logo' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
             'owner_name' => 'required|string|max:255',
             'vendor_image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
@@ -193,6 +212,11 @@ class VendorController extends Controller
         // return $vendor;
 
         // Handle file uploads
+        if ($request->hasFile('logo')) {
+            $filename = $this->fileUploadService->uploadImage('vendor/logo/', $request->file('logo'));
+            $vendor->logo = $filename;
+        }
+
         if ($request->hasFile('vendor_image')) {
             $filename = $this->fileUploadService->uploadImage('vendor/vendor_image/', $request->file('vendor_image'));
             $vendor->vendor_image = $filename;
@@ -223,7 +247,6 @@ class VendorController extends Controller
      * Remove the specified resource from storage.
      *
      * @param  int  $id
-     * @return \Illuminate\Http\Response
      */
     public function destroy($id)
     {
@@ -256,6 +279,46 @@ class VendorController extends Controller
         } catch (Exception $e) {
             return redirect()->back()->with('error', 'Something went wrong');
         }
+    }
+
+    public function fetchCity($stateId)
+    {
+        $cities = City::where('state_id', $stateId)->get()->map(function ($city) {
+            $city->name = ucwords($city->name);
+            return $city;
+        });
+        if ($cities->isEmpty()) {
+            return response()->json(['status' => 0, 'message' => 'No cities found']);
+        }
+        return response()->json(['status' => 1, 'data' => $cities]);
+    }
+
+
+    public function fetchsubcategory($category_id = null)
+    {
+        $data = SubCategory::where('category_id', $category_id)->get();
+        return response()->json([
+            'status' => 1,
+            'data' => $data,
+        ]);
+    }
+
+    public function getMenus(Request $request, $subcategoryId)
+    {
+        $menus = Menu::where('subcategory_id', $subcategoryId)->get();
+        return response()->json([
+            'status' => 1,
+            'data' => $menus
+        ]);
+    }
+
+    public function getsubMenus(Request $request, $menuId)
+    {
+        $submenus = SubMenu::where('menu_id', $menuId)->get();
+        return response()->json([
+            'status' => 1,
+            'data' => $submenus
+        ]);
     }
 
 

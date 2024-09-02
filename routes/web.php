@@ -11,14 +11,17 @@ use App\Http\Controllers\MetaDescripConroller;
 use App\Http\Controllers\MetaTitleController;
 use App\Http\Controllers\MetaUrlController;
 use App\Http\Controllers\NewsletterController;
+use App\Http\Controllers\OTPController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\ReviewController;
 use App\Http\Controllers\ServiceDetailController;
 use App\Http\Controllers\SubCategoryController;
 use App\Http\Controllers\SubMenuController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\VendorController;
-use App\Http\Controllers\ReviewController;
+use App\Http\Controllers\VerifiedController;
 use Illuminate\Support\Facades\Route;
+
 
 
 /*
@@ -63,13 +66,13 @@ Route::get('/term-condition', function () {
 //     return view('frontend.services-in-india');
 // })->name('services-in-india');
 
-Route::get('/vender-profile', function () {
-    return view('frontend.vender-profile');
-})->name('vender-profile');
+// Route::get('/vender-profile', function () {
+//     return view('frontend.vender-profile');
+// })->name('vender-profile');
 
-// Route::get('/service-in-india-city', function () {
-//     return view('frontend.service-in-india-city');
-// })->name('service-in-india-city');
+// Route::get('/services', function () {
+//     return view('frontend.service-detail');
+// })->name('services');
 
 Route::get('/create-vendor', function () {
     return view('frontend.create-vendor');
@@ -79,17 +82,26 @@ Route::get('/privacy-policy', function () {
     return view('frontend.privacy-policy');
 })->name('privacy-policy');
 
-Route::get('/service-list', [FrontendController::class, 'serviceList'])->name('service-list');
-Route::get('/services-in-india', [FrontendController::class, 'servicesInIndia'])->name('services-in-india');
-Route::get('/service-in-india-city', [FrontendController::class, 'servicesInIndiaCity'])->name('services-in-india');
+Route::controller(FrontendController::class)->group(function () {
+    Route::get('/', 'home')->name('home');
+    Route::get('/service-list', 'serviceList')->name('service-list');
+    Route::get('/services-in-india', 'servicesInIndia')->name('services-in-india');
+    // Route::get('/service-in-india-city', 'servicesInIndiaCity')->name('services-in-india-city');
+    Route::get('/service-details', 'serviceDetails')->name('service-details');
+    Route::get('/service-grid/{slug}', 'subCategory')->name('service.grid');
+    Route::post('/user/enquiry/store', 'enquiryStore')->name('enquirystore');
+    Route::post('/user/enquiry/update', 'enquiryUpdate')->name('enquiryupdate');
+    // Route::post('/verify-otp', 'verifyOtp')->name('user.verifyOtp');
+    Route::get('/{slug}-in-india', 'servicesInIndiaCity')->name('services-in-india-city');
+    Route::get('/provider-details/{id}', 'providerDetails')->name('vender-profile');
+    Route::post('/path-to-your-endpoint', 'filterServices')->name('filter.services');
+    Route::post('/user/review/store', 'reviewStore')->name('reviewstore');
+});
 
 
-Route::get('/', [FrontendController::class, 'home'])->name('home');
-Route::get('/service-details', [FrontendController::class, 'serviceDetails'])->name('service-details');
-Route::get('/service-grid/{slug}', [FrontendController::class, 'subCategory'])->name('service.grid');
-Route::post('/user/enquiry/store', [FrontendController::class, 'enquiryStore'])->name('enquirystore');
-Route::post('/user/enquiry/update', [FrontendController::class, 'enquiryUpdate'])->name('enquiryupdate');
-Route::post('/verify-otp', [FrontendController::class, 'verifyOtp'])->name('user.verifyOtp');
+Route::post('/get-otp', [OtpController::class, 'getOtp'])->name('getOtp');
+Route::post('/verify-otp', [OtpController::class, 'verifyOtp'])->name('verifyOtp');
+
 
 
 Route::middleware('auth')->group(function () {
@@ -131,19 +143,20 @@ Route::middleware('auth')->group(function () {
     Route::resource('/meta-url', MetaUrlController::class);
     Route::resource('/meta-title', MetaTitleController::class);
 
-
+    Route::resource('/verified', VerifiedController::class);
+    Route::post('/verified-status', [VerifiedController::class, 'verifyStatus'])->name('verified.status');
     Route::resource('/vendors', VendorController::class);
+    Route::controller(VendorController::class)->group(function () {
+        Route::post('/fetch-city-vendor/{stateId}', 'fetchCity');
+        Route::post('/fetch-subcategory/{id}', 'fetchsubcategory');
+        Route::post('/getMenus/{subcategoryId}', 'getMenus');
+        Route::post('/getsubMenus/{menuId}', 'getsubMenus');
+    });
     Route::resource('/reviews', ReviewController::class);
     Route::post('/reviews-status', [SubMenuController::class, 'subMenuStatus'])->name('reviews.status');
-
-
     Route::resource('/faq', FaqController::class);
     Route::post('/faq-status', [FaqController::class, 'faqStatus'])->name('faq.status');
-
     Route::resource('/india-services', IndiaServiceController::class);
-
-
-
     Route::resource('/newsletter', NewsletterController::class);
 });
 

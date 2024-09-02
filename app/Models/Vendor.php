@@ -47,6 +47,7 @@ class Vendor extends Model
         'status',
         'created_by',
         'price',
+        'description',
     ];
 
 
@@ -60,7 +61,7 @@ class Vendor extends Model
     }
     public function cityName()
     {
-        return $this->belongsTo(City::class, 'city_id', 'id');
+        return $this->belongsTo(City::class, 'city', 'id');
     }
 
 }

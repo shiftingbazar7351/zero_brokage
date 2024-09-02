@@ -13,25 +13,22 @@
                     <img src="{{ asset('assets/img/logofinal.png') }}" class="img-fluid" alt="Logo">
                 </a>
                 <a href="{{ route('home') }}" class="navbar-brand logo-small">
-                    <img
-                      src="assets/img/logofinal.png"
-                      class="img-fluid"
-                      alt="Logo"
-                    />
-                  </a>
+                    <img src="assets/img/logofinal.png" class="img-fluid" alt="Logo" />
+                </a>
             </div>
             <div class="main-menu-wrapper">
                 <div class="menu-header">
                     <a href="{{ route('home') }}" class="menu-logo">
                         <img src="{{ asset('assets/img/logofinal.png') }}" class="img-fluid" alt="Logo">
                     </a>
-                    <a id="menu_close" class="menu-close" href="javascript:void(0);"> <i
-                            class="fas fa-times"></i></a>
+                    <a id="menu_close" class="menu-close" href="javascript:void(0);"> <i class="fas fa-times"></i></a>
                 </div>
                 <ul class="main-nav">
                     <li class="has-submenu megamenu active">
-                        <a href="javascript:void(0);">Home <i class="fas fa-chevron-down"></i></a>
-                        <ul class="submenu mega-submenu">
+                        <a href="{{ route('home') }}">Home
+                            {{-- <i class="fas fa-chevron-down"></i> --}}
+                        </a>
+                        {{-- <ul class="submenu mega-submenu">
                             <li>
                                 <div class="megamenu-wrapper">
                                     <div class="row">
@@ -110,11 +107,13 @@
                                     </div>
                                 </div>
                             </li>
-                        </ul>
+                        </ul> --}}
                     </li>
                     <li class="has-submenu">
-                        <a href="javascript:void(0);">Services <i class="fas fa-chevron-down"></i></a>
-                        <ul class="submenu">
+                        <a href="javascript:void(0);">Services
+                            {{-- <i class="fas fa-chevron-down"></i> --}}
+                        </a>
+                        {{-- <ul class="submenu">
                             <li><a href="service-grid.html">Service Grid</a></li>
                             <li><a href="service-list.html">Service List</a></li>
                             <li class="has-submenu">
@@ -133,11 +132,13 @@
                                 </ul>
                             </li>
                             <li><a href="create-service.html">Create Service</a></li>
-                        </ul>
+                        </ul> --}}
                     </li>
                     <li class="has-submenu">
-                        <a href="javascript:void(0);">Customers <i class="fas fa-chevron-down"></i></a>
-                        <ul class="submenu">
+                        <a href="javascript:void(0);">Customers
+                            {{-- <i class="fas fa-chevron-down"></i> --}}
+                        </a>
+                        {{-- <ul class="submenu">
                             <li><a href="customer-dashboard.html">Dashboard</a></li>
                             <li><a href="customer-booking.html">Booking</a></li>
                             <li><a href="customer-favourite.html">Favorites</a></li>
@@ -145,11 +146,13 @@
                             <li><a href="customer-reviews.html">Reviews</a></li>
                             <li><a href="customer-chat.html">Chat</a></li>
                             <li><a href="customer-profile.html">Settings</a></li>
-                        </ul>
+                        </ul> --}}
                     </li>
                     <li class="has-submenu">
-                        <a href="javascript:void(0);">Providers <i class="fas fa-chevron-down"></i></a>
-                        <ul class="submenu">
+                        <a href="javascript:void(0);">Providers
+                            {{-- <i class="fas fa-chevron-down"></i> --}}
+                        </a>
+                        {{-- <ul class="submenu">
                             <li><a href="provider-dashboard.html">Dashboard</a></li>
                             <li><a href="provider-services.html">My Services</a></li>
                             <li><a href="provider-booking.html">Booking</a></li>
@@ -174,11 +177,13 @@
                             <li><a href="provider-reviews.html">Reviews</a></li>
                             <li><a href="provider-earnings.html">Earnings</a></li>
                             <li><a href="provider-chat.html">Chat</a></li>
-                        </ul>
+                        </ul> --}}
                     </li>
                     <li class="has-submenu">
-                        <a href="javascript:void(0);">Pages <i class="fas fa-chevron-down"></i></a>
-                        <ul class="submenu">
+                        <a href="javascript:void(0);">Pages
+                            {{-- <i class="fas fa-chevron-down"></i> --}}
+                        </a>
+                        {{-- <ul class="submenu">
                             <li><a href="about-us.html">About</a></li>
                             <li><a href="contact-us.html">Contact Us</a></li>
                             <li><a href="how-it-works.html">How It Works</a></li>
@@ -195,7 +200,6 @@
                                     <li><a href="choose-signup.html">Signup Choose </a></li>
                                     <li><a href="user-signup.html">Customer Signup</a></li>
                                     <li><a href="provider-signup.html">Provider Signup</a></li>
-                                    {{-- <li><a href="login.html">Login</a></li> --}}
                                     <li><a href="reset-password.html">Reset Password</a></li>
                                     <li><a href="password-recovery.html">Password Update</a></li>
                                     <li><a href="phone-otp.html">Phone OTP</a></li>
@@ -222,20 +226,22 @@
                             <li><a href="terms-condition.html">Terms & Conditions</a></li>
                             <li><a href="session-expired.html">Session Expired</a></li>
                             <li><a href="installer.html">Installer</a></li>
-                        </ul>
+                        </ul> --}}
                     </li>
                     <li class="has-submenu">
-                        <a href="blog-grid.html">Blog <i class="fas fa-chevron-down"></i></a>
-                        <ul class="submenu">
+                        <a href="blog-grid.html">Blog
+                            {{-- <i class="fas fa-chevron-down"></i> --}}
+                        </a>
+                        {{-- <ul class="submenu">
                             <li><a href="blog-grid.html">Blog Grid</a></li>
                             <li><a href="blog-list.html">Blog List</a></li>
                             <li><a href="blog-details.html">Blog Details</a></li>
-                        </ul>
+                        </ul> --}}
                     </li>
                     <li><a href="{{ route('admin_page') }}">Admin</a></li>
                 </ul>
             </div>
-           @include('frontend.layouts.login-popup')
+            @include('frontend.layouts.login-popup')
         </nav>
     </div>
 </header>

@@ -1,6 +1,14 @@
 @extends('backend.layouts.main')
 @section('styles')
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/css/intlTelInput.min.css">
+    <link rel="stylesheet" href="{{ asset('admin/summernote/summernote.min.css') }}">
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
+
+    <!-- include summernote css/js -->
+    <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css" rel="stylesheet">
 @endsection
 
 @section('content')
@@ -45,71 +53,99 @@
                                 @enderror
                             </div>
                             <div class="col-md-4">
-                                <label for="formFileCategory" class="form-label">Sub-Category <b
-                                        style="color: red;">*</b></label>
-                                <select name="sub_category" id="formFileCategory" class="form-select bg-light-subtle"
-                                    aria-label="Default select example" style="box-shadow: none" required>
-                                    <option selected disabled value="">Select Option</option>
-                                    @foreach ($subcategories as $subcategory)
-                                        <option value="{{ $subcategory->id }}">{{ $subcategory->name }}</option>
+                                <label for="category">Category<b style="color: red;">*</b></label>
+                                <select class="form-control" id="category" name="category" required>
+                                    <option value="">Select category</option>
+                                    @foreach ($categories as $category)
+                                        <option value="{{ $category->id }}">{{ $category->name }}</option>
                                     @endforeach
                                 </select>
+                                @error('category')
+                                    <div class="error text-danger">{{ $message }}</div>
+                                @enderror
                             </div>
                         </div>
+
+                        <div class="row mx-auto mt-3">
+                            <div class="col-md-4">
+                                <label for="subcategory">Sub Category<b style="color: red;">*</b></label>
+                                <select class="form-control" id="subcategory" name="sub_category" required>
+                                    <option value="">Select subcategory</option>
+                                </select>
+                                @error('sub_category')
+                                    <div class="error text-danger">{{ $message }}</div>
+                                @enderror
+                            </div>
+
+                            <div class="col-md-4">
+                                <label for="menu">Menu<b style="color: red;">*</b></label>
+                                <select class="form-control" id="menu" name="menu_id" required>
+                                    <option value="">Select menu</option>
+                                </select>
+                                @error('menu_id')
+                                    <div class="error text-danger">{{ $message }}</div>
+                                @enderror
+                            </div>
+                            <div class="col-md-4">
+                                <label for="submenu">Sub-Menu<b style="color: red;">*</b></label>
+                                <select class="form-control" id="submenu" name="submenu_id" required>
+                                    <option value="">Select submenu</option>
+                                </select>
+                                @error('submenu_id')
+                                    <div class="error text-danger">{{ $message }}</div>
+                                @enderror
+                            </div>
+                        </div>
+
                         <div class="row mx-auto mt-3">
                             <div class="col-md-6">
                                 <label for="companyname" class="form-label">Company Name<b
-                                        style="color: red;">*</b></label><span> (if same
-                                    name)</span>
-                                <input name="company_name" class="form-check-input mx-1" type="checkbox"
-                                    value="{{ old('company_name') }}" id="flexCheckChecked" checked>
+                                        style="color: red;">*</b></label><span> (if same name)</span>
+                                <input name="company_name_checkbox" class="form-check-input mx-1" type="checkbox"
+                                    id="companyNameCheckbox">
                                 <input name="company_name" value="{{ old('company_name') }}" id="companyname"
                                     class="form-control bg-light-subtle" type="text" placeholder="Company name"
                                     aria-label="default input example" required>
                                 @error('company_name')
-                                    <div class="error text-danger ">{{ $message }}</div>
+                                    <div class="error text-danger">{{ $message }}</div>
                                 @enderror
                             </div>
                             <div class="col-md-6">
                                 <label for="lcompanyname" class="form-label">Legal Company Name<b
                                         style="color: red;">*</b></label>
                                 <input name="legal_company_name" value="{{ old('legal_company_name') }}" id="lcompanyname"
-                                    class="form-control bg-light-subtle" type="text" placeholder="Company name"
+                                    class="form-control bg-light-subtle" type="text" placeholder="Legal Company name"
                                     aria-label="default input example" required>
                                 @error('legal_company_name')
-                                    <div class="error text-danger ">{{ $message }}</div>
+                                    <div class="error text-danger">{{ $message }}</div>
                                 @enderror
                             </div>
                         </div>
 
                         <div class="row mt-3">
                             <div class="col-md-4">
-                                <label for="formFile" class="form-label">State<b style="color: red;">*</b></label>
-                                <select name="state" class="form-select bg-light-subtle"
-                                    aria-label="Default select example" style="box-shadow: none" required>
+                                <label for="state" class="form-label">State<b style="color: red;">*</b></label>
+                                <select id="state" name="state" class="form-select" required>
                                     <option selected disabled>Select State</option>
-                                    <option value="1">One</option>
-                                    <option value="2">Two</option>
-                                    <option value="3">Three</option>
+                                    @foreach ($states as $state)
+                                        <option value="{{ $state->id }}">{{ ucwords($state->name) }}</option>
+                                    @endforeach
                                 </select>
                                 @error('state')
-                                    <div class="error text-danger ">{{ $message }}</div>
+                                    <div class="error text-danger">{{ $message }}</div>
                                 @enderror
                             </div>
 
                             <div class="col-md-4">
-                                <label for="formFile" class="form-label">City<b style="color: red;">*</b></label>
-                                <select name="city" class="form-select bg-light-subtle"
-                                    aria-label="Default select example" style="box-shadow: none" required>
-                                    <option selected disabled>Select City</option>
-                                    <option value="1">One</option>
-                                    <option value="2">Two</option>
-                                    <option value="3">Three</option>
+                                <label for="city" class="form-label">City<b style="color: red;">*</b></label>
+                                <select class="form-select" id="city" name="city" required>
+                                    <option value="">Select City</option>
                                 </select>
                                 @error('city')
-                                    <div class="error text-danger ">{{ $message }}</div>
+                                    <div class="error text-danger">{{ $message }}</div>
                                 @enderror
                             </div>
+
                             <div class="col-md-4">
                                 <label for="pinnumber" class="form-label">PIN Code<b style="color: red;">*</b></label>
                                 <input name="pincode" value="{{ old('pincode') }}" id="pinnumber"
@@ -126,9 +162,9 @@
 
                         <div class="row mt-4">
                             <div class="mb-3">
-                                <label for="exampleFormControlTextarea1" class="form-label text-dark">Example
-                                    textarea<b style="color: red;">*</b></label>
-                                <textarea name="address" value="{{ old('address') }}" class="form-control bg-light-subtle"
+                                <label for="exampleFormControlTextarea1" class="form-label text-dark">Address<b
+                                        style="color: red;">*</b></label>
+                                <textarea name="address" class="form-control bg-light-subtle" placeholder="Enter Address"
                                     id="exampleFormControlTextarea1" rows="3" required>{{ old('address') }}</textarea>
                             </div>
                             @error('address')
@@ -155,7 +191,7 @@
                                         style="color: red;">*</b></label><span class="mx-3">(Get
                                     notification)</span>
                                 <input name="whatsapp" value="{{ old('whatsapp') }}" class="form-check-input mx-2"
-                                    type="checkbox" value="" id="flexCheckChecked" checked>
+                                    type="checkbox" value="" id="flexCheckChecked" unchecked>
                                 <input name="whatsapp" value="{{ old('whatsapp') }}"
                                     class="form-control bg-light-subtle" id="whatsappNumVender" type="text"
                                     placeholder="Whatsapp number" aria-label="default input example"
@@ -165,12 +201,13 @@
                                     <div class="error text-danger ">{{ $message }}</div>
                                 @enderror
                             </div>
+
                             <div class="col-md-4 mt-4 mt-md-0">
                                 <label for="phoneNumVender" class="form-label">Phone Number<b
                                         style="color: red;">*</b></label><span class="mx-3">(Get
                                     notification)</span>
                                 <input name="number" value="{{ old('number') }}" class="form-check-input mx-2"
-                                    type="checkbox" value="" id="flexCheckChecked" checked>
+                                    type="checkbox" value="" id="flexCheckChecked" unchecked>
                                 <input name="number" value="{{ old('number') }}" class="form-control bg-light-subtle"
                                     id="phoneNumVender" type="text" placeholder="Phone number"
                                     aria-label="default input example" onkeyup="validateField(this)" maxlength="10"
@@ -182,7 +219,7 @@
                             </div>
                         </div>
 
-                        <div class="row mt-3">
+                        <div class="row ">
                             <div class="col-md-4">
                                 <label for="formFile" class="form-label">Website (if available)</label>
                                 <input name="website" value="{{ old('website') }}" class="form-control bg-light-subtle"
@@ -191,39 +228,24 @@
                                     <div class="error text-danger ">{{ $message }}</div>
                                 @enderror
                             </div>
-                            <div class="col-md-4">
+                            <div class="col-md-6">
                                 <label for="formFile" class="form-label">Verified or Approved By Team</label>
                                 <select name="verified" class="form-select bg-light-subtle"
                                     aria-label="Default select example" style="box-shadow: none">
                                     <option selected disabled value="">Select Option</option>
-                                    {{-- @foreach ($verifieds as $verified)
+                                    @foreach ($verifieds as $verified)
                                         <option value="{{ $verified->id }}">{{ $verified->name }}</option>
-                                        @endforeach --}}
+                                    @endforeach
                                 </select>
                                 @error('verified')
                                     <div class="error text-danger ">{{ $message }}</div>
                                 @enderror
                             </div>
 
-                            <div class="col-md-4">
-                                <label for="formFile" class="form-label">Select Sub-Menu<b
-                                        style="color: red;">*</b></label>
-                                <select name="submenu_id" class="form-select bg-light-subtle"
-                                    aria-label="Default select example" style="box-shadow: none" required>
-                                    <option selected disabled value="">Select Option</option>
-                                    @foreach ($submenus as $submenu)
-                                        <option value="{{ $submenu->id }}">{{ $submenu->name }}</option>
-                                    @endforeach
-                                </select>
-                                @error('submenu_id')
-                                    <div class="error text-danger ">{{ $message }}</div>
-                                @enderror
-                            </div>
-
                         </div>
 
-                        <div class="row mt-3">
-                            <div class="col-4 mb-3">
+                        <div class="row mt-6">
+                            <div class="col-md-4 mb-3">
                                 <label for="formFile" class="form-label">Vender Logo<b style="color: red;">*</b></label>
                                 <input name="logo" value="{{ old('logo') }}" class="form-control bg-light-subtle"
                                     type="file" id="formFile" required>
@@ -231,7 +253,7 @@
                                     <div class="error text-danger ">{{ $message }}</div>
                                 @enderror
                             </div>
-                            <div class="col-4">
+                            <div class="col-md-4">
                                 <label for="formFile" class="form-label">Owner name<b style="color: red;">*</b></label>
                                 <input name="owner_name" value="{{ old('owner_name') }}"
                                     class="form-control bg-light-subtle" type="text" placeholder="Enter owner name"
@@ -240,7 +262,7 @@
                                     <div class="error text-danger ">{{ $message }}</div>
                                 @enderror
                             </div>
-                            <div class="col-4 mb-3">
+                            <div class="col-md-4 mb-3">
                                 <label for="formFile" class="form-label">Vender Image<b style="color: red;">*</b></label>
                                 <input name="vendor_image" value="{{ old('vendor_image') }}"
                                     class="form-control bg-light-subtle" type="file" id="formFile" required>
@@ -388,7 +410,7 @@
                             <div class="col-md-1 d-flex" style="align-items: flex-end">
                                 <button type="button" id="addlocation" class="btn btn-primary">Add</button>
 
-                            </div>
+                            </div> 
                             <div class="col-md-4 d-none" id="longitude">
                                 <label for="formFile" class="form-label">Longitude Location<b
                                         style="color: red;">*</b></label>
@@ -397,6 +419,27 @@
                                         placeholder="Enter longitude location" aria-label="default input example">
                                 </div>
                             </div>
+
+                            <div class="row mt-3">
+                            <div class="mb-3 col-md-12">
+                                <label for="summery" class="col-form-label">Description <span
+                                        class="text-danger">*</span></label>
+                                <textarea class="form-control" id="summery" name="description">{{ old('desription') }}</textarea>
+                                @error('sub_category')
+                                <div class="error text-danger">{{ $message }}</div>
+                                @enderror
+                            </div>
+                            </div>
+
+                            <script>
+                                $(document).ready(function() {
+                                    $('#summery').summernote({
+                                        placeholder: "Write short description.....",
+                                        tabsize: 2,
+                                        height: 330
+                                    });
+                                });
+                            </script>
 
 
                         </div>
@@ -416,6 +459,8 @@
 
 @section('scripts')
     {{-- <script src="{{ asset('assets/js/vendor-validation.js') }}"></script> --}}
+    <script src="{{ asset('admin/summernote/summernote.min.js') }}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.1/js/bootstrap-select.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/intlTelInput.min.js"></script>
     <script>
         const inputvender = document.querySelector("#phoneNumVender");
@@ -429,6 +474,189 @@
         window.intlTelInput(whatsappvender, {
             initialCountry: "in",
             separateDialCode: true
+        });
+    </script>
+
+<script>
+    document.getElementById('addlocation').addEventListener('click', function() {
+
+        document.getElementById('longitude').classList.remove('d-none');
+        document.getElementById('addlocation').classList.add('d-none');
+    });
+</script>
+
+    <script>
+        document.getElementById('companyNameCheckbox').addEventListener('change', function() {
+            const companyNameField = document.getElementById('companyname');
+            const legalCompanyNameField = document.getElementById('lcompanyname');
+
+            if (this.checked) {
+                legalCompanyNameField.value = companyNameField.value;
+            } else {
+                legalCompanyNameField.value = ''; // Clear the legal company name if checkbox is unchecked
+            }
+        });
+
+        // Optional: Sync legal company name when company name is typed
+        document.getElementById('companyname').addEventListener('input', function() {
+            const checkbox = document.getElementById('companyNameCheckbox');
+            if (checkbox.checked) {
+                document.getElementById('lcompanyname').value = this.value;
+            }
+        });
+    </script>
+
+    <script>
+        $(document).ready(function() {
+            $('#state').on('change', function() {
+                var stateId = $(this).val();
+                if (stateId) {
+                    $.ajax({
+                        url: '/fetch-city-vendor/' + stateId,
+                        type: 'POST',
+                        data: {
+                            _token: '{{ csrf_token() }}'
+                        },
+                        success: function(response) {
+                            console.log(response);
+                            $('#city').empty().append('<option value="">Select City</option>');
+                            if (response.status === 1) {
+                                $.each(response.data, function(key, city) {
+                                    $('#city').append("<option value='" + city.id +
+                                        "'>" + city.name + "</option>");
+                                });
+                            } else {
+                                $('#city').append(
+                                    '<option value="" disabled>No cities found</option>');
+                            }
+                        },
+                        error: function(xhr, status, error) {
+                            console.log(error);
+                            $('#city').empty().append(
+                                '<option value="" disabled>Error loading cities</option>');
+                        }
+                    });
+                } else {
+                    $('#city').empty().append('<option value="">Select City</option>');
+                }
+            });
+        });
+
+        $('#category').on('change', function() {
+            var categoryId = $(this).val();
+            if (categoryId) {
+                $.ajax({
+                    url: '/fetch-subcategory/' + categoryId,
+                    type: 'POST',
+                    data: {
+                        _token: '{{ csrf_token() }}'
+                    },
+                    success: function(response) {
+                        $('#subcategory').empty().append(
+                            '<option value="" selected disabled>Select Subcategory</option>'
+                        );
+                        if (response.status === 1 && response.data.length > 0) {
+                            $.each(response.data, function(key, subcateg) {
+                                $('#subcategory').append(
+                                    '<option value="' +
+                                    subcateg.id + '">' + subcateg
+                                    .name +
+                                    '</option>');
+                            });
+                        } else {
+                            $('#subcategory').append(
+                                '<option value="" disabled>No subcategories found</option>'
+                            );
+                        }
+                    },
+                    error: function() {
+                        $('#subcategory').empty().append(
+                            '<option value="" disabled>Error loading subcategories</option>'
+                        );
+                    }
+                });
+            } else {
+                $('#subcategory').empty().append(
+                    '<option value="" selected disabled>Select Subcategory</option>');
+            }
+        });
+
+        $('#subcategory').on('change', function() {
+            var subcategoryId = $(this).val();
+            if (subcategoryId) {
+                $.ajax({
+                    url: '/getMenus/' + subcategoryId,
+                    type: 'POST',
+                    data: {
+                        _token: '{{ csrf_token() }}'
+                    },
+                    success: function(response) {
+                        $('#menu').empty().append(
+                            '<option value="" selected disabled>Select Menu</option>'
+                        );
+                        if (response.status === 1 && response.data.length > 0) {
+                            $.each(response.data, function(key, menu) {
+                                $('#menu').append('<option value="' +
+                                    menu.id +
+                                    '">' + menu.name + '</option>');
+                            });
+                        } else {
+                            $('#menu').append(
+                                '<option value="" disabled>No menus available</option>'
+                            );
+                        }
+                    },
+                    error: function(xhr) {
+                        console.error('Error loading menus:', xhr);
+                        $('#menu').empty().append(
+                            '<option value="" disabled>Error loading menus</option>'
+                        );
+                    }
+                });
+            } else {
+                $('#menu').empty().append(
+                    '<option value="" selected disabled>Select Menu</option>'
+                );
+            }
+        });
+
+        $('#menu').on('change', function() {
+            var submenuId = $(this).val();
+            if (submenuId) {
+                $.ajax({
+                    url: '/getsubMenus/' + submenuId,
+                    type: 'POST',
+                    data: {
+                        _token: '{{ csrf_token() }}'
+                    },
+                    success: function(response) {
+                        $('#submenu').empty().append(
+                            '<option value="" selected disabled>Select SubMenu</option>'
+                        );
+                        if (response.status === 1 && response.data.length > 0) {
+                            $.each(response.data, function(key, submenu) {
+                                $('#submenu').append('<option value="' +
+                                    submenu.id +
+                                    '">' + submenu.name + '</option>');
+                            });
+                        } else {
+                            $('#submenu').append(
+                                '<option value="" disabled>No menus available</option>'
+                            );
+                        }
+                    },
+                    error: function(xhr) {
+                        console.error('Error loading menus:', xhr);
+                        $('#submenu').empty().append(
+                            '<option value="" disabled>Error loading menus</option>'
+                        );
+                    }
+                });
+            } else {
+                $('#menu').empty().append(
+                    '<option value="" selected disabled>Select Menu</option>'
+                );
+            }
         });
     </script>
 @endsection

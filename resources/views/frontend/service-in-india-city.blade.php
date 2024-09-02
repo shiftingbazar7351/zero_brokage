@@ -99,24 +99,27 @@
             <div class="row">
                 <div class="col-md-12 col-12 my-4">
                     <h2 class=" breadcrumb-title text-white">Top Service Provider City</h2>
-                    <div class="d-flex justify-content-center gap-3  mx-auto mt-5">
 
-                        <div class="city-select d-flex gap-3 w-100">
-                            <select class="form-select" aria-label="Default select example">
-                                <option selected>Select your City</option>
+                    <div class="row" style="margin: 6% 0% 5% 25%;">
+                        <div class="col-md-3">
+                            <select name="">
                                 <option value="1">One</option>
                                 <option value="2">Two</option>
                                 <option value="3">Three</option>
+                                <option value="4">Four</option>
+                                <option value="4">Fouur</option>
                             </select>
-
-
-                            <select class="form-select" aria-label="Default select example">
-                                <option selected>Select your City</option>
+                        </div>
+                        <div class="col-md-3">
+                            <select name="">
                                 <option value="1">One</option>
                                 <option value="2">Two</option>
                                 <option value="3">Three</option>
+                                <option value="4">Four</option>
+                                <option value="4">Fouur</option>
                             </select>
-
+                        </div>
+                        <div class="col-md-1 mb-1   ">
                             <button type="button" class="btn btn-primary btn-lg">Submit</button>
                         </div>
                     </div>
@@ -239,113 +242,78 @@
     {{-- ..............................How it work End......................... --}}
 
 
-    <div class="container mt-4">
-        <div class="row">
-            <div class="col-md-12">
-                <div class="serviceIndiaContainer">
+    @if ($description)
+        <div class="container mt-4">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="serviceIndiaContainer">
 
-                    <h2 class="text-center">Here are Top 10 Packers and Movers Companies in India</h1>
+                        {{-- <h2 class="text-center">Here are Top 10 Packers and Movers Companies in India</h1> --}}
                         {!! $description->description ?? '' !!}
 
-                        {{-- <h4 class="mt-3">Gati Logistics Packers and Movers</h4>
-                        <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Possimus aperiam sit repellat quis
-                            perferendis iusto suscipit deserunt enim tempora, in, beatae eligendi vero ut sed esse,
-                            mollitia soluta eaque? Sint?20</p>
-                        <h4 class="mt-3">Express India Packers and Movers</h4>
-                        <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Possimus aperiam sit repellat quis
-                            perferendis iusto suscipit deserunt enim tempora, in, beatae eligendi vero ut sed esse,
-                            mollitia soluta eaque? Sint?20</p>
-                        <h4 class="mt-3">Gati Logistics Packers and Movers</h4>
-                        <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Possimus aperiam sit repellat quis
-                            perferendis iusto suscipit deserunt enim tempora, in, beatae eligendi vero ut sed esse,
-                            mollitia soluta eaque? Sint?20</p>
-                        <h4>Top Factors That Affect Charges of Movers </h4>
-                        <p><span class="text-dark">Delivery Type :</span>Lorem ipsum dolor sit amet consectetur
-                            adipisicing elit. Iste, harum quas molestias commodi voluptate tempora rem voluptatem quam
-                            quidem</p>
-                        <p><span class="text-dark">Delivery Type :</span>Lorem ipsum dolor sit amet consectetur
-                            adipisicing elit. Iste, harum quas molestias commodi voluptate tempora rem voluptatem quam
-                            quidem</p>
-                        <p><span class="text-dark">Delivery Type :</span>Lorem ipsum dolor sit amet consectetur
-                            adipisicing elit. Iste, harum quas molestias commodi voluptate tempora rem voluptatem quam
-                            quidem</p>
-                        <p><span class="text-dark">Delivery Type :</span>Lorem ipsum dolor sit amet consectetur
-                            adipisicing elit. Iste, harum quas molestias commodi voluptate tempora rem voluptatem quam
-                            quidem</p>
-                        <h4>Tips to Find a Shifting Company in India?</h4>
-                        <p>Tips to Find a Shifting Company in India?Tips to Find a Shifting Company in India?Tips to
-                            Find a Shifting Company in India?</p>
-                        <p>Tips to Find a Shifting Company in India?Tips to Find a Shifting Company in India?Tips to
-                            Find a Shifting Company in India?</p>
-                        <p>Tips to Find a Shifting Company in India?Tips to Find a Shifting Company in India?Tips to
-                            Find a Shifting Company in India?</p>
-                        <p>Tips to Find a Shifting Company in India?Tips to Find a Shifting Company in India?Tips to
-                            Find a Shifting Company in India?</p>
-
- --}}
-
-
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-
+    @endif
 
 
     <div class="container-fluid border border-primary w-75 mx-auto mt-5"></div>
 
-    <div class="section mt-4">
-        <div class="container">
-            <h1 class="text-center">Top Packer and Mover In India</h1>
-            <div class="row mt-4">
-                <div class="col-md-6">
-                    <div class="bangalore-con border-3 border-bottom border-primary mb-4">
-                        <a href="">
+    @if ($subcategory)
+        <div class="section mt-4">
+            <div class="container">
+                <h1 class="text-center">Top {{ ucwords($subcategory->name) ?? '' }} In India</h1>
+                <div class="row mt-4">
+                    <div class="col-md-6">
+                        <div class="bangalore-con border-3 border-bottom border-primary mb-4">
+                            <a href="">
+                                <h4>{{ $subcategory->slug ?? '' }} Bangalore</h4>
+                            </a>
+                            <p>Lorem ipo c d optio! Quos, commodi Lorem ipsum dolor, sit amet consectetur adipisicing
+                                elit. Quas, consectetur. ! Dolorum, enim porro. Nesciunt?</p>
+                        </div>
+                        <div class="bangalore-con border-3 border-bottom border-primary mb-4">
+                            <a href="">
+                                <h4>packers-and-movers Bangalore</h4>
+                            </a>
+                            <p>Lorem ipo c d optio! Quos, commodi Lorem ipsum dolor, sit amet consectetur adipisicing
+                                elit. Quas, consectetur. ! Dolorum, enim porro. Nesciunt?</p>
+                        </div>
+                        <div class="bangalore-con border-3 border-bottom border-primary mb-4">
+                            <a href="">
+                                <h4>packers-and-movers Bangalore</h4>
+                            </a>
+                            <p>Lorem ipo c d optio! Quos, commodi Lorem ipsum dolor, sit amet consectetur adipisicing
+                                elit. Quas, consectetur. ! Dolorum, enim porro. Nesciunt?</p>
+                        </div>
+                    </div>
+                    <div class="col-md-6 ">
+                        <div class="bangalore-con border-3 border-bottom border-primary mb-4">
+                            <a href="">
+                                <h4>packers-and-movers Bangalore</h4>
+                            </a>
+                            <p>Lorem ipsummodi nesciunt iuatur, sequi aut perferendis optio! Dignissimos quod fuga totam
+                                beatae at adipisci! Quos, commodi! Dolorum, enim porro. Nesciunt?</p>
+                        </div>
+                        <div class="bangalore-con border-3 border-bottom border-primary mb-4">
                             <h4>packers-and-movers Bangalore</h4>
-                        </a>
-                        <p>Lorem ipo c d optio! Quos, commodi Lorem ipsum dolor, sit amet consectetur adipisicing
-                            elit. Quas, consectetur. ! Dolorum, enim porro. Nesciunt?</p>
-                    </div>
-                    <div class="bangalore-con border-3 border-bottom border-primary mb-4">
-                        <a href="">
-                            <h4>packers-and-movers Bangalore</h4>
-                        </a>
-                        <p>Lorem ipo c d optio! Quos, commodi Lorem ipsum dolor, sit amet consectetur adipisicing
-                            elit. Quas, consectetur. ! Dolorum, enim porro. Nesciunt?</p>
-                    </div>
-                    <div class="bangalore-con border-3 border-bottom border-primary mb-4">
-                        <a href="">
-                            <h4>packers-and-movers Bangalore</h4>
-                        </a>
-                        <p>Lorem ipo c d optio! Quos, commodi Lorem ipsum dolor, sit amet consectetur adipisicing
-                            elit. Quas, consectetur. ! Dolorum, enim porro. Nesciunt?</p>
-                    </div>
-                </div>
-                <div class="col-md-6 ">
-                    <div class="bangalore-con border-3 border-bottom border-primary mb-4">
-                        <a href="">
-                            <h4>packers-and-movers Bangalore</h4>
-                        </a>
-                        <p>Lorem ipsummodi nesciunt iuatur, sequi aut perferendis optio! Dignissimos quod fuga totam
-                            beatae at adipisci! Quos, commodi! Dolorum, enim porro. Nesciunt?</p>
-                    </div>
-                    <div class="bangalore-con border-3 border-bottom border-primary mb-4">
-                        <h4>packers-and-movers Bangalore</h4>
-                        <p>Lorem ipsummodi nesciunt iuatur, sequi aut perferendis optio! Dignissimos quod fuga totam
-                            beatae at adipisci! Quos, commodi! Dolorum, enim porro. Nesciunt?</p>
-                    </div>
-                    <div class="bangalore-con border-3 border-bottom border-primary mb-4">
-                        <a href="">
-                            <h4>packers-and-movers Bangalore</h4>
-                        </a>
-                        <p>Lorem ipsummodi nesciunt iuatur, sequi aut perferendis optio! Dignissimos quod fuga totam
-                            beatae at adipisci! Quos, commodi! Dolorum, enim porro. Nesciunt?</p>
-                    </div>
+                            <p>Lorem ipsummodi nesciunt iuatur, sequi aut perferendis optio! Dignissimos quod fuga totam
+                                beatae at adipisci! Quos, commodi! Dolorum, enim porro. Nesciunt?</p>
+                        </div>
+                        <div class="bangalore-con border-3 border-bottom border-primary mb-4">
+                            <a href="">
+                                <h4>packers-and-movers Bangalore</h4>
+                            </a>
+                            <p>Lorem ipsummodi nesciunt iuatur, sequi aut perferendis optio! Dignissimos quod fuga totam
+                                beatae at adipisci! Quos, commodi! Dolorum, enim porro. Nesciunt?</p>
+                        </div>
 
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
+    @endif
 
     <div class="container-fluid bg-light shadow">
 
@@ -392,81 +360,179 @@
     </div>
 
     <!-- ..............................FAQ section............................ -->
-
-    <div class="container my-4">
-        <h1 class="text-center my-4">FAQ </h1>
-        <div class="row">
-            <div class="accordion" id="accordionExample">
-                @foreach ($faqs as $index => $faq)
-                    <div class="accordion-item">
-                        <h2 class="accordion-header" id="heading{{ $index }}">
-                            <button class="accordion-button" type="button" data-bs-toggle="collapse"
-                                data-bs-target="#collapse{{ $index }}" aria-expanded="true"
-                                aria-controls="collapse{{ $index }}">
-                                {{ $faq->question ?? '' }}
-                            </button>
-                        </h2>
-                        <div id="collapse{{ $index }}"
-                            class="accordion-collapse collapse{{ $index == 0 ? ' show' : '' }}"
-                            aria-labelledby="heading{{ $index }}" data-bs-parent="#accordionExample">
-                            <div class="accordion-body">
-                                {{ $faq->answer ?? '' }}
+    @if (count($faqs) > 0)
+        <div class="container my-4">
+            <h1 class="text-center my-4">FAQ </h1>
+            <div class="row">
+                <div class="accordion" id="accordionExample">
+                    @foreach ($faqs as $index => $faq)
+                        <div class="accordion-item">
+                            <h2 class="accordion-header" id="heading{{ $index }}">
+                                <button class="accordion-button" type="button" data-bs-toggle="collapse"
+                                    data-bs-target="#collapse{{ $index }}" aria-expanded="true"
+                                    aria-controls="collapse{{ $index }}">
+                                    {{ $faq->question ?? '' }}
+                                </button>
+                            </h2>
+                            <div id="collapse{{ $index }}"
+                                class="accordion-collapse collapse{{ $index == 0 ? ' show' : '' }}"
+                                aria-labelledby="heading{{ $index }}" data-bs-parent="#accordionExample">
+                                <div class="accordion-body">
+                                    {{ $faq->answer ?? '' }}
+                                </div>
                             </div>
                         </div>
-                    </div>
-                @endforeach
+                    @endforeach
 
 
+                </div>
             </div>
+
         </div>
-
-    </div>
-
+    @endif
     {{-- .........................................What our Client said (review section)...................................... --}}
 
-    <section class="client-section">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-12 text-center">
-                    <div class="section-heading aos" data-aos="fade-up">
-                        <h2>What our client says</h2>
-                        <p>Lorem ipsum dolor sit amet, consectetur elit</p>
+    @if (count($reviews) > 0)
+        <section class="client-section">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12 text-center">
+                        <div class="section-heading aos" data-aos="fade-up">
+                            <h2>What our client says</h2>
+                            {{-- <p>Lorem ipsum dolor sit amet, consectetur elit</p> --}}
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="owl-carousel testimonial-slider">
-                        <div class="client-widget aos" data-aos="fade-up">
-                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
-                                incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis
-                                nostrud exercitation ullamco laboris nisi </p>
-                            <h5>Sophie Moore</h5>
-                            <h6>Director</h6>
-                        </div>
-                        <div class="client-widget aos" data-aos="fade-up">
-
-                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
-                                incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis
-                                nostrud exercitation ullamco laboris nisi </p>
-                            <h5>Mike Hussy</h5>
-                            <h6>Lead</h6>
-                        </div>
-                        <div class="client-widget aos" data-aos="fade-up">
-
-                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
-                                incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis
-                                nostrud exercitation ullamco laboris nisi </p>
-                            <h5>John Doe</h5>
-                            <h6>CEO</h6>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="owl-carousel testimonial-slider">
+                            @foreach ($reviews as $review)
+                                <div class="client-widget aos" data-aos="fade-up">
+                                    <p>{{ $review->description ?? '' }}</p>
+                                    <h5>{{ $review->name }}</h5>
+                                    <h6>{{ $review->profession ?? '' }}</h6>
+                                </div>
+                            @endforeach
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
+    @endif
 
+    <script>
+        function create_custom_dropdowns() {
+            $('select').each(function(i, select) {
+                if (!$(this).next().hasClass('dropdown-select')) {
+                    $(this).after('<div class="dropdown-select wide ' + ($(this).attr('class') || '') +
+                        '" tabindex="0"><span class="current"></span><div class="list"><ul></ul></div></div>');
+                    var dropdown = $(this).next();
+                    var options = $(select).find('option');
+                    var selected = $(this).find('option:selected');
+                    dropdown.find('.current').html(selected.data('display-text') || selected.text());
+                    options.each(function(j, o) {
+                        var display = $(o).data('display-text') || '';
+                        dropdown.find('ul').append('<li class="option ' + ($(o).is(':selected') ?
+                                'selected' : '') + '" data-value="' + $(o).val() +
+                            '" data-display-text="' + display + '">' + $(o).text() + '</li>');
+                    });
+                }
+            });
 
+            $('.dropdown-select ul').before(
+                '<div class="dd-search"><input id="txtSearchValue" autocomplete="off" onkeyup="filter()" class="dd-searchbox" type="text"></div>'
+            );
+        }
+
+        // Event listeners
+
+        // Open/close
+        $(document).on('click', '.dropdown-select', function(event) {
+            if ($(event.target).hasClass('dd-searchbox')) {
+                return;
+            }
+            $('.dropdown-select').not($(this)).removeClass('open');
+            $(this).toggleClass('open');
+            if ($(this).hasClass('open')) {
+                $(this).find('.option').attr('tabindex', 0);
+                $(this).find('.selected').focus();
+            } else {
+                $(this).find('.option').removeAttr('tabindex');
+                $(this).focus();
+            }
+        });
+
+        // Close when clicking outside
+        $(document).on('click', function(event) {
+            if ($(event.target).closest('.dropdown-select').length === 0) {
+                $('.dropdown-select').removeClass('open');
+                $('.dropdown-select .option').removeAttr('tabindex');
+            }
+            event.stopPropagation();
+        });
+
+        function filter() {
+            var valThis = $('#txtSearchValue').val();
+            $('.dropdown-select ul > li').each(function() {
+                var text = $(this).text();
+                (text.toLowerCase().indexOf(valThis.toLowerCase()) > -1) ? $(this).show(): $(this).hide();
+            });
+        };
+        // Search
+
+        // Option click
+        $(document).on('click', '.dropdown-select .option', function(event) {
+            $(this).closest('.list').find('.selected').removeClass('selected');
+            $(this).addClass('selected');
+            var text = $(this).data('display-text') || $(this).text();
+            $(this).closest('.dropdown-select').find('.current').text(text);
+            $(this).closest('.dropdown-select').prev('select').val($(this).data('value')).trigger('change');
+        });
+
+        // Keyboard events
+        $(document).on('keydown', '.dropdown-select', function(event) {
+            var focused_option = $($(this).find('.list .option:focus')[0] || $(this).find('.list .option.selected')[
+                0]);
+            // Space or Enter
+            //if (event.keyCode == 32 || event.keyCode == 13) {
+            if (event.keyCode == 13) {
+                if ($(this).hasClass('open')) {
+                    focused_option.trigger('click');
+                } else {
+                    $(this).trigger('click');
+                }
+                return false;
+                // Down
+            } else if (event.keyCode == 40) {
+                if (!$(this).hasClass('open')) {
+                    $(this).trigger('click');
+                } else {
+                    focused_option.next().focus();
+                }
+                return false;
+                // Up
+            } else if (event.keyCode == 38) {
+                if (!$(this).hasClass('open')) {
+                    $(this).trigger('click');
+                } else {
+                    var focused_option = $($(this).find('.list .option:focus')[0] || $(this).find(
+                        '.list .option.selected')[0]);
+                    focused_option.prev().focus();
+                }
+                return false;
+                // Esc
+            } else if (event.keyCode == 27) {
+                if ($(this).hasClass('open')) {
+                    $(this).trigger('click');
+                }
+                return false;
+            }
+        });
+
+        $(document).ready(function() {
+            create_custom_dropdowns();
+        });
+    </script>
 
     <script src="{{ asset('assets/js/service-india-popup.js') }}"></script>
 

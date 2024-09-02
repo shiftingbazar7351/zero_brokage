@@ -46,9 +46,15 @@
                                         <td>
                                             <div class="d-flex">
                                                 <a class="btn delete-table me-2 edit-service"
+                                                href="{{ route('vendors.show', $vendor->id) }}">
+                                                 <i class="fe fe-eye"></i>
+                                                </a>
+                                                
+                                                <a class="btn delete-table me-2 edit-service"
                                                     href="{{ route('vendors.edit', $vendor->id) }}">
                                                     <i class="fe fe-edit"></i>
                                                 </a>
+
                                                 <!-- Delete Button -->
                                                 <form action="{{ route('vendors.destroy', $vendor->id) }}"
                                                     method="POST" style="display:inline;">

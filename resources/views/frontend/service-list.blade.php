@@ -1,8 +1,6 @@
 @extends('frontend.layouts.main')
 @section('content')
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/css/intlTelInput.min.css">
-
-
     <div class="breadcrumb-bar">
         <div class="container">
             <div class="row">
@@ -76,16 +74,6 @@
                             </div>
                         </div>
                         <div class="filter-content">
-                            <h2>Sub Category</h2>
-                            <select class="form-control select" id="mySelect">
-                                <option value="AllSubCategory">All Sub Category</option>
-                                <option value="computer">Computer</option>
-                                <option value="construction">Construction1</option>
-                                <option value="construction">Construction2</option>
-                                <option value="construction">Construction3</option>
-                            </select>
-                        </div>
-                        <div class="filter-content">
                             <h2>Categories</h2>
                             <div class="filter-checkbox" id="fill-more">
                                 <ul>
@@ -137,6 +125,7 @@
                             <a href="javascript:void(0);" id="more" class="more-view">View More <i
                                     class="feather-arrow-down-circle ms-1"></i></a>
                         </div>
+
 
                         <div class="filter-content">
                             <h2>By Rating</h2>
@@ -306,7 +295,7 @@
                                         class="phone-number-field form-group input-detailss"
                                         onkeyup="validateNumBookingg(this)" maxlength="10"
                                         placeholder="Enter Mobile Number" required>
-                                    <div id="res-booking1" class="text-danger"></div>
+                                    <div id="res-booking1"></div>
                                     <button id="saveChanges-booking1" class="btn mb-4">Continue</button>
                                 </div>
                             </div>
@@ -323,34 +312,24 @@
 
                                     <div class="row px-5">
                                         <div class="col-md-6">
-                                            <div class="mb-3">
-                                                <input type="text" class="input-detailss form-control" id="nameVal"
+                                            <input type="text" class="input-detailss form-control mb-4"
                                                 aria-label="Sizing example input" name="name"
                                                 aria-describedby="inputGroup-sizing-default" placeholder="Enter your name"
                                                 required>
-                                                <p id="nameerrr" class="errordiv text-danger"></p>
-                                            </div>
-                                            <div>
-                                                <input type="text" class="form-control  input-detailss" id="locationVal"
+                                            <input type="text" class="form-control  mb-4 input-detailss"
                                                 aria-label="Sizing example input" name="location"
                                                 aria-describedby="inputGroup-sizing-default"
                                                 placeholder="Enter your Location" required>
-                                                <p id="loacationerrr" class="errordiv text-danger"></p>
-                                            </div>
 
                                         </div>
                                         <div class="col-md-6">
-                                            <div class="mb-3">
-                                                <input type="text" class="form-control  input-detailss" id="emailVal"
+                                            <input type="text" class="form-control mb-4 input-detailss"
                                                 aria-label="Sizing example input" name="email"
                                                 aria-describedby="inputGroup-sizing-default"
                                                 placeholder="Enter your email" required>
-                                                <p id="emailerrr" class="errordiv text-danger"></p>
-                                            </div>
-                                            <input type="date" class="form-control  input-detailss" id="dateVal"
+                                            <input type="date" class="form-control  mb-4 input-detailss"
                                                 aria-label="Sizing example input" name="date_time"
                                                 aria-describedby="inputGroup-sizing-default" required>
-                                                <p id="dateerror" class="errordiv text-danger"></p>
                                         </div>
                                     </div>
 
@@ -368,26 +347,22 @@
                                     <h5 class="sign-up-text">We've Sent you a 4 Digit Pin On Your Number</h5>
 
                                     <div class="edit-phone-cont">
-                                        <div class="Phone-Number">8303361853</div>
+                                        <div class="Phone-Number"></div>
                                         <div class="edit-icon" id="editnumber-booking"><img
                                                 src="{{ asset('assets/img/icons/edit-icon.svg') }}" alt="">Edit
                                         </div>
                                     </div>
                                     <div class="main-div">
-                                        <div class="input-div"><input type="text" value="" class="otp-input"
-                                                maxlength="1" />
+                                        <div class="input-div"><input type="text" maxlength="1" />
                                         </div>
 
-                                        <div class="input-div"><input type="text" value="" class="otp-input"
-                                                maxlength="1" />
+                                        <div class="input-div"><input type="text" maxlength="1" />
                                         </div>
 
-                                        <div class="input-div"><input type="text" value="" class="otp-input"
-                                                maxlength="1" />
+                                        <div class="input-div"><input type="text" maxlength="1" />
                                         </div>
 
-                                        <div class="input-div"><input type="text" value="" class="otp-input"
-                                                maxlength="1" />
+                                        <div class="input-div"><input type="text" maxlength="1" />
                                         </div>
                                     </div>
                                     <div class="resend">
@@ -404,7 +379,6 @@
                                         OTP</button>
 
 
-
                                     <div class="term-condition">
                                         <input type="checkbox" class="checkbox" id="checkbox-login-booking">
                                         <p>By Continuing, you agree to our <span class="term">Term and Condition</span>
@@ -419,6 +393,32 @@
             </div>
         </div>
     </div>
+    
+    <script>
+        window.addEventListener('scroll', function() {
+            var stickySlider = document.querySelector('.sticky-slider');
+            var offsetTop = stickySlider.offsetTop;
+
+            if (window.pageYOffset > offsetTop - 98) {
+                stickySlider.style.position = 'fixed';
+                stickySlider.style.top = '98px';
+                stickySlider.style.zIndex = '99';
+                stickySlider.style.width = '100%'; // Ensures the width doesn't collapse
+            } else {
+                stickySlider.style.position = 'relative';
+                stickySlider.style.top = 'auto';
+            }
+        });
+    </script>
+    <script src="{{ asset('assets/js/booking_infoPopup.js') }}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/intlTelInput.min.js"></script>
+    <script>
+        const inputtestt = document.querySelector("#phoneNumberInput-booking");
+        window.intlTelInput(inputtestt, {
+            initialCountry: "in",
+            separateDialCode: true
+        });
+    </script>
     <script>
         $(document).ready(function() {
             // Handle mobile number submission
@@ -462,7 +462,7 @@
                     type: 'POST',
                     data: {
                         mobile_number: $('#phoneNumberInput-booking')
-                    .val(), // Assuming mobile number is being used as identifier
+                            .val(), // Assuming mobile number is being used as identifier
                         name: name,
                         move_from_origin: move_from_origin,
                         email: email,
@@ -497,39 +497,59 @@
             $('#verify-otp-booking').click(function(e) {
                 e.preventDefault();
 
-                let otp = '';
-                $('.main-div input').each(function() {
-                    otp += $(this).val();
+                var otp = '';
+                var allFilled = true;
+
+                // Combine the OTP input values
+                $('.input-div input').each(function() {
+                    var value = $(this).val().trim(); // Trim any whitespace
+                    if (value === '' || value.length !== 1) {
+                        allFilled = false;
+                        return false; // Exit loop if any field is empty or not a single digit
+                    }
+                    otp += value;
                 });
 
+                if (!allFilled || otp.length !== 4) {
+                    toastr.error('Please enter a valid 4-digit OTP.');
+                    return; // Exit if OTP is not valid
+                }
+
+                var mobileNumber = $('.Phone-Number').text(); // Get mobile number from the popup
+
                 $.ajax({
-                    url: '{{ route('user.verifyOtp') }}',
+                    url: '/verify-otp',
                     type: 'POST',
                     data: {
-                        mobile_number: $('.Phone-Number').text()
-                    .trim(), // Assuming phone number is in this div
+                        mobile_number: mobileNumber,
                         otp: otp,
                         _token: '{{ csrf_token() }}'
                     },
                     success: function(response) {
-                        // alert('OTP verified successfully');
-                        console.log(mobile_number)
-                        $('#myPopup2-booking').hide();
-                        // Proceed with the next step, e.g., redirect or show a success message
-                        locatin.reload();
+                        if (response.success) {
+                            toastr.success(response.success);
+
+                            // Hide the OTP verification popup or transition to the next step
+                            $('#myPopup2-booking').hide();
+                        }
                     },
                     error: function(xhr) {
-                        let errors = xhr.responseJSON.errors;
-                        if (errors && errors.error) {
-                            alert(errors.error[0]);
+                        if (xhr.status === 422) {
+                            var errors = xhr.responseJSON.errors;
+                            $.each(errors, function(key, value) {
+                                toastr.error(value);
+                            });
+                        } else if (xhr.status === 400) {
+                            toastr.error(xhr.responseJSON.error);
                         }
                     }
                 });
             });
+
+
+
         });
     </script>
-
-
     <script>
         const otpInputs = document.querySelectorAll('.otp-input');
 
@@ -582,5 +602,72 @@
         });
     </script>
 
+    <script>
+        document.getElementById('sortByPrice').addEventListener('change', function() {
+            applyFilters();
+        });
 
+        document.getElementById('mySelect').addEventListener('change', function() {
+            applyFilters();
+        });
+
+        document.querySelectorAll('.categoryCheckbox').forEach(function(checkbox) {
+            checkbox.addEventListener('change', function() {
+                applyFilters();
+            });
+        });
+
+        document.querySelectorAll('.rating-set input[type="checkbox"]').forEach(function(checkbox) {
+            checkbox.addEventListener('change', function() {
+                applyFilters();
+            });
+        });
+
+        function applyFilters() {
+            let keyword = document.getElementById('input-keyword').value;
+            let location = document.getElementById('location-val').value;
+            let subCategory = document.getElementById('mySelect').value;
+            let categories = Array.from(document.querySelectorAll('.categoryCheckbox:checked')).map(cb => cb
+                .nextElementSibling.textContent.trim());
+            let ratings = Array.from(document.querySelectorAll('.rating-set input[type="checkbox"]:checked')).map(cb => cb
+                .nextElementSibling.textContent.trim());
+            let sortByPrice = document.getElementById('sortByPrice').value;
+
+            let filters = {
+                keyword: keyword,
+                location: location,
+                subCategory: subCategory,
+                categories: categories,
+                ratings: ratings,
+                sortByPrice: sortByPrice
+            };
+
+            console.log(filters);
+
+            // Send filters to backend via AJAX
+            fetchResults(filters);
+        }
+
+        function fetchResults(filters) {
+            fetch('/path-to-your-endpoint', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+                    },
+                    body: JSON.stringify(filters)
+                })
+                .then(response => response.json())
+                .then(data => {
+                    // Update the DOM with the filtered results
+                    console.log(data);
+                    updateResults(data);
+                })
+                .catch(error => console.error('Error:', error));
+        }
+
+        function updateResults(data) {
+            // Use the returned data to update the service list in the DOM
+        }
+    </script>
 @endsection

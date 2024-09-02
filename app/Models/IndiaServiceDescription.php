@@ -14,4 +14,9 @@ class IndiaServiceDescription extends Model
         'created_by',
         'status',
     ];
-}
+
+    public function subCategory()
+    {
+        return $this->belongsTo(SubCategory::class,'sub_category_id','id');
+    }
+ }

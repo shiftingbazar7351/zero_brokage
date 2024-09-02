@@ -1,6 +1,9 @@
 @extends('backend.layouts.main')
 
 @section('styles')
+    <script src="https://cdn.ckeditor.com/4.20.1/standard/ckeditor.js"></script>
+    {{-- <script src="https://cdn.jsdelivr.net/npm/ckeditor4@4.25.0/ckeditor.js"></script> --}}
+
     <style>
         .default-img {
             width: auto;
@@ -123,8 +126,7 @@
                         <div class="row">
                             <div class="form-group col-md-6">
                                 <label for="name">Name</label>
-                                <input type="text" class="form-control" id="name" name="name"
-                                    placeholder="Enter Name">
+                                <input type="text" class="form-control" id="name" name="name" placeholder="Enter Name">
                                 <div id="name-error" class="text-danger"></div>
                             </div>
                             <div class="form-group col-md-6">
@@ -149,7 +151,7 @@
 
                             <div class="form-group col-md-6">
                                 <label for="menu">Menu</label>
-                                <select class="form-control" id="menu" name="menu">
+                                    <select class="form-control" id="menu" name="menu">
                                     <option value="">Select menu</option>
                                 </select>
                                 <div id="menu-error" class="text-danger"></div>
@@ -169,7 +171,7 @@
 
                             <div class="form-group col-md-6">
                                 <label for="category">City</label>
-                                <select class="form-control" id="city" name="city">
+                                <select  class="form-control" id="city" name="city">
                                     <option value="">Select City</option>
                                 </select>
                                 <div id="city-error" class="text-danger"></div>
@@ -179,22 +181,21 @@
                         <div class="row">
                             <div class="form-group col-md-6">
                                 <label for="price">Price(INR)</label>
-                                <input type="text" class="form-control" id="price" name="total_price"
+                                    <input type="text" class="form-control" id="price" name="total_price"
                                     placeholder="Enter Ammount">
                                 <div id="price-error" class="text-danger"></div>
                             </div>
 
                             <div class="form-group col-md-6">
                                 <label for="price">Discount(%)</label>
-                                <input type="text" class="form-control" id="discount" name="discount"
+                                <input type="text" cl    ass="form-control" id="discount" name="discount"
                                     placeholder="Enter Discount percentage">
                                 <div id="discount-error" class="text-danger"></div>
                             </div>
                         </div>
                         <div class="form-group">
                             <label for="final-price">Final Price (INR)</label>
-                            <input type="text" class="form-control" id="final-price" name="final_price" readonly
-                                disabled>
+                            <input type="text" class="form-control" id="final-price" name="final_price" readonly disabled>
                             <div id="final_price-error" class="text-danger"></div>
                         </div>
                         <div class="mb-3">
@@ -218,15 +219,14 @@
                         </div>
 
                         <div class="form-group">
-                            <label for="description" class="col-form-label">Details <span
-                                    class="text-danger">*</span></label>
-                            <textarea class="form-control" id="details" placeholder="Enter Details" name="details">{{ old('details') }}</textarea>
+                            <label for="details" class="col-form-label">Details <span class="text-danger">*</span></label>
+                            <textarea class="f    orm-control" id="details" placeholder="Enter Details" name="details">{{ old('details') }}</textarea>
                             <div id="details-error" class="text-danger"></div>
                         </div>
 
                         <div class="form-group">
                             <label for="description">Description</label>
-                            <textarea type="text" class="form-control" id="description" name="description" placeholder="Enter Ammount"></textarea>
+                            <textarea type="text" class="form-control" id="description" name="descript    ion" placeholder="Enter Ammount"></textarea>
                             <div id="description-error" class="text-danger"></div>
                         </div>
 
@@ -237,11 +237,17 @@
         </div>
     </div>
 
+    <script>
+        // Initialize CKEditor for t    he Details and Description fields
+        CKEDITOR.replace('details');
+    </script>
+
+
     <div class="modal fade" id="edit-category" tabindex="-1" aria-labelledby="editCategoryModalLabel"
         aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
-                <div class="modal-header">
+                <div class="modal-he    ader">
                     <h5 class="modal-title">Edit Sub-Menu</h5>
                     <button type="button" class="btn-close close-modal" data-bs-dismiss="modal" aria-label="Close">
                         <i class="fe fe-x"></i>
@@ -370,16 +376,22 @@
                             </div>
                             <div id="image-error" class="text-danger"></div>
                         </div>
+
                         <div class="form-group">
-                            <label for="description" class="col-form-label">Details <span
-                                    class="text-danger">*</span></label>
+                            <label for="description" class="col-form-label">Details <span class="text-danger">*</span></label>
                             <textarea class="form-control" id="edit-details" placeholder="Enter Details" name="details">{{ old('details') }}</textarea>
                             <div id="details-error" class="text-danger"></div>
                         </div>
 
+                        <script>
+                            // Initialize CKEditor for the edit-details field
+                            CKEDITOR.replace('edit-details');
+                        </script>
+
+
                         <div class="form-group">
                             <label for="description">Description</label>
-                            <textarea type="text" class="form-control" id="edit-description" name="description" placeholder="Enter Ammount"></textarea>
+                            <textarea type="text" cl                        ass="form-control" id="edit-description" name="description" placeholder="Enter Ammount"></textarea>
                             <div id="description-error" class="text-danger"></div>
                         </div>
 
@@ -403,40 +415,6 @@
     <script src="{{ asset('admin/assets/js/preview-img.js') }}"></script>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            // When the modal is shown, populate the form fields with the subcategory data
-            $('#editCategoryModal').on('show.bs.modal', function(event) {
-                var button = $(event.relatedTarget); // Button that triggered the modal
-                // Extract info from data-* attributes
-                var id = button.data('id');
-                var name = button.data('name');
-                var category = button.data('category_id');
-                var state = button.data('state');
-                var city = button.data('city');
-                var price = button.data('price');
-                var discount = button.data('discount');
-                var description = button.data('description');
-                var image = button.data('image');
-
-                // Update the modal's form action
-                var formAction = '{{ url('subcategories') }}/' + id;
-                $(this).find('form').attr('action', formAction);
-
-                // Populate the form fields
-                $(this).find('#edit-name').val(name);
-                $(this).find('#edit-category').val(category);
-                $(this).find('#edit-state').val(state);
-                $(this).find('#edit-city').val(city);
-                $(this).find('#edit-price').val(price);
-                $(this).find('#edit-discount').val(discount);
-
-                // Update the image preview
-                $(this).find('#icon-preview').attr('src', image ||
-                    '{{ asset('admin/assets/img/icons/upload.svg') }}');
-
-                // Trigger change event on state dropdown to fetch cities (if applicable)
-                $('#edit-state').trigger('change');
-            });
-
             //----------------Add form final price ---------------------------------//
             function calculateFinalPrice() {
                 const price = parseFloat($('#price').val());
@@ -813,40 +791,6 @@
                 });
             };
 
-
-
-            // Function to handle form submission for editing a menu
-            // $('#editCategoryForm').on('submit', function(e) {
-            //     e.preventDefault();
-
-            //     let id = $('#editCategoryId').val();
-            //     let formData = new FormData(this);
-
-            //     $.ajax({
-            //         type: 'POST',
-            //         url: `/submenu/${id}`,
-            //         data: formData,
-            //         contentType: false,
-            //         processData: false,
-            //         success: function(response) {
-            //             if (response.success) {
-            //                 // Reload the page to reflect the updated data
-            //                 location.reload();
-            //             }
-            //         },
-            //         error: function(xhr) {
-            //             let errors = xhr.responseJSON.errors;
-
-            //             // Clear any previous error messages
-            //             $('.error-message').text('');
-
-            //             // Loop through the errors and display them
-            //             $.each(errors, function(key, value) {
-            //                 $(`#${key}-error`).text(value[0]);
-            //             });
-            //         }
-            //     });
-            // });
 
 
             $('#editCategoryForm').on('submit', function(e) {

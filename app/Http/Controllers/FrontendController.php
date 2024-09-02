@@ -97,7 +97,7 @@ class FrontendController extends Controller
         $subcategory = Subcategory::where('status', 1)
             ->where('slug', $slug)
             ->first();
-        $cities = City::paginate(10);
+        $cities = City::select('id','name','state_id','status')->where('status','active')->paginate(10);
         $cityIds = City::pluck('id');
         $vendors = Vendor::whereIn('city', $cityIds)->first();
         $description = IndiaServiceDescription::where('sub_category_id', $subcategory->id ?? '')->first();

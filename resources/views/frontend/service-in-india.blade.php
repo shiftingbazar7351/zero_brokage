@@ -281,7 +281,7 @@
                     @foreach ($cities as $city)
                         <div class="col-md-6 mb-4">
                             <div class="bangalore-con border-3 border-bottom border-primary mb-4">
-                                <a href="{{ route('services-in-india', $vendors->id) }}" class="uppercase">
+                                <a href="{{ route('services-in-india', $city->name ?? '') }}" class="uppercase">
                                     <h4>{{ $subcategory->slug ?? '' }} {{ strtoupper($city->name) }}</h4>
                                 </a>
                                 <p>{{ Str::limit($vendors->description, 300, '...') }}</p>

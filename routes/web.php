@@ -85,14 +85,14 @@ Route::get('/privacy-policy', function () {
 Route::controller(FrontendController::class)->group(function () {
     Route::get('/', 'home')->name('home');
     Route::get('/service-list', 'serviceList')->name('service-list');
-    Route::get('/services-in-india/{id}', 'servicesInIndia')->name('services-in-india');
+    Route::get('/services-in-{city}', 'servicesInIndia')->name('services-in-india');
     // Route::get('/service-in-india-city', 'servicesInIndiaCity')->name('services-in-india-city');
     Route::get('/service-details', 'serviceDetails')->name('service-details');
     Route::get('/service-grid/{slug}', 'subCategory')->name('service.grid');
     Route::post('/user/enquiry/store', 'enquiryStore')->name('enquirystore');
     Route::post('/user/enquiry/update', 'enquiryUpdate')->name('enquiryupdate');
     // Route::post('/verify-otp', 'verifyOtp')->name('user.verifyOtp');
-    Route::get('/{slug}-in-india', 'servicesInIndiaCity')->name('services-in-india-city');
+    Route::get('{slug}-in-india', 'servicesInIndiaCity')->name('services-in-india-city');
     Route::get('/provider-details/{id}', 'providerDetails')->name('vender-profile');
     Route::post('/path-to-your-endpoint', 'filterServices')->name('filter.services');
     Route::post('/user/review/store', 'reviewStore')->name('reviewstore');

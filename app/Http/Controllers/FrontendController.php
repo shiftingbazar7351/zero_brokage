@@ -68,16 +68,17 @@ class FrontendController extends Controller
 
         return view('frontend.service-list', compact('submenus', 'subcategory', 'menus'));
     }
-    public function servicesInIndia($id)
+    public function servicesInIndia($city)
     {
         $faqs = Faq::where('status', 1)->select('question', 'answer')->get();
         $description = IndiaServiceDescription::first();
-        $submenus = SubMenu::with(['subCategory', 'menu', 'cityName.state'])
-            ->where('status', 1)
-            ->orderByDesc('created_at')
-            ->select('id', 'name', 'image', 'slug', 'total_price', 'discounted_price', 'discount', 'subcategory_id', 'menu_id', 'city_id', 'description', 'details')
+        $vendors = Vendor::where('status', 1)
+        ->with('verified')
+            ->whereHas('cityName', function ($query) use ($city) {
+                $query->where('name', $city);
+            })
             ->get();
-        return view('frontend.services-in-india', compact('faqs', 'submenus', 'description'));
+        return view('frontend.services-in-india-vendors', compact('faqs', 'vendors', 'description'));
     }
 
     public function servicesInIndiaCity($slug)
@@ -97,13 +98,20 @@ class FrontendController extends Controller
         $subcategory = Subcategory::where('status', 1)
             ->where('slug', $slug)
             ->first();
-        $cities = City::select('id','name','state_id','status')->where('status','active')->paginate(10);
-        $cityIds = City::pluck('id');
-        $vendors = Vendor::whereIn('city', $cityIds)->first();
-        $description = IndiaServiceDescription::where('sub_category_id', $subcategory->id ?? '')->first();
-        return view('frontend.service-in-india-city', compact('faqs', 'submenus', 'description', 'reviews', 'subcategory', 'states', 'cities', 'vendors'));
-    }
+            $cities = City::select('id', 'name', 'state_id', 'status')
+            ->where('status', 'active')
+            ->paginate(10);
 
+        // Use a subquery to directly filter vendors by city
+        $vendors = Vendor::whereIn('city', function ($query) {
+            $query->select('id')
+                  ->from('cities')
+                  ->where('status', 'active');
+        })->first();
+
+        $description = IndiaServiceDescription::where('sub_category_id', $subcategory->id ?? '')->first();
+        return view('frontend.service-in-india', compact('faqs', 'submenus', 'description', 'reviews', 'subcategory', 'states', 'cities', 'vendors'));
+    }
 
     public function enquiryStore(Request $request)
     {

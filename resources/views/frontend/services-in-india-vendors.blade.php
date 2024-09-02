@@ -395,28 +395,28 @@
 
 
 
-                            @foreach ($submenus as $menu)
+                            @foreach ($vendors as $vendor)
                                 <div class="service-list">
                                     <div class="service-cont">
                                         <div class="service-cont-img">
                                             <a href="service-details.html">
                                                 <img class="img-fluid serv-img" alt="Service Image"
-                                                    src="{{ asset('storage/submenu/' . $menu->image ?? '') }}">
+                                                    src="{{ asset('storage/vendor/vendor_image/' . ($vendor->vendor_image ?? 'default-placeholder.png')) }}">
                                             </a>
                                         </div>
                                         <div class="service-cont-info">
-                                            <span class="item-cat">{{ $menu->menu->name ?? '' }}</span>
+                                            <span class="item-cat">{{ $vendor->subCategory->name ?? '' }}</span>
                                             <h5 class="title">
-                                                <a href="service-details.html">{{ $menu->name ?? '' }}</a>
+                                                <a href="{{ route('vender-profile',$vendor->id ??'') }}">{{ $vendor->vendor_name ?? '' }}</a>
                                             </h5>
-                                            <p>{{ $menu->description ?? '' }}</p>
-                                            <a href="#" class="text-primary text-decoration-underline"
+                                            {{-- <p>{!! $vendor->description ?? '' !!}</p> --}}
+                                            {{-- <a href="#" class="text-primary text-decoration-underline"
                                                 data-bs-toggle="modal" data-bs-target="#modal-{{ $menu->id }}">View
-                                                Details</a>
+                                                Details</a> --}}
 
                                             <!-- Modal -->
-                                            <div class="modal fade" id="modal-{{ $menu->id }}" tabindex="-1"
-                                                aria-labelledby="modalLabel-{{ $menu->id }}" aria-hidden="true">
+                                            {{-- <div class="modal fade" id="modal-{{ $vendor->id }}" tabindex="-1"
+                                                aria-labelledby="modalLabel-{{ $vendor->id }}" aria-hidden="true">
                                                 <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
                                                     <div class="modal-content">
                                                         <div class="modal-header">
@@ -430,11 +430,11 @@
                                                         </div>
                                                     </div>
                                                 </div>
-                                            </div>
+                                            </div> --}}
                                             <div class="service-pro-img d-flex gap-4">
                                                 <p><i class="feather-map-pin"></i>
-                                                    {{ ucwords($menu->cityName->name ?? '') }},
-                                                    {{ ucwords($menu->cityName->state->name ?? '') }}
+                                                    {{ ucwords($vendor->cityName->name ?? '') }},
+                                                    {{ ucwords($vendor->cityName->state->name ?? '') }}
                                                 </p>
                                             </div>
 
@@ -442,14 +442,19 @@
                                         </div>
 
                                         <div class="verified-img-india" style="width: 80px; height:50px; margin-left:3%">
-                                            <img src="{{ asset('assets/img/icons/verified_india.png') }}" alt="dsa" style="width:100%">
+                                            @if(isset($vendor->verified) && isset($vendor->verified->image))
+                                                <img src="{{ asset('storage/verified/' . $vendor->verified->image) }}" alt="dsa" style="width:100%">
+                                            @else
+                                                <img src="{{ asset('storage/verified/default-placeholder.png') }}" alt="default image" style="width:100%">
+                                            @endif
                                         </div>
+
                                     </div>
                                     <div class="service-action">
-                                        <h6>&#8377;{{ $menu->discounted_price ?? '' }}<span class="old-price">&#8377;
-                                                {{ $menu->total_price ?? '' }}</span></h6>
+                                        {{-- <h6>&#8377;{{ $vendor->discounted_price ?? '' }}<span class="old-price">&#8377;
+                                                {{ $vendor->total_price ?? '' }}</span></h6> --}}
                                         <a class="btn btn-secondary book-Now-btn">Book Now</a>
-                                        <a href="{{ route('vender-profile',$menu->id) }}" class="btn btn-secondary">View Profile</a>
+                                        <a href="{{ route('vender-profile',$vendor->id) }}" class="btn btn-secondary">View Profile</a>
                                     </div>
                                 </div>
                             @endforeach
@@ -559,7 +564,7 @@
                         </div>
                     </div>
 
-                    <div class="row">
+                    {{-- <div class="row">
                         <div class="col-sm-12">
                             <div class="blog-pagination rev-page">
                                 <nav>
@@ -586,7 +591,7 @@
                                 </nav>
                             </div>
                         </div>
-                    </div>
+                    </div> --}}
 
                 </div>
 

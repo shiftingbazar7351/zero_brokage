@@ -36,22 +36,22 @@ class VerifiedController extends Controller
             'name' => 'required',
             'image' => 'required|image', // Adding an image validation rule
         ]);
-    
+
         $review = new Verified($request->all());
         $review->slug = generateSlug($request->name);
         $review->created_by = auth()->id();
-    
+
         if ($request->hasFile('image')) {
             $filename = $this->fileUploadService->uploadImage('verified/', $request->file('image'));
             $review->image = $filename;
         }
-        
+
         $review->save();
-    
+
         // Return a JSON response
         return response()->json(['success' => true, 'message' => 'Added Successfully']);
     }
-    
+
     /**
      * Display the specified resource.
      *
@@ -94,24 +94,24 @@ class VerifiedController extends Controller
             'name' => 'required',
             'image' => 'nullable|mimes:jpeg,png,jpg,gif|max:2048', // Make image optional
         ]);
-    
+
         $review = Verified::findOrFail($id);
-    
+
         $review->name = $request->name;
-        $review->slug = generateSlug($request->name); 
+        $review->slug = generateSlug($request->name);
         $review->created_by = auth()->id();
-    
+
         if ($request->hasFile('image')) {
             $filename = $this->fileUploadService->uploadImage('verified/', $request->file('image'));
             $review->image = $filename;
         }
-    
+
         $review->save();
-    
+
         return response()->json(['success' => true, 'message' => 'Updated successfully.']);
     }
-    
-    
+
+
     /**
      * Remove the specified resource from storage.
      *

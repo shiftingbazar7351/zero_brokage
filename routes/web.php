@@ -96,7 +96,6 @@ Route::controller(FrontendController::class)->group(function () {
     Route::get('/provider-details/{id}', 'providerDetails')->name('vender-profile');
     Route::post('/path-to-your-endpoint', 'filterServices')->name('filter.services');
     Route::post('/user/review/store', 'reviewStore')->name('reviewstore');
-
 });
 
 

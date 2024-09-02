@@ -101,14 +101,14 @@
 
                         <div class="city-select d-flex gap-3 w-50">
                             <select class="form-control" id="state" name="state">
-                                <option value="">Select state</option>
+                                <option value="" selected disabled>Select state</option>
                                 @foreach ($states as $state)
-                                    <option value="{{ $state->id }}">{{ ucwords($state->name) }}</option>
+                                    <option value="{{ $state->id ??'' }}">{{ ucwords($state->name ??'') }}</option>
                                 @endforeach
                             </select>
                             <div id="state-error" class="text-danger"></div>
-                            <select class="form-control" id="city" name="city">
-                                <option value="">Select City</option>
+                            <select class="form-control" id="city" name="city" >
+                                <option value="" selected disabled>Select City</option>
                             </select>
                             <div id="city-error" class="text-danger"></div>
 

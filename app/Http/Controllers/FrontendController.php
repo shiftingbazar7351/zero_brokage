@@ -81,9 +81,10 @@ class FrontendController extends Controller
 
     public function servicesInIndiaCity($slug)
     {
-        $states = State::where('country_id',101)->get();
+        $states = State::where('country_id',101)
+       ->select('id','country_id','name','status')
+       ->get();
         $faqs = Faq::where('status', 1)->select('question', 'answer')->get();
-        $description = IndiaServiceDescription::first();
         $submenus = SubMenu::with(['subCategory', 'menu', 'cityName.state'])
             ->where('status', 1)
             ->orderByDesc('created_at')
@@ -96,6 +97,7 @@ class FrontendController extends Controller
             ->orderByDesc('created_at')
             ->where('slug', $slug)
             ->first();
+        $description = IndiaServiceDescription::where('sub_category_id',$subcategory->id ??'')->first();
         return view('frontend.service-in-india-city', compact('faqs', 'submenus', 'description', 'reviews', 'subcategory','states'));
     }
 

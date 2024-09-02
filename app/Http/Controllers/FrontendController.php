@@ -190,13 +190,13 @@ class FrontendController extends Controller
     public function reviewStore(Request $request)
     {
         // Validate request
-        $request->validate([
-            'name' => 'required|string|max:255',
-            'email' => 'required|email',
-            'phone_number' => 'required|max:15',
-            'description' => 'required|string',
-            'rating' => 'required',
-        ]);
+        // $request->validate([
+        //     'name' => 'required|string|max:255',
+        //     'email' => 'required|email',
+        //     'phone_number' => 'required|max:15',
+        //     'description' => 'required|string',
+        //     'rating' => 'required',
+        // ]);
 
         // Store review logic here
         // Example:

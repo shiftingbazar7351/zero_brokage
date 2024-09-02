@@ -8,5 +8,5 @@ use Illuminate\Database\Eloquent\Model;
 class MetaUrl extends Model
 {
     use HasFactory;
-    protected $fillable = ['url'];
+    protected $fillable = ['url','title','description','keyword'];
 }

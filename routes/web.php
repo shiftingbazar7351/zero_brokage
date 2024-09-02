@@ -133,9 +133,7 @@ Route::middleware('auth')->group(function () {
     Route::resource('/enquiry', EnquiryController::class);
     Route::post('/enquiry-status', [EnquiryController::class, 'enquiryStatus'])->name('enquiry.status');
 
-    Route::resource('/meta', MetaDescripConroller::class);
-    Route::resource('/meta-url', MetaUrlController::class);
-    Route::resource('/meta-title', MetaTitleController::class);
+    Route::resource('/meta', MetaUrlController::class);
 
     Route::resource('/verified', VerifiedController::class);
     Route::post('/verified-status', [VerifiedController::class, 'verifyStatus'])->name('verified.status');

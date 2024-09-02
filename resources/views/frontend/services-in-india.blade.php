@@ -524,6 +524,10 @@
 
 
                                         </div>
+
+                                        <div class="verified-img-india" style="width: 80px; height:50px; margin-left:3%">
+                                            <img src="{{ asset('assets/img/icons/verified_india.png') }}" alt="dsa" style="width:100%">
+                                        </div>
                                     </div>
                                     <div class="service-action">
                                         <h6>&#8377;{{ $menu->discounted_price ?? '' }}<span class="old-price">&#8377;

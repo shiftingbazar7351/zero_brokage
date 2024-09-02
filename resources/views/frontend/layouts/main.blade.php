@@ -33,6 +33,10 @@
 <body class="body-one">
     <div class="main-wrapper">
         <style>
+            .uppercase {
+                text-transform: uppercase;
+            }
+
             body {
                 font-family: Arial, sans-serif;
                 margin: 0;

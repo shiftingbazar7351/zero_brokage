@@ -426,7 +426,7 @@
                                                                 data-bs-dismiss="modal" aria-label="Close"></button>
                                                         </div>
                                                         <div class="modal-body">
-                                                            <p>{{ $menu->details ?? 'No Data Found' }}</p>
+                                                            <p>{!! $menu->details ?? 'No Data Found' !!}</p>
                                                         </div>
                                                     </div>
                                                 </div>

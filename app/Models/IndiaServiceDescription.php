@@ -19,4 +19,8 @@ class IndiaServiceDescription extends Model
     {
         return $this->belongsTo(SubCategory::class,'sub_category_id','id');
     }
+    // public function city()
+    // {
+    //     return $this->belongsTo(City::class,'city','id');
+    // }
  }

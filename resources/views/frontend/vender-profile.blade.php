@@ -348,70 +348,71 @@
 
     {{-- ..........................Provider Details container start...................... --}}
 
-    <div class="container mt-4 border">
-        <div class="row">
-            <div class="col-md-3 d-flex align-items-center">
-                <div class="img-prof">
-                    <img src="{{ asset('storage/vendor/vendor_image/' . $vendor->vendor_image ?? '') }}" alt=""
-                        class="w-100 object-fit-contain">
+    @if ($vendor)
+        <div class="container mt-4 border">
+            <div class="row">
+                <div class="col-md-3 d-flex align-items-center">
+                    <div class="img-prof">
+                        <img src="{{ asset('storage/vendor/vendor_image/' . ($vendor->vendor_image ?? 'default-placeholder.png')) }}"
+                            alt="" class="w-100 object-fit-contain">
+                    </div>
+
                 </div>
+                <div class="col-md-9">
 
-            </div>
-            <div class="col-md-9">
+                    <div class="provider-info">
+                        <h2>{{ $vendor->vendor_name ?? '' }}</h2>
+                        <h5>{{ $vendor->company_name ?? '' }}</h5>
+                        <p>
+                            {{ $vendor->address ?? '' }}
+                        </p>
+                        <div class="row">
+                            <div class="col-lg-6 col-md-12">
+                                <div class="provide-box">
+                                    <span><i class="feather-mail"></i></span>
+                                    <div class="provide-info">
+                                        <h6>Email</h6>
+                                        <p>
+                                            <a href="https://truelysell.dreamstechnologies.com/cdn-cgi/l/email-protection"
+                                                {{-- class="__cf_email__" --}}
+                                                data-cfemail="baced2d5d7dbc9d2fadfc2dbd7cad6df94d9d5d7">{{ $vendor->email ?? '' }}</a>
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-6 col-md-12">
+                                <div class="provide-box">
+                                    <span><i class="feather-phone"></i></span>
+                                    <div class="provide-info">
+                                        <h6>Phone</h6>
+                                        <p>+91 {{ $vendor->number ?? '' }}</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-6 col-md-12">
+                                <div class="provide-box">
+                                    <span><i class="feather-map-pin"></i></span>
+                                    <div class="provide-info">
+                                        <h6>Address</h6>
+                                        {{-- <p>Hanover, Maryland</p> --}}
 
-                <div class="provider-info">
-                    <h2>{{ $vendor->vendor_name ?? '' }}</h2>
-                    <h5>{{ $vendor->company_name ?? '' }}</h5>
-                    <p>
-                        {{ $vendor->address ?? '' }}
-                    </p>
-                    <div class="row">
-                        <div class="col-lg-6 col-md-12">
-                            <div class="provide-box">
-                                <span><i class="feather-mail"></i></span>
-                                <div class="provide-info">
-                                    <h6>Email</h6>
-                                    <p>
-                                        <a href="https://truelysell.dreamstechnologies.com/cdn-cgi/l/email-protection"
-                                            {{-- class="__cf_email__" --}}
-                                            data-cfemail="baced2d5d7dbc9d2fadfc2dbd7cad6df94d9d5d7">{{ $vendor->email ?? '' }}</a>
-                                    </p>
+                                        <p>
+                                            {{ ucwords($vendor->cityName->name ?? '') }},
+                                            {{ ucwords($vendor->cityName->state->name ?? '') }}
+                                        </p>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="col-lg-6 col-md-12">
-                            <div class="provide-box">
-                                <span><i class="feather-phone"></i></span>
-                                <div class="provide-info">
-                                    <h6>Phone</h6>
-                                    <p>+91 {{ $vendor->number ?? '' }}</p>
+                            <div class="col-lg-6 col-md-12">
+                                <div class="provide-box">
+                                    <span><i class="feather-globe"></i></span>
+                                    <div class="provide-info">
+                                        <h6>Website</h6>
+                                        <p>{{ $vendor->website ?? '' }}</p>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="col-lg-6 col-md-12">
-                            <div class="provide-box">
-                                <span><i class="feather-map-pin"></i></span>
-                                <div class="provide-info">
-                                    <h6>Address</h6>
-                                    {{-- <p>Hanover, Maryland</p> --}}
-
-                                    <p>
-                                        {{ ucwords($vendor->cityName->name ?? '') }},
-                                        {{ ucwords($vendor->cityName->state->name ?? '') }}
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-lg-6 col-md-12">
-                            <div class="provide-box">
-                                <span><i class="feather-globe"></i></span>
-                                <div class="provide-info">
-                                    <h6>Website</h6>
-                                    <p>{{ $vendor->website ?? '' }}</p>
-                                </div>
-                            </div>
-                        </div>
-                        {{-- <div class="col-lg-6 col-md-12">
+                            {{-- <div class="col-lg-6 col-md-12">
                             <div class="provide-box">
                                 <span><i class="feather-book-open"></i></span>
                                 <div class="provide-info">
@@ -420,35 +421,37 @@
                                 </div>
                             </div>
                         </div> --}}
-                        <div class="col-lg-6 col-md-12">
-                            <div class="provide-box">
-                                <span></span>
-                                <a href="#">
-                                    <div class="provide-info">
-                                        <button class="btn btn-primary">Get Best Quotes</button>
-                                    </div>
-                                </a>
+                            <div class="col-lg-6 col-md-12">
+                                <div class="provide-box">
+                                    <span></span>
+                                    <a href="#">
+                                        <div class="provide-info">
+                                            <button class="btn btn-primary">Get Best Quotes</button>
+                                        </div>
+                                    </a>
+                                </div>
                             </div>
+
+
                         </div>
-
-
                     </div>
                 </div>
             </div>
         </div>
-    </div>
+    @endif
     {{-- ..............................Provider about section................................... --}}
 
     <div class="container mt-3">
         <div class="row">
             <div class="col-md-12">
-                <div class="provider-details">
-                    <h5>Service Details</h5>
-                    <p>
-                        {{ $vendor->description ?? '' }}
-                    </p>
-                </div>
-
+                @if ($vendor)
+                    <div class="provider-details">
+                        <h5>Service Details</h5>
+                        <p>
+                            {{ $vendor->description ?? '' }}
+                        </p>
+                    </div>
+                @endif
 
 
                 <div class="contact-queries mb-4">

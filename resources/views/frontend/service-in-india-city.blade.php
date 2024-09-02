@@ -103,11 +103,11 @@
                             <select class="form-control" id="state" name="state">
                                 <option value="" selected disabled>Select state</option>
                                 @foreach ($states as $state)
-                                    <option value="{{ $state->id ??'' }}">{{ ucwords($state->name ??'') }}</option>
+                                    <option value="{{ $state->id ?? '' }}">{{ ucwords($state->name ?? '') }}</option>
                                 @endforeach
                             </select>
                             <div id="state-error" class="text-danger"></div>
-                            <select class="form-control" id="city" name="city" >
+                            <select class="form-control" id="city" name="city">
                                 <option value="" selected disabled>Select City</option>
                             </select>
                             <div id="city-error" class="text-danger"></div>
@@ -255,57 +255,26 @@
     @if ($subcategory)
         <div class="section mt-4">
             <div class="container">
-                <h1 class="text-center">Top {{ ucwords($subcategory->name) ?? '' }} In India</h1>
+                <h1 class="text-center">Top {{ $subcategory->name ?? '' }} In India</h1>
                 <div class="row mt-4">
-                    <div class="col-md-6">
-                        <div class="bangalore-con border-3 border-bottom border-primary mb-4">
-                            <a href="">
-                                <h4>{{ $subcategory->slug ?? '' }} Bangalore</h4>
-                            </a>
-                            <p>Lorem ipo c d optio! Quos, commodi Lorem ipsum dolor, sit amet consectetur adipisicing
-                                elit. Quas, consectetur. ! Dolorum, enim porro. Nesciunt?</p>
+                    @foreach ($cities as $city)
+                        <div class="col-md-6 mb-4">
+                            <div class="bangalore-con border-3 border-bottom border-primary mb-4">
+                                <a href="{{ route('services-in-india',$vendors->id) }}" class="uppercase">
+                                    <h4>{{ $subcategory->slug ?? '' }} {{ strtoupper($city->name) }}</h4>
+                                </a>
+                                <p>{{ Str::limit($vendors->description, 300, '...') }}</p>
+                            </div>
                         </div>
-                        <div class="bangalore-con border-3 border-bottom border-primary mb-4">
-                            <a href="">
-                                <h4>packers-and-movers Bangalore</h4>
-                            </a>
-                            <p>Lorem ipo c d optio! Quos, commodi Lorem ipsum dolor, sit amet consectetur adipisicing
-                                elit. Quas, consectetur. ! Dolorum, enim porro. Nesciunt?</p>
-                        </div>
-                        <div class="bangalore-con border-3 border-bottom border-primary mb-4">
-                            <a href="">
-                                <h4>packers-and-movers Bangalore</h4>
-                            </a>
-                            <p>Lorem ipo c d optio! Quos, commodi Lorem ipsum dolor, sit amet consectetur adipisicing
-                                elit. Quas, consectetur. ! Dolorum, enim porro. Nesciunt?</p>
-                        </div>
-                    </div>
-                    <div class="col-md-6 ">
-                        <div class="bangalore-con border-3 border-bottom border-primary mb-4">
-                            <a href="">
-                                <h4>packers-and-movers Bangalore</h4>
-                            </a>
-                            <p>Lorem ipsummodi nesciunt iuatur, sequi aut perferendis optio! Dignissimos quod fuga totam
-                                beatae at adipisci! Quos, commodi! Dolorum, enim porro. Nesciunt?</p>
-                        </div>
-                        <div class="bangalore-con border-3 border-bottom border-primary mb-4">
-                            <h4>packers-and-movers Bangalore</h4>
-                            <p>Lorem ipsummodi nesciunt iuatur, sequi aut perferendis optio! Dignissimos quod fuga totam
-                                beatae at adipisci! Quos, commodi! Dolorum, enim porro. Nesciunt?</p>
-                        </div>
-                        <div class="bangalore-con border-3 border-bottom border-primary mb-4">
-                            <a href="">
-                                <h4>packers-and-movers Bangalore</h4>
-                            </a>
-                            <p>Lorem ipsummodi nesciunt iuatur, sequi aut perferendis optio! Dignissimos quod fuga totam
-                                beatae at adipisci! Quos, commodi! Dolorum, enim porro. Nesciunt?</p>
-                        </div>
-
-                    </div>
+                    @endforeach
+                </div>
+                <div class="d-flex justify-content-center">
+                    {{ $cities->appends(request()->query())->links() }} <!-- Pagination links -->
                 </div>
             </div>
         </div>
     @endif
+
 
     <div class="container-fluid bg-light shadow">
 

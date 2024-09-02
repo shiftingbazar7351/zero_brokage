@@ -66,12 +66,12 @@ class SubMenuController extends Controller
             'city' => 'required',
             'total_price' => 'required|numeric',
             'discount' => 'required|numeric',
-            'details' => 'required|max:200',
-            'description' => 'required|max:200',
+            'details' => 'required',
+            'description' => 'required',
             'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
 
-        
+
         $finalPrice = $request->input('total_price');
         $discountPercentage = $request->input('discount');
 
@@ -148,7 +148,7 @@ class SubMenuController extends Controller
             // 'final_price' => 'required|numeric',
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048', // Image is optional
         ]);
-    
+
         $finalPrice = $request->input('price');
         $discountPercentage = $request->input('discount');
         if (!empty($finalPrice) && !empty($discountPercentage)) {
@@ -157,8 +157,8 @@ class SubMenuController extends Controller
         } else {
             $finalPrice = $request->input('price');
         }
-    
-  
+
+
         $sub_menu->name = $request->input('name');
         $sub_menu->slug = generateSlug($request->name);
         $sub_menu->category_id = $request->input('category_id');
@@ -170,18 +170,18 @@ class SubMenuController extends Controller
         $sub_menu->discount = $request->input('discount');
         $sub_menu->discounted_price = $finalPrice;
         $sub_menu->description = $request->input('description');
-    
+
         // Handle image upload
         if ($request->hasFile('image')) {
             $filename = $this->fileUploadService->uploadImage('submenu/', $request->file('image'));
             $sub_menu->image = $filename;
         }
-    
+
         $sub_menu->save();
-    
+
         return response()->json(['success' => true, 'message' => 'Sub-Menu updated successfully!']);
     }
-    
+
 
 
     /**

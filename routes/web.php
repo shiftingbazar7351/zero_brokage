@@ -85,7 +85,7 @@ Route::get('/privacy-policy', function () {
 Route::controller(FrontendController::class)->group(function () {
     Route::get('/', 'home')->name('home');
     Route::get('/service-list', 'serviceList')->name('service-list');
-    Route::get('/services-in-india', 'servicesInIndia')->name('services-in-india');
+    Route::get('/services-in-india/{id}', 'servicesInIndia')->name('services-in-india');
     // Route::get('/service-in-india-city', 'servicesInIndiaCity')->name('services-in-india-city');
     Route::get('/service-details', 'serviceDetails')->name('service-details');
     Route::get('/service-grid/{slug}', 'subCategory')->name('service.grid');

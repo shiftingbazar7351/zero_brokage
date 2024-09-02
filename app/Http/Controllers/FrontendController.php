@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\City;
 use App\Models\Enquiry;
 use App\Models\Faq;
 use App\Models\IndiaServiceDescription;
@@ -20,7 +21,7 @@ class FrontendController extends Controller
     {
         $subcategories = Subcategory::where('status', 1)
             ->orderByDesc('created_at')
-            ->select('id','name','slug','icon')
+            ->select('id', 'name', 'slug', 'icon')
             ->get();
         $trendingsubcat = $subcategories->where('trending', 1);
         $featuresubcat = $subcategories->where('featured', 1);
@@ -67,7 +68,7 @@ class FrontendController extends Controller
 
         return view('frontend.service-list', compact('submenus', 'subcategory', 'menus'));
     }
-    public function servicesInIndia()
+    public function servicesInIndia($id)
     {
         $faqs = Faq::where('status', 1)->select('question', 'answer')->get();
         $description = IndiaServiceDescription::first();
@@ -81,9 +82,9 @@ class FrontendController extends Controller
 
     public function servicesInIndiaCity($slug)
     {
-        $states = State::where('country_id',101)
-       ->select('id','country_id','name','status')
-       ->get();
+        $states = State::where('country_id', 101)
+            ->select('id', 'country_id', 'name', 'status')
+            ->get();
         $faqs = Faq::where('status', 1)->select('question', 'answer')->get();
         $submenus = SubMenu::with(['subCategory', 'menu', 'cityName.state'])
             ->where('status', 1)
@@ -94,12 +95,15 @@ class FrontendController extends Controller
             ->select('id', 'description', 'name', 'profession', 'status')
             ->get();
         $subcategory = Subcategory::where('status', 1)
-            ->orderByDesc('created_at')
             ->where('slug', $slug)
             ->first();
-        $description = IndiaServiceDescription::where('sub_category_id',$subcategory->id ??'')->first();
-        return view('frontend.service-in-india-city', compact('faqs', 'submenus', 'description', 'reviews', 'subcategory','states'));
+        $cities = City::paginate(10);
+        $cityIds = City::pluck('id');
+        $vendors = Vendor::whereIn('city', $cityIds)->first();
+        $description = IndiaServiceDescription::where('sub_category_id', $subcategory->id ?? '')->first();
+        return view('frontend.service-in-india-city', compact('faqs', 'submenus', 'description', 'reviews', 'subcategory', 'states', 'cities', 'vendors'));
     }
+
 
     public function enquiryStore(Request $request)
     {

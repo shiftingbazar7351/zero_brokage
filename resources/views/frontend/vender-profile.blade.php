@@ -44,7 +44,7 @@
 @section('content')
     <div class="breadcrumb-bar">
         <div class="container">
-            <div class="row bg-light rounded">
+            {{-- <div class="row bg-light rounded">
                 <div class="col-md-12  my-4">
                     <div class=" breadcrumb-title text-dark">Fill this form to get the best quotes</div>
                     <div id="div1"
@@ -76,7 +76,227 @@
                     </div>
 
                 </div>
+            </div> --}}
+
+            <div class="row bg-light rounded">
+                <div class="col-md-12 my-4">
+                    <div class="breadcrumb-title text-dark">Fill this form to get the best quotes</div>
+                    <div id="div1"
+                        class="d-flex flex-column flex-sm-row justify-content-center gap-3 col-12 col-md-9 mx-auto my-4">
+                        <div class="col-md-3">
+                            <input id="name" class="form-control" type="text" placeholder="Enter your name">
+                            <span id="name-error" class="text-danger"></span>
+                        </div>
+                        <div class="col-md-3">
+                            <input id="email" class="form-control" type="email" placeholder="Enter your email">
+                            <span id="email-error" class="text-danger"></span>
+                        </div>
+                        {{-- <div class="col-md-3 d-flex flex-column">
+                            <input id="mobile" class="form-control" type="text" placeholder="Enter Mobile No"
+                                maxlength="10">
+                            <span id="mobile-error" class="text-danger">Don't use +91</span>
+                        </div> --}}
+
+                        <div class="col-md-3 d-flex flex-column">
+                            <div><input class="form-control" id="venderprofileNum" name="mobile_number" type="text"
+                                    placeholder="Enter Mobile No" maxlength="10"></div>
+                            <div class="text-danger" id="mobile-error">Don't use +91</p>
+                            </div>
+                        </div>
+                        <div>
+                            <button id="getOtpBtn" type="button" class="btn btn-primary btn-lg text-nowrap">Get
+                                OTP</button>
+                        </div>
+                    </div>
+
+                    <div id="div2" class="d-flex justify-content-center col-12 col-md-9 mx-auto d-none gap-4 my-4">
+                        <input id="otp" class="form-control text-center w-25 inputOTP" type="text"
+                            placeholder="Enter your OTP" maxlength="4">
+                        <button id="verifyOtpBtn" type="button" class="btn btn-primary btn-lg text-nowrap">Verify
+                            OTP</button>
+                    </div>
+                </div>
             </div>
+            <script>
+                // $(document).ready(function() {
+                //     // Get OTP button click event
+                //     $('#getOtpBtn').click(function() {
+                //         // Clear previous errors
+                //         $('#name-error').text('');
+                //         $('#email-error').text('');
+                //         $('#mobile-error').text('');
+
+                //         // Collect form data
+                //         var name = $('#name').val();
+                //         var email = $('#email').val();
+                //         var mobile = $('#venderprofileNum').val(); // Updated ID
+
+                //         // Client-side validation
+                //         if (!name) {
+                //             $('#name-error').text('Name is required.');
+                //             return;
+                //         }
+                //         if (!email) {
+                //             $('#email-error').text('Email is required.');
+                //             return;
+                //         }
+                //         if (!mobile || mobile.length != 10) {
+                //             $('#mobile-error').text('Valid mobile number is required.');
+                //             return;
+                //         }
+
+                //         // Send AJAX request to get OTP
+                //         $.ajax({
+                //             url: '{{ route('getOtp') }}',
+                //             method: 'POST',
+                //             data: {
+                //                 _token: '{{ csrf_token() }}',
+                //                 name: name,
+                //                 email: email,
+                //                 mobile_number: mobile // Updated key to match server-side expectation
+                //             },
+                //             success: function(response) {
+                //                 if (response.success) {
+                //                     $('#div1').addClass('d-none');
+                //                     $('#div2').removeClass('d-none');
+                //                     alert('OTP sent successfully.');
+                //                 } else {
+                //                     alert('Failed to send OTP. Please try again.');
+                //                 }
+                //             },
+                //             error: function(xhr) {
+                //                 alert('An error occurred. Please try again.');
+                //             }
+                //         });
+                //     });
+
+                //     // Verify OTP button click event
+                //     $('#verifyOtpBtn').click(function() {
+                //         var otp = $('#otp').val();
+
+                //         if (!otp || otp.length != 4) {
+                //             alert('Please enter a valid 4-digit OTP.');
+                //             return;
+                //         }
+
+                //         // Send AJAX request to verify OTP
+                //         $.ajax({
+                //             url: '{{ route('verifyOtp') }}',
+                //             method: 'POST',
+                //             data: {
+                //                 _token: '{{ csrf_token() }}',
+                //                 otp: otp
+                //             },
+                //             success: function(response) {
+                //                 if (response.success) {
+                //                     alert('OTP verified successfully.');
+                //                     // Redirect or perform next action
+                //                 } else {
+                //                     alert('Invalid OTP. Please try again.');
+                //                 }
+                //             },
+                //             error: function(xhr) {
+                //                 alert('An error occurred. Please try again.');
+                //             }
+                //         });
+                //     });
+                // });
+
+
+                $(document).ready(function() {
+                    // Get OTP button click event
+                    $('#getOtpBtn').click(function() {
+                        // Clear previous errors
+                        $('#name-error').text('');
+                        $('#email-error').text('');
+                        $('#mobile-error').text('');
+
+                        // Collect form data
+                        var name = $('#name').val();
+                        var email = $('#email').val();
+                        var mobile = $('#venderprofileNum').val(); // Correct ID
+
+                        // Client-side validation
+                        if (!name) {
+                            $('#name-error').text('Name is required.');
+                            return;
+                        }
+                        if (!email) {
+                            $('#email-error').text('Email is required.');
+                            return;
+                        }
+                        if (!mobile || mobile.length != 10) {
+                            $('#mobile-error').text('Valid mobile number is required.');
+                            return;
+                        }
+
+                        // Send AJAX request to get OTP
+                        $.ajax({
+                            url: '{{ route('getOtp') }}',
+                            method: 'POST',
+                            data: {
+                                _token: '{{ csrf_token() }}',
+                                name: name,
+                                email: email,
+                                mobile_number: mobile // Updated key to match server-side expectation
+                            },
+                            success: function(response) {
+                                if (response.success) {
+                                    $('#div1').addClass('d-none');
+                                    $('#div2').removeClass('d-none');
+                                    alert('OTP sent successfully.');
+                                } else {
+                                    alert('Failed to send OTP. Please try again.');
+                                }
+                            },
+                            error: function(xhr) {
+                                alert('An error occurred. Please try again.');
+                            }
+                        });
+                    });
+
+                    // Verify OTP button click event
+                    $('#verifyOtpBtn').click(function() {
+                        // Collect form data
+                        var otp = $('#otp').val();
+                        var mobile = $('#venderprofileNum').val(); // Ensure the mobile number is included
+
+                        if (!otp || otp.length != 4) {
+                            alert('Please enter a valid 4-digit OTP.');
+                            return;
+                        }
+                        if (!mobile || mobile.length != 10) {
+                            alert('Valid mobile number is required.');
+                            return;
+                        }
+
+                        // Send AJAX request to verify OTP
+                        $.ajax({
+                            url: '{{ route('verifyOtp') }}',
+                            method: 'POST',
+                            data: {
+                                _token: '{{ csrf_token() }}',
+                                otp: otp,
+                                mobile_number: mobile // Include mobile number in the request
+                            },
+                            success: function(response) {
+                                if (response.success) {
+                                    // alert('OTP verified successfully.');
+                                    toastr.success('OTP verified successfully.')
+                                    location.reload();
+                                    // Redirect or perform next action
+                                } else {
+                                    toastr.error('Incorrect OTP entered.');
+                                }
+                            },
+                            error: function(xhr) {
+                                // alert('An error occurred. Please try again.');
+                                toastr.error('Incorrect OTP entered.')
+                            }
+                        });
+                    });
+                });
+            </script>
         </div>
     </div>
 
@@ -203,9 +423,11 @@
                         <div class="col-lg-6 col-md-12">
                             <div class="provide-box">
                                 <span></span>
-                                <div class="provide-info">
-                                    <button class="btn btn-primary">Get Best Quotes</button>
-                                </div>
+                                <a href="#">
+                                    <div class="provide-info">
+                                        <button class="btn btn-primary">Get Best Quotes</button>
+                                    </div>
+                                </a>
                             </div>
                         </div>
 

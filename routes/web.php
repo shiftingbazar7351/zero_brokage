@@ -11,15 +11,17 @@ use App\Http\Controllers\MetaDescripConroller;
 use App\Http\Controllers\MetaTitleController;
 use App\Http\Controllers\MetaUrlController;
 use App\Http\Controllers\NewsletterController;
+use App\Http\Controllers\OTPController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\ReviewController;
 use App\Http\Controllers\ServiceDetailController;
 use App\Http\Controllers\SubCategoryController;
 use App\Http\Controllers\SubMenuController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\VendorController;
-use App\Http\Controllers\ReviewController;
 use App\Http\Controllers\VerifiedController;
 use Illuminate\Support\Facades\Route;
+
 
 
 /*
@@ -89,13 +91,18 @@ Route::controller(FrontendController::class)->group(function () {
     Route::get('/service-grid/{slug}', 'subCategory')->name('service.grid');
     Route::post('/user/enquiry/store', 'enquiryStore')->name('enquirystore');
     Route::post('/user/enquiry/update', 'enquiryUpdate')->name('enquiryupdate');
-    Route::post('/verify-otp', 'verifyOtp')->name('user.verifyOtp');
+    // Route::post('/verify-otp', 'verifyOtp')->name('user.verifyOtp');
     Route::get('/{slug}-in-india', 'servicesInIndiaCity')->name('services-in-india-city');
     Route::get('/provider-details/{id}', 'providerDetails')->name('vender-profile');
     Route::post('/path-to-your-endpoint', 'filterServices')->name('filter.services');
     Route::post('/user/review/store', 'reviewStore')->name('reviewstore');
 
 });
+
+
+Route::post('/get-otp', [OtpController::class, 'getOtp'])->name('getOtp');
+Route::post('/verify-otp', [OtpController::class, 'verifyOtp'])->name('verifyOtp');
+
 
 
 Route::middleware('auth')->group(function () {

@@ -7,6 +7,7 @@ use App\Models\Faq;
 use App\Models\IndiaServiceDescription;
 use App\Models\Menu;
 use App\Models\Review;
+use App\Models\State;
 use App\Models\SubCategory;
 use App\Models\SubMenu;
 use App\Models\Vendor;
@@ -19,6 +20,7 @@ class FrontendController extends Controller
     {
         $subcategories = Subcategory::where('status', 1)
             ->orderByDesc('created_at')
+            ->select('id','name','slug','icon')
             ->get();
         $trendingsubcat = $subcategories->where('trending', 1);
         $featuresubcat = $subcategories->where('featured', 1);
@@ -79,6 +81,7 @@ class FrontendController extends Controller
 
     public function servicesInIndiaCity($slug)
     {
+        $states = State::where('country_id',101)->get();
         $faqs = Faq::where('status', 1)->select('question', 'answer')->get();
         $description = IndiaServiceDescription::first();
         $submenus = SubMenu::with(['subCategory', 'menu', 'cityName.state'])
@@ -93,7 +96,7 @@ class FrontendController extends Controller
             ->orderByDesc('created_at')
             ->where('slug', $slug)
             ->first();
-        return view('frontend.service-in-india-city', compact('faqs', 'submenus', 'description', 'reviews', 'subcategory'));
+        return view('frontend.service-in-india-city', compact('faqs', 'submenus', 'description', 'reviews', 'subcategory','states'));
     }
 
     public function enquiryStore(Request $request)

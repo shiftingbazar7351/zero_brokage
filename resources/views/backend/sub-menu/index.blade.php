@@ -148,10 +148,10 @@
                                 </select>
                                 <div id="subcategory_id-error" class="text-danger"></div>
                             </div>
-    
+
                             <div class="form-group col-md-6">
                                 <label for="menu">Menu</label>
-                                <select class="form-control" id="menu" name="menu">
+                                    <select class="form-control" id="menu" name="menu">
                                     <option value="">Select menu</option>
                                 </select>
                                 <div id="menu-error" class="text-danger"></div>
@@ -168,27 +168,27 @@
                                 </select>
                                 <div id="state-error" class="text-danger"></div>
                             </div>
-    
+
                             <div class="form-group col-md-6">
                                 <label for="category">City</label>
-                                <select class="form-control" id="city" name="city">
+                                <select  class="form-control" id="city" name="city">
                                     <option value="">Select City</option>
                                 </select>
                                 <div id="city-error" class="text-danger"></div>
                             </div>
                         </div>
-    
+
                         <div class="row">
                             <div class="form-group col-md-6">
                                 <label for="price">Price(INR)</label>
-                                <input type="text" class="form-control" id="price" name="total_price"
+                                    <input type="text" class="form-control" id="price" name="total_price"
                                     placeholder="Enter Ammount">
                                 <div id="price-error" class="text-danger"></div>
                             </div>
-    
+
                             <div class="form-group col-md-6">
                                 <label for="price">Discount(%)</label>
-                                <input type="text" class="form-control" id="discount" name="discount"
+                                <input type="text" cl    ass="form-control" id="discount" name="discount"
                                     placeholder="Enter Discount percentage">
                                 <div id="discount-error" class="text-danger"></div>
                             </div>
@@ -217,37 +217,37 @@
                             </div>
                             <div id="image-error" class="text-danger"></div>
                         </div>
-    
+
                         <div class="form-group">
                             <label for="details" class="col-form-label">Details <span class="text-danger">*</span></label>
-                            <textarea class="form-control" id="details" placeholder="Enter Details" name="details">{{ old('details') }}</textarea>
+                            <textarea class="f    orm-control" id="details" placeholder="Enter Details" name="details">{{ old('details') }}</textarea>
                             <div id="details-error" class="text-danger"></div>
                         </div>
-    
+
                         <div class="form-group">
                             <label for="description">Description</label>
-                            <textarea type="text" class="form-control" id="description" name="description" placeholder="Enter Ammount"></textarea>
+                            <textarea type="text" class="form-control" id="description" name="descript    ion" placeholder="Enter Ammount"></textarea>
                             <div id="description-error" class="text-danger"></div>
                         </div>
-    
+
                         <button type="submit" class="btn btn-primary">Save</button>
                     </form>
                 </div>
             </div>
         </div>
     </div>
-    
+
     <script>
-        // Initialize CKEditor for the Details and Description fields
+        // Initialize CKEditor for t    he Details and Description fields
         CKEDITOR.replace('details');
     </script>
-    
+
 
     <div class="modal fade" id="edit-category" tabindex="-1" aria-labelledby="editCategoryModalLabel"
         aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
-                <div class="modal-header">
+                <div class="modal-he    ader">
                     <h5 class="modal-title">Edit Sub-Menu</h5>
                     <button type="button" class="btn-close close-modal" data-bs-dismiss="modal" aria-label="Close">
                         <i class="fe fe-x"></i>
@@ -382,16 +382,16 @@
                             <textarea class="form-control" id="edit-details" placeholder="Enter Details" name="details">{{ old('details') }}</textarea>
                             <div id="details-error" class="text-danger"></div>
                         </div>
-                        
+
                         <script>
                             // Initialize CKEditor for the edit-details field
                             CKEDITOR.replace('edit-details');
                         </script>
-                        
+
 
                         <div class="form-group">
                             <label for="description">Description</label>
-                            <textarea type="text" class="form-control" id="edit-description" name="description" placeholder="Enter Ammount"></textarea>
+                            <textarea type="text" cl                        ass="form-control" id="edit-description" name="description" placeholder="Enter Ammount"></textarea>
                             <div id="description-error" class="text-danger"></div>
                         </div>
 

@@ -63,47 +63,47 @@ class VendorController extends Controller
     public function store(Request $request)
     {
 
-        $validatedData = $request->validate([
-            'manager_id' => 'required|integer',
-            'employee_id' => 'required|integer',
-            'category' => 'required|string|max:255',
-            'sub_category' => 'required|string|max:255',
-            'menu_id' => 'required|string|max:255',
-            'submenu_id' => 'required|string|max:255',
-            'company_name' => 'required|string|max:255',
-            'legal_company_name' => 'required|string|max:255',
-            'city' => 'required|string|max:255',
-            'state' => 'required|string|max:255',
-            'pincode' => 'required|string|max:6',
-            'address' => 'required|string|max:500',
-            'email' => 'required|email',
-            // 'whatsapp' => 'nullable|string|max:10',
-            // 'number' => 'required|string|max:10',
-            'website' => 'nullable|url',
-            // 'verified' => 'required|integer',
-            // 'submenu_id' => 'required|integer',
-            'description' => 'required',
-            'logo' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-            'owner_name' => 'required|string|max:255',
-            'vendor_image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-            'gst_image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-            'gst_number' => 'required|string|max:15',
-            'pan_image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-            'pan_number' => 'required|string|max:10',
-            'adhar_image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-            // 'adhar_numbere' => 'required|string|max:12',
-            // 'visiting_card' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-            // 'client_sign' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-            // 'video' => 'nullable|mimetypes:video/mp4,video/avi,video/mpeg|max:10000',
-            // 'location_lat' => 'nullable|numeric',
-            // 'location_lang' => 'nullable|numeric',
-        ]);
+        // $validatedData = $request->validate([
+        //     'manager_id' => 'required|integer',
+        //     'employee_id' => 'required|integer',
+        //     'category' => 'required|string|max:255',
+        //     'sub_category' => 'required|string|max:255',
+        //     'menu_id' => 'required|string|max:255',
+        //     'submenu_id' => 'required|string|max:255',
+        //     'company_name' => 'required|string|max:255',
+        //     'legal_company_name' => 'required|string|max:255',
+        //     'city' => 'required|string|max:255',
+        //     'state' => 'required|string|max:255',
+        //     'pincode' => 'required|string|max:6',
+        //     'address' => 'required|string|max:500',
+        //     'email' => 'required|email',
+        //     // 'whatsapp' => 'nullable|string|max:10',
+        //     // 'number' => 'required|string|max:10',
+        //     'website' => 'nullable|url',
+        //     // 'verified' => 'required|integer',
+        //     // 'submenu_id' => 'required|integer',
+        //     'description' => 'required',
+        //     'logo' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+        //     'owner_name' => 'required|string|max:255',
+        //     'vendor_image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+        //     'gst_image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+        //     'gst_number' => 'required|string|max:15',
+        //     'pan_image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+        //     'pan_number' => 'required|string|max:10',
+        //     'adhar_image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+        //     // 'adhar_numbere' => 'required|string|max:12',
+        //     // 'visiting_card' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+        //     // 'client_sign' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+        //     // 'video' => 'nullable|mimetypes:video/mp4,video/avi,video/mpeg|max:10000',
+        //     // 'location_lat' => 'nullable|numeric',
+        //     // 'location_lang' => 'nullable|numeric',
+        // ]);
         // return $request->all();
 
         // Save vendor data
         // Create the vendor record
 
-        $vendor = Vendor::create($validatedData);
+        $vendor = Vendor::create($request->all());
         // return $vendor;
         $vendor->created_by = auth()->user()->id;
 

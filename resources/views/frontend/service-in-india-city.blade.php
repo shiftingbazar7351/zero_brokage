@@ -1,8 +1,10 @@
 @extends('frontend.layouts.main')
 @section('styles')
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/css/intlTelInput.min.css">
-    <link rel="stylesheet" href="{{ asset('assets/css/service-in-india-city.css') }}">
+    {{-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/css/bootstrap-select.min.css"> --}}
+
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
     <style>
         .work-box {
             border: 2px solid #427de9;
@@ -97,21 +99,27 @@
             <div class="row">
                 <div class="col-md-12 col-12 my-4">
                     <h2 class=" breadcrumb-title text-white">Top Service Provider City</h2>
-                    <div class="d-flex justify-content-center gap-3  mx-auto mt-5">
 
-                        <div class="city-select d-flex gap-3 w-50">
-                            <select class="form-control" id="state" name="state">
-                                <option value="" selected disabled>Select state</option>
-                                @foreach ($states as $state)
-                                    <option value="{{ $state->id ?? '' }}">{{ ucwords($state->name ?? '') }}</option>
-                                @endforeach
+                    <div class="row" style="margin: 6% 0% 5% 25%;">
+                        <div class="col-md-3">
+                            <select name="">
+                                <option value="1">One</option>
+                                <option value="2">Two</option>
+                                <option value="3">Three</option>
+                                <option value="4">Four</option>
+                                <option value="4">Fouur</option>
                             </select>
-                            <div id="state-error" class="text-danger"></div>
-                            <select class="form-control" id="city" name="city">
-                                <option value="" selected disabled>Select City</option>
+                        </div>
+                        <div class="col-md-3">
+                            <select name="">
+                                <option value="1">One</option>
+                                <option value="2">Two</option>
+                                <option value="3">Three</option>
+                                <option value="4">Four</option>
+                                <option value="4">Fouur</option>
                             </select>
-                            <div id="city-error" class="text-danger"></div>
-
+                        </div>
+                        <div class="col-md-1 mb-1   ">
                             <button type="button" class="btn btn-primary btn-lg">Submit</button>
                         </div>
                     </div>
@@ -382,39 +390,6 @@
     @endif
 
     <script>
-        $('#state').on('change', function() {
-            var stateId = $(this).val();
-            if (stateId) {
-                $.ajax({
-                    url: '/fetch-city/' + stateId,
-                    type: 'POST',
-                    data: {
-                        _token: '{{ csrf_token() }}'
-                    },
-                    success: function(response) {
-                        $('#city').empty().append(
-                            '<option value="">Select city</option>');
-                        if (response.status === 1) {
-                            $.each(response.data, function(key, city) {
-                                $('#city').append("<option value='" +
-                                    city.id +
-                                    "'>" + city.name + "</option>");
-                            });
-                        }
-                    },
-                    error: function() {
-                        $('#city').empty().append(
-                            '<option value="" disabled>Error loading cities</option>'
-                        );
-                    }
-                });
-            } else {
-                $('#city').empty().append('<option value="">Select city</option>');
-            }
-        });
-    </script>
-
-    {{-- <script>
         function create_custom_dropdowns() {
             $('select').each(function(i, select) {
                 if (!$(this).next().hasClass('dropdown-select')) {
@@ -526,9 +501,11 @@
         $(document).ready(function() {
             create_custom_dropdowns();
         });
-    </script> --}}
+    </script>
 
     <script src="{{ asset('assets/js/service-india-popup.js') }}"></script>
+
+    {{-- <script src="asset('assets/js/service-india-city.js')"></script> --}}
     <script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/intlTelInput.min.js"></script>
     <script src="assets/js/jquery-3.7.0.min.js" type="7db8b12444c9592ace2cf678-text/javascript"></script>
     <script>

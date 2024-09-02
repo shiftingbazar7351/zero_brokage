@@ -1,8 +1,6 @@
 @extends('frontend.layouts.main')
 @section('content')
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/css/intlTelInput.min.css">
-
-
     <div class="breadcrumb-bar">
         <div class="container">
             <div class="row">
@@ -44,7 +42,7 @@
                         <div class="img">
                             <img src="{{ Storage::url('menu/' . $menu->image ?? '') }}" alt="" draggable="false" />
                         </div>
-                        <h5 style="font-weight: bold" class="pt-1">{{ $menu->name ?? '' }}</h5>
+                        <h5 style="font-weight: bold; text-align:center" class="pt-1">{{ $menu->name ?? '' }}</h5>
                     </li>
                 @endforeach
             </ul>
@@ -74,16 +72,6 @@
                                 <input type="text" class="form-control" placeholder="Select Location" id="location-val">
                                 <i class="feather-map-pin"></i>
                             </div>
-                        </div>
-                        <div class="filter-content">
-                            <h2>Sub Category</h2>
-                            <select class="form-control select" id="mySelect">
-                                <option value="AllSubCategory">All Sub Category</option>
-                                <option value="computer">Computer</option>
-                                <option value="construction">Construction1</option>
-                                <option value="construction">Construction2</option>
-                                <option value="construction">Construction3</option>
-                            </select>
                         </div>
                         <div class="filter-content">
                             <h2>Categories</h2>
@@ -244,7 +232,7 @@
                             @foreach ($submenus as $menu)
                                 <input type="hidden" name="submenu_id" value="{{ $menu->menu_id }}">
                                 <input type="hidden" name="subcategory_id" id="subcategory_id" {{ $menu->id }}>
-                                <div class="service-list">
+                                <div class="service-list shadow-sm">
                                     <div class="service-cont">
                                         <div class="service-cont-img">
                                             <a href="service-details.html">
@@ -405,6 +393,7 @@
             </div>
         </div>
     </div>
+    
     <script>
         window.addEventListener('scroll', function() {
             var stickySlider = document.querySelector('.sticky-slider');
@@ -421,10 +410,7 @@
             }
         });
     </script>
-
     <script src="{{ asset('assets/js/booking_infoPopup.js') }}"></script>
-
-
     <script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/intlTelInput.min.js"></script>
     <script>
         const inputtestt = document.querySelector("#phoneNumberInput-booking");
@@ -433,7 +419,6 @@
             separateDialCode: true
         });
     </script>
-
     <script>
         $(document).ready(function() {
             // Handle mobile number submission
@@ -565,8 +550,6 @@
 
         });
     </script>
-
-
     <script>
         const otpInputs = document.querySelectorAll('.otp-input');
 
@@ -619,5 +602,72 @@
         });
     </script>
 
+    <script>
+        document.getElementById('sortByPrice').addEventListener('change', function() {
+            applyFilters();
+        });
 
+        document.getElementById('mySelect').addEventListener('change', function() {
+            applyFilters();
+        });
+
+        document.querySelectorAll('.categoryCheckbox').forEach(function(checkbox) {
+            checkbox.addEventListener('change', function() {
+                applyFilters();
+            });
+        });
+
+        document.querySelectorAll('.rating-set input[type="checkbox"]').forEach(function(checkbox) {
+            checkbox.addEventListener('change', function() {
+                applyFilters();
+            });
+        });
+
+        function applyFilters() {
+            let keyword = document.getElementById('input-keyword').value;
+            let location = document.getElementById('location-val').value;
+            let subCategory = document.getElementById('mySelect').value;
+            let categories = Array.from(document.querySelectorAll('.categoryCheckbox:checked')).map(cb => cb
+                .nextElementSibling.textContent.trim());
+            let ratings = Array.from(document.querySelectorAll('.rating-set input[type="checkbox"]:checked')).map(cb => cb
+                .nextElementSibling.textContent.trim());
+            let sortByPrice = document.getElementById('sortByPrice').value;
+
+            let filters = {
+                keyword: keyword,
+                location: location,
+                subCategory: subCategory,
+                categories: categories,
+                ratings: ratings,
+                sortByPrice: sortByPrice
+            };
+
+            console.log(filters);
+
+            // Send filters to backend via AJAX
+            fetchResults(filters);
+        }
+
+        function fetchResults(filters) {
+            fetch('/path-to-your-endpoint', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+                    },
+                    body: JSON.stringify(filters)
+                })
+                .then(response => response.json())
+                .then(data => {
+                    // Update the DOM with the filtered results
+                    console.log(data);
+                    updateResults(data);
+                })
+                .catch(error => console.error('Error:', error));
+        }
+
+        function updateResults(data) {
+            // Use the returned data to update the service list in the DOM
+        }
+    </script>
 @endsection

@@ -64,9 +64,9 @@ Route::get('/term-condition', function () {
 //     return view('frontend.services-in-india');
 // })->name('services-in-india');
 
-Route::get('/vender-profile', function () {
-    return view('frontend.vender-profile');
-})->name('vender-profile');
+// Route::get('/vender-profile', function () {
+//     return view('frontend.vender-profile');
+// })->name('vender-profile');
 
 // Route::get('/services', function () {
 //     return view('frontend.service-detail');
@@ -84,13 +84,17 @@ Route::controller(FrontendController::class)->group(function () {
     Route::get('/', 'home')->name('home');
     Route::get('/service-list', 'serviceList')->name('service-list');
     Route::get('/services-in-india', 'servicesInIndia')->name('services-in-india');
-    Route::get('/service-in-india-city', 'servicesInIndiaCity')->name('services-in-india-city');
+    // Route::get('/service-in-india-city', 'servicesInIndiaCity')->name('services-in-india-city');
     Route::get('/service-details', 'serviceDetails')->name('service-details');
     Route::get('/service-grid/{slug}', 'subCategory')->name('service.grid');
-
     Route::post('/user/enquiry/store', 'enquiryStore')->name('enquirystore');
     Route::post('/user/enquiry/update', 'enquiryUpdate')->name('enquiryupdate');
     Route::post('/verify-otp', 'verifyOtp')->name('user.verifyOtp');
+    Route::get('/{slug}-in-india', 'servicesInIndiaCity')->name('services-in-india-city');
+    Route::get('/provider-details/{id}', 'providerDetails')->name('vender-profile');
+    Route::post('/path-to-your-endpoint', 'filterServices')->name('filter.services');
+    Route::post('/user/review/store', 'reviewStore')->name('reviewstore');
+
 });
 
 
@@ -132,7 +136,6 @@ Route::middleware('auth')->group(function () {
     Route::resource('/meta', MetaDescripConroller::class);
     Route::resource('/meta-url', MetaUrlController::class);
     Route::resource('/meta-title', MetaTitleController::class);
-
 
     Route::resource('/verified', VerifiedController::class);
     Route::post('/verified-status', [VerifiedController::class, 'verifyStatus'])->name('verified.status');

@@ -134,80 +134,82 @@
                     </div>
                 </div>
 
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="owl-carousel service-slider">
-                        @foreach ($featuresubcat as $subcategory)
-                            <div class="service-widget aos featured-cont" data-aos="fade-up" style="width: 300px">
-                                <div class="service-img feat-img mt-2" style="width: 250px">
-                                    <a href="{{ route('service.grid', ['slug' => $subcategory->slug]) }}">
-                                        <img src="{{ asset('storage/icon/' . $subcategory->icon ?? '') }}"
-                                             class="img-fluid serv-img" alt="Service Image" style="width: 250px; height:120px">
-                                    </a>
-                                    <p style="text-align: center; margin:5px 0px" class="text-dark">{{ $subcategory->name ?? '' }}</p>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="owl-carousel service-slider">
+                            @foreach ($featuresubcat as $subcategory)
+                                <div class="service-widget aos featured-cont" data-aos="fade-up" style="width: 300px">
+                                    <div class="service-img feat-img mt-2" style="width: 250px">
+                                        <a href="{{ route('service.grid', ['slug' => $subcategory->slug]) }}">
+                                            <img src="{{ asset('storage/icon/' . $subcategory->icon ?? '') }}"
+                                                class="img-fluid serv-img" alt="Service Image"
+                                                style="width: 250px; height:120px">
+                                        </a>
+                                        <p style="text-align: center; margin:5px 0px" class="text-dark">
+                                            {{ $subcategory->name ?? '' }}</p>
+                                    </div>
                                 </div>
-                            </div>
-                        @endforeach
+                            @endforeach
+                        </div>
                     </div>
                 </div>
-            </div>
 
             </div>
 
         </section>
     @endif
 
-    @if(count($providers) > 0)
-    <section class="providers-section">
-        <div class="container">
-            <div class="section-heading">
-                <div class="row align-items-center">
-                    <div class="col-md-6 aos" data-aos="fade-up">
-                        <h2>Top Providers</h2>
-                        <p>Meet Our Experts</p>
-                    </div>
-                    {{-- <div class="col-md-6 text-md-end aos" data-aos="fade-up">
+    @if (count($providers) > 0)
+        <section class="providers-section">
+            <div class="container">
+                <div class="section-heading">
+                    <div class="row align-items-center">
+                        <div class="col-md-6 aos" data-aos="fade-up">
+                            <h2>Top Providers</h2>
+                            <p>Meet Our Experts</p>
+                        </div>
+                        {{-- <div class="col-md-6 text-md-end aos" data-aos="fade-up">
                         <a href="providers.html" class="btn btn-primary btn-view">View All<i
                                 class="feather-arrow-right-circle"></i></a>
                     </div> --}}
+                    </div>
                 </div>
-            </div>
-            <div class="row  aos" data-aos="fade-up">
-                @foreach ($providers as $provider)
-                    <div class="col-lg-3 col-sm-3">
-                        <div class="providerset">
-                            <div class="providerset-img">
-                                <a href="provider-details.html">
-                                    <img src="{{ asset('storage/vendor/vendor_image/' . $provider->vendor_image ?? '') }}"
-                                        alt="img" style="height: 194px">
-                                </a>
-                            </div>
-                            <div class="providerset-content">
-                                <div class="providerset-price">
-                                    <div class="providerset-name">
-                                        <h4><a href="provider-details.html">{{ $provider->vendor_name ?? '' }}</a><i
-                                                class="fa fa-check-circle" aria-hidden="true"></i></h4>
-                                        <span>{{ $provider->subCategory->name ?? '' }}</span>
-                                    </div>
-                                    <div class="providerset-prices">
-                                        {{-- <h6>&#8377;{{ $provider->price ??'' }}<span>/hr</span></h6> --}}
-                                    </div>
+                <div class="row  aos" data-aos="fade-up">
+                    @foreach ($providers as $provider)
+                        <div class="col-lg-3 col-sm-3">
+                            <div class="providerset">
+                                <div class="providerset-img">
+                                    <a href="{{ route('vender-profile',$provider->id ??'') }}">
+                                        <img src="{{ asset('storage/vendor/vendor_image/' . $provider->vendor_image ?? '') }}"
+                                            alt="img" style="height: 194px">
+                                    </a>
                                 </div>
-                                <div class="provider-rating">
-                                    <div class="rating">
-                                        <i class="fas fa-star filled"></i>
-                                        <i class="fas fa-star filled"></i>
-                                        <i class="fas fa-star filled"></i>
-                                        <i class="fas fa-star filled"></i>
-                                        <i
-                                            class="fa-solid fa-star-half-stroke filled"></i><span>({{ $provider->review_count ?? '0' }})</span>
+                                <div class="providerset-content">
+                                    <div class="providerset-price">
+                                        <div class="providerset-name">
+                                            <h4><a href="provider-details.html">{{ $provider->vendor_name ?? '' }}</a><i
+                                                    class="fa fa-check-circle" aria-hidden="true"></i></h4>
+                                            <span>{{ $provider->subCategory->name ?? '' }}</span>
+                                        </div>
+                                        <div class="providerset-prices">
+                                            {{-- <h6>&#8377;{{ $provider->price ??'' }}<span>/hr</span></h6> --}}
+                                        </div>
+                                    </div>
+                                    <div class="provider-rating">
+                                        <div class="rating">
+                                            <i class="fas fa-star filled"></i>
+                                            <i class="fas fa-star filled"></i>
+                                            <i class="fas fa-star filled"></i>
+                                            <i class="fas fa-star filled"></i>
+                                            <i
+                                                class="fa-solid fa-star-half-stroke filled"></i><span>({{ $provider->review_count ?? '0' }})</span>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                @endforeach
-                {{-- <div class="col-lg-3 col-sm-3">
+                    @endforeach
+                    {{-- <div class="col-lg-3 col-sm-3">
                     <div class="providerset">
                         <div class="providerset-img">
                             <a href="provider-details.html">
@@ -298,9 +300,9 @@
                     </div>
                 </div> --}}
 
+                </div>
             </div>
-        </div>
-    </section>
+        </section>
     @endif
 
     <section class="work-section pt-0">
@@ -379,20 +381,20 @@
                         <a href="service-list1-All.html" class="btn btn-primary btn-view">View All<i
                                 class="feather-arrow-right-circle"></i></a>
                     </div> --}}
+                    </div>
                 </div>
-            </div>
-            <div class="row">
-                @foreach ($subcategories as $subcategory)
-                <div class="col-md-2">
-                    <a href="{{ route('service.grid', ['slug' => $subcategory->slug]) }}" class="feature-box aos" data-aos="fade-up">
-                        <div class="feature-icon">
-                            <span>
-                                <img src="{{ asset('storage/icon/' . $subcategory->icon ?? '') }}"
-                                     alt="img" class="rounded-circle">
-                            </span>
-                        </div>
-                        <h5>{{ $subcategory->name ?? '' }}</h5>
-
+                <div class="row">
+                    @foreach ($subcategories as $subcategory)
+                        <div class="col-md-2">
+                            <a href="{{ route('services-in-india-city',$subcategory->slug ??'') }}" class="feature-box aos"
+                                data-aos="fade-up">
+                                <div class="feature-icon">
+                                    <span>
+                                        <img src="{{ asset('storage/icon/' . $subcategory->icon ?? '') }}" alt="img"
+                                            class="rounded-circle">
+                                    </span>
+                                </div>
+                                <h5>{{ $subcategory->name ?? '' }}</h5>
                             </a>
                         </div>
                     @endforeach

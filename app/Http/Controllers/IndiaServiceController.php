@@ -1,7 +1,10 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use App\Models\Category;
+use App\Models\Menu;
+use App\Models\SubCategory;
+use App\Models\SubMenu;
 use App\Models\IndiaServiceDescription;
 use Illuminate\Http\Request;
 
@@ -23,7 +26,10 @@ class IndiaServiceController extends Controller
      */
     public function create()
     {
-        return view('backend.india-service-description.create');
+        $categories = Category::where('status', 1)->orderByDesc('created_at')->get();
+        $subcategories = SubCategory::orderByDesc('created_at')->get();
+        $submenus = SubMenu::orderByDesc('created_at')->get();
+        return view('backend.india-service-description.create',compact('categories','subcategories','submenus'));
     }
 
     /**

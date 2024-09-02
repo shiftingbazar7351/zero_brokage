@@ -422,11 +422,11 @@
 
                             <div class="row mt-3">
                             <div class="mb-3 col-md-12">
-                                <label for="summery" class="col-form-label">Desription <span
+                                <label for="summery" class="col-form-label">Description <span
                                         class="text-danger">*</span></label>
-                                <textarea class="form-control" id="summery" name="summery">{{ old('summery') }}</textarea>
-                                @error('summery')
-                                    <span class="text-danger">{{ $message }}</span>
+                                <textarea class="form-control" id="summery" name="description">{{ old('desription') }}</textarea>
+                                @error('sub_category')
+                                <div class="error text-danger">{{ $message }}</div>
                                 @enderror
                             </div>
                             </div>

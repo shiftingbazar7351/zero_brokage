@@ -1,9 +1,8 @@
 @extends('frontend.layouts.main')
 @section('styles')
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/css/intlTelInput.min.css">
-    {{-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/css/bootstrap-select.min.css"> --}}
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
 
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
     <style>
         .work-box {
@@ -91,6 +90,24 @@
             background-color: #1573d6;
             color: black;
         }
+
+        .select2-container .select2-selection--single {
+            height: 42px;
+            /* Customize the height */
+            border-radius: 6px;
+            border: solid 1px #eee;
+            box-shadow: 0px 2px 5px 0px rgba(155, 155, 155, 0.5);
+            padding: 5px;
+        }
+
+        .select2-container--default .select2-selection--single .select2-selection__arrow {
+            height: 100%;
+            right: 10px;
+        }
+
+        .select2-container--default .select2-selection--single .select2-selection__arrow {
+            display: none;
+        }
     </style>
 @endsection
 @section('content')
@@ -100,26 +117,27 @@
                 <div class="col-md-12 col-12 my-4">
                     <h2 class=" breadcrumb-title text-white">Top Service Provider City</h2>
 
-                    <div class="row" style="margin: 6% 0% 5% 25%;">
-                        <div class="col-md-3">
-                            <select name="">
-                                <option value="1">One</option>
-                                <option value="2">Two</option>
-                                <option value="3">Three</option>
-                                <option value="4">Four</option>
-                                <option value="4">Fouur</option>
+                    <div class="row align-items-center" style="margin: 6% 0% 5% 10%;">
+                        <div class="col-md-5">
+                            <select class="form-control" name="" id="state">
+                                <option>Select State</option>
+                                <option value="two">Two</option>
+                                <option value="Three">Three</option>
+                                <option value="Four">Four</option>
+                                <option value="Fouur">Fouur</option>
                             </select>
                         </div>
-                        <div class="col-md-3">
-                            <select name="">
-                                <option value="1">One</option>
-                                <option value="2">Two</option>
-                                <option value="3">Three</option>
-                                <option value="4">Four</option>
-                                <option value="4">Fouur</option>
+                        <div class="col-md-5 ">
+                            <select class="form-control" name="" id="city">
+                                <option>Select city</option>
+                                <option value="Delhi">Delhi</option>
+                                <option value="Dehradun">Dehradun</option>
+                                <option value="Uttrakhnad">Uttrakhnad</option>
+                                <option value="Uttar Pradesh">Uttar Pradesh</option>
+                                <option value="Foouuur">Foouuur</option>
                             </select>
                         </div>
-                        <div class="col-md-1 mb-1   ">
+                        <div class="col-md-1">
                             <button type="button" class="btn btn-primary btn-lg">Submit</button>
                         </div>
                     </div>
@@ -419,121 +437,21 @@
             </div>
         </section>
     @endif
-
     <script>
-        function create_custom_dropdowns() {
-            $('select').each(function(i, select) {
-                if (!$(this).next().hasClass('dropdown-select')) {
-                    $(this).after('<div class="dropdown-select wide ' + ($(this).attr('class') || '') +
-                        '" tabindex="0"><span class="current"></span><div class="list"><ul></ul></div></div>');
-                    var dropdown = $(this).next();
-                    var options = $(select).find('option');
-                    var selected = $(this).find('option:selected');
-                    dropdown.find('.current').html(selected.data('display-text') || selected.text());
-                    options.each(function(j, o) {
-                        var display = $(o).data('display-text') || '';
-                        dropdown.find('ul').append('<li class="option ' + ($(o).is(':selected') ?
-                                'selected' : '') + '" data-value="' + $(o).val() +
-                            '" data-display-text="' + display + '">' + $(o).text() + '</li>');
-                    });
-                }
-            });
-
-            $('.dropdown-select ul').before(
-                '<div class="dd-search"><input id="txtSearchValue" autocomplete="off" onkeyup="filter()" class="dd-searchbox" type="text"></div>'
-            );
-        }
-
-        // Event listeners
-
-        // Open/close
-        $(document).on('click', '.dropdown-select', function(event) {
-            if ($(event.target).hasClass('dd-searchbox')) {
-                return;
-            }
-            $('.dropdown-select').not($(this)).removeClass('open');
-            $(this).toggleClass('open');
-            if ($(this).hasClass('open')) {
-                $(this).find('.option').attr('tabindex', 0);
-                $(this).find('.selected').focus();
-            } else {
-                $(this).find('.option').removeAttr('tabindex');
-                $(this).focus();
-            }
-        });
-
-        // Close when clicking outside
-        $(document).on('click', function(event) {
-            if ($(event.target).closest('.dropdown-select').length === 0) {
-                $('.dropdown-select').removeClass('open');
-                $('.dropdown-select .option').removeAttr('tabindex');
-            }
-            event.stopPropagation();
-        });
-
-        function filter() {
-            var valThis = $('#txtSearchValue').val();
-            $('.dropdown-select ul > li').each(function() {
-                var text = $(this).text();
-                (text.toLowerCase().indexOf(valThis.toLowerCase()) > -1) ? $(this).show(): $(this).hide();
-            });
-        };
-        // Search
-
-        // Option click
-        $(document).on('click', '.dropdown-select .option', function(event) {
-            $(this).closest('.list').find('.selected').removeClass('selected');
-            $(this).addClass('selected');
-            var text = $(this).data('display-text') || $(this).text();
-            $(this).closest('.dropdown-select').find('.current').text(text);
-            $(this).closest('.dropdown-select').prev('select').val($(this).data('value')).trigger('change');
-        });
-
-        // Keyboard events
-        $(document).on('keydown', '.dropdown-select', function(event) {
-            var focused_option = $($(this).find('.list .option:focus')[0] || $(this).find('.list .option.selected')[
-                0]);
-            // Space or Enter
-            //if (event.keyCode == 32 || event.keyCode == 13) {
-            if (event.keyCode == 13) {
-                if ($(this).hasClass('open')) {
-                    focused_option.trigger('click');
-                } else {
-                    $(this).trigger('click');
-                }
-                return false;
-                // Down
-            } else if (event.keyCode == 40) {
-                if (!$(this).hasClass('open')) {
-                    $(this).trigger('click');
-                } else {
-                    focused_option.next().focus();
-                }
-                return false;
-                // Up
-            } else if (event.keyCode == 38) {
-                if (!$(this).hasClass('open')) {
-                    $(this).trigger('click');
-                } else {
-                    var focused_option = $($(this).find('.list .option:focus')[0] || $(this).find(
-                        '.list .option.selected')[0]);
-                    focused_option.prev().focus();
-                }
-                return false;
-                // Esc
-            } else if (event.keyCode == 27) {
-                if ($(this).hasClass('open')) {
-                    $(this).trigger('click');
-                }
-                return false;
-            }
-        });
-
         $(document).ready(function() {
-            create_custom_dropdowns();
+            $('#state').select2({
+                placeholder: "Select an option", // Placeholder text
+                allowClear: true // Option to clear the selection
+            });
+            $('#city').select2({
+                placeholder: "Select an option", // Placeholder text
+                allowClear: true // Option to clear the selection
+            });
         });
     </script>
 
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
     <script src="{{ asset('assets/js/service-india-popup.js') }}"></script>
 
     {{-- <script src="asset('assets/js/service-india-city.js')"></script> --}}

@@ -97,7 +97,7 @@ class FrontendController extends Controller
             ->orderByDesc('created_at')
             ->where('slug', $slug)
             ->first();
-        $description = IndiaServiceDescription::where('sub_category_id',$subcategory->id ??'')->first();
+        $description = IndiaServiceDescription::first();
         return view('frontend.service-in-india-city', compact('faqs', 'submenus', 'description', 'reviews', 'subcategory','states'));
     }
 

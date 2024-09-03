@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Category;
 use App\Models\City;
 use App\Models\Enquiry;
 use App\Models\Faq;
@@ -81,7 +82,8 @@ class FrontendController extends Controller
         // $subcategory = Subcategory::where('status', 1)
         //     ->where('slug', $slug)
         //     ->first();
-        return view('frontend.services-in-india-vendors', compact('faqs', 'vendors', 'description'));
+        $subcategories = Subcategory::where('status',1)->get();
+        return view('frontend.services-in-india-vendors', compact('faqs', 'vendors', 'description','subcategories'));
     }
 
     public function servicesInIndiaCity($slug)

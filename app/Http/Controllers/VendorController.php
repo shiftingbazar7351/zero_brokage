@@ -62,8 +62,8 @@ class VendorController extends Controller
         $validatedData = $request->validate([
             'manager_id' => 'required|integer',
             'employee_id' => 'required|integer',
-            'category' => 'required|string|max:255',
-            'sub_category' => 'required|string|max:255',
+            'category' => 'required|max:255',
+            'sub_category' => 'required|max:255',
             'menu_id' => 'required|max:255',
             'submenu_id' => 'required|max:255',
             'company_name' => 'required|string|max:255',
@@ -75,7 +75,7 @@ class VendorController extends Controller
             'email' => 'required|email',
             'whatsapp' => 'nullable|max:10',
             'number' => 'required|max:10',
-            'website' => 'nullable|url',
+            // 'website' => 'nullable|url',
             // 'verified' => 'required',
             // 'submenu_id' => 'required|integer',
             // 'description' => 'required',
@@ -83,16 +83,16 @@ class VendorController extends Controller
             'owner_name' => 'required|string|max:255',
             'vendor_image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
             'gst_image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-            'gst_number' => 'required|string|max:15',
+            'gst_number' => 'required|max:15',
             'pan_image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-            'pan_number' => 'required|string|max:10',
+            'pan_number' => 'required|max:10',
             'adhar_image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-            'adhar_numbere' => 'required|string|max:12',
+            'adhar_numbere' => 'required|max:12',
             // 'visiting_card' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
             // 'client_sign' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-           'video' => 'required|file|mimetypes:video/mp4,video/x-m4v|max:51200', // Max 50MB      
+        //    'video' => 'required|file|mimetypes:video/mp4,video/x-m4v|max:51200', // Max 50MB      
             // 'location_lat' => 'nullable|numeric',
-            'location_lang' => 'nullable|numeric',
+            // 'location_lang' => 'nullable|numeric',
         ]);
         // return $request->all();
 
@@ -191,27 +191,39 @@ class VendorController extends Controller
     public function update(Request $request, $id)
     {
         $validatedData = $request->validate([
-            'manager_id' => 'required',
-            'employee_id' => 'required',
-            'sub_category' => 'required|string|max:255',
+            'manager_id' => 'required|integer',
+            'employee_id' => 'required|integer',
+            'category' => 'required|max:255',
+            'sub_category' => 'required|max:255',
+            'menu_id' => 'required|max:255',
+            'submenu_id' => 'required|max:255',
             'company_name' => 'required|string|max:255',
-            'legal_company_name' => 'required|string|max:255',
-            'city' => 'required|string|max:255',
-            'state' => 'required|string|max:255',
-            'pincode' => 'required|string|max:6',
+            'legal_company_name' => '|string|max:255',
+            'city' => 'required|max:255',
+            'state' => 'required|max:255',
+            'pincode' => 'required|max:6',
             'address' => 'required|string|max:500',
             'email' => 'required|email',
-            'website' => 'nullable|url',
-            'verified' => 'required',
+            'whatsapp' => 'nullable|max:10',
+            'number' => 'required|max:10',
+            // 'website' => 'nullable|url',
+            // 'verified' => 'required',
+            // 'submenu_id' => 'required|integer',
             // 'description' => 'required',
             'logo' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
             'owner_name' => 'required|string|max:255',
             'vendor_image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
             'gst_image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-            'gst_number' => 'required|string|max:15',
+            'gst_number' => 'required|max:15',
             'pan_image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-            'pan_number' => 'required|string|max:10',
+            'pan_number' => 'required|max:10',
             'adhar_image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'adhar_numbere' => 'required|max:12',
+            // 'visiting_card' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            // 'client_sign' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+        //    'video' => 'required|file|mimetypes:video/mp4,video/x-m4v|max:51200', // Max 50MB      
+            // 'location_lat' => 'nullable|numeric',
+            // 'location_lang' => 'nullable|numeric',
         ]);
 
         $vendor = Vendor::findOrFail($id); // Find the vendor by ID or fail if not found
@@ -242,6 +254,11 @@ class VendorController extends Controller
         if ($request->hasFile('adhar_image')) {
             $filename = $this->fileUploadService->uploadImage('vendor/adhar_image/', $request->file('adhar_image'));
             $vendor->adhar_image = $filename;
+        }
+
+        if ($request->hasFile('video')) {
+            $filename = $this->fileUploadService->uploadImage('vendor/video/', $request->file('video'));
+            $vendor->video = $filename;
         }
 
         $vendor->save(); // Save the changes

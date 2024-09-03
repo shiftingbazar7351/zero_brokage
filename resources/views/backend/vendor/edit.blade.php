@@ -380,12 +380,14 @@
 
                             <div class="row mt-3">
                                 <div class="col-md-4">
-                                    <label for="formFile" class="form-label">Official video<b
+                                    <label for="formFile" class="form-label">Official video <b
                                             style="color: red;">*</b></label>
-                                    <input name="video" class="form-control bg-light-subtle" type="file"
-                                        id="formFile" required>
+                                    <input name="video" accept="video/*"
+                                        class="form-control bg-light-subtle" type="file" id="formFile" required>
+                                    <small id="fileHelp" class="form-text text-muted">Max file size: 50MB. Supported formats:
+                                        mp4, m4v.</small>
                                     @error('video')
-                                        <div class="error text-danger ">{{ $message }}</div>
+                                        <div class="error text-danger">{{ $message }}</div>
                                     @enderror
                                 </div>
                                 <div class="col-md-4">

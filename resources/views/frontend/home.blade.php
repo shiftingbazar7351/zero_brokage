@@ -83,7 +83,7 @@
             </div>
         </section>
     @endif
-    @if (count($trendingsubcat) != 0)
+    @if (count($trendingsubcat) > 0)
         <section class="feature-section">
             <div class="container">
                 <div class="section-heading">
@@ -119,7 +119,7 @@
             </div>
         </section>
     @endif
-    @if (count($featuresubcat) != 0)
+    @if (count($featuresubcat) > 0)
         <section class="service-section">
             <div class="container">
                 <div class="section-heading">

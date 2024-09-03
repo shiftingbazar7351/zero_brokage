@@ -364,7 +364,7 @@
                             <div class="col-md-4">
                                 <label for="formFile" class="form-label">Official video <b
                                         style="color: red;">*</b></label>
-                                <input name="video" accept="video/mp4,video/x-m4v,video/*"
+                                <input name="video" accept="video/*"
                                     class="form-control bg-light-subtle" type="file" id="formFile" required>
                                 <small id="fileHelp" class="form-text text-muted">Max file size: 50MB. Supported formats:
                                     mp4, m4v.</small>
@@ -465,7 +465,7 @@
     <script src="{{ asset('admin/summernote/summernote.min.js') }}"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.1/js/bootstrap-select.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/intlTelInput.min.js"></script>
-    <script>
+    {{-- <script>
         document.getElementById('formFile').addEventListener('change', function() {
             const file = this.files[0];
             if (file.size > 52428800) { // 50MB limit
@@ -475,7 +475,7 @@
                 alert(`Selected file: ${file.name}`);
             }
         });
-    </script>
+    </script> --}}
     <script>
         const inputvender = document.querySelector("#phoneNumVender");
         window.intlTelInput(inputvender, {

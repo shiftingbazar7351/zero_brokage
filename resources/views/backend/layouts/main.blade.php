@@ -9,9 +9,9 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     {{-- <title>Zero Brokage</title> --}}
-    <title>{{ $meta->title ?? '$projectName' }}</title>
-    <meta name="description" content="{{ $meta->description }}">
-    <meta name="keywords" content="{{ $meta->keyword }}">
+    <title>{{ $meta->title ?? 'Zero Brokage' }}</title>
+    <meta name="description" content="{{ $meta->description ?? '' }}">
+    <meta name="keywords" content="{{ $meta->keyword ?? '' }}">
     <link rel="shortcut icon" href=" {{ asset('admin/assets/img/favicon.png') }} ">
     <link rel="stylesheet" href="{{ asset('admin/assets/css/select2.min.css') }}">
     <link rel="stylesheet" href="{{ asset('admin/assets/plugins/bootstrap/css/bootstrap.min.css') }}">

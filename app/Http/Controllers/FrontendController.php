@@ -89,6 +89,8 @@ class FrontendController extends Controller
         return view('frontend.services-in-india-vendors', compact('faqs', 'vendors', 'description', 'subcategories', 'menus', 'states'));
     }
 
+
+
     public function servicesInIndiaCity($slug)
     {
         $states = State::where('country_id', 101)

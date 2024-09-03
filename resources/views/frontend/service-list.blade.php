@@ -388,6 +388,8 @@
                             </div>
                         </div>
                     </div>
+
+{{-- ......................................Pagination container Start................................ --}}
                     <div class="row">
                         <div class="col-sm-12">
                             <div class="blog-pagination rev-page">
@@ -415,6 +417,7 @@
                             </div>
                         </div>
                     </div>
+ {{-- .........................................Pagination container End............................ --}}
                 </div>
 
             </div>

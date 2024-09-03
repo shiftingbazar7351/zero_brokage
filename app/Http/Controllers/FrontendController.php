@@ -73,8 +73,8 @@ class FrontendController extends Controller
     {
         $faqs = Faq::where('status', 1)->select('question', 'answer')->get();
         $description = IndiaServiceDescription::first();
-         $vendors = Vendor::where('status', 1)
-            ->with('verified')
+        $vendors = Vendor::where('status', 1)
+            ->with(['verified','cityName'])
             ->whereHas('cityName', function ($query) use ($city) {
                 $query->where('name', $city);
             })
@@ -88,6 +88,8 @@ class FrontendController extends Controller
         $states = State::where('status', 'active')->where('country_id', 101)->get();
         return view('frontend.services-in-india-vendors', compact('faqs', 'vendors', 'description', 'subcategories', 'menus', 'states'));
     }
+
+
 
     public function servicesInIndiaCity($slug)
     {

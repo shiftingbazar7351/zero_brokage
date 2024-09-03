@@ -273,91 +273,49 @@
 
     <div class="container-fluid border border-primary w-75 mx-auto mt-5"></div>
 
+
     @if ($subcategory)
         <div class="section mt-4">
             <div class="container">
-                <h1 class="text-center">Top {{ $subcategory->name ?? '' }} In India</h1>
+                <h1 class="text-center mb-4">Top {{ $subcategory->name ?? '' }} In India</h1>
                 <div class="row mt-4" id="cities-container">
                     @foreach ($cities as $city)
                         <div class="col-md-6 mb-4">
-                            <div class="bangalore-con border-3 border-bottom border-primary mb-4">
-                                <a href="{{ route('services-in-india', $city->name ?? '') }}" class="uppercase">
-                                    <h4>{{ $subcategory->slug ?? '' }} {{ strtoupper($city->name) }}</h4>
+                            <div class="bangalore-con border-3 border-bottom border-primary rounded p-3 shadow-sm mb-4">
+                                <a href="{{ route('services-in-india', $city->name ?? '') }}"
+                                    class="text-decoration-none text-dark">
+                                    <h4 class="text-uppercase mb-2">{{ $subcategory->slug ?? '' }}
+                                        {{ strtoupper($city->name) }}</h4>
                                 </a>
                                 @if ($vendors)
-                                    <p>{!! Str::limit($vendors->description, 300, '') !!}</p>
+                                    <p class="text-muted">{!! Str::limit($vendors->description, 300, '...') !!}</p>
                                 @else
-                                    <p></p>
+                                    <p class="text-muted"></p>
                                 @endif
                             </div>
                         </div>
                     @endforeach
                 </div>
-                {{-- <div class="d-flex justify-content-center" id="pagination-links"
-                    data-pagination="{{ $cities->appends(request()->query())->links()->toHtml() }}">
-                    {!! $cities->links() !!}
-                </div> --}}
+                <div class="d-flex justify-content-between mb-4" id="pagination-links">
+                    @if ($cities->currentPage() > 1)
+                        <a href="{{ $cities->previousPageUrl() }}" class="btn btn-primary btn-sm"
+                            data-page="{{ $cities->currentPage() - 1 }}">Previous</a>
+                    @else
+                        <button class="btn btn-secondary btn-sm" disabled>Previous</button>
+                    @endif
 
-                <div class="row mb-4">
-                    <div class="col-sm-12">
-                        <div class="blog-pagination rev-page">
-                            <nav>
-                                <ul class="pagination justify-content-center mt-0">
-                                    <li class="page-item disabled">
-                                        <a class="page-link page-prev" href="javascript:void(0);" style="background: none;"
-                                            tabindex="-1"><i class="fa-solid fa-arrow-left me-1"></i> PREV</a>
-                                    </li>
-                                    <li class="page-item active">
-                                        <a class="page-link" href="javascript:void(0);">1</a>
-                                    </li>
-                                    <li class="page-item">
-                                        <a class="page-link" href="javascript:void(0);">2</a>
-                                    </li>
-                                    <li class="page-item">
-                                        <a class="page-link" href="javascript:void(0);">3</a>
-                                    </li>
-                                    <li class="page-item">
-                                        <a class="page-link page-next" href="javascript:void(0);" style="background: none;">NEXT <i
-                                                class="fa-solid fa-arrow-right ms-1"></i></a>
-                                    </li>
-                                </ul>
-                            </nav>
-                        </div>
-                    </div>
+                    @if ($cities->hasMorePages())
+                        <a href="{{ $cities->nextPageUrl() }}" class="btn btn-primary btn-sm"
+                            data-page="{{ $cities->currentPage() + 1 }}">Next</a>
+                    @else
+                        <button class="btn btn-secondary btn-sm" disabled>Next</button>
+                    @endif
                 </div>
             </div>
         </div>
     @endif
 
 
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const paginationLinks = document.getElementById('pagination-links');
-            const citiesContainer = document.getElementById('cities-container');
-
-            paginationLinks.addEventListener('click', function(event) {
-                event.preventDefault();
-
-                if (event.target.tagName === 'A') {
-                    const url = event.target.getAttribute('href');
-
-                    fetch(url)
-                        .then(response => response.text())
-                        .then(html => {
-                            const parser = new DOMParser();
-                            const doc = parser.parseFromString(html, 'text/html');
-
-                            // Update cities container and pagination links
-                            citiesContainer.innerHTML = doc.getElementById('cities-container')
-                            .innerHTML;
-                            paginationLinks.innerHTML = doc.getElementById('pagination-links')
-                            .innerHTML;
-                        })
-                        .catch(error => console.error('Error fetching data:', error));
-                }
-            });
-        });
-    </script>
 
 
     <div class="container-fluid bg-light shadow">
@@ -521,6 +479,37 @@
         window.intlTelInput(inputtestt, {
             initialCountry: "in",
             separateDialCode: true
+        });
+    </script>
+    {{-- for pagination --}}
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const paginationLinks = document.getElementById('pagination-links');
+            const citiesContainer = document.getElementById('cities-container');
+
+            paginationLinks.addEventListener('click', function(event) {
+                event.preventDefault();
+
+                const target = event.target;
+
+                if (target.tagName === 'A') {
+                    const url = target.getAttribute('href');
+
+                    fetch(url)
+                        .then(response => response.text())
+                        .then(html => {
+                            const parser = new DOMParser();
+                            const doc = parser.parseFromString(html, 'text/html');
+
+                            // Update cities container and pagination links
+                            citiesContainer.innerHTML = doc.getElementById('cities-container')
+                                .innerHTML;
+                            paginationLinks.innerHTML = doc.getElementById('pagination-links')
+                                .innerHTML;
+                        })
+                        .catch(error => console.error('Error fetching data:', error));
+                }
+            });
         });
     </script>
 @endsection

@@ -393,7 +393,7 @@
             </div>
         </div>
     </div>
-    
+
     <script>
         window.addEventListener('scroll', function() {
             var stickySlider = document.querySelector('.sticky-slider');

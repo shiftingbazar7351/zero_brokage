@@ -63,17 +63,21 @@
                         </div>
                         <div class="filter-content">
                             <h2>Keyword</h2>
-                            <input type="text" class="form-control" id="input-keyword"
+                            <input type="text" class="form-control" id="input-keyword" name="keyword"
                                 placeholder="What are you looking for?">
                         </div>
+                        
                         <div class="filter-content">
                             <h2>Location</h2>
                             <div class="dropdown">
-                                <input type="text" placeholder="Search.." id="myInput" onkeyup="filterFunction()"
+                                <div class="group-img">
+                                <input type="text" placeholder="Search.." id="myInput" name="location" onkeyup="filterFunction()"
                                     class="form-control">
+                                </div>
+                                    {{-- <i class="feather-map-pin"></i> --}}
                                 <div id="myDropdown" class="dropdown-content">
                                     @foreach ($cities as $city)
-                                    <div onclick="selectOption('{{ ucwords($city->name) }}')">
+                                    <div onclick="selectOption(' {{ ucwords($city->name) }}, {{ ucwords($city->state->name ?? '') }}')">
                                         {{ ucwords($city->name) }}, {{ ucwords($city->state->name ?? '') }}
                                     </div>
                                 @endforeach
@@ -233,7 +237,7 @@
                                         <i class="fa-regular fa-star filled"></i>
                                         <i class="fa-regular fa-star filled"></i>
                                         <i class="fa-regular fa-star filled"></i>
-                                        <i class="fa-regular fa-star"></i>
+                                        <i class="fa-regular fa-star filled"></i>
                                         <span class="d-inline-block average-rating float-end">(35)</span>
                                     </a>
                                 </li>
@@ -482,7 +486,7 @@
                         </div>
                     </div>
 
-                    <div class="row">
+                    {{-- <div class="row">
                         <div class="col-sm-12">
                             <div class="blog-pagination rev-page">
                                 <nav>
@@ -508,7 +512,7 @@
                                 </nav>
                             </div>
                         </div>
-                    </div>
+                    </div> --}}
                 </div>
 
             </div>

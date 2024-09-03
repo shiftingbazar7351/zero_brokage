@@ -97,30 +97,29 @@
                 <div class="col-md-12 col-12 my-4">
                     <h2 class=" breadcrumb-title text-white">Top Service Provider City</h2>
                     <div class="d-flex justify-content-center gap-3  mx-auto mt-5">
-                        <select class="form-select" name="category" aria-label="Default select example">
+                        <select class="form-select" name="category" id="subcategory" aria-label="Default select example">
                             <option value="" selected disabled>Select your Category</option>
                             @foreach ($subcategories as $category)
                                 <option value="{{ $category->id }}">{{ $category->name ?? '' }}</option>
                             @endforeach
                         </select>
-                        <select class="form-select" name="subcategry" aria-label="Default select example">
-                            <option value="" selected disabled>Select your Category</option>
-                            @foreach ($subcategories as $category)
-                                <option value="{{ $category->id }}">{{ $category->name ?? '' }}</option>
+
+                        <select class="form-select" name="menu" id="menu" aria-label="Default select example">
+                            <option value="" selected disabled>Select sub-category</option>
+                        </select>
+
+
+
+                        <select class="form-control" id="state" name="state">
+                            <option value="" selected disabled>Select State</option>
+                            @foreach ($states as $state)
+                                <option value="{{ $state->id }}">{{ ucwords($state->name) ?? '' }}</option>
                             @endforeach
                         </select>
-                        <select class="form-select" aria-label="Default select example">
-                            <option selected>Select your State</option>
-                            <option value="1">One</option>
-                            <option value="2">Two</option>
-                            <option value="3">Three</option>
+                        <select class="form-control" id="city" name="city">
+                            <option value="">Select City</option>
                         </select>
-                        <select class="form-select" aria-label="Default select example">
-                            <option selected>Select your City</option>
-                            <option value="1">One</option>
-                            <option value="2">Two</option>
-                            <option value="3">Three</option>
-                        </select>
+                        <div id="city-error" class="text-danger"></div>
                         <button type="button" class="btn btn-primary btn-lg">Submit</button>
                     </div>
                 </div>
@@ -770,17 +769,10 @@
                             </div>
                         </div>
                     @endforeach
-
-
                 </div>
             </div>
-
         </div>
     @endif
-
-
-
-
 
     <script src="{{ asset('assets/js/service-india-popup.js') }}"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/intlTelInput.min.js"></script>
@@ -790,6 +782,67 @@
         window.intlTelInput(inputtestt, {
             initialCountry: "in",
             separateDialCode: true
+        });
+
+        //for fetching city through state
+        $('#state').on('change', function() {
+            var stateId = $(this).val();
+            if (stateId) {
+                $.ajax({
+                    url: '/fetch-city/' + stateId,
+                    type: 'POST',
+                    data: {
+                        _token: '{{ csrf_token() }}'
+                    },
+                    success: function(response) {
+                        $('#city').empty().append(
+                            '<option value="" selected disabled>Select City</option>');
+                        if (response.status === 1) {
+                            $.each(response.data, function(key, city) {
+                                $('#city').append("<option value='" +
+                                    city.id +
+                                    "'>" + city.name + "</option>");
+                            });
+                        }
+                    },
+                    error: function() {
+                        $('#city').empty().append(
+                            '<option value="" disabled>Error loading cities</option>'
+                        );
+                    }
+                });
+            } else {
+                $('#city').empty().append('<option value="">Select city</option>');
+            }
+        });
+    </script>
+
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $('#subcategory').change(function() {
+                var subcategoryId = $(this).val();
+
+                if (subcategoryId) {
+                    $.ajax({
+                        url: "{{ route('get.menus', '') }}/" + subcategoryId,
+                        type: "GET",
+                        dataType: "json",
+                        success: function(data) {
+                            $('#menu').empty();
+                            $('#menu').append(
+                                '<option value="" selected disabled>Select sub-category</option>'
+                                );
+                            $.each(data, function(key, value) {
+                                $('#menu').append('<option value="' + value.id + '">' +
+                                    value.name + '</option>');
+                            });
+                        }
+                    });
+                } else {
+                    $('#menu').empty();
+                    $('#menu').append('<option value="" selected disabled>Select your Menu</option>');
+                }
+            });
         });
     </script>
 @endsection

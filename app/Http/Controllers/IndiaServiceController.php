@@ -53,7 +53,9 @@ class IndiaServiceController extends Controller
             'submenu_id.required' => 'Please select a submenu.',
         ]);
 
-        IndiaServiceDescription::create($request->all());
+        $india = IndiaServiceDescription::create($request->all());
+        $india->created_by = auth()->id();
+
         return redirect(route('india-services.index'))->with('success', 'Added successfully');
     }
 

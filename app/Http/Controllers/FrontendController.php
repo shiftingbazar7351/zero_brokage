@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Category;
 use App\Models\City;
 use App\Models\Enquiry;
 use App\Models\Faq;
@@ -81,7 +82,10 @@ class FrontendController extends Controller
         // $subcategory = Subcategory::where('status', 1)
         //     ->where('slug', $slug)
         //     ->first();
-        return view('frontend.services-in-india-vendors', compact('faqs', 'vendors', 'description'));
+        $subcategories = Subcategory::where('status', 1)->get();
+        $menus = Menu::where('status', 1)->get();
+        $states = State::where('status', 'active')->where('country_id', 101)->get();
+        return view('frontend.services-in-india-vendors', compact('faqs', 'vendors', 'description', 'subcategories', 'menus', 'states'));
     }
 
     public function servicesInIndiaCity($slug)
@@ -233,5 +237,12 @@ class FrontendController extends Controller
         // Return success response
         return response()->json(['success' => true, 'message' => 'Review submitted successfully!']);
     }
+
+    public function getMenus($subcategory_id)
+    {
+        $menus = Menu::where('subcategory_id', $subcategory_id)->get();
+        return response()->json($menus);
+    }
+
 
 }

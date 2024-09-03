@@ -97,30 +97,29 @@
                 <div class="col-md-12 col-12 my-4">
                     <h2 class=" breadcrumb-title text-white">Top Service Provider City</h2>
                     <div class="d-flex justify-content-center gap-3  mx-auto mt-5">
-                        <select class="form-select" aria-label="Default select example">
-                            <option selected>Select your Category</option>
-                            <option value="1">One</option>
-                            <option value="2">Two</option>
-                            <option value="3">Three</option>
+                        <select class="form-select" name="category" id="subcategory" aria-label="Default select example">
+                            <option value="" selected disabled>Select your Category</option>
+                            @foreach ($subcategories as $category)
+                                <option value="{{ $category->id }}">{{ $category->name ?? '' }}</option>
+                            @endforeach
                         </select>
-                        <select class="form-select" aria-label="Default select example">
-                            <option selected>Select your Sub-category</option>
-                            <option value="1">One</option>
-                            <option value="2">Two</option>
-                            <option value="3">Three</option>
+
+                        <select class="form-select" name="menu" id="menu" aria-label="Default select example">
+                            <option value="" selected disabled>Select sub-category</option>
                         </select>
-                        <select class="form-select" aria-label="Default select example">
-                            <option selected>Select your State</option>
-                            <option value="1">One</option>
-                            <option value="2">Two</option>
-                            <option value="3">Three</option>
+
+
+
+                        <select class="form-control" id="state" name="state">
+                            <option value="" selected disabled>Select State</option>
+                            @foreach ($states as $state)
+                                <option value="{{ $state->id }}">{{ ucwords($state->name) ?? '' }}</option>
+                            @endforeach
                         </select>
-                        <select class="form-select" aria-label="Default select example">
-                            <option selected>Select your City</option>
-                            <option value="1">One</option>
-                            <option value="2">Two</option>
-                            <option value="3">Three</option>
+                        <select class="form-control" id="city" name="city">
+                            <option value="">Select City</option>
                         </select>
+                        <div id="city-error" class="text-danger"></div>
                         <button type="button" class="btn btn-primary btn-lg">Submit</button>
                     </div>
                 </div>
@@ -375,7 +374,7 @@
                     <div class="row sorting-div">
                         <div class="col-lg-4 col-sm-12 ">
                             <div class="count-search">
-                                <h6>Found 6 Services</h6>
+                                <h6>Found {{ count($vendors) }} vendors</h6>
                             </div>
                         </div>
                         <div class="col-lg-8 col-sm-12 d-flex justify-content-end ">
@@ -407,7 +406,8 @@
                                         <div class="service-cont-info">
                                             <span class="item-cat">{{ $vendor->subCategory->name ?? '' }}</span>
                                             <h5 class="title">
-                                                <a href="{{ route('vender-profile',$vendor->id ??'') }}">{{ $vendor->vendor_name ?? '' }}</a>
+                                                <a
+                                                    href="{{ route('vender-profile', $vendor->id ?? '') }}">{{ $vendor->vendor_name ?? '' }}</a>
                                             </h5>
                                             {{-- <p>{!! $vendor->description ?? '' !!}</p> --}}
                                             {{-- <a href="#" class="text-primary text-decoration-underline"
@@ -442,10 +442,12 @@
                                         </div>
 
                                         <div class="verified-img-india" style="width: 80px; height:50px; margin-left:3%">
-                                            @if(isset($vendor->verified) && isset($vendor->verified->image))
-                                                <img src="{{ asset('storage/verified/' . $vendor->verified->image) }}" alt="dsa" style="width:100%">
+                                            @if (isset($vendor->verified) && isset($vendor->verified->image))
+                                                <img src="{{ asset('storage/verified/' . $vendor->verified->image) }}"
+                                                    alt="dsa" style="width:100%">
                                             @else
-                                                <img src="{{ asset('storage/verified/default-placeholder.png') }}" alt="default image" style="width:100%">
+                                                <img src="{{ asset('storage/verified/default-placeholder.png') }}"
+                                                    alt="default image" style="width:100%">
                                             @endif
                                         </div>
 
@@ -454,7 +456,8 @@
                                         {{-- <h6>&#8377;{{ $vendor->discounted_price ?? '' }}<span class="old-price">&#8377;
                                                 {{ $vendor->total_price ?? '' }}</span></h6> --}}
                                         <a class="btn btn-secondary book-Now-btn">Book Now</a>
-                                        <a href="{{ route('vender-profile',$vendor->id) }}" class="btn btn-secondary">View Profile</a>
+                                        <a href="{{ route('vender-profile', $vendor->id) }}"
+                                            class="btn btn-secondary">View Profile</a>
                                     </div>
                                 </div>
                             @endforeach
@@ -674,7 +677,7 @@
                 <div class="serviceIndiaContainer">
 
                     {{-- <h2 class="text-center">Here are Top 10 Packers and Movers Companies in India</h1> --}}
-                    {!! $vendor->description ??'' !!}
+                    {!! $vendor->description ?? '' !!}
 
                 </div>
             </div>
@@ -685,7 +688,7 @@
 
     <div class="container-fluid border border-primary w-75 mx-auto mt-5"></div>
 
-    {{-- @if(count($subcategories) > 0) --}}
+    {{-- @if (count($subcategories) > 0) --}}
     {{-- <div class="section mt-4">
         <div class="container">
             <h1 class="text-center">Top Packers and movers In India</h1>
@@ -743,40 +746,33 @@
 
     <!-- ..............................FAQ section............................ -->
 
-    @if(count($faqs) > 0)
-    <div class="container my-4">
-        <h1 class="text-center my-4">FAQ </h1>
-        <div class="row">
-            <div class="accordion" id="accordionExample">
-                @foreach ($faqs as $index => $faq)
-                    <div class="accordion-item">
-                        <h2 class="accordion-header" id="heading{{ $index }}">
-                            <button class="accordion-button" type="button" data-bs-toggle="collapse"
-                                data-bs-target="#collapse{{ $index }}" aria-expanded="true"
-                                aria-controls="collapse{{ $index }}">
-                                {{ $faq->question ?? '' }}
-                            </button>
-                        </h2>
-                        <div id="collapse{{ $index }}"
-                            class="accordion-collapse collapse{{ $index == 0 ? ' show' : '' }}"
-                            aria-labelledby="heading{{ $index }}" data-bs-parent="#accordionExample">
-                            <div class="accordion-body">
-                                {{ $faq->answer ?? '' }}
+    @if (count($faqs) > 0)
+        <div class="container my-4">
+            <h1 class="text-center my-4">FAQ </h1>
+            <div class="row">
+                <div class="accordion" id="accordionExample">
+                    @foreach ($faqs as $index => $faq)
+                        <div class="accordion-item">
+                            <h2 class="accordion-header" id="heading{{ $index }}">
+                                <button class="accordion-button" type="button" data-bs-toggle="collapse"
+                                    data-bs-target="#collapse{{ $index }}" aria-expanded="true"
+                                    aria-controls="collapse{{ $index }}">
+                                    {{ $faq->question ?? '' }}
+                                </button>
+                            </h2>
+                            <div id="collapse{{ $index }}"
+                                class="accordion-collapse collapse{{ $index == 0 ? ' show' : '' }}"
+                                aria-labelledby="heading{{ $index }}" data-bs-parent="#accordionExample">
+                                <div class="accordion-body">
+                                    {{ $faq->answer ?? '' }}
+                                </div>
                             </div>
                         </div>
-                    </div>
-                @endforeach
-
-
+                    @endforeach
+                </div>
             </div>
         </div>
-
-    </div>
     @endif
-
-
-
-
 
     <script src="{{ asset('assets/js/service-india-popup.js') }}"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/intlTelInput.min.js"></script>
@@ -786,6 +782,67 @@
         window.intlTelInput(inputtestt, {
             initialCountry: "in",
             separateDialCode: true
+        });
+
+        //for fetching city through state
+        $('#state').on('change', function() {
+            var stateId = $(this).val();
+            if (stateId) {
+                $.ajax({
+                    url: '/fetch-city/' + stateId,
+                    type: 'POST',
+                    data: {
+                        _token: '{{ csrf_token() }}'
+                    },
+                    success: function(response) {
+                        $('#city').empty().append(
+                            '<option value="" selected disabled>Select City</option>');
+                        if (response.status === 1) {
+                            $.each(response.data, function(key, city) {
+                                $('#city').append("<option value='" +
+                                    city.id +
+                                    "'>" + city.name + "</option>");
+                            });
+                        }
+                    },
+                    error: function() {
+                        $('#city').empty().append(
+                            '<option value="" disabled>Error loading cities</option>'
+                        );
+                    }
+                });
+            } else {
+                $('#city').empty().append('<option value="">Select city</option>');
+            }
+        });
+    </script>
+
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $('#subcategory').change(function() {
+                var subcategoryId = $(this).val();
+
+                if (subcategoryId) {
+                    $.ajax({
+                        url: "{{ route('get.menus', '') }}/" + subcategoryId,
+                        type: "GET",
+                        dataType: "json",
+                        success: function(data) {
+                            $('#menu').empty();
+                            $('#menu').append(
+                                '<option value="" selected disabled>Select sub-category</option>'
+                                );
+                            $.each(data, function(key, value) {
+                                $('#menu').append('<option value="' + value.id + '">' +
+                                    value.name + '</option>');
+                            });
+                        }
+                    });
+                } else {
+                    $('#menu').empty();
+                    $('#menu').append('<option value="" selected disabled>Select your Menu</option>');
+                }
+            });
         });
     </script>
 @endsection

@@ -27,21 +27,18 @@ class VendorController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
      */
     public function index()
     {
         $subcategories = SubCategory::orderByDesc('created_at')->get();
         $submenus = SubMenu::orderByDesc('created_at')->get();
         $vendors = Vendor::orderByDesc('created_at')->get();
-
         return view("backend.vendor.index", compact('subcategories', 'submenus', 'vendors'));
     }
 
     /**
      * Show the form for creating a new resource.
      *
-     * @return \Illuminate\Http\Response
      */
     public function create()
     {
@@ -58,7 +55,6 @@ class VendorController extends Controller
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
     {
@@ -103,7 +99,7 @@ class VendorController extends Controller
         // Save vendor data
         // Create the vendor record
 
-        $vendor = Vendor::create($validatedData);
+        $vendor = Vendor::create($request->all());
         // return $vendor;
         $vendor->created_by = auth()->user()->id;
 
@@ -155,7 +151,6 @@ class VendorController extends Controller
      * Display the specified resource.
      *
      * @param  int  $id
-     * @return \Illuminate\Http\Response
      */
     public function show($id)
     {
@@ -167,7 +162,6 @@ class VendorController extends Controller
      * Show the form for editing the specified resource.
      *
      * @param  int  $id
-     * @return \Illuminate\Http\Response
      */
     public function edit($id)
     {
@@ -186,7 +180,6 @@ class VendorController extends Controller
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
-     * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
     {
@@ -254,7 +247,6 @@ class VendorController extends Controller
      * Remove the specified resource from storage.
      *
      * @param  int  $id
-     * @return \Illuminate\Http\Response
      */
     public function destroy($id)
     {

@@ -18,4 +18,9 @@ class IndiaServiceDescription extends Model
         'submenu_id',
         'status',
     ];
-}
+
+    public function subCategory()
+    {
+        return $this->belongsTo(SubCategory::class,'sub_category_id','id');
+    }
+ }

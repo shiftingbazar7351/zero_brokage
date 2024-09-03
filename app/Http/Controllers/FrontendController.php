@@ -123,6 +123,11 @@ class FrontendController extends Controller
         return view('frontend.service-in-india', compact('faqs', 'submenus', 'description', 'reviews', 'subcategory', 'states', 'cities', 'vendors'));
     }
 
+    // public function fetchDataOfProvider(){
+    //     dd('delelle');
+    //     return view('frontend.services-in-india-vendors');
+    // }
+
     public function enquiryStore(Request $request)
     {
         $validator = Validator::make($request->all(), [

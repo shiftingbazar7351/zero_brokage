@@ -158,6 +158,8 @@ Route::middleware('auth')->group(function () {
     Route::post('/faq-status', [FaqController::class, 'faqStatus'])->name('faq.status');
     Route::resource('/india-services', IndiaServiceController::class);
     Route::resource('/newsletter', NewsletterController::class);
+
+    Route::get('/fetch-city-data', [FrontendController::class, 'fetchDataOfProvider'])->name('fetchDataOfProvider');
 });
 
 

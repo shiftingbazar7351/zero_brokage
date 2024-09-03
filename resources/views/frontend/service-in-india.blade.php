@@ -272,7 +272,9 @@
 
 
     <div class="container-fluid border border-primary w-75 mx-auto mt-5"></div>
-    {{-- @if ($subcategory)
+
+
+    @if ($subcategory)
         <div class="section mt-4">
             <div class="container">
                 <h1 class="text-center mb-4">Top {{ $subcategory->name ?? '' }} In India</h1>
@@ -288,237 +290,31 @@
                                 @if ($vendors)
                                     <p class="text-muted">{!! Str::limit($vendors->description, 300, '...') !!}</p>
                                 @else
-                                    <p class="text-muted">No description available.</p>
+                                    <p class="text-muted"></p>
                                 @endif
                             </div>
                         </div>
                     @endforeach
                 </div>
-                <div class="d-flex justify-content-center mb-4">
-                    <nav aria-label="Page navigation">
-                        <ul class="pagination pagination-rounded">
-                            @if ($cities->onFirstPage())
-                                <li class="page-item disabled">
-                                    <span class="page-link">Previous</span>
-                                </li>
-                            @else
-                                <li class="page-item">
-                                    <a class="page-link" href="{{ $cities->previousPageUrl() }}">Previous</a>
-                                </li>
-                            @endif
+                <div class="d-flex justify-content-between mb-4" id="pagination-links">
+                    @if ($cities->currentPage() > 1)
+                        <a href="{{ $cities->previousPageUrl() }}" class="btn btn-primary btn-sm"
+                            data-page="{{ $cities->currentPage() - 1 }}">Previous</a>
+                    @else
+                        <button class="btn btn-secondary btn-sm" disabled>Previous</button>
+                    @endif
 
-                            @if ($currentPage > 1 && $currentPage > 6)
-                                <li class="page-item">
-                                    <a class="page-link" href="{{ $cities->url(1) }}">1</a>
-                                </li>
-                                <li class="page-item disabled">
-                                    <span class="page-link">...</span>
-                                </li>
-                            @endif
-
-                            @foreach ($pageRange as $page)
-                                <li class="page-item {{ $currentPage == $page ? 'active' : '' }}">
-                                    <a class="page-link" href="{{ $cities->url($page) }}">{{ $page }}</a>
-                                </li>
-                            @endforeach
-
-                            @if ($currentPage < $totalPages - 5 && $currentPage < $totalPages - 1)
-                                <li class="page-item disabled">
-                                    <span class="page-link">...</span>
-                                </li>
-                                <li class="page-item">
-                                    <a class="page-link" href="{{ $cities->url($totalPages) }}">{{ $totalPages }}</a>
-                                </li>
-                            @endif
-
-                            @if ($cities->hasMorePages())
-                                <li class="page-item">
-                                    <a class="page-link" href="{{ $cities->nextPageUrl() }}">Next</a>
-                                </li>
-                            @else
-                                <li class="page-item disabled">
-                                    <span class="page-link">Next</span>
-                                </li>
-                            @endif
-                        </ul>
-                    </nav>
-                </div>
-                <div class="d-flex justify-content-center mb-4">
-                    <div class="form-group">
-                        <label for="perPageSelect" class="form-label">Records per page:</label>
-                        <select id="perPageSelect" class="form-select" aria-label="Records per page">
-                            <option value="10" {{ $perPage == 10 ? 'selected' : '' }}>10</option>
-                            <option value="20" {{ $perPage == 20 ? 'selected' : '' }}>20</option>
-                            <option value="30" {{ $perPage == 30 ? 'selected' : '' }}>30</option>
-                            <option value="40" {{ $perPage == 40 ? 'selected' : '' }}>40</option>
-                        </select>
-                    </div>
+                    @if ($cities->hasMorePages())
+                        <a href="{{ $cities->nextPageUrl() }}" class="btn btn-primary btn-sm"
+                            data-page="{{ $cities->currentPage() + 1 }}">Next</a>
+                    @else
+                        <button class="btn btn-secondary btn-sm" disabled>Next</button>
+                    @endif
                 </div>
             </div>
         </div>
     @endif
 
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const paginationLinks = document.getElementById('pagination-links');
-            const citiesContainer = document.getElementById('cities-container');
-            const perPageSelect = document.getElementById('perPageSelect');
-
-            paginationLinks.addEventListener('click', function(event) {
-                event.preventDefault();
-
-                if (event.target.tagName === 'A') {
-                    const url = event.target.getAttribute('href');
-
-                    fetch(url)
-                        .then(response => response.text())
-                        .then(html => {
-                            const parser = new DOMParser();
-                            const doc = parser.parseFromString(html, 'text/html');
-
-                            // Update cities container and pagination links
-                            citiesContainer.innerHTML = doc.getElementById('cities-container')
-                            .innerHTML;
-                            paginationLinks.innerHTML = doc.getElementById('pagination-links')
-                            .innerHTML;
-                        })
-                        .catch(error => console.error('Error fetching data:', error));
-                }
-            });
-
-            perPageSelect.addEventListener('change', function() {
-                const perPage = this.value;
-                const url = new URL(window.location.href);
-                url.searchParams.set('per_page', perPage);
-                window.location.href = url.href;
-            });
-        });
-    </script> --}}
-
-    {{-- @if ($subcategory)
-        <div class="section mt-4">
-            <div class="container">
-                <h1 class="text-center">Top {{ $subcategory->name ?? '' }} In India</h1>
-                <div class="row mt-4" id="cities-container">
-                    @foreach ($cities as $city)
-                        <div class="col-md-6 mb-4">
-                            <div class="bangalore-con border-3 border-bottom border-primary mb-4">
-                                <a href="{{ route('services-in-india', $city->name ?? '') }}" class="uppercase">
-                                    <h4>{{ $subcategory->slug ?? '' }} {{ strtoupper($city->name) }}</h4>
-                                </a>
-                                @if ($vendors)
-                                    <p>{!! Str::limit($vendors->description, 300, '') !!}</p>
-                                @else
-                                    <p></p>
-                                @endif
-                            </div>
-                        </div>
-                    @endforeach
-                </div>
-                <div class="d-flex justify-content-center mb-4" id="pagination-links">
-                    {!! $cities->appends(request()->query())->links() !!}
-                </div>
-            </div>
-        </div>
-    @endif
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const paginationLinks = document.getElementById('pagination-links');
-            const citiesContainer = document.getElementById('cities-container');
-
-            paginationLinks.addEventListener('click', function(event) {
-                event.preventDefault();
-
-                if (event.target.tagName === 'A') {
-                    const url = event.target.getAttribute('href');
-
-                    fetch(url)
-                        .then(response => response.text())
-                        .then(html => {
-                            const parser = new DOMParser();
-                            const doc = parser.parseFromString(html, 'text/html');
-
-                            // Update cities container and pagination links
-                            citiesContainer.innerHTML = doc.getElementById('cities-container')
-                                .innerHTML;
-                            paginationLinks.innerHTML = doc.getElementById('pagination-links')
-                                .innerHTML;
-                        })
-                        .catch(error => console.error('Error fetching data:', error));
-                }
-            });
-        });
-    </script> --}}
-
-    @if ($subcategory)
-    <div class="section mt-4">
-        <div class="container">
-            <h1 class="text-center mb-4">Top {{ $subcategory->name ?? '' }} In India</h1>
-            <div class="row mt-4" id="cities-container">
-                @foreach ($cities as $city)
-                    <div class="col-md-6 mb-4">
-                        <div class="bangalore-con border-3 border-bottom border-primary rounded p-3 shadow-sm mb-4">
-                            <a href="{{ route('services-in-india', $city->name ?? '') }}"
-                                class="text-decoration-none text-dark">
-                                <h4 class="text-uppercase mb-2">{{ $subcategory->slug ?? '' }}
-                                    {{ strtoupper($city->name) }}</h4>
-                            </a>
-                            @if ($vendors)
-                                <p class="text-muted">{!! Str::limit($vendors->description, 300, '...') !!}</p>
-                            @else
-                                <p class="text-muted">No description available.</p>
-                            @endif
-                        </div>
-                    </div>
-                    
-                @endforeach
-            </div>
-            <div class="d-flex justify-content-between mb-4" id="pagination-links">
-                @if ($cities->currentPage() > 1)
-                    <a href="{{ $cities->previousPageUrl() }}" class="btn btn-primary btn-sm" data-page="{{ $cities->currentPage() - 1 }}">Previous</a>
-                @else
-                    <button class="btn btn-secondary btn-sm" disabled>Previous</button>
-                @endif
-
-                @if ($cities->hasMorePages())
-                    <a href="{{ $cities->nextPageUrl() }}" class="btn btn-primary btn-sm" data-page="{{ $cities->currentPage() + 1 }}">Next</a>
-                @else
-                    <button class="btn btn-secondary btn-sm" disabled>Next</button>
-                @endif
-            </div>
-        </div>
-    </div>
-@endif
-<script>
-    document.addEventListener('DOMContentLoaded', function() {
-        const paginationLinks = document.getElementById('pagination-links');
-        const citiesContainer = document.getElementById('cities-container');
-
-        paginationLinks.addEventListener('click', function(event) {
-            event.preventDefault();
-
-            const target = event.target;
-
-            if (target.tagName === 'A') {
-                const url = target.getAttribute('href');
-
-                fetch(url)
-                    .then(response => response.text())
-                    .then(html => {
-                        const parser = new DOMParser();
-                        const doc = parser.parseFromString(html, 'text/html');
-
-                        // Update cities container and pagination links
-                        citiesContainer.innerHTML = doc.getElementById('cities-container')
-                            .innerHTML;
-                        paginationLinks.innerHTML = doc.getElementById('pagination-links')
-                            .innerHTML;
-                    })
-                    .catch(error => console.error('Error fetching data:', error));
-            }
-        });
-    });
-</script>
 
 
 
@@ -681,6 +477,37 @@
         window.intlTelInput(inputtestt, {
             initialCountry: "in",
             separateDialCode: true
+        });
+    </script>
+    {{-- for pagination --}}
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const paginationLinks = document.getElementById('pagination-links');
+            const citiesContainer = document.getElementById('cities-container');
+
+            paginationLinks.addEventListener('click', function(event) {
+                event.preventDefault();
+
+                const target = event.target;
+
+                if (target.tagName === 'A') {
+                    const url = target.getAttribute('href');
+
+                    fetch(url)
+                        .then(response => response.text())
+                        .then(html => {
+                            const parser = new DOMParser();
+                            const doc = parser.parseFromString(html, 'text/html');
+
+                            // Update cities container and pagination links
+                            citiesContainer.innerHTML = doc.getElementById('cities-container')
+                                .innerHTML;
+                            paginationLinks.innerHTML = doc.getElementById('pagination-links')
+                                .innerHTML;
+                        })
+                        .catch(error => console.error('Error fetching data:', error));
+                }
+            });
         });
     </script>
 @endsection

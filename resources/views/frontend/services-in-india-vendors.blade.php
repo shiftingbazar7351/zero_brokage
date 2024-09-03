@@ -377,20 +377,10 @@
                                 <h6>Found {{ count($vendors) }} vendors</h6>
                             </div>
                         </div>
-                        <div class="col-lg-8 col-sm-12 d-flex justify-content-end ">
-                            <div class="sortbyset">
-                                <div class="sorting-select">
-                                    <select class="form-control select">
-                                        <option>Price Low to High</option>
-                                        <option>Price High to Low</option>
-                                    </select>
-                                </div>
-                            </div>
-
-                        </div>
+                        
                     </div>
                     <div class="row">
-                        <div class="col-md-12">
+                        <div class="col-md-12 mt-4">
 
 
 

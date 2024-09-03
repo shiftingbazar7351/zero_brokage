@@ -446,9 +446,9 @@
             <div class="col-md-12">
                 @if ($vendor)
                     <div class="provider-details">
-                        <h5>Service Details</h5>
+                        {{-- <h5>Service Details</h5> --}}
                         <p>
-                            {{ $vendor->description ?? '' }}
+                            {!! $vendor->description ?? '' !!}
                         </p>
                     </div>
                 @endif

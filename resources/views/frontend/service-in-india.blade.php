@@ -287,15 +287,16 @@
                                 @if ($vendors)
                                     <p>{!! Str::limit($vendors->description, 300, '') !!}</p>
                                 @else
-                                    <p>No description available.</p>
+                                    <p></p>
                                 @endif
                             </div>
                         </div>
                     @endforeach
                 </div>
                 <div class="d-flex justify-content-center">
-                    {{ $cities->appends(request()->query())->links() }} <!-- Pagination links -->
+                    {{ $cities->links() }} <!-- Pagination links -->
                 </div>
+                {{-- {{ dd($cities->links()) }} --}}
             </div>
         </div>
     @endif

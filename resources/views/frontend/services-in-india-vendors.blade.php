@@ -412,7 +412,7 @@
                                             @if ($vendor)
                                                 <p>{!! Str::limit($vendor->description, 150, '') !!}</p>
                                             @else
-                                                <p>No description available.</p>
+                                                <p></p>
                                             @endif
                                             {{-- <a href="#" class="text-primary text-decoration-underline"
                                                 data-bs-toggle="modal" data-bs-target="#modal-{{ $menu->id }}">View

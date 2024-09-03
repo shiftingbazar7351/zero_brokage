@@ -205,6 +205,7 @@
     </script>
 
     @include('frontend.layouts.scripts')
+    @yield('scripts')
 </body>
 
 </html>

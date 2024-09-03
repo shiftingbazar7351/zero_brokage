@@ -22,7 +22,7 @@ class FrontendController extends Controller
     {
         $subcategories = Subcategory::where('status', 1)
             ->orderByDesc('created_at')
-            ->select('id', 'name', 'slug', 'icon','trending','featured','background_image')
+            ->select('id', 'name', 'slug', 'icon', 'trending', 'featured', 'background_image')
             ->get();
         $trendingsubcat = $subcategories->where('trending', 1);
         $featuresubcat = $subcategories->where('featured', 1);
@@ -67,18 +67,23 @@ class FrontendController extends Controller
             )
             ->get();
 
-        return view('frontend.service-list', compact('submenus', 'subcategory', 'menus'));
+        $subcategories = SubCategory::where('status', 1)
+            ->select('id', 'name')
+            ->get();
+            $cities = City::paginate(10);
+
+        return view('frontend.service-list', compact('submenus', 'subcategory', 'menus', 'subcategories','cities'));
     }
     public function servicesInIndia($city)
     {
         $faqs = Faq::where('status', 1)->select('question', 'answer')->get();
         $description = IndiaServiceDescription::first();
         $vendors = Vendor::where('status', 1)
-            ->with(['verified','cityName'])
+            ->with(['verified', 'cityName'])
             ->whereHas('cityName', function ($query) use ($city) {
                 $query->where('name', $city);
             })
-            ->select('id','sub_category','city','verified','vendor_image','description','vendor_name')
+            ->select('id', 'sub_category', 'city', 'verified', 'vendor_image', 'description', 'vendor_name')
             ->get();
         // $subcategory = Subcategory::where('status', 1)
         //     ->where('slug', $slug)

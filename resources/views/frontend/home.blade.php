@@ -119,7 +119,7 @@
             </div>
         </section>
     @endif
-    @if (count($featuresubcat) > 0)
+    @if (count($featuresubcat))
         <section class="service-section">
             <div class="container">
                 <div class="section-heading">
@@ -159,7 +159,7 @@
         </section>
     @endif
 
-    @if (count($providers) > 0)
+    @if (count($providers))
         <section class="providers-section">
             <div class="container">
                 <div class="section-heading">

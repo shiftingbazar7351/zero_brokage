@@ -22,7 +22,7 @@ class FrontendController extends Controller
     {
         $subcategories = Subcategory::where('status', 1)
             ->orderByDesc('created_at')
-            ->select('id', 'name', 'slug', 'icon')
+            ->select('id', 'name', 'slug', 'icon','trending','featured','background_image')
             ->get();
         $trendingsubcat = $subcategories->where('trending', 1);
         $featuresubcat = $subcategories->where('featured', 1);
@@ -73,11 +73,12 @@ class FrontendController extends Controller
     {
         $faqs = Faq::where('status', 1)->select('question', 'answer')->get();
         $description = IndiaServiceDescription::first();
-        $vendors = Vendor::where('status', 1)
+         $vendors = Vendor::where('status', 1)
             ->with('verified')
             ->whereHas('cityName', function ($query) use ($city) {
                 $query->where('name', $city);
             })
+            ->select('id','sub_category','city','verified','vendor_image','description','vendor_name')
             ->get();
         // $subcategory = Subcategory::where('status', 1)
         //     ->where('slug', $slug)
@@ -87,6 +88,8 @@ class FrontendController extends Controller
         $states = State::where('status', 'active')->where('country_id', 101)->get();
         return view('frontend.services-in-india-vendors', compact('faqs', 'vendors', 'description', 'subcategories', 'menus', 'states'));
     }
+
+
 
     public function servicesInIndiaCity($slug)
     {

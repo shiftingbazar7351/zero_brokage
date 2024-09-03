@@ -120,22 +120,17 @@
                     <div class="row align-items-center" style="margin: 6% 0% 5% 10%;">
                         <div class="col-md-5">
                             <select class="form-control" name="" id="state">
-                                <option>Select State</option>
-                                <option value="two">Two</option>
-                                <option value="Three">Three</option>
-                                <option value="Four">Four</option>
-                                <option value="Fouur">Fouur</option>
+                                <option value="" selected disabled></option>
+                                @foreach ($states as $state)
+                                    <option value="{{ $state->id }}">{{ ucwords($state->name) }}</option>
+                                @endforeach
                             </select>
                         </div>
                         <div class="col-md-5 ">
-                            <select class="form-control" name="" id="city">
-                                <option>Select city</option>
-                                <option value="Delhi">Delhi</option>
-                                <option value="Dehradun">Dehradun</option>
-                                <option value="Uttrakhnad">Uttrakhnad</option>
-                                <option value="Uttar Pradesh">Uttar Pradesh</option>
-                                <option value="Foouuur">Foouuur</option>
+                            <select class="form-control" name="city" id="city">
+                                <option value="">Select City</option>
                             </select>
+                            <div id="city-error" class="text-danger"></div>
                         </div>
                         <div class="col-md-1">
                             <button type="button" class="btn btn-primary btn-lg">Submit</button>
@@ -281,57 +276,26 @@
     @if ($subcategory)
         <div class="section mt-4">
             <div class="container">
-                <h1 class="text-center">Top {{ ucwords($subcategory->name) ?? '' }} In India</h1>
+                <h1 class="text-center">Top {{ $subcategory->name ?? '' }} In India</h1>
                 <div class="row mt-4">
-                    <div class="col-md-6">
-                        <div class="bangalore-con border-3 border-bottom border-primary mb-4">
-                            <a href="">
-                                <h4>{{ $subcategory->slug ?? '' }} Bangalore</h4>
-                            </a>
-                            <p>Lorem ipo c d optio! Quos, commodi Lorem ipsum dolor, sit amet consectetur adipisicing
-                                elit. Quas, consectetur. ! Dolorum, enim porro. Nesciunt?</p>
+                    @foreach ($cities as $city)
+                        <div class="col-md-6 mb-4">
+                            <div class="bangalore-con border-3 border-bottom border-primary mb-4">
+                                <a href="{{ route('services-in-india', $city->name ?? '') }}" class="uppercase">
+                                    <h4>{{ $subcategory->slug ?? '' }} {{ strtoupper($city->name) }}</h4>
+                                </a>
+                                <p>{{ Str::limit($vendors->description, 300, '...') }}</p>
+                            </div>
                         </div>
-                        <div class="bangalore-con border-3 border-bottom border-primary mb-4">
-                            <a href="">
-                                <h4>packers-and-movers Bangalore</h4>
-                            </a>
-                            <p>Lorem ipo c d optio! Quos, commodi Lorem ipsum dolor, sit amet consectetur adipisicing
-                                elit. Quas, consectetur. ! Dolorum, enim porro. Nesciunt?</p>
-                        </div>
-                        <div class="bangalore-con border-3 border-bottom border-primary mb-4">
-                            <a href="">
-                                <h4>packers-and-movers Bangalore</h4>
-                            </a>
-                            <p>Lorem ipo c d optio! Quos, commodi Lorem ipsum dolor, sit amet consectetur adipisicing
-                                elit. Quas, consectetur. ! Dolorum, enim porro. Nesciunt?</p>
-                        </div>
-                    </div>
-                    <div class="col-md-6 ">
-                        <div class="bangalore-con border-3 border-bottom border-primary mb-4">
-                            <a href="">
-                                <h4>packers-and-movers Bangalore</h4>
-                            </a>
-                            <p>Lorem ipsummodi nesciunt iuatur, sequi aut perferendis optio! Dignissimos quod fuga totam
-                                beatae at adipisci! Quos, commodi! Dolorum, enim porro. Nesciunt?</p>
-                        </div>
-                        <div class="bangalore-con border-3 border-bottom border-primary mb-4">
-                            <h4>packers-and-movers Bangalore</h4>
-                            <p>Lorem ipsummodi nesciunt iuatur, sequi aut perferendis optio! Dignissimos quod fuga totam
-                                beatae at adipisci! Quos, commodi! Dolorum, enim porro. Nesciunt?</p>
-                        </div>
-                        <div class="bangalore-con border-3 border-bottom border-primary mb-4">
-                            <a href="">
-                                <h4>packers-and-movers Bangalore</h4>
-                            </a>
-                            <p>Lorem ipsummodi nesciunt iuatur, sequi aut perferendis optio! Dignissimos quod fuga totam
-                                beatae at adipisci! Quos, commodi! Dolorum, enim porro. Nesciunt?</p>
-                        </div>
-
-                    </div>
+                    @endforeach
+                </div>
+                <div class="d-flex justify-content-center">
+                    {{ $cities->appends(request()->query())->links() }} <!-- Pagination links -->
                 </div>
             </div>
         </div>
     @endif
+
 
     <div class="container-fluid bg-light shadow">
 
@@ -448,13 +412,43 @@
                 allowClear: true // Option to clear the selection
             });
         });
+
+        // Populate Cities
+        $('#state').on('change', function() {
+            var stateId = $(this).val();
+            if (stateId) {
+                $.ajax({
+                    url: '/fetch-city/' + stateId,
+                    type: 'POST',
+                    data: {
+                        _token: '{{ csrf_token() }}'
+                    },
+                    success: function(response) {
+                        $('#city').empty().append(
+                            '<option value="">Select city</option>');
+                        if (response.status === 1) {
+                            $.each(response.data, function(key, city) {
+                                $('#city').append("<option value='" +
+                                    city.id +
+                                    "'>" + city.name + "</option>");
+                            });
+                        }
+                    },
+                    error: function() {
+                        $('#city').empty().append(
+                            '<option value="" disabled>Error loading cities</option>'
+                        );
+                    }
+                });
+            } else {
+                $('#city').empty().append('<option value="">Select city</option>');
+            }
+        });
     </script>
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
     <script src="{{ asset('assets/js/service-india-popup.js') }}"></script>
-
-    {{-- <script src="asset('assets/js/service-india-city.js')"></script> --}}
     <script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/intlTelInput.min.js"></script>
     <script src="assets/js/jquery-3.7.0.min.js" type="7db8b12444c9592ace2cf678-text/javascript"></script>
     <script>

@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Category;
+use App\Models\City;
 use App\Models\Enquiry;
 use App\Models\Faq;
 use App\Models\IndiaServiceDescription;
@@ -20,7 +22,7 @@ class FrontendController extends Controller
     {
         $subcategories = Subcategory::where('status', 1)
             ->orderByDesc('created_at')
-            ->select('id','name','slug','icon')
+            ->select('id', 'name', 'slug', 'icon')
             ->get();
         $trendingsubcat = $subcategories->where('trending', 1);
         $featuresubcat = $subcategories->where('featured', 1);
@@ -67,23 +69,30 @@ class FrontendController extends Controller
 
         return view('frontend.service-list', compact('submenus', 'subcategory', 'menus'));
     }
-    public function servicesInIndia()
+    public function servicesInIndia($city)
     {
         $faqs = Faq::where('status', 1)->select('question', 'answer')->get();
         $description = IndiaServiceDescription::first();
-        $submenus = SubMenu::with(['subCategory', 'menu', 'cityName.state'])
-            ->where('status', 1)
-            ->orderByDesc('created_at')
-            ->select('id', 'name', 'image', 'slug', 'total_price', 'discounted_price', 'discount', 'subcategory_id', 'menu_id', 'city_id', 'description', 'details')
+        $vendors = Vendor::where('status', 1)
+            ->with('verified')
+            ->whereHas('cityName', function ($query) use ($city) {
+                $query->where('name', $city);
+            })
             ->get();
-        return view('frontend.services-in-india', compact('faqs', 'submenus', 'description'));
+        // $subcategory = Subcategory::where('status', 1)
+        //     ->where('slug', $slug)
+        //     ->first();
+        $subcategories = Subcategory::where('status', 1)->get();
+        $menus = Menu::where('status', 1)->get();
+        $states = State::where('status', 'active')->where('country_id', 101)->get();
+        return view('frontend.services-in-india-vendors', compact('faqs', 'vendors', 'description', 'subcategories', 'menus', 'states'));
     }
 
     public function servicesInIndiaCity($slug)
     {
-        $states = State::where('country_id',101)
-       ->select('id','country_id','name','status')
-       ->get();
+        $states = State::where('country_id', 101)
+            ->select('id', 'country_id', 'name', 'status')
+            ->get();
         $faqs = Faq::where('status', 1)->select('question', 'answer')->get();
         $submenus = SubMenu::with(['subCategory', 'menu', 'cityName.state'])
             ->where('status', 1)
@@ -94,11 +103,21 @@ class FrontendController extends Controller
             ->select('id', 'description', 'name', 'profession', 'status')
             ->get();
         $subcategory = Subcategory::where('status', 1)
-            ->orderByDesc('created_at')
             ->where('slug', $slug)
             ->first();
-        $description = IndiaServiceDescription::first();
-        return view('frontend.service-in-india-city', compact('faqs', 'submenus', 'description', 'reviews', 'subcategory','states'));
+        $cities = City::select('id', 'name', 'state_id', 'status')
+            ->where('status', 'active')
+            ->paginate(10);
+
+        // Use a subquery to directly filter vendors by city
+        $vendors = Vendor::whereIn('city', function ($query) {
+            $query->select('id')
+                ->from('cities')
+                ->where('status', 'active');
+        })->first();
+
+        $description = IndiaServiceDescription::where('sub_category_id', $subcategory->id ?? '')->first();
+        return view('frontend.service-in-india', compact('faqs', 'submenus', 'description', 'reviews', 'subcategory', 'states', 'cities', 'vendors'));
     }
 
     public function enquiryStore(Request $request)
@@ -218,5 +237,12 @@ class FrontendController extends Controller
         // Return success response
         return response()->json(['success' => true, 'message' => 'Review submitted successfully!']);
     }
+
+    public function getMenus($subcategory_id)
+    {
+        $menus = Menu::where('subcategory_id', $subcategory_id)->get();
+        return response()->json($menus);
+    }
+
 
 }

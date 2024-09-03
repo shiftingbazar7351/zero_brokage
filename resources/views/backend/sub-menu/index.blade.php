@@ -226,7 +226,7 @@
 
                         <div class="form-group">
                             <label for="description">Description</label>
-                            <textarea type="text" class="form-control" id="description" name="descript    ion" placeholder="Enter Ammount"></textarea>
+                            <textarea type="text" class="form-control" id="description" name="description" placeholder="Enter Ammount"></textarea>
                             <div id="description-error" class="text-danger"></div>
                         </div>
 

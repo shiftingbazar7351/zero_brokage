@@ -41,9 +41,21 @@ class IndiaServiceController extends Controller
     {
         $request->validate([
             'description' => 'required',
+            'category_id' => 'required',
+            'sub_category_id' => 'required',
+            'menu_id' => 'required',
+            'submenu_id' => 'required',
+        ], [
+            'description.required' => 'The description field is required.',
+            'category_id.required' => 'Please select a category.',
+            'sub_category_id.required' => 'Please select a subcategory.',
+            'menu_id.required' => 'Please select a menu.',
+            'submenu_id.required' => 'Please select a submenu.',
         ]);
 
-        IndiaServiceDescription::create($request->all());
+        $india = IndiaServiceDescription::create($request->all());
+        $india->created_by = auth()->id();
+
         return redirect(route('india-services.index'))->with('success', 'Added successfully');
     }
 
@@ -77,8 +89,19 @@ class IndiaServiceController extends Controller
     public function update(Request $request, $id)
     {
         $request->validate([
-            'description' => 'required'
+            'description' => 'required',
+            'category_id' => 'required',
+            'sub_category_id' => 'required',
+            'menu_id' => 'required',
+            'submenu_id' => 'required',
+        ], [
+            'description.required' => 'The description field is required.',
+            'category_id.required' => 'Please select a category.',
+            'sub_category_id.required' => 'Please select a subcategory.',
+            'menu_id.required' => 'Please select a menu.',
+            'submenu_id.required' => 'Please select a submenu.',
         ]);
+        
         IndiaServiceDescription::findOrFail($id)->update($request->all());
         return redirect(route('india-services.index'))->with('success', 'Updated Successfully');
     }

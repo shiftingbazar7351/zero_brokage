@@ -218,7 +218,6 @@
                     method: 'POST',
                     data: $(this).serialize(), // Serialize form data
                     success: function(response) {
-                        alert('Review added successfully!');
                         $('#add-review').modal('hide'); // Hide the modal
                         if (response) {
                         location.reload(); // Refresh page to show updated data

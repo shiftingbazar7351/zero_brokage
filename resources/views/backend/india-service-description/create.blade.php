@@ -20,23 +20,23 @@
                         <div class="mb-3 col-md-12">
                             <div class="col-md-6">
                                 <label for="category">Category<b style="color: red;">*</b></label>
-                                <select class="form-control" id="category" name="category_id" required>
+                                <select class="form-control" id="category" name="category_id" >
                                     <option value="">Select category</option>
                                     @foreach ($categories as $category)
                                         <option value="{{ $category->id }}">{{ $category->name }}</option>
                                     @endforeach
                                 </select>
-                                @error('category')
+                                @error('category_id')
                                     <div class="error text-danger">{{ $message }}</div>
                                 @enderror
                             </div>
 
                             <div class="col-md-6">
                                 <label for="subcategory">Sub Category<b style="color: red;">*</b></label>
-                                <select class="form-control" id="subcategory" name="sub_category_id" required>
+                                <select class="form-control" id="subcategory" name="sub_category_id" >
                                     <option value="">Select subcategory</option>
                                 </select>
-                                @error('sub_category')
+                                @error('sub_category_id')
                                     <div class="error text-danger">{{ $message }}</div>
                                 @enderror
                             </div>
@@ -47,7 +47,7 @@
 
                             <div class="col-md-6">
                                 <label for="menu">Menu<b style="color: red;">*</b></label>
-                                <select class="form-control" id="menu" name="menu_id" required>
+                                <select class="form-control" id="menu" name="menu_id" >
                                     <option value="">Select menu</option>
                                 </select>
                                 @error('menu_id')
@@ -56,7 +56,7 @@
                             </div>
                             <div class="col-md-6">
                                 <label for="submenu">Sub-Menu<b style="color: red;">*</b></label>
-                                <select class="form-control" id="submenu" name="submenu_id" required>
+                                <select class="form-control" id="submenu" name="submenu_id" >
                                     <option value="">Select submenu</option>
                                 </select>
                                 @error('submenu_id')

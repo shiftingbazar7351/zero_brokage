@@ -12,6 +12,10 @@ class IndiaServiceDescription extends Model
     protected $fillable=[
         'description',
         'created_by',
+        'category_id',
+        'sub_category_id',
+        'menu_id',
+        'submenu_id',
         'status',
     ];
 

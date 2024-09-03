@@ -10,49 +10,59 @@ class MetaUrlController extends Controller
 {
     public function index()
     {
-        $urls = MetaUrl::all();
-        return view('backend.meta.url', compact('urls'));
+        $metas = MetaUrl::all();
+        return view('backend.meta.index', compact('metas'));
     }
 
     public function store(Request $request)
     {
-        $validator = Validator::make($request->all(), [
-            'url' => 'required|url',
+        $request->validate([
+            'url' => 'required',
+            'title' => 'required',
+            'keyword' => 'required',
+            'description' => 'required',
         ]);
 
-        if ($validator->fails()) {
-            return response()->json(['errors' => $validator->errors()], 422);
-        }
 
-        $url = new MetaUrl();
-        $url->url = $request->url;
-        $url->save();
+        $meta = new MetaUrl($request->all());
+        $meta->created_by = auth()->id();
+        $meta->url = $request->url;
+        $meta->title = $request->title;
+        $meta->keyword = $request->keyword;
+        $meta->description = $request->description;
+        $meta->save();
 
-        return response()->json(['success' => true, 'message' => 'URL created successfully', 'url' => $url]);
+    return response()->json(['success' => true, 'message' => 'Meta created successfully']);
     }
 
+    public function edit($id)
+    {
+        $meta = MetaUrl::findOrFail($id);
+        return response()->json($meta);
+    }
     public function update(Request $request, $id)
     {
-        $validator = Validator::make($request->all(), [
-            'url' => 'required|url',
+        $request->validate([
+            'url' => 'required',
+            'title' => 'required',
+            'keyword' => 'required',
+            'description' => 'required',
         ]);
 
-        if ($validator->fails()) {
-            return response()->json(['errors' => $validator->errors()], 422);
-        }
+        $meta = MetaUrl::findOrFail($id);
+        $meta->url = $request->url;
+        $meta->title = $request->title;
+        $meta->keyword = $request->keyword;
+        $meta->description = $request->description;
+        $meta->update();
 
-        $url = MetaUrl::findOrFail($id);
-        $url->url = $request->url;
-        $url->save();
-
-        return response()->json(['success' => true, 'message' => 'URL updated successfully', 'url' => $url]);
+        return redirect()->back()->with('success', 'Updated Successfully');
     }
 
-    public function destroy($id)
+    public function destroy(MetaUrl $meta)
     {
-        $url = MetaUrl::findOrFail($id);
-        $url->delete();
+        $meta->delete();
 
-        return response()->json(['success' => true, 'message' => 'URL deleted successfully']);
+        return redirect()->back()->with('success', ' Deleted successfully.');
     }
 }

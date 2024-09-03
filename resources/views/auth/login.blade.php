@@ -17,7 +17,7 @@
             <x-input-label for="password" :value="__('Password')" style="font-size: 18px" />
 
             <div class="position-relative">
-                <x-text-input id="password" class="password-field block mt-1 w-full form-control pr-5" type="password" name="password" required
+                <x-text-input id="password" class="password-field block mt-1 w-full form-control pr-5" type="password"  name="password" required
                     autocomplete="current-password" />
 
                 <span id="toggle-password" onclick="togglePasswordVisibility()" style="cursor: pointer; position: absolute; right: 10px; top: 50%; transform: translateY(-50%);">

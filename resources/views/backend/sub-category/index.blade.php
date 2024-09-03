@@ -14,7 +14,7 @@
     <div class="page-wrapper page-settings">
         <div class="content">
             <div class="content-page-header content-page-headersplit mb-0">
-                <h5>Categories</h5>
+                <h5>Sub Categories</h5>
                 <div class="list-btn">
                     <ul>
                         <li>
@@ -26,10 +26,10 @@
                     </ul>
                 </div>
             </div>
-            <div class="row">
+            <div class="row text-center">
                 <div class="col-12">
                     <div class="table-resposnive table-div">
-                        <table class="table datatable">
+                        <table class="table datatable table-striped table-bordered">
                             <thead>
                                 <tr>
                                     <th>#</th>
@@ -160,7 +160,7 @@
                             </div>
                             <div id="image-error" class="text-danger"></div>
                         </div>
-                        
+
                         <div class="mb-3">
                             <label class="form-label">Menu Image</label>
                             <div class="form-uploads">

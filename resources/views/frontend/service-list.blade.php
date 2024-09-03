@@ -32,7 +32,7 @@
     {{-- .................................Slider...................................... --}}
 
 
-    <div class="d-flex justify-content-center px-4 sticky-slider" style="background-color: rgb(229, 230, 233)">
+    <div class="d-flex justify-content-center px-4 sticky-slider" style="background-color: rgb(239, 240, 241)">
         <div class="wrapper">
             <i id="left" class="fa-solid fas fa-angle-left"></i>
             <ul class="carousel" style="justify-content: center">
@@ -51,7 +51,7 @@
     </div>
 
 
-    <div class="content">
+    <div class="content" style="background-color: white">
         <div class="container-fluid">
             <div class="row">
 

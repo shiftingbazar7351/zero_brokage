@@ -38,8 +38,8 @@
             </div>
             <div class="row">
                 <div class="col-12 ">
-                    <div class="table-resposnive table-div">
-                        <table class="table table-bordered">
+                    <div class="table-resposnive table-div text-center">
+                        <table class="table table-bordered table-striped">
                             <thead class="thead-dark">
                                 <tr>
                                     <th>ID</th>
@@ -81,7 +81,7 @@
                                             </td>
 
                                             <td>
-                                                <div class="d-flex">
+                                                <div class="d-flex" style="justify-content: center">
                                                     <button class="btn delete-table me-2"
                                                         onclick="editCategory({{ $subcategory->id }})" type="button"
                                                         data-bs-toggle="modal" data-bs-target="#edit-category">

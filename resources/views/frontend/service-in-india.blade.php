@@ -203,7 +203,7 @@
             </div>
             <div class="row">
                 <div class="col-md-3">
-                    <div class="work-box aos" data-aos="fade-up">
+                    <div class="work-box aos p-2" data-aos="fade-up">
                         <div class="work-icon">
                             <span class="first">
                                 <img src="assets/img/icons/work-icon.svg" alt="img">
@@ -214,7 +214,7 @@
                     </div>
                 </div>
                 <div class="col-md-3">
-                    <div class="work-box aos" data-aos="fade-up">
+                    <div class="work-box aos p-2" data-aos="fade-up">
                         <div class="work-icon">
                             <span>
                                 <img src="assets/img/icons/find-icon.svg" alt="img">
@@ -226,7 +226,7 @@
                     </div>
                 </div>
                 <div class="col-md-3">
-                    <div class="work-box aos" data-aos="fade-up">
+                    <div class="work-box aos p-2" data-aos="fade-up">
                         <div class="work-icon">
                             <span>
                                 <img src="assets/img/icons/place-icon.svg" alt="img">
@@ -238,7 +238,7 @@
                     </div>
                 </div>
                 <div class="col-md-3">
-                    <div class="work-box aos" data-aos="fade-up">
+                    <div class="work-box aos p-2" data-aos="fade-up">
                         <div class="work-icon">
                             <span>
                                 <img src="assets/img/icons/next-icon.svg" alt="img">
@@ -464,14 +464,16 @@
             </div>
         </section>
     @endif
+
+{{-- .....................Script for select search button................. --}}
     <script>
         $(document).ready(function() {
             $('#state').select2({
-                placeholder: "Select an option", // Placeholder text
+                placeholder: "Select your state here...", // Placeholder text
                 allowClear: true // Option to clear the selection
             });
             $('#city').select2({
-                placeholder: "Select an option", // Placeholder text
+                placeholder: "Select your city here...", // Placeholder text
                 allowClear: true // Option to clear the selection
             });
         });

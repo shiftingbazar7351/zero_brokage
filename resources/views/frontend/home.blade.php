@@ -318,7 +318,7 @@
             </div>
             <div class="row">
                 <div class="col-md-3">
-                    <div class="work-box aos" data-aos="fade-up">
+                    <div class="work-box aos p-2" data-aos="fade-up">
                         <div class="work-icon">
                             <span class="first">
                                 <img src="assets/img/icons/work-icon.svg" alt="img">
@@ -330,7 +330,7 @@
                     </div>
                 </div>
                 <div class="col-md-3">
-                    <div class="work-box aos" data-aos="fade-up">
+                    <div class="work-box aos p-2" data-aos="fade-up">
                         <div class="work-icon">
                             <span>
                                 <img src="assets/img/icons/find-icon.svg" alt="img">
@@ -342,7 +342,7 @@
                     </div>
                 </div>
                 <div class="col-md-3">
-                    <div class="work-box aos" data-aos="fade-up">
+                    <div class="work-box aos p-2" data-aos="fade-up">
                         <div class="work-icon">
                             <span>
                                 <img src="assets/img/icons/place-icon.svg" alt="img">
@@ -354,7 +354,7 @@
                     </div>
                 </div>
                 <div class="col-md-3">
-                    <div class="work-box aos" data-aos="fade-up">
+                    <div class="work-box aos p-2" data-aos="fade-up">
                         <div class="work-icon">
                             <span>
                                 <img src="assets/img/icons/next-icon.svg" alt="img">
@@ -362,7 +362,7 @@
                         </div>
                         <h5>Schedule Your Move</h5>
                         <p>Confirm the booking details, including the date & time for a seamless move.</p>
-                        <h4>03</h4>
+                        <h4>04</h4>
                     </div>
                 </div>
             </div>

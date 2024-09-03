@@ -470,6 +470,7 @@
                             @endif
                         </div>
                     </div>
+                    
                 @endforeach
             </div>
             <div class="d-flex justify-content-between mb-4" id="pagination-links">

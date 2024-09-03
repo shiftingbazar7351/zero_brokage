@@ -16,7 +16,7 @@
                     </ul>
                 </div>
             </div>
-            <div class="row">
+            <div class="row text-center">
                 <div class="col-12">
                     <div class="table-responsive table-div">
                         <table class="table table-bordered">
@@ -59,7 +59,7 @@
                                             <td>{{ $enquiry->email }}</td>
                                             <td>{{ $enquiry->mobile_number }}</td>
                                             <td>
-                                                <div class="d-flex">
+                                                <div class="d-flex" style="justify-content: center">
                                                     <button class="btn delete-table me-2"
                                                     onclick="editEnquiry({{ $enquiry->id }}, '{{ $enquiry->name }}', '{{ $enquiry->email }}', '{{ $enquiry->mobile_number }}', '{{ $enquiry->move_from_origin }}', '{{ $enquiry->date_time }}')"
                                                     type="button" data-bs-toggle="modal"

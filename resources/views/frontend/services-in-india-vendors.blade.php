@@ -409,7 +409,7 @@
                                                 <a
                                                     href="{{ route('vender-profile', $vendor->id ?? '') }}">{{ $vendor->vendor_name ?? '' }}</a>
                                             </h5>
-                                            {{-- <p>{!! $vendor->description ?? '' !!}</p> --}}
+                                            <p>{!! Str::limit($vendor->description,150) ?? '' !!}</p>
                                             {{-- <a href="#" class="text-primary text-decoration-underline"
                                                 data-bs-toggle="modal" data-bs-target="#modal-{{ $menu->id }}">View
                                                 Details</a> --}}
@@ -443,13 +443,12 @@
 
                                         <div class="verified-img-india" style="width: 80px; height:50px; margin-left:3%">
                                             @if (isset($vendor->verified) && isset($vendor->verified->image))
-                                                <img src="{{ asset('storage/verified/' . $vendor->verified->image) }}"
-                                                    alt="dsa" style="width:100%">
+                                                <img src="{{ asset('storage/verified/' . $vendor->verified->image) }}" alt="verified image" style="width:100%">
                                             @else
-                                                <img src="{{ asset('storage/verified/default-placeholder.png') }}"
-                                                    alt="default image" style="width:100%">
+                                                <img src="{{ asset('assets/img/icons/verified_india.png') }}" alt="default image" style="width:100%">
                                             @endif
                                         </div>
+
 
                                     </div>
                                     <div class="service-action">

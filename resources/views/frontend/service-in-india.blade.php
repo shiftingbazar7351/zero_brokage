@@ -277,7 +277,7 @@
         <div class="section mt-4">
             <div class="container">
                 <h1 class="text-center">Top {{ $subcategory->name ?? '' }} In India</h1>
-                <div class="row mt-4">
+                <div class="row mt-4" id="cities-container">
                     @foreach ($cities as $city)
                         <div class="col-md-6 mb-4">
                             <div class="bangalore-con border-3 border-bottom border-primary mb-4">
@@ -293,13 +293,71 @@
                         </div>
                     @endforeach
                 </div>
-                <div class="d-flex justify-content-center">
-                    {{ $cities->links() }} <!-- Pagination links -->
+                {{-- <div class="d-flex justify-content-center" id="pagination-links"
+                    data-pagination="{{ $cities->appends(request()->query())->links()->toHtml() }}">
+                    {!! $cities->links() !!}
+                </div> --}}
+
+                <div class="row mb-4">
+                    <div class="col-sm-12">
+                        <div class="blog-pagination rev-page">
+                            <nav>
+                                <ul class="pagination justify-content-center mt-0">
+                                    <li class="page-item disabled">
+                                        <a class="page-link page-prev" href="javascript:void(0);" style="background: none;"
+                                            tabindex="-1"><i class="fa-solid fa-arrow-left me-1"></i> PREV</a>
+                                    </li>
+                                    <li class="page-item active">
+                                        <a class="page-link" href="javascript:void(0);">1</a>
+                                    </li>
+                                    <li class="page-item">
+                                        <a class="page-link" href="javascript:void(0);">2</a>
+                                    </li>
+                                    <li class="page-item">
+                                        <a class="page-link" href="javascript:void(0);">3</a>
+                                    </li>
+                                    <li class="page-item">
+                                        <a class="page-link page-next" href="javascript:void(0);" style="background: none;">NEXT <i
+                                                class="fa-solid fa-arrow-right ms-1"></i></a>
+                                    </li>
+                                </ul>
+                            </nav>
+                        </div>
+                    </div>
                 </div>
-                {{-- {{ dd($cities->links()) }} --}}
             </div>
         </div>
     @endif
+
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const paginationLinks = document.getElementById('pagination-links');
+            const citiesContainer = document.getElementById('cities-container');
+
+            paginationLinks.addEventListener('click', function(event) {
+                event.preventDefault();
+
+                if (event.target.tagName === 'A') {
+                    const url = event.target.getAttribute('href');
+
+                    fetch(url)
+                        .then(response => response.text())
+                        .then(html => {
+                            const parser = new DOMParser();
+                            const doc = parser.parseFromString(html, 'text/html');
+
+                            // Update cities container and pagination links
+                            citiesContainer.innerHTML = doc.getElementById('cities-container')
+                            .innerHTML;
+                            paginationLinks.innerHTML = doc.getElementById('pagination-links')
+                            .innerHTML;
+                        })
+                        .catch(error => console.error('Error fetching data:', error));
+                }
+            });
+        });
+    </script>
 
 
     <div class="container-fluid bg-light shadow">

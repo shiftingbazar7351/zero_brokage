@@ -63,5 +63,8 @@ class Vendor extends Model
     {
         return $this->belongsTo(City::class, 'city', 'id');
     }
-
+    public function verified()
+    {
+        return $this->belongsTo(Verified::class, 'verified');
+    }
 }

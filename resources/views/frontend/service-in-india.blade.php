@@ -284,7 +284,7 @@
                                 <a href="{{ route('services-in-india', $city->name ?? '') }}" class="uppercase">
                                     <h4>{{ $subcategory->slug ?? '' }} {{ strtoupper($city->name) }}</h4>
                                 </a>
-                                <p>{{ Str::limit($vendors->description, 300, '...') }}</p>
+                                <p>{!! Str::limit($vendors->description, 300, '') !!}</p>
                             </div>
                         </div>
                     @endforeach

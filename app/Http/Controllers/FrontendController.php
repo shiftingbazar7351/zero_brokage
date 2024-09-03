@@ -22,7 +22,7 @@ class FrontendController extends Controller
     {
         $subcategories = Subcategory::where('status', 1)
             ->orderByDesc('created_at')
-            ->select('id', 'name', 'slug', 'icon')
+            ->select('id', 'name', 'slug', 'icon','trending','featured')
             ->get();
         $trendingsubcat = $subcategories->where('trending', 1);
         $featuresubcat = $subcategories->where('featured', 1);

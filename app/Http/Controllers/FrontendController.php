@@ -73,11 +73,14 @@ class FrontendController extends Controller
         $faqs = Faq::where('status', 1)->select('question', 'answer')->get();
         $description = IndiaServiceDescription::first();
         $vendors = Vendor::where('status', 1)
-        ->with('verified')
+            ->with('verified')
             ->whereHas('cityName', function ($query) use ($city) {
                 $query->where('name', $city);
             })
             ->get();
+        // $subcategory = Subcategory::where('status', 1)
+        //     ->where('slug', $slug)
+        //     ->first();
         return view('frontend.services-in-india-vendors', compact('faqs', 'vendors', 'description'));
     }
 
@@ -98,15 +101,15 @@ class FrontendController extends Controller
         $subcategory = Subcategory::where('status', 1)
             ->where('slug', $slug)
             ->first();
-            $cities = City::select('id', 'name', 'state_id', 'status')
+        $cities = City::select('id', 'name', 'state_id', 'status')
             ->where('status', 'active')
             ->paginate(10);
 
         // Use a subquery to directly filter vendors by city
         $vendors = Vendor::whereIn('city', function ($query) {
             $query->select('id')
-                  ->from('cities')
-                  ->where('status', 'active');
+                ->from('cities')
+                ->where('status', 'active');
         })->first();
 
         $description = IndiaServiceDescription::where('sub_category_id', $subcategory->id ?? '')->first();

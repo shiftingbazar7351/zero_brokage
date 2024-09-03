@@ -28,7 +28,7 @@
                                         <div class="form-group mb-0">
                                             <label>What are you looking for?</label>
                                             <input type="text" class="form-control border p-3"
-                                                placeholder="Car Repair Service">
+                                                placeholder="e.g Car,AC,Electricians service etc">
                                         </div>
                                     </div>
                                     <div class="search-btn">

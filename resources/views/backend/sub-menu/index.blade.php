@@ -188,7 +188,7 @@
 
                             <div class="form-group col-md-6">
                                 <label for="price">Discount(%)</label>
-                                <input type="text" cl    ass="form-control" id="discount" name="discount"
+                                <input type="text" class="form-control"    ass="form-control" id="discount" name="discount"
                                     placeholder="Enter Discount percentage">
                                 <div id="discount-error" class="text-danger"></div>
                             </div>

@@ -40,7 +40,7 @@
                             <tbody>
                                 @if ($metas->isEmpty())
                                     <tr>
-                                        <td colspan="3" class="text-center">No data found</td>
+                                        <td colspan="6" class="text-center">No data found</td>
                                     </tr>
                                 @else
                                     @foreach ($metas as $meta)
@@ -113,8 +113,8 @@
 
                         <div class="mb-3">
                             <label class="form-label">Meta Description</label>
-                            <input type="text" class="form-control" name="description"
-                                placeholder="Enter Meta Description" value="{{ old('description') }}">
+                            <textarea type="text" class="form-control" name="description"
+                                placeholder="Enter Meta Description" >{{ old('description') }}</textarea>
                             <div id="description_error" class="text-danger"></div>
                         </div>
 

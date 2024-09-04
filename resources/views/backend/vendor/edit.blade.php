@@ -346,7 +346,7 @@
                                 <div class="col-md-3 mb-3">
                                     <label for="PanImage" class="form-label">PAN Image<b
                                             style="color: red;">*</b></label>
-                                        <span>
+                                    <span>
                                             @if($vendor->pan_image)
                                             <div class="mb-2 image-container">
                                                 <img id="existingImage" src="{{ asset('storage/vendor/pan_image/' . $vendor->pan_image) }}" alt="Current Image" class="small-image">

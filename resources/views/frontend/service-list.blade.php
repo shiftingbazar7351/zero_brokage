@@ -168,82 +168,39 @@
                     <div class="row mt-4" id="service-list">
                         <div class="col-md-12">
                             @include('frontend.partials.service-list')
-                            {{-- @foreach ($submenus as $menu)
-                                <!-- Repeat the HTML structure of the service list here -->
-                                <div class="service-list shadow-sm">
-                                    <div class="service-cont">
-                                        <div class="service-cont-img">
-                                            <a href="service-details.html">
-                                                <img class="img-fluid serv-img" alt="Service Image"
-                                                    src="{{ asset('storage/submenu/' . $menu->image ?? '') }}">
-                                            </a>
-                                        </div>
-                                        <div class="service-cont-info">
-                                            <span class="item-cat">{{ ucwords($menu->menu->name) ?? '' }}</span>
-                                            <h5 class="title"><a href="service-details.html">{{ $menu->name ?? '' }}</a>
-                                            </h5>
-                                            <p>{{ $menu->description ?? '' }}</p>
-                                            <a href="#" class="text-primary text-decoration-underline"
-                                                data-bs-toggle="modal" data-bs-target="#modal-{{ $menu->id }}">View
-                                                Details</a>
-
-                                            <!-- Modal and other details -->
-                                        </div>
-                                    </div>
-                                    <div class="service-action">
-                                        <h6>&#8377;{{ $menu->discounted_price ?? '' }}<span class="old-price">&#8377;
-                                                {{ $menu->total_price ?? '' }}</span></h6>
-                                        <a class="btn btn-secondary book-Now-btn">Book Now</a>
-                                    </div>
-                                </div>
-                            @endforeach --}}
+                            {{--  --}}
 
                         </div>
                     </div>
                 </div>
-                <script>
-                    $(document).ready(function() {
-                        // Trigger AJAX search on button click
-                        $('#search-button').click(function() {
-                            performSearch();
-                        });
 
-                        // Trigger AJAX search when a filter changes
-                        $('.toggleCheckbox, #input-keyword, #myInput').on('change keyup', function() {
-                            performSearch();
-                        });
-
-                        // Function to perform AJAX request
-                        function performSearch() {
-                            let keyword = $('#input-keyword').val();
-                            let location = $('#myInput').val();
-                            let categories = [];
-
-                            // Get selected categories
-                            $('.categoryCheckbox:checked').each(function() {
-                                categories.push($(this).closest('li').find('.check-content').text().trim());
-                            });
-
-                            $.ajax({
-                                url: "{{ route('your.search.route') }}", // Replace with your route
-                                method: 'GET',
-                                data: {
-                                    keyword: keyword,
-                                    location: location,
-                                    categories: categories
-                                },
-                                success: function(response) {
-                                    $('#service-list').html(response
-                                    .html); // Replace the service list with the new data
-                                },
-                                error: function(xhr) {
-                                    console.error(xhr.responseText); // Handle errors
-                                }
-                            });
-                        }
-                    });
-                </script>
-
+                {{-- <div class="row">
+                    <div class="col-sm-12">
+                        <div class="blog-pagination rev-page">
+                            <nav>
+                                <ul class="pagination justify-content-center">
+                                    <li class="page-item disabled">
+                                        <a class="page-link page-prev" href="javascript:void(0);"
+                                            tabindex="-1"><i class="fa-solid fa-arrow-left me-1"></i> PREV</a>
+                                    </li>
+                                    <li class="page-item active">
+                                        <a class="page-link" href="javascript:void(0);">1</a>
+                                    </li>
+                                    <li class="page-item">
+                                        <a class="page-link" href="javascript:void(0);">2</a>
+                                    </li>
+                                    <li class="page-item">
+                                        <a class="page-link" href="javascript:void(0);">3</a>
+                                    </li>
+                                    <li class="page-item">
+                                        <a class="page-link page-next" href="javascript:void(0);">NEXT <i
+                                                class="fa-solid fa-arrow-right ms-1"></i></a>
+                                    </li>
+                                </ul>
+                            </nav>
+                        </div>
+                    </div>
+                </div> --}}
             </div>
         </div>
     </div>
@@ -466,4 +423,47 @@
             document.getElementById("myDropdown").style.display = "none";
         }
     </script>
+
+<script>
+    $(document).ready(function() {
+        // Trigger AJAX search on button click
+        $('#search-button').click(function() {
+            performSearch();
+        });
+
+        // Trigger AJAX search when a filter changes
+        $('.toggleCheckbox, #input-keyword, #myInput').on('change keyup', function() {
+            performSearch();
+        });
+
+        // Function to perform AJAX request
+        function performSearch() {
+            let keyword = $('#input-keyword').val();
+            let location = $('#myInput').val();
+            let categories = [];
+
+            // Get selected categories
+            $('.categoryCheckbox:checked').each(function() {
+                categories.push($(this).closest('li').find('.check-content').text().trim());
+            });
+
+            $.ajax({
+                url: "{{ route('your.search.route') }}", // Replace with your route
+                method: 'GET',
+                data: {
+                    keyword: keyword,
+                    location: location,
+                    categories: categories
+                },
+                success: function(response) {
+                    $('#service-list').html(response
+                    .html); // Replace the service list with the new data
+                },
+                error: function(xhr) {
+                    console.error(xhr.responseText); // Handle errors
+                }
+            });
+        }
+    });
+</script>
 @endsection

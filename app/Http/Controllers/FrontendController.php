@@ -65,8 +65,7 @@ class FrontendController extends Controller
                 'sub_menus.description',
                 'sub_menus.details'
             )
-            ->get();
-
+            ->paginate(10);
         $subcategories = SubCategory::where('status', 1)
             ->select('id', 'name')
             ->get();
@@ -74,7 +73,7 @@ class FrontendController extends Controller
 
         return view('frontend.service-list', compact('submenus', 'subcategory', 'menus', 'subcategories', 'cities'));
     }
-    
+
 
     public function servicesInIndia($city)
     {
@@ -259,7 +258,7 @@ class FrontendController extends Controller
             $query->where('name', 'like', '%' . $request->keyword . '%')
                 ->orWhere('discounted_price', 'like', '%' . $request->keyword . '%')
                 ->orWhere('total_price', 'like', '%' . $request->keyword . '%')
-                ->orWhereHas('subcategory', function ($q) use ($request) {
+                ->orWhereHas('subCategory', function ($q) use ($request) {
                     $q->where('name', 'like', '%' . $request->keyword . '%');
                 })
                 ->orderByDesc('created_at');
@@ -275,8 +274,8 @@ class FrontendController extends Controller
             });
         }
 
-        if ($request->filled('categories')) {
-            $query->whereHas('subcategory', function ($q) use ($request) {
+        if ($request->filled('Categories')) {
+            $query->whereHas('subCategory', function ($q) use ($request) {
                 $q->whereIn('name', $request->categories);
             });
         }
@@ -287,7 +286,5 @@ class FrontendController extends Controller
 
         return response()->json(['html' => $view]);
     }
-
-
 
 }

@@ -73,7 +73,7 @@
                                 <img src="assets/img/logofinal.png" alt="" style="width: 185px;">
                             </div>
                             <div class="login-header">
-                                <h3 >Login</h3>
+                                <h3>Forgot Password</h3>
                                 {{-- <p>Please enter your Phone Number</p>
                                 <h6>Sign in with <a href="login-phone.html">Phone Number</a></h6> --}}
                             </div>

@@ -438,13 +438,13 @@
     </script> --}}
     <script src="{{ asset('assets/js/booking_infoPopup.js') }}"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/intlTelInput.min.js"></script>
-    <script>
+    {{-- <script>
         const inputtestt = document.querySelector("#phoneNumberInput-booking");
         window.intlTelInput(inputtestt, {
             initialCountry: "in",
             separateDialCode: true
         });
-    </script>
+    </script> --}}
     <script>
         $(document).ready(function() {
             // Handle mobile number submission
@@ -597,36 +597,6 @@
             });
         });
     </script>
-
-    {{-- <script>
-        window.addEventListener('scroll', function() {
-            var stickySlider = document.querySelector('.sticky-slider');
-            var offsetTop = stickySlider.offsetTop;
-
-            if (window.pageYOffset > offsetTop - 0) {
-                stickySlider.style.position = 'fixed';
-                stickySlider.style.top = '0px';
-                stickySlider.style.zIndex = '9999999999';
-                stickySlider.style.width = '100%'; // Ensures the width doesn't collapse
-            } else {
-                stickySlider.style.position = 'relative';
-                stickySlider.style.top = 'auto';
-            }
-        });
-    </script>
-
-
-    <script src="{{ asset('assets/js/booking_infoPopup.js') }}"></script>
-
-
-    {{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/intlTelInput.min.js"></script>
-    <script>
-        const inputPhonelist = document.querySelector("#phoneNumberInput-booking");
-        window.intlTelInput(inputPhonelist, {
-            initialCountry: "in",
-            separateDialCode: true
-        });
-    </script> --}}
 
     <script>
         document.getElementById('sortByPrice').addEventListener('change', function() {

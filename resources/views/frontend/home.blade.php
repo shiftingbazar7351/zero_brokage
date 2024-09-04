@@ -11,7 +11,7 @@
                             <h1>Welcome to <span class="truely">ZERO</span><span class="sell">BROKAGE</span> For
                                 Your Home Services </h1>
                             <div class="search-box">
-                                <form action="https://truelysell.dreamstechnologies.com/html/template/search.html">
+                                {{-- <form> --}}
                                     <div class="search-input line">
                                         <div class="search-group-icon">
                                             <i class="feather-map-pin"></i>
@@ -36,7 +36,7 @@
                                                 class="feather-search me-2"></i>Search
                                         </button>
                                     </div>
-                                </form>
+                                {{-- </form> --}}
                             </div>
                         </div>
                     </div>

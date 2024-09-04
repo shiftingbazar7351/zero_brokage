@@ -3,10 +3,10 @@
     <div class="page-wrapper page-settings">
         <div class="content">
             <div class="container-fluid">
-                <div class="row mx-auto" style="background-color: rgb(236, 236, 236)">
+                <div class="row mx-auto">
                     <h1 class="text-center">Service Details</h1>
                     <div class="col-lg-12">
-                        <table class="table table-sm">
+                        <table class="table table-sm table-bordered table-striped">
 
                             <tbody>
                                 @forelse ($vendors as $vendor)

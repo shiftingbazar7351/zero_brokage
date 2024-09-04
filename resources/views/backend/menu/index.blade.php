@@ -26,10 +26,10 @@
                     </ul>
                 </div>
             </div>
-            <div class="row">
+            <div class="row text-center">
                 <div class="col-12">
                     <div class="table-responsive table-div">
-                        <table class="table datatable">
+                        <table class="table datatable table-striped table-bordered">
                             <thead>
                                 <tr>
                                     <th>#</th>

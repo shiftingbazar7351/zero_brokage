@@ -11442,6 +11442,7 @@ fieldset#first-field {
 }
 .blog-pagination ul li {
     margin-right: 10px;
+    cursor: pointer;
 }
 .blog-pagination ul li:first-child {
     margin-right: 20px;

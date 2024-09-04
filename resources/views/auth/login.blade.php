@@ -6,18 +6,24 @@
 
         <!-- Email Address -->
         <div>
-            <x-input-label for="email" :value="__('Email')" style="font-size: 18px"/>
+            <x-input-label for="email" :value="__('Email')" style="font-size: 18px" />
             <x-text-input id="email" class=" mt-1 w-full form-control" type="email" name="email" :value="old('email')"
                 required autofocus autocomplete="username" />
             <x-input-error :messages="$errors->get('email')" class="mt-2" />
         </div>
 
         <!-- Password -->
-        <div class="mt-4">
-            <x-input-label for="password" :value="__('Password')"  style="font-size: 18px" />
+        <div class="mt-4 position-relative">
+            <x-input-label for="password" :value="__('Password')" style="font-size: 18px" />
 
-            <x-text-input id="password" class="block mt-1 w-full form-control" type="password" name="password" required
-                autocomplete="current-password" />
+            <div class="position-relative">
+                <x-text-input id="password" class="password-field block mt-1 w-full form-control pr-5" type="password"  name="password" required
+                    autocomplete="current-password" />
+
+                <span id="toggle-password" onclick="togglePasswordVisibility()" style="cursor: pointer; position: absolute; right: 10px; top: 50%; transform: translateY(-50%);">
+                    <i class="fas fa-eye"></i>
+                </span>
+            </div>
 
             <x-input-error :messages="$errors->get('password')" class="mt-2" />
         </div>
@@ -51,4 +57,20 @@
 </div> --}}
         </div>
     </form>
+    <script>
+       function togglePasswordVisibility() {
+        const passwordField = document.getElementById('password');
+        const toggleIcon = document.getElementById('toggle-password').querySelector('i');
+
+        if (passwordField.type === 'password') {
+            passwordField.type = 'text';
+            toggleIcon.classList.remove('fa-eye');
+            toggleIcon.classList.add('fa-eye-slash');
+        } else {
+            passwordField.type = 'password';
+            toggleIcon.classList.remove('fa-eye-slash');
+            toggleIcon.classList.add('fa-eye');
+        }
+    }
+    </script>
 @endsection

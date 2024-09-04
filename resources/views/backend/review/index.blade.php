@@ -25,7 +25,7 @@
             <div class="row">
                 <div class="col-12">
                     <div class="table-resposnive table-div">
-                        <table class="table datatable">
+                        <table class="table datatable table-striped">
                             <thead>
                                 <tr>
                                     <th>#</th>

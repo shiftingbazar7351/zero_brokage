@@ -32,7 +32,7 @@
     {{-- .................................Slider...................................... --}}
 
 
-    <div class="justify-content-center px-4 sticky-slider" style="background-color: rgb(229, 230, 233)">
+    {{-- <div class="d-flex justify-content-center px-4 sticky-slider" style="background-color: rgb(239, 240, 241)">
         <div class="wrapper">
             <i id="left" class="fa-solid fas fa-angle-left"></i>
             <ul class="carousel" style="justify-content: center">
@@ -48,10 +48,10 @@
             </ul>
             <i id="right" class="fa-solid fas fa-angle-right"></i>
         </div>
-    </div>
+    </div> --}}
 
 
-    <div class="content">
+    <div class="content" style="background-color: white">
         <div class="container-fluid">
             <div class="row">
 
@@ -59,20 +59,115 @@
                     <div class="filter-div">
                         <div class="filter-head">
                             <h5>Filter by</h5>
-                            <a href="#" class="reset-link" onclick="resetVal()">Reset Filters</a>
+                            <a href="javascript:void(0);" class="reset-link" onclick="resetVal()">Reset Filters</a>
                         </div>
                         <div class="filter-content">
                             <h2>Keyword</h2>
-                            <input type="text" class="form-control" id="input-keyword"
+                            <input type="text" class="form-control" id="input-keyword" name="keyword"
                                 placeholder="What are you looking for?">
                         </div>
+                        
                         <div class="filter-content">
                             <h2>Location</h2>
-                            <div class="group-img">
-                                <input type="text" class="form-control" placeholder="Select Location" id="location-val">
-                                <i class="feather-map-pin"></i>
+                            <div class="dropdown">
+                                <div class="group-img">
+                                <input type="text" placeholder="Search.." id="myInput" name="location" onkeyup="filterFunction()"
+                                    class="form-control">
+                                </div>
+                                    {{-- <i class="feather-map-pin"></i> --}}
+                                <div id="myDropdown" class="dropdown-content">
+                                    @foreach ($cities as $city)
+                                    <div onclick="selectOption(' {{ ucwords($city->name) }}, {{ ucwords($city->state->name ?? '') }}')">
+                                        {{ ucwords($city->name) }}, {{ ucwords($city->state->name ?? '') }}
+                                    </div>
+                                @endforeach
+
+                                    {{-- <div onclick="selectOption('Base')">Base</div>
+                                    <div onclick="selectOption('Blog')">Blog</div>
+                                    <div onclick="selectOption('Contact')">Contact</div>
+                                    <div onclick="selectOption('Custom')">Custom</div>
+                                    <div onclick="selectOption('Support')">Support</div>
+                                    <div onclick="selectOption('Tools')">Tools</div> --}}
+                                </div>
                             </div>
                         </div>
+
+                        <style>
+                            /* The search field */
+                            #myInput {
+                                box-sizing: border-box;
+                                font-size: 16px;
+                                padding: 10px;
+                                border: 1px solid #ddd;
+                                width: 100%;
+                                margin-bottom: 10px;
+                            }
+
+                            /* The container <div> - needed to position the dropdown content */
+                            .dropdown {
+                                position: relative;
+                                display: inline-block;
+                                width: 100%;
+                            }
+
+                            /* Dropdown Content */
+                            .dropdown-content {
+                                display: none;
+                                /* Hide by default */
+                                position: absolute;
+                                background-color: #f6f6f6;
+                                border: 1px solid #ddd;
+                                max-height: 200px;
+                                /* Limit height */
+                                overflow-y: auto;
+                                /* Enable scroll if content exceeds height */
+                                z-index: 1;
+                                width: 100%;
+                            }
+
+                            /* Links inside the dropdown */
+                            .dropdown-content div {
+                                color: black;
+                                padding: 12px 16px;
+                                text-decoration: none;
+                                display: block;
+                                cursor: pointer;
+                            }
+
+                            /* Change color of dropdown options on hover */
+                            .dropdown-content div:hover {
+                                background-color: #f1f1f1;
+                            }
+                        </style>
+
+                        <script>
+                            function filterFunction() {
+                                var input, filter, div, options, i;
+                                input = document.getElementById("myInput");
+                                filter = input.value.toUpperCase();
+                                div = document.getElementById("myDropdown");
+                                options = div.getElementsByTagName("div");
+
+                                // Show dropdown content when user starts typing
+                                div.style.display = input.value ? "block" : "none";
+
+                                for (i = 0; i < options.length; i++) {
+                                    txtValue = options[i].textContent || options[i].innerText;
+                                    if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                                        options[i].style.display = "";
+                                    } else {
+                                        options[i].style.display = "none";
+                                    }
+                                }
+                            }
+
+                            function selectOption(value) {
+                                document.getElementById("myInput").value = value;
+                                document.getElementById("myDropdown").style.display = "none";
+                            }
+                        </script>
+
+
                         <div class="filter-content">
                             <h2>Categories</h2>
                             <div class="filter-checkbox" id="fill-more">
@@ -84,14 +179,16 @@
                                             <b class="check-content">All Categories</b>
                                         </label>
                                     </li>
-                                    <li>
-                                        <label class="checkboxs">
-                                            <input type="checkbox" class="toggleCheckbox categoryCheckbox">
-                                            <span><i></i></span>
-                                            <b class="check-content">Construction</b>
-                                        </label>
-                                    </li>
-                                    <li>
+                                    @foreach ($subcategories as $subcategory)
+                                        <li>
+                                            <label class="checkboxs">
+                                                <input type="checkbox" class="toggleCheckbox categoryCheckbox">
+                                                <span><i></i></span>
+                                                <b class="check-content">{{ $subcategory->name ?? '' }}</b>
+                                            </label>
+                                        </li>
+                                    @endforeach
+                                    {{-- <li>
                                         <label class="checkboxs">
                                             <input type="checkbox" class="toggleCheckbox categoryCheckbox">
                                             <span><i></i></span>
@@ -118,7 +215,7 @@
                                             <span><i></i></span>
                                             <b class="check-content">Interior</b>
                                         </label>
-                                    </li>
+                                    </li> --}}
 
                                 </ul>
                             </div>
@@ -140,7 +237,7 @@
                                         <i class="fa-regular fa-star filled"></i>
                                         <i class="fa-regular fa-star filled"></i>
                                         <i class="fa-regular fa-star filled"></i>
-                                        <i class="fa-regular fa-star"></i>
+                                        <i class="fa-regular fa-star filled"></i>
                                         <span class="d-inline-block average-rating float-end">(35)</span>
                                     </a>
                                 </li>
@@ -388,14 +485,15 @@
                             </div>
                         </div>
                     </div>
-                    <div class="row">
+
+                    {{-- <div class="row">
                         <div class="col-sm-12">
                             <div class="blog-pagination rev-page">
                                 <nav>
                                     <ul class="pagination justify-content-center mt-0">
                                         <li class="page-item disabled">
-                                            <a class="page-link page-prev" href="javascript:void(0);"
-                                                tabindex="-1"><i class="fa-solid fa-arrow-left me-1"></i> PREV</a>
+                                            <a class="page-link page-prev" href="javascript:void(0);" tabindex="-1"><i
+                                                    class="fa-solid fa-arrow-left me-1"></i> PREV</a>
                                         </li>
                                         <li class="page-item active">
                                             <a class="page-link" href="javascript:void(0);">1</a>
@@ -414,13 +512,14 @@
                                 </nav>
                             </div>
                         </div>
-                    </div>
+                    </div> --}}
                 </div>
 
             </div>
         </div>
     </div>
-
+@endsection
+@section('scripts')
     <script>
         window.addEventListener('scroll', function() {
             var stickySlider = document.querySelector('.sticky-slider');
@@ -627,74 +726,5 @@
             initialCountry: "in",
             separateDialCode: true
         });
-    </script>
-
-    <script>
-        document.getElementById('sortByPrice').addEventListener('change', function() {
-            applyFilters();
-        });
-
-        document.getElementById('mySelect').addEventListener('change', function() {
-            applyFilters();
-        });
-
-        document.querySelectorAll('.categoryCheckbox').forEach(function(checkbox) {
-            checkbox.addEventListener('change', function() {
-                applyFilters();
-            });
-        });
-
-        document.querySelectorAll('.rating-set input[type="checkbox"]').forEach(function(checkbox) {
-            checkbox.addEventListener('change', function() {
-                applyFilters();
-            });
-        });
-
-        function applyFilters() {
-            let keyword = document.getElementById('input-keyword').value;
-            let location = document.getElementById('location-val').value;
-            let subCategory = document.getElementById('mySelect').value;
-            let categories = Array.from(document.querySelectorAll('.categoryCheckbox:checked')).map(cb => cb
-                .nextElementSibling.textContent.trim());
-            let ratings = Array.from(document.querySelectorAll('.rating-set input[type="checkbox"]:checked')).map(cb => cb
-                .nextElementSibling.textContent.trim());
-            let sortByPrice = document.getElementById('sortByPrice').value;
-
-            let filters = {
-                keyword: keyword,
-                location: location,
-                subCategory: subCategory,
-                categories: categories,
-                ratings: ratings,
-                sortByPrice: sortByPrice
-            };
-
-            console.log(filters);
-
-            // Send filters to backend via AJAX
-            fetchResults(filters);
-        }
-
-        function fetchResults(filters) {
-            fetch('/path-to-your-endpoint', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
-                    },
-                    body: JSON.stringify(filters)
-                })
-                .then(response => response.json())
-                .then(data => {
-                    // Update the DOM with the filtered results
-                    console.log(data);
-                    updateResults(data);
-                })
-                .catch(error => console.error('Error:', error));
-        }
-
-        function updateResults(data) {
-            // Use the returned data to update the service list in the DOM
-        }
     </script>
 @endsection

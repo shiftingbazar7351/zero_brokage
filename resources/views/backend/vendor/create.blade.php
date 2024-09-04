@@ -407,17 +407,20 @@
                         <div class="row mt-3">
                             <div class="col-md-6 mb-3">
                                 <label for="experience" class="form-label">Experience<b style="color: red;">*</b></label>
-                                <input name="experience" value="{{ old('experience') }}"
-                                    class="form-control bg-light-subtle" type="text" id="experience" placeholder="Enter Experience" required>
+                                <select name="experience" id="experience" class="form-control bg-light-subtle" required>
+                                    <option value="" selected disabled>Select Experience</option>
+                                    @for ($i = 0; $i <= 20; $i++)
+                                        <option value="{{ $i }}" {{ old('experience') == $i ? 'selected' : '' }}>
+                                            {{ $i }}
+                                        </option>
+                                    @endfor
+                                </select>
                                 <div id="experienceError" class="text-danger"></div>
                                 @error('experience')
-                                    <div class="error text-danger ">{{ $message }}</div>
+                                    <div class="error text-danger">{{ $message }}</div>
                                 @enderror
                             </div>
-
-
-                         
-                          
+                            
                         </div>
                         <div class="row mt-3">
                             {{-- <div class="col-md-4">

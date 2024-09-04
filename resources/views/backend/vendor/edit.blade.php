@@ -1,14 +1,34 @@
 @extends('backend.layouts.main')
 @section('styles')
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/css/intlTelInput.min.css">
-<link rel="stylesheet" href="{{ asset('admin/summernote/summernote.min.css') }}">
-<link href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" rel="stylesheet">
-<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
+    <style>
+        .image-container {
+            position: relative;
+            display: inline-block;
+        }
 
-<!-- include summernote css/js -->
-<link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css" rel="stylesheet">
+        .small-image {
+            width: 100px;
+            /* Adjust as needed */
+            height: auto;
+            transition: transform 0.3s ease;
+            /* Smooth transition effect */
+        }
+
+        .image-container:hover .small-image {
+            width: 200px;
+            /* Adjust as needed for medium size */
+        }
+    </style>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/css/intlTelInput.min.css">
+    <link rel="stylesheet" href="{{ asset('admin/summernote/summernote.min.css') }}">
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
+
+    <!-- include summernote css/js -->
+    <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css" rel="stylesheet">
 @endsection
 
 @section('content')
@@ -224,25 +244,36 @@
                             </div>
 
                             <div class="row ">
-                                <div class="col-md-4">
+                                <div class="col-md-4 mb-3">
                                     <label for="formFile" class="form-label">Website (if available)</label>
-                                    <input name="website" value="{{ old('website', $vendor->website ?? '') }}"
+                                    <input name="website" value="{{ old('website') }}"
                                         class="form-control bg-light-subtle" type="text" placeholder="www.example.com"
                                         aria-label="default input example">
                                     @error('website')
                                         <div class="error text-danger ">{{ $message }}</div>
                                     @enderror
                                 </div>
-                                <div class="col-md-6">
+                                <div class="col-md-4 mb-3">
                                     <label for="formFile" class="form-label">Verified or Approved By Team</label>
                                     <select name="verified" class="form-select bg-light-subtle"
                                         aria-label="Default select example" style="box-shadow: none">
                                         <option selected disabled value="">Select Option</option>
-                                        {{-- @foreach ($verifieds as $verified)
+                                        @foreach ($verifieds as $verified)
                                             <option value="{{ $verified->id }}">{{ $verified->name }}</option>
-                                            @endforeach --}}
+                                        @endforeach
                                     </select>
                                     @error('verified')
+                                        <div class="error text-danger ">{{ $message }}</div>
+                                    @enderror
+                                </div>
+
+                                <div class="col-md-4 mb-3">
+                                    <label for="otp" class="form-label">OTP<b style="color: red;">*</b></label>
+                                    <input name="otp" value="{{ old('otp') }}"
+                                        class="form-control bg-light-subtle" type="text" id="otp"
+                                        placeholder="Enter valid OTP" required>
+                                    <div id="otpError" class="text-danger"></div>
+                                    @error('otp')
                                         <div class="error text-danger ">{{ $message }}</div>
                                     @enderror
                                 </div>
@@ -293,6 +324,13 @@
                                         <div class="error text-danger ">{{ $message }}</div>
                                     @enderror
                                 </div>
+                                <div class="col-md-3 mb-3">
+                                    @if($vendor->gst_image)
+                                        <div class="mb-2 image-container">
+                                            <img id="existingImage" src="{{ asset('storage/vendor/gst_image/' . $vendor->gst_image) }}" alt="Current Image" class="small-image">
+                                        </div>
+                                    @endif
+                                </div>
                                 <div class="col-md-3">
                                     <label for="gstNumber" class="form-label">GST Number<b
                                             style="color: red;">*</b></label>
@@ -308,6 +346,13 @@
                                 <div class="col-md-3 mb-3">
                                     <label for="PanImage" class="form-label">PAN Image<b
                                             style="color: red;">*</b></label>
+                                        <span>
+                                            @if($vendor->pan_image)
+                                            <div class="mb-2 image-container">
+                                                <img id="existingImage" src="{{ asset('storage/vendor/pan_image/' . $vendor->pan_image) }}" alt="Current Image" class="small-image">
+                                            </div>
+                                        @endif
+                                    </span>
                                     <input name="pan_image" value="{{ old('pan_image', $vendor->pan_image ?? '') }}"
                                         class="form-control bg-light-subtle" type="file" id="PanImage" required>
                                     <div id="PanImageError" class="text-danger"></div>
@@ -357,16 +402,62 @@
                                     @enderror
                                 </div>
                                 <div class="col-md-3 mb-3">
-                                    <label for="formFile" class="form-label">Visiting Card Image<b
-                                            style="color: red;">*</b></label>
-                                    <input name="visiting_card"
-                                        value="{{ old('visiting_card', $vendor->visiting_card ?? '') }}"
-                                        class="form-control bg-light-subtle" type="file" id="formFile" required>
-                                    @error('visiting_card')
-                                        <div class="error text-danger ">{{ $message }}</div>
-                                    @enderror
+                                    @if($vendor->adhar_image)
+                                        <div class="mb-2 image-container">
+                                            <img id="existingImage" src="{{ asset('storage/vendor/adhar_image/' . $vendor->adhar_image) }}" alt="Current Image" class="small-image">
+                                        </div>
+                                    @endif
                                 </div>
                                 <div class="col-md-3 mb-3">
+                                    <label for="formFile" class="form-label">Visiting Card Image<b style="color: red;">*</b></label>
+                                
+                                    <input name="visiting_card" class="form-control bg-light-subtle" type="file" id="formFile">
+                                    @error('visiting_card')
+                                        <div class="error text-danger">{{ $message }}</div>
+                                    @enderror
+                                </div>
+                                
+                                <div class="col-md-3 mb-3">
+                                    @if($vendor->visiting_card)
+                                        <div class="mb-2 image-container">
+                                            <img id="existingImage" src="{{ asset('storage/vendor/visiting_card/' . $vendor->visiting_card) }}" alt="Current Image" class="small-image">
+                                        </div>
+                                    @endif
+                                </div>
+                                
+                                <script>
+                                    document.addEventListener('DOMContentLoaded', function() {
+                                        const fileInput = document.getElementById('formFile');
+                                        const imagePreview = document.getElementById('existingImage');
+
+                                        fileInput.addEventListener('change', function() {
+                                            const file = fileInput.files[0];
+                                            if (file) {
+                                                const reader = new FileReader();
+                                                reader.onload = function(e) {
+                                                    // Update the existing image with the new file
+                                                    if (imagePreview) {
+                                                        imagePreview.src = e.target.result;
+                                                    } else {
+                                                        // Create a new image element if none exists
+                                                        const newImage = document.createElement('img');
+                                                        newImage.src = e.target.result;
+                                                        newImage.classList.add('small-image');
+                                                        newImage.style.maxWidth = '100%';
+                                                        newImage.style.height = 'auto';
+                                                        fileInput.parentNode.insertBefore(newImage, fileInput);
+                                                    }
+                                                };
+                                                reader.readAsDataURL(file);
+                                            }
+                                        });
+                                    });
+                                </script>
+
+
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
                                     <label for="formFile" class="form-label">Client signature<b
                                             style="color: red;">*</b></label>
                                     <input name="client_sign"
@@ -380,12 +471,15 @@
 
                             <div class="row mt-3">
                                 <div class="col-md-4">
-                                    <label for="formFile" class="form-label">Official video<b
+                                    <label for="formFile" class="form-label">Official video <b
                                             style="color: red;">*</b></label>
-                                    <input name="video" class="form-control bg-light-subtle" type="file"
-                                        id="formFile" required>
+                                    <input name="video" accept="video/*" class="form-control bg-light-subtle"
+                                        type="file" id="formFile" required>
+                                    <small id="fileHelp" class="form-text text-muted">Max file size: 50MB. Supported
+                                        formats:
+                                        mp4, m4v.</small>
                                     @error('video')
-                                        <div class="error text-danger ">{{ $message }}</div>
+                                        <div class="error text-danger">{{ $message }}</div>
                                     @enderror
                                 </div>
                                 <div class="col-md-4">
@@ -411,6 +505,27 @@
                                     @enderror
                                 </div>
 
+                            </div>
+
+                            <div class="row mt-3">
+                                <div class="col-md-6 mb-3">
+                                    <label for="experience" class="form-label">Experience<b
+                                            style="color: red;">*</b></label>
+                                    <select name="experience" id="experience" class="form-control bg-light-subtle"
+                                        required>
+                                        <option value="" selected disabled>Select Experience</option>
+                                        @for ($i = 0; $i <= 20; $i++)
+                                            <option value="{{ $i }}"
+                                                {{ old('experience') == $i ? 'selected' : '' }}>
+                                                {{ $i }}
+                                            </option>
+                                        @endfor
+                                    </select>
+                                    <div id="experienceError" class="text-danger"></div>
+                                    @error('experience')
+                                        <div class="error text-danger">{{ $message }}</div>
+                                    @enderror
+                                </div>
                             </div>
                             <div class="row mt-3">
                                 {{-- <div class="col-md-4">
@@ -483,8 +598,8 @@
 @endsection
 
 @section('scripts')
-<script src="{{ asset('admin/summernote/summernote.min.js') }}"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.1/js/bootstrap-select.min.js"></script>
+    <script src="{{ asset('admin/summernote/summernote.min.js') }}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.1/js/bootstrap-select.min.js"></script>
     <script>
         document.getElementById('companyNameCheckbox').addEventListener('change', function() {
             const companyNameField = document.getElementById('companyname');

@@ -113,30 +113,34 @@
 @section('content')
     <div class="breadcrumb-bar">
         <div class="container">
+            
             <div class="row">
-                <div class="col-md-12 col-12 my-4">
-                    <h2 class=" breadcrumb-title text-white">Top Service Provider City</h2>
-
-                    <div class="row align-items-center" style="margin: 6% 0% 5% 10%;">
-                        <div class="col-md-5">
-                            <select class="form-control" name="" id="state">
-                                <option value="" selected disabled></option>
-                                @foreach ($states as $state)
-                                    <option value="{{ $state->id }}">{{ ucwords($state->name) }}</option>
-                                @endforeach
-                            </select>
-                        </div>
-                        <div class="col-md-5 ">
-                            <select class="form-control" name="city" id="city">
-                                <option value="">Select City</option>
-                            </select>
-                            <div id="city-error" class="text-danger"></div>
-                        </div>
-                        <div class="col-md-1">
-                            <button type="button" class="btn btn-primary btn-lg">Submit</button>
+                <form action="{{ route('services-in-india',$vendorsofcity->city) }}" method="GET">
+                    @csrf
+                    <div class="col-md-12 col-12 my-4">
+                        <h2 class=" breadcrumb-title text-white">Top Service Provider City</h2>
+    
+                        <div class="row align-items-center" style="margin: 6% 0% 5% 10%;">
+                            <div class="col-md-5">
+                                <select class="form-control" name="" id="state">
+                                    <option value="" selected disabled></option>
+                                    @foreach ($states as $state)
+                                        <option value="{{ $state->id }}">{{ ucwords($state->name) }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                            <div class="col-md-5 ">
+                                <select class="form-control" name="city" id="city">
+                                    <option value="">Select City</option>
+                                </select>
+                                <div id="city-error" class="text-danger"></div>
+                            </div>
+                            <div class="col-md-1">
+                                <button type="submit" class="btn btn-primary btn-lg">Submit</button>
+                            </div>
                         </div>
                     </div>
-                </div>
+                </form>              
             </div>
         </div>
     </div>
@@ -203,7 +207,7 @@
             </div>
             <div class="row">
                 <div class="col-md-3">
-                    <div class="work-box aos p-2" data-aos="fade-up">
+                    <div class="work-box aos" data-aos="fade-up">
                         <div class="work-icon">
                             <span class="first">
                                 <img src="assets/img/icons/work-icon.svg" alt="img">
@@ -214,7 +218,7 @@
                     </div>
                 </div>
                 <div class="col-md-3">
-                    <div class="work-box aos p-2" data-aos="fade-up">
+                    <div class="work-box aos" data-aos="fade-up">
                         <div class="work-icon">
                             <span>
                                 <img src="assets/img/icons/find-icon.svg" alt="img">
@@ -226,7 +230,7 @@
                     </div>
                 </div>
                 <div class="col-md-3">
-                    <div class="work-box aos p-2" data-aos="fade-up">
+                    <div class="work-box aos" data-aos="fade-up">
                         <div class="work-icon">
                             <span>
                                 <img src="assets/img/icons/place-icon.svg" alt="img">
@@ -238,7 +242,7 @@
                     </div>
                 </div>
                 <div class="col-md-3">
-                    <div class="work-box aos p-2" data-aos="fade-up">
+                    <div class="work-box aos" data-aos="fade-up">
                         <div class="work-icon">
                             <span>
                                 <img src="assets/img/icons/next-icon.svg" alt="img">
@@ -422,52 +426,48 @@
             </div>
         </section>
     @endif
-
-{{-- .....................Script for select search button................. --}}
     <script>
         $(document).ready(function() {
             $('#state').select2({
-                placeholder: "Select your state here...", // Placeholder text
-                allowClear: true // Option to clear the selection
+                placeholder: "Select an option",
+                allowClear: true
             });
+    
             $('#city').select2({
-                placeholder: "Select your city here...", // Placeholder text
-                allowClear: true // Option to clear the selection
+                placeholder: "Select an option",
+                allowClear: true
             });
-        });
-
-        // Populate Cities
-        $('#state').on('change', function() {
-            var stateId = $(this).val();
-            if (stateId) {
-                $.ajax({
-                    url: '/fetch-city/' + stateId,
-                    type: 'POST',
-                    data: {
-                        _token: '{{ csrf_token() }}'
-                    },
-                    success: function(response) {
-                        $('#city').empty().append(
-                            '<option value="">Select city</option>');
-                        if (response.status === 1) {
-                            $.each(response.data, function(key, city) {
-                                $('#city').append("<option value='" +
-                                    city.id +
-                                    "'>" + city.name + "</option>");
-                            });
+    
+            $('#state').on('change', function() {
+                var stateId = $(this).val();
+                if (stateId) {
+                    $.ajax({
+                        url: '/fetch-city/' + stateId,
+                        type: 'POST',
+                        data: {
+                            _token: '{{ csrf_token() }}' // Ensure this token is properly rendered
+                        },
+                        success: function(response) {
+                            $('#city').empty().append('<option value="">Select city</option>');
+                            if (response.status === 1 && response.data) {
+                                $.each(response.data, function(key, city) {
+                                    $('#city').append("<option value='" + city.id + "'>" + city.name + "</option>");
+                                });
+                            } else {
+                                $('#city').append('<option value="" disabled>' + response.message + '</option>');
+                            }
+                        },
+                        error: function() {
+                            $('#city').empty().append('<option value="" disabled>Error loading cities</option>');
                         }
-                    },
-                    error: function() {
-                        $('#city').empty().append(
-                            '<option value="" disabled>Error loading cities</option>'
-                        );
-                    }
-                });
-            } else {
-                $('#city').empty().append('<option value="">Select city</option>');
-            }
+                    });
+                } else {
+                    $('#city').empty().append('<option value="">Select city</option>');
+                }
+            });
         });
     </script>
+    
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>

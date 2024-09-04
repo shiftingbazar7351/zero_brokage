@@ -250,6 +250,38 @@ class FrontendController extends Controller
     //     $menus = Menu::where('subcategory_id', $subcategory_id)->get();
     //     return response()->json($menus);
     // }
+    public function search(Request $request)
+    {
+        $keyword = $request->input('keyword');
+        $location = $request->input('location');
+        $categories = $request->input('categories', []);
+        $sort = $request->input('sort', 'asc'); // Default sort order
+
+        $query = SubMenu::query();
+
+        if ($keyword) {
+            $query->where('name', 'like', "%{$keyword}%");
+        }
+
+        if ($location) {
+            $query->where('location', 'like', "%{$location}%");
+        }
+
+        if (!empty($categories)) {
+            $query->whereIn('category', $categories);
+        }
+
+        $query->orderBy('discounted_price', $sort);
+
+        $submenus = $query->get();
+
+        if ($request->ajax()) {
+            $html = view('frontend.service-list', ['submenus' => $submenus])->render();
+            return response()->json(['html' => $html]);
+        }
+
+        return view('frontend.service-list', ['submenus' => $submenus]);
+    }
 
 
 

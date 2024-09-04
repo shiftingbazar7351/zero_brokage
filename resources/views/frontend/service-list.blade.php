@@ -57,7 +57,42 @@
                             <h5>Filter by</h5>
                             <a href="#" class="reset-link" onclick="resetVal()">Reset Filters</a>
                         </div>
-                        <div class="filter-content">
+
+
+                        <form id="filterForm">
+                            <div class="filter-content">
+                                <h2>Keyword</h2>
+                                <input type="text" class="form-control" id="input-keyword" name="keyword" placeholder="What are you looking for?">
+                            </div>
+                            <div class="filter-content">
+                                <h2>Location</h2>
+                                <div class="group-img">
+                                    <input type="text" class="form-control" placeholder="Select Location" id="location-val">
+                                    <i class="feather-map-pin"></i>
+                                </div>
+                            </div>
+                            <div class="filter-content">
+                                <h2>Categories</h2>
+                                <div class="filter-checkbox" id="fill-more">
+                                    <ul>
+                                        <!-- Assuming category IDs are available -->
+                                        @foreach ($subcategories as $category)
+                                        <li>
+                                            <label class="checkboxs">
+                                                <input type="checkbox" class="toggleCheckbox categoryCheckbox" name="categories[]" value="{{ $category->id }}">
+                                                <span><i></i></span>
+                                                <b class="check-content">{{ $category->name }}</b>
+                                            </label>
+                                        </li>
+                                        @endforeach
+                                    </ul>
+                                </div>
+                            </div>
+                            <button type="button" class="btn btn-primary" id="searchButton">Search</button>
+                        </form>
+
+
+                        {{-- <div class="filter-content">
                             <h2>Keyword</h2>
                             <input type="text" class="form-control" id="input-keyword"
                                 placeholder="What are you looking for?">
@@ -120,85 +155,11 @@
                             </div>
                             <a href="javascript:void(0);" id="more" class="more-view">View More <i
                                     class="feather-arrow-down-circle ms-1"></i></a>
-                        </div>
+                        </div> --}}
 
 
-                        <div class="filter-content">
-                            <h2>By Rating</h2>
-                            <ul class="rating-set">
-                                <li>
-                                    <label class="checkboxs d-inline-flex">
-                                        <input type="checkbox" class="toggleCheckbox">
-                                        <span><i></i></span>
-                                    </label>
-                                    <a class="rating" href="javascript:void(0);">
-                                        <i class="fa-regular fa-star filled"></i>
-                                        <i class="fa-regular fa-star filled"></i>
-                                        <i class="fa-regular fa-star filled"></i>
-                                        <i class="fa-regular fa-star filled"></i>
-                                        <i class="fa-regular fa-star"></i>
-                                        <span class="d-inline-block average-rating float-end">(35)</span>
-                                    </a>
-                                </li>
-                                <li>
-                                    <label class="checkboxs d-inline-flex">
-                                        <input type="checkbox" class="toggleCheckbox">
-                                        <span><i></i></span>
-                                    </label>
-                                    <a class="rating" href="javascript:void(0);">
-                                        <i class="fa-regular fa-star filled"></i>
-                                        <i class="fa-regular fa-star filled"></i>
-                                        <i class="fa-regular fa-star filled"></i>
-                                        <i class="fa-regular fa-star filled"></i>
-                                        <i class="fa-regular fa-star"></i>
-                                        <span class="d-inline-block average-rating float-end">(40)</span>
-                                    </a>
-                                </li>
-                                <li>
-                                    <label class="checkboxs d-inline-flex">
-                                        <input type="checkbox" class="toggleCheckbox">
-                                        <span><i></i></span>
-                                    </label>
-                                    <a class="rating" href="javascript:void(0);">
-                                        <i class="fa-regular fa-star filled"></i>
-                                        <i class="fa-regular fa-star filled"></i>
-                                        <i class="fa-regular fa-star filled"></i>
-                                        <i class="fa-regular fa-star"></i>
-                                        <i class="fa-regular fa-star"></i>
-                                        <span class="d-inline-block average-rating float-end">(40)</span>
-                                    </a>
-                                </li>
-                                <li>
-                                    <label class="checkboxs d-inline-flex">
-                                        <input type="checkbox" class="toggleCheckbox">
-                                        <span><i></i></span>
-                                    </label>
-                                    <a class="rating" href="javascript:void(0);">
-                                        <i class="fa-regular fa-star filled"></i>
-                                        <i class="fa-regular fa-star filled"></i>
-                                        <i class="fa-regular fa-star"></i>
-                                        <i class="fa-regular fa-star"></i>
-                                        <i class="fa-regular fa-star"></i>
-                                        <span class="d-inline-block average-rating float-end">(20)</span>
-                                    </a>
-                                </li>
-                                <li>
-                                    <label class="checkboxs d-inline-flex">
-                                        <input type="checkbox" class="toggleCheckbox">
-                                        <span><i></i></span>
-                                    </label>
-                                    <a class="rating" href="javascript:void(0);">
-                                        <i class="fa-regular fa-star filled"></i>
-                                        <i class="fa-regular fa-star"></i>
-                                        <i class="fa-regular fa-star"></i>
-                                        <i class="fa-regular fa-star"></i>
-                                        <i class="fa-regular fa-star"></i>
-                                        <span class="d-inline-block average-rating float-end">(5)</span>
-                                    </a>
-                                </li>
-                            </ul>
-                        </div>
-                        <button class="btn btn-primary">Search</button>
+
+                        {{-- <button class="btn btn-primary">Search</button> --}}
                     </div>
                 </div>
 
@@ -210,20 +171,8 @@
                                 <h6>Found {{ count($menus) }} Services</h6>
                             </div>
                         </div>
-                        <div class="col-lg-8 col-sm-12 d-flex justify-content-end ">
-                            <div class="sortbyset">
-                                <div class="sorting-select">
-                                    <select class="form-control select" id="sortByPrice">
-                                        <option value="asc">Price Low to High</option>
-                                        <option value="desc">Price High to Low</option>
-                                    </select>
-
-                                </div>
-                            </div>
-
-                        </div>
                     </div>
-                    <div class="row">
+                    <div class="row mt-4">
                         <div class="col-md-12">
                             @foreach ($submenus as $menu)
                                 <input type="hidden" name="submenu_id" value="{{ $menu->menu_id }}">
@@ -280,7 +229,6 @@
                                     </div>
                                 </div>
                             @endforeach
-                            {{-- {{ dd($menu) }} --}}
                             <div id="myPopup-booking1" class="popup">
                                 <div class="popup-content" style="width:36%">
                                     <span class="close" id="closePopup-booking1">&times;</span>
@@ -295,8 +243,6 @@
                                     <button id="saveChanges-booking1" class="btn mb-4">Continue</button>
                                 </div>
                             </div>
-
-
                             <div id="myPopup-booking" class="popup">
                                 <div class="popup-content" style="width: 39%;">
                                     <span class="close" id="closePopup-booking">&times;</span>
@@ -333,7 +279,6 @@
 
                                 </div>
                             </div>
-
                             <div id="myPopup2-booking" class="popup">
                                 <div class="popup-content" style="width: 39%">
                                     <span class="close" id="closePopup2-booking">&times;</span>
@@ -598,72 +543,4 @@
         });
     </script>
 
-    <script>
-        document.getElementById('sortByPrice').addEventListener('change', function() {
-            applyFilters();
-        });
-
-        document.getElementById('mySelect').addEventListener('change', function() {
-            applyFilters();
-        });
-
-        document.querySelectorAll('.categoryCheckbox').forEach(function(checkbox) {
-            checkbox.addEventListener('change', function() {
-                applyFilters();
-            });
-        });
-
-        document.querySelectorAll('.rating-set input[type="checkbox"]').forEach(function(checkbox) {
-            checkbox.addEventListener('change', function() {
-                applyFilters();
-            });
-        });
-
-        function applyFilters() {
-            let keyword = document.getElementById('input-keyword').value;
-            let location = document.getElementById('location-val').value;
-            let subCategory = document.getElementById('mySelect').value;
-            let categories = Array.from(document.querySelectorAll('.categoryCheckbox:checked')).map(cb => cb
-                .nextElementSibling.textContent.trim());
-            let ratings = Array.from(document.querySelectorAll('.rating-set input[type="checkbox"]:checked')).map(cb => cb
-                .nextElementSibling.textContent.trim());
-            let sortByPrice = document.getElementById('sortByPrice').value;
-
-            let filters = {
-                keyword: keyword,
-                location: location,
-                subCategory: subCategory,
-                categories: categories,
-                ratings: ratings,
-                sortByPrice: sortByPrice
-            };
-
-            console.log(filters);
-
-            // Send filters to backend via AJAX
-            fetchResults(filters);
-        }
-
-        function fetchResults(filters) {
-            fetch('/path-to-your-endpoint', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
-                    },
-                    body: JSON.stringify(filters)
-                })
-                .then(response => response.json())
-                .then(data => {
-                    // Update the DOM with the filtered results
-                    console.log(data);
-                    updateResults(data);
-                })
-                .catch(error => console.error('Error:', error));
-        }
-
-        function updateResults(data) {
-            // Use the returned data to update the service list in the DOM
-        }
-    </script>
 @endsection

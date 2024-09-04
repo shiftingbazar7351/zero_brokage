@@ -238,7 +238,7 @@
                                     <div class="error text-danger ">{{ $message }}</div>
                                 @enderror
                             </div>
-                            <div class="col-md-6">
+                            <div class="col-md-4 mb-3">
                                 <label for="formFile" class="form-label">Verified or Approved By Team</label>
                                 <select name="verified" class="form-select bg-light-subtle"
                                     aria-label="Default select example" style="box-shadow: none">
@@ -248,6 +248,16 @@
                                     @endforeach
                                 </select>
                                 @error('verified')
+                                    <div class="error text-danger ">{{ $message }}</div>
+                                @enderror
+                            </div>
+
+                            <div class="col-md-4 mb-3">
+                                <label for="otp" class="form-label">OTP<b style="color: red;">*</b></label>
+                                <input name="otp" value="{{ old('otp') }}"
+                                    class="form-control bg-light-subtle" type="text" id="otp" placeholder="Enter valid OTP" required>
+                                <div id="otpError" class="text-danger"></div>
+                                @error('otp')
                                     <div class="error text-danger ">{{ $message }}</div>
                                 @enderror
                             </div>
@@ -372,14 +382,17 @@
 
                         <div class="row mt-3">
                             <div class="col-md-4">
-                                <label for="formFile" class="form-label">Official video<b
+                                <label for="formFile" class="form-label">Official video <b
                                         style="color: red;">*</b></label>
-                                <input name="video" class="form-control bg-light-subtle" type="file" id="formFile"
-                                    required>
+                                <input name="video" accept="video/*"
+                                    class="form-control bg-light-subtle" type="file" id="formFile" required>
+                                <small id="fileHelp" class="form-text text-muted">Max file size: 50MB. Supported formats:
+                                    mp4, m4v.</small>
                                 @error('video')
-                                    <div class="error text-danger ">{{ $message }}</div>
+                                    <div class="error text-danger">{{ $message }}</div>
                                 @enderror
                             </div>
+
                             <div class="col-md-4">
                                 <label for="formFile" class="form-label">Vendor Name<b style="color: red;">*</b></label>
                                 <input class="form-control bg-light-subtle" type="text" name="vendor_name"
@@ -395,6 +408,25 @@
                                     placeholder="Enter Review Count" aria-label="default input example" required>
                                 @error('video')
                                     <div class="error text-danger ">{{ $message }}</div>
+                                @enderror
+                            </div>
+
+                        </div>
+
+                        <div class="row mt-3">
+                            <div class="col-md-6 mb-3">
+                                <label for="experience" class="form-label">Experience<b style="color: red;">*</b></label>
+                                <select name="experience" id="experience" class="form-control bg-light-subtle" required>
+                                    <option value="" selected disabled>Select Experience</option>
+                                    @for ($i = 0; $i <= 20; $i++)
+                                        <option value="{{ $i }}" {{ old('experience') == $i ? 'selected' : '' }}>
+                                            {{ $i }}
+                                        </option>
+                                    @endfor
+                                </select>
+                                <div id="experienceError" class="text-danger"></div>
+                                @error('experience')
+                                    <div class="error text-danger">{{ $message }}</div>
                                 @enderror
                             </div>
 
@@ -472,6 +504,17 @@
     <script src="{{ asset('admin/summernote/summernote.min.js') }}"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.1/js/bootstrap-select.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/intlTelInput.min.js"></script>
+    {{-- <script>
+        document.getElementById('formFile').addEventListener('change', function() {
+            const file = this.files[0];
+            if (file.size > 52428800) { // 50MB limit
+                alert('File size exceeds 50MB');
+                this.value = ''; // Clear the input
+            } else {
+                alert(`Selected file: ${file.name}`);
+            }
+        });
+    </script> --}}
     <script>
         const inputvender = document.querySelector("#phoneNumVender");
         window.intlTelInput(inputvender, {

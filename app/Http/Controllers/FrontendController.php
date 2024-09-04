@@ -77,6 +77,7 @@ class FrontendController extends Controller
 
     public function servicesInIndia($city)
     {
+ 
         $faqs = Faq::where('status', 1)->select('question', 'answer')->get();
         $description = IndiaServiceDescription::first();
         $vendors = Vendor::where('status', 1)
@@ -97,6 +98,16 @@ class FrontendController extends Controller
 
     public function servicesInIndiaCity($slug)
     {
+        $cities = City::select('id', 'name', 'state_id', 'status')
+        ->where('status', 'active')
+        ->paginate(10);
+        
+        $vendorsofcity = Vendor::whereIn('city', function ($query) {
+             $query->select('id')
+                 ->from('cities')
+                 ->where('status', 'active');
+         })->first();
+
         $states = State::where('country_id', 101)
             ->select('id', 'country_id', 'name', 'status')
             ->get();
@@ -124,8 +135,9 @@ class FrontendController extends Controller
         })->first();
 
         $description = IndiaServiceDescription::where('sub_category_id', $subcategory->id ?? '')->first();
-        return view('frontend.service-in-india', compact('faqs', 'submenus', 'description', 'reviews', 'subcategory', 'states', 'cities', 'vendors'));
+        return view('frontend.service-in-india', compact('faqs', 'submenus', 'description', 'vendorsofcity', 'reviews', 'subcategory', 'states', 'cities', 'vendors'));
     }
+
 
     public function enquiryStore(Request $request)
     {

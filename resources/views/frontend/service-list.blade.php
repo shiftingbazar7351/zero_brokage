@@ -267,7 +267,136 @@
             separateDialCode: true
         });
     </script> --}}
+
     <script>
+        $(document).ready(function() {
+    // Handle mobile number submission
+    $('#saveChanges-booking1').click(function(e) {
+        e.preventDefault();
+        let mobileNumber = $('#phoneNumberInput-booking').val();
+
+        $.ajax({
+            url: '/user/enquiry/store',
+            type: 'POST',
+            data: {
+                mobile_number: mobileNumber,
+                _token: '{{ csrf_token() }}'
+            },
+            success: function(response) {
+                alert('Mobile number saved successfully');
+                // Open the next popup
+                $('#myPopup-booking1').hide();
+                $('#myPopup-booking').show();
+            },
+            error: function(xhr) {
+                let errors = xhr.responseJSON.errors;
+                if (errors && errors.mobile_number) {
+                    $('#res-booking1').text(errors.mobile_number[0]);
+                }
+            }
+        });
+    });
+
+    // Handle details submission
+    $('#saveChanges-booking').click(function(e) {
+        e.preventDefault();
+        let name = $('input[placeholder="Enter your name"]').val();
+        let move_from_origin = $('input[placeholder="Enter your Location"]').val();
+        let email = $('input[placeholder="Enter your email"]').val();
+        let subcategory_id = $('#subcategory_id').val();
+        let date_time = $('input[type="date"]').val();
+
+        $.ajax({
+            url: '/user/enquiry/update',
+            type: 'POST',
+            data: {
+                mobile_number: $('#phoneNumberInput-booking').val(),
+                name: name,
+                move_from_origin: move_from_origin,
+                email: email,
+                date_time: date_time,
+                subcategory_id: subcategory_id,
+                _token: '{{ csrf_token() }}'
+            },
+            success: function(response) {
+                alert('Details updated successfully');
+                $('#myPopup-booking').hide();
+                $('#myPopup2-booking').show();
+            },
+            error: function(xhr) {
+                let errors = xhr.responseJSON.errors;
+                if (errors) {
+                    // Display the errors in the current modal
+                    if (errors.name) {
+                        $('input[placeholder="Enter your name"]').next('.error-message').text(errors.name[0]);
+                    }
+                    if (errors.email) {
+                        $('input[placeholder="Enter your email"]').next('.error-message').text(errors.email[0]);
+                    }
+                    if (errors.date_time) {
+                        $('input[type="date"]').next('.error-message').text(errors.date_time[0]);
+                    }
+                    if (errors.move_from_origin) {
+                        $('input[placeholder="Enter your Location"]').next('.error-message').text(errors.move_from_origin[0]);
+                    }
+                }
+            }
+        });
+    });
+
+    // Handle OTP verification
+    $('#verify-otp-booking').click(function(e) {
+        e.preventDefault();
+
+        var otp = '';
+        var allFilled = true;
+
+        $('.input-div input').each(function() {
+            var value = $(this).val().trim();
+            if (value === '' || value.length !== 1) {
+                allFilled = false;
+                return false;
+            }
+            otp += value;
+        });
+
+        if (!allFilled || otp.length !== 4) {
+            toastr.error('Please enter a valid 4-digit OTP.');
+            return;
+        }
+
+        var mobileNumber = $('.Phone-Number').text();
+
+        $.ajax({
+            url: '/verify-otp',
+            type: 'POST',
+            data: {
+                mobile_number: mobileNumber,
+                otp: otp,
+                _token: '{{ csrf_token() }}'
+            },
+            success: function(response) {
+                if (response.success) {
+                    toastr.success(response.success);
+                    $('#myPopup2-booking').hide();
+                }
+            },
+            error: function(xhr) {
+                if (xhr.status === 422) {
+                    var errors = xhr.responseJSON.errors;
+                    $.each(errors, function(key, value) {
+                        toastr.error(value);
+                    });
+                } else if (xhr.status === 400) {
+                    toastr.error(xhr.responseJSON.error);
+                }
+            }
+        });
+    });
+});
+
+    </script>
+    {{-- <script>
         $(document).ready(function() {
             // Handle mobile number submission
             $('#saveChanges-booking1').click(function(e) {
@@ -397,7 +526,9 @@
 
 
         });
-    </script>
+    </script> --}}
+
+
     <script>
         const otpInputs = document.querySelectorAll('.otp-input');
 

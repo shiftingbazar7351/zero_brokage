@@ -300,12 +300,12 @@
                         </div>
                     @endforeach
                 </div>
-                <div class="d-flex justify-content-between mb-4" id="pagination-links">
+                <div class="d-flex justify-content-center gap-5 mb-4" id="pagination-links">
                     @if ($cities->currentPage() > 1)
                         <a href="{{ $cities->previousPageUrl() }}" class="btn btn-primary btn-sm"
                             data-page="{{ $cities->currentPage() - 1 }}">Previous</a>
                     @else
-                        <button class="btn btn-secondary btn-sm" disabled>Previous</button>
+                        <button class="btn btn-secondary btn-sm"disabled>Previous</button>
                     @endif
 
                     @if ($cities->hasMorePages())

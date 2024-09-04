@@ -28,10 +28,6 @@
     </div>
     <div></div>
 
-
-    {{-- .................................Slider...................................... --}}
-
-
     <div class="d-flex justify-content-center px-4" style="background-color: rgb(239, 240, 241)">
         <div class="wrapper">
             <i id="left" class="fa-solid fas fa-angle-left"></i>
@@ -617,7 +613,7 @@
                 stickySlider.style.top = 'auto';
             }
         });
-    </script> --}}
+    </script>
 
 
     <script src="{{ asset('assets/js/booking_infoPopup.js') }}"></script>

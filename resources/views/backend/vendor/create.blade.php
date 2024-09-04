@@ -28,7 +28,7 @@
                             <div class="col-md-4">
                                 <label for="formManager" class="form-label">Manager <b style="color: red;">*</b></label>
                                 <select name="manager_id" id="formManager" class="form-select bg-light-subtle"
-                                    aria-label="Default select example" style="box-shadow: none" required>
+                                    aria-label="Default select example" style="box-shadow: none; font-size:1.4rem" required>
                                     <option selected disabled>Select Option</option>
                                     <option value="1" {{ old('manager_id') == '1' ? 'selected' : '' }}>dummy</option>
                                     <option value="2" {{ old('manager_id') == '2' ? 'selected' : '' }}>person</option>
@@ -39,7 +39,7 @@
                             <div class="col-md-4">
                                 <label for="formFile" class="form-label">Employee<b style="color: red;">*</b></label>
                                 <select name="employee_id" class="form-select bg-light-subtle"
-                                    aria-label="Default select example" style="box-shadow: none" required>
+                                    aria-label="Default select example" style="box-shadow: none;font-size:1.4rem" required>
                                     <option value="" selected disabled>Select Option</option>
                                     <option value="1" {{ old('employee_id') == '1' ? 'selected' : '' }}>employee1
                                     </option>
@@ -174,7 +174,7 @@
 
 
                         <div class="row mt-4">
-                            <div class="col-md-4">
+                            <div class="col-md-3">
                                 <label for="emailAddressVender" class="form-label">Email Address<b
                                         style="color: red;">*</b></label>
                                 <input name="email" value="{{ old('email') }}" class="form-control bg-light-subtle"
@@ -186,7 +186,7 @@
                                 @enderror
                             </div>
 
-                            <div class="col-md-4 mt-4 mt-md-0">
+                            <div class="col-md-3 mt-4 mt-md-0">
                                 <label for="formFile" class="form-label">Whatsapp<b
                                         style="color: red;">*</b></label><span class="mx-3">(Get
                                     notification)</span>
@@ -202,26 +202,35 @@
                                 @enderror
                             </div>
 
-                            <div class="col-md-4 mt-4 mt-md-0">
+                            <div class="col-md-3 mt-4 mt-md-0">
                                 <label for="phoneNumVender" class="form-label">Phone Number<b
-                                        style="color: red;">*</b></label><span class="mx-3">(Get
-                                    notification)</span>
+                                        style="color: red;">*</b></label>
+                                <span>(Get notification)</span>
                                 <input name="number" value="{{ old('number') }}" class="form-check-input mx-2"
                                     type="checkbox" value="" id="flexCheckChecked" unchecked>
                                 <input name="number" value="{{ old('number') }}" class="form-control bg-light-subtle"
                                     id="phoneNumVender" type="text" placeholder="Phone number"
                                     aria-label="default input example" onkeyup="validateField(this)" maxlength="10"
-                                    required>
+                                    oninput="checkPhoneNumber(this)" required>
                                 <div id="phoneError" class="text-danger"></div>
                                 @error('number')
-                                    <div class="error text-danger ">{{ $message }}</div>
+                                    <div class="error text-danger">{{ $message }}</div>
                                 @enderror
                             </div>
 
+                            <div class="col-md-3 mt-4 mt-md-0" id="otpSection" style="display: none;">
+                                <label for="phoneNumVender" class="form-label">Verify OTP<b
+                                        style="color: red;">*</b></label>
+                                <div class="d-flex">
+                                    <input type="text" class="form-control me-2" placeholder="Enter OTP"
+                                        aria-label="OTP">
+                                    <button type="button" class="btn btn-primary">OTP Submit</button>
+                                </div>
+                            </div>
                         </div>
 
-                        <div class="row ">
-                            <div class="col-md-4 mb-3">
+                        <div class="row mt-4">
+                            <div class="col-md-4">
                                 <label for="formFile" class="form-label">Website (if available)</label>
                                 <input name="website" value="{{ old('website') }}" class="form-control bg-light-subtle"
                                     type="text" placeholder="www.example.com" aria-label="default input example">
@@ -420,7 +429,7 @@
                                     <div class="error text-danger">{{ $message }}</div>
                                 @enderror
                             </div>
-                            
+
                         </div>
                         <div class="row mt-3">
                             {{-- <div class="col-md-4">
@@ -513,6 +522,20 @@
             separateDialCode: true
         });
     </script>
+
+    {{-- .............Show OTP verify input field (start)..................... --}}
+    <script>
+        function checkPhoneNumber(input) {
+            const otpSection = document.getElementById('otpSection');
+            if (input.value.length === 10) {
+                otpSection.style.display = 'block';
+            } else {
+                otpSection.style.display = 'none';
+            }
+        }
+    </script>
+    {{-- .............Show OTP verify input field (end)..................... --}}
+
     <script>
         const whatsappvender = document.querySelector("#whatsappNumVender");
         window.intlTelInput(whatsappvender, {

@@ -27512,6 +27512,9 @@ td.ant-table-column-sort {
     .popup-content {
         width: 77% !important;
     }
+    .card{
+        margin: 24px 0px;
+    }
 }
 
 @media only screen and (max-width: 575.98px) {

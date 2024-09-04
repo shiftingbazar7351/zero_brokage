@@ -70,10 +70,11 @@ class FrontendController extends Controller
         $subcategories = SubCategory::where('status', 1)
             ->select('id', 'name')
             ->get();
-            $cities = City::paginate(10);
+        $cities = City::paginate(10);
 
-        return view('frontend.service-list', compact('submenus', 'subcategory', 'menus', 'subcategories','cities'));
+        return view('frontend.service-list', compact('submenus', 'subcategory', 'menus', 'subcategories', 'cities'));
     }
+
     public function servicesInIndia($city)
     {
         $faqs = Faq::where('status', 1)->select('question', 'answer')->get();
@@ -93,8 +94,6 @@ class FrontendController extends Controller
         $states = State::where('status', 'active')->where('country_id', 101)->get();
         return view('frontend.services-in-india-vendors', compact('faqs', 'vendors', 'description', 'subcategories', 'menus', 'states'));
     }
-
-
 
     public function servicesInIndiaCity($slug)
     {
@@ -246,11 +245,13 @@ class FrontendController extends Controller
         return response()->json(['success' => true, 'message' => 'Review submitted successfully!']);
     }
 
-    public function getMenus($subcategory_id)
-    {
-        $menus = Menu::where('subcategory_id', $subcategory_id)->get();
-        return response()->json($menus);
-    }
+    // public function getMenus($subcategory_id)
+    // {
+    //     $menus = Menu::where('subcategory_id', $subcategory_id)->get();
+    //     return response()->json($menus);
+    // }
+
+
 
 
 }

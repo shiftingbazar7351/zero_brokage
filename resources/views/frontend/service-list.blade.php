@@ -66,21 +66,22 @@
                             <input type="text" class="form-control" id="input-keyword" name="keyword"
                                 placeholder="What are you looking for?">
                         </div>
-                        
+
                         <div class="filter-content">
                             <h2>Location</h2>
                             <div class="dropdown">
                                 <div class="group-img">
-                                <input type="text" placeholder="Search.." id="myInput" name="location" onkeyup="filterFunction()"
-                                    class="form-control">
+                                    <input type="text" placeholder="Search.." id="myInput" name="location"
+                                        onkeyup="filterFunction()" class="form-control">
                                 </div>
-                                    {{-- <i class="feather-map-pin"></i> --}}
+                                {{-- <i class="feather-map-pin"></i> --}}
                                 <div id="myDropdown" class="dropdown-content">
                                     @foreach ($cities as $city)
-                                    <div onclick="selectOption(' {{ ucwords($city->name) }}, {{ ucwords($city->state->name ?? '') }}')">
-                                        {{ ucwords($city->name) }}, {{ ucwords($city->state->name ?? '') }}
-                                    </div>
-                                @endforeach
+                                        <div
+                                            onclick="selectOption(' {{ ucwords($city->name) }}, {{ ucwords($city->state->name ?? '') }}')">
+                                            {{ ucwords($city->name) }}, {{ ucwords($city->state->name ?? '') }}
+                                        </div>
+                                    @endforeach
 
                                     {{-- <div onclick="selectOption('Base')">Base</div>
                                     <div onclick="selectOption('Blog')">Blog</div>
@@ -311,18 +312,17 @@
                                 <h6>Found {{ count($menus) }} Services</h6>
                             </div>
                         </div>
-                        <div class="col-lg-8 col-sm-12 d-flex justify-content-end ">
-                            <div class="sortbyset">
-                                <div class="sorting-select">
-                                    <select class="form-control select" id="sortByPrice">
-                                        <option value="asc">Price Low to High</option>
-                                        <option value="desc">Price High to Low</option>
-                                    </select>
+                        <form method="GET" action="{{ route('your-route-name') }}">
+                            <select class="form-control select" id="sortByPrice" name="sortByPrice"
+                                onchange="this.form.submit()">
+                                <option value="" selected disabled>Price filter</option>
+                                <option value="asc" {{ request('sortByPrice') == 'asc' ? 'selected' : '' }}>Price Low to
+                                    High</option>
+                                <option value="desc" {{ request('sortByPrice') == 'desc' ? 'selected' : '' }}>Price High
+                                    to Low</option>
+                            </select>
+                        </form>
 
-                                </div>
-                            </div>
-
-                        </div>
                     </div>
                     <div class="row">
                         <div class="col-md-12">
@@ -483,6 +483,7 @@
                                     </div>
                                 </div>
                             </div>
+
                         </div>
                     </div>
 

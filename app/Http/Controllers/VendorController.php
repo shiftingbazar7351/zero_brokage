@@ -178,7 +178,8 @@ class VendorController extends Controller
         $vendor = Vendor::findOrFail($id); // Find the vendor by ID or fail if not found
         $subcategories = SubCategory::orderByDesc('created_at')->get();
         $submenus = SubMenu::orderByDesc('created_at')->get();
-        return view('backend.vendor.edit', compact('vendor', 'subcategories', 'submenus','categories','states')); // Pass the vendor data to the view
+        $verifieds = Verified::orderByDesc('created_at')->get();
+        return view('backend.vendor.edit', compact('vendor', 'subcategories', 'submenus','categories','states','verifieds')); // Pass the vendor data to the view
     }
 
 

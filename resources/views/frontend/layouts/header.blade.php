@@ -13,7 +13,7 @@
                     <img src="{{ asset('assets/img/logofinal.png') }}" class="img-fluid" alt="Logo">
                 </a>
                 <a href="{{ route('home') }}" class="navbar-brand logo-small">
-                    <img src="assets/img/logofinal.png" class="img-fluid" alt="Logo" />
+                    <img src="{{ asset('assets/img/logofinal.png') }}" class="img-fluid" alt="Logo" />
                 </a>
             </div>
             <div class="main-menu-wrapper">

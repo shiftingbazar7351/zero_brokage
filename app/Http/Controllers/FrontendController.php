@@ -251,6 +251,35 @@ class FrontendController extends Controller
     //     return response()->json($menus);
     // }
 
+    public function search(Request $request)
+    {
+        $keyword = $request->input('keyword');
+        $location = $request->input('location');
+        $categories = $request->input('categories', []);
+
+        $query = SubMenu::query();
+
+        if ($keyword) {
+            $query->where('name', 'like', "%{$keyword}%");
+        }
+
+        if ($location) {
+            $query->where('location', 'like', "%{$location}%");
+        }
+
+        if (!empty($categories)) {
+            $query->whereIn('category', $categories);
+        }
+
+        $submenus = $query->get();
+
+        if ($request->ajax()) {
+            return view('frontend.service-list', ['submenus' => $submenus])->render();
+        }
+
+        return view('frontend.service-list', ['submenus' => $submenus]);
+    }
+
 
 
 

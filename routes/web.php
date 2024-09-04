@@ -94,6 +94,8 @@ Route::controller(FrontendController::class)->group(function () {
     Route::get('/provider-details/{id}', 'providerDetails')->name('vender-profile');
     Route::post('/user/review/store', 'reviewStore')->name('reviewstore');
     Route::get('/get-menus/{subcategory_id}', 'getMenus')->name('get.menus');
+    Route::get('/search-filter',  'search')->name('search.filter');
+
 
 });
 

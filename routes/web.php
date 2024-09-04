@@ -100,6 +100,9 @@ Route::controller(FrontendController::class)->group(function () {
 
 });
 
+Route::post('/fetch-city/{stateId}', [SubMenuController::class, 'fetchCity']);
+
+
 
 Route::post('/get-otp', [OtpController::class, 'getOtp'])->name('getOtp');
 Route::post('/verify-otp', [OtpController::class, 'verifyOtp'])->name('verifyOtp');
@@ -135,7 +138,6 @@ Route::middleware('auth')->group(function () {
     Route::post('/submenu-status', [SubMenuController::class, 'subMenuStatus'])->name('submenu.status');
     Route::post('/fetch-subcategory/{id}', [SubMenuController::class, 'fetchsubcategory']);
     Route::post('/getMenus/{subcategoryId}', [SubMenuController::class, 'getMenus']);
-    Route::post('/fetch-city/{stateId}', [SubMenuController::class, 'fetchCity']);
 
     Route::resource('service-detail', ServiceDetailController::class);
     Route::resource('/enquiry', EnquiryController::class);

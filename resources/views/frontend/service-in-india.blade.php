@@ -115,7 +115,7 @@
         <div class="container">
             
             <div class="row">
-                <form action="{{ route('services-in-india',$vendors->city) }}" method="GET">
+                <form action="{{ route('services-in-india',$vendorsofcity->city) }}" method="GET">
                     @csrf
                     <div class="col-md-12 col-12 my-4">
                         <h2 class=" breadcrumb-title text-white">Top Service Provider City</h2>
@@ -429,38 +429,37 @@
     <script>
         $(document).ready(function() {
             $('#state').select2({
-                placeholder: "Select an option", // Placeholder text
-                allowClear: true // Option to clear the selection
+                placeholder: "Select an option",
+                allowClear: true
             });
+    
             $('#city').select2({
-                placeholder: "Select an option", // Placeholder text
-                allowClear: true // Option to clear the selection
+                placeholder: "Select an option",
+                allowClear: true
             });
-
+    
             $('#state').on('change', function() {
                 var stateId = $(this).val();
+                alert(stateId);
                 if (stateId) {
                     $.ajax({
                         url: '/fetch-city/' + stateId,
                         type: 'POST',
                         data: {
-                            _token: '{{ csrf_token() }}'
+                            _token: '{{ csrf_token() }}' // Ensure this token is properly rendered
                         },
                         success: function(response) {
-                            $('#city').empty().append(
-                                '<option value="">Select city</option>');
-                            if (response.status === 1) {
+                            $('#city').empty().append('<option value="">Select city</option>');
+                            if (response.status === 1 && response.data) {
                                 $.each(response.data, function(key, city) {
-                                    $('#city').append("<option value='" +
-                                        city.id +
-                                        "'>" + city.name + "</option>");
+                                    $('#city').append("<option value='" + city.id + "'>" + city.name + "</option>");
                                 });
+                            } else {
+                                $('#city').append('<option value="" disabled>' + response.message + '</option>');
                             }
                         },
                         error: function() {
-                            $('#city').empty().append(
-                                '<option value="" disabled>Error loading cities</option>'
-                            );
+                            $('#city').empty().append('<option value="" disabled>Error loading cities</option>');
                         }
                     });
                 } else {
@@ -468,9 +467,8 @@
                 }
             });
         });
-
-        // Populate Cities
     </script>
+    
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>

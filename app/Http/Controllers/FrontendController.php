@@ -22,7 +22,7 @@ class FrontendController extends Controller
     {
         $subcategories = Subcategory::where('status', 1)
             ->orderByDesc('created_at')
-            ->select('id', 'name', 'slug', 'icon','trending','featured','background_image')
+            ->select('id', 'name', 'slug', 'icon', 'trending', 'featured', 'background_image')
             ->get();
         $trendingsubcat = $subcategories->where('trending', 1);
         $featuresubcat = $subcategories->where('featured', 1);
@@ -67,18 +67,24 @@ class FrontendController extends Controller
             )
             ->get();
 
-        return view('frontend.service-list', compact('submenus', 'subcategory', 'menus'));
+        $subcategories = SubCategory::where('status', 1)
+            ->select('id', 'name')
+            ->get();
+        $cities = City::paginate(10);
+
+        return view('frontend.service-list', compact('submenus', 'subcategory', 'menus', 'subcategories', 'cities'));
     }
+
     public function servicesInIndia($city)
     {
         $faqs = Faq::where('status', 1)->select('question', 'answer')->get();
         $description = IndiaServiceDescription::first();
         $vendors = Vendor::where('status', 1)
-            ->with(['verified','cityName'])
+            ->with(['verified', 'cityName'])
             ->whereHas('cityName', function ($query) use ($city) {
                 $query->where('name', $city);
             })
-            ->select('id','sub_category','city','verified','vendor_image','description','vendor_name')
+            ->select('id', 'sub_category', 'city', 'verified', 'vendor_image', 'description', 'vendor_name')
             ->get();
         // $subcategory = Subcategory::where('status', 1)
         //     ->where('slug', $slug)
@@ -88,8 +94,6 @@ class FrontendController extends Controller
         $states = State::where('status', 'active')->where('country_id', 101)->get();
         return view('frontend.services-in-india-vendors', compact('faqs', 'vendors', 'description', 'subcategories', 'menus', 'states'));
     }
-
-
 
     public function servicesInIndiaCity($slug)
     {
@@ -241,11 +245,42 @@ class FrontendController extends Controller
         return response()->json(['success' => true, 'message' => 'Review submitted successfully!']);
     }
 
-    public function getMenus($subcategory_id)
+    // public function getMenus($subcategory_id)
+    // {
+    //     $menus = Menu::where('subcategory_id', $subcategory_id)->get();
+    //     return response()->json($menus);
+    // }
+
+    public function search(Request $request)
     {
-        $menus = Menu::where('subcategory_id', $subcategory_id)->get();
-        return response()->json($menus);
+        $keyword = $request->input('keyword');
+        $location = $request->input('location');
+        $categories = $request->input('categories', []);
+
+        $query = SubMenu::query();
+
+        if ($keyword) {
+            $query->where('name', 'like', "%{$keyword}%");
+        }
+
+        if ($location) {
+            $query->where('location', 'like', "%{$location}%");
+        }
+
+        if (!empty($categories)) {
+            $query->whereIn('category', $categories);
+        }
+
+        $submenus = $query->get();
+
+        if ($request->ajax()) {
+            return view('frontend.service-list', ['submenus' => $submenus])->render();
+        }
+
+        return view('frontend.service-list', ['submenus' => $submenus]);
     }
+
+
 
 
 }

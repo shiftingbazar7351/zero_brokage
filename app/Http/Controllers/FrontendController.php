@@ -250,39 +250,42 @@ class FrontendController extends Controller
     //     $menus = Menu::where('subcategory_id', $subcategory_id)->get();
     //     return response()->json($menus);
     // }
-    public function search(Request $request)
+    public function filterSubmenus(Request $request)
     {
-        $keyword = $request->input('keyword');
-        $location = $request->input('location');
-        $categories = $request->input('categories', []);
-        $sort = $request->input('sort', 'asc'); // Default sort order
+        $query = Submenu::query();
 
-        $query = SubMenu::query();
-
-        if ($keyword) {
-            $query->where('name', 'like', "%{$keyword}%");
+        if ($request->filled('keyword')) {
+            $query->where('name', 'like', '%' . $request->keyword . '%')
+                ->orWhere('discounted_price', 'like', '%' . $request->keyword . '%')
+                ->orWhere('total_price', 'like', '%' . $request->keyword . '%')
+                ->orWhereHas('subcategory', function ($q) use ($request) {
+                    $q->where('name', 'like', '%' . $request->keyword . '%');
+                })
+                ->orderByDesc('created_at');
         }
 
-        if ($location) {
-            $query->where('location', 'like', "%{$location}%");
+
+        if ($request->filled('location')) {
+            $query->whereHas('cityName', function ($q) use ($request) {
+                $q->where('name', 'like', '%' . $request->location . '%')
+                    ->orWhereHas('state', function ($stateQuery) use ($request) {
+                        $stateQuery->where('name', 'like', '%' . $request->location . '%');
+                    });
+            });
         }
 
-        if (!empty($categories)) {
-            $query->whereIn('category', $categories);
+        if ($request->filled('categories')) {
+            $query->whereHas('subcategory', function ($q) use ($request) {
+                $q->whereIn('name', $request->categories);
+            });
         }
-
-        $query->orderBy('discounted_price', $sort);
 
         $submenus = $query->get();
 
-        if ($request->ajax()) {
-            $html = view('frontend.service-list', ['submenus' => $submenus])->render();
-            return response()->json(['html' => $html]);
-        }
+        $view = view('frontend.partials.service-list', compact('submenus'))->render();
 
-        return view('frontend.service-list', ['submenus' => $submenus]);
+        return response()->json(['html' => $view]);
     }
-
 
 
 

@@ -113,8 +113,9 @@
 @section('content')
     <div class="breadcrumb-bar">
         <div class="container">
+            
             <div class="row">
-                <form action="{{ route('fetchDataOfProvider') }}" method="GET">
+                <form action="{{ route('services-in-india',$vendors->city) }}" method="GET">
                     @csrf
                     <div class="col-md-12 col-12 my-4">
                         <h2 class=" breadcrumb-title text-white">Top Service Provider City</h2>

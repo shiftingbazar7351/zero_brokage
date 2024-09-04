@@ -113,13 +113,13 @@
 @section('content')
     <div class="breadcrumb-bar">
         <div class="container">
-            
+
             <div class="row">
-                <form action="{{ route('services-in-india',$vendorsofcity->city) }}" method="GET">
+                <form action="{{ route('services-in-india',$vendors->city) }}" method="GET">
                     @csrf
                     <div class="col-md-12 col-12 my-4">
                         <h2 class=" breadcrumb-title text-white">Top Service Provider City</h2>
-    
+
                         <div class="row align-items-center" style="margin: 6% 0% 5% 10%;">
                             <div class="col-md-5">
                                 <select class="form-control" name="" id="state">
@@ -140,7 +140,7 @@
                             </div>
                         </div>
                     </div>
-                </form>              
+                </form>
             </div>
         </div>
     </div>
@@ -432,12 +432,12 @@
                 placeholder: "Select an option",
                 allowClear: true
             });
-    
+
             $('#city').select2({
                 placeholder: "Select an option",
                 allowClear: true
             });
-    
+
             $('#state').on('change', function() {
                 var stateId = $(this).val();
                 if (stateId) {
@@ -467,7 +467,7 @@
             });
         });
     </script>
-    
+
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>

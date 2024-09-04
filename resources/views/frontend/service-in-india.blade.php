@@ -126,13 +126,13 @@
                                 @endforeach
                             </select>
                         </div>
-                        <div class="col-md-5 ">
+                        <div class="col-md-5 mt-4 mt-md-0 ">
                             <select class="form-control" name="city" id="city">
                                 <option value="">Select City</option>
                             </select>
                             <div id="city-error" class="text-danger"></div>
                         </div>
-                        <div class="col-md-1">
+                        <div class="col-md-1 mt-4 mt-md-0">
                             <button type="button" class="btn btn-primary btn-lg">Submit</button>
                         </div>
                     </div>
@@ -296,12 +296,12 @@
                         </div>
                     @endforeach
                 </div>
-                <div class="d-flex justify-content-between mb-4" id="pagination-links">
+                <div class="d-flex justify-content-center gap-5 mb-4" id="pagination-links">
                     @if ($cities->currentPage() > 1)
                         <a href="{{ $cities->previousPageUrl() }}" class="btn btn-primary btn-sm"
                             data-page="{{ $cities->currentPage() - 1 }}">Previous</a>
                     @else
-                        <button class="btn btn-secondary btn-sm" disabled>Previous</button>
+                        <button class="btn btn-secondary btn-sm"disabled>Previous</button>
                     @endif
 
                     @if ($cities->hasMorePages())

@@ -113,9 +113,9 @@
                             <div class="col-md-6">
                                 <label for="lcompanyname" class="form-label">Legal Company Name<b
                                         style="color: red;">*</b></label>
-                                <input name="legal_company_name" value="{{ old('legal_company_name') }}" id="lcompanyname"
-                                    class="form-control bg-light-subtle" type="text" placeholder="Legal Company name"
-                                    aria-label="default input example" required>
+                                <input name="legal_company_name" value="{{ old('legal_company_name') }}"
+                                    id="lcompanyname" class="form-control bg-light-subtle" type="text"
+                                    placeholder="Legal Company name" aria-label="default input example" required>
                                 @error('legal_company_name')
                                     <div class="error text-danger">{{ $message }}</div>
                                 @enderror
@@ -174,7 +174,7 @@
 
 
                         <div class="row mt-4">
-                            <div class="col-md-4">
+                            <div class="col-md-3">
                                 <label for="emailAddressVender" class="form-label">Email Address<b
                                         style="color: red;">*</b></label>
                                 <input name="email" value="{{ old('email') }}" class="form-control bg-light-subtle"
@@ -186,7 +186,7 @@
                                 @enderror
                             </div>
 
-                            <div class="col-md-4 mt-4 mt-md-0">
+                            <div class="col-md-3 mt-4 mt-md-0">
                                 <label for="formFile" class="form-label">Whatsapp<b
                                         style="color: red;">*</b></label><span class="mx-3">(Get
                                     notification)</span>
@@ -202,24 +202,34 @@
                                 @enderror
                             </div>
 
-                            <div class="col-md-4 mt-4 mt-md-0">
+                            <div class="col-md-3 mt-4 mt-md-0">
                                 <label for="phoneNumVender" class="form-label">Phone Number<b
-                                        style="color: red;">*</b></label><span class="mx-3">(Get
-                                    notification)</span>
+                                        style="color: red;">*</b></label>
+                                <span>(Get notification)</span>
                                 <input name="number" value="{{ old('number') }}" class="form-check-input mx-2"
                                     type="checkbox" value="" id="flexCheckChecked" unchecked>
                                 <input name="number" value="{{ old('number') }}" class="form-control bg-light-subtle"
                                     id="phoneNumVender" type="text" placeholder="Phone number"
                                     aria-label="default input example" onkeyup="validateField(this)" maxlength="10"
-                                    required>
+                                    oninput="checkPhoneNumber(this)" required>
                                 <div id="phoneError" class="text-danger"></div>
                                 @error('number')
-                                    <div class="error text-danger ">{{ $message }}</div>
+                                    <div class="error text-danger">{{ $message }}</div>
                                 @enderror
+                            </div>
+
+                            <div class="col-md-3 mt-4 mt-md-0" id="otpSection" style="display: none;">
+                                <label for="phoneNumVender" class="form-label">Verify OTP<b
+                                        style="color: red;">*</b></label>
+                                <div class="d-flex">
+                                    <input type="text" class="form-control me-2" placeholder="Enter OTP"
+                                        aria-label="OTP">
+                                    <button type="button" class="btn btn-primary">OTP Submit</button>
+                                </div>
                             </div>
                         </div>
 
-                        <div class="row ">
+                        <div class="row mt-4">
                             <div class="col-md-4">
                                 <label for="formFile" class="form-label">Website (if available)</label>
                                 <input name="website" value="{{ old('website') }}" class="form-control bg-light-subtle"
@@ -410,7 +420,7 @@
                             <div class="col-md-1 d-flex" style="align-items: flex-end">
                                 <button type="button" id="addlocation" class="btn btn-primary">Add</button>
 
-                            </div> 
+                            </div>
                             <div class="col-md-4 d-none" id="longitude">
                                 <label for="formFile" class="form-label">Longitude Location<b
                                         style="color: red;">*</b></label>
@@ -421,14 +431,14 @@
                             </div>
 
                             <div class="row mt-3">
-                            <div class="mb-3 col-md-12">
-                                <label for="summery" class="col-form-label">Description <span
-                                        class="text-danger">*</span></label>
-                                <textarea class="form-control" id="summery" name="description">{{ old('desription') }}</textarea>
-                                @error('sub_category')
-                                <div class="error text-danger">{{ $message }}</div>
-                                @enderror
-                            </div>
+                                <div class="mb-3 col-md-12">
+                                    <label for="summery" class="col-form-label">Description <span
+                                            class="text-danger">*</span></label>
+                                    <textarea class="form-control" id="summery" name="description">{{ old('desription') }}</textarea>
+                                    @error('sub_category')
+                                        <div class="error text-danger">{{ $message }}</div>
+                                    @enderror
+                                </div>
                             </div>
 
                             <script>
@@ -469,6 +479,20 @@
             separateDialCode: true
         });
     </script>
+
+    {{-- .............Show OTP verify input field (start)..................... --}}
+    <script>
+        function checkPhoneNumber(input) {
+            const otpSection = document.getElementById('otpSection');
+            if (input.value.length === 10) {
+                otpSection.style.display = 'block';
+            } else {
+                otpSection.style.display = 'none';
+            }
+        }
+    </script>
+    {{-- .............Show OTP verify input field (end)..................... --}}
+    
     <script>
         const whatsappvender = document.querySelector("#whatsappNumVender");
         window.intlTelInput(whatsappvender, {
@@ -477,13 +501,13 @@
         });
     </script>
 
-<script>
-    document.getElementById('addlocation').addEventListener('click', function() {
+    <script>
+        document.getElementById('addlocation').addEventListener('click', function() {
 
-        document.getElementById('longitude').classList.remove('d-none');
-        document.getElementById('addlocation').classList.add('d-none');
-    });
-</script>
+            document.getElementById('longitude').classList.remove('d-none');
+            document.getElementById('addlocation').classList.add('d-none');
+        });
+    </script>
 
     <script>
         document.getElementById('companyNameCheckbox').addEventListener('change', function() {

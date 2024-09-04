@@ -32,7 +32,7 @@
     {{-- .................................Slider...................................... --}}
 
 
-    <div class="d-flex justify-content-center px-4 sticky-slider" style="background-color: rgb(239, 240, 241)">
+    <div class="d-flex justify-content-center px-4" style="background-color: rgb(239, 240, 241)">
         <div class="wrapper">
             <i id="left" class="fa-solid fas fa-angle-left"></i>
             <ul class="carousel" style="justify-content: center">
@@ -424,7 +424,7 @@
         </div>
     </div>
 
-    <script>
+    {{-- <script>
         window.addEventListener('scroll', function() {
             var stickySlider = document.querySelector('.sticky-slider');
             var offsetTop = stickySlider.offsetTop;
@@ -439,7 +439,7 @@
                 stickySlider.style.top = 'auto';
             }
         });
-    </script>
+    </script> --}}
     <script src="{{ asset('assets/js/booking_infoPopup.js') }}"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/intlTelInput.min.js"></script>
     <script>
@@ -602,7 +602,7 @@
         });
     </script>
 
-    <script>
+    {{-- <script>
         window.addEventListener('scroll', function() {
             var stickySlider = document.querySelector('.sticky-slider');
             var offsetTop = stickySlider.offsetTop;
@@ -617,20 +617,20 @@
                 stickySlider.style.top = 'auto';
             }
         });
-    </script>
+    </script> --}}
 
 
     <script src="{{ asset('assets/js/booking_infoPopup.js') }}"></script>
 
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/intlTelInput.min.js"></script>
+    {{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/intlTelInput.min.js"></script>
     <script>
-        const inputtestt = document.querySelector("#phoneNumberInput-booking");
-        window.intlTelInput(inputtestt, {
+        const inputPhonelist = document.querySelector("#phoneNumberInput-booking");
+        window.intlTelInput(inputPhonelist, {
             initialCountry: "in",
             separateDialCode: true
         });
-    </script>
+    </script> --}}
 
     <script>
         document.getElementById('sortByPrice').addEventListener('change', function() {

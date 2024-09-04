@@ -152,6 +152,42 @@
                             <a href="javascript:void(0);" id="more" class="more-view">View More <i
                                     class="feather-arrow-down-circle ms-1"></i></a>
                         </div>
+
+                        <div class="filter-content">
+                            <h2>Experince <span><i class="feather-chevron-down"></i></span></h2>
+                            <div class="filter-checkbox" id="fill-more" style="height: 135px">
+                                <ul>
+                                    <li>
+                                        <label class="checkboxs">
+                                            <input type="checkbox" class="toggleCheckboxIndia" id="allCategories">
+                                            <span><i></i></span>
+                                            <b class="check-content">1 years - 5 years</b>
+                                        </label>
+                                    </li>
+                                    <li>
+                                        <label class="checkboxs">
+                                            <input type="checkbox" class="toggleCheckboxIndia" id="allCategories">
+                                            <span><i></i></span>
+                                            <b class="check-content">6 years - 10 years</b>
+                                        </label>
+                                    </li>
+                                    <li>
+                                        <label class="checkboxs">
+                                            <input type="checkbox" class="toggleCheckboxIndia" id="allCategories">
+                                            <span><i></i></span>
+                                            <b class="check-content">11 years - 15 years</b>
+                                        </label>
+                                    </li>
+                                    <li>
+                                        <label class="checkboxs">
+                                            <input type="checkbox" class="toggleCheckboxIndia" id="allCategories">
+                                            <span><i></i></span>
+                                            <b class="check-content">15 years - 20 years</b>
+                                        </label>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
                         {{-- <button class="btn btn-primary" id="search-button">Search</button> --}}
                     </div>
                 </div>

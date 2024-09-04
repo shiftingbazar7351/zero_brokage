@@ -283,6 +283,12 @@ class FrontendController extends Controller
             });
         }
 
+         if ($request->filled('categories')) {
+            $query->whereHas('menu', function ($q) use ($request) {
+                $q->whereIn('name', $request->categories);
+            });
+        }
+
         $submenus = $query->get();
 
         $serviceListView = view('frontend.partials.service-list', compact('submenus'))->render();

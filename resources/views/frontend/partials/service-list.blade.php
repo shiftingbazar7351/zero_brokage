@@ -1,4 +1,4 @@
-@if ($submenus)
+@if ($submenus && $submenus->isNotEmpty())
     @foreach ($submenus as $menu)
         <!-- Repeat the HTML structure of the service list here -->
         <div class="service-list shadow-sm">
@@ -51,10 +51,10 @@
             </div>
         </div>
     @endforeach
-@else
-    <div>
-        <img class="align-item-center" src="https://tycove.com/public/assets/images/no-data-found.svg" alt="">
-        <div class="text-center" style="color: #6978dd;">
+    @else
+    <div class="text-center">
+        <img class="align-item-center" src="https://tycove.com/public/assets/images/no-data-found.svg" alt="No Data Found" style="margin-top: 50px;">
+        <div style="color: #6978dd; margin-top: 20px;">
             <b>No Data Found</b>
         </div>
     </div>

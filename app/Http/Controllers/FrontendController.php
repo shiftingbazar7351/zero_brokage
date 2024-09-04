@@ -77,7 +77,6 @@ class FrontendController extends Controller
 
     public function servicesInIndia($city)
     {
- 
         $faqs = Faq::where('status', 1)->select('question', 'answer')->get();
         $description = IndiaServiceDescription::first();
         $vendors = Vendor::where('status', 1)
@@ -98,16 +97,6 @@ class FrontendController extends Controller
 
     public function servicesInIndiaCity($slug)
     {
-        $cities = City::select('id', 'name', 'state_id', 'status')
-        ->where('status', 'active')
-        ->paginate(10);
-        
-        $vendorsofcity = Vendor::whereIn('city', function ($query) {
-             $query->select('id')
-                 ->from('cities')
-                 ->where('status', 'active');
-         })->first();
-
         $states = State::where('country_id', 101)
             ->select('id', 'country_id', 'name', 'status')
             ->get();
@@ -135,9 +124,8 @@ class FrontendController extends Controller
         })->first();
 
         $description = IndiaServiceDescription::where('sub_category_id', $subcategory->id ?? '')->first();
-        return view('frontend.service-in-india', compact('faqs', 'submenus', 'description', 'vendorsofcity', 'reviews', 'subcategory', 'states', 'cities', 'vendors'));
+        return view('frontend.service-in-india', compact('faqs', 'submenus', 'description', 'reviews', 'subcategory', 'states', 'cities', 'vendors'));
     }
-
 
     public function enquiryStore(Request $request)
     {
@@ -262,35 +250,6 @@ class FrontendController extends Controller
     //     $menus = Menu::where('subcategory_id', $subcategory_id)->get();
     //     return response()->json($menus);
     // }
-
-    public function search(Request $request)
-    {
-        $keyword = $request->input('keyword');
-        $location = $request->input('location');
-        $categories = $request->input('categories', []);
-
-        $query = SubMenu::query();
-
-        if ($keyword) {
-            $query->where('name', 'like', "%{$keyword}%");
-        }
-
-        if ($location) {
-            $query->where('location', 'like', "%{$location}%");
-        }
-
-        if (!empty($categories)) {
-            $query->whereIn('category', $categories);
-        }
-
-        $submenus = $query->get();
-
-        if ($request->ajax()) {
-            return view('frontend.service-list', ['submenus' => $submenus])->render();
-        }
-
-        return view('frontend.service-list', ['submenus' => $submenus]);
-    }
 
 
 

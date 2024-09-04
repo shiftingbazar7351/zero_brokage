@@ -95,6 +95,7 @@ Route::controller(FrontendController::class)->group(function () {
     Route::post('/user/review/store', 'reviewStore')->name('reviewstore');
     Route::get('/get-menus/{subcategory_id}', 'getMenus')->name('get.menus');
     Route::get('/search-filter',  'search')->name('search.filter');
+    Route::get('/filter-submenus','filterSubmenus')->name('your.search.route');
 
 
 });

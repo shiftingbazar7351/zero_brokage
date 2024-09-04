@@ -2,8 +2,6 @@
 @section('styles')
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/css/intlTelInput.min.css">
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
-
-
     <style>
         .work-box {
             border: 2px solid #427de9;
@@ -113,8 +111,8 @@
 @section('content')
     <div class="breadcrumb-bar">
         <div class="container">
-
             <div class="row">
+                {{-- {{ dd($vendors->city) }} --}}
                 <form action="{{ route('services-in-india',$vendors->city) }}" method="GET">
                     @csrf
                     <div class="col-md-12 col-12 my-4">

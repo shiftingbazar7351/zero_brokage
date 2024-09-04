@@ -11,7 +11,7 @@
                             <h1>Welcome to <span class="truely">ZERO</span><span class="sell">BROKAGE</span> For
                                 Your Home Services </h1>
                             <div class="search-box">
-                                <form action="https://truelysell.dreamstechnologies.com/html/template/search.html">
+                                {{-- <form> --}}
                                     <div class="search-input line">
                                         <div class="search-group-icon">
                                             <i class="feather-map-pin"></i>
@@ -36,7 +36,7 @@
                                                 class="feather-search me-2"></i>Search
                                         </button>
                                     </div>
-                                </form>
+                                {{-- </form> --}}
                             </div>
                         </div>
                     </div>
@@ -187,7 +187,7 @@
                                 <div class="providerset-content">
                                     <div class="providerset-price">
                                         <div class="providerset-name">
-                                            <h4><a href="provider-details.html">{{ $provider->vendor_name ?? '' }}</a><i
+                                            <h4><a href="{{ route('vender-profile',$provider->id ??'') }}">{{ $provider->vendor_name ?? '' }}</a><i
                                                     class="fa fa-check-circle" aria-hidden="true"></i></h4>
                                             <span>{{ $provider->subCategory->name ?? '' }}</span>
                                         </div>
@@ -201,8 +201,7 @@
                                             <i class="fas fa-star filled"></i>
                                             <i class="fas fa-star filled"></i>
                                             <i class="fas fa-star filled"></i>
-                                            <i
-                                                class="fa-solid fa-star-half-stroke filled"></i><span>({{ $provider->review_count ?? '0' }})</span>
+                                            <i class="fa-solid fa-star-half-stroke filled"></i><span>({{ $provider->review_count ?? '0' }})</span>
                                         </div>
                                     </div>
                                 </div>

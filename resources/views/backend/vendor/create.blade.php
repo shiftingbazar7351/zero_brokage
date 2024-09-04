@@ -28,7 +28,7 @@
                             <div class="col-md-4">
                                 <label for="formManager" class="form-label">Manager <b style="color: red;">*</b></label>
                                 <select name="manager_id" id="formManager" class="form-select bg-light-subtle"
-                                    aria-label="Default select example" style="box-shadow: none" required>
+                                    aria-label="Default select example" style="box-shadow: none; font-size:1.4rem" required>
                                     <option selected disabled>Select Option</option>
                                     <option value="1" {{ old('manager_id') == '1' ? 'selected' : '' }}>dummy</option>
                                     <option value="2" {{ old('manager_id') == '2' ? 'selected' : '' }}>person</option>
@@ -39,7 +39,7 @@
                             <div class="col-md-4">
                                 <label for="formFile" class="form-label">Employee<b style="color: red;">*</b></label>
                                 <select name="employee_id" class="form-select bg-light-subtle"
-                                    aria-label="Default select example" style="box-shadow: none" required>
+                                    aria-label="Default select example" style="box-shadow: none;font-size:1.4rem" required>
                                     <option value="" selected disabled>Select Option</option>
                                     <option value="1" {{ old('employee_id') == '1' ? 'selected' : '' }}>employee1
                                     </option>
@@ -492,7 +492,7 @@
         }
     </script>
     {{-- .............Show OTP verify input field (end)..................... --}}
-    
+
     <script>
         const whatsappvender = document.querySelector("#whatsappNumVender");
         window.intlTelInput(whatsappvender, {

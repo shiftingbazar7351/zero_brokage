@@ -74,6 +74,7 @@ class FrontendController extends Controller
 
         return view('frontend.service-list', compact('submenus', 'subcategory', 'menus', 'subcategories', 'cities'));
     }
+    
 
     public function servicesInIndia($city)
     {

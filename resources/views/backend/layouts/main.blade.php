@@ -70,7 +70,7 @@
             var newValue = this.value.replace(new RegExp(/[^\d]/, 'ig'), "");
             this.value = newValue;
         }
-        var userName = document.querySelector('#phoneNumVender');
+        var userName = document.querySelector('#phoneNumVender','#number');
         userName.addEventListener('input', restrictNumber);
     </script>
 

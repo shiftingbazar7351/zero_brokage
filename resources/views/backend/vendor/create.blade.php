@@ -248,12 +248,13 @@
                             <div class="col-md-3 mt-4 mt-md-0" id="otpSection" style="display: none;">
                                 <label for="otp" class="form-label">Verify OTP<b style="color: red;">*</b></label>
                                 <div class="d-flex">
-                                    <input type="text" class="form-control me-2" id="otp" placeholder="Enter OTP" aria-label="OTP">
-                                    <button type="button" class="btn btn-primary" onclick="verifyOtp()">OTP Submit</button>
+                                    <input type="text" class="form-control me-2" id="otp"
+                                        placeholder="Enter OTP" aria-label="OTP" maxlength="4" id="number">
+                                    <button type="button" class="btn btn-primary" onclick="verifyOtp()">OTP
+                                        Submit</button>
                                 </div>
                                 <div id="otpError" class="text-danger"></div>
                             </div>
-
 
                         </div>
 
@@ -280,16 +281,16 @@
                                 @enderror
                             </div>
 
-                            <div class="col-md-4 mb-3">
-                                <label for="otp" class="form-label">OTP<b style="color: red;">*</b></label>
-                                <input name="otp" value="{{ old('otp') }}" class="form-control bg-light-subtle"
-                                    type="text" id="otp" placeholder="Enter valid OTP" required>
+                            <div class="col-md-3 mt-4 mt-md-0" id="otpSection" style="display: none;">
+                                <label for="otp" class="form-label">Verify OTP<b style="color: red;">*</b></label>
+                                <div class="d-flex">
+                                    <input type="text" class="form-control me-2" id="otp"
+                                        placeholder="Enter OTP" aria-label="OTP">
+                                    <button type="button" class="btn btn-primary" onclick="verifyOtp()">OTP
+                                        Submit</button>
+                                </div>
                                 <div id="otpError" class="text-danger"></div>
-                                @error('otp')
-                                    <div class="error text-danger ">{{ $message }}</div>
-                                @enderror
                             </div>
-
                         </div>
 
                         <div class="row mt-6">
@@ -529,21 +530,10 @@
 @endsection
 
 @section('scripts')
-    {{-- <script src="{{ asset('assets/js/vendor-validation.js') }}"></script> --}}
     <script src="{{ asset('admin/summernote/summernote.min.js') }}"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.1/js/bootstrap-select.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/intlTelInput.min.js"></script>
-    {{-- <script>
-        document.getElementById('formFile').addEventListener('change', function() {
-            const file = this.files[0];
-            if (file.size > 52428800) { // 50MB limit
-                alert('File size exceeds 50MB');
-                this.value = ''; // Clear the input
-            } else {
-                alert(`Selected file: ${file.name}`);
-            }
-        });
-    </script> --}}
+
     <script>
         const inputvender = document.querySelector("#phoneNumVender");
         window.intlTelInput(inputvender, {
@@ -771,6 +761,7 @@
                     },
                     success: function(response) {
                         alert(response.message); // Notify OTP sent
+                        // alert(opt);
                         document.getElementById('otpSection').style.display = 'block'; // Show OTP input
                     },
                     error: function(response) {
@@ -790,38 +781,42 @@
         }
 
         function verifyOtp() {
-    var otp = document.getElementById('otp').value; // Get the OTP entered by the user
-    var phoneNumber = document.getElementById('phoneNumVender').value; // Get the mobile number
+            var otp = document.getElementById('otp').value;
+            var phoneNumber = document.getElementById('phoneNumVender').value; // Get the mobile number
 
-    if (otp.length === 4 && phoneNumber.length === 10) {
-        // Clear previous errors
-        document.getElementById('otpError').textContent = '';
+            if (otp.length === 4 && phoneNumber.length === 10) {
+                document.getElementById('otpError').textContent = '';
 
-        // AJAX call to verify OTP
-        $.ajax({
-            url: '/verify-otp',
-            method: 'POST',
-            data: {
-                otp: otp,
-                mobile_number: phoneNumber,  // Include the mobile number
-                _token: '{{ csrf_token() }}'
-            },
-            success: function(response) {
-                alert(response.message); // Notify OTP verified
-                document.getElementById('otpSection').style.display = 'none'; // Hide OTP input after verification
-            },
-            error: function(response) {
-                if (response.responseJSON && response.responseJSON.errors) {
-                    document.getElementById('otpError').textContent = response.responseJSON.errors.mobile_number ? response.responseJSON.errors.mobile_number[0] : response.responseJSON.errors.otp[0];
-                } else {
-                    document.getElementById('otpError').textContent = 'An error occurred. Please try again.';
-                }
+                $.ajax({
+                    url: '/vendor-verify-otp',
+                    method: 'POST',
+                    data: {
+                        otp: otp,
+                        mobile_number: phoneNumber, // send the mobile number as 'mobile_number'
+                        _token: '{{ csrf_token() }}'
+                    },
+                    success: function(response) {
+                        alert(response.message); // Notify OTP verified
+                        toastr.success('Otp verfied successfully')
+                        document.getElementById('otpSection').style.display =
+                        'none'; // Hide OTP input after verification
+                    },
+                    error: function(response) {
+                        if (response.responseJSON && response.responseJSON.errors) {
+                            document.getElementById('otpError').textContent = response.responseJSON.errors
+                                .mobile_number ?
+                                response.responseJSON.errors.mobile_number[0] :
+                                response.responseJSON.errors.otp[0];
+                        } else {
+                            document.getElementById('otpError').textContent =
+                                'An error occurred. Please try again.';
+                        }
+                    }
+                });
+            } else {
+                document.getElementById('otpError').textContent =
+                    'Please enter a valid 4-digit OTP and 10-digit phone number.';
             }
-        });
-    } else {
-        document.getElementById('otpError').textContent = 'Please enter a valid 4-digit OTP and 10-digit phone number.';
-    }
-}
-
+        }
     </script>
 @endsection

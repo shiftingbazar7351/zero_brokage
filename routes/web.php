@@ -108,7 +108,7 @@ Route::post('/fetch-city/{stateId}', [SubMenuController::class, 'fetchCity']);
 
 
 Route::post('/get-otp', [OtpController::class, 'getOtp'])->name('getOtp');
-Route::post('/verify-otp', [OtpController::class, 'verifyOtp'])->name('verifyOtp');
+// Route::post('/verify-otp', [OtpController::class, 'verifyOtp'])->name('verifyOtp');
 
 
 

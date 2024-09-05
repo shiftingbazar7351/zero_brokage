@@ -7,17 +7,17 @@
         }
 
         .small-image {
-            width: 100px;
+            width: 70px;
             /* Adjust as needed */
             height: auto;
             transition: transform 0.3s ease;
             /* Smooth transition effect */
         }
 
-        .image-container:hover .small-image {
-            width: 200px;
-            /* Adjust as needed for medium size */
-        }
+        /* .image-container:hover .small-image {
+                        width: 200px; */
+        /* Adjust as needed for medium size */
+        /* } */
     </style>
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/css/intlTelInput.min.css">
@@ -51,7 +51,7 @@
                                 <div class="col-md-4">
                                     <label for="formManager" class="form-label">Manager <b style="color: red;">*</b></label>
                                     <select name="manager_id" id="formManager" class="form-select bg-light-subtle"
-                                        aria-label="Default select example" style="box-shadow: none" required>
+                                        aria-label="Default select example" style="box-shadow: none; font-size:1.4rem" required>
                                         <option selected disabled>Select Option</option>
                                         <option value="1" {{ old('manager_id') == '1' ? 'selected' : '' }}>dummy
                                         </option>
@@ -65,7 +65,7 @@
                                 <div class="col-md-4">
                                     <label for="formFile" class="form-label">Employee<b style="color: red;">*</b></label>
                                     <select name="employee_id" class="form-select bg-light-subtle"
-                                        aria-label="Default select example" style="box-shadow: none" required>
+                                        aria-label="Default select example" style="box-shadow: none;font-size:1.4rem" required>
                                         <option value="" selected disabled>Select Option</option>
                                         <option value="1" {{ old('employee_id') == '1' ? 'selected' : '' }}>employee1
                                         </option>
@@ -80,7 +80,7 @@
                                 </div>
                                 <div class="col-md-4">
                                     <label for="category">Category</label>
-                                    <select class="form-control" id="category" name="category" required>
+                                    <select class="form-control bg-light-subtle" id="category" name="category" required>
                                         <option value="">Select category</option>
                                         @foreach ($categories as $category)
                                             <option value="{{ $category->id }}">{{ $category->name }}</option>
@@ -90,10 +90,10 @@
                                 </div>
                             </div>
 
-                            <div class="row mx-auto">
+                            <div class="row mx-auto mt-3">
                                 <div class="col-md-4">
                                     <label for="subcategory">Sub Category</label>
-                                    <select class="form-control" id="subcategory" name="sub_category" required>
+                                    <select class="form-control bg-light-subtle" id="subcategory" name="sub_category" required>
                                         <option value="">Select subcategory</option>
                                     </select>
                                     <div id="subcategory_id-error" class="text-danger"></div>
@@ -101,7 +101,7 @@
 
                                 <div class="col-md-4">
                                     <label for="menu">Menu</label>
-                                    <select class="form-control" id="menu" name="menu_id" required>
+                                    <select class="form-control bg-light-subtle" id="menu" name="menu_id" required>
                                         <option value="">Select menu</option>
                                     </select>
                                     <div id="menu_id-error" class="text-danger"></div>
@@ -109,7 +109,7 @@
                                 </div>
                                 <div class="col-md-4">
                                     <label for="submenu">Sub-Menu</label>
-                                    <select class="form-control" id="submenu" name="submenu_id" required>
+                                    <select class="form-control bg-light-subtle" id="submenu" name="submenu_id" required>
                                         <option value="">Select submenu</option>
                                     </select>
                                     <div id="menu_id-error" class="text-danger"></div>
@@ -146,7 +146,7 @@
                             <div class="row mt-3">
                                 <div class="col-md-4">
                                     <label for="state" class="form-label">State<b style="color: red;">*</b></label>
-                                    <select id="state" name="state" class="form-select" required>
+                                    <select id="state" name="state" class="form-select bg-light-subtle" style="font-size: 1.4rem" required>
                                         <option selected disabled>Select State</option>
                                         @foreach ($states as $state)
                                             <option value="{{ $state->id }}">{{ ucwords($state->name) }}</option>
@@ -159,7 +159,7 @@
 
                                 <div class="col-md-4">
                                     <label for="city" class="form-label">City<b style="color: red;">*</b></label>
-                                    <select class="form-select" id="city" name="city" required>
+                                    <select class="form-select bg-light-subtle" id="city" name="city" style="font-size: 1.4rem" required>
                                         <option value="">Select City</option>
                                     </select>
                                     @error('city')
@@ -243,7 +243,7 @@
                                 </div>
                             </div>
 
-                            <div class="row ">
+                            <div class="row mt-3">
                                 <div class="col-md-4 mb-3">
                                     <label for="formFile" class="form-label">Website (if available)</label>
                                     <input name="website" value="{{ old('website') }}"
@@ -256,7 +256,7 @@
                                 <div class="col-md-4 mb-3">
                                     <label for="formFile" class="form-label">Verified or Approved By Team</label>
                                     <select name="verified" class="form-select bg-light-subtle"
-                                        aria-label="Default select example" style="box-shadow: none">
+                                        aria-label="Default select example" style="box-shadow: none;font-size:1.4rem">
                                         <option selected disabled value="">Select Option</option>
                                         @foreach ($verifieds as $verified)
                                             <option value="{{ $verified->id }}">{{ $verified->name }}</option>
@@ -267,32 +267,7 @@
                                     @enderror
                                 </div>
 
-                                <div class="col-md-4 mb-3">
-                                    <label for="otp" class="form-label">OTP<b style="color: red;">*</b></label>
-                                    <input name="otp" value="{{ old('otp') }}"
-                                        class="form-control bg-light-subtle" type="text" id="otp"
-                                        placeholder="Enter valid OTP" required>
-                                    <div id="otpError" class="text-danger"></div>
-                                    @error('otp')
-                                        <div class="error text-danger ">{{ $message }}</div>
-                                    @enderror
-                                </div>
-
-                            </div>
-
-                            <div class="row mt-6">
-                                <div class="col-4 mb-3">
-                                    <label for="formFile" class="form-label">Vender Logo<b
-                                            style="color: red;">*</b></label>
-                                    <input name="logo" value="{{ old('logo', $vendor->logo ?? '') }}"
-                                        class="form-control bg-light-subtle" type="file" id="formFile"
-                                        title="{{ asset('storage/vendor/vendor_image/' . $vendor->vendor_image ?? '') }}"
-                                        required>
-                                    @error('logo')
-                                        <div class="error text-danger ">{{ $message }}</div>
-                                    @enderror
-                                </div>
-                                <div class="col-4">
+                                <div class="col-md-4">
                                     <label for="formFile" class="form-label">Owner name<b
                                             style="color: red;">*</b></label>
                                     <input name="owner_name" value="{{ old('owner_name', $vendor->owner_name ?? '') }}"
@@ -302,9 +277,41 @@
                                         <div class="error text-danger ">{{ $message }}</div>
                                     @enderror
                                 </div>
-                                <div class="col-4 mb-3">
+
+                            </div>
+
+                            <div class="row mt-6">
+                                <div class="col-md-6 mb-3">
+                                    <label for="formFile" class="form-label">Vendor Logo<b
+                                            style="color: red;">*</b></label>
+                                            <span>
+                                                @if ($vendor->gst_image)
+                                                    <div class="mb-2 image-container">
+                                                        <img id="existingImage"
+                                                            src="{{ asset('storage/vendor/gst_image/'. $vendor->logo) }}"
+                                                            alt="Current Image" class="small-image">
+                                                    </div>
+                                                @endif
+                                            </span>
+                                    <input name="logo" value="{{ old('logo', $vendor->logo ?? '') }}"
+                                        class="form-control bg-light-subtle" type="file" id="formFile"
+                                        title="{{ asset('storage/vendor/vendor_image/' . $vendor->vendor_image ?? '') }}"
+                                        required>
+                                    @error('logo')
+                                        <div class="error text-danger ">{{ $message }}</div>
+                                    @enderror
+                                </div>
+                                
+                                <div class="col-md-6 mb-3">
                                     <label for="formFile" class="form-label">Vender Image<b
                                             style="color: red;">*</b></label>
+                                             @if ($vendor->gst_image)
+                                                    <div class="mb-2 image-container">
+                                                        <img id="existingImage"
+                                                            src="{{ asset('storage/vendor/gst_image/'. $vendor->logo) }}"
+                                                            alt="Current Image" class="small-image">
+                                                    </div>
+                                                @endif
                                     <input name="vendor_image"
                                         value="{{ old('vendor_image', $vendor->vendor_image ?? '') }}"
                                         class="form-control bg-light-subtle" type="file" id="formFile" required>
@@ -314,9 +321,18 @@
                                 </div>
                             </div>
                             <div class="row mt-3">
-                                <div class="col-md-3 mb-3">
+                                <div class="col-md-4 mb-3">
                                     <label for="GSTimage" class="form-label">GST Image<b
                                             style="color: red;">*</b></label>
+                                    <span>
+                                        @if ($vendor->gst_image)
+                                            <div class="mb-2 image-container">
+                                                <img id="existingImage"
+                                                    src="{{ asset('storage/vendor/gst_image/' . $vendor->gst_image) }}"
+                                                    alt="Current Image" class="small-image">
+                                            </div>
+                                        @endif
+                                    </span>
                                     <input name="gst_image" value="{{ old('gst_image', $vendor->gst_image ?? '') }}"
                                         class="form-control bg-light-subtle" type="file" id="GSTimage" required>
                                     <div id="gstImageError" class="text-danger"></div>
@@ -324,32 +340,37 @@
                                         <div class="error text-danger ">{{ $message }}</div>
                                     @enderror
                                 </div>
-                                <div class="col-md-3 mb-3">
-                                    @if($vendor->gst_image)
-                                        <div class="mb-2 image-container">
-                                            <img id="existingImage" src="{{ asset('storage/vendor/gst_image/' . $vendor->gst_image) }}" alt="Current Image" class="small-image">
-                                        </div>
-                                    @endif
-                                </div>
-                                <div class="col-md-3">
-                                    <label for="gstNumber" class="form-label">GST Number<b
+
+                                <div class="col-md-4 mb-3">
+                                    <label for="adharImage" class="form-label">Adhar Image<b
                                             style="color: red;">*</b></label>
-                                    <input name="gst_number" value="{{ old('gst_number', $vendor->gst_number ?? '') }}"
-                                        class="form-control bg-light-subtle" id="gstNumber" type="text"
-                                        placeholder="GST number" aria-label="default input example"
-                                        onkeyup="validateField(this)" maxlength="15" required>
-                                    <div id="gstError" class="text-danger"></div>
-                                    @error('gst_number')
+                                    <span>
+                                        @if ($vendor->adhar_image)
+                                            <div class="mb-2 image-container">
+                                                <img id="existingImage"
+                                                    src="{{ asset('storage/vendor/adhar_image/' . $vendor->adhar_image) }}"
+                                                    alt="Current Image" class="small-image">
+                                            </div>
+                                        @endif
+                                    </span>
+                                    <input name="adhar_image"
+                                        value="{{ old('adhar_image', $vendor->adhar_image ?? '') }}"
+                                        class="form-control bg-light-subtle" type="file" id="adharImage" required>
+                                    <div id="adharImageError" class="text-danger" required></div>
+                                    @error('adhar_image')
                                         <div class="error text-danger ">{{ $message }}</div>
                                     @enderror
                                 </div>
-                                <div class="col-md-3 mb-3">
+
+                                <div class="col-md-4 mb-3">
                                     <label for="PanImage" class="form-label">PAN Image<b
                                             style="color: red;">*</b></label>
                                     <span>
-                                            @if($vendor->pan_image)
+                                        @if ($vendor->pan_image)
                                             <div class="mb-2 image-container">
-                                                <img id="existingImage" src="{{ asset('storage/vendor/pan_image/' . $vendor->pan_image) }}" alt="Current Image" class="small-image">
+                                                <img id="existingImage"
+                                                    src="{{ asset('storage/vendor/pan_image/' . $vendor->pan_image) }}"
+                                                    alt="Current Image" class="small-image">
                                             </div>
                                         @endif
                                     </span>
@@ -361,21 +382,10 @@
                                     @enderror
                                 </div>
 
-                                <div class="col-md-3">
-                                    <label for="panCard" class="form-label">PAN Card Number<b
-                                            style="color: red;">*</b></label>
-                                    <input name="pan_number" value="{{ old('pan_number', $vendor->pan_number ?? '') }}"
-                                        class="form-control bg-light-subtle" id="panCard" type="text"
-                                        placeholder="PAN Card number" aria-label="default input example"
-                                        onkeyup="validateField(this)" maxlength="10" required>
-                                    <div id="panError" class="text-danger"></div>
-                                    @error('pan_number')
-                                        <div class="error text-danger ">{{ $message }}</div>
-                                    @enderror
-                                </div>
+
                             </div>
                             <div class="row mt-md-3">
-                                <div class="col-md-3">
+                                <div class="col-md-4">
                                     <label for="adharvender" class="form-label">Adhar Number<b
                                             style="color: red;">*</b></label>
                                     <input name="adhar_numbere"
@@ -390,76 +400,47 @@
 
                                 </div>
 
-                                <div class="col-md-3 mb-3">
-                                    <label for="adharImage" class="form-label">Adhar Image<b
+                                <div class="col-md-4">
+                                    <label for="gstNumber" class="form-label">GST Number<b
                                             style="color: red;">*</b></label>
-                                    <input name="adhar_image"
-                                        value="{{ old('adhar_image', $vendor->adhar_image ?? '') }}"
-                                        class="form-control bg-light-subtle" type="file" id="adharImage" required>
-                                    <div id="adharImageError" class="text-danger" required></div>
-                                    @error('adhar_image')
+                                    <input name="gst_number" value="{{ old('gst_number', $vendor->gst_number ?? '') }}"
+                                        class="form-control bg-light-subtle" id="gstNumber" type="text"
+                                        placeholder="GST number" aria-label="default input example"
+                                        onkeyup="validateField(this)" maxlength="15" required>
+                                    <div id="gstError" class="text-danger"></div>
+                                    @error('gst_number')
                                         <div class="error text-danger ">{{ $message }}</div>
                                     @enderror
                                 </div>
-                                <div class="col-md-3 mb-3">
-                                    @if($vendor->adhar_image)
-                                        <div class="mb-2 image-container">
-                                            <img id="existingImage" src="{{ asset('storage/vendor/adhar_image/' . $vendor->adhar_image) }}" alt="Current Image" class="small-image">
-                                        </div>
-                                    @endif
-                                </div>
-                                <div class="col-md-3 mb-3">
-                                    <label for="formFile" class="form-label">Visiting Card Image<b style="color: red;">*</b></label>
-                                
-                                    <input name="visiting_card" class="form-control bg-light-subtle" type="file" id="formFile">
-                                    @error('visiting_card')
-                                        <div class="error text-danger">{{ $message }}</div>
+                                <div class="col-md-4">
+                                    <label for="panCard" class="form-label">PAN Card Number<b
+                                            style="color: red;">*</b></label>
+                                    <input name="pan_number" value="{{ old('pan_number', $vendor->pan_number ?? '') }}"
+                                        class="form-control bg-light-subtle" id="panCard" type="text"
+                                        placeholder="PAN Card number" aria-label="default input example"
+                                        onkeyup="validateField(this)" maxlength="10" required>
+                                    <div id="panError" class="text-danger"></div>
+                                    @error('pan_number')
+                                        <div class="error text-danger ">{{ $message }}</div>
                                     @enderror
                                 </div>
-                                
-                                <div class="col-md-3 mb-3">
-                                    @if($vendor->visiting_card)
-                                        <div class="mb-2 image-container">
-                                            <img id="existingImage" src="{{ asset('storage/vendor/visiting_card/' . $vendor->visiting_card) }}" alt="Current Image" class="small-image">
-                                        </div>
-                                    @endif
-                                </div>
-                                
-                                <script>
-                                    document.addEventListener('DOMContentLoaded', function() {
-                                        const fileInput = document.getElementById('formFile');
-                                        const imagePreview = document.getElementById('existingImage');
 
-                                        fileInput.addEventListener('change', function() {
-                                            const file = fileInput.files[0];
-                                            if (file) {
-                                                const reader = new FileReader();
-                                                reader.onload = function(e) {
-                                                    // Update the existing image with the new file
-                                                    if (imagePreview) {
-                                                        imagePreview.src = e.target.result;
-                                                    } else {
-                                                        // Create a new image element if none exists
-                                                        const newImage = document.createElement('img');
-                                                        newImage.src = e.target.result;
-                                                        newImage.classList.add('small-image');
-                                                        newImage.style.maxWidth = '100%';
-                                                        newImage.style.height = 'auto';
-                                                        fileInput.parentNode.insertBefore(newImage, fileInput);
-                                                    }
-                                                };
-                                                reader.readAsDataURL(file);
-                                            }
-                                        });
-                                    });
-                                </script>
 
 
                             </div>
-                            <div class="row">
+                            <div class="row mt-4">
                                 <div class="col-md-6">
                                     <label for="formFile" class="form-label">Client signature<b
                                             style="color: red;">*</b></label>
+                                    <span>
+                                        @if ($vendor->client_sign)
+                                            <div class="mb-2 image-container">
+                                                <img id="existingImage"
+                                                    src="{{ asset('storage/vendor/client_sign/' . $vendor->client_sign) }}"
+                                                    alt="Current Image" class="small-image">
+                                            </div>
+                                        @endif
+                                    </span>
                                     <input name="client_sign"
                                         value="{{ old('client_sign', $vendor->client_sign ?? '') }}"
                                         class="form-control bg-light-subtle" type="file" id="formFile" required>
@@ -467,21 +448,34 @@
                                         <div class="error text-danger ">{{ $message }}</div>
                                     @enderror
                                 </div>
-                            </div>
 
-                            <div class="row mt-3">
-                                <div class="col-md-4">
-                                    <label for="formFile" class="form-label">Official video <b
+
+
+
+                                <div class="col-md-6 mb-3">
+                                    <label for="formFile" class="form-label">Visiting Card Image<b
                                             style="color: red;">*</b></label>
-                                    <input name="video" accept="video/*" class="form-control bg-light-subtle"
-                                        type="file" id="formFile" required>
-                                    <small id="fileHelp" class="form-text text-muted">Max file size: 50MB. Supported
-                                        formats:
-                                        mp4, m4v.</small>
-                                    @error('video')
+                                    <span>
+                                        @if ($vendor->visiting_card)
+                                            <div class="mb-2 image-container">
+                                                <img id="existingImage"
+                                                    src="{{ asset('storage/vendor/visiting_card/' . $vendor->visiting_card) }}"
+                                                    alt="Current Image" class="small-image">
+                                            </div>
+                                        @endif
+                                    </span>
+
+                                    <input name="visiting_card" class="form-control bg-light-subtle" type="file"
+                                        id="formFile">
+                                    @error('visiting_card')
                                         <div class="error text-danger">{{ $message }}</div>
                                     @enderror
                                 </div>
+
+                            </div>
+
+                            <div class="row mt-3">
+
                                 <div class="col-md-4">
                                     <label for="formFile" class="form-label">Vendor Name<b
                                             style="color: red;">*</b></label>
@@ -504,11 +498,7 @@
                                         <div class="error text-danger ">{{ $message }}</div>
                                     @enderror
                                 </div>
-
-                            </div>
-
-                            <div class="row mt-3">
-                                <div class="col-md-6 mb-3">
+                                <div class="col-md-4 mb-3">
                                     <label for="experience" class="form-label">Experience<b
                                             style="color: red;">*</b></label>
                                     <select name="experience" id="experience" class="form-control bg-light-subtle"
@@ -526,7 +516,10 @@
                                         <div class="error text-danger">{{ $message }}</div>
                                     @enderror
                                 </div>
+
                             </div>
+
+
                             <div class="row mt-3">
                                 {{-- <div class="col-md-4">
                                     <label for="formFile" class="form-label">price<b style="color: red;">*</b></label>
@@ -536,8 +529,20 @@
                                         <div class="error text-danger ">{{ $message }}</div>
                                     @enderror
                                 </div> --}}
+                                <div class="col-md-4  mb-3">
+                                    <label for="formFile" class="form-label">Official video <b
+                                            style="color: red;">*</b></label>
+                                    <input name="video" accept="video/*" class="form-control bg-light-subtle"
+                                        type="file" id="formFile" required>
+                                    <small id="fileHelp" class="form-text text-muted">Max file size: 50MB. Supported
+                                        formats:
+                                        mp4, m4v.</small>
+                                    @error('video')
+                                        <div class="error text-danger">{{ $message }}</div>
+                                    @enderror
+                                </div>
 
-                                <div class="col-md-4">
+                                <div class="col-md-3">
                                     <label for="formFile" class="form-label">Location<b style="color: red;">*</b></label>
                                     <input class="form-control bg-light-subtle" type="text" name="location_lat"
                                         value="{{ old('location_lat', $vendor->location_lat ?? '') }}"
@@ -546,7 +551,7 @@
                                         <div class="error text-danger ">{{ $message }}</div>
                                     @enderror
                                 </div>
-                                <div class="col-md-1 d-flex" style="align-items: flex-end">
+                                <div class="col-md-1 d-flex" style="align-items: center">
                                     <button type="button" id="addlocation" class="btn btn-primary">Add</button>
 
                                 </div>
@@ -620,6 +625,37 @@
             }
         });
     </script>
+
+    {{-- ...................Show  upload image (start)...................... --}}
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const fileInput = document.getElementById('formFile');
+            const imagePreview = document.getElementById('existingImage');
+
+            fileInput.addEventListener('change', function() {
+                const file = fileInput.files[0];
+                if (file) {
+                    const reader = new FileReader();
+                    reader.onload = function(e) {
+                        // Update the existing image with the new file
+                        if (imagePreview) {
+                            imagePreview.src = e.target.result;
+                        } else {
+                            // Create a new image element if none exists
+                            const newImage = document.createElement('img');
+                            newImage.src = e.target.result;
+                            newImage.classList.add('small-image');
+                            newImage.style.maxWidth = '100%';
+                            newImage.style.height = 'auto';
+                            fileInput.parentNode.insertBefore(newImage, fileInput);
+                        }
+                    };
+                    reader.readAsDataURL(file);
+                }
+            });
+        });
+    </script>
+    {{-- ...................Show  upload image (end)...................... --}}
     <script>
         document.getElementById('addlocation').addEventListener('click', function() {
 

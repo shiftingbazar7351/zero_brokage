@@ -24,10 +24,10 @@
     <div class="page-wrapper page-settings">
         <div class="content">
             <div class="container-fluid">
-                <div class="row mx-auto" style="background-color: rgb(236, 236, 236)">
+                <div class="row mx-auto">
                     <h1 class="text-center">Service Details</h1>
-                    <div class="col-lg-12">
-                        <table class="table table-sm">
+                    <div class="col-md-3">
+                        <table class="table table-sm table-bordered table-striped">
 
                             <tbody>
                                 @forelse ($vendors as $vendor)
@@ -52,49 +52,139 @@
                                     <th scope="row">Pin Code</th>
                                     <td class="text-wrap">{{ $vendor->pincode  }}</td>
                                 </tr>
-
                                 <tr>
-                                    <th scope="row">Adhar Number </th>
-                                    <td class="text-wrap">{{ $vendor->adhar_numbere  }}</td>
-                                </tr>
-
-                                <tr>
-                                    <th scope="row"> GST Number </th>
-                                    <td class="text-wrap">{{ $vendor->gst_number  }}</td>
-                                </tr>
-
-                                <tr>
-                                    <th scope="row">Location</th>
-                                    <td class="text-wrap">{{ $vendor->location_lat  }}</td>
-                                </tr>
-
-                                <tr>
-                                    <th scope="row">PAN Image</th>
-                                    <td class="text-wrap">  <span>
-                                        @if($vendor->pan_image)
-                                        <div class="mb-2 image-container">
-                                            <img id="existingImage" src="{{ asset('storage/vendor/pan_image/' . $vendor->pan_image) }}" alt="Current Image" class="small-image">
-                                        </div>
-                                    @endif
-                                </span></td>
-                                </tr>
-
-                                <tr>
-                                    <th scope="row">Description</th>
-                                    <td class="text-wrap">
-                                        @php
-                                            $description = $vendor->description;
-                                            $words = explode(' ', $description);
-                                            if (count($words) > 100) {
-                                                $words = array_slice($words, 0, 50);
-                                                $description = implode(' ', $words) . '...';
-                                            }
-                                        @endphp
-                                        {{ $description }}
+                                    <th scope="row">Image</th>
+                                    <td style="text-align: center">
+                                        <img src="{{asset('assets/img/services/AC_Cleaning.jpg')}}" alt="" style="width: 120px;">
+                                        <a href="https://www.w3schools.com" target="_blank" style="display: block">Visit W3Schools</a>
                                     </td>
                                 </tr>
-                                
+                                @empty
+                                <tr>
+                                    <td colspan="4" class="text-center">No data found</td>
+                                </tr>
+                            @endforelse
 
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="col-md-3">
+                        <table class="table table-sm table-bordered table-striped">
+
+                            <tbody>
+                                @forelse ($vendors as $vendor)
+                                <tr>
+                                    <th scope="row">Name :</th>
+                                    <td class="text-wrap"> {{ $vendor->vendor_name  }}</td>
+
+                                </tr>
+                                <tr>
+                                    <th scope="row">Number :</th>
+                                    <td class="text-wrap"> {{ $vendor->number  }} </td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">Adress</th>
+                                    <td class="text-wrap">{{ $vendor->address  }}</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">city</th>
+                                    <td class="text-wrap">{{ $vendor->city  }}</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">Pin Code</th>
+                                    <td class="text-wrap">{{ $vendor->pincode  }}</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">Image</th>
+                                    <td style="text-align: center">
+                                        <img src="{{asset('assets/img/services/AC_Cleaning.jpg')}}" alt="" style="width: 120px;">
+                                        <a href="https://www.w3schools.com" target="_blank" style="display: block">Visit W3Schools</a>
+                                    </td>
+                                </tr>
+                                @empty
+                                <tr>
+                                    <td colspan="4" class="text-center">No data found</td>
+                                </tr>
+                            @endforelse
+
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="col-md-3">
+                        <table class="table table-sm table-bordered table-striped">
+
+                            <tbody>
+                                @forelse ($vendors as $vendor)
+                                <tr>
+                                    <th scope="row">Name :</th>
+                                    <td class="text-wrap"> {{ $vendor->vendor_name  }}</td>
+
+                                </tr>
+                                <tr>
+                                    <th scope="row">Number :</th>
+                                    <td class="text-wrap"> {{ $vendor->number  }} </td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">Adress</th>
+                                    <td class="text-wrap">{{ $vendor->address  }}</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">city</th>
+                                    <td class="text-wrap">{{ $vendor->city  }}</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">Pin Code</th>
+                                    <td class="text-wrap">{{ $vendor->pincode  }}</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">Image</th>
+                                    <td style="text-align: center">
+                                        <img src="{{asset('assets/img/services/AC_Cleaning.jpg')}}" alt="" style="width: 120px;">
+                                        <a href="https://www.w3schools.com" target="_blank" style="display: block">Visit W3Schools</a>
+                                    </td>
+                                </tr>
+                                @empty
+                                <tr>
+                                    <td colspan="4" class="text-center">No data found</td>
+                                </tr>
+                            @endforelse
+
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="col-md-3">
+                        <table class="table table-sm table-bordered table-striped">
+
+                            <tbody>
+                                @forelse ($vendors as $vendor)
+                                <tr>
+                                    <th scope="row">Name :</th>
+                                    <td class="text-wrap"> {{ $vendor->vendor_name  }}</td>
+
+                                </tr>
+                                <tr>
+                                    <th scope="row">Number :</th>
+                                    <td class="text-wrap"> {{ $vendor->number  }} </td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">Adress</th>
+                                    <td class="text-wrap">{{ $vendor->address  }}</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">city</th>
+                                    <td class="text-wrap">{{ $vendor->city  }}</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">Pin Code</th>
+                                    <td class="text-wrap">{{ $vendor->pincode  }}</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">Image</th>
+                                    <td style="text-align: center">
+                                        <img src="{{asset('assets/img/services/AC_Cleaning.jpg')}}" alt="" style="width: 120px;">
+                                        <a href="https://www.w3schools.com" target="_blank" style="display: block">Visit W3Schools</a>
+                                    </td>
+                                </tr>
                                 @empty
                                 <tr>
                                     <td colspan="4" class="text-center">No data found</td>

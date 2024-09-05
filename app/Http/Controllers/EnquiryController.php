@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Category;
 use App\Models\Enquiry;
+use App\Models\Menu;
+use App\Models\SubMenu;
 use App\Models\SubCategory;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -17,8 +19,10 @@ class EnquiryController extends Controller
     {
         $subcategories = SubCategory::orderByDesc('created_at')->get();
         $categories = Category::orderByDesc('created_at')->get();
+        $menus = Menu::orderByDesc('created_at')->get();
+        $submenus = SubMenu::orderByDesc('created_at')->get();
         $enquiries = Enquiry::with('subcategory.categoryName')->orderByDesc('created_at')->get();
-        return view('backend.enquiry.index', compact('enquiries', 'subcategories', 'categories'));
+        return view('backend.enquiry.index', compact('enquiries', 'subcategories', 'categories','menus','submenus'));
     }
 
     public function store(Request $request)
@@ -44,6 +48,8 @@ class EnquiryController extends Controller
     }
 
 
+
+
     /**
      * Show the form for editing the specified resource.
      */
@@ -52,6 +58,28 @@ class EnquiryController extends Controller
         return response()->json(['enquiry' => $enquiry]);
 
     }
+
+//     public function getEnquiry($id)
+// {
+//     $enquiry = Enquiry::with(['menu', 'submenu'])->find($id);
+//     $menus = Menu::all(); // Fetch all menus
+//     $submenus = SubMenu::where('menu_id', $enquiry->menu_id)->get(); // Fetch submenus based on the selected menu
+
+//     return response()->json([
+//         'id' => $enquiry->id,
+//         'name' => $enquiry->name,
+//         'email' => $enquiry->email,
+//         'mobile_number' => $enquiry->mobile_number,
+//         'move_from_origin' => $enquiry->move_from_origin,
+//         'date_time' => $enquiry->date_time,
+//         'category_id' => $enquiry->category_id,
+//         'menu_id' => $enquiry->menu_id,
+//         'submenu_id' => $enquiry->submenu_id,
+//         'menus' => $menus,
+//         'submenus' => $submenus,
+//     ]);
+// }
+
 
     /**
      * Update the specified resource in storage.
@@ -110,6 +138,21 @@ class EnquiryController extends Controller
         }
         return response()->json(['status' => 1, 'data' => $subcategories]);
     }
+
+    public function fetchMenu($subcategoryId)
+    {
+        $menus = Menu::where('subcategory_id', $subcategoryId)->get()->map(function ($menu) {
+            $menu->name = ucwords($menu->name);
+            return $menu;
+        });
+    
+        if ($menus->isEmpty()) {
+            return response()->json(['status' => 0, 'message' => 'No menu found']);
+        }
+    
+        return response()->json(['status' => 1, 'data' => $menus]);
+    }
+    
 
     public function enquiryStatus(Request $request)
     {

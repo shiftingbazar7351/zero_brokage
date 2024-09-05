@@ -74,7 +74,7 @@ class MenuController extends Controller
     public function update(Request $request, Menu $menu)
     {
         $request->validate([
-            'name' => 'required|unique:menus,name,' . $menu->id,
+            'name' => 'required',
             'category_id' => 'required',
             'subcategory' => 'required|integer|exists:menus,subcategory_id',
             'image' => 'nullable|image|mimes:jpeg,png|max:2048',

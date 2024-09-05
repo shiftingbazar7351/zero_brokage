@@ -199,33 +199,4 @@
         </div>
     </div>
 @endsection
-@section('scripts')
-<script>
-    document.addEventListener('DOMContentLoaded', function() {
-        const fileInput = document.getElementById('formFile');
-        const imagePreview = document.getElementById('existingImage');
 
-        fileInput.addEventListener('change', function() {
-            const file = fileInput.files[0];
-            if (file) {
-                const reader = new FileReader();
-                reader.onload = function(e) {
-                    // Update the existing image with the new file
-                    if (imagePreview) {
-                        imagePreview.src = e.target.result;
-                    } else {
-                        // Create a new image element if none exists
-                        const newImage = document.createElement('img');
-                        newImage.src = e.target.result;
-                        newImage.classList.add('small-image');
-                        newImage.style.maxWidth = '100%';
-                        newImage.style.height = 'auto';
-                        fileInput.parentNode.insertBefore(newImage, fileInput);
-                    }
-                };
-                reader.readAsDataURL(file);
-            }
-        });
-    });
-</script>
-@endsection

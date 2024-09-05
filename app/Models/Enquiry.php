@@ -2,6 +2,10 @@
 
 namespace App\Models;
 
+use App\Models\Category;
+use App\Models\SubCategory;
+use App\Models\Menu;
+use App\Models\Submenu;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -14,6 +18,11 @@ class Enquiry extends Model
         'move_from_destination',
         'date_time',
         'name',
+        'category',
+        'menu_id',
+        'submenu_id',
+        'type',
+        'created_by',
         'email',
         'mobile_number',
         'otp'
@@ -21,11 +30,21 @@ class Enquiry extends Model
 
     public function category()
     {
-        return $this->belongsTo(Category::class);
+        return $this->belongsTo(Category::class,'category','id');
     }
 
     public function subcategory()
     {
         return $this->belongsTo(SubCategory::class,'subcategory_id','id');
+    }
+
+    public function menu()
+    {
+        return $this->belongsTo(Menu::class,'menu_id','id');
+    }
+
+    public function submenu()
+    {
+        return $this->belongsTo(Submenu::class,'submenu_id','id');
     }
 }

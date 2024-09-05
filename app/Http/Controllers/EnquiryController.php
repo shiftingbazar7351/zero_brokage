@@ -41,13 +41,18 @@ class EnquiryController extends Controller
         if ($validator->fails()) {
             return response()->json(['errors' => $validator->errors()], 422);
         }
-        $enquiry = new Enquiry($request->all());
+        $enquiry = Enquiry::create($request->all());
+        $enquiry->created_by = auth()->user()->id;
         $enquiry->save();
         session()->flash('success', 'Submitted Successfully');
         return response()->json(['redirect' => url()->previous()]);
     }
 
-
+    public function show($id)
+    {
+         $enquirys = Enquiry::with('category','subcategory')->findOrFail($id);
+        return view("backend.enquiry.show",compact('enquirys',));
+    }
 
 
     /**
@@ -59,26 +64,7 @@ class EnquiryController extends Controller
 
     }
 
-//     public function getEnquiry($id)
-// {
-//     $enquiry = Enquiry::with(['menu', 'submenu'])->find($id);
-//     $menus = Menu::all(); // Fetch all menus
-//     $submenus = SubMenu::where('menu_id', $enquiry->menu_id)->get(); // Fetch submenus based on the selected menu
 
-//     return response()->json([
-//         'id' => $enquiry->id,
-//         'name' => $enquiry->name,
-//         'email' => $enquiry->email,
-//         'mobile_number' => $enquiry->mobile_number,
-//         'move_from_origin' => $enquiry->move_from_origin,
-//         'date_time' => $enquiry->date_time,
-//         'category_id' => $enquiry->category_id,
-//         'menu_id' => $enquiry->menu_id,
-//         'submenu_id' => $enquiry->submenu_id,
-//         'menus' => $menus,
-//         'submenus' => $submenus,
-//     ]);
-// }
 
 
     /**

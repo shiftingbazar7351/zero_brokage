@@ -61,13 +61,11 @@
                                             <td>
                                                 <div class="d-flex" style="justify-content: center">
 
-                                                    <button class="btn delete-table me-2"
-                                                    onclick="showData({{ $enquiry->id }})"
-                                                    type="button" data-bs-toggle="modal"
-                                                    data-bs-target="#showdata-preview">
-                                                    <i class="fe fe-eye"></i>
-                                                    </button>
-                                                    
+                                                    <a class="btn delete-table me-2 edit-service"
+                                                        href="{{ route('enquiry.show', $enquiry->id) }}">
+                                                        <i class="fe fe-eye"></i>
+                                                    </a>
+
 
 
                                                     <button class="btn delete-table me-2"
@@ -104,33 +102,8 @@
 
     @include('backend.enquiry.edit')
 
-    {{-- @include('backend.enquiry.show') --}}
-
     <!-- Modal Structure -->
-    <div class="modal fade" id="showdata-preview" tabindex="-1" aria-labelledby="editEnquiryModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="editEnquiryModalLabel">Edit Enquiry</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <form id="showdata-preview-form">
-                        <div class="mb-3">
-                            <label for="enquiry-name" class="form-label">Enquiry Name</label>
-                            <input type="text" class="form-control" id="enquiry-name" name="name">
-                        </div>
-                        <div class="mb-3">
-                            <label for="enquiry-description" class="form-label">Enquiry Description</label>
-                            <textarea class="form-control" id="enquiry-description" name="description"></textarea>
-                        </div>
-                        <!-- Add other fields as needed -->
-                        <button type="submit" class="btn btn-primary">Save Changes</button>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
+
 
 
 @endsection
@@ -138,25 +111,6 @@
 @section('scripts')
     <script>
         $(document).ready(function() {
-
-            function showData(enquiryId) {
-                // Example: Fetch data via AJAX or pass it from a dataset
-                $.ajax({
-                    url: '/enquiries/' + enquiryId + '/edit',
-                    method: 'GET',
-                    success: function(data) {
-                        // Populate modal fields with data (for example, name and description)
-                        $('#enquiry-name').val(data.name);
-                        $('#enquiry-description').val(data.description);
-                        // Open the modal if it's not handled by data-bs-toggle
-                        $('#showdata-preview').modal('show');
-                    },
-                    error: function(error) {
-                        console.log('Error fetching enquiry data:', error);
-                    }
-                });
-            }
-
 
             // $(document).ready(function() {
             // Function to fetch subcategories

@@ -5120,7 +5120,7 @@ a.reset-link:hover {
     padding: 10px 20px;
 }
 #fill-more {
-    height: 180px;
+    height: auto;
     overflow: hidden;
 }
 .more-view {

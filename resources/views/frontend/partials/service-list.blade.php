@@ -12,7 +12,7 @@
                 <div class="service-cont-info">
                     <span class="item-cat">{{ ucwords($menu->menu->name) ?? '' }}</span>
                     <h5 class="title"><a href="service-details.html">{{ $menu->name ?? '' }}</a></h5>
-                    <p>{{ $menu->description ?? '' }}</p>
+                    <p>{!! $menu->description ?? '' !!}</p>
                     <a href="#" class="text-primary text-decoration-underline" data-bs-toggle="modal"
                         data-bs-target="#modal-{{ $menu->id }}">View
                         Details</a>

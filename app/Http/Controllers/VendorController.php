@@ -2,18 +2,19 @@
 
 namespace App\Http\Controllers;
 use App\Models\Category;
+use App\Models\City;
+use App\Models\Country;
 use App\Models\Menu;
+use App\Models\State;
 use App\Models\SubCategory;
 use App\Models\SubMenu;
-use App\Models\Country;
-use App\Models\State;
-use App\Models\Verified;
-use App\Models\City;
 use App\Models\Vendor;
+use App\Models\Verified;
 use App\Services\FileUploadService;
 
 use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Session;
 
 class VendorController extends Controller
 {
@@ -90,7 +91,7 @@ class VendorController extends Controller
             'adhar_numbere' => 'required|max:12',
             // 'visiting_card' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
             // 'client_sign' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-        //    'video' => 'required|file|mimetypes:video/mp4,video/x-m4v|max:51200', // Max 50MB      
+        //    'video' => 'required|file|mimetypes:video/mp4,video/x-m4v|max:51200', // Max 50MB
             // 'location_lat' => 'nullable|numeric',
             // 'location_lang' => 'nullable|numeric',
         ]);
@@ -100,7 +101,7 @@ class VendorController extends Controller
         // Create the vendor record
 
         $vendor = Vendor::create($request->all());
-       
+
         $vendor->created_by = auth()->user()->id;
 
         // Check if the request has any image files and update the vendor model
@@ -222,7 +223,7 @@ class VendorController extends Controller
             'adhar_numbere' => 'required|max:12',
             // 'visiting_card' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
             // 'client_sign' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-        //    'video' => 'required|file|mimetypes:video/mp4,video/x-m4v|max:51200', // Max 50MB      
+        //    'video' => 'required|file|mimetypes:video/mp4,video/x-m4v|max:51200', // Max 50MB
             // 'location_lat' => 'nullable|numeric',
             // 'location_lang' => 'nullable|numeric',
         ]);
@@ -347,5 +348,34 @@ class VendorController extends Controller
     }
 
 
+    public function sendOtp(Request $request)
+    {
+        // $request->validate([
+        //     'number' => 'required|digits:10',
+        // ]);
+
+        $otp = rand(1000, 9999); // Generate a 4-digit OTP
+       $genertedOtp = Session::put('otp', $otp); // Store OTP in the session
+
+        // Logic to send OTP to the phone number (using an SMS API or any service)
+
+        return response()->json(['message' => 'OTP sent successfully.','otp' => $genertedOtp]);
+    }
+
+    public function verifyOtp(Request $request)
+    {
+        $request->validate([
+            'otp' => 'required|digits:4',
+        ]);
+
+        // Check if the entered OTP matches the session OTP
+        if ($request->otp == Session::get('otp')) {
+            // Store the verification time in the database (assuming you have a user or record to update)
+            // Example: $user->update(['otp_verified_at' => Carbon::now()]);
+            return response()->json(['message' => 'OTP verified successfully.']);
+        } else {
+            return response()->json(['message' => 'Invalid OTP.'], 400);
+        }
+    }
 
 }

@@ -66,13 +66,13 @@ class FrontendController extends Controller
                 'sub_menus.details'
             )
             ->paginate(10);
-        $subcategories = Menu::where('status', 1)
-            ->select('id', 'name')
-            ->get();
+        // $subcategories = Menu::where('status', 1)
+        //     ->select('id', 'name')
+        //     ->get();
         $cities = City::paginate(10);
 
 
-        return view('frontend.service-list', compact('submenus', 'subcategory', 'menus', 'subcategories', 'cities'));
+        return view('frontend.service-list', compact('submenus', 'subcategory', 'menus', 'cities'));
     }
 
 

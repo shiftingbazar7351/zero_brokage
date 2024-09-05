@@ -52,7 +52,8 @@ class FrontendController extends Controller
             ->where('sub_menus.status', 1) // Specify the table for status
             ->orderByDesc('menus.created_at') // Order by a field from the menus table
             ->select(
-                'sub_menus.id as submenu_id',
+                'sub_menus.id as id',
+                // 'sub_menus.id as submenu_id',
                 'sub_menus.name',
                 'sub_menus.image',
                 'sub_menus.slug',
@@ -66,12 +67,13 @@ class FrontendController extends Controller
                 'sub_menus.details'
             )
             ->paginate(10);
-        $subcategories = SubCategory::where('status', 1)
-            ->select('id', 'name')
-            ->get();
+        // $subcategories = Menu::where('status', 1)
+        //     ->select('id', 'name')
+        //     ->get();
         $cities = City::paginate(10);
 
-        return view('frontend.service-list', compact('submenus', 'subcategory', 'menus', 'subcategories', 'cities'));
+
+        return view('frontend.service-list', compact('submenus', 'subcategory', 'menus', 'cities'));
     }
 
 
@@ -257,13 +259,15 @@ class FrontendController extends Controller
         if ($request->filled('keyword')) {
             $query->where('name', 'like', '%' . $request->keyword . '%')
                 ->orWhere('discounted_price', 'like', '%' . $request->keyword . '%')
+                ->orWhere('description', 'like', '%' . $request->keyword . '%')
                 ->orWhere('total_price', 'like', '%' . $request->keyword . '%')
-                ->orWhereHas('subCategory', function ($q) use ($request) {
+                ->orWhereHas('cityName', function ($q) use ($request) {
                     $q->where('name', 'like', '%' . $request->keyword . '%');
                 })
-                ->orderByDesc('created_at');
+                ->orWhereHas('menu', function ($q) use ($request) {
+                    $q->where('name', 'like', '%' . $request->keyword . '%');
+                });
         }
-
 
         if ($request->filled('location')) {
             $query->whereHas('cityName', function ($q) use ($request) {
@@ -274,17 +278,28 @@ class FrontendController extends Controller
             });
         }
 
-        if ($request->filled('Categories')) {
-            $query->whereHas('subCategory', function ($q) use ($request) {
+        if ($request->filled('categories')) {
+            $query->whereHas('menu', function ($q) use ($request) {
+                $q->whereIn('name', $request->categories);
+            });
+        }
+
+         if ($request->filled('categories')) {
+            $query->whereHas('menu', function ($q) use ($request) {
                 $q->whereIn('name', $request->categories);
             });
         }
 
         $submenus = $query->get();
 
-        $view = view('frontend.partials.service-list', compact('submenus'))->render();
+        $serviceListView = view('frontend.partials.service-list', compact('submenus'))->render();
+        $filterView = view('frontend.partials.service-list', compact('submenus'))->render(); // Add this line
 
-        return response()->json(['html' => $view]);
+        return response()->json([
+            'html' => $serviceListView,
+            'filterHtml' => $filterView // Add this line
+        ]);
     }
+
 
 }

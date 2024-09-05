@@ -377,7 +377,7 @@
                                 <h6>Found {{ count($vendors) }} vendors</h6>
                             </div>
                         </div>
-                        
+
                     </div>
                     <div class="row">
                         <div class="col-md-12 mt-4">

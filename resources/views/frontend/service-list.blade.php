@@ -138,7 +138,7 @@
                                             <b class="check-content">All Categories</b>
                                         </label>
                                     </li>
-                                    @foreach ($subcategories as $subcategory)
+                                    @foreach ($menus as $subcategory)
                                         <li>
                                             <label class="checkboxs">
                                                 <input type="checkbox" class="toggleCheckbox categoryCheckbox">
@@ -148,9 +148,47 @@
                                         </li>
                                     @endforeach
                                 </ul>
+                                {{-- <a href="javascript:void(0);" id="more" class="more-view">View More <i
+                                    class="feather-arrow-down-circle ms-1"></i></a> --}}
                             </div>
                             <a href="javascript:void(0);" id="more" class="more-view">View More <i
                                     class="feather-arrow-down-circle ms-1"></i></a>
+                        </div>
+
+                        <div class="filter-content">
+                            <h2>Experince <span><i class="feather-chevron-down"></i></span></h2>
+                            <div class="filter-checkbox" id="fill-more">
+                                <ul>
+                                    <li>
+                                        <label class="checkboxs">
+                                            <input type="checkbox" class="toggleCheckboxIndia" id="allCategories">
+                                            <span><i></i></span>
+                                            <b class="check-content">1 years - 5 years</b>
+                                        </label>
+                                    </li>
+                                    <li>
+                                        <label class="checkboxs">
+                                            <input type="checkbox" class="toggleCheckboxIndia" id="allCategories">
+                                            <span><i></i></span>
+                                            <b class="check-content">6 years - 10 years</b>
+                                        </label>
+                                    </li>
+                                    <li>
+                                        <label class="checkboxs">
+                                            <input type="checkbox" class="toggleCheckboxIndia" id="allCategories">
+                                            <span><i></i></span>
+                                            <b class="check-content">11 years - 15 years</b>
+                                        </label>
+                                    </li>
+                                    <li>
+                                        <label class="checkboxs">
+                                            <input type="checkbox" class="toggleCheckboxIndia" id="allCategories">
+                                            <span><i></i></span>
+                                            <b class="check-content">15 years - 20 years</b>
+                                        </label>
+                                    </li>
+                                </ul>
+                            </div>
                         </div>
                         {{-- <button class="btn btn-primary" id="search-button">Search</button> --}}
                     </div>
@@ -160,7 +198,7 @@
                     <div class="row sorting-div">
                         <div class="col-lg-4 col-sm-12 ">
                             <div class="count-search">
-                                <h6>Found {{ count($menus) }} Services</h6>
+                                <h6> Services</h6>
                             </div>
                         </div>
                     </div>
@@ -231,6 +269,7 @@
             separateDialCode: true
         });
     </script> --}}
+
     <script>
         $(document).ready(function() {
             // Handle mobile number submission
@@ -362,6 +401,8 @@
 
         });
     </script>
+
+
     <script>
         const otpInputs = document.querySelectorAll('.otp-input');
 
@@ -424,46 +465,47 @@
         }
     </script>
 
-<script>
-    $(document).ready(function() {
-        // Trigger AJAX search on button click
-        $('#search-button').click(function() {
-            performSearch();
-        });
-
-        // Trigger AJAX search when a filter changes
-        $('.toggleCheckbox, #input-keyword, #myInput').on('change keyup', function() {
-            performSearch();
-        });
-
-        // Function to perform AJAX request
-        function performSearch() {
-            let keyword = $('#input-keyword').val();
-            let location = $('#myInput').val();
-            let categories = [];
-
-            // Get selected categories
-            $('.categoryCheckbox:checked').each(function() {
-                categories.push($(this).closest('li').find('.check-content').text().trim());
+    <script>
+        $(document).ready(function() {
+            // Trigger AJAX search on button click
+            $('#search-button').click(function() {
+                performSearch();
             });
 
-            $.ajax({
-                url: "{{ route('your.search.route') }}", // Replace with your route
-                method: 'GET',
-                data: {
-                    keyword: keyword,
-                    location: location,
-                    categories: categories
-                },
-                success: function(response) {
-                    $('#service-list').html(response
-                    .html); // Replace the service list with the new data
-                },
-                error: function(xhr) {
-                    console.error(xhr.responseText); // Handle errors
-                }
+            // Trigger AJAX search when a filter changes
+            $('.toggleCheckbox, #input-keyword, #myInput').on('change keyup', function() {
+                performSearch();
             });
-        }
-    });
-</script>
+
+            // Function to perform AJAX request
+            function performSearch() {
+                let keyword = $('#input-keyword').val();
+                let location = $('#myInput').val();
+                let categories = [];
+
+                // Get selected categories
+                $('.categoryCheckbox:checked').each(function() {
+                    categories.push($(this).closest('li').find('.check-content').text().trim());
+                });
+
+                $.ajax({
+                    url: "{{ route('your.search.route') }}", // Replace with your route
+                    method: 'GET',
+                    data: {
+                        keyword: keyword,
+                        location: location,
+                        categories: categories
+                    },
+                    success: function(response) {
+                        $('#service-list').html(response.html);
+                        $('#filter-section').html(response
+                        .filterHtml); // Update the filter section as well
+                    },
+                    error: function(xhr) {
+                        console.error(xhr.responseText); // Handle errors
+                    }
+                });
+            }
+        });
+    </script>
 @endsection

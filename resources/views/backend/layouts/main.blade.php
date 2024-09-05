@@ -9,7 +9,7 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     {{-- <title>Zero Brokage</title> --}}
-    <title>{{ ucwords($meta->title ??'') ?? 'Zero Brokage' }}</title>
+    <title>{{ ucwords($meta->title ?? '') ?? 'Zero Brokage' }}</title>
     <meta name="description" content="{{ ucwords($meta->description ?? '') }}">
     <meta name="keywords" content="{{ ucwords($meta->keyword ?? '') }}">
     <link rel="shortcut icon" href=" {{ asset('admin/assets/img/favicon.png') }} ">
@@ -64,6 +64,14 @@
                 });
             }
         });
+
+        // for accept only numbers in phone number fields
+        function restrictNumber(e) {
+            var newValue = this.value.replace(new RegExp(/[^\d]/, 'ig'), "");
+            this.value = newValue;
+        }
+        var userName = document.querySelector('#phoneNumVender');
+        userName.addEventListener('input', restrictNumber);
     </script>
 
     <link rel="stylesheet" type="text/css"

@@ -1911,7 +1911,7 @@ Version      : 1.0
 				button.innerHTML = "Show less <i class='feather-arrow-up-circle ms-1'>";
 			} else {
 				isLess = true;
-				container.style.height = '180px';
+				container.style.height = 'auto';
 				button.innerHTML = "Show more <i class='feather-arrow-down-circle ms-1'></i>";
 			}
 		}

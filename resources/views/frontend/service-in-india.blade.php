@@ -113,11 +113,10 @@
         <div class="container">
             <div class="row">
                 {{-- {{ dd($vendors->city) }} --}}
-                <form action="{{ route('services-in-india',$vendors->city) }}" method="GET">
+                <form id="city-form" method="GET">
                     @csrf
                     <div class="col-md-12 col-12 my-4">
-                        <h2 class=" breadcrumb-title text-white">Top Service Provider City</h2>
-
+                        <h2 class="breadcrumb-title text-white">Top Service Provider City</h2>
                         <div class="row align-items-center" style="margin: 6% 0% 5% 10%;">
                             <div class="col-md-5">
                                 <select class="form-control" name="" id="state">
@@ -127,7 +126,7 @@
                                     @endforeach
                                 </select>
                             </div>
-                            <div class="col-md-5 ">
+                            <div class="col-md-5">
                                 <select class="form-control" name="city" id="city">
                                     <option value="">Select City</option>
                                 </select>
@@ -139,6 +138,7 @@
                         </div>
                     </div>
                 </form>
+
             </div>
         </div>
     </div>
@@ -154,7 +154,6 @@
                                 3500+
                             </span></h5>
                         <p class="card-text">Daily Customer</p>
-
                     </div>
                 </div>
             </div>
@@ -449,18 +448,35 @@
                             $('#city').empty().append('<option value="">Select city</option>');
                             if (response.status === 1 && response.data) {
                                 $.each(response.data, function(key, city) {
-                                    $('#city').append("<option value='" + city.id + "'>" + city.name + "</option>");
+                                    $('#city').append("<option value='" + city.name +
+                                        "'>" + city.name + "</option>");
                                 });
                             } else {
-                                $('#city').append('<option value="" disabled>' + response.message + '</option>');
+                                $('#city').append('<option value="" disabled>' + response
+                                    .message + '</option>');
                             }
                         },
                         error: function() {
-                            $('#city').empty().append('<option value="" disabled>Error loading cities</option>');
+                            $('#city').empty().append(
+                                '<option value="" disabled>Error loading cities</option>');
                         }
                     });
                 } else {
                     $('#city').empty().append('<option value="">Select city</option>');
+                }
+            });
+
+            // Handle form submission
+            $('#city-form').on('submit', function(event) {
+                event.preventDefault(); // Prevent the default form submission
+
+                var cityName = $('#city').val();
+                if (cityName) {
+                    // Redirect to the desired route with the selected city
+                    window.location.href = "{{ route('services-in-india', '') }}" + encodeURIComponent(
+                        cityName);
+                } else {
+                    $('#city-error').text('Please select a city.');
                 }
             });
         });

@@ -148,6 +148,8 @@
                                         </li>
                                     @endforeach
                                 </ul>
+                                {{-- <a href="javascript:void(0);" id="more" class="more-view">View More <i
+                                    class="feather-arrow-down-circle ms-1"></i></a> --}}
                             </div>
                             <a href="javascript:void(0);" id="more" class="more-view">View More <i
                                     class="feather-arrow-down-circle ms-1"></i></a>
@@ -155,7 +157,7 @@
 
                         <div class="filter-content">
                             <h2>Experince <span><i class="feather-chevron-down"></i></span></h2>
-                            <div class="filter-checkbox" id="fill-more" style="height: 135px">
+                            <div class="filter-checkbox" id="fill-more">
                                 <ul>
                                     <li>
                                         <label class="checkboxs">

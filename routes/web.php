@@ -78,6 +78,10 @@ Route::get('/create-vendor', function () {
     return view('frontend.create-vendor');
 })->name('create-vendor');
 
+Route::get('/pricing', function () {
+    return view('frontend.pricing');
+})->name('pricing');
+
 Route::get('/privacy-policy', function () {
     return view('frontend.privacy-policy');
 })->name('privacy-policy');

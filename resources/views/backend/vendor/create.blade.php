@@ -559,7 +559,13 @@
             separateDialCode: true
         });
 </script>
-
+<script>
+    const whatsappvender = document.querySelector("#whatsappNumVender");
+        window.intlTelInput(whatsappvender, {
+            initialCountry: "in",
+            separateDialCode: true
+        });
+</script>
 {{-- .............Show OTP verify input field (start)..................... --}}
 <script>
    function checkPhoneNumberOrWhatsapp(input) {
@@ -584,13 +590,7 @@
 </script>
 {{-- .............Show OTP verify input field (end)..................... --}}
 
-<script>
-    const whatsappvender = document.querySelector("#whatsappNumVender");
-        window.intlTelInput(whatsappvender, {
-            initialCountry: "in",
-            separateDialCode: true
-        });
-</script>
+
 
 <script>
     document.getElementById('addlocation').addEventListener('click', function() {

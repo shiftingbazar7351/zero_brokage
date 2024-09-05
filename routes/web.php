@@ -15,6 +15,7 @@ use App\Http\Controllers\OTPController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ReviewController;
 use App\Http\Controllers\ServiceDetailController;
+use App\Http\Controllers\ProductController;
 use App\Http\Controllers\SubCategoryController;
 use App\Http\Controllers\SubMenuController;
 use App\Http\Controllers\UserController;
@@ -159,6 +160,9 @@ Route::middleware('auth')->group(function () {
 
 
     });
+
+    Route::resource('/products', ProductController::class);
+
     Route::resource('/reviews', ReviewController::class);
     Route::post('/reviews-status', [SubMenuController::class, 'subMenuStatus'])->name('reviews.status');
     Route::resource('/faq', FaqController::class);

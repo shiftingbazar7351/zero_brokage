@@ -95,6 +95,13 @@
                     </a>
                 </li>
 
+                <li class="{{ Route::currentRouteName() === 'products.index' ? 'active' : '' }}">
+                    <a href="{{ route('products.index') }}">
+                        <i class="fe fe-file-text"></i>
+                        <span>Products</span>
+                    </a>
+                </li>
+
 
 
 

@@ -1,4 +1,25 @@
 @extends('backend.layouts.main')
+@section('styles')
+<style>
+    .image-container {
+        position: relative;
+        display: inline-block;
+    }
+
+    .small-image {
+        width: 100px;
+        /* Adjust as needed */
+        height: auto;
+        transition: transform 0.3s ease;
+        /* Smooth transition effect */
+    }
+
+    .image-container:hover .small-image {
+        width: 200px;
+        /* Adjust as needed for medium size */
+    }
+</style>
+@endsection
 @section('content')
     <div class="page-wrapper page-settings">
         <div class="content">
@@ -178,3 +199,4 @@
         </div>
     </div>
 @endsection
+

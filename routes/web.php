@@ -145,6 +145,8 @@ Route::middleware('auth')->group(function () {
     Route::resource('service-detail', ServiceDetailController::class);
     Route::resource('/enquiry', EnquiryController::class);
     Route::post('/enquiry-status', [EnquiryController::class, 'enquiryStatus'])->name('enquiry.status');
+    Route::get('/get-menus/{subcategoryId}', [EnquiryController::class, 'fetchMenu']);
+
 
     Route::resource('/meta', MetaUrlController::class);
 

@@ -48,6 +48,8 @@ class OtpController extends Controller
 
         // Find the enquiry with the given mobile number
         $enquiry = Enquiry::where('mobile_number', $request->mobile_number)->first();
+        $enquiry->otp_verified_at = now();
+        $enquiry->save();
 
         if (!$enquiry) {
             return response()->json(['success' => false, 'errors' => ['mobile_number' => ['Mobile number not found.']]], 404);

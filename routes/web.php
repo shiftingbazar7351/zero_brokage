@@ -100,17 +100,13 @@ Route::controller(FrontendController::class)->group(function () {
     Route::get('/get-menus/{subcategory_id}', 'getMenus')->name('get.menus');
     Route::get('/search-filter', 'search')->name('search.filter');
     Route::get('/filter-submenus', 'filterSubmenus')->name('your.search.route');
-    // Route::post('/verify-otp', 'verifyOtp')->name('send.verify.otp');
+    Route::post('/enquiry-verify-otp', 'verifyOtp')->name('enquiry.verify.otp');
 });
 
 Route::post('/fetch-city/{stateId}', [SubMenuController::class, 'fetchCity']);
 
-
-
 Route::post('/get-otp', [OtpController::class, 'getOtp'])->name('getOtp');
-// Route::post('/verify-otp', [OtpController::class, 'verifyOtp'])->name('verifyOtp');
-
-
+Route::post('/verify-otp', [OtpController::class, 'verifyOtp'])->name('verifyOtp');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

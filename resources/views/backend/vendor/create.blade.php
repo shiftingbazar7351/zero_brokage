@@ -202,7 +202,7 @@
                                 @enderror
                             </div>
 
-                            <div class="col-md-3 mt-4 mt-md-0">
+                            {{-- <div class="col-md-3 mt-4 mt-md-0">
                                 <label for="phoneNumVender" class="form-label">Phone Number<b
                                         style="color: red;">*</b></label>
                                 <span>(Get notification)</span>
@@ -229,7 +229,32 @@
                                         aria-label="OTP">
                                     <button type="button" class="btn btn-primary">OTP Submit</button>
                                 </div>
+                            </div> --}}
+
+                            <div class="col-md-3 mt-4 mt-md-0">
+                                <label for="phoneNumVender" class="form-label">Phone Number<b
+                                        style="color: red;">*</b></label>
+                                <span>(Get notification)</span>
+                                <input name="number" value="{{ old('number') }}" class="form-control bg-light-subtle"
+                                    id="phoneNumVender" type="text" placeholder="Phone number"
+                                    aria-label="default input example" onblur="sendOtpIfValid(this)" maxlength="10"
+                                    oninput="checkPhoneNumber(this)" required>
+                                <div id="phoneError" class="text-danger"></div>
+                                @error('number')
+                                    <div class="error text-danger">{{ $message }}</div>
+                                @enderror
                             </div>
+
+                            <div class="col-md-3 mt-4 mt-md-0" id="otpSection" style="display: none;">
+                                <label for="otp" class="form-label">Verify OTP<b style="color: red;">*</b></label>
+                                <div class="d-flex">
+                                    <input type="text" class="form-control me-2" id="otp" placeholder="Enter OTP" aria-label="OTP">
+                                    <button type="button" class="btn btn-primary" onclick="verifyOtp()">OTP Submit</button>
+                                </div>
+                                <div id="otpError" class="text-danger"></div>
+                            </div>
+
+
                         </div>
 
                         <div class="row mt-4">
@@ -257,8 +282,8 @@
 
                             <div class="col-md-4 mb-3">
                                 <label for="otp" class="form-label">OTP<b style="color: red;">*</b></label>
-                                <input name="otp" value="{{ old('otp') }}"
-                                    class="form-control bg-light-subtle" type="text" id="otp" placeholder="Enter valid OTP" required>
+                                <input name="otp" value="{{ old('otp') }}" class="form-control bg-light-subtle"
+                                    type="text" id="otp" placeholder="Enter valid OTP" required>
                                 <div id="otpError" class="text-danger"></div>
                                 @error('otp')
                                     <div class="error text-danger ">{{ $message }}</div>
@@ -387,8 +412,8 @@
                             <div class="col-md-4">
                                 <label for="formFile" class="form-label">Official video <b
                                         style="color: red;">*</b></label>
-                                <input name="video" accept="video/*"
-                                    class="form-control bg-light-subtle" type="file" id="formFile" required>
+                                <input name="video" accept="video/*" class="form-control bg-light-subtle"
+                                    type="file" id="formFile" required>
                                 <small id="fileHelp" class="form-text text-muted">Max file size: 50MB. Supported formats:
                                     mp4, m4v.</small>
                                 @error('video')
@@ -422,7 +447,8 @@
                                 <select name="experience" id="experience" class="form-control bg-light-subtle" required>
                                     <option value="" selected disabled>Select Experience</option>
                                     @for ($i = 0; $i <= 20; $i++)
-                                        <option value="{{ $i }}" {{ old('experience') == $i ? 'selected' : '' }}>
+                                        <option value="{{ $i }}"
+                                            {{ old('experience') == $i ? 'selected' : '' }}>
                                             {{ $i }}
                                         </option>
                                     @endfor
@@ -728,5 +754,74 @@
                 );
             }
         });
+
+        function sendOtpIfValid(input) {
+            var phoneNumber = input.value;
+            if (phoneNumber.length === 10) {
+                // Clear any previous errors
+                document.getElementById('phoneError').textContent = '';
+
+                // AJAX call to send OTP
+                $.ajax({
+                    url: '/vendor-send-otp',
+                    method: 'POST',
+                    data: {
+                        number: phoneNumber, // Changed to 'number'
+                        _token: '{{ csrf_token() }}'
+                    },
+                    success: function(response) {
+                        alert(response.message); // Notify OTP sent
+                        document.getElementById('otpSection').style.display = 'block'; // Show OTP input
+                    },
+                    error: function(response) {
+                        if (response.responseJSON && response.responseJSON.errors && response.responseJSON
+                            .errors.number) {
+                            document.getElementById('phoneError').textContent = response.responseJSON.errors
+                                .number[0];
+                        } else {
+                            document.getElementById('phoneError').textContent =
+                                'An error occurred. Please try again.';
+                        }
+                    }
+                });
+            } else {
+                document.getElementById('phoneError').textContent = 'Please enter a valid 10-digit phone number.';
+            }
+        }
+
+        function verifyOtp() {
+    var otp = document.getElementById('otp').value; // Get the OTP entered by the user
+    var phoneNumber = document.getElementById('phoneNumVender').value; // Get the mobile number
+
+    if (otp.length === 4 && phoneNumber.length === 10) {
+        // Clear previous errors
+        document.getElementById('otpError').textContent = '';
+
+        // AJAX call to verify OTP
+        $.ajax({
+            url: '/verify-otp',
+            method: 'POST',
+            data: {
+                otp: otp,
+                mobile_number: phoneNumber,  // Include the mobile number
+                _token: '{{ csrf_token() }}'
+            },
+            success: function(response) {
+                alert(response.message); // Notify OTP verified
+                document.getElementById('otpSection').style.display = 'none'; // Hide OTP input after verification
+            },
+            error: function(response) {
+                if (response.responseJSON && response.responseJSON.errors) {
+                    document.getElementById('otpError').textContent = response.responseJSON.errors.mobile_number ? response.responseJSON.errors.mobile_number[0] : response.responseJSON.errors.otp[0];
+                } else {
+                    document.getElementById('otpError').textContent = 'An error occurred. Please try again.';
+                }
+            }
+        });
+    } else {
+        document.getElementById('otpError').textContent = 'Please enter a valid 4-digit OTP and 10-digit phone number.';
+    }
+}
+
     </script>
 @endsection

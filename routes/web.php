@@ -159,7 +159,7 @@ Route::middleware('auth')->group(function () {
         Route::post('/getMenus/{subcategoryId}', 'getMenus');
         Route::post('/getsubMenus/{menuId}', 'getsubMenus');
         Route::post('/vendor-send-otp', 'sendOtp')->name('vendor.send.otp');
-        Route::post('/vendor-verify-otp', [OtpController::class, 'verifyOtp'])->name('vendor.verify.otp');
+        Route::post('/vendor-verify-otp', 'verifyOtp')->name('vendor.verify.otp');
 
 
     });

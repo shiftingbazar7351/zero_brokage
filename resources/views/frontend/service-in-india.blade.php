@@ -154,7 +154,6 @@
                                 3500+
                             </span></h5>
                         <p class="card-text">Daily Customer</p>
-
                     </div>
                 </div>
             </div>

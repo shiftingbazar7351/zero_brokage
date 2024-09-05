@@ -138,7 +138,7 @@
                                             <b class="check-content">All Categories</b>
                                         </label>
                                     </li>
-                                    @foreach ($subcategories as $subcategory)
+                                    @foreach ($menus as $subcategory)
                                         <li>
                                             <label class="checkboxs">
                                                 <input type="checkbox" class="toggleCheckbox categoryCheckbox">

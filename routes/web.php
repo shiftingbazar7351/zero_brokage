@@ -98,10 +98,9 @@ Route::controller(FrontendController::class)->group(function () {
     Route::get('/provider-details/{id}', 'providerDetails')->name('vender-profile');
     Route::post('/user/review/store', 'reviewStore')->name('reviewstore');
     Route::get('/get-menus/{subcategory_id}', 'getMenus')->name('get.menus');
-    Route::get('/search-filter',  'search')->name('search.filter');
-    Route::get('/filter-submenus','filterSubmenus')->name('your.search.route');
-
-
+    Route::get('/search-filter', 'search')->name('search.filter');
+    Route::get('/filter-submenus', 'filterSubmenus')->name('your.search.route');
+    // Route::post('/verify-otp', 'verifyOtp')->name('send.verify.otp');
 });
 
 Route::post('/fetch-city/{stateId}', [SubMenuController::class, 'fetchCity']);
@@ -157,6 +156,10 @@ Route::middleware('auth')->group(function () {
         Route::post('/fetch-subcategory/{id}', 'fetchsubcategory');
         Route::post('/getMenus/{subcategoryId}', 'getMenus');
         Route::post('/getsubMenus/{menuId}', 'getsubMenus');
+        Route::post('/vendor-send-otp', 'sendOtp')->name('vendor.send.otp');
+        Route::post('/vendor-verify-otp', [OtpController::class, 'verifyOtp'])->name('vendor.verify.otp');
+
+
     });
     Route::resource('/reviews', ReviewController::class);
     Route::post('/reviews-status', [SubMenuController::class, 'subMenuStatus'])->name('reviews.status');

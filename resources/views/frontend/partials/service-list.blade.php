@@ -16,7 +16,6 @@
                     <a href="#" class="text-primary text-decoration-underline" data-bs-toggle="modal"
                         data-bs-target="#modal-{{ $menu->id }}">View
                         Details</a>
-
                     <!-- Modal -->
                     <div class="modal fade" id="modal-{{ $menu->id }}" tabindex="-1"
                         aria-labelledby="modalLabel-{{ $menu->id }}" aria-hidden="true">

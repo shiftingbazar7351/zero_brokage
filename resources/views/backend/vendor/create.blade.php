@@ -487,7 +487,6 @@
                         </div>
                         <div class="col-md-1 d-flex" style="align-items: flex-end">
                             <button type="button" id="addlocation" class="btn btn-primary">Add</button>
-
                         </div>
                         <div class="col-md-4 d-none" id="longitude">
                             <label for="formFile" class="form-label">Longitude Location<b

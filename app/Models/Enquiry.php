@@ -28,7 +28,7 @@ class Enquiry extends Model
         'otp'
     ];
 
-    public function category()
+    public function categoryName()
     {
         return $this->belongsTo(Category::class,'category','id');
     }

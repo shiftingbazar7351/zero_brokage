@@ -20,22 +20,22 @@
                                 <tr>
                                     <th scope="row">Email</th>
                                     <td class="text-wrap">{{ $enquirys->email ?? ''}}</td>
-                                </tr>                              
-                            
+                                </tr>
+
 
                             </tbody>
-                            
+
                         </table>
                     </div>
 
                     <div class="col-md-4">
                         <table class="table table-sm table-bordered table-striped">
                             <tbody>
-                                
+
 
                                 <tr>
                                     <th scope="row">category</th>
-                                    <td class="text-wrap">{{ $enquirys->category->name ?? '' }}</td>
+                                    <td class="text-wrap">{{ $enquirys->categoryName->name ?? '' }}</td>
                                 </tr>
                                 <tr>
                                     <th scope="row">Sub-Category</th>
@@ -45,22 +45,22 @@
                                     <th scope="row">Menu</th>
                                     <td class="text-wrap">{{ $enquirys->menu->name ?? '' }}</td>
                                 </tr>
-                               
+
 
                             </tbody>
-                            
+
                         </table>
                     </div>
 
                     <div class="col-md-4">
                         <table class="table table-sm table-bordered table-striped">
                             <tbody>
-                               
+
                                 <tr>
                                     <th scope="row">Sub-Menu</th>
                                     <td class="text-wrap">{{ $enquirys->submenu->name ?? '' }}</td>
-                                </tr>     
-                                
+                                </tr>
+
                                 <tr>
                                     <th scope="row">Date</th>
                                     <td class="text-wrap">{{ \Carbon\Carbon::parse($enquirys->date_time)->format('j-M-Y') ?? '' }}</td>
@@ -85,7 +85,7 @@
                                 </tr>
 
                             </tbody>
-                            
+
                         </table>
                     </div>
 

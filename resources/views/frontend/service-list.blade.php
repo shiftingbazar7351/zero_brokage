@@ -97,103 +97,7 @@
         <div class="container-fluid">
             <div class="row">
 
-                <div class="col-lg-3 col-sm-12 theiaStickySidebar">
-                    <div class="filter-div">
-                        <div class="filter-head">
-                            <h5>Filter by</h5>
-                            <a href="javascript:void(0);" class="reset-link" onclick="resetVal()">Reset Filters</a>
-                        </div>
-                        <div class="filter-content">
-                            <h2>Keyword</h2>
-                            <input type="text" class="form-control" id="input-keyword" name="keyword"
-                                placeholder="What are you looking for?">
-                        </div>
-
-                        <div class="filter-content">
-                            <h2>Location</h2>
-                            <div class="dropdown">
-                                <div class="group-img">
-                                    <input type="text" placeholder="Search.." id="myInput" name="location"
-                                        onkeyup="filterFunction()" class="form-control" style="font-size: small;">
-                                </div>
-                                <div id="myDropdown" class="dropdown-content">
-                                    @foreach ($cities as $city)
-                                        <div onclick="selectOption('{{ ucwords($city->name) }}, {{ ucwords($city->state->name ?? '') }}')"
-                                            style="font-size: small;">
-                                            {{ ucwords($city->name) }}, {{ ucwords($city->state->name ?? '') }}
-                                        </div>
-                                    @endforeach
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="filter-content">
-                            <h2>Categories</h2>
-                            <div class="filter-checkbox" id="fill-more">
-                                <ul>
-                                    <li>
-                                        <label class="checkboxs">
-                                            <input type="checkbox" class="toggleCheckbox" id="allCategories">
-                                            <span><i></i></span>
-                                            <b class="check-content">All Categories</b>
-                                        </label>
-                                    </li>
-                                    @foreach ($menus as $subcategory)
-                                        <li>
-                                            <label class="checkboxs">
-                                                <input type="checkbox" class="toggleCheckbox categoryCheckbox">
-                                                <span><i></i></span>
-                                                <b class="check-content">{{ $subcategory->name ?? '' }}</b>
-                                            </label>
-                                        </li>
-                                    @endforeach
-                                </ul>
-                                {{-- <a href="javascript:void(0);" id="more" class="more-view">View More <i
-                                    class="feather-arrow-down-circle ms-1"></i></a> --}}
-                            </div>
-                            <a href="javascript:void(0);" id="more" class="more-view">View More <i
-                                    class="feather-arrow-down-circle ms-1"></i></a>
-                        </div>
-
-                        <div class="filter-content">
-                            <h2>Experince <span><i class="feather-chevron-down"></i></span></h2>
-                            <div class="filter-checkbox" id="fill-more">
-                                <ul>
-                                    <li>
-                                        <label class="checkboxs">
-                                            <input type="checkbox" class="toggleCheckboxIndia" id="allCategories">
-                                            <span><i></i></span>
-                                            <b class="check-content">1 years - 5 years</b>
-                                        </label>
-                                    </li>
-                                    <li>
-                                        <label class="checkboxs">
-                                            <input type="checkbox" class="toggleCheckboxIndia" id="allCategories">
-                                            <span><i></i></span>
-                                            <b class="check-content">6 years - 10 years</b>
-                                        </label>
-                                    </li>
-                                    <li>
-                                        <label class="checkboxs">
-                                            <input type="checkbox" class="toggleCheckboxIndia" id="allCategories">
-                                            <span><i></i></span>
-                                            <b class="check-content">11 years - 15 years</b>
-                                        </label>
-                                    </li>
-                                    <li>
-                                        <label class="checkboxs">
-                                            <input type="checkbox" class="toggleCheckboxIndia" id="allCategories">
-                                            <span><i></i></span>
-                                            <b class="check-content">15 years - 20 years</b>
-                                        </label>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-                        {{-- <button class="btn btn-primary" id="search-button">Search</button> --}}
-                    </div>
-                </div>
-
+                @include('frontend.partials.filter-section')
                 <div class="col-lg-8 col-sm-12">
                     <div class="row sorting-div">
                         <div class="col-lg-4 col-sm-12 ">
@@ -244,31 +148,10 @@
     </div>
 @endsection
 @section('scripts')
-    {{-- <script>
-        window.addEventListener('scroll', function() {
-            var stickySlider = document.querySelector('.sticky-slider');
-            var offsetTop = stickySlider.offsetTop;
 
-            if (window.pageYOffset > offsetTop - 98) {
-                stickySlider.style.position = 'fixed';
-                stickySlider.style.top = '98px';
-                stickySlider.style.zIndex = '99';
-                stickySlider.style.width = '100%'; // Ensures the width doesn't collapse
-            } else {
-                stickySlider.style.position = 'relative';
-                stickySlider.style.top = 'auto';
-            }
-        });
-    </script> --}}
     <script src="{{ asset('assets/js/booking_infoPopup.js') }}"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/intlTelInput.min.js"></script>
-    {{-- <script>
-        const inputtestt = document.querySelector("#phoneNumberInput-booking");
-        window.intlTelInput(inputtestt, {
-            initialCountry: "in",
-            separateDialCode: true
-        });
-    </script> --}}
+
 
     <script>
         $(document).ready(function() {
@@ -346,57 +229,60 @@
 
 
             $('#verify-otp-booking').click(function(e) {
-                e.preventDefault();
+    e.preventDefault();
 
-                var otp = '';
-                var allFilled = true;
+    var otp = '';
+    var allFilled = true;
 
-                // Combine the OTP input values
-                $('.input-div input').each(function() {
-                    var value = $(this).val().trim(); // Trim any whitespace
-                    if (value === '' || value.length !== 1) {
-                        allFilled = false;
-                        return false; // Exit loop if any field is empty or not a single digit
-                    }
-                    otp += value;
+    // Collect OTP from input fields
+    $('.input-div input').each(function() {
+        var value = $(this).val().trim(); // Trim any whitespace
+        if (value === '' || value.length !== 1) {
+            allFilled = false;
+            return false; // Exit loop if any field is empty or not a single digit
+        }
+        otp += value;
+    });
+
+    // Validate OTP length
+    if (!allFilled || otp.length !== 4) {
+        toastr.error('Please enter a valid 4-digit OTP.');
+        return; // Exit if OTP is not valid
+    }
+
+    // Get the mobile number
+    var mobileNumber = $('.Phone-Number').text().trim();
+
+    // Make AJAX request
+    $.ajax({
+        url: '/enquiry-verify-otp',
+        type: 'POST',
+        data: {
+            mobile_number: mobileNumber,
+            otp: otp,
+            _token: '{{ csrf_token() }}'
+        },
+        success: function(response) {
+            if (response.success) {
+                toastr.success(response.success);
+                $('#myPopup2-booking').hide(); // Hide OTP popup
+                // Optionally: Redirect or proceed to the next step
+            }
+        },
+        error: function(xhr) {
+            if (xhr.status === 422) {
+                var errors = xhr.responseJSON.errors;
+                $.each(errors, function(key, value) {
+                    toastr.error(value);
                 });
-
-                if (!allFilled || otp.length !== 4) {
-                    toastr.error('Please enter a valid 4-digit OTP.');
-                    return; // Exit if OTP is not valid
-                }
-
-                var mobileNumber = $('.Phone-Number').text(); // Get mobile number from the popup
-
-                $.ajax({
-                    url: '/verify-otp',
-                    type: 'POST',
-                    data: {
-                        mobile_number: mobileNumber,
-                        otp: otp,
-                        _token: '{{ csrf_token() }}'
-                    },
-                    success: function(response) {
-                        if (response.success) {
-                            toastr.success(response.success);
-
-                            // Hide the OTP verification popup or transition to the next step
-                            $('#myPopup2-booking').hide();
-                        }
-                    },
-                    error: function(xhr) {
-                        if (xhr.status === 422) {
-                            var errors = xhr.responseJSON.errors;
-                            $.each(errors, function(key, value) {
-                                toastr.error(value);
-                            });
-                        } else if (xhr.status === 400) {
-                            toastr.error(xhr.responseJSON.error);
-                        }
-                    }
-                });
-            });
-
+            } else if (xhr.status === 400) {
+                toastr.error(xhr.responseJSON.error);
+            } else {
+                toastr.error('An unexpected error occurred.');
+            }
+        }
+    });
+});
 
 
         });
@@ -464,8 +350,8 @@
             document.getElementById("myDropdown").style.display = "none";
         }
     </script>
-
-    <script>
+{{-- new --}}
+    {{-- <script>
         $(document).ready(function() {
             // Trigger AJAX search on button click
             $('#search-button').click(function() {
@@ -503,6 +389,57 @@
                     },
                     error: function(xhr) {
                         console.error(xhr.responseText); // Handle errors
+                    }
+                });
+            }
+        });
+    </script> --}}
+{{-- new2 --}}
+    <script>
+        $(document).ready(function() {
+            $('#search-button').click(function() {
+                performSearch();
+            });
+
+            // Trigger search when a filter changes
+            $('.toggleCheckbox, #input-keyword, #myInput, .toggleCheckboxIndia').on('change keyup', function() {
+                performSearch();
+            });
+
+            // Function to perform AJAX search
+            function performSearch() {
+                let keyword = $('#input-keyword').val();
+                let location = $('#myInput').val();
+                let categories = [];
+                let experience = '';
+
+                // Get selected categories
+                $('.categoryCheckbox:checked').each(function() {
+                    categories.push($(this).closest('li').find('.check-content').text().trim());
+                });
+
+                // Get selected experience range
+                $('.toggleCheckboxIndia:checked').each(function() {
+                    experience = $(this).closest('li').find('.check-content').text()
+                        .trim(); // Format: "1 years - 5 years"
+                    experience = experience.replace('years', '').trim(); // Extract only the number range
+                });
+
+                $.ajax({
+                    url: "{{ route('your.search.route') }}",
+                    method: 'GET',
+                    data: {
+                        keyword: keyword,
+                        location: location,
+                        categories: categories,
+                        experience: experience
+                    },
+                    success: function(response) {
+                        $('#service-list').html(response.html);
+                        $('#filter-section').html(response.filterHtml); // Update the filter section
+                    },
+                    error: function(xhr) {
+                        console.error(xhr.responseText);
                     }
                 });
             }

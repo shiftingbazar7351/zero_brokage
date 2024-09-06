@@ -6,6 +6,7 @@ use App\Http\Controllers\EnquiryController;
 use App\Http\Controllers\FaqController;
 use App\Http\Controllers\FrontendController;
 use App\Http\Controllers\IndiaServiceController;
+use App\Http\Controllers\IpAddressController;
 use App\Http\Controllers\MenuController;
 use App\Http\Controllers\MetaDescripConroller;
 use App\Http\Controllers\MetaTitleController;
@@ -101,19 +102,17 @@ Route::controller(FrontendController::class)->group(function () {
     Route::get('/get-menus/{subcategory_id}', 'getMenus')->name('get.menus');
     Route::get('/search-filter', 'search')->name('search.filter');
     Route::get('/filter-submenus', 'filterSubmenus')->name('your.search.route');
-    // Route::post('/verify-otp', 'verifyOtp')->name('send.verify.otp');
+    Route::post('/enquiry-verify-otp', 'verifyOtp')->name('enquiry.verify.otp');
+    Route::get('/fetch-city-data','fetchDataOfProvider')->name('fetchDataOfProvider');
+
 });
 
 Route::post('/fetch-city/{stateId}', [SubMenuController::class, 'fetchCity']);
 
-
-
 Route::post('/get-otp', [OtpController::class, 'getOtp'])->name('getOtp');
 Route::post('/verify-otp', [OtpController::class, 'verifyOtp'])->name('verifyOtp');
 
-
-
-Route::middleware('auth')->group(function () {
+Route::middleware(['auth', 'check.ip'])->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
@@ -138,15 +137,35 @@ Route::middleware('auth')->group(function () {
     Route::resource('/menus', MenuController::class);
     Route::post('/menu-status', [MenuController::class, 'menuStatus'])->name('menu.status');
 
+    // Route::resource('/submenu', SubMenuController::class);
+    // Route::post('/submenu-status', [SubMenuController::class, 'subMenuStatus'])->name('submenu.status');
+    // Route::post('/fetch-subcategory/{id}', [SubMenuController::class, 'fetchsubcategory']);
+    // Route::post('/getMenus/{subcategoryId}', [SubMenuController::class, 'getMenus']);
+
+    // Resource route for submenu
     Route::resource('/submenu', SubMenuController::class);
-    Route::post('/submenu-status', [SubMenuController::class, 'subMenuStatus'])->name('submenu.status');
-    Route::post('/fetch-subcategory/{id}', [SubMenuController::class, 'fetchsubcategory']);
-    Route::post('/getMenus/{subcategoryId}', [SubMenuController::class, 'getMenus']);
+
+    // Grouping the additional routes related to submenu
+    Route::controller(SubMenuController::class)->group(function () {
+        Route::post('/submenu-status', 'subMenuStatus')->name('submenu.status');
+        Route::post('/fetch-subcategory/{id}', 'fetchsubcategory');
+        Route::post('/getMenus/{subcategoryId}', 'getMenus');
+        Route::post('/reviews-status', 'subMenuStatus')->name('reviews.status');
+    });
+
+
 
     Route::resource('service-detail', ServiceDetailController::class);
+    // Route::resource('/enquiry', EnquiryController::class);
+    // Route::post('/enquiry-status', [EnquiryController::class, 'enquiryStatus'])->name('enquiry.status');
+    // Route::get('/get-menus/{subcategoryId}', [EnquiryController::class, 'fetchMenu']);
+
     Route::resource('/enquiry', EnquiryController::class);
-    Route::post('/enquiry-status', [EnquiryController::class, 'enquiryStatus'])->name('enquiry.status');
-    Route::get('/get-menus/{subcategoryId}', [EnquiryController::class, 'fetchMenu']);
+    Route::controller(EnquiryController::class)->group(function () {
+        Route::post('/enquiry-status', 'enquiryStatus')->name('enquiry.status');
+        Route::get('/get-menus/{subcategoryId}', 'fetchMenu');
+        Route::get('/reporting-data', 'reportData')->name('report.index');
+    });
 
 
     Route::resource('/meta', MetaUrlController::class);
@@ -160,21 +179,19 @@ Route::middleware('auth')->group(function () {
         Route::post('/getMenus/{subcategoryId}', 'getMenus');
         Route::post('/getsubMenus/{menuId}', 'getsubMenus');
         Route::post('/vendor-send-otp', 'sendOtp')->name('vendor.send.otp');
-        Route::post('/vendor-verify-otp', [OtpController::class, 'verifyOtp'])->name('vendor.verify.otp');
-
-
+        Route::post('/vendor-verify-otp', 'verifyOtp')->name('vendor.verify.otp');
     });
 
     Route::resource('/products', ProductController::class);
+    Route::resource('/ipaddress', IpAddressController::class);
+    Route::post('/ipaddress-status', [IpAddressController::class, 'ipaddressStatus'])->name('ipaddress.status');
 
     Route::resource('/reviews', ReviewController::class);
-    Route::post('/reviews-status', [SubMenuController::class, 'subMenuStatus'])->name('reviews.status');
     Route::resource('/faq', FaqController::class);
     Route::post('/faq-status', [FaqController::class, 'faqStatus'])->name('faq.status');
     Route::resource('/india-services', IndiaServiceController::class);
     Route::resource('/newsletter', NewsletterController::class);
 
-    Route::get('/fetch-city-data', [FrontendController::class, 'fetchDataOfProvider'])->name('fetchDataOfProvider');
 });
 
 

@@ -302,131 +302,83 @@
                             @enderror
                         </div>
 
-                    </div>
+                                @error('number')
+                                    <div class="error text-danger">{{ $message }}</div>
+                                @enderror
+                            </div>
 
-                    <div class="row mt-6">
-                        <div class="col-md-4 mb-3">
-                            <label for="formFile" class="form-label">Vender Logo<b style="color: red;">*</b></label>
-                            <input name="logo" value="{{ old('logo') }}" class="form-control bg-light-subtle"
-                                type="file" id="formFile" required>
-                            @error('logo')
-                            <div class="error text-danger ">{{ $message }}</div>
-                            @enderror
-                        </div>
-                        <div class="col-md-4">
-                            <label for="formFile" class="form-label">Owner name<b style="color: red;">*</b></label>
-                            <input name="owner_name" value="{{ old('owner_name') }}"
-                                class="form-control bg-light-subtle" type="text" placeholder="Enter owner name"
-                                aria-label="default input example" required>
-                            @error('owner_name')
-                            <div class="error text-danger ">{{ $message }}</div>
-                            @enderror
-                        </div>
-                        <div class="col-md-4 mb-3">
-                            <label for="formFile" class="form-label">Vender Image<b style="color: red;">*</b></label>
-                            <input name="vendor_image" value="{{ old('vendor_image') }}"
-                                class="form-control bg-light-subtle" type="file" id="formFile" required>
-                            @error('vendor_image')
-                            <div class="error text-danger ">{{ $message }}</div>
-                            @enderror
-                        </div>
-                    </div>
-                    <div class="row mt-3">
-                        <div class="col-md-3 mb-3">
-                            <label for="GSTimage" class="form-label">GST Image<b style="color: red;">*</b></label>
-                            <input name="gst_image" value="{{ old('gst_image') }}" class="form-control bg-light-subtle"
-                                type="file" id="GSTimage" required>
-                            <div id="gstImageError" class="text-danger"></div>
-                            @error('gst_image')
-                            <div class="error text-danger ">{{ $message }}</div>
-                            @enderror
-                        </div>
-                        <div class="col-md-3">
-                            <label for="gstNumber" class="form-label">GST Number<b style="color: red;">*</b></label>
-                            <input name="gst_number" value="{{ old('gst_number') }}"
-                                class="form-control bg-light-subtle" id="gstNumber" type="text" placeholder="GST number"
-                                aria-label="default input example" onkeyup="validateField(this)" maxlength="15"
-                                required>
-                            <div id="gstError" class="text-danger"></div>
-                            @error('gst_number')
-                            <div class="error text-danger ">{{ $message }}</div>
-                            @enderror
-                        </div>
-                        <div class="col-md-3 mb-3">
-                            <label for="PanImage" class="form-label">PAN Image<b style="color: red;">*</b></label>
-                            <input name="pan_image" value="{{ old('pan_image') }}" class="form-control bg-light-subtle"
-                                type="file" id="PanImage" required>
-                            <div id="PanImageError" class="text-danger"></div>
-                            @error('pan_image')
-                            <div class="error text-danger ">{{ $message }}</div>
-                            @enderror
-                        </div>
 
-                        <div class="col-md-3">
-                            <label for="panCard" class="form-label">PAN Card Number<b style="color: red;">*</b></label>
-                            <input name="pan_number" value="{{ old('pan_number') }}"
-                                class="form-control bg-light-subtle" id="panCard" type="text"
-                                placeholder="PAN Card number" aria-label="default input example"
-                                onkeyup="validateField(this)" maxlength="10" required>
-                            <div id="panError" class="text-danger"></div>
-                            @error('pan_number')
-                            <div class="error text-danger ">{{ $message }}</div>
-                            @enderror
-                        </div>
-                    </div>
-                    <div class="row mt-md-3">
-                        <div class="col-md-3">
-                            <label for="adharvender" class="form-label">Adhar Number<b style="color: red;">*</b></label>
-                            <input name="adhar_numbere" value="{{ old('adhar_numbere') }}"
-                                class="form-control bg-light-subtle" id="adharvender" onkeyup="validateField(this)"
-                                type="text" placeholder="Adhar Number" aria-label="default input example" maxlength="12"
-                                required>
-                            <div id="adharError" class="text-danger"></div>
-                            @error('adhar_numbere')
-                            <div class="error text-danger ">{{ $message }}</div>
-                            @enderror
+
+                            <div class="col-md-3 mt-4 mt-md-0" id="otpSection" style="display: none;">
+                                <label for="phoneNumVender" class="form-label">Verify OTP<b
+                                        style="color: red;">*</b></label>
+                                <div class="d-flex">
+                                    <input type="text" class="form-control me-2" placeholder="Enter OTP"
+                                        aria-label="OTP">
+                                    <button type="button" class="btn btn-primary">OTP Submit</button>
+                                </div>
+                            </div> --}}
+
+                            <div class="col-md-3 mt-4 mt-md-0">
+                                <label for="phoneNumVender" class="form-label">Phone Number<b
+                                        style="color: red;">*</b></label>
+                                <span>(Get notification)</span>
+                                <input name="number" value="{{ old('number') }}" class="form-control bg-light-subtle"
+                                    id="phoneNumVender" type="text" placeholder="Phone number"
+                                    aria-label="default input example" onblur="sendOtpIfValid(this)" maxlength="10"
+                                    oninput="checkPhoneNumber(this)" required>
+                                <div id="phoneError" class="text-danger"></div>
+                                @error('number')
+                                    <div class="error text-danger">{{ $message }}</div>
+                                @enderror
+                            </div>
+
+                            <div class="col-md-3 mt-4 mt-md-0" id="otpSection" style="display: none;">
+                                <label for="otp" class="form-label">Verify OTP<b style="color: red;">*</b></label>
+                                <div class="d-flex">
+                                    <input type="text" class="form-control me-2" id="otp"
+                                        placeholder="Enter OTP" aria-label="OTP" maxlength="4" id="number">
+                                    <button type="button" class="btn btn-primary" onclick="verifyOtp()">OTP
+                                        Submit</button>
+                                </div>
+                                <div id="otpError" class="text-danger"></div>
+                            </div>
 
                         </div>
 
-                        <div class="col-md-3 mb-3">
-                            <label for="adharImage" class="form-label">Adhar Image<b style="color: red;">*</b></label>
-                            <input name="adhar_image" value="{{ old('adhar_image') }}"
-                                class="form-control bg-light-subtle" type="file" id="adharImage" required>
-                            <div id="adharImageError" class="text-danger" required></div>
-                            @error('adhar_image')
-                            <div class="error text-danger ">{{ $message }}</div>
-                            @enderror
-                        </div>
-                        <div class="col-md-3 mb-3">
-                            <label for="formFile" class="form-label">Visiting Card Image<b
-                                    style="color: red;">*</b></label>
-                            <input name="visiting_card" value="{{ old('visiting_card') }}"
-                                class="form-control bg-light-subtle" type="file" id="formFile" required>
-                            @error('visiting_card')
-                            <div class="error text-danger ">{{ $message }}</div>
-                            @enderror
-                        </div>
-                        <div class="col-md-3 mb-3">
-                            <label for="formFile" class="form-label">Client signature<b
-                                    style="color: red;">*</b></label>
-                            <input name="client_sign" class="form-control bg-light-subtle" type="file" id="formFile"
-                                required>
-                            @error('client_sign')
-                            <div class="error text-danger ">{{ $message }}</div>
-                            @enderror
-                        </div>
-                    </div>
+                        <div class="row mt-4">
+                            <div class="col-md-4">
+                                <label for="formFile" class="form-label">Website (if available)</label>
+                                <input name="website" value="{{ old('website') }}" class="form-control bg-light-subtle"
+                                    type="text" placeholder="www.example.com" aria-label="default input example">
+                                @error('website')
+                                    <div class="error text-danger ">{{ $message }}</div>
+                                @enderror
+                            </div>
+                            <div class="col-md-4 mb-3">
+                                <label for="formFile" class="form-label">Verified or Approved By Team</label>
+                                <select name="verified" class="form-select bg-light-subtle"
+                                    aria-label="Default select example" style="box-shadow: none">
+                                    <option selected disabled value="">Select Option</option>
+                                    @foreach ($verifieds as $verified)
+                                        <option value="{{ $verified->id }}">{{ $verified->name }}</option>
+                                    @endforeach
+                                </select>
+                                @error('verified')
+                                    <div class="error text-danger ">{{ $message }}</div>
+                                @enderror
+                            </div>
 
-                    <div class="row mt-3">
-                        <div class="col-md-4">
-                            <label for="formFile" class="form-label">Official video <b style="color: red;">*</b></label>
-                            <input name="video" accept="video/*" class="form-control bg-light-subtle" type="file"
-                                id="formFile" required>
-                            <small id="fileHelp" class="form-text text-muted">Max file size: 50MB. Supported formats:
-                                mp4, m4v.</small>
-                            @error('video')
-                            <div class="error text-danger">{{ $message }}</div>
-                            @enderror
+                            <div class="col-md-3 mt-4 mt-md-0" id="otpSection" style="display: none;">
+                                <label for="otp" class="form-label">Verify OTP<b style="color: red;">*</b></label>
+                                <div class="d-flex">
+                                    <input type="text" class="form-control me-2" id="otp"
+                                        placeholder="Enter OTP" aria-label="OTP">
+                                    <button type="button" class="btn btn-primary" onclick="verifyOtp()">OTP
+                                        Submit</button>
+                                </div>
+                                <div id="otpError" class="text-danger"></div>
+                            </div>
                         </div>
 
                         <div class="col-md-4">
@@ -536,23 +488,12 @@
 @endsection
 
 @section('scripts')
-{{-- <script src="{{ asset('assets/js/vendor-validation.js') }}"></script> --}}
-<script src="{{ asset('admin/summernote/summernote.min.js') }}"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.1/js/bootstrap-select.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/intlTelInput.min.js"></script>
-{{-- <script>
-    document.getElementById('formFile').addEventListener('change', function() {
-            const file = this.files[0];
-            if (file.size > 52428800) { // 50MB limit
-                alert('File size exceeds 50MB');
-                this.value = ''; // Clear the input
-            } else {
-                alert(`Selected file: ${file.name}`);
-            }
-        });
-</script> --}}
-<script>
-    const inputvender = document.querySelector("#phoneNumVender");
+    <script src="{{ asset('admin/summernote/summernote.min.js') }}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.1/js/bootstrap-select.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/intlTelInput.min.js"></script>
+
+    <script>
+        const inputvender = document.querySelector("#phoneNumVender");
         window.intlTelInput(inputvender, {
             initialCountry: "in",
             separateDialCode: true
@@ -784,15 +725,23 @@
                     url: '/vendor-send-otp',
                     method: 'POST',
                     data: {
-                        phone_number: phoneNumber,
+                        number: phoneNumber, // Changed to 'number'
                         _token: '{{ csrf_token() }}'
                     },
                     success: function(response) {
                         alert(response.message); // Notify OTP sent
+                        // alert(opt);
                         document.getElementById('otpSection').style.display = 'block'; // Show OTP input
                     },
                     error: function(response) {
-                        document.getElementById('phoneError').textContent = response.responseJSON.message;
+                        if (response.responseJSON && response.responseJSON.errors && response.responseJSON
+                            .errors.number) {
+                            document.getElementById('phoneError').textContent = response.responseJSON.errors
+                                .number[0];
+                        } else {
+                            document.getElementById('phoneError').textContent =
+                                'An error occurred. Please try again.';
+                        }
                     }
                 });
             } else {
@@ -800,30 +749,42 @@
             }
         }
 
-
         function verifyOtp() {
             var otp = document.getElementById('otp').value;
-            if (otp.length === 4) {
-                // Clear previous errors
+            var phoneNumber = document.getElementById('phoneNumVender').value; // Get the mobile number
+
+            if (otp.length === 4 && phoneNumber.length === 10) {
                 document.getElementById('otpError').textContent = '';
 
-                // AJAX call to verify OTP
                 $.ajax({
-                    url: '/verify-otp',
+                    url: '/vendor-verify-otp',
                     method: 'POST',
                     data: {
                         otp: otp,
+                        mobile_number: phoneNumber, // send the mobile number as 'mobile_number'
                         _token: '{{ csrf_token() }}'
                     },
                     success: function(response) {
                         alert(response.message); // Notify OTP verified
+                        toastr.success('Otp verfied successfully')
+                        document.getElementById('otpSection').style.display =
+                        'none'; // Hide OTP input after verification
                     },
                     error: function(response) {
-                        document.getElementById('otpError').textContent = response.responseJSON.message;
+                        if (response.responseJSON && response.responseJSON.errors) {
+                            document.getElementById('otpError').textContent = response.responseJSON.errors
+                                .mobile_number ?
+                                response.responseJSON.errors.mobile_number[0] :
+                                response.responseJSON.errors.otp[0];
+                        } else {
+                            document.getElementById('otpError').textContent =
+                                'An error occurred. Please try again.';
+                        }
                     }
                 });
             } else {
-                document.getElementById('otpError').textContent = 'Please enter a valid 4-digit OTP.';
+                document.getElementById('otpError').textContent =
+                    'Please enter a valid 4-digit OTP and 10-digit phone number.';
             }
         }
 </script>

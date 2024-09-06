@@ -81,6 +81,14 @@
                         <span>Enquiry</span>
                     </a>
                 </li>
+
+
+                {{-- <li class="{{ Route::currentRouteName() === 'report.index' ? 'active' : '' }}">
+                    <a href="{{ route('report.index') }}">
+                        <i class="fe fe-file-text"></i>
+                        <span>Report</span>
+                    </a>
+                </li> --}}
                 <li class="{{ Route::currentRouteName() === 'faq.index' ? 'active' : '' }}">
                     <a href="{{ route('faq.index') }}">
                         <i class="fe fe-file-text"></i>
@@ -129,6 +137,7 @@
                             </a>
                         </li>
 
+
                     </ul>
 
                 </li>
@@ -140,12 +149,23 @@
                     </a>
                 </li>
 
+
+
                 <li class="{{ Route::currentRouteName() === 'newsletter.index' ? 'active' : '' }}">
                     <a href="{{ route('newsletter.index') }}">
                         <i class="fe fe-file-text"></i>
                         <span>Newsletter</span>
                     </a>
                 </li>
+
+                <li class="{{ Route::currentRouteName() === 'ipaddress.index' ? 'active' : '' }}">
+                    <a href="{{ route('ipaddress.index') }}">
+                        <i class="fe fe-file-text"></i>
+                        <span>Ip Address</span>
+                    </a>
+                </li>
+
+
 
             </ul>
         </div>

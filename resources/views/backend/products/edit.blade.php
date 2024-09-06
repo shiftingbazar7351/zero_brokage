@@ -5,13 +5,13 @@
         <div class="content">
             <div class="row">
                 <div>
-                    {{-- <h1> Paragraph</h1> --}}
-                    <form id="addCategoryModal" action="{{ route('products.update') }}" method="POST">
+                    <form action="{{ route('products.update', $product->id ?? '', $product->name ?? '') }}" method="POST">
                         @csrf
+                        @method('PUT')
                         <div class="row">
                             <div class="mb-3 col-md-6">
                                 <label for="category">Category<b style="color: red;">*</b></label>
-                                <select class="form-control" id="category" name="category_id">
+                                <select class="form-control" id="category" name="category_id[]" multiple>
                                     <option value="">Select category</option>
                                     @foreach ($categories as $category)
                                         <option value="{{ $category->id }}">{{ $category->name }}</option>
@@ -25,7 +25,7 @@
 
                             <div class="mb-3 col-md-6">
                                 <label for="subcategory">Sub Category<b style="color: red;">*</b></label>
-                                <select class="form-control" id="subcategory" name="subcategory_id">
+                                <select class="form-control" id="subcategory" name="subcategory_id[]" multiple>
                                     <option value="">Select subcategory</option>
                                 </select>
                                 @error('subcategory_id')
@@ -39,7 +39,7 @@
 
                             <div class=" mb-3 col-md-6">
                                 <label for="menu">Menu<b style="color: red;">*</b></label>
-                                <select class="form-control" id="menu" name="menu_id">
+                                <select class="form-control" id="menu" name="menu_id[]" multiple>
                                     <option value="">Select menu</option>
                                 </select>
                                 @error('menu_id')
@@ -48,7 +48,7 @@
                             </div>
                             <div class="mb-3 col-md-6">
                                 <label for="submenu">Sub-Menu<b style="color: red;">*</b></label>
-                                <select class="form-control" id="submenu" name="submenu_id">
+                                <select class="form-control" id="submenu" name="submenu_id[]" multiple>
                                     <option value="">Select submenu</option>
                                 </select>
                                 @error('submenu_id')
@@ -61,7 +61,7 @@
 
                             <div class=" mb-3 col-md-6">
                                 <label for="state">State<b style="color: red;">*</b></label>
-                                <select class="form-control" id="state" name="state">
+                                <select class="form-control" id="state" name="state[]" multiple>
                                     <option value="">Select state</option>
                                     @foreach ($states as $state)
                                         <option value="{{ $state->id }}">{{ ucwords($state->name) }}</option>
@@ -73,7 +73,7 @@
                             </div>
                             <div class="mb-3 col-md-6">
                                 <label for="city">City<b style="color: red;">*</b></label>
-                                <select class="form-control" id="city" name="city">
+                                <select class="form-control" id="city" name="city[]" multiple>
                                     <option value="">Select city</option>
                                 </select>
                                 @error('city')
@@ -85,12 +85,12 @@
                         <div class="row">
                             <div class=" mb-3 col-md-6">
                                 <label for="gst">GST<b style="color: red;">*</b></label>
-                                <select class="form-control" id="gst" name="gst">
+                                <select class="form-control" id="gst" name="gst[]" multiple>
                                     <option value="">Select GST</option>
-                                    <option value="">0%</option>
-                                    <option value="">12%</option>
-                                    <option value="">18%</option>
-                                    <option value="">28%</option>
+                                    <option value="0" {{ old('gst') == '1' ? 'selected' : '' }}>  0% </option>
+                                    <option value="12" {{ old('gst') == '1' ? 'selected' : '' }}> 12% </option>
+                                    <option value="18" {{ old('gst') == '1' ? 'selected' : '' }}> 18% </option>
+                                    <option value="28" {{ old('gst') == '1' ? 'selected' : '' }}> 28% </option>
                                 </select>
                                 @error('gst')
                                     <div class="error text-danger">{{ $message }}</div>
@@ -98,11 +98,11 @@
                             </div>
                             <div class="mb-3 col-md-6">
                                 <label for="hcn">HSN/SAC<b style="color: red;">*</b></label>
-                                <select class="form-control" id="hsn" name="hsn">
+                                <select class="form-control" id="hsn" name="hsn[]" multiple>
                                     <option value="">Select HSN/SAC</option>
-                                    <option value="">0</option>
-                                    <option value="">2</option>
-                                    <option value="">4</option>
+                                    <option value="0" {{ old('hsn') == '1' ? 'selected' : '' }}> 0% </option>
+                                    <option value="2" {{ old('hsn') == '1' ? 'selected' : '' }}> 2% </option>
+                                    <option value="4" {{ old('hsn') == '1' ? 'selected' : '' }}> 4% </option>                    
                                 </select>
                                 @error('hsn')
                                     <div class="error text-danger">{{ $message }}</div>
@@ -114,7 +114,7 @@
                             <div class="mb-3 col-md-6">
                                 <label for="name">Name<b style="color: red;">*</b></label>
                                 <input class="form-control" type="text" id="name" name="name"
-                                    placeholder="Enter Name">
+                                    placeholder="Enter Name" value="{{ old('name', $product->name ?? '') }}" >
                                 @error('name')
                                     <div class="error text-danger">{{ $message }}</div>
                                 @enderror
@@ -122,7 +122,7 @@
 
                             <div class="mb-3 col-md-6">
                                 <label for="price">price<b style="color: red;">*</b></label>
-                                <input class="form-control" type="text" id="price" name="price"
+                                <input class="form-control" type="text" id="product" value="{{ old('price', $product->price ?? '') }}" name="price"
                                     placeholder="Enter Price">
                                 @error('price')
                                     <div class="error text-danger">{{ $message }}</div>
@@ -132,19 +132,19 @@
                         <div class="mb-3">
                             <label for="description" class="col-form-label">Desription <span
                                     class="text-danger">*</span></label>
-                            <textarea class="form-control" id="description" name="description">{{ old('description') }}</textarea>
+                            <textarea class="form-control" id="description" value="{{ old('description', $product->description ?? '') }}" name="description">{{ $product->description ?? '' }}</textarea>
                             @error('description')
                                 <span class="text-danger">{{ $message }}</span>
                             @enderror
                         </div>
+
+                        <div class="text-end">
+                            <button type="submit" class="btn btn-primary">Save Changes</button>
+                        </div>
+                    </form>
                 </div>
-                <div class="text-end">
-                    <button type="submit" class="btn btn-primary">Save Changes</button>
-                </div>
-                </form>
             </div>
         </div>
-    </div>
     </div>
 @endsection
 

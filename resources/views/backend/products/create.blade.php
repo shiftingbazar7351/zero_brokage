@@ -6,7 +6,7 @@
             <div class="row">
                 <div>
                     {{-- <h1> Paragraph</h1> --}}
-                    <form  action="{{ route('products.store') }}" method="POST">
+                    <form action="{{ route('products.store') }}" method="POST">
                         @csrf
                         <div class="row">
                             <div class="mb-3 col-md-6">
@@ -87,10 +87,10 @@
                                 <label for="gst">GST<b style="color: red;">*</b></label>
                                 <select class="form-control" id="gst" name="gst[]" multiple>
                                     <option value="">Select GST</option>
-                                    <option value="">0%</option>
-                                    <option value="">12%</option>
-                                    <option value="">18%</option>
-                                    <option value="">28%</option>
+                                    <option value="0">0%</option>
+                                    <option value="12">12%</option>
+                                    <option value="18">18%</option>
+                                    <option value="28">28%</option>
                                 </select>
                                 @error('gst')
                                     <div class="error text-danger">{{ $message }}</div>
@@ -100,9 +100,9 @@
                                 <label for="hcn">HSN/SAC<b style="color: red;">*</b></label>
                                 <select class="form-control" id="hsn" name="hsn[]" multiple>
                                     <option value="">Select HSN/SAC</option>
-                                    <option value="">0</option>
-                                    <option value="">2</option>
-                                    <option value="">4</option>
+                                    <option value="0">0</option>
+                                    <option value="2">2</option>
+                                    <option value="4">4</option>
                                 </select>
                                 @error('hsn')
                                     <div class="error text-danger">{{ $message }}</div>

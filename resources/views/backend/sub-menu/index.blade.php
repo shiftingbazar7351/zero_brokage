@@ -159,7 +159,7 @@
                         </div>
                         <div class="row">
                             <div class="form-group col-md-6">
-                                <label for="category">State</label>
+                                <label for="state">State</label>
                                 <select class="form-control" id="state" name="state">
                                     <option value="">Select state</option>
                                     @foreach ($states as $state)
@@ -170,7 +170,7 @@
                             </div>
 
                             <div class="form-group col-md-6">
-                                <label for="category">City</label>
+                                <label for="city">City</label>
                                 <select  class="form-control" id="city" name="city">
                                     <option value="">Select City</option>
                                 </select>

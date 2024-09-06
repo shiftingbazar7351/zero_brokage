@@ -19,13 +19,15 @@ return new class extends Migration
             $table->string('price')->nullable();
             $table->string('gst')->nullable();
             $table->string('hsn')->nullable();
+            $table->string('state')->nullable();
+            $table->string('city')->nullable();
             $table->string('category_id')->nullable();
             $table->string('subcategory_id')->nullable();
             $table->string('menu_id')->nullable();
             $table->string('submenu_id')->nullable();
-            $table->string('created_by')->nullable();
             $table->longText('description')->nullable();
             $table->boolean('status')->default(1)->comment('0=>inactive,1=>active');
+            $table->string('created_by')->nullable();
             $table->softDeletes();
             $table->timestamps();
         });

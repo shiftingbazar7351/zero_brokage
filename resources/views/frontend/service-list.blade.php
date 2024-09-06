@@ -85,7 +85,7 @@
                         <div class="img">
                             <img src="{{ Storage::url('menu/' . $menu->image ?? '') }}" alt="" draggable="false" />
                         </div>
-                        <h5 style="font-weight: bold; text-align:center" class="pt-1">{{ $menu->name ?? '' }}</h5>
+                        <h5 style="font-weight: bold;text-align:center" class="pt-1">{{ $menu->name ?? '' }}</h5>
                     </li>
                 @endforeach
             </ul>

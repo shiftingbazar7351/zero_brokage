@@ -67,12 +67,12 @@ class Vendor extends Model
     }
     public function verified()
     {
-        return $this->belongsTo(Verified::class, 'verified','id');
+        return $this->belongsTo(Verified::class, 'verified', 'id');
     }
 
     public function submenu()
-{
-    return $this->belongsTo(Submenu::class, 'submenu_id', 'id');
-}
+    {
+        return $this->belongsTo(Submenu::class, 'submenu_id', 'id');
+    }
 
 }

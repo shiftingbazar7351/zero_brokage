@@ -12,11 +12,10 @@
                 <div class="service-cont-info">
                     <span class="item-cat">{{ ucwords($menu->menu->name) ?? '' }}</span>
                     <h5 class="title"><a href="service-details.html">{{ $menu->name ?? '' }}</a></h5>
-                    <p>{!! $menu->description ?? '' !!}</p>
+                    <p>{!! Str::limit($menu->description, 150, '') ?? '' !!}</p>
                     <a href="#" class="text-primary text-decoration-underline" data-bs-toggle="modal"
                         data-bs-target="#modal-{{ $menu->id }}">View
                         Details</a>
-
                     <!-- Modal -->
                     <div class="modal fade" id="modal-{{ $menu->id }}" tabindex="-1"
                         aria-labelledby="modalLabel-{{ $menu->id }}" aria-hidden="true">
@@ -29,7 +28,7 @@
                                         aria-label="Close"></button>
                                 </div>
                                 <div class="modal-body">
-                                    <p>{{ $menu->details ?? 'No Data Found' }}</p>
+                                    <p>{!! $menu->details ?? 'No Data Found' !!}</p>
                                 </div>
                             </div>
                         </div>

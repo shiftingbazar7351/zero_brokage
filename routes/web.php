@@ -79,6 +79,10 @@ Route::get('/create-vendor', function () {
     return view('frontend.create-vendor');
 })->name('create-vendor');
 
+Route::get('/pricing', function () {
+    return view('frontend.pricing');
+})->name('pricing');
+
 Route::get('/privacy-policy', function () {
     return view('frontend.privacy-policy');
 })->name('privacy-policy');
@@ -97,17 +101,13 @@ Route::controller(FrontendController::class)->group(function () {
     Route::get('/get-menus/{subcategory_id}', 'getMenus')->name('get.menus');
     Route::get('/search-filter', 'search')->name('search.filter');
     Route::get('/filter-submenus', 'filterSubmenus')->name('your.search.route');
-    // Route::post('/verify-otp', 'verifyOtp')->name('send.verify.otp');
+    Route::post('/enquiry-verify-otp', 'verifyOtp')->name('enquiry.verify.otp');
 });
 
 Route::post('/fetch-city/{stateId}', [SubMenuController::class, 'fetchCity']);
 
-
-
 Route::post('/get-otp', [OtpController::class, 'getOtp'])->name('getOtp');
 Route::post('/verify-otp', [OtpController::class, 'verifyOtp'])->name('verifyOtp');
-
-
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -156,7 +156,7 @@ Route::middleware('auth')->group(function () {
         Route::post('/getMenus/{subcategoryId}', 'getMenus');
         Route::post('/getsubMenus/{menuId}', 'getsubMenus');
         Route::post('/vendor-send-otp', 'sendOtp')->name('vendor.send.otp');
-        Route::post('/vendor-verify-otp', [OtpController::class, 'verifyOtp'])->name('vendor.verify.otp');
+        Route::post('/vendor-verify-otp', 'verifyOtp')->name('vendor.verify.otp');
 
 
     });

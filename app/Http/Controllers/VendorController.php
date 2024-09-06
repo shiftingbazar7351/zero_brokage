@@ -12,8 +12,10 @@ use App\Models\Vendor;
 use App\Models\Verified;
 use App\Services\FileUploadService;
 
+use Carbon\Carbon;
 use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Session;
 
 class VendorController extends Controller
@@ -49,7 +51,7 @@ class VendorController extends Controller
         $countryId = Country::where('name', 'India')->value('id');
         $verifieds = Verified::orderByDesc('created_at')->get();
         $states = State::where('country_id', $countryId)->get(['name', 'id']);
-        return view("backend.vendor.create", compact('subcategories', 'submenus', 'states','categories','verifieds'));
+        return view("backend.vendor.create", compact('subcategories', 'submenus', 'states', 'categories', 'verifieds'));
     }
 
     /**
@@ -91,7 +93,7 @@ class VendorController extends Controller
             'adhar_numbere' => 'required|max:12',
             // 'visiting_card' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
             // 'client_sign' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-        //    'video' => 'required|file|mimetypes:video/mp4,video/x-m4v|max:51200', // Max 50MB
+            //    'video' => 'required|file|mimetypes:video/mp4,video/x-m4v|max:51200', // Max 50MB
             // 'location_lat' => 'nullable|numeric',
             // 'location_lang' => 'nullable|numeric',
         ]);
@@ -103,6 +105,8 @@ class VendorController extends Controller
         $vendor = Vendor::create($request->all());
 
         $vendor->created_by = auth()->user()->id;
+        $vendor->otp = Session::get('otp');
+        // $vendor->otp_verified_at = Session::get('otp_verified_at');
 
         // Check if the request has any image files and update the vendor model
         if ($request->hasFile('logo')) {
@@ -163,7 +167,7 @@ class VendorController extends Controller
     public function show($id)
     {
         $vendors = Vendor::orderByDesc('created_at')->get();
-        return view("backend.vendor.show",compact('vendors',));
+        return view("backend.vendor.show", compact('vendors', ));
     }
 
     /**
@@ -180,7 +184,7 @@ class VendorController extends Controller
         $subcategories = SubCategory::orderByDesc('created_at')->get();
         $submenus = SubMenu::orderByDesc('created_at')->get();
         $verifieds = Verified::orderByDesc('created_at')->get();
-        return view('backend.vendor.edit', compact('vendor', 'subcategories', 'submenus','categories','states','verifieds')); // Pass the vendor data to the view
+        return view('backend.vendor.edit', compact('vendor', 'subcategories', 'submenus', 'categories', 'states', 'verifieds')); // Pass the vendor data to the view
     }
 
 
@@ -223,7 +227,7 @@ class VendorController extends Controller
             'adhar_numbere' => 'required|max:12',
             // 'visiting_card' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
             // 'client_sign' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-        //    'video' => 'required|file|mimetypes:video/mp4,video/x-m4v|max:51200', // Max 50MB
+            //    'video' => 'required|file|mimetypes:video/mp4,video/x-m4v|max:51200', // Max 50MB
             // 'location_lat' => 'nullable|numeric',
             // 'location_lang' => 'nullable|numeric',
         ]);
@@ -346,35 +350,47 @@ class VendorController extends Controller
             'data' => $submenus
         ]);
     }
-
-
     public function sendOtp(Request $request)
     {
-        // $request->validate([
-        //     'number' => 'required|digits:10',
-        // ]);
+        $request->validate([
+            'number' => 'required|digits:10',
+        ]);
 
         $otp = rand(1000, 9999); // Generate a 4-digit OTP
-       $genertedOtp = Session::put('otp', $otp); // Store OTP in the session
+        Session::put('otp', $otp); // Store OTP in the session
+        Session::put('number', $request->number); // Store OTP in the session
 
         // Logic to send OTP to the phone number (using an SMS API or any service)
 
-        return response()->json(['message' => 'OTP sent successfully.','otp' => $genertedOtp]);
+        return response()->json(['message' => 'OTP sent successfully.', 'otp' => $otp]);
     }
 
+    // Method to verify OTP
     public function verifyOtp(Request $request)
     {
-        $request->validate([
-            'otp' => 'required|digits:4',
-        ]);
+        try {
+            // Validate the request
+            $request->validate([
+                'otp' => 'required|digits:4',
+                'mobile_number' => 'required|digits:10',
+            ]);
 
-        // Check if the entered OTP matches the session OTP
-        if ($request->otp == Session::get('otp')) {
-            // Store the verification time in the database (assuming you have a user or record to update)
-            // Example: $user->update(['otp_verified_at' => Carbon::now()]);
-            return response()->json(['message' => 'OTP verified successfully.']);
-        } else {
-            return response()->json(['message' => 'Invalid OTP.'], 400);
+            // Retrieve the OTP from the session
+            $storedOtp = Session::get('otp');
+
+            // Match the OTP with the one stored in session
+            if ($request->otp == $storedOtp) {
+                // Store the OTP verified time in the session
+                Session::put('otp_verified_at', now());
+
+                return response()->json(['message' => 'OTP verified successfully.']);
+            } else {
+                return response()->json(['message' => 'Invalid OTP.'], 400);
+            }
+        } catch (Exception $e) {
+            // Log the error for debugging
+            Log::error('OTP verification failed: ' . $e->getMessage());
+            return response()->json(['message' => 'An error occurred. Please try again.'], 500);
         }
     }
 

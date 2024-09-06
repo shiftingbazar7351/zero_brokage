@@ -7261,7 +7261,7 @@ table.table td h2.table-user span {
     margin-left: 5px;
 }
 .price-card:hover {
-    background: #4c40ed;
+    background: #303032;
 }
 .price-card:hover .price-head h6,
 .price-card:hover .price-head h1,
@@ -28678,6 +28678,5 @@ td.ant-table-column-sort {
     padding: 3% 0% 4% 0%;
     box-shadow: 0px 5px 5px 4px #d6d3d3;
 }
-
 
 

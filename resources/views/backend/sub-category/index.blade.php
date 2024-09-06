@@ -142,7 +142,7 @@
                         </div>
 
                         <div class="mb-3">
-                            <label class="form-label">Menu Image</label>
+                            <label class="form-label">Image </label>
                             <div class="form-uploads">
                                 <div class="form-uploads-path">
                                     <img id="image-preview-icon" src="{{ asset('admin/assets/img/icons/upload.svg') }}"
@@ -150,7 +150,7 @@
                                     <div class="file-browse">
                                         <h6>Drag & drop image or </h6>
                                         <div class="file-browse-path">
-                                            <input type="file" name="image" id="image-input-icon"
+                                            <input type="file" name="icon" id="image-input-icon"
                                                 accept="image/jpeg, image/png">
                                             <a href="javascript:void(0);"> Browse</a>
                                         </div>
@@ -158,11 +158,11 @@
                                     <h5>Supported formats: JPEG, PNG</h5>
                                 </div>
                             </div>
-                            <div id="image-error" class="text-danger"></div>
+                            <div id="icon_error" class="text-danger"></div>
                         </div>
 
                         <div class="mb-3">
-                            <label class="form-label">Menu Image</label>
+                            <label class="form-label">Background Image</label>
                             <div class="form-uploads">
                                 <div class="form-uploads-path">
                                     <img id="image-preview-bg" src="{{ asset('admin/assets/img/icons/upload.svg') }}"
@@ -170,7 +170,7 @@
                                     <div class="file-browse">
                                         <h6>Drag & drop image or </h6>
                                         <div class="file-browse-path">
-                                            <input type="file" name="image" id="image-input-bg"
+                                            <input type="file" name="background_image" id="image-input-bg"
                                                 accept="image/jpeg, image/png">
                                             <a href="javascript:void(0);"> Browse</a>
                                         </div>
@@ -178,7 +178,7 @@
                                     <h5>Supported formats: JPEG, PNG</h5>
                                 </div>
                             </div>
-                            <div id="image-error" class="text-danger"></div>
+                            <div id="background_image_error" class="text-danger"></div>
                         </div>
                         <div class="text-end">
                             <button type="button" class="btn btn-secondary me-2" data-bs-dismiss="modal">Cancel</button>
@@ -231,37 +231,45 @@
                                 <label class="form-check-label" for="is_featured">Is Featured</label>
                             </div>
                         </div>
+
                         <div class="mb-3">
-                            <label class="form-label">Sub Category Image</label>
+                            <label class="form-label">Image </label>
                             <div class="form-uploads">
                                 <div class="form-uploads-path">
-                                    <img id="edit-image-preview-icon"
-                                        src="{{ asset('admin/assets/img/icons/upload.svg') }}" alt="img"
-                                        class="default-img preview-img">
+                                    <img id="edit-image-preview-icon" src="{{ asset('admin/assets/img/icons/upload.svg') }}"
+                                        alt="img" class="default-img">
                                     <div class="file-browse">
-                                        <input type="file" name="icon" id="edit-image-input-icon"
-                                            accept="image/jpeg, image/png">
-                                        <a href="javascript:void(0);"> Browse</a>
+                                        <h6>Drag & drop image or </h6>
+                                        <div class="file-browse-path">
+                                            <input type="file" name="icon" id="edit-image-input-icon"
+                                                accept="image/jpeg, image/png">
+                                            <a href="javascript:void(0);"> Browse</a>
+                                        </div>
                                     </div>
-                                    <div id="icon_error_edit" class="text-danger"></div>
+                                    <h5>Supported formats: JPEG, PNG</h5>
                                 </div>
                             </div>
+                            <div id="icon_error_edit" class="text-danger"></div>
                         </div>
+
                         <div class="mb-3">
-                            <label class="form-label">Sub Category Background Image</label>
+                            <label class="form-label">Background Image</label>
                             <div class="form-uploads">
                                 <div class="form-uploads-path">
-                                    <img id="edit-image-preview-bg"
-                                        src="{{ asset('admin/assets/img/icons/upload.svg') }}" alt="img"
-                                        class="default-img preview-img">
+                                    <img id="edit-image-preview-bg" src="{{ asset('admin/assets/img/icons/upload.svg') }}"
+                                        alt="img" class="default-img">
                                     <div class="file-browse">
-                                        <input type="file" name="background_image" id="edit-image-input-bg"
-                                            accept="image/jpeg, image/png">
-                                        <a href="javascript:void(0);"> Browse</a>
+                                        <h6>Drag & drop image or </h6>
+                                        <div class="file-browse-path">
+                                            <input type="file" name="icon" id="edit-image-input-bg"
+                                                accept="image/jpeg, image/png">
+                                            <a href="javascript:void(0);"> Browse</a>
+                                        </div>
                                     </div>
-                                    <div id="background_image_error_edit" class="text-danger"></div>
+                                    <h5>Supported formats: JPEG, PNG</h5>
                                 </div>
                             </div>
+                            <div id="background_image_error_edit" class="text-danger"></div>
                         </div>
                         <div class="text-end">
                             <button type="button" class="btn btn-secondary me-2" data-bs-dismiss="modal">Cancel</button>

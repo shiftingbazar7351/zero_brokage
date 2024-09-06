@@ -48,17 +48,30 @@
                         <div class="text-danger category-error"></div>
                     </div>
 
+
                     <div class="mb-3">
-                        <label for="editSubcategory" class="form-label">Subcategory</label>
+                        <label for="editSubcategory" class="form-label">Subcategory<b style="color: red;">*</b></label>
                         <select class="form-control" id="editSubcategory" name="subcategory_id">
-                            <option value="" disabled>Select Subcategory</option>
-                            @foreach ($subcategories as $subcategory)
-                                <option value="{{ $subcategory->id }}">
-                                    {{ $subcategory->name }}
-                                </option>
-                            @endforeach
+                            <option value="" disabled selected>Select Subcategory</option>
                         </select>
                         <div class="text-danger subcategory_id-error"></div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="menu">Menu<b style="color: red;">*</b></label>
+                        <select class="form-control" id="editmenu" name="menu_id" >
+                            <option value="">Select menu</option>
+                          
+                        </select>
+                        <div class="text-danger menu_id-error"></div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="submenu">Sub-Menu<b style="color: red;">*</b></label>
+                        <select class="form-control" id="editsubmenu" name="submenu_id" >
+                            <option value="">Select submenu</option>
+                         
+                        </select>
+                        <div class="text-danger submenu_id-error"></div>
                     </div>
 
                     <div class="mb-3">

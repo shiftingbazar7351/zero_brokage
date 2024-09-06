@@ -15,6 +15,7 @@ use App\Http\Controllers\OTPController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ReviewController;
 use App\Http\Controllers\ServiceDetailController;
+use App\Http\Controllers\ProductController;
 use App\Http\Controllers\SubCategoryController;
 use App\Http\Controllers\SubMenuController;
 use App\Http\Controllers\UserController;
@@ -145,6 +146,8 @@ Route::middleware('auth')->group(function () {
     Route::resource('service-detail', ServiceDetailController::class);
     Route::resource('/enquiry', EnquiryController::class);
     Route::post('/enquiry-status', [EnquiryController::class, 'enquiryStatus'])->name('enquiry.status');
+    Route::get('/get-menus/{subcategoryId}', [EnquiryController::class, 'fetchMenu']);
+
 
     Route::resource('/meta', MetaUrlController::class);
 
@@ -161,6 +164,9 @@ Route::middleware('auth')->group(function () {
 
 
     });
+
+    Route::resource('/products', ProductController::class);
+
     Route::resource('/reviews', ReviewController::class);
     Route::post('/reviews-status', [SubMenuController::class, 'subMenuStatus'])->name('reviews.status');
     Route::resource('/faq', FaqController::class);

@@ -52,7 +52,8 @@ class FrontendController extends Controller
             ->where('sub_menus.status', 1) // Specify the table for status
             ->orderByDesc('menus.created_at') // Order by a field from the menus table
             ->select(
-                'sub_menus.id as submenu_id',
+                'sub_menus.id as id',
+                // 'sub_menus.id as submenu_id',
                 'sub_menus.name',
                 'sub_menus.image',
                 'sub_menus.slug',

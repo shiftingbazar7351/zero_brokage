@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Category;
 use App\Models\Enquiry;
+use App\Models\Menu;
+use App\Models\SubMenu;
 use App\Models\SubCategory;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -17,8 +19,10 @@ class EnquiryController extends Controller
     {
         $subcategories = SubCategory::orderByDesc('created_at')->get();
         $categories = Category::orderByDesc('created_at')->get();
+        $menus = Menu::orderByDesc('created_at')->get();
+        $submenus = SubMenu::orderByDesc('created_at')->get();
         $enquiries = Enquiry::with('subcategory.categoryName')->orderByDesc('created_at')->get();
-        return view('backend.enquiry.index', compact('enquiries', 'subcategories', 'categories'));
+        return view('backend.enquiry.index', compact('enquiries', 'subcategories', 'categories','menus','submenus'));
     }
 
     public function store(Request $request)
@@ -37,10 +41,17 @@ class EnquiryController extends Controller
         if ($validator->fails()) {
             return response()->json(['errors' => $validator->errors()], 422);
         }
-        $enquiry = new Enquiry($request->all());
+        $enquiry = Enquiry::create($request->all());
+        $enquiry->created_by = auth()->user()->id;
         $enquiry->save();
         session()->flash('success', 'Submitted Successfully');
         return response()->json(['redirect' => url()->previous()]);
+    }
+
+    public function show($id)
+    {
+         $enquirys = Enquiry::with('category','subcategory')->findOrFail($id);
+        return view("backend.enquiry.show",compact('enquirys',));
     }
 
 
@@ -52,6 +63,9 @@ class EnquiryController extends Controller
         return response()->json(['enquiry' => $enquiry]);
 
     }
+
+
+
 
     /**
      * Update the specified resource in storage.
@@ -110,6 +124,21 @@ class EnquiryController extends Controller
         }
         return response()->json(['status' => 1, 'data' => $subcategories]);
     }
+
+    public function fetchMenu($subcategoryId)
+    {
+        $menus = Menu::where('subcategory_id', $subcategoryId)->get()->map(function ($menu) {
+            $menu->name = ucwords($menu->name);
+            return $menu;
+        });
+    
+        if ($menus->isEmpty()) {
+            return response()->json(['status' => 0, 'message' => 'No menu found']);
+        }
+    
+        return response()->json(['status' => 1, 'data' => $menus]);
+    }
+    
 
     public function enquiryStatus(Request $request)
     {

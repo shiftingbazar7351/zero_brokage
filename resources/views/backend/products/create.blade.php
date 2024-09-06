@@ -85,7 +85,7 @@
                         <div class="row">
                             <div class=" mb-3 col-md-6">
                                 <label for="gst">GST<b style="color: red;">*</b></label>
-                                <select class="form-control" id="gst" name="gst[]" multiple>
+                                <select class="form-control" id="gst" name="gst">
                                     <option value="">Select GST</option>
                                     <option value="0">0%</option>
                                     <option value="12">12%</option>
@@ -98,7 +98,7 @@
                             </div>
                             <div class="mb-3 col-md-6">
                                 <label for="hcn">HSN/SAC<b style="color: red;">*</b></label>
-                                <select class="form-control" id="hsn" name="hsn[]" multiple>
+                                <select class="form-control" id="hsn" name="hsn">
                                     <option value="">Select HSN/SAC</option>
                                     <option value="0">0</option>
                                     <option value="2">2</option>
@@ -152,24 +152,32 @@
     <script>
         $(document).ready(function() {
             $('#category').on('change', function() {
-                var categoryId = $(this).val();
-                if (categoryId) {
+                var categoryIds = $(this).val(); // Get selected category IDs
+                if (categoryIds && categoryIds.length > 0) {
                     $.ajax({
-                        url: '/fetch-subcategory/' + categoryId,
+                        url: '/product-fetch-subcategory', // Your route to fetch subcategories
                         type: 'POST',
                         data: {
-                            _token: '{{ csrf_token() }}'
+                            _token: '{{ csrf_token() }}',
+                            category_ids: categoryIds // Send the selected category IDs as an array
                         },
                         success: function(response) {
+                            // Clear the subcategory dropdown
                             $('#subcategory').empty().append(
-                                '<option value="" selected disabled>Select Subcategory</option>'
-                            );
-                            if (response.status === 1 && response.data.length > 0) {
-                                $.each(response.data, function(key, subcateg) {
-                                    $('#subcategory').append(
-                                        '<option value="' +
-                                        subcateg.id + '">' + subcateg
-                                        .name +
+                                '<option value="" disabled>Select Subcategory</option>');
+
+                            // Display selected category names
+                            $.each(response.data.categories, function(index, category) {
+                                console.log("Selected Category: " + category
+                                    .name); // Show selected categories in console
+                            });
+
+                            // Populate subcategories
+                            if (response.status === 1 && response.data.subcategories.length >
+                                0) {
+                                $.each(response.data.subcategories, function(key, subcategory) {
+                                    $('#subcategory').append('<option value="' +
+                                        subcategory.id + '">' + subcategory.name +
                                         '</option>');
                                 });
                             } else {
@@ -184,20 +192,18 @@
                             );
                         }
                     });
-                } else {
-                    $('#subcategory').empty().append(
-                        '<option value="" selected disabled>Select Subcategory</option>');
                 }
             });
 
             $('#subcategory').on('change', function() {
-                var subcategoryId = $(this).val();
-                if (subcategoryId) {
+                var subcategoryIds = $(this).val(); // Capture selected subcategory IDs
+                if (subcategoryIds && subcategoryIds.length > 0) {
                     $.ajax({
-                        url: '/getMenus/' + subcategoryId,
+                        url: '/product-fetch-menu', // Updated URL
                         type: 'POST',
                         data: {
-                            _token: '{{ csrf_token() }}'
+                            _token: '{{ csrf_token() }}',
+                            subcategory_ids: subcategoryIds // Send the subcategory IDs as an array
                         },
                         success: function(response) {
                             $('#menu').empty().append(
@@ -205,9 +211,10 @@
                             );
                             if (response.status === 1 && response.data.length > 0) {
                                 $.each(response.data, function(key, menu) {
-                                    $('#menu').append('<option value="' +
-                                        menu.id +
-                                        '">' + menu.name + '</option>');
+                                    $('#menu').append(
+                                        '<option value="' + menu.id + '">' + menu
+                                        .name + '</option>'
+                                    );
                                 });
                             } else {
                                 $('#menu').append(
@@ -229,44 +236,49 @@
                 }
             });
 
+
+            // Similar logic for Menu and Submenu dropdowns
             $('#menu').on('change', function() {
-                var submenuId = $(this).val();
-                if (submenuId) {
+                var menuIds = $(this).val(); // Get selected menu IDs
+
+                if (menuIds && menuIds.length > 0) {
                     $.ajax({
-                        url: '/getsubMenus/' + submenuId,
+                        url: '/product-fetch-submenu', // Your route to fetch submenus
                         type: 'POST',
                         data: {
-                            _token: '{{ csrf_token() }}'
+                            _token: '{{ csrf_token() }}',
+                            menu_ids: menuIds // Send the selected menu IDs as an array
                         },
                         success: function(response) {
+                            // Clear the submenu dropdown
                             $('#submenu').empty().append(
-                                '<option value="" selected disabled>Select SubMenu</option>'
-                            );
-                            if (response.status === 1 && response.data.length > 0) {
-                                $.each(response.data, function(key, submenu) {
-                                    $('#submenu').append('<option value="' +
-                                        submenu.id +
-                                        '">' + submenu.name + '</option>');
+                                '<option value="" disabled>Select Submenu</option>');
+
+                            // Display selected menu names
+                            $.each(response.data.menus, function(index, menu) {
+                                console.log("Selected Menu: " + menu
+                                    .name); // Show selected menus in console
+                            });
+
+                            // Populate submenus
+                            if (response.status === 1 && response.data.submenus.length > 0) {
+                                $.each(response.data.submenus, function(key, submenu) {
+                                    $('#submenu').append('<option value="' + submenu
+                                        .id + '">' + submenu.name + '</option>');
                                 });
                             } else {
                                 $('#submenu').append(
-                                    '<option value="" disabled>No menus available</option>'
-                                );
+                                    '<option value="" disabled>No submenus found</option>');
                             }
                         },
-                        error: function(xhr) {
-                            console.error('Error loading menus:', xhr);
+                        error: function() {
                             $('#submenu').empty().append(
-                                '<option value="" disabled>Error loading menus</option>'
-                            );
+                                '<option value="" disabled>Error loading submenus</option>');
                         }
                     });
-                } else {
-                    $('#menu').empty().append(
-                        '<option value="" selected disabled>Select Menu</option>'
-                    );
                 }
             });
+
 
             // Populate Cities
             $('#state').on('change', function() {

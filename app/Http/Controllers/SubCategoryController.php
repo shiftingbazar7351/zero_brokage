@@ -36,8 +36,8 @@ class SubCategoryController extends Controller
         $request->validate([
             'category_id' => 'required',
             'name' => 'required',
-            'background_image' => 'required|image|mimes:jpeg,png,jpg,gif,webp|max:5048',
-            'icon' => 'required|image|mimes:jpeg,png,jpg,gif,webp|max:5048',
+            'background_image' => 'required|image|mimes:jpeg,png|max:5048',
+            'icon' => 'required|image|mimes:jpeg,png,|max:5048',
         ]);
 
         $subcategory = new SubCategory();
@@ -94,8 +94,8 @@ class SubCategoryController extends Controller
         $request->validate([
             'category_id' => 'required',
             'name' => 'required',
-            'background_image' => 'image|mimes:jpeg,png,jpg,gif|max:5048',
-            'icon' => 'image|mimes:jpeg,png,jpg,gif|max:5048',
+            'background_image' => 'required|image|mimes:jpeg,png|max:5048',
+            'icon' => 'required|image|mimes:jpeg,png,|max:5048',
         ]);
 
         $subcategory->name = $request->name;

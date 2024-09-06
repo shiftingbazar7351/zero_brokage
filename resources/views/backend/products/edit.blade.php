@@ -85,7 +85,7 @@
                         <div class="row">
                             <div class=" mb-3 col-md-6">
                                 <label for="gst">GST<b style="color: red;">*</b></label>
-                                <select class="form-control" id="gst" name="gst[]" multiple>
+                                <select class="form-control" id="gst" name="gst" >
                                     <option value="">Select GST</option>
                                     <option value="0" {{ old('gst') == '1' ? 'selected' : '' }}>  0% </option>
                                     <option value="12" {{ old('gst') == '1' ? 'selected' : '' }}> 12% </option>
@@ -98,7 +98,7 @@
                             </div>
                             <div class="mb-3 col-md-6">
                                 <label for="hcn">HSN/SAC<b style="color: red;">*</b></label>
-                                <select class="form-control" id="hsn" name="hsn[]" multiple>
+                                <select class="form-control" id="hsn" name="hsn" >
                                     <option value="">Select HSN/SAC</option>
                                     <option value="0" {{ old('hsn') == '1' ? 'selected' : '' }}> 0% </option>
                                     <option value="2" {{ old('hsn') == '1' ? 'selected' : '' }}> 2% </option>

@@ -24,10 +24,15 @@
                                 <tr>
                                     <th>ID</th>
                                     <th>Name</th>
-                                    <th>Location</th>
+                                    {{-- <th>Location</th> --}}
+                                    <th>category</th>
+                                    <th>Sub category</th>
+                                    <th>Menu</th>
+                                    <th>Sub menu</th>
                                     <th>Date</th>
                                     <th>Email</th>
                                     <th>Mobile</th>
+
                                     <th>Action</th>
                                 </tr>
                             </thead>
@@ -39,9 +44,14 @@
                                 @else
                                     @foreach ($enquiries as $enquiry)
                                         <tr>
-                                            <td>{{ $loop->iteration }}</td>
+                                            <td>{{ $enquiry->id ??'' }}</td>
                                             <td>{{ $enquiry->name }}</td>
-                                            <td>{{ $enquiry->move_from_origin }}</td>
+                                            {{-- <td>{{ $enquiry->move_from_origin }}</td> --}}
+                                            <td>{{ $enquiry->categoryName->name ??'' }}</td>
+                                            <td>{{ $enquiry->subcategory->name ??'' }}</td>
+                                            <td>{{ $enquiry->menu->name ??'' }}</td>
+                                            <td>{{ $enquiry->submenu->name ??'' }}</td>
+
                                             <td>
                                                 @php
                                                     $date = \Carbon\Carbon::parse($enquiry->date_time);

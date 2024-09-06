@@ -50,7 +50,7 @@ class EnquiryController extends Controller
 
     public function show($id)
     {
-         $enquirys = Enquiry::with('category','subcategory')->findOrFail($id);
+        $enquirys = Enquiry::with('categoryName','subcategory')->findOrFail($id);
         return view("backend.enquiry.show",compact('enquirys',));
     }
 
@@ -131,14 +131,14 @@ class EnquiryController extends Controller
             $menu->name = ucwords($menu->name);
             return $menu;
         });
-    
+
         if ($menus->isEmpty()) {
             return response()->json(['status' => 0, 'message' => 'No menu found']);
         }
-    
+
         return response()->json(['status' => 1, 'data' => $menus]);
     }
-    
+
 
     public function enquiryStatus(Request $request)
     {
@@ -152,5 +152,9 @@ class EnquiryController extends Controller
 
         return response()->json(['success' => false, 'message' => 'Item not found.']);
     }
+    // public function reportData()
+    // {
+    //     return view('backend.report');
+    // }
 
 }

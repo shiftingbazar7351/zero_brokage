@@ -88,6 +88,10 @@ Route::get('/privacy-policy', function () {
     return view('frontend.privacy-policy');
 })->name('privacy-policy');
 
+Route::get('/reciept', function () {
+    return view('frontend.reciept');
+})->name('reciept');
+
 Route::controller(FrontendController::class)->group(function () {
     Route::get('/', 'home')->name('home');
     Route::get('/service-list', 'serviceList')->name('service-list');
@@ -176,8 +180,8 @@ Route::middleware(['auth', 'check.ip'])->group(function () {
     Route::controller(VendorController::class)->group(function () {
         Route::post('/fetch-city-vendor/{stateId}', 'fetchCity');
         Route::post('/product-fetch-subcategory', 'fetchSubcategory')->name('fetch.subcategory');
-        Route::post('/product-fetch-menu', 'fetchMenu')->name('fetch.menu');    
-        Route::post('/product-fetch-submenu', 'fetchSubmenu')->name('fetch.submenu');     
+        Route::post('/product-fetch-menu', 'fetchMenu')->name('fetch.menu');
+        Route::post('/product-fetch-submenu', 'fetchSubmenu')->name('fetch.submenu');
         // Route::post('/getMenus/{subcategoryId}', 'getMenus');
         Route::post('/getsubMenus/{menuId}', 'getsubMenus');
         Route::post('/vendor-send-otp', 'sendOtp')->name('vendor.send.otp');

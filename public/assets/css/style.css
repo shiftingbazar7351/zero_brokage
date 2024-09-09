@@ -2241,7 +2241,7 @@ html.menu-opened body {
 }
 .hero-section:before {
     content: "";
-    background-image: url("../img/bannerillustration-3288525_1280_.png");
+    background-image: url("../img/bannerillustration-3288525_1280_.webp");
     background-repeat: no-repeat;
     /* background-position: 100% 0%; */
     background-position: center;

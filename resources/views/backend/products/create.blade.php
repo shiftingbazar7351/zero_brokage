@@ -127,9 +127,40 @@
 
                             <div class="mb-3 col-md-6">
                                 <label for="subcategory">Sub Category<b style="color: red;">*</b></label>
-                                <select class="form-control" id="subcategory" name="subcategory_id[]" multiple>
+                                {{-- <select class="form-control" id="subcategory" name="subcategory_id[]" multiple>
                                     <option value="">Select subcategory</option>
+                                </select> --}}
+
+                                <select name="fabric_color_enn[]" id="fabric_color_enn[]" multiple="multiplee" class="form-control select2">
+                                    <option value="Beige">
+                                        Beige
+                                    </option>
+
+                                    <option value="Red">
+                                        Red
+                                    </option>
+
+                                    <option value="Petrol">
+                                        Petrol
+                                    </option>
+
+                                    <option value="Royal Blue">
+                                        Royal Blue
+                                    </option>
+
+                                    <option value="Dark Blue">
+                                        Dark Blue
+                                    </option>
+
+                                    <option value="Bottle Green">
+                                        Bottle Green
+                                    </option>
+
+                                    <option value="Light Grey">
+                                        Light Grey
+                                    </option>
                                 </select>
+
                                 @error('subcategory_id')
                                     <div class="error text-danger">{{ $message }}</div>
                                 @enderror
@@ -405,6 +436,12 @@
     </script>
     <script>
         $('.select2[multiple]').select2({
+            width: '100%',
+            closeOnSelect: false
+        })
+    </script>
+    <script>
+        $('.select2[multiplee]').select2({
             width: '100%',
             closeOnSelect: false
         })

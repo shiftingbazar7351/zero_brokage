@@ -75,9 +75,9 @@
                     <form action="{{ route('products.store') }}" method="POST">
                         @csrf
                         <div class="row">
-                            {{-- <div class="mb-3 col-md-6">
+                            <div class="mb-3 col-md-6">
                                 <label for="category">Category<b style="color: red;">*</b></label>
-                                <select class="form-control" id="category" name="category_id[]" multiple>
+                                <select name="fabric_color_en[]" id="fabric_color_en[]" multiple="multiple" class="form-control select2">
                                     <option value="">Select category</option>
                                     @foreach ($categories as $category)
                                         <option value="{{ $category->id }}">{{ $category->name }}</option>
@@ -86,9 +86,9 @@
                                 @error('category_id')
                                     <div class="error text-danger">{{ $message }}</div>
                                 @enderror
-                            </div> --}}
+                            </div>
 
-                            <div class="mb-3 col-md-6">
+                            {{-- <div class="mb-3 col-md-6">
                                 <label for="category">Category<b style="color: red;">*</b></label>
                                 <select name="fabric_color_en[]" id="fabric_color_en[]" multiple="multiple" class="form-control select2">
                                     <option value="Beige">
@@ -122,12 +122,12 @@
                                 @error('category_id')
                                     <div class="error text-danger">{{ $message }}</div>
                                 @enderror
-                            </div>
+                            </div> --}}
 
 
                             <div class="mb-3 col-md-6">
                                 <label for="subcategory">Sub Category<b style="color: red;">*</b></label>
-                                {{-- <select class="form-control" id="subcategory" name="subcategory_id[]" multiple>
+                                {{-- <select class="form-control select2" id="subcategory" name="subcategory_id[]  multiple="multiplee"">
                                     <option value="">Select subcategory</option>
                                 </select> --}}
 

@@ -101,7 +101,7 @@ Route::controller(FrontendController::class)->group(function () {
     Route::post('/user/review/store', 'reviewStore')->name('reviewstore');
     Route::get('/get-menus/{subcategory_id}', 'getMenus')->name('get.menus');
     Route::get('/search-filter', 'search')->name('search.filter');
-    Route::get('/filter-submenus', 'filterSubmenus')->name('your.search.route');
+    Route::get('/filter-submenus/{slug}', 'filterSubmenus')->name('filter.submenu');
     Route::post('/enquiry-verify-otp', 'verifyOtp')->name('enquiry.verify.otp');
     Route::get('/fetch-city-data','fetchDataOfProvider')->name('fetchDataOfProvider');
 
@@ -176,8 +176,8 @@ Route::middleware(['auth', 'check.ip'])->group(function () {
     Route::controller(VendorController::class)->group(function () {
         Route::post('/fetch-city-vendor/{stateId}', 'fetchCity');
         Route::post('/product-fetch-subcategory', 'fetchSubcategory')->name('fetch.subcategory');
-        Route::post('/product-fetch-menu', 'fetchMenu')->name('fetch.menu');    
-        Route::post('/product-fetch-submenu', 'fetchSubmenu')->name('fetch.submenu');     
+        Route::post('/product-fetch-menu', 'fetchMenu')->name('fetch.menu');
+        Route::post('/product-fetch-submenu', 'fetchSubmenu')->name('fetch.submenu');
         // Route::post('/getMenus/{subcategoryId}', 'getMenus');
         Route::post('/getsubMenus/{menuId}', 'getsubMenus');
         Route::post('/vendor-send-otp', 'sendOtp')->name('vendor.send.otp');

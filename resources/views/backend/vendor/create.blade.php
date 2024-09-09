@@ -125,8 +125,7 @@
                         <div class="row mt-3">
                             <div class="col-md-4">
                                 <label for="state" class="form-label">State<b style="color: red;">*</b></label>
-                                <select id="state" name="state" class="form-select" style="font-size:1.4rem"
-                                    required>
+                                <select id="state" name="state" class="form-select" required>
                                     <option selected disabled>Select State</option>
                                     @foreach ($states as $state)
                                         <option value="{{ $state->id }}">{{ ucwords($state->name) }}</option>
@@ -139,8 +138,7 @@
 
                             <div class="col-md-4">
                                 <label for="city" class="form-label">City<b style="color: red;">*</b></label>
-                                <select class="form-select" id="city" name="city" style="font-size:1.4rem"
-                                    required>
+                                <select class="form-select" id="city" name="city" required>
                                     <option value="">Select City</option>
                                 </select>
                                 @error('city')
@@ -189,99 +187,75 @@
                             </div>
 
                             <div class="col-md-3 mt-4 mt-md-0">
-                                <label for="whatsappNumVender" class="form-label">WhatsApp<b
-                                        style="color: red;">*</b></label>
-                                <span class="mx-3">(Get notification)</span>
+                                <label for="formFile" class="form-label">Whatsapp<b
+                                        style="color: red;">*</b></label><span class="mx-3">(Get
+                                    notification)</span>
+                                <input name="whatsapp" value="{{ old('whatsapp') }}" class="form-check-input mx-2"
+                                    type="checkbox" value="" id="flexCheckChecked" unchecked>
                                 <input name="whatsapp" value="{{ old('whatsapp') }}"
-                                    class="form-control bg-light-subtle" id="whatsappNumVender"
-                                    oninput="checkPhoneNumberOrWhatsapp(this)" type="text"
-                                    placeholder="WhatsApp number" aria-label="default input example" maxlength="10"
-                                    required>
+                                    class="form-control bg-light-subtle" id="whatsappNumVender" type="text"
+                                    placeholder="Whatsapp number" aria-label="default input example"
+                                    onkeyup="validateField(this)" maxlength="10" required>
                                 <div id="whatsappError" class="text-danger"></div>
                                 @error('whatsapp')
-                                    <div class="error text-danger">{{ $message }}</div>
+                                    <div class="error text-danger ">{{ $message }}</div>
                                 @enderror
                             </div>
 
                             {{-- <div class="col-md-3 mt-4 mt-md-0">
-                            <label for="phoneNumVender" class="form-label">Phone Number<b
-                                    style="color: red;">*</b></label>
-                            <span>(Get notification)</span>
-                            <input name="number" value="{{ old('number') }}" class="form-check-input mx-2"
-                                type="checkbox" value="" id="flexCheckChecked" unchecked>
-                            <input name="number" value="{{ old('number') }}" class="form-control bg-light-subtle"
-                                id="phoneNumVender" type="text" placeholder="Phone number"
-                                aria-label="default input example" maxlength="10" accept=""
-                                oninput="checkPhoneNumber(this)" required>
-                            <div id="phoneError" class="text-danger"></div>
+                                <label for="phoneNumVender" class="form-label">Phone Number<b
+                                        style="color: red;">*</b></label>
+                                <span>(Get notification)</span>
+                                <input name="number" value="{{ old('number') }}" class="form-check-input mx-2"
+                                    type="checkbox" value="" id="flexCheckChecked" unchecked>
+                                <input name="number" value="{{ old('number') }}" class="form-control bg-light-subtle"
+                                    id="phoneNumVender" type="text" placeholder="Phone number"
+                                    aria-label="default input example" maxlength="10" accept=""
+                                    oninput="checkPhoneNumber(this)" required>
+                                <div id="phoneError" class="text-danger"></div>
 
-                            @error('number')
-                            <div class="error text-danger">{{ $message }}</div>
-                            @enderror
-                        </div> --}}
-
-
-                            {{-- <div class="col-md-3 mt-4 mt-md-0">
-                            <label for="phoneNumVender" class="form-label">Phone Number<b
-                                    style="color: red;">*</b></label>
-                            <span>(Get notification)</span>
-                            <input name="number" value="{{ old('number') }}" class="form-check-input mx-2"
-                                type="checkbox" id="flexCheckChecked">
-                            <input name="number" value="{{ old('number') }}" class="form-control bg-light-subtle"
-                                id="phoneNumVender" type="text" placeholder="Phone number"
-                                aria-label="default input example" onblur="sendOtpIfValid(this)"
-                                oninput="checkPhoneNumber(this)" maxlength="10" required>
-                            <div id="phoneError" class="text-danger"></div>
-                            @error('number')
-                            <div class="error text-danger">{{ $message }}</div>
-                            @enderror
-                        </div>
-
-
-
-                        <div class="col-md-3 mt-4 mt-md-0" id="otpSection" style="display: none;">
-                            <label for="phoneNumVender" class="form-label">Verify OTP<b
-                                    style="color: red;">*</b></label>
-                            <div class="d-flex">
-                                <input type="text" class="form-control me-2" placeholder="Enter OTP" aria-label="OTP">
-                                <button type="button" class="btn btn-primary">OTP Submit</button>
+                                @error('number')
+                                    <div class="error text-danger">{{ $message }}</div>
+                                @enderror
                             </div>
-                        </div> --}}
 
-                        <div class="col-md-3 mt-4 mt-md-0">
-                            <label for="phoneNumVender" class="form-label">Phone Number<b
-                                    style="color: red;">*</b></label>
-                            <span>(Get notification)</span>
-                            <input name="number" value="{{ old('number') }}" class="form-control bg-light-subtle"
-                                id="phoneNumVender" type="text" placeholder="Phone number"
-                                aria-label="default input example" oninput="checkPhoneNumberOrWhatsapp(this)"
-                                maxlength="10" required>
-                            <div id="phoneError" class="text-danger"></div>
-                            @error('number')
-                            <div class="error text-danger">{{ $message }}</div>
-                            @enderror
-                        </div>
 
-                        <div class="col-md-3 mt-4 mt-md-0" id="otpSection" style="display: none;">
-                            <label for="otp" class="form-label">Verify OTP<b style="color: red;">*</b></label>
-                            <div class="d-flex">
-                                <input type="text" class="form-control me-2" id="otp" placeholder="Enter OTP"
-                                    aria-label="OTP">
-                                <button type="button" class="btn btn-primary" onclick="verifyOtp()">OTP Submit</button>
+
+                            <div class="col-md-3 mt-4 mt-md-0" id="otpSection" style="display: none;">
+                                <label for="phoneNumVender" class="form-label">Verify OTP<b
+                                        style="color: red;">*</b></label>
+                                <div class="d-flex">
+                                    <input type="text" class="form-control me-2" placeholder="Enter OTP"
+                                        aria-label="OTP">
+                                    <button type="button" class="btn btn-primary">OTP Submit</button>
+                                </div>
+                            </div> --}}
+
+                            <div class="col-md-3 mt-4 mt-md-0">
+                                <label for="phoneNumVender" class="form-label">Phone Number<b
+                                        style="color: red;">*</b></label>
+                                <span>(Get notification)</span>
+                                <input name="number" value="{{ old('number') }}" class="form-control bg-light-subtle"
+                                    id="phoneNumVender" type="text" placeholder="Phone number"
+                                    aria-label="default input example" onblur="sendOtpIfValid(this)" maxlength="10"
+                                    oninput="checkPhoneNumber(this)" required>
+                                <div id="phoneError" class="text-danger"></div>
+                                @error('number')
+                                    <div class="error text-danger">{{ $message }}</div>
+                                @enderror
                             </div>
-                            <div id="otpError" class="text-danger"></div>
-                        </div>
 
                             <div class="col-md-3 mt-4 mt-md-0" id="otpSection" style="display: none;">
                                 <label for="otp" class="form-label">Verify OTP<b style="color: red;">*</b></label>
                                 <div class="d-flex">
                                     <input type="text" class="form-control me-2" id="otp"
-                                        placeholder="Enter OTP" aria-label="OTP">
+                                        placeholder="Enter OTP" aria-label="OTP" maxlength="4" id="number">
                                     <button type="button" class="btn btn-primary" onclick="verifyOtp()">OTP
                                         Submit</button>
                                 </div>
                                 <div id="otpError" class="text-danger"></div>
                             </div>
+
                         </div>
 
                         <div class="row mt-4">
@@ -296,7 +270,7 @@
                             <div class="col-md-4 mb-3">
                                 <label for="formFile" class="form-label">Verified or Approved By Team</label>
                                 <select name="verified" class="form-select bg-light-subtle"
-                                    aria-label="Default select example" style="box-shadow: none;font-size:1.4rem">
+                                    aria-label="Default select example" style="box-shadow: none">
                                     <option selected disabled value="">Select Option</option>
                                     @foreach ($verifieds as $verified)
                                         <option value="{{ $verified->id }}">{{ $verified->name }}</option>
@@ -306,34 +280,17 @@
                                     <div class="error text-danger ">{{ $message }}</div>
                                 @enderror
                             </div>
-                            {{--
-                        <div class="col-md-4 mb-3">
-                            <label for="otp" class="form-label">OTP<b style="color: red;">*</b></label>
-                            <input name="otp" value="{{ old('otp') }}" class="form-control bg-light-subtle" type="text"
-                                id="otp" placeholder="Enter valid OTP" required>
-                            <div id="otpError" class="text-danger"></div>
-                            @error('otp')
-                            <div class="error text-danger ">{{ $message }}</div>
-                            @enderror
-                        </div> --}}
 
-                            <div class="col-md-4 mb-3">
-                                <label for="experience" class="form-label">Experience<b style="color: red;">*</b></label>
-                                <select name="experience" id="experience" class="form-control bg-light-subtle" required>
-                                    <option value="" selected disabled>Select Experience</option>
-                                    @for ($i = 0; $i <= 20; $i++)
-                                        <option value="{{ $i }}"
-                                            {{ old('experience') == $i ? 'selected' : '' }}>
-                                            {{ $i }}
-                                        </option>
-                                    @endfor
-                                </select>
-                                <div id="experienceError" class="text-danger"></div>
-                                @error('experience')
-                                    <div class="error text-danger">{{ $message }}</div>
-                                @enderror
+                            <div class="col-md-3 mt-4 mt-md-0" id="otpSection" style="display: none;">
+                                <label for="otp" class="form-label">Verify OTP<b style="color: red;">*</b></label>
+                                <div class="d-flex">
+                                    <input type="text" class="form-control me-2" id="otp"
+                                        placeholder="Enter OTP" aria-label="OTP">
+                                    <button type="button" class="btn btn-primary" onclick="verifyOtp()">OTP
+                                        Submit</button>
+                                </div>
+                                <div id="otpError" class="text-danger"></div>
                             </div>
-
                         </div>
 
                         <div class="row mt-6">
@@ -485,19 +442,34 @@
 
                         </div>
 
-                        {{-- <div class="row mt-3">
+                        <div class="row mt-3">
+                            <div class="col-md-6 mb-3">
+                                <label for="experience" class="form-label">Experience<b style="color: red;">*</b></label>
+                                <select name="experience" id="experience" class="form-control bg-light-subtle" required>
+                                    <option value="" selected disabled>Select Experience</option>
+                                    @for ($i = 0; $i <= 20; $i++)
+                                        <option value="{{ $i }}"
+                                            {{ old('experience') == $i ? 'selected' : '' }}>
+                                            {{ $i }}
+                                        </option>
+                                    @endfor
+                                </select>
+                                <div id="experienceError" class="text-danger"></div>
+                                @error('experience')
+                                    <div class="error text-danger">{{ $message }}</div>
+                                @enderror
+                            </div>
 
-
-                    </div> --}}
+                        </div>
                         <div class="row mt-3">
                             {{-- <div class="col-md-4">
-                            <label for="formFile" class="form-label">price<b style="color: red;">*</b></label>
-                            <input class="form-control bg-light-subtle" type="text" name="price"
-                                placeholder="Enter price" aria-label="default input example" required>
-                            @error('video')
-                            <div class="error text-danger ">{{ $message }}</div>
-                            @enderror
-                        </div> --}}
+                                <label for="formFile" class="form-label">price<b style="color: red;">*</b></label>
+                                <input class="form-control bg-light-subtle" type="text" name="price"
+                                    placeholder="Enter price" aria-label="default input example" required>
+                                @error('video')
+                                    <div class="error text-danger ">{{ $message }}</div>
+                                @enderror
+                            </div> --}}
 
                             <div class="col-md-4">
                                 <label for="formFile" class="form-label">Location<b style="color: red;">*</b></label>
@@ -509,6 +481,7 @@
                             </div>
                             <div class="col-md-1 d-flex" style="align-items: flex-end">
                                 <button type="button" id="addlocation" class="btn btn-primary">Add</button>
+
                             </div>
                             <div class="col-md-4 d-none" id="longitude">
                                 <label for="formFile" class="form-label">Longitude Location<b
@@ -567,50 +540,39 @@
             initialCountry: "in",
             separateDialCode: true
         });
-</script>
-<script>
-    const whatsappvender = document.querySelector("#whatsappNumVender");
+    </script>
+
+    {{-- .............Show OTP verify input field (start)..................... --}}
+    <script>
+        function checkPhoneNumber(input) {
+            const otpSection = document.getElementById('otpSection');
+            if (input.value.length === 10) {
+                otpSection.style.display = 'block';
+            } else {
+                otpSection.style.display = 'none';
+            }
+        }
+    </script>
+    {{-- .............Show OTP verify input field (end)..................... --}}
+
+    <script>
+        const whatsappvender = document.querySelector("#whatsappNumVender");
         window.intlTelInput(whatsappvender, {
             initialCountry: "in",
             separateDialCode: true
         });
-</script>
-{{-- .............Show OTP verify input field (start)..................... --}}
-<script>
-   function checkPhoneNumberOrWhatsapp(input) {
-    const otpSection = document.getElementById('otpSection');
-    const phoneNum = document.getElementById('phoneNumVender').value;
-    const whatsappNum = document.getElementById('whatsappNumVender').value;
+    </script>
 
-    // Check if either phone number or WhatsApp number is 10 digits
-    if (phoneNum.length === 10 || whatsappNum.length === 10) {
-        otpSection.style.display = 'block';
-    } else {
-        otpSection.style.display = 'none';
-    }
-
-    // // Handle error messages
-    // if (input.id === 'phoneNumVender') {
-    //     document.getElementById('phoneError').textContent = (phoneNum.length < 10) ? 'Please enter a valid 10-digit phone number.' : '';
-    // } else if (input.id === 'whatsappNumVender') {
-    //     document.getElementById('whatsappError').textContent = (whatsappNum.length < 10) ? 'Please enter a valid 10-digit WhatsApp number.' : '';
-    // }
-}
-</script>
-{{-- .............Show OTP verify input field (end)..................... --}}
-
-
-
-<script>
-    document.getElementById('addlocation').addEventListener('click', function() {
+    <script>
+        document.getElementById('addlocation').addEventListener('click', function() {
 
             document.getElementById('longitude').classList.remove('d-none');
             document.getElementById('addlocation').classList.add('d-none');
         });
-</script>
+    </script>
 
-<script>
-    document.getElementById('companyNameCheckbox').addEventListener('change', function() {
+    <script>
+        document.getElementById('companyNameCheckbox').addEventListener('change', function() {
             const companyNameField = document.getElementById('companyname');
             const legalCompanyNameField = document.getElementById('lcompanyname');
 
@@ -628,10 +590,10 @@
                 document.getElementById('lcompanyname').value = this.value;
             }
         });
-</script>
+    </script>
 
-<script>
-    $(document).ready(function() {
+    <script>
+        $(document).ready(function() {
             $('#state').on('change', function() {
                 var stateId = $(this).val();
                 if (stateId) {
@@ -856,5 +818,5 @@
                     'Please enter a valid 4-digit OTP and 10-digit phone number.';
             }
         }
-</script>
+    </script>
 @endsection

@@ -100,7 +100,7 @@
                 <div class="row align-items-center">
                     <div class="col-md-4">
                         <div class="copyright-text">
-                            <p class="mb-0"> &copy;2024 Copyright ZeroBrokage.com. All Rights Reserved.</p>
+                            <p class="mb-0"> &copy;2024 Copyright Flybizz.com. All Rights Reserved.</p>
                         </div>
                     </div>
                     <div class="col-md-4">

@@ -163,6 +163,7 @@
                                 <tr>
                                     <th scope="row">Adress</th>
                                     <td class="text-wrap">{{ $vendor->address  }}</td>
+
                                 </tr>
                                 <tr>
                                     <th scope="row">city</th>

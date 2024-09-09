@@ -2,9 +2,9 @@
 
 @section('styles')
     <style>
-        .preview-img {
-            width: 100px;
-            height: 100px;
+        img {
+            width: 150px;
+            height: 150px;
             object-fit: cover;
         }
     </style>
@@ -236,8 +236,9 @@
                             <label class="form-label">Image </label>
                             <div class="form-uploads">
                                 <div class="form-uploads-path">
-                                    <img id="edit-image-preview-icon" src="{{ asset('admin/assets/img/icons/upload.svg') }}"
-                                        alt="img" class="default-img">
+                                    <img id="edit-image-preview-icon"
+                                        src="{{ asset('admin/assets/img/icons/upload.svg') }}" alt="img"
+                                        class="default-img">
                                     <div class="file-browse">
                                         <h6>Drag & drop image or </h6>
                                         <div class="file-browse-path">
@@ -256,12 +257,13 @@
                             <label class="form-label">Background Image</label>
                             <div class="form-uploads">
                                 <div class="form-uploads-path">
-                                    <img id="edit-image-preview-bg" src="{{ asset('admin/assets/img/icons/upload.svg') }}"
-                                        alt="img" class="default-img">
+                                    <img id="edit-image-preview-bg"
+                                        src="{{ asset('admin/assets/img/icons/upload.svg') }}" alt="img"
+                                        class="default-img">
                                     <div class="file-browse">
                                         <h6>Drag & drop image or </h6>
                                         <div class="file-browse-path">
-                                            <input type="file" name="icon" id="edit-image-input-bg"
+                                            <input type="file" name="background_image" id="edit-image-input-bg"
                                                 accept="image/jpeg, image/png">
                                             <a href="javascript:void(0);"> Browse</a>
                                         </div>
@@ -271,6 +273,33 @@
                             </div>
                             <div id="background_image_error_edit" class="text-danger"></div>
                         </div>
+                        <script>
+                            // Function to preview the image
+                            function previewImage(input, previewId) {
+                                var file = input.files[0];
+                                if (file) {
+                                    var reader = new FileReader();
+                                    reader.onload = function(e) {
+                                        $('#' + previewId).attr('src', e.target.result)
+                                            .css({
+                                                'width': '150px',
+                                                'height': '150px'
+                                            }); // Set the preview image size to 50px
+                                    };
+                                    reader.readAsDataURL(file);
+                                }
+                            }
+
+                            // Event listener for icon image preview
+                            $('#edit-image-input-icon').on('change', function() {
+                                previewImage(this, 'edit-image-preview-icon');
+                            });
+
+                            // Event listener for background image preview
+                            $('#edit-image-input-bg').on('change', function() {
+                                previewImage(this, 'edit-image-preview-bg');
+                            });
+                        </script>
                         <div class="text-end">
                             <button type="button" class="btn btn-secondary me-2" data-bs-dismiss="modal">Cancel</button>
                             <button type="submit" class="btn btn-primary">Update</button>
@@ -314,13 +343,11 @@
                             .errors.icon[0] : '');
                         $('#background_image_error').text(xhr.responseJSON.errors
                             .background_image ? xhr.responseJSON.errors.background_image[
-                            0] : '');
+                                0] : '');
                     }
                 });
             });
         });
-
-
 
         // Edit Subcategory
         window.editSubCategory = function(id) {

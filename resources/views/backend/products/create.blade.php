@@ -1,72 +1,7 @@
 @extends('backend.layouts.main')
 
 @section('content')
-<link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.10/css/select2.min.css" rel="stylesheet"/>
-<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.css" rel="stylesheet"/>
-
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.10/js/select2.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/js/all.min.js"></script>
-
-<style>
-    body{
-   color: black !important;
-}
-
-.select2-results__options[aria-multiselectable="true"] li {
-    padding-left: 30px;
-    position: relative
-}
-
-.select2-results__options[aria-multiselectable="true"] li:before {
-    position: absolute;
-    left: 8px;
-    opacity: .6;
-    top: 6px;
-    font-family: "FontAwesome";
-    content: "\f0c8";
-}
-
-.select2-results__options[aria-multiselectable="true"] li[aria-selected="true"]:before {
-    content: "\f14a";
-}
-.select2-results__options {
-    &[aria-multiselectable=true] {
-
-        .select2-results__option {
-            &[aria-selected=true]:before {
-                content: '☑';
-                padding: 0 0 0 4px;
-            }
-
-            &:before {
-                content: '◻';
-                padding: 0 0 0 4px;
-            }
-        }
-    }
-}
-.select2-container--default .select2-results__option--selected {
-    background-color: #5897fb !important;
-    color: white;
-}
-.select2-container--default .select2-selection--multiple .select2-selection__choice {
-    background-color: #5897fb !important;
-    border-color: #5897fb !important;
-    color: white;
-}
-.select2-container--default .select2-selection--multiple .select2-selection__choice__remove{
-    background: none !important;
-    color: black !important;
-    top: -3px !important;
-}
-.select2-results__options[aria-multiselectable="true"] li:before {
-
-    opacity: 1 !important;
-}
-
- </style>
-
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.1/css/bootstrap-select.css" />
     <div class="page-wrapper page-settings">
         <div class="content">
             <div class="row">
@@ -90,7 +25,8 @@
 
                             <div class="mb-3 col-md-6">
                                 <label for="category">Category<b style="color: red;">*</b></label>
-                                <select name="fabric_color_en[]" id="fabric_color_en[]" multiple="multiple" class="form-control select2">
+                                <select name="fabric_color_en[]" id="fabric_color_en[]" multiple="multiple"
+                                    class="form-control select2">
                                     <option value="Beige">
                                         Beige
                                     </option>
@@ -131,7 +67,8 @@
                                     <option value="">Select subcategory</option>
                                 </select> --}}
 
-                                <select name="fabric_color_enn[]" id="fabric_color_enn[]" multiple="multiplee" class="form-control select2">
+                                <select name="fabric_color_enn[]" id="fabric_color_enn[]" multiple="multiplee"
+                                    class="form-control select2">
                                     <option value="Beige">
                                         Beige
                                     </option>
@@ -269,6 +206,20 @@
                             @error('description')
                                 <span class="text-danger">{{ $message }}</span>
                             @enderror
+                        </div>
+
+                        <div class="form-group">
+                            <label for="size">Size</label>
+                            <select name="size[]" class="form-control selectpicker" multiple aria-label="Default select example" data-live-search="true">
+                                <option value="">--Select any size--</option>
+                                <option value="S">Small (S)</option>
+                                <option value="M">Medium (M)</option>
+                                <option value="L">Large (L)</option>
+                                <option value="XL">Extra Large (XL)</option>
+                                <option value="XXL"> XXL</option>
+                                <option value="3XL"> 3XL</option>
+                                <option value="4XL"> 4XL</option>
+                            </select>
                         </div>
 
                         <div class="text-end">
@@ -446,22 +397,5 @@
             });
         });
     </script>
-    <script>
-        $('.select2[multiple]').select2({
-            width: '100%',
-            closeOnSelect: false
-        })
-        $('.select2[multiplee]').select2({
-            width: '100%',
-            closeOnSelect: false
-        })
-    </script>
-
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
-    <script
-  type="text/javascript"
-  src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/7.3.2/mdb.umd.min.js"
-></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.1/js/bootstrap-select.min.js"></script>
 @endsection

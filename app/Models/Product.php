@@ -20,23 +20,31 @@ class Product extends Model
         'subcategory_id', 'menu_id', 'submenu_id', 'created_by'
     ];
 
-    // Many-to-Many Relationship with Category
-    public function categories()
+    public function categoryName()
     {
-        return $this->belongsToMany(Category::class, 'category', 'id');
+        return $this->belongsTo(Category::class,'category_id','id');
     }
 
-    // Many-to-Many Relationship with SubCategory
-    public function subCategories()
+    public function subcategory()
     {
-        return $this->belongsToMany(SubCategory::class, 'subcategory_id', 'id');
+        return $this->belongsTo(SubCategory::class,'subcategory_id','id');
     }
 
-    // Many-to-Many Relationship with Menu
-    public function menus()
+    public function menu()
     {
-        return $this->belongsToMany(Menu::class, 'menu_id', 'id');
+        return $this->belongsTo(Menu::class,'menu_id','id');
     }
+
+    public function submenu()
+    {
+        return $this->belongsTo(Submenu::class,'submenu_id','id');
+    }
+
+    public function createdBy()
+    {
+        return $this->belongsTo(user::class,'created_by','id');
+    }
+
 
     // Many-to-Many Relationship with City
     public function cities()
@@ -51,9 +59,5 @@ class Product extends Model
     }
 
     // Submenu relationship if you have it
-    public function subMenus()
-    {
-        return $this->belongsToMany(SubMenu::class, 'submenu_id', 'id');
-    }
 }
 

@@ -46,7 +46,39 @@
                         </table>
                     </div>
 
+                    <div class="col-md-6">
+                        <table class="table table-sm table-bordered table-striped">
+                            <tbody>
+                                <tr>
+                                    <th scope="row">Category :</th>
+                                    <td class="text-wrap">{{ $products->categoryName->name ?? ''}}</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">Sub Category :</th>
+                                    <td class="text-wrap">{{ $products->subcategory->name ?? ''}}</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">Menu</th>
+                                    <td class="text-wrap">{{ $products->menu->name ?? ''}}</td>
+                                </tr>  
+                                
+                                <tr>
+                                    <th scope="row">Sub Menu</th>
+                                    <td class="text-wrap">{{ $products->submenu->name ?? ''}}</td>
+                                </tr> 
+                                
+                                <tr>
+                                    <th scope="row">Created By</th>
+                                    <td>
+                                        <td class="text-wrap">{{ $products->createdBy->name ?? ''}}</td>
+                                    </td>
+                                </tr>
+                            
 
+                            </tbody>
+                            
+                        </table>
+                    </div>
                 </div>
             </div>
         </div>

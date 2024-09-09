@@ -23,6 +23,7 @@
                             <thead class="thead-dark">
                                 <tr>
                                     <th>#</th>
+                                    <th>Name</th>
                                     <th>Description</th>
                                     <th>Action</th>
                                 </tr>
@@ -36,9 +37,11 @@
                                     @foreach ($products as $product)
                                         <tr class="text-wrap">
                                             <td>{{ $loop->iteration }}</td>
+                                            <td>{{ $product->name }}</td>
                                             <td title="{{ $product->description }}">
                                                 {!! truncateCharacters($product->description, 500) !!}
                                             </td>
+
                                             <td>
                                                 <div class="d-flex">
                                                     <a class="btn delete-table me-2 edit-product" href="{{ route('products.show', $product->id) }}">

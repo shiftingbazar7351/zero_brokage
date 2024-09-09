@@ -72,6 +72,7 @@ class ProductController extends Controller
             'description' => $request->description,
         ]);
 
+        // return $product;
         // Redirect back with a success message
         return redirect()->route('products.index')->with('success', 'Product added successfully.');
     }
@@ -87,7 +88,7 @@ class ProductController extends Controller
      */
     public function show($id)
     {
-        $products = Product::findOrFail($id);
+        return $products = Product::with(['categoryName','subcategory'])->findOrFail($id);
         return view("backend.products.show",compact('products',));
     }
 

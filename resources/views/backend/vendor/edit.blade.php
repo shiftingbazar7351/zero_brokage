@@ -246,7 +246,7 @@
                             <div class="row mt-3">
                                 <div class="col-md-4 mb-3">
                                     <label for="formFile" class="form-label">Website (if available)</label>
-                                    <input name="website" value="{{ old('website') }}"
+                                    <input name="website" value="{{ old('website', $vendor->website ?? '') }}"
                                         class="form-control bg-light-subtle" type="text" placeholder="www.example.com"
                                         aria-label="default input example">
                                     @error('website')

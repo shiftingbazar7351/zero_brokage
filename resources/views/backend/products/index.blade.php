@@ -23,6 +23,7 @@
                             <thead class="thead-dark">
                                 <tr>
                                     <th>#</th>
+                                    <th>Name</th>
                                     <th>Description</th>
                                     <th>Action</th>
                                 </tr>
@@ -36,11 +37,17 @@
                                     @foreach ($products as $product)
                                         <tr class="text-wrap">
                                             <td>{{ $loop->iteration }}</td>
+                                            <td>{{ $product->name }}</td>
                                             <td title="{{ $product->description }}">
                                                 {!! truncateCharacters($product->description, 500) !!}
                                             </td>
+
                                             <td>
                                                 <div class="d-flex">
+                                                    <a class="btn delete-table me-2 edit-product" href="{{ route('products.show', $product->id) }}">
+                                                        <i class="fe fe-eye"></i>
+                                                    </a>
+
                                                     <a class="btn delete-table me-2 edit-product" href="{{ route('products.edit', $product->id) }}">
                                                         <i class="fe fe-edit"></i>
                                                     </a>
@@ -50,7 +57,7 @@
                                                         @csrf
                                                         @method('DELETE')
                                                         <button type="submit" class="btn delete-table"
-                                                            onclick="return confirm('Are you sure you want to delete this sub-category?');">
+                                                            onclick="return confirm('Are you sure you want to delete this product?');">
                                                             <i class="fe fe-trash-2"></i>
                                                         </button>
                                                     </form>

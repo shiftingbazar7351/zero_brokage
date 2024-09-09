@@ -3,9 +3,11 @@
 namespace App\Http\Controllers;
 use App\Models\Product;
 use App\Models\Category;
+use App\Models\SubCategory;
+use App\Models\SubMenu;
 use App\Models\Country;
-use Illuminate\Http\Request;
 use App\Models\State;
+use Illuminate\Http\Request;
 
 class ProductController extends Controller
 {
@@ -17,7 +19,7 @@ class ProductController extends Controller
     public function index()
     {
         $products = Product::get();
-        return view('backend.products.index',compact('products'));
+        return view('backend.products.index', compact('products'));
     }
 
     /**
@@ -30,7 +32,7 @@ class ProductController extends Controller
         $countryId = Country::where('name', 'India')->value('id');
         $states = State::where('country_id', $countryId)->get(['name', 'id']);
         $categories = Category::where('status', 1)->orderByDesc('created_at')->get();
-        return view('backend.products.create',compact('categories','states'));
+        return view('backend.products.create', compact('categories', 'states'));
     }
 
     /**
@@ -38,44 +40,45 @@ class ProductController extends Controller
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
-     */
+     */ 
     public function store(Request $request)
     {
-        // Validate the incoming request
-        $request->validate([
-            'category_id' => 'required|array',
-            'subcategory_id' => 'required|array',
-            'menu_id' => 'required|array',
-            'submenu_id' => 'required|array',
-            'state' => 'required|array',
-            'city' => 'required|array',
-            'gst' => 'required|array',
-            'hsn' => 'required|array',
+        // Validate the form input
+        $validated = $request->validate([
+            'category_id' => 'required',
+            'subcategory_id' => 'required',
+            'menu_id' => 'required',
+            'submenu_id' => 'required',
+            'state' => 'required',
+            'city' => 'required',
+            'gst' => 'required',
+            'hsn' => 'required',
             'name' => 'required|string|max:255',
             'price' => 'required|numeric',
             'description' => 'required|string',
         ]);
-    
-        // Create the product
+        // return $request->all();
         $product = Product::create([
+            'category_id' => json_encode($request->category_id), // Use json_encode if storing multiple IDs
+            'subcategory_id' => json_encode($request->subcategory_id),
+            'menu_id' => json_encode($request->menu_id),
+            'submenu_id' => json_encode($request->submenu_id),
+            'state' => json_encode($request->state),
+            'city' => json_encode($request->city),
+            'gst' => $request->gst,
+            'hsn' => $request->hsn,
             'name' => $request->name,
             'price' => $request->price,
             'description' => $request->description,
-            'created_by' => auth()->id(),
         ]);
-    
-        // Sync the relationships
-        $product->categories()->sync($request->category_id);
-        $product->subcategories()->sync($request->subcategory_id);
-        $product->menus()->sync($request->menu_id);
-        $product->submenus()->sync($request->submenu_id);
-        $product->states()->sync($request->state);
-        $product->cities()->sync($request->city);
-    
-        return redirect(route('products.index'))->with('success', 'Product added successfully');
+
+        // return $product;
+        // Redirect back with a success message
+        return redirect()->route('products.index')->with('success', 'Product added successfully.');
     }
-    
-    
+
+
+
 
     /**
      * Display the specified resource.
@@ -85,7 +88,8 @@ class ProductController extends Controller
      */
     public function show($id)
     {
-        //
+        return $products = Product::with(['categoryName','subcategory'])->findOrFail($id);
+        return view("backend.products.show",compact('products',));
     }
 
     /**
@@ -96,7 +100,15 @@ class ProductController extends Controller
      */
     public function edit($id)
     {
-        //
+        $countryId = Country::where('name', 'India')->value('id');
+        $states = State::where('country_id', $countryId)->get(['name', 'id']);
+        $categories = Category::where('status', 1)->orderByDesc('created_at')->get();
+
+        $subcategories = SubCategory::orderByDesc('created_at')->get();
+        $submenus = SubMenu::orderByDesc('created_at')->get();
+        $product = Product::findOrFail($id);
+        return view('backend.products.edit', compact('product', 'subcategories', 'submenus','categories','states'));
+
     }
 
     /**
@@ -108,8 +120,44 @@ class ProductController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        // Validate the form input
+        $validated = $request->validate([
+            // 'category_id' => 'required', // Uncomment if these fields need to be updated
+            // 'subcategory_id' => 'required',
+            // 'menu_id' => 'required',
+            // 'submenu_id' => 'required',
+            // 'state' => 'required',
+            // 'city' => 'required',
+            // 'gst' => 'required',
+            // 'hsn' => 'required',
+            'name' => 'required|string|max:255',
+            'price' => 'required|numeric',
+            'description' => 'required|string',
+        ]);
+    
+        // Find the existing product by ID
+        $product = Product::find($id);
+    
+        // Update the product with the validated data
+        $product->update([
+            'category_id' => json_encode($request->category_id), // Use json_encode if storing multiple IDs
+            'subcategory_id' => json_encode($request->subcategory_id),
+            'menu_id' => json_encode($request->menu_id),
+            'submenu_id' => json_encode($request->submenu_id),
+            'state' => json_encode($request->state),
+            'city' => json_encode($request->city),
+            'gst' => $request->gst,
+            'hsn' => $request->hsn,
+            'name' => $request->name,
+            'price' => $request->price,
+            'description' => $request->description,
+        ]);
+    
+        // Redirect back with a success message
+        // return redirect()->back()->with('success', 'Updated Successfully');
+        return redirect()->route('products.index')->with('success', 'Updated  Successfully.');
     }
+    
 
     /**
      * Remove the specified resource from storage.
@@ -119,6 +167,13 @@ class ProductController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $service = Product::find($id);
+
+        if ($service) {
+            $service->delete();
+            return redirect()->back()->with('success', 'Deleted Successfully');
+        } else {
+            return redirect()->back()->with('error', 'Product not found');
+        }
     }
 }

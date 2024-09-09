@@ -4,8 +4,8 @@ namespace App\Http\Controllers;
 use App\Models\Category;
 use App\Models\City;
 use App\Models\Country;
-use App\Models\Menu;
 use App\Models\State;
+use App\Models\Menu;
 use App\Models\SubCategory;
 use App\Models\SubMenu;
 use App\Models\Vendor;
@@ -166,8 +166,8 @@ class VendorController extends Controller
      */
     public function show($id)
     {
-        $vendors = Vendor::orderByDesc('created_at')->get();
-        return view("backend.vendor.show", compact('vendors', ));
+        $vendor = Vendor::findOrFail($id);
+        return view("backend.vendor.show", compact('vendor', ));
     }
 
     /**
@@ -324,14 +324,65 @@ class VendorController extends Controller
     }
 
 
-    public function fetchsubcategory($category_id = null)
+    public function fetchSubcategory(Request $request)
     {
-        $data = SubCategory::where('category_id', $category_id)->get();
+        $categoryIds = $request->category_ids;
+    
+        if (!empty($categoryIds)) {
+            // Fetch subcategories that belong to the selected categories
+            $subcategories = SubCategory::whereIn('category_id', $categoryIds)->get();
+    
+            return response()->json([
+                'status' => 1,
+                'data' => [
+                    'categories' => Category::whereIn('id', $categoryIds)->get(), // Return the selected categories
+                    'subcategories' => $subcategories,
+                ],
+            ]);
+        }
+    
         return response()->json([
-            'status' => 1,
-            'data' => $data,
+            'status' => 0,
+            'data' => [],
+            'message' => 'No categories selected',
         ]);
     }
+    
+    // Similarly for fetching menus and submenus
+    public function fetchSubMenu(Request $request)
+    {
+        $menuIds = $request->menu_ids;
+    
+        // Fetch menus based on the selected menu IDs
+        $menus = Menu::whereIn('id', $menuIds)->get();
+    
+        // Fetch submenus related to the selected menus
+        $submenus = SubMenu::whereIn('menu_id', $menuIds)->get();
+    
+        // Return response
+        if ($submenus->isEmpty()) {
+            return response()->json(['status' => 0, 'data' => ['menus' => $menus, 'submenus' => []]]);
+        }
+    
+        return response()->json(['status' => 1, 'data' => ['menus' => $menus, 'submenus' => $submenus]]);
+    }
+    
+
+        public function fetchMenu(Request $request)
+    {
+        $subcategoryIds = $request->subcategory_ids;
+
+        // Fetch menus based on the selected subcategory IDs
+        $menus = Menu::whereIn('subcategory_id', $subcategoryIds)->get();
+
+        if ($menus->isEmpty()) {
+            return response()->json(['status' => 0, 'data' => []]);
+        }
+
+        return response()->json(['status' => 1, 'data' => $menus]);
+    }
+
+    
 
     public function getMenus(Request $request, $subcategoryId)
     {

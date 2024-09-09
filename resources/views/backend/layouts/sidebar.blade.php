@@ -103,7 +103,7 @@
                     </a>
                 </li>
 
-                <li class="{{ Route::currentRouteName() === 'products.index' ? 'active' : '' }}">
+                <li class="{{ in_array(Route::currentRouteName(), ['products.index', 'products.create', 'products.edit']) ? 'active' : '' }}">
                     <a href="{{ route('products.index') }}">
                         <i class="fe fe-file-text"></i>
                         <span>Products</span>

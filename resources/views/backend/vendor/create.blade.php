@@ -745,40 +745,40 @@
             }
         });
 
-        function sendOtpIfValid(input) {
-            var phoneNumber = input.value;
-            if (phoneNumber.length === 10) {
-                // Clear any previous errors
-                document.getElementById('phoneError').textContent = '';
+            function sendOtpIfValid(input) {
+                var phoneNumber = input.value;
+                if (phoneNumber.length === 10) {
+                    // Clear any previous errors
+                    document.getElementById('phoneError').textContent = '';
 
-                // AJAX call to send OTP
-                $.ajax({
-                    url: '/vendor-send-otp',
-                    method: 'POST',
-                    data: {
-                        number: phoneNumber, // Changed to 'number'
-                        _token: '{{ csrf_token() }}'
-                    },
-                    success: function(response) {
-                        alert(response.message); // Notify OTP sent
-                        // alert(opt);
-                        document.getElementById('otpSection').style.display = 'block'; // Show OTP input
-                    },
-                    error: function(response) {
-                        if (response.responseJSON && response.responseJSON.errors && response.responseJSON
-                            .errors.number) {
-                            document.getElementById('phoneError').textContent = response.responseJSON.errors
-                                .number[0];
-                        } else {
-                            document.getElementById('phoneError').textContent =
-                                'An error occurred. Please try again.';
+                    // AJAX call to send OTP
+                    $.ajax({
+                        url: '/vendor-send-otp',
+                        method: 'POST',
+                        data: {
+                            number: phoneNumber, // Changed to 'number'
+                            _token: '{{ csrf_token() }}'
+                        },
+                        success: function(response) {
+                            toastr.success('OTP has been sent: ' + response.otp); // Notify OTP sent
+                            // alert(opt);
+                            document.getElementById('otpSection').style.display = 'block'; // Show OTP input
+                        },
+                        error: function(response) {
+                            if (response.responseJSON && response.responseJSON.errors && response.responseJSON
+                                .errors.number) {
+                                document.getElementById('phoneError').textContent = response.responseJSON.errors
+                                    .number[0];
+                            } else {
+                                document.getElementById('phoneError').textContent =
+                                    'An error occurred. Please try again.';
+                            }
                         }
-                    }
-                });
-            } else {
-                document.getElementById('phoneError').textContent = 'Please enter a valid 10-digit phone number.';
+                    });
+                } else {
+                    document.getElementById('phoneError').textContent = 'Please enter a valid 10-digit phone number.';
+                }
             }
-        }
 
         function verifyOtp() {
             var otp = document.getElementById('otp').value;

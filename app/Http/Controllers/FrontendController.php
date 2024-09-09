@@ -76,75 +76,90 @@ class FrontendController extends Controller
     }
 
     public function filterSubmenus(Request $request, $slug)
-{
-    $subcategory = SubCategory::where('slug', $slug)
-        ->select('id', 'slug', 'name', 'background_image')
-        ->first();
+    {
+        $subcategory = SubCategory::where('slug', $slug)
+            ->select('id', 'slug', 'name', 'background_image')
+            ->first();
 
-    if (!$subcategory) {
+        if (!$subcategory) {
+            return response()->json([
+                'error' => 'Subcategory not found'
+            ], 404);
+        }
+
+        $query = SubMenu::where('subcategory_id', $subcategory->id)->select(
+            // 'sub_menus.id as id',
+            'sub_menus.id as submenu_id',
+            'sub_menus.id',
+            'sub_menus.name',
+            'sub_menus.image',
+            'sub_menus.slug',
+            'sub_menus.total_price',
+            'sub_menus.discounted_price',
+            'sub_menus.discount',
+            'sub_menus.subcategory_id',
+            'sub_menus.menu_id',
+            'sub_menus.city_id',
+            'sub_menus.description',
+            'sub_menus.details'
+        );
+
+        // Keyword filter
+        if ($request->filled('keyword')) {
+            $query->where(function ($q) use ($request) {
+                $q->where('name', 'like', '%' . $request->keyword . '%')
+                    ->orWhere('discounted_price', 'like', '%' . $request->keyword . '%')
+                    ->orWhere('description', 'like', '%' . $request->keyword . '%')
+                    ->orWhere('total_price', 'like', '%' . $request->keyword . '%')
+                    ->orWhereHas('cityName', function ($q) use ($request) {
+                        $q->where('name', 'like', '%' . $request->keyword . '%');
+                    })
+                    ->orWhereHas('menu', function ($q) use ($request) {
+                        $q->where('name', 'like', '%' . $request->keyword . '%');
+                    });
+            });
+        }
+
+        // Location filter
+        if ($request->filled('location')) {
+            $query->whereHas('cityName', function ($q) use ($request) {
+                $q->where('name', 'like', '%' . $request->location . '%')
+                    ->orWhereHas('state', function ($stateQuery) use ($request) {
+                        $stateQuery->where('name', 'like', '%' . $request->location . '%');
+                    });
+            });
+        }
+
+        // Categories filter
+        if ($request->filled('categories')) {
+            $query->whereHas('menu', function ($q) use ($request) {
+                $q->whereIn('name', $request->categories);
+            });
+        }
+
+        // Experience filter (from Vendor table)
+        if ($request->filled('experience')) {
+            $experienceRange = explode('-', $request->experience); // For example, "1-5"
+            $minExperience = trim($experienceRange[0]);
+            $maxExperience = trim($experienceRange[1]);
+
+            $query->whereHas('vendors', function ($q) use ($minExperience, $maxExperience) {
+                $q->whereBetween('experience', [$minExperience, $maxExperience]);
+            });
+        }
+
+        // Execute the query and paginate results
+        $submenus = $query->paginate(10);
+
+        // Render views for response
+        $serviceListView = view('frontend.partials.service-list', compact('submenus'))->render();
+        $filterView = view('frontend.partials.service-list', compact('submenus'))->render(); // Updated filter
+
         return response()->json([
-            'error' => 'Subcategory not found'
-        ], 404);
+            'html' => $serviceListView,
+            'filterHtml' => $filterView,
+        ]);
     }
-
-    $query = SubMenu::where('subcategory_id', $subcategory->id);
-
-    // Keyword filter
-    if ($request->filled('keyword')) {
-        $query->where(function ($q) use ($request) {
-            $q->where('name', 'like', '%' . $request->keyword . '%')
-                ->orWhere('discounted_price', 'like', '%' . $request->keyword . '%')
-                ->orWhere('description', 'like', '%' . $request->keyword . '%')
-                ->orWhere('total_price', 'like', '%' . $request->keyword . '%')
-                ->orWhereHas('cityName', function ($q) use ($request) {
-                    $q->where('name', 'like', '%' . $request->keyword . '%');
-                })
-                ->orWhereHas('menu', function ($q) use ($request) {
-                    $q->where('name', 'like', '%' . $request->keyword . '%');
-                });
-        });
-    }
-
-    // Location filter
-    if ($request->filled('location')) {
-        $query->whereHas('cityName', function ($q) use ($request) {
-            $q->where('name', 'like', '%' . $request->location . '%')
-                ->orWhereHas('state', function ($stateQuery) use ($request) {
-                    $stateQuery->where('name', 'like', '%' . $request->location . '%');
-                });
-        });
-    }
-
-    // Categories filter
-    if ($request->filled('categories')) {
-        $query->whereHas('menu', function ($q) use ($request) {
-            $q->whereIn('name', $request->categories);
-        });
-    }
-
-    // Experience filter (from Vendor table)
-    if ($request->filled('experience')) {
-        $experienceRange = explode('-', $request->experience); // For example, "1-5"
-        $minExperience = trim($experienceRange[0]);
-        $maxExperience = trim($experienceRange[1]);
-
-        $query->whereHas('vendors', function ($q) use ($minExperience, $maxExperience) {
-            $q->whereBetween('experience', [$minExperience, $maxExperience]);
-        });
-    }
-
-    // Execute the query and paginate results
-    $submenus = $query->paginate(10);
-
-    // Render views for response
-    $serviceListView = view('frontend.partials.service-list', compact('submenus'))->render();
-    $filterView = view('frontend.partials.service-list', compact('submenus'))->render(); // Updated filter
-
-    return response()->json([
-        'html' => $serviceListView,
-        'filterHtml' => $filterView,
-    ]);
-}
 
 
     // public function filterSubmenus(Request $request,$slug)

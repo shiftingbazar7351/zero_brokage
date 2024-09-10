@@ -1,5 +1,5 @@
 $(document).ready(function() {
-    $('.status-toggle').on('change', function() {
+    $('.status-toggle').off('change').on('change', function() {
         const checkbox = $(this);
         const categoryId = checkbox.data('id');
         const status = checkbox.is(':checked') ? 1 : 0;

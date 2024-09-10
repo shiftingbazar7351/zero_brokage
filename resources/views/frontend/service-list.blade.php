@@ -74,6 +74,7 @@
         </div>
     </div>
     <div></div>
+    <input type="hidden" name="subcategory_slug" value="{{ $subcategory->slug }}">
 
     <div class="d-flex justify-content-center px-4 sticky-slider" style="background-color: rgb(239, 240, 241)">
         <div class="wrapper">
@@ -412,6 +413,7 @@
                 let location = $('#myInput').val();
                 let categories = [];
                 let experience = '';
+                let slug = '{{ $subcategory->slug }}';
 
                 // Get selected categories
                 $('.categoryCheckbox:checked').each(function() {
@@ -426,7 +428,7 @@
                 });
 
                 $.ajax({
-                    url: "{{ route('your.search.route') }}",
+                    url: "{{ url('filter-submenus') }}/" + slug,
                     method: 'GET',
                     data: {
                         keyword: keyword,

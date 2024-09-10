@@ -13,16 +13,18 @@ use App\Http\Controllers\MetaTitleController;
 use App\Http\Controllers\MetaUrlController;
 use App\Http\Controllers\NewsletterController;
 use App\Http\Controllers\OTPController;
+use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ReviewController;
 use App\Http\Controllers\ServiceDetailController;
-use App\Http\Controllers\ProductController;
 use App\Http\Controllers\SubCategoryController;
 use App\Http\Controllers\SubMenuController;
+use App\Http\Controllers\TransactionController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\VendorController;
 use App\Http\Controllers\VerifiedController;
 use Illuminate\Support\Facades\Route;
+
 
 
 
@@ -101,7 +103,7 @@ Route::controller(FrontendController::class)->group(function () {
     Route::post('/user/review/store', 'reviewStore')->name('reviewstore');
     Route::get('/get-menus/{subcategory_id}', 'getMenus')->name('get.menus');
     Route::get('/search-filter', 'search')->name('search.filter');
-    Route::get('/filter-submenus', 'filterSubmenus')->name('your.search.route');
+    Route::get('/filter-submenus/{slug}', 'filterSubmenus')->name('filter.submenu');
     Route::post('/enquiry-verify-otp', 'verifyOtp')->name('enquiry.verify.otp');
     Route::get('/fetch-city-data','fetchDataOfProvider')->name('fetchDataOfProvider');
 
@@ -176,8 +178,8 @@ Route::middleware(['auth', 'check.ip'])->group(function () {
     Route::controller(VendorController::class)->group(function () {
         Route::post('/fetch-city-vendor/{stateId}', 'fetchCity');
         Route::post('/product-fetch-subcategory', 'fetchSubcategory')->name('fetch.subcategory');
-        Route::post('/product-fetch-menu', 'fetchMenu')->name('fetch.menu');    
-        Route::post('/product-fetch-submenu', 'fetchSubmenu')->name('fetch.submenu');     
+        Route::post('/product-fetch-menu', 'fetchMenu')->name('fetch.menu');
+        Route::post('/product-fetch-submenu', 'fetchSubmenu')->name('fetch.submenu');
         // Route::post('/getMenus/{subcategoryId}', 'getMenus');
         Route::post('/getsubMenus/{menuId}', 'getsubMenus');
         Route::post('/vendor-send-otp', 'sendOtp')->name('vendor.send.otp');
@@ -193,8 +195,8 @@ Route::middleware(['auth', 'check.ip'])->group(function () {
     Route::post('/faq-status', [FaqController::class, 'faqStatus'])->name('faq.status');
     Route::resource('/india-services', IndiaServiceController::class);
     Route::resource('/newsletter', NewsletterController::class);
-
+    Route::resource('/transaction', TransactionController::class);
+    Route::post('/transaction-status', [TransactionController::class, 'transactionStatus'])->name('transaction.status');
 });
-
 
 require __DIR__ . '/auth.php';

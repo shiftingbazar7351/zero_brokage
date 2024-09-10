@@ -280,10 +280,10 @@
                                 <div class="col-md-3">
                                     <label for="formFile" class="form-label">DOB<b
                                             style="color: red;">*</b></label>
-                                    <input name="" value="{{ old('owner_name', $vendor->owner_name ?? '') }}"
+                                    <input name="dob" value="{{ old('dob', $vendor->dob ?? '') }}"
                                         class="form-control bg-light-subtle" type="date"
-                                        placeholder="Enter owner name" aria-label="default input example" required>
-                                    @error('owner_name')
+                                        placeholder="Enter DOB" aria-label="default input example" required>
+                                    @error('dob')
                                         <div class="error text-danger ">{{ $message }}</div>
                                     @enderror
                                 </div>
@@ -305,7 +305,7 @@
                                                 @endif
                                             </span>
                                     <input name="logo" value="{{ old('logo', $vendor->logo ?? '') }}"
-                                        class="form-control bg-light-subtle" type="file" id="formFile"
+                                        class="form-control bg-light-subtle" type="file" 
                                         title="{{ asset('storage/vendor/vendor_image/' . $vendor->vendor_image ?? '') }}"
                                         required>
                                     @error('logo')
@@ -476,7 +476,7 @@
                                         @endif
                                     </span>
 
-                                    <input name="visiting_card" class="form-control bg-light-subtle" type="file"
+                                    <input name="visiting_card"  value="{{ old('visiting_card', $vendor->visiting_card ?? '') }}" class="form-control bg-light-subtle" type="file"
                                         id="formFile">
                                     @error('visiting_card')
                                         <div class="error text-danger">{{ $message }}</div>

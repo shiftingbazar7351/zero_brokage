@@ -289,13 +289,13 @@
                         </div>
 
                         <div class="col-md-4 mb-3">
-                            <label for="otp" class="form-label">OTP<b style="color: red;">*</b></label>
-                            <input name="otp" value="{{ old('otp') }}" class="form-control bg-light-subtle" type="text"
+                            <label for="otp" class="form-label">DOB<b style="color: red;">*</b></label>
+                            <input name="dob" value="" class="form-control bg-light-subtle" type="date"
                                 id="otp" placeholder="Enter valid OTP" required>
-                            <div id="otpError" class="text-danger"></div>
+                            {{-- <div id="otpError" class="text-danger"></div>
                             @error('otp')
                             <div class="error text-danger ">{{ $message }}</div>
-                            @enderror
+                            @enderror --}}
                         </div>
 
                     </div>

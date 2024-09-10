@@ -243,8 +243,8 @@
                                 </div>
                             </div>
 
-                            <div class="row mt-3">
-                                <div class="col-md-4 mb-3">
+                            <div class="row mt-4">
+                                <div class="col-md-3 mb-3">
                                     <label for="formFile" class="form-label">Website (if available)</label>
                                     <input name="website" value="{{ old('website', $vendor->website ?? '') }}"
                                         class="form-control bg-light-subtle" type="text" placeholder="www.example.com"
@@ -253,7 +253,7 @@
                                         <div class="error text-danger ">{{ $message }}</div>
                                     @enderror
                                 </div>
-                                <div class="col-md-4 mb-3">
+                                <div class="col-md-3 mb-3">
                                     <label for="formFile" class="form-label">Verified or Approved By Team</label>
                                     <select name="verified" class="form-select bg-light-subtle"
                                         aria-label="Default select example" style="box-shadow: none;font-size:1.4rem">
@@ -267,7 +267,7 @@
                                     @enderror
                                 </div>
 
-                                <div class="col-md-4">
+                                <div class="col-md-3">
                                     <label for="formFile" class="form-label">Owner name<b
                                             style="color: red;">*</b></label>
                                     <input name="owner_name" value="{{ old('owner_name', $vendor->owner_name ?? '') }}"
@@ -277,6 +277,17 @@
                                         <div class="error text-danger ">{{ $message }}</div>
                                     @enderror
                                 </div>
+                                <div class="col-md-3">
+                                    <label for="formFile" class="form-label">DOB<b
+                                            style="color: red;">*</b></label>
+                                    <input name="" value="{{ old('owner_name', $vendor->owner_name ?? '') }}"
+                                        class="form-control bg-light-subtle" type="date"
+                                        placeholder="Enter owner name" aria-label="default input example" required>
+                                    @error('owner_name')
+                                        <div class="error text-danger ">{{ $message }}</div>
+                                    @enderror
+                                </div>
+
 
                             </div>
 
@@ -301,7 +312,7 @@
                                         <div class="error text-danger ">{{ $message }}</div>
                                     @enderror
                                 </div>
-                                
+
                                 <div class="col-md-6 mb-3">
                                     <label for="formFile" class="form-label">Vender Image<b
                                             style="color: red;">*</b></label>

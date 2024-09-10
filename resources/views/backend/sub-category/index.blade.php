@@ -238,7 +238,7 @@
                                 <div class="form-uploads-path">
                                     <img id="edit-image-preview-icon"
                                         src="{{ asset('admin/assets/img/icons/upload.svg') }}" alt="img"
-                                        class="default-img">
+                                        class="default-img prev">
                                     <div class="file-browse">
                                         <h6>Drag & drop image or </h6>
                                         <div class="file-browse-path">
@@ -259,7 +259,7 @@
                                 <div class="form-uploads-path">
                                     <img id="edit-image-preview-bg"
                                         src="{{ asset('admin/assets/img/icons/upload.svg') }}" alt="img"
-                                        class="default-img">
+                                        class="default-img prev">
                                     <div class="file-browse">
                                         <h6>Drag & drop image or </h6>
                                         <div class="file-browse-path">
@@ -273,33 +273,7 @@
                             </div>
                             <div id="background_image_error_edit" class="text-danger"></div>
                         </div>
-                        <script>
-                            // Function to preview the image
-                            function previewImage(input, previewId) {
-                                var file = input.files[0];
-                                if (file) {
-                                    var reader = new FileReader();
-                                    reader.onload = function(e) {
-                                        $('#' + previewId).attr('src', e.target.result)
-                                            .css({
-                                                'width': '150px',
-                                                'height': '150px'
-                                            }); // Set the preview image size to 50px
-                                    };
-                                    reader.readAsDataURL(file);
-                                }
-                            }
 
-                            // Event listener for icon image preview
-                            $('#edit-image-input-icon').on('change', function() {
-                                previewImage(this, 'edit-image-preview-icon');
-                            });
-
-                            // Event listener for background image preview
-                            $('#edit-image-input-bg').on('change', function() {
-                                previewImage(this, 'edit-image-preview-bg');
-                            });
-                        </script>
                         <div class="text-end">
                             <button type="button" class="btn btn-secondary me-2" data-bs-dismiss="modal">Cancel</button>
                             <button type="submit" class="btn btn-primary">Update</button>
@@ -318,6 +292,33 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="{{ asset('admin/assets/js/status-update.js') }}"></script>
     <script src="{{ asset('admin/assets/js/preview-img.js') }}"></script>
+    <script>
+        // Function to preview the image
+        function previewImage(input, previewId) {
+            var file = input.files[0];
+            if (file) {
+                var reader = new FileReader();
+                reader.onload = function(e) {
+                    $('#' + previewId).attr('src', e.target.result)
+                        .css({
+                            'width': '150px',
+                            'height': '150px'
+                        }); // Set the preview image size to 50px
+                };
+                reader.readAsDataURL(file);
+            }
+        }
+
+        // Event listener for icon image preview
+        $('#edit-image-input-icon').on('change', function() {
+            previewImage(this, 'edit-image-preview-icon');
+        });
+
+        // Event listener for background image preview
+        $('#edit-image-input-bg').on('change', function() {
+            previewImage(this, 'edit-image-preview-bg');
+        });
+    </script>
     <script>
         $(document).ready(function() {
             $('#addSubCategoryForm').off('submit').on('submit', function(e) {

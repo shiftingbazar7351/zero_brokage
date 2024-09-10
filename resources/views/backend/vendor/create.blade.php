@@ -652,7 +652,7 @@
         var categoryId = $(this).val();
         if (categoryId) {
             $.ajax({
-                url: '/fetch-subcategory/' + categoryId,
+                url: '/product-fetch-subcategory/' + categoryId,
                 type: 'POST',
                 data: {
                     _token: '{{ csrf_token() }}'

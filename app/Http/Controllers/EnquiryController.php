@@ -21,7 +21,7 @@ class EnquiryController extends Controller
         $categories = Category::orderByDesc('created_at')->get();
         $menus = Menu::orderByDesc('created_at')->get();
         $submenus = SubMenu::orderByDesc('created_at')->get();
-        $enquiries = Enquiry::with('subcategory.categoryName')->orderByDesc('created_at')->get();
+        $enquiries = Enquiry::with('subcategory.categoryName')->orderByDesc('created_at')->paginate(10);
         return view('backend.enquiry.index', compact('enquiries', 'subcategories', 'categories','menus','submenus'));
     }
 

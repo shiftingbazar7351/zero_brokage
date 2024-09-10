@@ -155,5 +155,6 @@ class SubCategoryController extends Controller
         }
         return response()->json(['success' => false, 'message' => 'Item not found.']);
     }
+    
 
 }

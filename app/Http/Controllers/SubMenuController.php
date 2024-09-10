@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use Illuminate\Validation\Rule;
 use App\Models\Category;
 use App\Models\City;
 use App\Models\Country;
@@ -58,7 +58,7 @@ class SubMenuController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'name' => 'required|unique:sub_menus,name',
+            'name' => 'required|unique:sub_menus|max:255',
             'category' => 'required',
             'subcategory_id' => 'required',
             'menu' => 'required',
@@ -68,7 +68,7 @@ class SubMenuController extends Controller
             'discount' => 'required|numeric',
             'details' => 'required',
             'description' => 'required',
-            'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'image' => 'required|image|max:2048',
         ]);
 
 
@@ -136,10 +136,14 @@ class SubMenuController extends Controller
 
         // Validate the input data
         $request->validate([
-            'name' => 'required',
+            'name' => [
+                'required',
+                'max:255',
+                Rule::unique('sub_menus')->ignore($sub_menu->id)
+            ],
             'total_price' => 'required|numeric',
             'discount' => 'required|numeric',
-            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'image' => 'nullable|image|max:2048',
         ]);
 
         // Calculate final price with discount

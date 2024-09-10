@@ -151,7 +151,7 @@
                                         <h6>Drag & drop image or </h6>
                                         <div class="file-browse-path">
                                             <input type="file" name="icon" id="image-input-icon"
-                                                accept="image/jpeg, image/png">
+                                                accept="image/*">
                                             <a href="javascript:void(0);"> Browse</a>
                                         </div>
                                     </div>
@@ -171,7 +171,7 @@
                                         <h6>Drag & drop image or </h6>
                                         <div class="file-browse-path">
                                             <input type="file" name="background_image" id="image-input-bg"
-                                                accept="image/jpeg, image/png">
+                                                accept="image/*">
                                             <a href="javascript:void(0);"> Browse</a>
                                         </div>
                                     </div>
@@ -243,7 +243,7 @@
                                         <h6>Drag & drop image or </h6>
                                         <div class="file-browse-path">
                                             <input type="file" name="icon" id="edit-image-input-icon"
-                                                accept="image/jpeg, image/png">
+                                                accept="image/*">
                                             <a href="javascript:void(0);"> Browse</a>
                                         </div>
                                     </div>
@@ -264,7 +264,7 @@
                                         <h6>Drag & drop image or </h6>
                                         <div class="file-browse-path">
                                             <input type="file" name="background_image" id="edit-image-input-bg"
-                                                accept="image/jpeg, image/png">
+                                                accept="image/*">
                                             <a href="javascript:void(0);"> Browse</a>
                                         </div>
                                     </div>

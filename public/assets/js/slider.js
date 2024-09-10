@@ -24,8 +24,8 @@
 
 document.addEventListener("DOMContentLoaded", function() {
     const carousel = document.querySelector(".carousel");
-    const arrowBtns = document.querySelectorAll(".wrapper i");
-    const wrapper = document.querySelector(".wrapper");
+    const arrowBtns = document.querySelectorAll(".wrapper-slider i");
+    const wrapperr = document.querySelector(".wrapper-slider");
 
     const firstCard = carousel.querySelector(".card");
     const firstCardWidth = firstCard.offsetWidth;
@@ -89,7 +89,7 @@ document.addEventListener("DOMContentLoaded", function() {
     carousel.addEventListener("mousedown", dragStart);
     carousel.addEventListener("mousemove", dragging);
     document.addEventListener("mouseup", dragStop);
-    wrapper.addEventListener("mouseenter", () =>
+    wrapperr.addEventListener("mouseenter", () =>
         clearTimeout(timeoutId));
     // wrapper.addEventListener("mouseleave", autoPlay);
 

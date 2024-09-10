@@ -151,7 +151,7 @@
     <div class="d-flex justify-content-center px-4 sticky-slider" style="background-color: rgb(239, 240, 241)">
         <div class="wrapper-slider">
             <i id="left" class="fa-solid fas fa-angle-left"></i>
-            <ul class="carousel" style="justify-content: center">
+            <ul class="carousell" style="justify-content: center">
                 @foreach ($menus as $menu)
                     <input type="hidden" name="menu_id" value="{{ $menu->id }}">
                     <li class="card">
@@ -221,11 +221,39 @@
             </div>
         </div>
     </div>
+
+
 @endsection
 @section('scripts')
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>
     <script src="{{ asset('assets/js/booking_infoPopup.js') }}"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/intlTelInput.min.js"></script>
+
+
+ {{-- ...........................OTP automatic go to next input fields (start)........................... --}}
+    <script>
+        const otpInputs = document.querySelectorAll('.input-div input'); // Select input inside input-div
+
+        otpInputs.forEach((input, index) => {
+            input.addEventListener('input', () => {
+                if (input.value.length === 1) {
+                    // Move to the next input field if it exists
+                    if (index < otpInputs.length - 1) {
+                        otpInputs[index + 1].focus();
+                    }
+                }
+            });
+
+            input.addEventListener('keydown', (e) => {
+                // Handle the backspace key to move to the previous input
+                if (e.key === 'Backspace' && input.value.length === 0 && index > 0) {
+                    otpInputs[index - 1].focus();
+                }
+            });
+        });
+    </script>
+    {{-- ...........................OTP automatic go to next input fields (end)........................... --}}
+
 
 
     <script>

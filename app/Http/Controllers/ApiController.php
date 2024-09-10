@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Menu;
 use App\Models\SubCategory;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Log;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Log;
 
 class ApiController extends Controller
 {
@@ -48,5 +49,38 @@ class ApiController extends Controller
             ], Response::HTTP_INTERNAL_SERVER_ERROR);
         }
 
+    }
+
+    public function menuList()
+    {
+        try {
+            $menus = Menu::where('status', 1)
+                ->get();
+
+            // Check if menus are found
+            if ($menus->isEmpty()) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'No menus found.',
+                    'data' => []
+                ]);
+            }
+
+            return response()->json([
+                'success' => true,
+                'message' => 'menus retrieved successfully.',
+                'data' => $menus
+            ]);
+
+        } catch (\Exception $e) {
+            // Log the exception for debugging
+            Log::error('Error retrieving menus: ' . $e->getMessage());
+
+            return response()->json([
+                'success' => false,
+                'message' => 'An error occurred while retrieving menus.',
+                'error' => $e->getMessage()
+            ]);
+        }
     }
 }

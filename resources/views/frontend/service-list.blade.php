@@ -1,5 +1,8 @@
 @extends('frontend.layouts.main')
 @section('styles')
+<link href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" rel="stylesheet"/>
+
+
     <style>
         /* The search field */
         #myInput {
@@ -50,7 +53,7 @@
 @endsection
 @section('content')
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/css/intlTelInput.min.css">
-    <div class="breadcrumb-bar">
+    {{-- <div class="breadcrumb-bar">
         <div class="container">
             <div class="row">
                 <div class="col-md-12 col-12 text-start">
@@ -72,12 +75,72 @@
 
             </div>
         </div>
-    </div>
-    <div></div>
-    <input type="hidden" name="subcategory_slug" value="{{ $subcategory->slug }}">
+    </div> --}}
+
+    <div class="wrapper">
+        <div id="carousel-slider" class="carousel slide carousel-fade" data-ride="carousel" data-interval="2000">
+            <!--Indicators-->
+            <ol class="carousel-indicators">
+              <li data-target="#carousel-slider" data-slide-to="0" class="active"></li>
+              <li data-target="#carousel-slider" data-slide-to="1"></li>
+              <li data-target="#carousel-slider" data-slide-to="2"></li>
+              <li data-target="#carousel-slider" data-slide-to="3"></li>
+              <li data-target="#carousel-slider" data-slide-to="4"></li>
+              <li data-target="#carousel-slider" data-slide-to="5"></li>
+              <li data-target="#carousel-slider" data-slide-to="6"></li>
+              <li data-target="#carousel-slider" data-slide-to="7"></li>
+              <li data-target="#carousel-slider" data-slide-to="8"></li>
+            </ol>
+            <!--Indicators-->
+            <!--Slides-->
+            <div class="carousel-inner" role="listbox">
+              <!--First slide-->
+              <div class="carousel-item active">
+                <img class="" src="{{ asset('assets/img/banner/1.png') }}" style="width: 100%; height:50vh" alt="First slide">
+              </div>
+              <!--/First slide-->
+              <!--Second slide-->
+              <div class="carousel-item">
+                  <img class="" src="{{ asset('assets/img/banner/4.png') }}" style="width: 100%; height:50vh;" alt="First slide">
+              </div>
+              <!--/Second slide-->
+              <!--Third slide-->
+              <div class="carousel-item">
+                <img class="" src="{{ asset('assets/img/banner/5.png') }}" style="width: 100%; height:50vh" alt="Third slide">
+              </div>
+              <div class="carousel-item">
+                <img class="" src="{{ asset('assets/img/banner/8.png') }}" style="width: 100%; height:50vh" alt="Third slide">
+              </div>
+              <div class="carousel-item">
+                <img class="" src="{{ asset('assets/img/banner/9.png') }}" style="width: 100%; height:50vh" alt="Third slide">
+              </div>
+              <div class="carousel-item">
+                <img class="" src="{{ asset('assets/img/banner/12.png') }}" style="width: 100%; height:50vh" alt="Third slide">
+              </div>
+              <div class="carousel-item">
+                <img class="" src="{{ asset('assets/img/banner/13.png') }}" style="width: 100%; height:50vh" alt="Third slide">
+              </div>
+              <div class="carousel-item">
+                <img class="" src="{{ asset('assets/img/banner/15.png') }}" style="width: 100%; height:50vh" alt="Third slide">
+              </div>
+              <div class="carousel-item">
+                <img class="" src="{{ asset('assets/img/banner/17.png') }}" style="width: 100%; height:50vh" alt="Third slide">
+              </div>
+              <!--/Third slide-->
+              <a class="carousel-control-prev" href="#carousel-slider" role="button" data-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true" style="background-color: black"></span>
+                <span class="sr-only" >Previous</span>
+              </a>
+              <a class="carousel-control-next" href="#carousel-slider" role="button" data-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true" style="background-color: black"></span>
+                <span class="sr-only">Next</span>
+              </a>
+            </div>
+          </div>
+      </div>
 
     <div class="d-flex justify-content-center px-4 sticky-slider" style="background-color: rgb(239, 240, 241)">
-        <div class="wrapper">
+        <div class="wrapper-slider">
             <i id="left" class="fa-solid fas fa-angle-left"></i>
             <ul class="carousel" style="justify-content: center">
                 @foreach ($menus as $menu)
@@ -86,7 +149,7 @@
                         <div class="img">
                             <img src="{{ Storage::url('menu/' . $menu->image ?? '') }}" alt="" draggable="false" />
                         </div>
-                        <h5 style="font-weight: bold;text-align:center" class="pt-1">{{ $menu->name ?? '' }}</h5>
+                        <h5 style="font-weight: bold;text-align:center; font-size:16px" class="pt-1">{{ $menu->name ?? '' }}</h5>
                     </li>
                 @endforeach
             </ul>
@@ -149,7 +212,7 @@
     </div>
 @endsection
 @section('scripts')
-
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>
     <script src="{{ asset('assets/js/booking_infoPopup.js') }}"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/intlTelInput.min.js"></script>
 

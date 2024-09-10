@@ -2,10 +2,10 @@
     <div class="sidebar-header">
         <div class="sidebar-logo">
             <a href="#">
-                <img src="{{ asset('admin/assets/img/logo.svg') }}" class="img-fluid logo" alt="Logo">
+                <img src="{{asset('assets/img/logofinal.webp')}}" class="img-fluid logo rounded" alt="Logo" style="background-color: white">
             </a>
             <a href="#">
-                <img src="{{ asset('admin/assets/img/logo-small.svg') }}" class="img-fluid logo-small" alt="Logo">
+                <img src="{{asset('assets/img/logofinal.webp')}}" class="img-fluid logo-small" alt="Logo">
             </a>
         </div>
 

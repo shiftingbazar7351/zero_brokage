@@ -209,15 +209,16 @@ class SubMenuController extends Controller
             return redirect()->back()->with('error', 'Something went wrong');
         }
     }
-    public function fetchsubcategory(Request $request)
+    public function fetchsubcategory($id = null)
     {
-        $categoryIds = $request->category_ids; // Receive array of category IDs
-        $data = SubCategory::whereIn('category_id', $categoryIds)->get(); // Fetch subcategories for multiple categories
+        $data = SubCategory::where('category_id', $id)->get();
         return response()->json([
             'status' => 1,
             'data' => $data,
         ]);
+ 
     }
+ 
 
 
     public function fetchmenu($menu_id = null)

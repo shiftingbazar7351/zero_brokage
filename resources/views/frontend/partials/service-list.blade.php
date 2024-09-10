@@ -11,7 +11,7 @@
                 </div>
                 <div class="service-cont-info">
                     <span class="item-cat">{{ ucwords($menu->menu->name) ?? '' }}</span>
-                    <h5 class="title"><a href="service-details.html">{{ $menu->name ?? '' }}</a></h5>
+                    <h5 class="title"><a>{{ $menu->name ?? '' }}</a></h5>
                     <p>{!! Str::limit($menu->description, 150, '') ?? '' !!}</p>
                     <a href="#" class="text-primary text-decoration-underline" data-bs-toggle="modal"
                         data-bs-target="#modal-{{ $menu->id }}">View

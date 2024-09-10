@@ -14,12 +14,12 @@
                     </div>
                     <ul>
                         <li>
-                            @if ($metas->isEmpty())
+                            {{-- @if ($metas->isEmpty()) --}}
                                 <button class="btn btn-primary" type="button" data-bs-toggle="modal"
                                     data-bs-target="#add-meta">
                                     <i class="fa fa-plus me-2"></i>Add Meta
                                 </button>
-                            @endif
+                            {{-- @endif --}}
                         </li>
                     </ul>
                 </div>

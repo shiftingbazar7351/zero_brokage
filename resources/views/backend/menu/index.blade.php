@@ -73,7 +73,7 @@
                                                     style="display:inline;">
                                                     @csrf
                                                     @method('DELETE')
-                                                    <button class="btn delete-table" type="subm it"
+                                                    <button class="btn delete-table" type="submit"
                                                         onclick="return confirm('Are you sure want to delete this?')">
                                                         <i class="fe fe-trash-2"></i>
                                                     </button>
@@ -140,7 +140,7 @@
                                         <h6>Drag & drop image or </h6>
                                         <div class="file-browse-path">
                                             <input type="file" name="image" id="image-input-icon"
-                                                accept="image/jpeg, image/png">
+                                                accept="image/*">
                                             <a href="javascript:void(0);"> Browse</a>
                                         </div>
                                     </div>
@@ -209,7 +209,7 @@
                                         <h6>Drag & drop image or </h6>
                                         <div class="file-browse-path">
                                             <input type="file" id="edit-image-input-bg" name="image"
-                                                accept="image/jpeg, image/png">
+                                                accept="image/*">
                                             <a href="javascript:void(0);"> Browse</a>
                                         </div>
                                     </div>

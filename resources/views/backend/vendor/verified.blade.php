@@ -125,7 +125,7 @@
                                         <h6>Drag & drop image or </h6>
                                         <div class="file-browse-path">
                                             <input type="file" id="image-input-icon" name="image"
-                                                accept="image/jpeg, image/png">
+                                                accept="image/*">
                                             <a href="javascript:void(0);"> Browse</a>
                                         </div>
                                     </div>
@@ -177,7 +177,7 @@
                                         <h6>Drag & drop image or </h6>
                                         <div class="file-browse-path">
                                             <input type="file" id="editImage" name="image"
-                                                accept="image/jpeg, image/png">
+                                                accept="image/*">
                                             <a href="javascript:void(0);"> Browse</a>
                                         </div>
                                     </div>

@@ -10,7 +10,7 @@ class MetaUrlController extends Controller
 {
     public function index()
     {
-        $metas = MetaUrl::all();
+        $metas = MetaUrl::paginate(10);
         return view('backend.meta.index', compact('metas'));
     }
 

@@ -13,14 +13,14 @@ class VerifiedController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-
+    protected $fileUploadService;
      public function __construct(FileUploadService $fileUploadService)
      {
          $this->fileUploadService = $fileUploadService;
      }
     public function index()
     {
-        $verifieds = Verified::orderByDesc('created_at')->get();
+        $verifieds = Verified::orderByDesc('created_at')->paginate(10);
         return view("backend.vendor.verified", compact("verifieds"));
     }
 

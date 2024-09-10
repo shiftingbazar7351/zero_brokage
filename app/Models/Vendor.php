@@ -22,6 +22,7 @@ class Vendor extends Model
         'pincode',
         'address',
         'otp',
+        'dob',
         'experience',
         'email',
         'whatsapp',

@@ -14,7 +14,7 @@ class ReviewController extends Controller
      */
     public function index()
     {
-        $reviews = Review::orderByDesc('created_at')->get();
+        $reviews = Review::orderByDesc('created_at')->pagnate(10);
         return view('backend.review.index',compact('reviews'));
     }
 
@@ -77,7 +77,7 @@ class ReviewController extends Controller
             'description' => 'required',
             'profession' => 'required',
         ]);
-    
+
         $review = Review::findOrFail($id);
 
         // Update the FAQ with the new data

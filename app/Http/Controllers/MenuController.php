@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use Illuminate\Validation\Rule;
 use App\Models\Menu;
 use App\Models\SubCategory;
 use App\Models\Category;
@@ -25,8 +25,8 @@ class MenuController extends Controller
     {
         $subcategories = SubCategory::orderByDesc('created_at')->get();
         $categories = Category::orderByDesc('created_at')->get();
-        $menusCat = Menu::orderByDesc('created_at')->get();
-        return view('backend.menu.index',compact('subcategories','categories','menusCat'));
+        $menusCat = Menu::orderByDesc('created_at')->paginate(10);
+        return view('backend.menu.index', compact('subcategories', 'categories', 'menusCat'));
     }
 
     /**
@@ -36,28 +36,28 @@ class MenuController extends Controller
     {
         // Validate and store the new menu category
         $request->validate([
-            'name' => 'required',
+            'name' => 'required|unique:menus|max:255',
             'category_id' => 'required',
             'subcategory' => 'required',
-            'image' => 'required|image|mimes:jpeg,png|max:2048',
+            'image' => 'required|image|max:2024',
         ]);
-    
-            $menu = new Menu();
-            $menu->name = $request->name;
-            $menu->subcategory_id = $request->subcategory;
-            $menu->category_id = $request->category_id;
-            $menu->slug = $this->generateSlug($request->name);
-    
-            if ($request->hasFile('image')) {
-                $filename = $this->fileUploadService->uploadImage('menu/', $request->file('image'));
-                $menu->image = $filename;
-            }
-    
-            $menu->save();
-    
-            return response()->json(['success' => true, 'message' => 'Menu added successfully!']);      
+
+        $menu = new Menu();
+        $menu->name = $request->name;
+        $menu->subcategory_id = $request->subcategory;
+        $menu->category_id = $request->category_id;
+        $menu->slug = $this->generateSlug($request->name);
+
+        if ($request->hasFile('image')) {
+            $filename = $this->fileUploadService->uploadImage('menu/', $request->file('image'));
+            $menu->image = $filename;
+        }
+
+        $menu->save();
+
+        return response()->json(['success' => true, 'message' => 'Menu added successfully!']);
     }
-    
+
 
     protected function generateSlug($name)
     {
@@ -74,42 +74,47 @@ class MenuController extends Controller
     public function update(Request $request, Menu $menu)
     {
         $request->validate([
-            'name' => 'required',
+            // 'name' => 'required',
+            'name' => [
+                'required',
+                'max:255',
+                Rule::unique('menus')->ignore($menu->id)
+            ],
             'category_id' => 'required',
             'subcategory' => 'required|integer|exists:menus,subcategory_id',
-            'image' => 'nullable|image|mimes:jpeg,png|max:2048',
+            'image' => 'nullable|image|max:2024',
         ]);
-    
-    
-            $menu->name = $request->name;
-            $menu->subcategory_id = $request->subcategory;
-            $menu->slug = $this->generateSlug($request->name);
-    
-            if ($request->hasFile('image')) {
-                $filename = $this->fileUploadService->uploadImage('menu/', $request->file('image'));
-                $menu->image = $filename;
-            }
-    
-            $menu->save();
-    
-            return response()->json(['success' => true, 'message' => 'Menu updated successfully!']);
-        
+
+
+        $menu->name = $request->name;
+        $menu->subcategory_id = $request->subcategory;
+        $menu->slug = $this->generateSlug($request->name);
+
+        if ($request->hasFile('image')) {
+            $filename = $this->fileUploadService->uploadImage('menu/', $request->file('image'));
+            $menu->image = $filename;
         }
-    
-    
+
+        $menu->save();
+
+        return response()->json(['success' => true, 'message' => 'Menu updated successfully!']);
+
+    }
+
+
     public function destroy($id)
     {
         try {
-        $menu = Menu::findOrFail($id);
+            $menu = Menu::findOrFail($id);
 
-        $img = $menu->image;
-        $menu->forceDelete();
-        if ($img) {
-        $this->fileUploadService->removeImage('menu/', $img);
-        }
+            $img = $menu->image;
+            $menu->forceDelete();
+            if ($img) {
+                $this->fileUploadService->removeImage('menu/', $img);
+            }
 
-        $menu->delete();
-        return redirect()->back()->with('success', 'Menu Deleted.');
+            $menu->delete();
+            return redirect()->back()->with('success', 'Menu Deleted.');
 
         } catch (Exception $e) {
             return redirect()->back()->with('error', 'Something went wrong');
@@ -117,7 +122,7 @@ class MenuController extends Controller
     }
 
 
-  
+
 
 
     public function menuStatus(Request $request)

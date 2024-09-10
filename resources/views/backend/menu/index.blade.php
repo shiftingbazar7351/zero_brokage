@@ -73,7 +73,7 @@
                                                     style="display:inline;">
                                                     @csrf
                                                     @method('DELETE')
-                                                    <button class="btn delete-table" type="subm it"
+                                                    <button class="btn delete-table" type="submit"
                                                         onclick="return confirm('Are you sure want to delete this?')">
                                                         <i class="fe fe-trash-2"></i>
                                                     </button>

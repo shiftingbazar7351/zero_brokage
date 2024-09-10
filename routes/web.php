@@ -13,16 +13,18 @@ use App\Http\Controllers\MetaTitleController;
 use App\Http\Controllers\MetaUrlController;
 use App\Http\Controllers\NewsletterController;
 use App\Http\Controllers\OTPController;
+use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ReviewController;
 use App\Http\Controllers\ServiceDetailController;
-use App\Http\Controllers\ProductController;
 use App\Http\Controllers\SubCategoryController;
 use App\Http\Controllers\SubMenuController;
+use App\Http\Controllers\TransactionController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\VendorController;
 use App\Http\Controllers\VerifiedController;
 use Illuminate\Support\Facades\Route;
+
 
 
 
@@ -193,8 +195,8 @@ Route::middleware(['auth', 'check.ip'])->group(function () {
     Route::post('/faq-status', [FaqController::class, 'faqStatus'])->name('faq.status');
     Route::resource('/india-services', IndiaServiceController::class);
     Route::resource('/newsletter', NewsletterController::class);
-
+    Route::resource('/transaction', TransactionController::class);
+    Route::post('/transaction-status', [TransactionController::class, 'transactionStatus'])->name('transaction.status');
 });
-
 
 require __DIR__ . '/auth.php';

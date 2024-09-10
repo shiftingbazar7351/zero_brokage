@@ -165,6 +165,13 @@
                     </a>
                 </li>
 
+                <li class="{{ Route::currentRouteName() === 'transaction.index' ? 'active' : '' }}">
+                    <a href="{{ route('transaction.index') }}">
+                        <i class="fe fe-file-text"></i>
+                        <span>Transactions</span>
+                    </a>
+                </li>
+
 
 
             </ul>

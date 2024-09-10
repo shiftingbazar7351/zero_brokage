@@ -1,4 +1,5 @@
 @extends('backend.layouts.main')
+
 @section('content')
     <div class="page-wrapper page-settings">
         <div class="content">
@@ -8,7 +9,7 @@
                     <ul>
                         <li>
                             <button class="btn btn-primary" type="button" data-bs-toggle="modal"
-                                data-bs-target="#add-category">
+                                data-bs-target="#add-transaction-modal">
                                 <i class="fa fa-plus me-2"></i>Add Transaction
                             </button>
                         </li>
@@ -23,6 +24,8 @@
                                 <tr>
                                     <th>#</th>
                                     <th>Transaction Id</th>
+                                    <th>Payment Time</th>
+                                    <th>Payment Method</th>
                                     <th>Created By</th>
                                     <th>Status</th>
                                     <th>Action</th>
@@ -31,18 +34,38 @@
                             <tbody>
                                 @forelse ($transactions as $transaction)
                                     <tr>
-                                        <td>{{ $transaction->id ?? '' }}</td>
+                                        <td>{{ $transaction->id ??'' }}</td>
                                         <td>{{ $transaction->transaction_id ?? '' }}</td>
+                                        <td>{{ $transaction->payment_time ?? '' }}</td>
+                                        <td>{{ $transaction->payment_method ?? '' }}</td>
                                         <td>{{ $transaction->createdBy->name ?? '' }}</td>
+
                                         <td>
-                                            <div class="active-switch">
-                                                <label class="switch">
-                                                    <input type="checkbox" class="status-toggle"
-                                                        data-id="{{ $transaction->id }}"
-                                                        {{ $transaction->status ? 'checked' : '' }}>
-                                                    <span class="sliders round"></span>
-                                                </label>
-                                            </div>
+                                            @if ($transaction->payment_status == 2)
+                                                <div class="status-actions d-flex justify-content-center">
+                                                    <!-- Approve Form -->
+                                                    <form action="{{ route('transaction.approve', $transaction->id) }}"
+                                                        method="POST" class="me-2">
+                                                        @csrf
+                                                        <button type="submit" class="btn btn-success"
+                                                            {{ $transaction->payment_status == 1 ? 'disabled' : '' }}
+                                                            title="Approve">
+                                                            <i class="fa fa-check"></i>
+                                                        </button>
+                                                    </form>
+                                                    <!-- Reject Button (Triggers Modal for Rejection Reason) -->
+                                                    <button type="button" class="btn btn-danger" data-bs-toggle="modal"
+                                                        data-bs-target="#rejectModal-{{ $transaction->id }}"
+                                                        {{ $transaction->payment_status == 0 ? 'disabled' : '' }}
+                                                        title="Reject">
+                                                        <i class="fa fa-times"></i>
+                                                    </button>
+                                                </div>
+                                            @elseif($transaction->payment_status == 0)
+                                                <span class="badge bg-danger">Rejected</span>
+                                            @else
+                                                <span class="badge bg-success">Approved</span>
+                                            @endif
                                         </td>
                                         <td>
                                             <div class="table-actions d-flex justify-content-center">
@@ -56,7 +79,7 @@
                                                     @csrf
                                                     @method('DELETE')
                                                     <button class="btn delete-table" type="submit"
-                                                        onclick="return confirm('Are you sure want to delete this?')">
+                                                        onclick="return confirm('Are you sure you want to delete this?')">
                                                         <i class="fe fe-trash-2"></i>
                                                     </button>
                                                 </form>
@@ -65,7 +88,7 @@
                                     </tr>
                                 @empty
                                     <tr>
-                                        <td colspan="4" class="text-center">No data found</td>
+                                        <td colspan="5" class="text-center">No data found</td>
                                     </tr>
                                 @endforelse
                             </tbody>
@@ -77,14 +100,13 @@
     </div>
 
     <!-- Add Transaction Modal -->
-    <div class="modal fade" id="add-category">
+    <div class="modal fade" id="add-transaction-modal" tabindex="-1" aria-labelledby="addTransactionModalLabel"
+        aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title">Add Transaction</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
-                        <i class="fe fe-x"></i>
-                    </button>
+                    <h5 class="modal-title" id="addTransactionModalLabel">Add Transaction</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body pt-0">
                     <form id="addTransactionForm" method="POST" enctype="multipart/form-data">
@@ -97,21 +119,20 @@
                         </div>
                         <div class="mb-3">
                             <label class="form-label">UTR Number</label>
-                            <input type="text" class="form-control" name="utr"
-                                placeholder="Enter UTR Number" required>
+                            <input type="text" class="form-control" name="utr" placeholder="Enter UTR Number"
+                                required>
                             <div id="utr_error" class="text-danger"></div>
                         </div>
                         <div class="mb-3">
                             <label class="form-label">Screenshots</label>
                             <div class="form-uploads">
                                 <div class="form-uploads-path">
-                                    <img id="image-preview-icon" width="100px" height="100px" src="{{ asset('admin/assets/img/icons/upload.svg') }}"
-                                        alt="img" class="default-img">
+                                    <img id="image-preview-icon" width="100" height="100"
+                                        src="{{ asset('admin/assets/img/icons/upload.svg') }}" alt="img">
                                     <div class="file-browse">
                                         <h6>Drag & drop image or </h6>
                                         <div class="file-browse-path">
-                                            <input type="file" name="screenshot" id="image-input-icon"
-                                                accept="image/jpeg, image/png">
+                                            <input type="file" name="screenshot" id="image-input-icon" accept="image/*">
                                             <a href="javascript:void(0);"> Browse</a>
                                         </div>
                                     </div>
@@ -120,19 +141,17 @@
                             </div>
                             <div id="image-error" class="text-danger"></div>
                         </div>
-
                         <div class="mb-3">
                             <label class="form-label">Payment Time</label>
                             <input type="datetime-local" class="form-control" name="payment_time"
                                 placeholder="Enter Payment time" required>
                             <div id="payment_time_error" class="text-danger"></div>
                         </div>
-
                         <div class="mb-3">
                             <label class="form-label">Payment Method</label>
                             <input type="text" class="form-control" name="payment_method"
                                 placeholder="Enter Payment Method" required>
-                            <div id="payment_time_error" class="text-danger"></div>
+                            <div id="payment_method_error" class="text-danger"></div>
                         </div>
                         <div class="text-end">
                             <button type="button" class="btn btn-secondary me-2" data-bs-dismiss="modal">Cancel</button>
@@ -140,47 +159,105 @@
                         </div>
                     </form>
                 </div>
-
             </div>
         </div>
     </div>
 
-
-    <div class="modal fade" id="edit-transaction-modal">
+    <!-- Edit Transaction Modal -->
+    <div class="modal fade" id="edit-transaction-modal" tabindex="-1" aria-labelledby="editTransactionModalLabel"
+        aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title">Edit Transaction</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                    <h5 class="modal-title" id="editTransactionModalLabel">Edit Transaction</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body pt-0">
                     <form id="editTransactionForm" method="POST">
                         @csrf
                         @method('PUT')
-                        {{-- {{ dd($transaction) }} --}}
                         <div class="mb-3">
                             <label class="form-label">Transaction Id</label>
                             <input type="text" class="form-control" id="editTransactionId" name="transaction_id"
-                                value="{{ $transaction->transaction_id ?? '' }}" required>
+                                required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">UTR Number</label>
+                            <input type="text" class="form-control" id="editUtrId" name="utr"
+                                placeholder="Enter UTR Number" required>
+                            <div id="utr_error" class="text-danger"></div>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Screenshot</label>
+                            <div class="form-uploads">
+                                <div class="form-uploads-path">
+                                    <img id="background-preview" width="100" height="100"
+                                        src="{{ asset('admin/assets/img/icons/upload.svg') }}" alt="img">
+                                    <div class="file-browse">
+                                        <h6>Drag & drop image or </h6>
+                                        <div class="file-browse-path">
+                                            <input type="file" id="editImage" name="image" accept="image/*">
+                                            <a href="javascript:void(0);"> Browse</a>
+                                        </div>
+                                    </div>
+                                    <h5>Supported formats: JPEG, PNG</h5>
+                                </div>
+                            </div>
+                            <div id="image-error" class="text-danger"></div>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Payment Time</label>
+                            <input type="datetime-local" class="form-control" id="editTimeId" name="payment_time"
+                                required>
+                            <div id="payment_time_error" class="text-danger"></div>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Payment Method</label>
+                            <input type="text" class="form-control" id="editPaymentMethodId" name="payment_method"
+                                required>
+                            <div id="payment_method_error" class="text-danger"></div>
                         </div>
                         <div class="text-end">
                             <button type="button" class="btn btn-secondary me-2" data-bs-dismiss="modal">Cancel</button>
-                            <button type="submit" class="btn btn-primary">Save Changes</button>
+                            <button type="submit" class="btn btn-primary">Save</button>
                         </div>
                     </form>
                 </div>
             </div>
         </div>
     </div>
+
+    <!-- Reject Transaction Modal -->
+    @foreach ($transactions as $transaction)
+        <div class="modal fade" id="rejectModal-{{ $transaction->id }}" tabindex="-1"
+            aria-labelledby="rejectModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="rejectModalLabel">Reject Transaction</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body pt-0">
+                        <form action="{{ route('transaction.reject', $transaction->id) }}" method="POST">
+                            @csrf
+                            <div class="mb-3">
+                                <label class="form-label">Reason</label>
+                                <textarea class="form-control" name="reason" rows="3" required></textarea>
+                            </div>
+                            <div class="text-end">
+                                <button type="button" class="btn btn-secondary me-2"
+                                    data-bs-dismiss="modal">Cancel</button>
+                                <button type="submit" class="btn btn-danger">Reject</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    @endforeach
 @endsection
 
 @section('scripts')
-    <script>
-        var statusRoute = `{{ route('transaction.status') }}`;
-    </script>
-    <script src="{{ asset('admin/assets/js/status-update.js') }}"></script>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="{{ asset('admin/assets/js/preview-img.js') }}"></script>
     <script>
         function editTransaction(id) {
             $.ajax({
@@ -188,7 +265,20 @@
                 method: 'GET',
                 success: function(data) {
                     // Populate the modal form fields with the fetched data
-                    $('#editTransactionId').val(data.transaction_id); // Fill transaction_id
+                    $('#editTransactionId').val(data.transaction_id);
+                    $('#editUtrId').val(data.utr);
+                    $('#editTimeId').val(data.payment_time);
+                    $('#editPaymentMethodId').val(data.payment_method);
+
+                    // Generate the URL for the screenshot image
+                    if (data.screenshot) {
+                        // Assuming `data.screenshot` is the path relative to `storage/app/public`
+                        $('#background-preview').attr('src', `/storage/transaction/${data.screenshot}`);
+                    } else {
+                        $('#background-preview').attr('src',
+                            '{{ asset('admin/assets/img/icons/upload.svg') }}'); // Default preview image
+                    }
+
                     $('#editTransactionForm').attr('action', `/transaction/${id}`); // Update form action URL
                     $('#edit-transaction-modal').modal('show'); // Show modal
                 },
@@ -198,48 +288,5 @@
                 }
             });
         }
-
-        $(document).ready(function() {
-            $('#addTransactionForm').on('submit', function(e) {
-                e.preventDefault(); // Prevent default form submission
-
-                // Clear previous error messages
-                $('#name_error').text('');
-
-                // Get form data
-                var formData = new FormData(this);
-
-                // Send AJAX request
-                $.ajax({
-                    url: "{{ route('transaction.store') }}", // Adjust this route if necessary
-                    type: 'POST',
-                    data: formData,
-                    contentType: false,
-                    processData: false,
-                    success: function(response) {
-                        location.reload();
-                        // Handle success response
-                        // alert('Transaction added successfully!');
-                        // Optionally, close modal and reset the form
-                        $('#add-category').modal('hide');
-                        $('#addTransactionForm')[0].reset();
-
-                        // You can also refresh the table or append the new transaction to the table dynamically
-                    },
-                    error: function(xhr) {
-                        // Handle error response
-                        if (xhr.status === 422) {
-                            // Display validation errors
-                            var errors = xhr.responseJSON.errors;
-                            if (errors.transaction_id) {
-                                $('#name_error').text(errors.transaction_id[0]);
-                            }
-                        } else {
-                            alert('Something went wrong. Please try again.');
-                        }
-                    }
-                });
-            });
-        });
     </script>
 @endsection

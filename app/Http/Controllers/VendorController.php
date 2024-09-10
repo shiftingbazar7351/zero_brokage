@@ -35,7 +35,7 @@ class VendorController extends Controller
     {
         $subcategories = SubCategory::orderByDesc('created_at')->get();
         $submenus = SubMenu::orderByDesc('created_at')->get();
-        $vendors = Vendor::orderByDesc('created_at')->get();
+        $vendors = Vendor::orderByDesc('created_at')->paginate(10);
         return view("backend.vendor.index", compact('subcategories', 'submenus', 'vendors'));
     }
 

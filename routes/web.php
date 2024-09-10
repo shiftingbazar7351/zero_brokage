@@ -6,6 +6,7 @@ use App\Http\Controllers\EnquiryController;
 use App\Http\Controllers\FaqController;
 use App\Http\Controllers\FrontendController;
 use App\Http\Controllers\IndiaServiceController;
+use App\Http\Controllers\InvoiceController;
 use App\Http\Controllers\IpAddressController;
 use App\Http\Controllers\MenuController;
 use App\Http\Controllers\MetaDescripConroller;
@@ -24,6 +25,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\VendorController;
 use App\Http\Controllers\VerifiedController;
 use Illuminate\Support\Facades\Route;
+
 
 
 
@@ -109,7 +111,7 @@ Route::controller(FrontendController::class)->group(function () {
     Route::get('/search-filter', 'search')->name('search.filter');
     Route::get('/filter-submenus/{slug}', 'filterSubmenus')->name('filter.submenu');
     Route::post('/enquiry-verify-otp', 'verifyOtp')->name('enquiry.verify.otp');
-    Route::get('/fetch-city-data','fetchDataOfProvider')->name('fetchDataOfProvider');
+    Route::get('/fetch-city-data', 'fetchDataOfProvider')->name('fetchDataOfProvider');
 
 });
 
@@ -201,6 +203,12 @@ Route::middleware(['auth', 'check.ip'])->group(function () {
     Route::resource('/newsletter', NewsletterController::class);
     Route::resource('/transaction', TransactionController::class);
     Route::post('/transaction-status', [TransactionController::class, 'transactionStatus'])->name('transaction.status');
+    Route::post('/transaction/approve/{id}', [TransactionController::class, 'approve'])->name('transaction.approve');
+    Route::post('/transaction/reject/{id}', [TransactionController::class, 'reject'])->name('transaction.reject');
+
+    Route::resource('/invoice', InvoiceController::class);
+    
+
 });
 
 require __DIR__ . '/auth.php';

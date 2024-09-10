@@ -18,7 +18,7 @@ class ProductController extends Controller
      */
     public function index()
     {
-        $products = Product::get();
+        $products = Product::paginate(10);
         return view('backend.products.index', compact('products'));
     }
 
@@ -40,7 +40,7 @@ class ProductController extends Controller
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
-     */ 
+     */
     public function store(Request $request)
     {
         // Validate the form input
@@ -134,10 +134,10 @@ class ProductController extends Controller
             'price' => 'required|numeric',
             'description' => 'required|string',
         ]);
-    
+
         // Find the existing product by ID
         $product = Product::find($id);
-    
+
         // Update the product with the validated data
         $product->update([
             'category_id' => json_encode($request->category_id), // Use json_encode if storing multiple IDs
@@ -152,12 +152,12 @@ class ProductController extends Controller
             'price' => $request->price,
             'description' => $request->description,
         ]);
-    
+
         // Redirect back with a success message
         // return redirect()->back()->with('success', 'Updated Successfully');
         return redirect()->route('products.index')->with('success', 'Updated  Successfully.');
     }
-    
+
 
     /**
      * Remove the specified resource from storage.

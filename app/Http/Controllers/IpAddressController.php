@@ -13,7 +13,7 @@ class IpAddressController extends Controller
      */
     public function index()
     {
-        $ipaddresses = IpAddress::get();
+        $ipaddresses = IpAddress::paginate(10);
         return view('backend.ip-address.index', compact('ipaddresses'));
     }
 

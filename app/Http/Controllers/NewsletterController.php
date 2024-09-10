@@ -13,7 +13,7 @@ class NewsletterController extends Controller
      */
     public function index()
     {
-        $newsletters = Newsletter::orderByDesc('created_at')->get();
+        $newsletters = Newsletter::orderByDesc('created_at')->paginate(10);
         return view('backend.newsletter.index',compact('newsletters'));
     }
 

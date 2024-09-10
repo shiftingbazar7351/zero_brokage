@@ -18,7 +18,7 @@ class ServiceDetailController extends Controller
         $subcategories = SubCategory::orderByDesc('created_at')->get();
         $categories = Category::orderByDesc('created_at')->get();
         $menusCat = Menu::orderByDesc('created_at')->get();
-        $serviceDetails = ServiceDetail::with('subCategory')->orderByDesc('created_by')->get();
+        $serviceDetails = ServiceDetail::with('subCategory')->orderByDesc('created_by')->paginate(10);
         return view('backend.service-detail.index', compact('serviceDetails','subcategories','categories','menusCat'));
     }
 

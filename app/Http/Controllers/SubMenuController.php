@@ -35,7 +35,7 @@ class SubMenuController extends Controller
         $subcategories = Subcategory::where('status', 1)->orderByDesc('created_at')->get();
         $countryId = Country::where('name', 'India')->value('id');
         $states = State::where('country_id', $countryId)->get(['name', 'id']);
-        $submenus = SubMenu::orderByDesc('created_at')->get();
+        $submenus = SubMenu::orderByDesc('created_at')->paginate(01);
         return view('backend.sub-menu.index', compact('submenus', 'categories', 'states', 'menus', 'subcategories'));
     }
 

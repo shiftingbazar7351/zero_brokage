@@ -16,7 +16,7 @@ class IndiaServiceController extends Controller
      */
     public function index()
     {
-        $services = IndiaServiceDescription::get();
+        $services = IndiaServiceDescription::paginate(10);
         return view('backend.india-service-description.index', compact('services'));
     }
 
@@ -101,7 +101,7 @@ class IndiaServiceController extends Controller
             'menu_id.required' => 'Please select a menu.',
             'submenu_id.required' => 'Please select a submenu.',
         ]);
-        
+
         IndiaServiceDescription::findOrFail($id)->update($request->all());
         return redirect(route('india-services.index'))->with('success', 'Updated Successfully');
     }
@@ -113,7 +113,7 @@ class IndiaServiceController extends Controller
      */
     public function destroy($id)
     {
-    
+
         $service = IndiaServiceDescription::find($id);
 
         if ($service) {

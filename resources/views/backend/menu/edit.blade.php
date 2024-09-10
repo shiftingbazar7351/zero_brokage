@@ -1,7 +1,7 @@
 <div class="modal fade" id="edit-category">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
-            <div class="modal-header">  
+            <div class="modal-header">
                 <h5 class="modal-title">Edit Menu</h5>
                 <button type="button" class="btn-close close-modal" data-bs-dismiss="modal" aria-label="Close">
                     <i class="fe fe-x"></i>
@@ -45,7 +45,7 @@
                                     <h6>Drag & drop image or </h6>
                                     <div class="file-browse-path">
                                         <input type="file" id="editIcon" name="icon"
-                                            accept="image/jpeg, image/png">
+                                            accept="image/*">
                                         <a href="javascript:void(0);"> Browse</a>
                                     </div>
                                 </div>

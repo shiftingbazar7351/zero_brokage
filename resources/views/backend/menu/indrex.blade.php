@@ -66,14 +66,14 @@
                                                     <a class="btn delete-table me-2 edit-subcategory"
                                                     data-id="{{ $menu->id }}"
                                                     data-name="{{ $menu->name }}"
-                                                    data-category="{{ $menu->category_id }}"              
+                                                    data-category="{{ $menu->category_id }}"
                                                     data-image="{{ Storage::url('assets/menu/' . $menu->image) }}"
                                                     data-bs-toggle="modal"
                                                     data-bs-target="#edit-category">
                                                     <i class="fe fe-edit"></i>
                                                 </a>
-                                                    
-                            
+
+
                                                     <!-- Delete Button -->
                                                     <form action="{{ route('menus.destroy', $menu->id) }}" method="POST" style="display:inline;">
                                                         @csrf
@@ -88,9 +88,9 @@
                                     @endforeach
                                 @endif
                             </tbody>
-                            
-                            
-                            
+
+
+
                         </table>
                     </div>
                 </div>
@@ -143,7 +143,7 @@
                                         <h6>Drag & drop image or </h6>
                                         <div class="file-browse-path">
                                             <input type="file" name="image" id="image-input-icon"
-                                                accept="image/jpeg, image/png">
+                                                accept="image/*">
                                             <a href="javascript:void(0);"> Browse</a>
                                         </div>
                                     </div>

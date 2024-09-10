@@ -116,10 +116,6 @@ class SubMenuController extends Controller
     public function edit($id)
     {
         $submenu = SubMenu::find($id);
-        // return response()->json([
-        //     'status' => 1,
-        //     'data' => $submenu,
-        // ]);
         return response()->json(['data' => $submenu]);
 
     }
@@ -133,38 +129,37 @@ class SubMenuController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, SubMenu $sub_menu)
+    public function update(Request $request, $id)
     {
+        // Find the existing SubMenu by ID
+        $sub_menu = SubMenu::findOrFail($id); // This will throw a 404 if the submenu is not found
+
         // Validate the input data
         $request->validate([
             'name' => 'required',
-            // 'category_id' => 'required|exists:categories,id',
-            // 'subcategory_id' => 'required|exists:subcategories,id',
-            // 'menu_id' => 'required|exists:menus,id',
-            // 'state' => 'required|exists:states,id',
-            // 'city_id' => 'required|exists:cities,id',
             'total_price' => 'required|numeric',
             'discount' => 'required|numeric',
-            // 'final_price' => 'required|numeric',
-            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048', // Image is optional
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
 
-        $finalPrice = $request->input('price');
+        // Calculate final price with discount
+
+        $finalPrice = $request->input('total_price');
         $discountPercentage = $request->input('discount');
+
         if (!empty($finalPrice) && !empty($discountPercentage)) {
             $discountAmount = ($finalPrice * $discountPercentage) / 100;
             $finalPrice -= $discountAmount;
         } else {
-            $finalPrice = $request->input('price');
+            $finalPrice = $request->input('total_price');
         }
 
-
+        // Update submenu fields
         $sub_menu->name = $request->input('name');
         $sub_menu->slug = generateSlug($request->name);
         $sub_menu->category_id = $request->input('category_id');
         $sub_menu->subcategory_id = $request->input('subcategory_id');
         $sub_menu->menu_id = $request->input('menu_id');
-        // $sub_menu->state = $request->input('state');
         $sub_menu->city_id = $request->input('city_id');
         $sub_menu->total_price = $request->input('total_price');
         $sub_menu->discount = $request->input('discount');
@@ -181,6 +176,7 @@ class SubMenuController extends Controller
 
         return response()->json(['success' => true, 'message' => 'Sub-Menu updated successfully!']);
     }
+
 
 
 
@@ -209,16 +205,16 @@ class SubMenuController extends Controller
             return redirect()->back()->with('error', 'Something went wrong');
         }
     }
-    public function fetchsubcategory(Request $request)
+    public function fetchsubcategory($id = null)
     {
-        $categoryIds = $request->category_ids; // Receive array of category IDs
-        $data = SubCategory::whereIn('category_id', $categoryIds)->get(); // Fetch subcategories for multiple categories
+        $data = SubCategory::where('category_id', $id)->get();
         return response()->json([
             'status' => 1,
             'data' => $data,
         ]);
+
     }
-    
+
 
     public function fetchmenu($menu_id = null)
     {
@@ -255,7 +251,7 @@ class SubMenuController extends Controller
     }
 
 
-    public function getMenus(Request $request, $subcategoryId)
+    public function getMenus($subcategoryId)
     {
         $menus = Menu::where('subcategory_id', $subcategoryId)->get();
         return response()->json([

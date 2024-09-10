@@ -94,8 +94,8 @@ class SubCategoryController extends Controller
         $request->validate([
             'category_id' => 'required',
             'name' => 'required',
-            'background_image' => 'required|image|mimes:jpeg,png|max:5048',
-            'icon' => 'required|image|mimes:jpeg,png,|max:5048',
+            'background_image' => 'nullable|image|mimes:jpeg,png|max:5048',
+            'icon' => 'nullable|image|mimes:jpeg,png,|max:5048',
         ]);
 
         $subcategory->name = $request->name;
@@ -104,16 +104,17 @@ class SubCategoryController extends Controller
         $subcategory->trending = $request->has('trending') ? 1 : 0;
         $subcategory->featured = $request->has('featured') ? 1 : 0;
 
-        if ($request->hasFile('background_image')) {
-            $filename = $this->fileUploadService->uploadImage('background_image/', $request->file('background_image'));
-            $subcategory->background_image = $filename;
-        }
-
+        
         if ($request->hasFile('icon')) {
             $filename = $this->fileUploadService->uploadImage('icon/', $request->file('icon'));
             $subcategory->icon = $filename;
         }
-
+        
+        if ($request->hasFile('background_image')) {
+            $filename = $this->fileUploadService->uploadImage('background_image/', $request->file('background_image'));
+            $subcategory->background_image = $filename;
+        }
+        
         $subcategory->save();
 
         return response()->json(['success' => true, 'message' => 'Subcategory updated successfully.']);

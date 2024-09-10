@@ -24,6 +24,8 @@
                                 <tr>
                                     <th>#</th>
                                     <th>Transaction Id</th>
+                                    <th>Payment Time</th>
+                                    <th>Payment Method</th>
                                     <th>Created By</th>
                                     <th>Status</th>
                                     <th>Action</th>
@@ -34,7 +36,10 @@
                                     <tr>
                                         <td>{{ $transaction->id ??'' }}</td>
                                         <td>{{ $transaction->transaction_id ?? '' }}</td>
+                                        <td>{{ $transaction->payment_time ?? '' }}</td>
+                                        <td>{{ $transaction->payment_method ?? '' }}</td>
                                         <td>{{ $transaction->createdBy->name ?? '' }}</td>
+
                                         <td>
                                             @if ($transaction->payment_status == 2)
                                                 <div class="status-actions d-flex justify-content-center">

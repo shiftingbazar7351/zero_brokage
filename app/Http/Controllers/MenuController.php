@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use Illuminate\Validation\Rule;
 use App\Models\Menu;
 use App\Models\SubCategory;
 use App\Models\Category;
@@ -36,10 +36,10 @@ class MenuController extends Controller
     {
         // Validate and store the new menu category
         $request->validate([
-            'name' => 'required',
+            'name' => 'required|unique:menus|max:255',
             'category_id' => 'required',
             'subcategory' => 'required',
-            'image' => 'required|image|mimes:jpeg,png|max:2048',
+            'image' => 'required|image|max:2024',
         ]);
 
         $menu = new Menu();
@@ -74,10 +74,15 @@ class MenuController extends Controller
     public function update(Request $request, Menu $menu)
     {
         $request->validate([
-            'name' => 'required',
+            // 'name' => 'required',
+            'name' => [
+                'required',
+                'max:255',
+                Rule::unique('menus')->ignore($menu->id)
+            ],
             'category_id' => 'required',
             'subcategory' => 'required|integer|exists:menus,subcategory_id',
-            'image' => 'nullable|image|mimes:jpeg,png|max:2048',
+            'image' => 'nullable|image|max:2024',
         ]);
 
 

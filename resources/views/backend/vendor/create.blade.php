@@ -289,11 +289,10 @@
                         </div>
 
                         <div class="col-md-4 mb-3">
-                            <label for="otp" class="form-label">OTP<b style="color: red;">*</b></label>
-                            <input name="otp" value="{{ old('otp') }}" class="form-control bg-light-subtle" type="text"
-                                id="otp" placeholder="Enter valid OTP" required>
-                            <div id="otpError" class="text-danger"></div>
-                            @error('otp')
+                            <label for="otp" class="form-label">DOB<b style="color: red;">*</b></label>
+                            <input name="dob" value="{{ old('dob') }}" class="form-control bg-light-subtle" type="date"
+                                id="dob" placeholder="Enter DOB" required>
+                            @error('dob')
                             <div class="error text-danger ">{{ $message }}</div>
                             @enderror
                         </div>
@@ -481,7 +480,7 @@
                             <div class="error text-danger ">{{ $message }}</div>
                             @enderror
                         </div>
-                        <div class="col-md-1 d-flex" style="align-items: flex-end">
+                        <div class="col-md-1 d-flex" style="align-items: center">
                             <button type="button" id="addlocation" class="btn btn-primary">Add</button>
                         </div>
                         <div class="col-md-4 d-none" id="longitude">
@@ -652,7 +651,7 @@
         var categoryId = $(this).val();
         if (categoryId) {
             $.ajax({
-                url: '/fetch-subcategory/' + categoryId,
+                url: '/product-fetch-subcategory/' + categoryId,
                 type: 'POST',
                 data: {
                     _token: '{{ csrf_token() }}'

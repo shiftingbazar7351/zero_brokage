@@ -92,6 +92,10 @@ Route::get('/privacy-policy', function () {
     return view('frontend.privacy-policy');
 })->name('privacy-policy');
 
+Route::get('/reciept', function () {
+    return view('frontend.reciept');
+})->name('reciept');
+
 Route::controller(FrontendController::class)->group(function () {
     Route::get('/', 'home')->name('home');
     Route::get('/service-list', 'serviceList')->name('service-list');

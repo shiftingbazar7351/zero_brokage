@@ -6,7 +6,7 @@
 
                     <div class="footer-widget">
                         <div class="footer-logo">
-                            <a href="{{ route('home') }}"><img src="{{ asset('assets/img/logofinal.png') }}" alt="logo"></a>
+                            <a href="{{ route('home') }}"><img src="{{ asset('assets/img/logofinal.webp') }}" alt="logo"></a>
                         </div>
                         <div class="footer-content">
                             <p>Your satisfaction is our priority. Reach out to us anytime. </p>

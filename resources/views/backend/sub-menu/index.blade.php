@@ -126,7 +126,8 @@
                         <div class="row">
                             <div class="form-group col-md-6">
                                 <label for="name">Name</label>
-                                <input type="text" class="form-control" id="name" name="name" placeholder="Enter Name">
+                                <input type="text" class="form-control" id="name" name="name"
+                                    placeholder="Enter Name">
                                 <div id="name-error" class="text-danger"></div>
                             </div>
                             <div class="form-group col-md-6">
@@ -151,7 +152,7 @@
 
                             <div class="form-group col-md-6">
                                 <label for="menu">Menu</label>
-                                    <select class="form-control" id="menu" name="menu">
+                                <select class="form-control" id="menu" name="menu">
                                     <option value="">Select menu</option>
                                 </select>
                                 <div id="menu-error" class="text-danger"></div>
@@ -171,7 +172,7 @@
 
                             <div class="form-group col-md-6">
                                 <label for="city">City</label>
-                                <select  class="form-control" id="city" name="city">
+                                <select class="form-control" id="city" name="city">
                                     <option value="">Select City</option>
                                 </select>
                                 <div id="city-error" class="text-danger"></div>
@@ -181,21 +182,22 @@
                         <div class="row">
                             <div class="form-group col-md-6">
                                 <label for="price">Price(INR)</label>
-                                    <input type="text" class="form-control" id="price" name="total_price"
+                                <input type="text" class="form-control" id="price" name="total_price"
                                     placeholder="Enter Ammount">
                                 <div id="price-error" class="text-danger"></div>
                             </div>
 
                             <div class="form-group col-md-6">
                                 <label for="price">Discount(%)</label>
-                                <input type="text" class="form-control"    ass="form-control" id="discount" name="discount"
-                                    placeholder="Enter Discount percentage">
+                                <input type="text" class="form-control" ass="form-control" id="discount"
+                                    name="discount" placeholder="Enter Discount percentage">
                                 <div id="discount-error" class="text-danger"></div>
                             </div>
                         </div>
                         <div class="form-group">
                             <label for="final-price">Final Price (INR)</label>
-                            <input type="text" class="form-control" id="final-price" name="final_price" readonly disabled>
+                            <input type="text" class="form-control" id="final-price" name="final_price" readonly
+                                disabled>
                             <div id="final_price-error" class="text-danger"></div>
                         </div>
                         <div class="mb-3">
@@ -219,7 +221,8 @@
                         </div>
 
                         <div class="form-group">
-                            <label for="details" class="col-form-label">Details <span class="text-danger">*</span></label>
+                            <label for="details" class="col-form-label">Details <span
+                                    class="text-danger">*</span></label>
                             <textarea class="f    orm-control" id="details" placeholder="Enter Details" name="details">{{ old('details') }}</textarea>
                             <div id="details-error" class="text-danger"></div>
                         </div>
@@ -255,9 +258,8 @@
                 </div>
                 <div class="modal-body">
                     <form id="editCategoryForm" method="POST" enctype="multipart/form-data">
+                        <input type="hidden" name="_method" value="PUT">
                         @csrf
-                        @method('PUT')
-
                         <!-- Hidden IDs -->
                         <input type="hidden" id="editCategoryId" name="category_id">
                         <input type="hidden" id="editSubcategoryId" name="subcategory_id">
@@ -299,7 +301,7 @@
                             <!-- Menu Field -->
                             <div class="form-group col-md-6">
                                 <label for="editMenuSelect" class="form-label">Menu</label>
-                                <select class="form-control" id="editMenuSelect" name="menu">
+                                <select class="form-control" id="editMenuSelect" name="menu_id">
                                     <option value="" selected>Select Menu</option>
                                 </select>
                                 <div id="menu_id-error" class="text-danger"></div>
@@ -366,7 +368,7 @@
                                     <div class="file-browse">
                                         <h6>Drag & drop image or </h6>
                                         <div class="file-browse-path">
-                                            <input type="file" id="editImage" name="image"
+                                            <input type="file" id="edit-image-input-bg" name="image"
                                                 accept="image/jpeg, image/png">
                                             <a href="javascript:void(0);"> Browse</a>
                                         </div>
@@ -378,8 +380,9 @@
                         </div>
 
                         <div class="form-group">
-                            <label for="description" class="col-form-label">Details <span class="text-danger">*</span></label>
-                            <textarea class="form-control" id="edit-details" placeholder="Enter Details" name="details">{{ old('details') }}</textarea>
+                            <label for="description" class="col-form-label">Details <span
+                                    class="text-danger">*</span></label>
+                            <textarea class="form-control" id="edit-details" placeholder="Enter Details" name="details"></textarea>
                             <div id="details-error" class="text-danger"></div>
                         </div>
 
@@ -391,7 +394,7 @@
 
                         <div class="form-group">
                             <label for="description">Description</label>
-                            <textarea type="text" cl                        ass="form-control" id="edit-description" name="description" placeholder="Enter Ammount"></textarea>
+                            <textarea type="text" class="form-control" id="edit-description" name="description" placeholder="Enter Ammount"></textarea>
                             <div id="description-error" class="text-danger"></div>
                         </div>
 
@@ -413,6 +416,28 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="{{ asset('admin/assets/js/status-update.js') }}"></script>
     <script src="{{ asset('admin/assets/js/preview-img.js') }}"></script>
+    <script>
+        // Function to preview the image
+        function previewImage(input, previewId) {
+            var file = input.files[0];
+            if (file) {
+                var reader = new FileReader();
+                reader.onload = function(e) {
+                    $('#' + previewId).attr('src', e.target.result)
+                        .css({
+                            'width': '150px',
+                            'height': '150px'
+                        }); // Set the preview image size to 50px
+                };
+                reader.readAsDataURL(file);
+            }
+        }
+
+        // Event listener for background image preview
+        $('#edit-image-input-bg').on('change', function() {
+            previewImage(this, 'background-preview');
+        });
+    </script>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             //----------------Add form final price ---------------------------------//
@@ -562,8 +587,8 @@
             });
 
             // Populate Menus
-            $('#subcategory').on('change', function() {
-                var subcategoryId = $(this).val();
+
+            function fetchMenus(subcategoryId, menuElement) {
                 if (subcategoryId) {
                     $.ajax({
                         url: '/getMenus/' + subcategoryId,
@@ -572,35 +597,49 @@
                             _token: '{{ csrf_token() }}'
                         },
                         success: function(response) {
-                            $('#menu').empty().append(
+                            menuElement.empty().append(
                                 '<option value="" selected disabled>Select Menu</option>'
                             );
+
                             if (response.status === 1 && response.data.length > 0) {
                                 $.each(response.data, function(key, menu) {
-                                    $('#menu').append('<option value="' +
-                                        menu.id +
+                                    menuElement.append('<option value="' + menu.id +
                                         '">' + menu.name + '</option>');
                                 });
                             } else {
-                                $('#menu').append(
+                                menuElement.append(
                                     '<option value="" disabled>No menus available</option>'
                                 );
                             }
                         },
                         error: function(xhr) {
                             console.error('Error loading menus:', xhr);
-                            $('#menu').empty().append(
+                            menuElement.empty().append(
                                 '<option value="" disabled>Error loading menus</option>'
                             );
                         }
                     });
                 } else {
-                    $('#menu').empty().append(
-                        '<option value="" selected disabled>Select Menu</option>'
-                    );
+                    menuElement.empty().append(
+                        '<option value="" selected disabled>Select Menu</option>');
                 }
+            }
+
+            // Event listener for editSubcategory
+            $('#editSubcategorySelect').on('change', function() {
+                var subcategoryId = $(this).val();
+                var menuElement = $('#editMenuSelect');
+                fetchMenus(subcategoryId, menuElement);
             });
 
+            // Event listener for subcategory
+            $('#subcategory').on('change', function() {
+                var subcategoryId = $(this).val();
+                var menuElement = $('#menu');
+                fetchMenus(subcategoryId, menuElement);
+            });
+
+            // editSubcategorySelect
 
             // Populate Cities
             $('#state').on('change', function() {
@@ -634,77 +673,36 @@
                 }
             });
 
-            // Populate Subcategories in Edit Modal
-            $('#editCategorySelect').on('change', function() {
-                var categoryId = $(this).val();
-                if (categoryId) {
-                    $.ajax({
-                        url: '/fetch-subcategory/' + categoryId,
-                        type: 'POST',
-                        data: {
-                            _token: '{{ csrf_token() }}'
-                        },
-                        success: function(response) {
-                            // console.log(response)
-                            $('#editSubcategorySelect').empty().append(
-                                '<option value="" selected>Select Subcategory</option>'
-                            );
-                            if (response.status === 1) {
-                                $.each(response.data, function(key, subcategory) {
-                                    $('#editSubcategorySelect').append(
-                                        '<option value="' + subcategory
-                                        .id + '">' +
-                                        subcategory.name + '</option>');
-                                });
-                            }
-                        },
-                        error: function() {
-                            $('#editSubcategorySelect').empty().append(
-                                '<option value="" disabled>Error loading subcategories</option>'
-                            );
-                        }
-                    });
-                } else {
-                    $('#editSubcategorySelect').empty().append(
-                        '<option value="">Select Subcategory</option>');
-                }
-            });
+            //edit-state
 
-            // Event handler for changing subcategory
-            $('#editSubcategorySelect').on('change', function() {
-                var subcategory_id = $(this).val();
-                if (subcategory_id) {
+            $('#edit-state').on('change', function() {
+                var stateId = $(this).val();
+                if (stateId) {
                     $.ajax({
-                        url: '/getMenus/' + subcategory_id,
+                        url: '/fetch-city/' + stateId,
                         type: 'POST',
                         data: {
                             _token: '{{ csrf_token() }}'
                         },
                         success: function(response) {
-                            console.log(response)
-                            $('#editmenuSelect').empty().append(
-                                '<option value="" selected>Select Menu</option>'
-                            );
+                            $('#edit-city').empty().append(
+                                '<option value="">Select city</option>');
                             if (response.status === 1) {
-                                $.each(response.data, function(key, menu) {
-                                    $('#editmenuSelect').append(
-                                        '<option value="' + menu.id +
-                                        '">' +
-                                        menu.name + '</option>'
-                                    );
+                                $.each(response.data, function(key, city) {
+                                    $('#edit-city').append("<option value='" +
+                                        city.id +
+                                        "'>" + city.name + "</option>");
                                 });
                             }
                         },
                         error: function() {
-                            $('#editmenuSelect').empty().append(
-                                '<option value="" disabled>Error loading menus</option>'
+                            $('#edit-city').empty().append(
+                                '<option value="" disabled>Error loading cities</option>'
                             );
                         }
                     });
                 } else {
-                    $('#editmenuSelect').empty().append(
-                        '<option value="">Select Menu</option>'
-                    );
+                    $('#edit-city').empty().append('<option value="">Select city</option>');
                 }
             });
 
@@ -718,10 +716,11 @@
                         $('#editName').val(response.data.name);
                         $('#edit-price').val(response.data.total_price);
                         $('#edit-discount').val(response.data.discount);
-                        $('#edit-final-price').val(response.data.final_price);
-                        $('#editCategorySelect').val(response.data.category_id).trigger(
-                            'change');
-                        $('#editSubcategory').val(response.data.subcategory_id).trigger(
+                        $('#edit-final-price').val(response.data.discounted_price);
+                        $('#edit-details').val(response.data.details);
+                        $('#edit-description').val(response.data.description);
+                        $('#editCategorySelect').val(response.data.category_id).trigger('change');
+                        $('#editSubcategorySelect').val(response.data.subcategory_id).trigger(
                             'change');
 
                         // Fetch and populate subcategories based on the selected category
@@ -734,23 +733,21 @@
                             success: function(subResponse) {
                                 $('#editSubcategorySelect').empty().append(
                                     '<option value="" selected>Select Subcategory</option>'
-                                );
+                                    );
                                 subResponse.data.forEach(sub => {
                                     $('#editSubcategorySelect')
                                         .append(
                                             `<option value="${sub.id}" ${sub.id == response.data.subcategory_id ? 'selected' : ''}>${sub.name}</option>`
-                                        );
+                                            );
                                 });
-
                             },
                             error: function(xhr) {
-                                console.error(
-                                    'Error fetching subcategories:', xhr
+                                console.error('Error fetching subcategories:', xhr
                                     .responseText);
                             }
                         });
 
-                        // After fetching subcategories, fetch menus based on selected subcategory
+                        // Fetch and populate menus based on the selected subcategory
                         $.ajax({
                             url: `/getMenus/${response.data.subcategory_id}`,
                             method: 'POST',
@@ -758,63 +755,87 @@
                                 _token: '{{ csrf_token() }}'
                             },
                             success: function(menuResponse) {
-                                console.log(menuResponse)
                                 $('#editmenuSelect').empty().append(
                                     '<option value="" selected>Select Menu</option>'
-                                );
+                                    );
                                 menuResponse.data.forEach(menu => {
-                                    console.log(menu.name)
                                     $('#editmenuSelect')
                                         .append(
                                             `<option value="${menu.id}" ${menu.id == response.data.menu_id ? 'selected' : ''}>${menu.name}</option>`
-                                        );
+                                            );
                                 });
                             },
                             error: function(xhr) {
-                                console.error(
-                                    'Error fetching menus:', xhr
-                                    .responseText);
+                                console.error('Error fetching menus:', xhr
+                                .responseText);
                             }
                         });
-
 
                         // Set image preview
                         if (response.data.image) {
                             $('#background-preview').attr('src',
                                 `/storage/submenu/${response.data.image}`);
                         }
+
+                        // Set state and fetch cities
+                        $('#edit-state').val(response.data.state_id).trigger('change');
+                        $.ajax({
+                            url: `/fetch-cities/${response.data.state_id}`,
+                            method: 'POST',
+                            data: {
+                                _token: '{{ csrf_token() }}'
+                            },
+                            success: function(cityResponse) {
+                                $('#edit-city').empty().append(
+                                    '<option value="" selected>Select City</option>'
+                                    );
+                                cityResponse.data.forEach(city => {
+                                    $('#edit-city')
+                                        .append(
+                                            `<option value="${city.id}" ${city.id == response.data.city_id ? 'selected' : ''}>${city.name}</option>`
+                                            );
+                                });
+                            },
+                            error: function(xhr) {
+                                console.error('Error fetching cities:', xhr
+                                    .responseText);
+                            }
+                        });
+
                     },
                     error: function(xhr) {
-                        console.error('Error fetching the submenu data:', xhr
-                            .responseText);
+                        console.error('Error fetching the submenu data:', xhr.responseText);
                     }
                 });
             };
 
 
 
-            $('#editCategoryForm').on('submit', function(e) {
+            $('#editCategoryForm').off('submit').on('submit', function(e) {
                 e.preventDefault();
 
-                let id = $('#editSubmenuId').val();
+                let id = $('#editSubmenuId').val(); // Ensure this ID is being captured properly
                 let formData = new FormData(this);
 
                 $.ajax({
-                    method: 'POST',
+                    method: 'POST', // Change this to PUT or PATCH based on your routes
                     url: `/submenu/${id}`,
                     data: formData,
-                    contentType: false,
-                    processData: false,
+                    contentType: false, // Important for file uploads
+                    processData: false, // Prevent jQuery from automatically processing the data
                     success: function(response) {
                         if (response.success) {
-                            if (response.success) {
-                                location.reload(); // Refresh page to show updated data
-                            }
+                            location.reload(); // Refresh the page to reflect the updated submenu data
+                        } else {
+                            // If there's a response but success is false, display the error message
+                            alert('An error occurred while updating.');
                         }
                     },
                     error: function(xhr) {
                         let errors = xhr.responseJSON.errors;
-                        $('#editCategoryForm .name-error').text(errors.name ? errors.name[0] :
+
+                        // Display error messages, if they exist
+                        $('#editCategoryForm .editname-error').text(errors.name ? errors.name[0] :
                             '');
                         $('#editCategoryForm .category_id-error').text(errors.category_id ?
                             errors.category_id[0] : '');
@@ -826,12 +847,6 @@
                 });
             });
 
-            // Function to display validation errors (optional helper function)
-            function displayErrors(errors) {
-                for (let field in errors) {
-                    $(`.${field}-error`).text(errors[field][0]);
-                }
-            }
 
 
         });

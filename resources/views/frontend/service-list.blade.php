@@ -96,44 +96,44 @@
             <div class="carousel-inner" role="listbox">
                 <!--First slide-->
                 <div class="carousel-item active">
-                    <img class="" src="{{ asset('assets/img/banner/1.png') }}" style="width: 100%; height:50vh"
+                    <img class="" src="{{ asset('assets/img/banner/1.webp') }}" style="width: 100%; height:50vh"
                         alt="First slide">
                 </div>
                 <!--/First slide-->
                 <!--Second slide-->
                 <div class="carousel-item">
-                    <img class="" src="{{ asset('assets/img/banner/4.png') }}" style="width: 100%; height:50vh;"
-                        alt="First slide">
+                    <img class="" src="{{ asset('assets/img/banner/4.webp') }}" style="width: 100%; height:50vh;"
+                        alt="second slide">
                 </div>
                 <!--/Second slide-->
                 <!--Third slide-->
                 <div class="carousel-item">
-                    <img class="" src="{{ asset('assets/img/banner/5.png') }}" style="width: 100%; height:50vh"
+                    <img class="" src="{{ asset('assets/img/banner/5.webp') }}" style="width: 100%; height:50vh"
                         alt="Third slide">
                 </div>
                 <div class="carousel-item">
-                    <img class="" src="{{ asset('assets/img/banner/8.png') }}" style="width: 100%; height:50vh"
-                        alt="Third slide">
+                    <img class="" src="{{ asset('assets/img/banner/8.webp') }}" style="width: 100%; height:50vh"
+                        alt="Fourth slide">
                 </div>
                 <div class="carousel-item">
-                    <img class="" src="{{ asset('assets/img/banner/9.png') }}" style="width: 100%; height:50vh"
-                        alt="Third slide">
+                    <img class="" src="{{ asset('assets/img/banner/9.webp') }}" style="width: 100%; height:50vh"
+                        alt="Fifth slide">
                 </div>
                 <div class="carousel-item">
-                    <img class="" src="{{ asset('assets/img/banner/12.png') }}" style="width: 100%; height:50vh"
-                        alt="Third slide">
+                    <img class="" src="{{ asset('assets/img/banner/12.webp') }}" style="width: 100%; height:50vh"
+                        alt="sixth slide">
                 </div>
                 <div class="carousel-item">
-                    <img class="" src="{{ asset('assets/img/banner/13.png') }}" style="width: 100%; height:50vh"
-                        alt="Third slide">
+                    <img class="" src="{{ asset('assets/img/banner/13.webp') }}" style="width: 100%; height:50vh"
+                        alt="seven slide">
                 </div>
                 <div class="carousel-item">
-                    <img class="" src="{{ asset('assets/img/banner/15.png') }}" style="width: 100%; height:50vh"
-                        alt="Third slide">
+                    <img class="" src="{{ asset('assets/img/banner/15.webp') }}" style="width: 100%; height:50vh"
+                        alt="eight slide">
                 </div>
                 <div class="carousel-item">
-                    <img class="" src="{{ asset('assets/img/banner/17.png') }}" style="width: 100%; height:50vh"
-                        alt="Third slide">
+                    <img class="" src="{{ asset('assets/img/banner/17.webp') }}" style="width: 100%; height:50vh"
+                        alt="Nine slide">
                 </div>
                 <!--/Third slide-->
                 <a class="carousel-control-prev" href="#carousel-slider" role="button" data-slide="prev">

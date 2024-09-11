@@ -1,15 +1,16 @@
 @extends('backend.layouts.main')
 
 @section('content')
-<link href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
 
-	<!-- Bootstrap-select CDN CSS LINK -->
-	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.12/dist/css/bootstrap-select.min.css">
+    <!-- Bootstrap-select CDN CSS LINK -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.12/dist/css/bootstrap-select.min.css">
     <style>
         .bootstrap-select:not([class*=col-]):not([class*=form-control]):not(.input-group-btn) {
 
-    width: 100%;
-}
+            width: 100%;
+        }
     </style>
     <div class="page-wrapper page-settings">
         <div class="content">
@@ -21,7 +22,8 @@
                         <div class="row">
                             <div class="mb-3 col-md-6">
                                 <label for="category">Category<b style="color: red;">*</b></label>
-                                <select class="selectpicker" multiple="multiple" data-live-search="true" data-selected-text-format="value" id="category" name="category_id[]" >
+                                <select class="selectpicker" multiple="multiple" data-live-search="true"
+                                    data-selected-text-format="value" id="category" name="category_id[]">
                                     <option value="">Select category</option>
                                     @foreach ($categories as $category)
                                         <option value="{{ $category->id }}">{{ $category->name }}</option>
@@ -32,17 +34,6 @@
                                 @enderror
                             </div>
 
-                            {{-- <div class="mb-3 col-md-6">
-                                <label for="category">Category<b style="color: red;">*</b></label>
-                                <select class="selectpicker" multiple="multiple" data-live-search="true" data-selected-text-format="value">
-                                    <option value="1">Mustard</option>
-                                    <option value="2">Ketchup</option>
-                                    <option value="3">Relish</option>
-                                  </select>
-                                @error('category_id')
-                                    <div class="error text-danger">{{ $message }}</div>
-                                @enderror
-                            </div> --}}
 
                             <div class="mb-3 col-md-6">
                                 <label for="subcategory">Sub Category<b style="color: red;">*</b></label>
@@ -54,50 +45,35 @@
                                 @enderror
                             </div>
 
-                            {{-- <div class="mb-3 col-md-6">
-                                <label for="subcategory">Sub Category<b style="color: red;">*</b></label>
-                                <select  id="subcategory" name="subcategory_id[]"  multiple="multiplee" class="selectpicker" data-live-search="true" data-selected-text-format="value">
-                                    <option value="">Select subcategory</option>
-                                </select> --}}
-
-                                {{-- <select name="fabric_color_enn[]" id="fabric_color_enn[]" multiple="multiplee"
-                                    class="form-control select2">
-                                    <option value="Beige">
-                                        Beige
-                                    </option>
-
-                                    <option value="Red">
-                                        Red
-                                    </option>
-
-                                    <option value="Petrol">
-                                        Petrol
-                                    </option>
-
-                                    <option value="Royal Blue">
-                                        Royal Blue
-                                    </option>
-
-                                    <option value="Dark Blue">
-                                        Dark Blue
-                                    </option>
-
-                                    <option value="Bottle Green">
-                                        Bottle Green
-                                    </option>
-
-                                    <option value="Light Grey">
-                                        Light Grey
-                                    </option>
-                                </select> --}}
-
-                                {{-- @error('subcategory_id')
-                                    <div class="error text-danger">{{ $message }}</div>
-                                @enderror
-                            </div> --}}
 
                         </div>
 
+                        {{-- <div class="row">
+                            <div class="mb-3 col-md-6">
+                                <label for="category">Category<b style="color: red;">*</b></label>
+                                <select class="form-control" id="category" name="category_id[]" multiple>
+                                    <option value="">Select category</option>
+                                    @foreach ($categories as $category)
+                                        <option value="{{ $category->id }}">{{ $category->name }}</option>
+                                    @endforeach
+                                </select>
+                                @error('category_id')
+                                    <div class="error text-danger">{{ $message }}</div>
+                                @enderror
+                            </div>
+
+
+                            <div class="mb-3 col-md-6">
+                                <label for="subcategory">Sub Category<b style="color: red;">*</b></label>
+                                <select class="form-control" id="subcategory" name="subcategory_id[]" multiple>
+                                    <option value="">Select subcategory</option>
+                                </select>
+                                @error('subcategory_id')
+                                    <div class="error text-danger">{{ $message }}</div>
+                                @enderror
+                            </div>
+
+                        </div> --}}
                         <div class="row">
 
                             <div class=" mb-3 col-md-6">
@@ -203,11 +179,12 @@
 
                         <div class="form-group col-md-12">
                             <label for="size">Size</label>
-                            <select class="selectpicker" multiple="multiple" data-live-search="true" data-selected-text-format="value">
+                            <select class="selectpicker" multiple="multiple" data-live-search="true"
+                                data-selected-text-format="value">
                                 <option value="1">Mustard</option>
                                 <option value="2">Ketchup</option>
                                 <option value="3">Relish</option>
-                              </select>
+                            </select>
                         </div>
 
                         <div class="text-end">
@@ -221,18 +198,27 @@
 @endsection
 
 @section('scripts')
-<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
-	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    <!-- Full version of jQuery -->
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous">
+    </script>
 
-	<!-- Bootstrap-select CDN JS LINK -->
-	<script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.12/dist/js/bootstrap-select.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous">
+    </script>
 
-	<!-- Bootstrap-Select Custom JS LINK-->
-	<script type="text/javascript">
-	$('.selectpicker').selectpicker();
-    $('.selectpicker').selectpicker('destroy').selectpicker();
-	</script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous">
+    </script>
+
+    <!-- Bootstrap-select CDN JS LINK -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.12/dist/js/bootstrap-select.min.js"></script>
+
+    <!-- Bootstrap-Select Custom JS LINK-->
+    <script type="text/javascript">
+        $('.selectpicker').selectpicker();
+        $('.selectpicker').selectpicker('destroy').selectpicker();
+    </script>
     <script>
         $(document).ready(function() {
             $('#category').on('change', function() {
@@ -397,6 +383,4 @@
             });
         });
     </script>
-
-
 @endsection

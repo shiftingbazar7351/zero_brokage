@@ -1,6 +1,6 @@
 <header class="header header-one">
     <div class="container">
-        <nav class="navbar navbar-expand-lg header-nav">
+        <nav class="navbar navbar-expand-lg header-nav" style="justify-content: space-between">
             <div class="navbar-header">
                 <a id="mobile_btn" href="javascript:void(0);">
                     <span class="bar-icon">

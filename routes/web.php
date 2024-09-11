@@ -157,7 +157,7 @@ Route::middleware(['auth', 'check.ip'])->group(function () {
     Route::controller(SubMenuController::class)->group(function () {
         Route::post('/submenu-status', 'subMenuStatus')->name('submenu.status');
         Route::post('/fetch-subcategory/{id}', 'fetchsubcategory');
-        Route::post('/getMenus/{subcategoryId}', 'getMenus');
+        Route::post('/getMenus/{subcatId}', 'getMenus');
         Route::post('/reviews-status', 'subMenuStatus')->name('reviews.status');
     });
 

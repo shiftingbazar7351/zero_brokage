@@ -69,6 +69,14 @@
                                 <span>Service details</span>
                             </a>
                         </li>
+
+                        <li>
+                            <a href="{{ route('india-services.index') }}"
+                                class="{{ Route::currentRouteName() === 'india-services.index' ? 'active' : '' }}">
+                                <i class="fe fe-file-text"></i>
+                                <span>India Services</span>
+                            </a>
+                        </li>
                     </ul>
 
                 </li>

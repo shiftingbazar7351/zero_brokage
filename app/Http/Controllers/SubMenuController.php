@@ -35,7 +35,7 @@ class SubMenuController extends Controller
         $subcategories = Subcategory::where('status', 1)->orderByDesc('created_at')->get();
         $countryId = Country::where('name', 'India')->value('id');
         $states = State::where('country_id', $countryId)->get(['name', 'id']);
-        $submenus = SubMenu::orderByDesc('created_at')->paginate(01);
+        $submenus = SubMenu::orderByDesc('created_at')->paginate(10);
         return view('backend.sub-menu.index', compact('submenus', 'categories', 'states', 'menus', 'subcategories'));
     }
 
@@ -115,8 +115,11 @@ class SubMenuController extends Controller
      */
     public function edit($id)
     {
+        // dd($states);
         $submenu = SubMenu::find($id);
-        return response()->json(['data' => $submenu]);
+        $city = City::where('id',$submenu->city_id)->first();
+        $state = State::where('id',$city->state_id)->first();
+        return response()->json(['data' => $submenu, 'state' => $state] );
 
     }
 
@@ -255,9 +258,9 @@ class SubMenuController extends Controller
     }
 
 
-    public function getMenus($subcategoryId)
+    public function getMenus($subcatId = null)
     {
-        $menus = Menu::where('subcategory_id', $subcategoryId)->get();
+        $menus = Menu::where('subcategory_id', $subcatId)->get();
         return response()->json([
             'status' => 1,
             'data' => $menus

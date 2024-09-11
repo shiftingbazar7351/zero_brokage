@@ -21,7 +21,7 @@
                         <div class="row">
                             <div class="mb-3 col-md-6">
                                 <label for="category">Category<b style="color: red;">*</b></label>
-                                <select name="category_id" id="category" multiple="multiple" class="selectpicker" data-live-search="true" data-selected-text-format="value">
+                                <select class="selectpicker" multiple="multiple" data-live-search="true" data-selected-text-format="value" id="category" name="category_id[]" >
                                     <option value="">Select category</option>
                                     @foreach ($categories as $category)
                                         <option value="{{ $category->id }}">{{ $category->name }}</option>
@@ -44,12 +44,21 @@
                                 @enderror
                             </div> --}}
 
-
                             <div class="mb-3 col-md-6">
                                 <label for="subcategory">Sub Category<b style="color: red;">*</b></label>
-                                <select class="form-control select2" id="subcategory" name="subcategory_id[]"  multiple="multiplee" class="selectpicker" data-live-search="true" data-selected-text-format="value">
+                                <select class="form-control" id="subcategory" name="subcategory_id[]" multiple>
                                     <option value="">Select subcategory</option>
                                 </select>
+                                @error('subcategory_id')
+                                    <div class="error text-danger">{{ $message }}</div>
+                                @enderror
+                            </div>
+
+                            {{-- <div class="mb-3 col-md-6">
+                                <label for="subcategory">Sub Category<b style="color: red;">*</b></label>
+                                <select  id="subcategory" name="subcategory_id[]"  multiple="multiplee" class="selectpicker" data-live-search="true" data-selected-text-format="value">
+                                    <option value="">Select subcategory</option>
+                                </select> --}}
 
                                 {{-- <select name="fabric_color_enn[]" id="fabric_color_enn[]" multiple="multiplee"
                                     class="form-control select2">
@@ -82,10 +91,10 @@
                                     </option>
                                 </select> --}}
 
-                                @error('subcategory_id')
+                                {{-- @error('subcategory_id')
                                     <div class="error text-danger">{{ $message }}</div>
                                 @enderror
-                            </div>
+                            </div> --}}
 
                         </div>
 

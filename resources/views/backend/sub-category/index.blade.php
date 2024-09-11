@@ -204,6 +204,11 @@
                         @method('PUT')
                         <input type="hidden" id="editSubCategoryId" name="id">
                         <div class="mb-3">
+                            <label class="form-label">Sub Category Name</label>
+                            <input type="text" class="form-control" id="editName" name="name">
+                            <div id="name_error_edit" class="text-danger"></div>
+                        </div>
+                        <div class="mb-3">
                             <label for="categoryName">Category Name</label>
                             <select class="form-control" id="categoryName" name="category_id">
                                 <option value="">Select Category</option>
@@ -213,11 +218,7 @@
                             </select>
                             <div id="category_id_error_edit" class="text-danger"></div>
                         </div>
-                        <div class="mb-3">
-                            <label class="form-label">Sub Category Name</label>
-                            <input type="text" class="form-control" id="editName" name="name">
-                            <div id="name_error_edit" class="text-danger"></div>
-                        </div>
+
                         <div class="mb-3">
                             <label class="form-label">Type</label>
                             <div class="form-check">

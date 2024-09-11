@@ -1,6 +1,6 @@
 @extends('frontend.layouts.main')
 @section('styles')
-<link href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" rel="stylesheet"/>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" rel="stylesheet" />
 
 
     <style>
@@ -81,75 +81,86 @@
         <div id="carousel-slider" class="carousel slide carousel-fade" data-ride="carousel" data-interval="2000">
             <!--Indicators-->
             <ol class="carousel-indicators">
-              <li data-target="#carousel-slider" data-slide-to="0" class="active"></li>
-              <li data-target="#carousel-slider" data-slide-to="1"></li>
-              <li data-target="#carousel-slider" data-slide-to="2"></li>
-              <li data-target="#carousel-slider" data-slide-to="3"></li>
-              <li data-target="#carousel-slider" data-slide-to="4"></li>
-              <li data-target="#carousel-slider" data-slide-to="5"></li>
-              <li data-target="#carousel-slider" data-slide-to="6"></li>
-              <li data-target="#carousel-slider" data-slide-to="7"></li>
-              <li data-target="#carousel-slider" data-slide-to="8"></li>
+                <li data-target="#carousel-slider" data-slide-to="0" class="active"></li>
+                <li data-target="#carousel-slider" data-slide-to="1"></li>
+                <li data-target="#carousel-slider" data-slide-to="2"></li>
+                <li data-target="#carousel-slider" data-slide-to="3"></li>
+                <li data-target="#carousel-slider" data-slide-to="4"></li>
+                <li data-target="#carousel-slider" data-slide-to="5"></li>
+                <li data-target="#carousel-slider" data-slide-to="6"></li>
+                <li data-target="#carousel-slider" data-slide-to="7"></li>
+                <li data-target="#carousel-slider" data-slide-to="8"></li>
             </ol>
             <!--Indicators-->
             <!--Slides-->
             <div class="carousel-inner" role="listbox">
-              <!--First slide-->
-              <div class="carousel-item active">
-                <img class="" src="{{ asset('assets/img/banner/1.png') }}" style="width: 100%; height:50vh" alt="First slide">
-              </div>
-              <!--/First slide-->
-              <!--Second slide-->
-              <div class="carousel-item">
-                  <img class="" src="{{ asset('assets/img/banner/4.png') }}" style="width: 100%; height:50vh;" alt="First slide">
-              </div>
-              <!--/Second slide-->
-              <!--Third slide-->
-              <div class="carousel-item">
-                <img class="" src="{{ asset('assets/img/banner/5.png') }}" style="width: 100%; height:50vh" alt="Third slide">
-              </div>
-              <div class="carousel-item">
-                <img class="" src="{{ asset('assets/img/banner/8.png') }}" style="width: 100%; height:50vh" alt="Third slide">
-              </div>
-              <div class="carousel-item">
-                <img class="" src="{{ asset('assets/img/banner/9.png') }}" style="width: 100%; height:50vh" alt="Third slide">
-              </div>
-              <div class="carousel-item">
-                <img class="" src="{{ asset('assets/img/banner/12.png') }}" style="width: 100%; height:50vh" alt="Third slide">
-              </div>
-              <div class="carousel-item">
-                <img class="" src="{{ asset('assets/img/banner/13.png') }}" style="width: 100%; height:50vh" alt="Third slide">
-              </div>
-              <div class="carousel-item">
-                <img class="" src="{{ asset('assets/img/banner/15.png') }}" style="width: 100%; height:50vh" alt="Third slide">
-              </div>
-              <div class="carousel-item">
-                <img class="" src="{{ asset('assets/img/banner/17.png') }}" style="width: 100%; height:50vh" alt="Third slide">
-              </div>
-              <!--/Third slide-->
-              <a class="carousel-control-prev" href="#carousel-slider" role="button" data-slide="prev">
-                <span class="carousel-control-prev-icon" aria-hidden="true" style="background-color: black"></span>
-                <span class="sr-only" >Previous</span>
-              </a>
-              <a class="carousel-control-next" href="#carousel-slider" role="button" data-slide="next">
-                <span class="carousel-control-next-icon" aria-hidden="true" style="background-color: black"></span>
-                <span class="sr-only">Next</span>
-              </a>
+                <!--First slide-->
+                <div class="carousel-item active">
+                    <img class="" src="{{ asset('assets/img/banner/1.png') }}" style="width: 100%; height:50vh"
+                        alt="First slide">
+                </div>
+                <!--/First slide-->
+                <!--Second slide-->
+                <div class="carousel-item">
+                    <img class="" src="{{ asset('assets/img/banner/4.png') }}" style="width: 100%; height:50vh;"
+                        alt="First slide">
+                </div>
+                <!--/Second slide-->
+                <!--Third slide-->
+                <div class="carousel-item">
+                    <img class="" src="{{ asset('assets/img/banner/5.png') }}" style="width: 100%; height:50vh"
+                        alt="Third slide">
+                </div>
+                <div class="carousel-item">
+                    <img class="" src="{{ asset('assets/img/banner/8.png') }}" style="width: 100%; height:50vh"
+                        alt="Third slide">
+                </div>
+                <div class="carousel-item">
+                    <img class="" src="{{ asset('assets/img/banner/9.png') }}" style="width: 100%; height:50vh"
+                        alt="Third slide">
+                </div>
+                <div class="carousel-item">
+                    <img class="" src="{{ asset('assets/img/banner/12.png') }}" style="width: 100%; height:50vh"
+                        alt="Third slide">
+                </div>
+                <div class="carousel-item">
+                    <img class="" src="{{ asset('assets/img/banner/13.png') }}" style="width: 100%; height:50vh"
+                        alt="Third slide">
+                </div>
+                <div class="carousel-item">
+                    <img class="" src="{{ asset('assets/img/banner/15.png') }}" style="width: 100%; height:50vh"
+                        alt="Third slide">
+                </div>
+                <div class="carousel-item">
+                    <img class="" src="{{ asset('assets/img/banner/17.png') }}" style="width: 100%; height:50vh"
+                        alt="Third slide">
+                </div>
+                <!--/Third slide-->
+                <a class="carousel-control-prev" href="#carousel-slider" role="button" data-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="sr-only">Previous</span>
+                </a>
+                <a class="carousel-control-next" href="#carousel-slider" role="button" data-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="sr-only">Next</span>
+                </a>
             </div>
-          </div>
-      </div>
+        </div>
+    </div>
 
     <div class="d-flex justify-content-center px-4 sticky-slider" style="background-color: rgb(239, 240, 241)">
         <div class="wrapper-slider">
             <i id="left" class="fa-solid fas fa-angle-left"></i>
-            <ul class="carousel" style="justify-content: center">
+            <ul class="carousell" style="justify-content: center">
                 @foreach ($menus as $menu)
                     <input type="hidden" name="menu_id" value="{{ $menu->id }}">
                     <li class="card">
                         <div class="img">
-                            <img src="{{ Storage::url('menu/' . $menu->image ?? '') }}" alt="" draggable="false" />
+                            <img src="{{ Storage::url('menu/' . $menu->image ?? '') }}" alt=""
+                                draggable="false" />
                         </div>
-                        <h5 style="font-weight: bold;text-align:center; font-size:16px" class="pt-1">{{ $menu->name ?? '' }}</h5>
+                        <h5 style="font-weight: bold;text-align:center; font-size:16px" class="pt-1">
+                            {{ $menu->name ?? '' }}</h5>
                     </li>
                 @endforeach
             </ul>
@@ -210,11 +221,39 @@
             </div>
         </div>
     </div>
+
+
 @endsection
 @section('scripts')
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>
     <script src="{{ asset('assets/js/booking_infoPopup.js') }}"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/intlTelInput.min.js"></script>
+
+
+ {{-- ...........................OTP automatic go to next input fields (start)........................... --}}
+    <script>
+        const otpInputs = document.querySelectorAll('.input-div input'); // Select input inside input-div
+
+        otpInputs.forEach((input, index) => {
+            input.addEventListener('input', () => {
+                if (input.value.length === 1) {
+                    // Move to the next input field if it exists
+                    if (index < otpInputs.length - 1) {
+                        otpInputs[index + 1].focus();
+                    }
+                }
+            });
+
+            input.addEventListener('keydown', (e) => {
+                // Handle the backspace key to move to the previous input
+                if (e.key === 'Backspace' && input.value.length === 0 && index > 0) {
+                    otpInputs[index - 1].focus();
+                }
+            });
+        });
+    </script>
+    {{-- ...........................OTP automatic go to next input fields (end)........................... --}}
+
 
 
     <script>
@@ -293,60 +332,60 @@
 
 
             $('#verify-otp-booking').click(function(e) {
-    e.preventDefault();
+                e.preventDefault();
 
-    var otp = '';
-    var allFilled = true;
+                var otp = '';
+                var allFilled = true;
 
-    // Collect OTP from input fields
-    $('.input-div input').each(function() {
-        var value = $(this).val().trim(); // Trim any whitespace
-        if (value === '' || value.length !== 1) {
-            allFilled = false;
-            return false; // Exit loop if any field is empty or not a single digit
-        }
-        otp += value;
-    });
-
-    // Validate OTP length
-    if (!allFilled || otp.length !== 4) {
-        toastr.error('Please enter a valid 4-digit OTP.');
-        return; // Exit if OTP is not valid
-    }
-
-    // Get the mobile number
-    var mobileNumber = $('.Phone-Number').text().trim();
-
-    // Make AJAX request
-    $.ajax({
-        url: '/enquiry-verify-otp',
-        type: 'POST',
-        data: {
-            mobile_number: mobileNumber,
-            otp: otp,
-            _token: '{{ csrf_token() }}'
-        },
-        success: function(response) {
-            if (response.success) {
-                toastr.success(response.success);
-                $('#myPopup2-booking').hide(); // Hide OTP popup
-                // Optionally: Redirect or proceed to the next step
-            }
-        },
-        error: function(xhr) {
-            if (xhr.status === 422) {
-                var errors = xhr.responseJSON.errors;
-                $.each(errors, function(key, value) {
-                    toastr.error(value);
+                // Collect OTP from input fields
+                $('.input-div input').each(function() {
+                    var value = $(this).val().trim(); // Trim any whitespace
+                    if (value === '' || value.length !== 1) {
+                        allFilled = false;
+                        return false; // Exit loop if any field is empty or not a single digit
+                    }
+                    otp += value;
                 });
-            } else if (xhr.status === 400) {
-                toastr.error(xhr.responseJSON.error);
-            } else {
-                toastr.error('An unexpected error occurred.');
-            }
-        }
-    });
-});
+
+                // Validate OTP length
+                if (!allFilled || otp.length !== 4) {
+                    toastr.error('Please enter a valid 4-digit OTP.');
+                    return; // Exit if OTP is not valid
+                }
+
+                // Get the mobile number
+                var mobileNumber = $('.Phone-Number').text().trim();
+
+                // Make AJAX request
+                $.ajax({
+                    url: '/enquiry-verify-otp',
+                    type: 'POST',
+                    data: {
+                        mobile_number: mobileNumber,
+                        otp: otp,
+                        _token: '{{ csrf_token() }}'
+                    },
+                    success: function(response) {
+                        if (response.success) {
+                            toastr.success(response.success);
+                            $('#myPopup2-booking').hide(); // Hide OTP popup
+                            // Optionally: Redirect or proceed to the next step
+                        }
+                    },
+                    error: function(xhr) {
+                        if (xhr.status === 422) {
+                            var errors = xhr.responseJSON.errors;
+                            $.each(errors, function(key, value) {
+                                toastr.error(value);
+                            });
+                        } else if (xhr.status === 400) {
+                            toastr.error(xhr.responseJSON.error);
+                        } else {
+                            toastr.error('An unexpected error occurred.');
+                        }
+                    }
+                });
+            });
 
 
         });
@@ -414,7 +453,7 @@
             document.getElementById("myDropdown").style.display = "none";
         }
     </script>
-{{-- new --}}
+    {{-- new --}}
     {{-- <script>
         $(document).ready(function() {
             // Trigger AJAX search on button click
@@ -458,7 +497,7 @@
             }
         });
     </script> --}}
-{{-- new2 --}}
+    {{-- new2 --}}
     <script>
         $(document).ready(function() {
             $('#search-button').click(function() {

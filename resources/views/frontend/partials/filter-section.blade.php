@@ -1,3 +1,5 @@
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
 <div class="col-lg-3 col-sm-12 theiaStickySidebar">
     <div class="filter-div">
         <div class="filter-head">
@@ -13,9 +15,10 @@
         <div class="filter-content">
             <h2>Location</h2>
             <div class="dropdown">
-                <div class="group-img">
+                <div class="group-img" style="position: relative; display:block;">
                     <input type="text" placeholder="Search.." id="myInput" name="location"
-                        onkeyup="filterFunction()" class="form-control" style="font-size: small;">
+                        onkeyup="filterFunction()" class="form-control" style="font-size: small; padding-right: 30px;">
+                    <i class="fa fa-map-marker" style="position: absolute; right: 15px; top: 50%; transform: translateY(-50%);"></i>
                 </div>
                 <div id="myDropdown" class="dropdown-content">
                     @foreach ($cities as $city)

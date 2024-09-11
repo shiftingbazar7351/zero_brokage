@@ -75,7 +75,7 @@
                                     </tr>
                                 @empty
                                     <tr>
-                                        <td colspan="4" class="text-center">No data found</td>
+                                        <td colspan="12" class="text-center">No data found</td>
                                     </tr>
                                 @endforelse
                             </tbody>
@@ -98,10 +98,11 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body pt-0">
-                    <form id="addSubCategoryForm" action="{{ route('invoice.update',$vendor->id ??'') }}" method="POST"
+                    <form id="addSubCategoryForm" action="{{ route('invoice.edit', $vendor->id ?? '') }}" method="POST"
                         enctype="multipart/form-data">
+                        {{-- {{ dd($vendor) }} --}}
                         @csrf
-                        @method('PUT')
+                        @method('POST')
                         <div class="mb-3">
                             <label for="vendor">vendor Name</label>
                             <select class="form-control" id="vendor" name="vendor_id">

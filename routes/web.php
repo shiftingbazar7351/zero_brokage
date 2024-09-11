@@ -207,7 +207,10 @@ Route::middleware(['auth', 'check.ip'])->group(function () {
     Route::post('/transaction/reject/{id}', [TransactionController::class, 'reject'])->name('transaction.reject');
 
     Route::resource('/invoice', InvoiceController::class);
-    
+    Route::post('invoice/{id}/edit', [InvoiceController::class, 'update'])->name('invoice.edit');
+    // Route::post('invoice/create/{id}', [InvoiceController::class, 'create'])->name('invoice.create');
+
+
 
 });
 

@@ -27,6 +27,7 @@
                                     <th>Payment Time</th>
                                     <th>Payment Method</th>
                                     <th>Created By</th>
+                                    <th>Created At</th>
                                     <th>Status</th>
                                     <th>Action</th>
                                 </tr>
@@ -36,9 +37,32 @@
                                     <tr>
                                         <td>{{ $transaction->id ??'' }}</td>
                                         <td>{{ $transaction->transaction_id ?? '' }}</td>
-                                        <td>{{ $transaction->payment_time ?? '' }}</td>
+                                        {{-- <td>{{ $transaction->payment_time ? \Carbon\Carbon::parse($transaction->payment_time)->format('h:i A, d M Y') : '' }}</td> --}}
+                                        <td>
+                                            @if ($transaction->payment_time)
+                                                {{ \Carbon\Carbon::parse($transaction->payment_time)->format('h:i A') }} <br>
+                                                {{ \Carbon\Carbon::parse($transaction->payment_time)->format('d M Y') }}
+                                            @endif
+                                        </td>
+
                                         <td>{{ $transaction->payment_method ?? '' }}</td>
                                         <td>{{ $transaction->createdBy->name ?? '' }}</td>
+                                        <td>
+                                            @if ($transaction->created_at)
+                                                @if ($transaction->created_at->isToday())
+                                                        <span class="badge bg-success">Today</span>
+                                                @elseif ($transaction->created_at->isYesterday())
+                                                        <span class="badge bg-secondary">Yesterday</span>
+
+                                                @else
+                                                    {{ $transaction->created_at->format('d M Y') }}
+                                                @endif
+                                            @else
+                                                <!-- Handle the case if created_at is null -->
+                                                N/A
+                                            @endif
+                                        </td>
+
 
                                         <td>
                                             @if ($transaction->payment_status == 2)
@@ -63,6 +87,8 @@
                                                 </div>
                                             @elseif($transaction->payment_status == 0)
                                                 <span class="badge bg-danger">Rejected</span>
+                                                <br>
+                                                <span class="text-wrap">{{ $transaction->reason ??'' }}</span>
                                             @else
                                                 <span class="badge bg-success">Approved</span>
                                             @endif

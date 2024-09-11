@@ -57,7 +57,7 @@ class ApiController extends Controller
     {
         try {
             // Fetch the subcategory by ID
-            $subcategory = SubCategory::select('id', 'slug')->find($id);
+            $subcategory = SubCategory::select('id')->find($id);
 
             // Check if the subcategory exists
             if (!$subcategory) {

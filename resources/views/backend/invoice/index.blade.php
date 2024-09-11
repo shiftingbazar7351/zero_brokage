@@ -8,235 +8,62 @@
             <div class="main-wrapper">
 
                 <div class="container border shadow-sm mt-2">
-                    <h4> Create Invoice</h4>
+                    <h4> CRUD Invoice</h4>
                 </div>
-                <div class="container mt-4 border rounded shadow">
-                    <form id="addCategoryModal" action="{{ route('invoice.store') }}" method="POST"
-                        enctype="multipart/form-data" data-parsley-validate="true">
-                        @csrf
-                        <div class="row mx-auto">
 
-                            <div class="col-md-4">
-                                <label for="category">Category<b style="color: red;">*</b></label>
-                                <select class="form-control" id="category" name="category" required>
-                                    <option value="">Select category</option>
-                                    @foreach ($categories as $category)
-                                        <option value="{{ $category->id }}">{{ $category->name }}</option>
-                                    @endforeach
-                                </select>
-                                @error('category')
-                                    <div class="error text-danger">{{ $message }}</div>
-                                @enderror
-                            </div>
+                <div class="list-btn d-flex my-3">
 
-                            <div class="col-md-4">
-                                <label for="subcategory">Sub Category<b style="color: red;">*</b></label>
-                                <select class="form-control" id="subcategory" name="sub_category" required>
-                                    <option value="">Select subcategory</option>
-                                </select>
-                                @error('sub_category')
-                                    <div class="error text-danger">{{ $message }}</div>
-                                @enderror
-                            </div>
-
-                            <div class="col-md-4">
-                                <label for="menu">Menu<b style="color: red;">*</b></label>
-                                <select class="form-control" id="menu" name="menu_id" required>
-                                    <option value="">Select menu</option>
-                                </select>
-                                @error('menu_id')
-                                    <div class="error text-danger">{{ $message }}</div>
-                                @enderror
-                            </div>
-
-                        </div>
-
-                        <div class="row mx-auto mt-3">
-
-                            <div class="col-md-4">
-                                <label for="submenu">Sub-Menu<b style="color: red;">*</b></label>
-                                <select class="form-control" id="submenu" name="submenu_id" required>
-                                    <option value="">Select submenu</option>
-                                </select>
-                                @error('submenu_id')
-                                    <div class="error text-danger">{{ $message }}</div>
-                                @enderror
-                            </div>
-
-                            <div class="col-md-4">
-                                <label for="state" class="form-label">State<b style="color: red;">*</b></label>
-                                <select id="state" name="state" class="form-select" required>
-                                    <option selected disabled>Select State</option>
-                                    @foreach ($states as $state)
-                                        <option value="{{ $state->id }}">{{ ucwords($state->name) }}</option>
-                                    @endforeach
-                                </select>
-                                @error('state')
-                                    <div class="error text-danger">{{ $message }}</div>
-                                @enderror
-                            </div>
-
-                            <div class="col-md-4">
-                                <label for="city" class="form-label">City<b style="color: red;">*</b></label>
-                                <select class="form-select" id="city" name="city" required>
-                                    <option value="">Select City</option>
-                                </select>
-                                @error('city')
-                                    <div class="error text-danger">{{ $message }}</div>
-                                @enderror
-                            </div>
-                        </div>
-
-                        <div class="row mx-auto mt-3">
-                            <div class="col-md-4">
-                                <label class="form-label">Product<b style="color: red;">*</b></label>
-                                <select name="employee_id" class="form-select bg-light-subtle"
-                                    aria-label="Default select example" required>
-                                    <option value="" selected disabled>Select Option</option>
-                                    <option value="1" {{ old('employee_id') == '1' ? 'selected' : '' }}>Product1
-                                    </option>
-                                    <option value="2" {{ old('employee_id') == '2' ? 'selected' : '' }}>Product2
-                                    </option>
-                                    <option value="3" {{ old('employee_id') == '3' ? 'selected' : '' }}>Product3
-                                    </option>
-                                </select>
-                                @error('employee_id')
-                                    <div class="text-danger">{{ $message }}</div>
-                                @enderror
-                            </div>
-                            <div class="col-md-4">
-                                <label class="form-label">HSN<b style="color: red;">*</b></label>
-                                <select name="employee_id" class="form-select bg-light-subtle"
-                                    aria-label="Default select example" required>
-                                    <option value="" selected disabled>Select HSN</option>
-                                    <option value="1" {{ old('employee_id') == '1' ? 'selected' : '' }}>Product1
-                                    </option>
-                                    <option value="2" {{ old('employee_id') == '2' ? 'selected' : '' }}>Product2
-                                    </option>
-                                    <option value="3" {{ old('employee_id') == '3' ? 'selected' : '' }}>Product3
-                                    </option>
-                                </select>
-                                @error('employee_id')
-                                    <div class="text-danger">{{ $message }}</div>
-                                @enderror
-                            </div>
-                            <div class="col-md-4">
-
-                                <label class="form-label text-dark">Price<b style="color: red;">*</b></label>
-                                <input name="price" class="form-control bg-light-subtle" placeholder="Enter price"
-                                    required>{{ old('price') }}</input>
-
-                                @error('price')
-                                    <div class="error text-danger ">{{ $message }}</div>
-                                @enderror
-                            </div>
-                        </div>
-
-                        <div class="row mx-auto mt-3">
-                            <div class="col-md-4">
-                                <label class="form-label">GST<b style="color: red;">*</b></label>
-                                <select name="employee_id" class="form-select bg-light-subtle"
-                                    aria-label="Default select example" required>
-                                    <option value="" selected disabled>Select GST</option>
-                                    <option value="1" {{ old('employee_id') == '1' ? 'selected' : '' }}>0%
-                                    </option>
-                                    <option value="2" {{ old('employee_id') == '2' ? 'selected' : '' }}>12%
-                                    </option>
-                                    <option value="3" {{ old('employee_id') == '3' ? 'selected' : '' }}>18%
-                                    </option>
-                                </select>
-                                @error('employee_id')
-                                    <div class="text-danger">{{ $message }}</div>
-                                @enderror
-                            </div>
-                            <div class="col-md-4">
-
-                                <label class="form-label text-dark">Quantity<b style="color: red;">*</b></label>
-                                <input name="quantity" class="form-control bg-light-subtle" placeholder="Enter quantity"
-                                    required>{{ old('quantity') }}</input>
-
-                                @error('quantity')
-                                    <div class="error text-danger ">{{ $message }}</div>
-                                @enderror
-                            </div>
-                            <div class="col-md-4">
-
-                                <label class="form-label text-dark">Total Ammount<b style="color: red;">*</b></label>
-                                <input name="total_ammount" class="form-control bg-light-subtle"
-                                    placeholder="Enter total_ammount" required>{{ old('total_ammount') }}</input>
-
-                                @error('total_ammount')
-                                    <div class="error text-danger ">{{ $message }}</div>
-                                @enderror
-                            </div>
-                        </div>
-                        <div class="row mx-auto mt-3">
-
-                            <div class="col-md-4">
-
-                                <label class="form-label text-dark">Grand Total<b style="color: red;">*</b></label>
-                                <input name="grand_total" class="form-control bg-light-subtle"
-                                    placeholder="Enter grand total" required>{{ old('grand_total') }}</input>
-
-                                @error('grand_total')
-                                    <div class="error text-danger ">{{ $message }}</div>
-                                @enderror
-                            </div>
-                        </div>
-
-                        <div class="row mt-3">
-                            <div class="">
-
-                                <button type="submit" id="submitbutton" class="btn btn-success">Add</button>
-                            </div>
-                        </div>
-                    </form>
+                    <ul>
+                        <li>
+                            <button class="btn btn-primary" type="button"
+                                onclick="window.location='{{ route('invoice.create') }}'">
+                                <i class="fa fa-plus me-2"></i>Add Vendors Invoice
+                            </button>
+                        </li>
+                    </ul>
                 </div>
+
                 <div class="col-12">
                     <div class="table-responsive table-div">
                         <table class="table datatable table-striped table-bordered">
                             <thead>
                                 <tr>
                                     <th>#</th>
-                                    <th>Name</th>
-                                    <th>Status</th>
+                                    <th>Category</th>
+                                    <th>Sub Category</th>
+                                    <th>Menu</th>
+                                    <th>Sub Menu</th>
+                                    <th>Price</th>
+                                    <th>Quantity</th>
+                                    <th>Total Ammount</th>
+                                    <th>Grand Total</th>
+                                    <th>City</th>
+                                    <th>State</th>
                                     <th>Action</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                @forelse ($submenus as $menu)
+                                @forelse ($invoices as $invoice)
                                     <tr>
                                         <td>{{ $loop->iteration }}</td>
-                                        <td>
-                                            <div class="table-imgname">
-                                                @if ($menu->image)
-                                                    <img src="{{ Storage::url('menu/' . $menu->image) }}"
-                                                        class="me-2 preview-img" alt="img">
-                                                @else
-                                                    No Image
-                                                @endif
-                                                <span>{{ $menu->name }}</span>
-                                            </div>
-                                        </td>
-                                        <td>
-                                            <div class="active-switch">
-                                                <label class="switch">
-                                                    <input type="checkbox" class="status-toggle"
-                                                        data-id="{{ $menu->id }}"
-                                                        {{ $menu->status ? 'checked' : '' }}>
-                                                    <span class="sliders round"></span>
-                                                </label>
-                                            </div>
-                                        </td>
+                                        <td> {{ $invoice->category->name ?? '' }} </td>
+                                        <td> {{ $invoice->subcategory->name ?? '' }} </td>
+                                        <td> {{ $invoice->menu->name ?? '' }} </td>
+                                        <td> {{ $invoice->submenu->name ?? '' }} </td>
+                                        <td> {{ $invoice->price ?? '' }} </td>
+                                        <td> {{ $invoice->quantity ?? '' }} </td>
+                                        <td> {{ $invoice->total_ammount ?? '' }} </td>
+                                        <td> {{ $invoice->grand_total ?? '' }} </td>
+                                        <td> {{ $invoice->city_name->name ?? '' }} </td>
+                                        {{-- <td></td> --}}
+                                        <td> {{ $invoice->state_name->name ?? '' }} </td>
                                         <td>
                                             <div class="table-actions d-flex justify-content-center">
-                                                <button class="btn delete-table me-2"
-                                                    onclick="editCategory({{ $menu->id }})" type="button"
+                                                <button class="btn delete-table me-2" onclick="#" type="button"
                                                     data-bs-toggle="modal" data-bs-target="#edit-category">
                                                     <i class="fe fe-edit"></i>
                                                 </button>
-                                                <form action="{{ route('menus.destroy', $menu->id) }}" method="POST"
-                                                    style="display:inline;">
+                                                <form action="#" method="POST" style="display:inline;">
                                                     @csrf
                                                     @method('DELETE')
                                                     <button class="btn delete-table" type="submit"
@@ -256,10 +83,12 @@
                         </table>
                     </div>
                 </div>
+
+                {{-- product data show fileds --}}
+
+
             </div>
 
-             
-            {{-- </div> --}}
         </div>
     </div>
 @endsection

@@ -68,11 +68,8 @@ class InvoiceController extends Controller
             'menu_id' => 'required|exists:menus,id',
             'submenu_id' => 'required|exists:sub_menus,id',
             'price' => 'required|numeric',
-            // 'hsn' => 'required|max:50',
-            // 'product_id' => 'required',
             'quantity' => 'required|integer',
             'total_ammount' => 'required|numeric',
-            // 'gst' => 'required|integer|min:0|max:100',
             'grand_total' => 'required|numeric',
             'state' => 'required|exists:states,id',
             'city' => 'required|exists:cities,id',
@@ -95,9 +92,12 @@ class InvoiceController extends Controller
         $invoice->city = $request->city;
         $invoice->save();
 
-        Session::flash('succcess','Added Successfully');
-        return redirect()->back()->with('new_invoice', $invoice);
+        // Store the invoice in the session
+        Session::put('new_invoice', $invoice);
+        Session::flash('success', 'Added Successfully');
+        return redirect()->back();
     }
+
 
     /**
      * Display the specified resource.
@@ -141,7 +141,6 @@ class InvoiceController extends Controller
         $vendorId = $request->input('vendor_id', $id);
         $vendor = Vendor::findOrFail($vendorId);
         return redirect(route('invoice.edit', $vendor->id ?? ''));
-
         // return redirect(route('invoice.create'))->with('success', 'Invoice added successfully');
     }
 
@@ -152,10 +151,11 @@ class InvoiceController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $invoices = Invoice::findOrFail($id);
+        if($invoices){
+            $invoices->delete();
+            return redirect()->back()->with('success','Deleted Successfully');
+        }
+        return redirect()->back()->with('error','Something went wrong');
     }
-
-    // In your controller
-
-
 }

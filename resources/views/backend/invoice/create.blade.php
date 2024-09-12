@@ -197,44 +197,43 @@
                                     <th>Action</th>
                                 </tr>
                             </thead>
-                            <tbody>
-                                @if (session('new_invoice'))
-                                    @php $invoice = session('new_invoice'); @endphp
-                                    <tr>
-                                        <td>1</td>
-                                        <td> {{ $invoice->category->name ?? '' }} </td>
-                                        <td> {{ $invoice->subcategory->name ?? '' }} </td>
-                                        <td> {{ $invoice->menu->name ?? '' }} </td>
-                                        <td> {{ $invoice->submenu->name ?? '' }} </td>
-                                        <td> {{ $invoice->price ?? '' }} </td>
-                                        <td> {{ $invoice->quantity ?? '' }} </td>
-                                        <td> {{ $invoice->total_ammount ?? '' }} </td>
-                                        <td> {{ $invoice->grand_total ?? '' }} </td>
-                                        <td> {{ $invoice->city_name->name ?? '' }} </td>
-                                        <td> {{ $invoice->state_name->name ?? '' }} </td>
-                                        <td>
-                                            <div class="table-actions d-flex justify-content-center">
-                                                <button class="btn delete-table me-2" onclick="#" type="button"
-                                                    data-bs-toggle="modal" data-bs-target="#edit-category">
-                                                    <i class="fe fe-edit"></i>
+                            @if (session('new_invoice'))
+                                @php $invoice = session('new_invoice'); @endphp
+                                <tr>
+                                    <td>1</td>
+                                    <td> {{ $invoice->category->name ?? '' }} </td>
+                                    <td> {{ $invoice->subcategory->name ?? '' }} </td>
+                                    <td> {{ $invoice->menu->name ?? '' }} </td>
+                                    <td> {{ $invoice->submenu->name ?? '' }} </td>
+                                    <td> {{ $invoice->price ?? '' }} </td>
+                                    <td> {{ $invoice->quantity ?? '' }} </td>
+                                    <td> {{ $invoice->total_ammount ?? '' }} </td>
+                                    <td> {{ $invoice->grand_total ?? '' }} </td>
+                                    <td> {{ $invoice->city_name->name ?? '' }} </td>
+                                    <td> {{ $invoice->state_name->name ?? '' }} </td>
+                                    <td>
+                                        <div class="table-actions d-flex justify-content-center">
+                                            <button class="btn delete-table me-2" onclick="#" type="button"
+                                                data-bs-toggle="modal" data-bs-target="#edit-category">
+                                                <i class="fe fe-edit"></i>
+                                            </button>
+                                            <form action="#" method="POST" style="display:inline;">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button class="btn delete-table" type="submit"
+                                                    onclick="return confirm('Are you sure want to delete this?')">
+                                                    <i class="fe fe-trash-2"></i>
                                                 </button>
-                                                <form action="#" method="POST" style="display:inline;">
-                                                    @csrf
-                                                    @method('DELETE')
-                                                    <button class="btn delete-table" type="submit"
-                                                        onclick="return confirm('Are you sure want to delete this?')">
-                                                        <i class="fe fe-trash-2"></i>
-                                                    </button>
-                                                </form>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                @else
-                                    <tr>
-                                        <td colspan="12" class="text-center">No data found</td>
-                                    </tr>
-                                @endif
-                            </tbody>
+                                            </form>
+                                        </div>
+                                    </td>
+                                </tr>
+                            @else
+                                <tr>
+                                    <td colspan="12" class="text-center">No data found</td>
+                                </tr>
+                            @endif
+
 
                         </table>
                     </div>
@@ -390,8 +389,8 @@
 
                             <div class="col-md-4">
                                 <label class="form-label text-dark">Date<b style="color: red;">*</b></label>
-                                <input name="date" type="date" class="form-control bg-light-subtle" placeholder="Enter Date"
-                                    required>{{ old('Date') }}</input>
+                                <input name="date" type="date" class="form-control bg-light-subtle"
+                                    placeholder="Enter Date" required>{{ old('Date') }}</input>
 
                                 @error('Date')
                                     <div class="error text-danger ">{{ $message }}</div>

@@ -153,7 +153,7 @@
                             <tbody>
                                 <tr>
                                     <th scope="row">Name :</th>
-                                    <td class="text-wrap"> {{ $vendor->vendor_name  }}</td>
+                                    <td class="text-wrap"> {{ $vendor->vendor_name ?? '' }}</td>
 
                                 </tr>
                                 <tr>

@@ -104,17 +104,15 @@
                             </div>
                             <div class="col-md-3">
                                 <label class="form-label">HSN<b style="color: red;">*</b></label>
-                                <select name="employee_id" class="form-select bg-light-subtle"
+                                <select name="hsn" class="form-select bg-light-subtle"
                                     aria-label="Default select example" required>
                                     <option value="" selected disabled>Select HSN</option>
-                                    <option value="1" {{ old('employee_id') == '1' ? 'selected' : '' }}>Product1
+                                    <option value="1" {{ old('hsn') == '998429' ? 'selected' : '' }}>998429
                                     </option>
-                                    <option value="2" {{ old('employee_id') == '2' ? 'selected' : '' }}>Product2
-                                    </option>
-                                    <option value="3" {{ old('employee_id') == '3' ? 'selected' : '' }}>Product3
+                                    <option value="2" {{ old('hsn') == '996511' ? 'selected' : '' }}>996511
                                     </option>
                                 </select>
-                                @error('employee_id')
+                                @error('hsn')
                                     <div class="text-danger">{{ $message }}</div>
                                 @enderror
                             </div>
@@ -133,22 +131,7 @@
                                 @enderror
                             </div>
 
-                            <div class="col-md-3">
-                                <label class="form-label">GST<b style="color: red;">*</b></label>
-                                <select name="employee_id" class="form-select bg-light-subtle"
-                                    aria-label="Default select example" required>
-                                    <option value="" selected disabled>Select GST</option>
-                                    <option value="1" {{ old('employee_id') == '1' ? 'selected' : '' }}>0%
-                                    </option>
-                                    <option value="2" {{ old('employee_id') == '2' ? 'selected' : '' }}>12%
-                                    </option>
-                                    <option value="3" {{ old('employee_id') == '3' ? 'selected' : '' }}>18%
-                                    </option>
-                                </select>
-                                @error('employee_id')
-                                    <div class="text-danger">{{ $message }}</div>
-                                @enderror
-                            </div>
+
                             <div class="col-md-3">
 
                                 <label class="form-label text-dark">Quantity<b style="color: red;">*</b></label>
@@ -167,6 +150,21 @@
 
                                 @error('total_ammount')
                                     <div class="error text-danger ">{{ $message }}</div>
+                                @enderror
+                            </div>
+                            <div class="col-md-3">
+                                <label class="form-label">GST<b style="color: red;">*</b></label>
+                                <select name="gst" class="form-select bg-light-subtle"
+                                    aria-label="Default select example" required>
+                                    <option value="3" {{ old('gst') == '18%' ? 'selected' : '' }}>18%
+                                    </option>
+                                    <option value="1" {{ old('gst') == '5%' ? 'selected' : '' }}>5%
+                                    </option>
+                                    <option value="2" {{ old('gst') == '12%' ? 'selected' : '' }}>12%
+                                    </option>
+                                </select>
+                                @error('gst')
+                                    <div class="text-danger">{{ $message }}</div>
                                 @enderror
                             </div>
                         </div>
@@ -213,9 +211,10 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @forelse ($invoices as $invoice)
+                                @if(session('new_invoice'))
+                                    @php $invoice = session('new_invoice'); @endphp
                                     <tr>
-                                        <td>{{ $loop->iteration }}</td>
+                                        <td>1</td>
                                         <td> {{ $invoice->category->name ?? '' }} </td>
                                         <td> {{ $invoice->subcategory->name ?? '' }} </td>
                                         <td> {{ $invoice->menu->name ?? '' }} </td>
@@ -225,7 +224,6 @@
                                         <td> {{ $invoice->total_ammount ?? '' }} </td>
                                         <td> {{ $invoice->grand_total ?? '' }} </td>
                                         <td> {{ $invoice->city_name->name ?? '' }} </td>
-                                        {{-- <td></td> --}}
                                         <td> {{ $invoice->state_name->name ?? '' }} </td>
                                         <td>
                                             <div class="table-actions d-flex justify-content-center">
@@ -244,12 +242,13 @@
                                             </div>
                                         </td>
                                     </tr>
-                                @empty
+                                @else
                                     <tr>
-                                        <td colspan="4" class="text-center">No data found</td>
+                                        <td colspan="12" class="text-center">No data found</td>
                                     </tr>
-                                @endforelse
+                                @endif
                             </tbody>
+
                         </table>
                     </div>
                 </div>

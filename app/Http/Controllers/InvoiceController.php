@@ -14,6 +14,7 @@ use App\Models\Transaction;
 use App\Models\Vendor;
 use App\Services\FileUploadService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Session;
 
 class InvoiceController extends Controller
 {
@@ -94,7 +95,8 @@ class InvoiceController extends Controller
         $invoice->city = $request->city;
         $invoice->save();
 
-        return redirect()->back()->with('success', 'Invoice added successfully');
+        Session::flash('succcess','Added Successfully');
+        return redirect()->back()->with('new_invoice', $invoice);
     }
 
     /**
@@ -122,9 +124,9 @@ class InvoiceController extends Controller
         $invoicesname = Invoice::with(['Category', 'cityName', 'subcategory', 'menu', 'submenu'])->get();
         $states = State::where('country_id', $countryId)->get(['name', 'id']);
         $invoices = Invoice::orderByDesc('created_at')->paginate(10);
-        $transactions = Transaction::select('id','transaction_id','utr','screenshot','payment_time')->get();
+        $transactions = Transaction::select('id', 'transaction_id', 'utr', 'screenshot', 'payment_time')->get();
         $vendor = Vendor::findOrFail($id);
-        return view('backend.invoice.create', compact( 'transactions','vendor', 'invoicesname', 'invoices', 'categories', 'subcategories', 'submenus', 'countryId', 'states'));
+        return view('backend.invoice.create', compact('transactions', 'vendor', 'invoicesname', 'invoices', 'categories', 'subcategories', 'submenus', 'countryId', 'states'));
     }
 
     /**

@@ -24,9 +24,9 @@
     <div class="page-wrapper page-settings">
         <div class="content">
             <div class="container-fluid">
-                <div class="row mx-auto">
+                <div class="row">
                     <h1 class="text-center">Service Details</h1>
-                    <div class="col-md-3">
+                    <div class="col-md-4">
                         <table class="table table-sm table-bordered table-striped">
 
                             <tbody>
@@ -41,7 +41,8 @@
                                 </tr>
                                 <tr>
                                     <th scope="row">Adress</th>
-                                    <td class="text-wrap">{{ $vendor->address  }}</td>
+                                    {{-- <td class="text-wrap">{{ $vendor->address  }}</td> --}}
+                                    <td class="text-wrap">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Aliquam fuga esse quae perspiciatis sit perferendis deserunt, maxime a magni animi. Fugit asperiores iste dolore quasi dolores hic ut officia libero.</td>
                                 </tr>
                                 <tr>
                                     <th scope="row">city</th>
@@ -55,6 +56,7 @@
                                     <th scope="row">Visiting Card</th>
                                     <td style="text-align: center">
                                         <img src="{{ asset('storage/vendor/visiting_card/' . $vendor->visiting_card) }}" alt="" style="width: 120px;">
+                                        {{-- <img src="{{ asset('assets/img/service-img-10.jpg') }}" alt="" style="width: 120px;"> --}}
                                         <a href="{{ asset('storage/vendor/visiting_card/' . $vendor->visiting_card) }}" target="_blank" style="display: block">Visiting Card</a>
                                     </td>
                                 </tr>
@@ -66,7 +68,7 @@
                             </tbody>
                         </table>
                     </div>
-                    <div class="col-md-3">
+                    <div class="col-md-4">
                         <table class="table table-sm table-bordered table-striped">
 
                             <tbody>
@@ -106,7 +108,7 @@
                             </tbody>
                         </table>
                     </div>
-                    <div class="col-md-3">
+                    <div class="col-md-4">
                         <table class="table table-sm table-bordered table-striped">
 
                             <tbody>
@@ -147,7 +149,7 @@
                             </tbody>
                         </table>
                     </div>
-                    <div class="col-md-3">
+                    {{-- <div class="col-md-3">
                         <table class="table table-sm table-bordered table-striped">
 
                             <tbody>
@@ -179,15 +181,15 @@
                                         <img src="{{asset('assets/img/services/AC_Cleaning.jpg')}}" alt="" style="width: 120px;">
                                         <a href="https://www.w3schools.com" target="_blank" style="display: block">Visit W3Schools</a>
                                     </td>
-                                </tr>
+                                </tr> --}}
                                 {{-- @empty
                                 <tr>
                                     <td colspan="4" class="text-center">No data found</td>
                                 </tr> --}}
-
+{{--
                             </tbody>
                         </table>
-                    </div>
+                    </div> --}}
                 </div>
             </div>
         </div>

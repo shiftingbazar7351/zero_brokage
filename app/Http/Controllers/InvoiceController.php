@@ -27,7 +27,7 @@ class InvoiceController extends Controller
         $subcategories = SubCategory::orderByDesc('created_at')->get();
         $submenus = SubMenu::orderByDesc('created_at')->get();
         $countryId = Country::where('name', 'India')->value('id');
-        $invoicesname = Invoice::with(['Category', 'cityName', 'stateName', 'subcategory', 'menu', 'submenu'])->get();
+        $invoicesname = Invoice::with(['Category', 'cityName', 'subcategory', 'menu', 'submenu'])->get();
         $states = State::where('country_id', $countryId)->get(['name', 'id']);
         $invoices = Invoice::orderByDesc('created_at')->paginate(10);
         $vendors = Vendor::select('id', 'vendor_name')->orderByDesc('created_at')->get();

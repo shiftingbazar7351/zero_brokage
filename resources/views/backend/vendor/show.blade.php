@@ -56,6 +56,7 @@
                                     <th scope="row">Visiting Card</th>
                                     <td style="text-align: center">
                                         <img src="{{ asset('storage/vendor/visiting_card/' . $vendor->visiting_card) }}" alt="" style="width: 120px;">
+                                        {{-- <img src="{{ asset('assets/img/service-img-10.jpg') }}" alt="" style="width: 120px;"> --}}
                                         <a href="{{ asset('storage/vendor/visiting_card/' . $vendor->visiting_card) }}" target="_blank" style="display: block">Visiting Card</a>
                                     </td>
                                 </tr>

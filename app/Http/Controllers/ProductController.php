@@ -5,6 +5,7 @@ use App\Models\Product;
 use App\Models\Category;
 use App\Models\SubCategory;
 use App\Models\SubMenu;
+use App\Models\Menu;
 use App\Models\Country;
 use App\Models\State;
 use Illuminate\Http\Request;
@@ -59,6 +60,7 @@ class ProductController extends Controller
         ]);
         // return $request->all();
         $product = Product::create([
+
             'category_id' => json_encode($request->category_id), // Use json_encode if storing multiple IDs
             'subcategory_id' => json_encode($request->subcategory_id),
             'menu_id' => json_encode($request->menu_id),
@@ -88,9 +90,24 @@ class ProductController extends Controller
      */
     public function show($id)
     {
-        return $products = Product::with(['categoryName','subcategory'])->findOrFail($id);
-        return view("backend.products.show",compact('products',));
+        $products = Product::findOrFail($id);
+    
+        // Decode the stored JSON array for category and subcategory IDs
+        $categoryIds = json_decode($products->category_id);
+        $subcategoryIds = json_decode($products->subcategory_id);
+        $menuIds = json_decode($products->menu_id);
+        $submenuIds = json_decode($products->submenu_id);
+    
+        // Fetch the related categories and subcategories using the decoded IDs
+        $categories = Category::whereIn('id', $categoryIds)->get();
+        $subcategories = SubCategory::whereIn('id', $subcategoryIds)->get();
+        $menus = Menu::whereIn('id', $menuIds)->get();
+        $submenus = SubMenu::whereIn('id', $submenuIds)->get();
+    
+        return view('backend.products.show', compact('products', 'categories', 'subcategories','menus','submenus'));
     }
+    
+    
 
     /**
      * Show the form for editing the specified resource.

@@ -20,24 +20,25 @@ class Product extends Model
         'subcategory_id', 'menu_id', 'submenu_id', 'created_by'
     ];
 
-    public function categoryName()
+    public function categories()
     {
-        return $this->belongsTo(Category::class,'category_id','id');
+        return $this->belongsToMany(Category::class, 'categories', 'id', 'category_id');
     }
-
-    public function subcategory()
+    
+    public function subcategories()
     {
-        return $this->belongsTo(SubCategory::class,'subcategory_id','id');
+        return $this->belongsToMany(SubCategory::class, 'subcategories', 'id', 'subcategory_id');
     }
+    
 
     public function menu()
     {
-        return $this->belongsTo(Menu::class,'menu_id','id');
+        return $this->belongsToMany(Menu::class,'menus','id', 'menu_id');
     }
 
     public function submenu()
     {
-        return $this->belongsTo(Submenu::class,'submenu_id','id');
+        return $this->belongsToMany(Submenu::class,'submenus','id' , 'submenu_id');
     }
 
     public function createdBy()

@@ -119,49 +119,41 @@
                         </div>
 
                         <div class="row mx-auto mt-3">
-
                             <div class="col-md-3">
-
                                 <label class="form-label text-dark">Price<b style="color: red;">*</b></label>
-                                <input name="price" class="form-control bg-light-subtle" placeholder="Enter price"
-                                    required>{{ old('price') }}</input>
-
+                                <input id="price" name="price" class="form-control bg-light-subtle"
+                                    placeholder="Enter price" required value="{{ old('price') }}">
                                 @error('price')
-                                    <div class="error text-danger ">{{ $message }}</div>
+                                    <div class="error text-danger">{{ $message }}</div>
                                 @enderror
                             </div>
 
-
                             <div class="col-md-3">
-
                                 <label class="form-label text-dark">Quantity<b style="color: red;">*</b></label>
-                                <input name="quantity" class="form-control bg-light-subtle" placeholder="Enter quantity"
-                                    required>{{ old('quantity') }}</input>
-
+                                <input id="quantity" name="quantity" class="form-control bg-light-subtle"
+                                    placeholder="Enter quantity" required value="{{ old('quantity') }}">
                                 @error('quantity')
-                                    <div class="error text-danger ">{{ $message }}</div>
+                                    <div class="error text-danger">{{ $message }}</div>
                                 @enderror
                             </div>
+
                             <div class="col-md-3">
-
-                                <label class="form-label text-dark">Total Ammount<b style="color: red;">*</b></label>
-                                <input name="total_ammount" class="form-control bg-light-subtle"
-                                    placeholder="Enter total_ammount" required>{{ old('total_ammount') }}</input>
-
+                                <label class="form-label text-dark">Total Amount<b style="color: red;">*</b></label>
+                                <input id="total_amount" name="total_ammount" class="form-control bg-light-subtle"
+                                    placeholder="Enter total amount" readonly required
+                                    value="{{ old('total_ammount') }}">
                                 @error('total_ammount')
-                                    <div class="error text-danger ">{{ $message }}</div>
+                                    <div class="error text-danger">{{ $message }}</div>
                                 @enderror
                             </div>
+
                             <div class="col-md-3">
                                 <label class="form-label">GST<b style="color: red;">*</b></label>
-                                <select name="gst" class="form-select bg-light-subtle"
+                                <select id="gst" name="gst" class="form-select bg-light-subtle"
                                     aria-label="Default select example" required>
-                                    <option value="3" {{ old('gst') == '18%' ? 'selected' : '' }}>18%
-                                    </option>
-                                    <option value="1" {{ old('gst') == '5%' ? 'selected' : '' }}>5%
-                                    </option>
-                                    <option value="2" {{ old('gst') == '12%' ? 'selected' : '' }}>12%
-                                    </option>
+                                    <option value="18" {{ old('gst') == '18%' ? 'selected' : '' }}>18%</option>
+                                    <option value="12" {{ old('gst') == '12%' ? 'selected' : '' }}>12%</option>
+                                    <option value="5" {{ old('gst') == '5%' ? 'selected' : '' }}>5%</option>
                                 </select>
                                 @error('gst')
                                     <div class="text-danger">{{ $message }}</div>
@@ -170,24 +162,19 @@
                         </div>
 
                         <div class="row mx-auto my-3">
-
                             <div class="col-md-4">
-
                                 <label class="form-label text-dark">Grand Total<b style="color: red;">*</b></label>
-                                <input name="grand_total" class="form-control bg-light-subtle"
-                                    placeholder="Enter grand total" required>{{ old('grand_total') }}</input>
-
+                                <input id="grand_total" name="grand_total" class="form-control bg-light-subtle"
+                                    placeholder="Enter grand total" readonly required value="{{ old('grand_total') }}">
                                 @error('grand_total')
-                                    <div class="error text-danger ">{{ $message }}</div>
+                                    <div class="error text-danger">{{ $message }}</div>
                                 @enderror
                             </div>
 
                             <div class="col-md-2 align-items-end d-flex">
                                 <button type="submit" id="submitbutton" class="btn btn-success">Add Invoice</button>
                             </div>
-
                         </div>
-
 
                     </form>
                 </div>
@@ -211,7 +198,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @if(session('new_invoice'))
+                                @if (session('new_invoice'))
                                     @php $invoice = session('new_invoice'); @endphp
                                     <tr>
                                         <td>1</td>
@@ -309,7 +296,6 @@
                                 <label class="form-label text-dark">Phone Number<b style="color: red;">*</b></label>
                                 <input name="number" id="discount" class="form-control bg-light-subtle"
                                     value="{{ $vendor->number ?? '' }}" placeholder="Enter company name" required />
-
                                 @error('number')
                                     <div class="error text-danger ">{{ $message }}</div>
                                 @enderror
@@ -350,10 +336,11 @@
                             <div class="col-md-4">
                                 <label class="form-label text-dark">Transaction Id<b style="color: red;">*</b></label>
                                 <select class="selectpicker" multiple="multiple" data-live-search="true"
-                                        data-selected-text-format="value" id="transactionId" name="transaction_id[]">
+                                    data-selected-text-format="value" id="transactionId" name="transaction_id[]">
                                     <option value="" selected disabled>Select Transaction ID</option>
                                     @foreach ($transactions as $transaction)
-                                        <option value="{{ $transaction->id }}">{{ $transaction->transaction_id ?? '' }}</option>
+                                        <option value="{{ $transaction->id }}">{{ $transaction->transaction_id ?? '' }}
+                                        </option>
                                     @endforeach
                                 </select>
                                 @error('transaction_id')
@@ -371,7 +358,8 @@
 
                             <div class="col-md-4">
                                 <label class="form-label">Payment Date<b style="color: red;">*</b></label>
-                                <input class="form-control" type="text" name="payment_time" value="{{ old('payment_time') }}">
+                                <input class="form-control" type="text" name="payment_time"
+                                    value="{{ old('payment_time') }}">
                                 @error('payment_time')
                                     <div class="text-danger">{{ $message }}</div>
                                 @enderror
@@ -402,7 +390,7 @@
 
                             <div class="col-md-4">
                                 <label class="form-label text-dark">Date<b style="color: red;">*</b></label>
-                                <input name="Date" class="form-control bg-light-subtle" placeholder="Enter Date"
+                                <input name="date" type="date" class="form-control bg-light-subtle" placeholder="Enter Date"
                                     required>{{ old('Date') }}</input>
 
                                 @error('Date')
@@ -411,8 +399,7 @@
                             </div>
                             <div class="col-md-12">
                                 <label class="form-label text-dark">Address<b style="color: red;">*</b></label>
-                                <textarea name="address" class="form-control bg-light-subtle" placeholder="Enter address"
-                                    required>{{ old('address',$vendor->address ??'') }}</textarea>
+                                <textarea name="address" class="form-control bg-light-subtle" placeholder="Enter address" required>{{ old('address', $vendor->address ?? '') }}</textarea>
 
                                 @error('address')
                                     <div class="error text-danger ">{{ $message }}</div>
@@ -589,124 +576,79 @@
                 );
             }
         });
-
-        function sendOtpIfValid(input) {
-            var phoneNumber = input.value;
-            if (phoneNumber.length === 10) {
-                // Clear any previous errors
-                document.getElementById('phoneError').textContent = '';
-
-                // AJAX call to send OTP
-                $.ajax({
-                    url: '/vendor-send-otp',
-                    method: 'POST',
-                    data: {
-                        number: phoneNumber, // Changed to 'number'
-                        _token: '{{ csrf_token() }}'
-                    },
-                    success: function(response) {
-                        // alert(response.message); // Notify OTP sent
-                        // alert(opt);
-                        toastr.success('OTP has been sent: ' + response.otp);
-                        document.getElementById('otpSection').style.display = 'block'; // Show OTP input
-                    },
-                    error: function(response) {
-                        if (response.responseJSON && response.responseJSON.errors && response.responseJSON
-                            .errors.number) {
-                            document.getElementById('phoneError').textContent = response.responseJSON.errors
-                                .number[0];
-                        } else {
-                            document.getElementById('phoneError').textContent =
-                                'An error occurred. Please try again.';
-                        }
-                    }
-                });
-            } else {
-                document.getElementById('phoneError').textContent = 'Please enter a valid 10-digit phone number.';
-            }
-        }
-
-        function verifyOtp() {
-            var otp = document.getElementById('otp').value;
-            var phoneNumber = document.getElementById('phoneNumVender').value; // Get the mobile number
-
-            if (otp.length === 4 && phoneNumber.length === 10) {
-                document.getElementById('otpError').textContent = '';
-
-                $.ajax({
-                    url: '/vendor-verify-otp',
-                    method: 'POST',
-                    data: {
-                        otp: otp,
-                        mobile_number: phoneNumber, // send the mobile number as 'mobile_number'
-                        _token: '{{ csrf_token() }}'
-                    },
-                    success: function(response) {
-                        // alert(response.message); // Notify OTP verified
-                        toastr.success('Otp verfied successfully')
-                        document.getElementById('otpSection').style.display =
-                            'none'; // Hide OTP input after verification
-                    },
-                    error: function(response) {
-                        if (response.responseJSON && response.responseJSON.errors) {
-                            document.getElementById('otpError').textContent = response.responseJSON.errors
-                                .mobile_number ?
-                                response.responseJSON.errors.mobile_number[0] :
-                                response.responseJSON.errors.otp[0];
-                        } else {
-                            document.getElementById('otpError').textContent =
-                                'An error occurred. Please try again.';
-                        }
-                    }
-                });
-            } else {
-                document.getElementById('otpError').textContent =
-                    'Please enter a valid 4-digit OTP and 10-digit phone number.';
-            }
-        }
-    </script>
-      <script>
         $(document).ready(function() {
-    $('#transactionId').on('change', function() {
-        var transactionIds = $(this).val(); // Get selected transaction IDs
+            $('#transactionId').on('change', function() {
+                var transactionIds = $(this).val(); // Get selected transaction IDs
 
-        if (transactionIds && transactionIds.length) {
-            $.ajax({
-                url: '/transactions',
-                type: 'GET',
-                data: { transaction_ids: transactionIds },
-                dataType: 'json',
-                success: function(data) {
-                    if (data && !data.error) {
-                        var utrs = [];
-                        var paymentTimes = [];
-                        var screenshots = [];
+                if (transactionIds && transactionIds.length) {
+                    $.ajax({
+                        url: '/transactions',
+                        type: 'GET',
+                        data: {
+                            transaction_ids: transactionIds
+                        },
+                        dataType: 'json',
+                        success: function(data) {
+                            if (data && !data.error) {
+                                var utrs = [];
+                                var paymentTimes = [];
+                                var screenshots = [];
 
-                        $.each(data, function(id, details) {
-                            utrs.push(details.utr);
-                            paymentTimes.push(details.payment_time);
-                            if (details.screenshot) {
-                                screenshots.push('<img src="' + details.screenshot + '" alt="Screenshot" style="width: 120px;">');
+                                $.each(data, function(id, details) {
+                                    utrs.push(details.utr);
+                                    paymentTimes.push(details.payment_time);
+                                    if (details.screenshot) {
+                                        screenshots.push('<img src="' + details
+                                            .screenshot +
+                                            '" alt="Screenshot" style="width: 120px;">'
+                                        );
+                                    } else {
+                                        screenshots.push('No Image');
+                                    }
+                                });
+
+                                $('input[name="utr"]').val(utrs.join(', '));
+                                $('input[name="payment_time"]').val(paymentTimes.join(', '));
+                                $('#screenshotContainer').html(screenshots.join('<br>'));
                             } else {
-                                screenshots.push('No Image');
+                                alert(data.error || 'Transaction details not found');
                             }
-                        });
-
-                        $('input[name="utr"]').val(utrs.join(', '));
-                        $('input[name="payment_time"]').val(paymentTimes.join(', '));
-                        $('#screenshotContainer').html(screenshots.join('<br>'));
-                    } else {
-                        alert(data.error || 'Transaction details not found');
-                    }
-                },
-                error: function(jqXHR, textStatus, errorThrown) {
-                    alert('Error retrieving transaction details: ' + textStatus);
+                        },
+                        error: function(jqXHR, textStatus, errorThrown) {
+                            alert('Error retrieving transaction details: ' + textStatus);
+                        }
+                    });
                 }
             });
-        }
-    });
-});
+        });
 
-      </script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const priceInput = document.getElementById('price');
+            const quantityInput = document.getElementById('quantity');
+            const totalAmountInput = document.getElementById('total_amount');
+            const gstSelect = document.getElementById('gst');
+            const grandTotalInput = document.getElementById('grand_total');
 
+            function calculateTotals() {
+                const price = parseFloat(priceInput.value) || 0;
+                const quantity = parseFloat(quantityInput.value) || 0;
+                const gstPercentage = parseFloat(gstSelect.value) || 0;
+
+                // Calculate Grand Total: Price * Quantity
+                const grandTotal = price * quantity;
+                grandTotalInput.value = grandTotal.toFixed(2);
+
+                // Calculate GST Amount: Grand Total * GST%
+                const gstAmount = grandTotal * (gstPercentage / 100);
+
+                // Calculate Total Amount after subtracting GST: Grand Total - GST Amount
+                const totalAmount = grandTotal - gstAmount;
+                totalAmountInput.value = totalAmount.toFixed(2);
+            }
+
+            priceInput.addEventListener('input', calculateTotals);
+            quantityInput.addEventListener('input', calculateTotals);
+            gstSelect.addEventListener('change', calculateTotals);
+        });
+    </script>
 @endsection

@@ -173,7 +173,7 @@
 
                         <div class="row mx-auto my-3">
 
-                            <div class="col-md-4">
+                            <div class="col-md-3">
 
                                 <label class="form-label text-dark">Grand Total<b style="color: red;">*</b></label>
                                 <input name="grand_total" class="form-control bg-light-subtle"
@@ -184,10 +184,54 @@
                                 @enderror
                             </div>
 
+                            <div class="col-md-3">
+                                <label class="form-label">Vendors<b style="color: red;">*</b></label>
+                                <select name="vendor_id" class="form-select bg-light-subtle"
+                                    aria-label="Default select example" required>
+                                    <option value="" selected disabled>Select Vendors</option>
+                                    <option value="1" {{ old('vendor_id') == '1' ? 'selected' : '' }}>Vendors1
+                                    </option>
+                                    <option value="2" {{ old('vendor_id') == '2' ? 'selected' : '' }}>Vendors2
+                                    </option>
+                                    <option value="3" {{ old('vendor_id') == '3' ? 'selected' : '' }}>Vendors3
+                                    </option>
+                                </select>
+                                @error('vendor_id')
+                                    <div class="text-danger">{{ $message }}</div>
+                                @enderror
+                            </div>
+
+                            <div class="col-md-3">
+                                <label class="form-label">Transection<b style="color: red;">*</b></label>
+                                <select name="transection_id" class="form-select bg-light-subtle"
+                                    aria-label="Default select example" required>
+                                    <option value="" selected disabled>Select transection</option>
+                                    <option value="1" {{ old('transection_id') == '1' ? 'selected' : '' }}>0
+                                    </option>
+                                    <option value="2" {{ old('transection_id') == '2' ? 'selected' : '' }}>12
+                                    </option>
+                                    <option value="3" {{ old('transection_id') == '3' ? 'selected' : '' }}>18
+                                    </option>
+                                </select>
+                                @error('transection_id')
+                                    <div class="text-danger">{{ $message }}</div>
+                                @enderror
+                            </div>
+
+                            <div class="col-md-3">
+                                <label class="form-label">UTR<b style="color: red;">*</b></label>
+                                <input class="form-control" type="text" name="utr" value="{{ old('utr') }}">
+                                @error('utr')
+                                    <div class="text-danger">{{ $message }}</div>
+                                @enderror
+                            </div>                           
+
+                        </div>
+
+                        <div class="row">
                             <div class="col-md-2 align-items-end d-flex">
                                 <button type="submit" id="submitbutton" class="btn btn-success">Add Invoice</button>
                             </div>
-
                         </div>
 
 

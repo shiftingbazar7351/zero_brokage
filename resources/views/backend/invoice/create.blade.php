@@ -7,10 +7,7 @@
 
             <div class="main-wrapper">
 
-                <div class="container border shadow-sm mt-2">
-                    <h4> CRUD Invoice</h4>
-                </div>
-                <div class="container mt-4 border rounded shadow">
+                <div class="container mt-4 border rounded shadow p-3">
                     <form id="addCategoryModal" action="{{ route('invoice.store') }}" method="POST"
                         enctype="multipart/form-data" data-parsley-validate="true">
                         @csrf
@@ -192,70 +189,247 @@
 
 
                     </form>
-                </div>
-                <div class="col-12">
-                    <div class="table-responsive table-div">
-                        <table class="table datatable table-striped table-bordered">
-                            <thead>
-                                <tr>
-                                    <th>#</th>
-                                    <th>Category</th>
-                                    <th>Sub Category</th>
-                                    <th>Menu</th>
-                                    <th>Sub Menu</th>
-                                    <th>Price</th>
-                                    <th>Quantity</th>
-                                    <th>Total Ammount</th>
-                                    <th>Grand Total</th>
-                                    <th>City</th>
-                                    <th>State</th>
-                                    <th>Action</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @forelse ($invoices as $invoice)
+                    <div class="row col-12">
+                        <div class="table-responsive table-div">
+                            <table class="table text-center table-bordered">
+                                <thead>
                                     <tr>
-                                        <td>{{ $loop->iteration }}</td>
-                                        <td> {{ $invoice->category->name ?? '' }} </td>
-                                        <td> {{ $invoice->subcategory->name ?? '' }} </td>
-                                        <td> {{ $invoice->menu->name ?? '' }} </td>
-                                        <td> {{ $invoice->submenu->name ?? '' }} </td>
-                                        <td> {{ $invoice->price ?? '' }} </td>
-                                        <td> {{ $invoice->quantity ?? '' }} </td>
-                                        <td> {{ $invoice->total_ammount ?? '' }} </td>
-                                        <td> {{ $invoice->grand_total ?? '' }} </td>
-                                        <td> {{ $invoice->city_name->name ?? '' }} </td>
-                                        {{-- <td></td> --}}
-                                        <td> {{ $invoice->state_name->name ?? '' }} </td>
-                                        <td>
-                                            <div class="table-actions d-flex justify-content-center">
-                                                <button class="btn delete-table me-2" onclick="#" type="button"
-                                                    data-bs-toggle="modal" data-bs-target="#edit-category">
-                                                    <i class="fe fe-edit"></i>
-                                                </button>
-                                                <form action="#" method="POST" style="display:inline;">
-                                                    @csrf
-                                                    @method('DELETE')
-                                                    <button class="btn delete-table" type="submit"
-                                                        onclick="return confirm('Are you sure want to delete this?')">
-                                                        <i class="fe fe-trash-2"></i>
+                                        <th scope="col">#</th>
+                                        <th scope="col">Category</th>
+                                        <th scope="col">Sub Category</th>
+                                        <th scope="col">Menu</th>
+                                        <th scope="col">Sub Menu</th>
+                                        <th scope="col">Price</th>
+                                        <th scope="col">Quantity</th>
+                                        <th scope="col">Total Ammount</th>
+                                        <th scope="col">Grand Total</th>
+                                        <th scope="col">City</th>
+                                        <th scope="col">State</th>
+                                        <th scope="col">Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @forelse ($invoices as $invoice)
+                                        <tr>
+                                            <td>{{ $loop->iteration }}</td>
+                                            <td> {{ $invoice->category->name ?? '' }} </td>
+                                            <td> {{ $invoice->subcategory->name ?? '' }} </td>
+                                            <td> {{ $invoice->menu->name ?? '' }} </td>
+                                            <td> {{ $invoice->submenu->name ?? '' }} </td>
+                                            <td> {{ $invoice->price ?? '' }} </td>
+                                            <td> {{ $invoice->quantity ?? '' }} </td>
+                                            <td> {{ $invoice->total_ammount ?? '' }} </td>
+                                            <td> {{ $invoice->grand_total ?? '' }} </td>
+                                            <td> {{ $invoice->city_name->name ?? '' }} </td>
+
+                                            <td> {{ $invoice->state_name->name ?? '' }} </td>
+                                            <td>
+                                                <div class="table-actions d-flex justify-content-center">
+                                                    <button class="btn delete-table me-2" onclick="#" type="button"
+                                                        data-bs-toggle="modal" data-bs-target="#edit-category">
+                                                        <i class="fe fe-edit"></i>
                                                     </button>
-                                                </form>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                @empty
-                                    <tr>
-                                        <td colspan="4" class="text-center">No data found</td>
-                                    </tr>
-                                @endforelse
-                            </tbody>
-                        </table>
+                                                    <form action="#" method="POST" style="display:inline;">
+                                                        @csrf
+                                                        @method('DELETE')
+                                                        <button class="btn delete-table" type="submit"
+                                                            onclick="return confirm('Are you sure want to delete this?')">
+                                                            <i class="fe fe-trash-2"></i>
+                                                        </button>
+                                                    </form>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    @empty
+                                        <tr>
+                                            <td colspan="4" class="text-center">No data found</td>
+                                        </tr>
+                                    @endforelse
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="row mt-3">
+                        <form id="addCategoryModal" action="{{ route('vendors.update', $vendor->id ?? '') }}" method="POST"
+                            enctype="multipart/form-data" data-parsley-validate="true">
+                            @csrf
+                            <div class="row mx-auto">
+
+                                <div class="col-md-6">
+
+                                    <label class="form-label text-dark">Company Name<b style="color: red;">*</b></label>
+                                    <input name="company_name" class="form-control bg-light-subtle"
+                                        placeholder="Enter company name"
+                                        value="{{ old('company_name', $vendor->company_name ?? '') }}" required></input>
+
+                                    @error('company_name')
+                                        <div class="error text-danger ">{{ $message }}</div>
+                                    @enderror
+                                </div>
+
+                                <div class="col-md-6">
+                                    <label class="form-label text-dark">Min Lead<b style="color: red;">*</b></label>
+                                    <input name="min_lead" class="form-control bg-light-subtle" value="1"
+                                        placeholder="Enter company name" required />
+
+                                    @error('company_name')
+                                        <div class="error text-danger ">{{ $message }}</div>
+                                    @enderror
+                                </div>
+
+                            </div>
+
+                            <div class="row mx-auto mt-3">
+                                <div class="col-md-4">
+                                    <label class="form-label text-dark">Locality<b style="color: red;">*</b></label>
+                                    <input name="location_lat" class="form-control bg-light-subtle"
+                                        value="{{ $vendor->location_lat ?? '' }}" placeholder="Enter company name"
+                                        required />
+
+                                    @error('company_name')
+                                        <div class="error text-danger ">{{ $message }}</div>
+                                    @enderror
+                                </div>
+                                <div class="col-md-4">
+                                    <label class="form-label text-dark">Whatsapp Number<b style="color: red;">*</b></label>
+                                    <input name="whatsapp" class="form-control bg-light-subtle" id="price"
+                                        maxlength="10" value="{{ $vendor->whatsapp ?? '' }}"
+                                        placeholder="Enter company name" required />
+
+                                    @error('whatsapp')
+                                        <div class="error text-danger ">{{ $message }}</div>
+                                    @enderror
+                                </div>
+                                <div class="col-md-4">
+                                    <label class="form-label text-dark">Phone Number<b style="color: red;">*</b></label>
+                                    <input name="number" id="discount" class="form-control bg-light-subtle"
+                                        value="{{ $vendor->number ?? '' }}" placeholder="Enter company name" required />
+
+                                    @error('number')
+                                        <div class="error text-danger ">{{ $message }}</div>
+                                    @enderror
+                                </div>
+                            </div>
+                            <div class="row mx-auto mt-3">
+                                <div class="col-md-4">
+                                    <label class="form-label text-dark">Email<b style="color: red;">*</b></label>
+                                    <input name="email" id="discount" class="form-control bg-light-subtle"
+                                        value="{{ $vendor->email ?? '' }}" placeholder="Enter company name" required />
+
+                                    @error('email')
+                                        <div class="error text-danger ">{{ $message }}</div>
+                                    @enderror
+                                </div>
+                                <div class="col-md-4">
+                                    <label class="form-label text-dark">State<b style="color: red;">*</b></label>
+                                    <input name="state" id="discount" class="form-control bg-light-subtle"
+                                        value="{{ $vendor->cityName->state->name ?? '' }}" placeholder="Enter company name"
+                                        required />
+
+                                    @error('state')
+                                        <div class="error text-danger ">{{ $message }}</div>
+                                    @enderror
+                                </div>
+                                <div class="col-md-4">
+                                    <label class="form-label text-dark">City<b style="color: red;">*</b></label>
+                                    <input name="city" id="discount" class="form-control bg-light-subtle"
+                                        value="{{ $vendor->cityName->name ?? '' }}" placeholder="Enter company name"
+                                        required />
+
+                                    @error('city')
+                                        <div class="error text-danger ">{{ $message }}</div>
+                                    @enderror
+                                </div>
+                            </div>
+                            <div class="row mx-auto mt-3">
+                                <div class="col-md-4">
+                                    <label class="form-label text-dark">Transaction Id<b style="color: red;">*</b></label>
+                                    <select class="selectpicker" multiple="multiple" data-live-search="true"
+                                            data-selected-text-format="value" id="transactionId" name="transaction_id[]">
+                                        <option value="" selected disabled>Select Transaction ID</option>
+                                        @foreach ($transactions as $transaction)
+                                            <option value="{{ $transaction->id }}">{{ $transaction->transaction_id ?? '' }}</option>
+                                        @endforeach
+                                    </select>
+                                    @error('transaction_id')
+                                        <div class="error text-danger">{{ $message }}</div>
+                                    @enderror
+                                </div>
+
+                                <div class="col-md-4">
+                                    <label class="form-label">UTR<b style="color: red;">*</b></label>
+                                    <input class="form-control" type="text" name="utr" value="{{ old('utr') }}">
+                                    @error('utr')
+                                        <div class="text-danger">{{ $message }}</div>
+                                    @enderror
+                                </div>
+
+                                <div class="col-md-4">
+                                    <label class="form-label">Payment Date<b style="color: red;">*</b></label>
+                                    <input class="form-control" type="text" name="payment_time" value="{{ old('payment_time') }}">
+                                    @error('payment_time')
+                                        <div class="text-danger">{{ $message }}</div>
+                                    @enderror
+                                </div>
+
+                                <div class="col-md-4">
+                                    <label class="form-label">Screenshot<b style="color: red;">*</b></label>
+                                    <div id="screenshotContainer" style="width: 50px; height;50px">
+                                        <!-- Images will be inserted here by AJAX -->
+
+                                    </div>
+                                    <input class="form-control" type="file" name="screenshot"
+                                        value="{{ old('screenshot') }}">
+                                    @error('screenshot')
+                                        <div class="text-danger">{{ $message }}</div>
+                                    @enderror
+                                </div>
+
+                                <div class="col-md-4">
+                                    <label class="form-label text-dark">GST<b style="color: red;">*</b></label>
+                                    <input name="gst" class="form-control bg-light-subtle" placeholder="Enter gst"
+                                        required>{{ old('gst') }}</input>
+
+                                    @error('gst')
+                                        <div class="error text-danger ">{{ $message }}</div>
+                                    @enderror
+                                </div>
+
+                                <div class="col-md-4">
+                                    <label class="form-label text-dark">Date<b style="color: red;">*</b></label>
+                                    <input name="Date" class="form-control bg-light-subtle" placeholder="Enter Date"
+                                        required>{{ old('Date') }}</input>
+
+                                    @error('Date')
+                                        <div class="error text-danger ">{{ $message }}</div>
+                                    @enderror
+                                </div>
+                                <div class="col-md-12">
+                                    <label class="form-label text-dark">Address<b style="color: red;">*</b></label>
+                                    <textarea name="address" class="form-control bg-light-subtle" placeholder="Enter address"
+                                        required>{{ old('address',$vendor->address ??'') }}</textarea>
+
+                                    @error('address')
+                                        <div class="error text-danger ">{{ $message }}</div>
+                                    @enderror
+                                </div>
+                                <div class="row mt-3">
+                                    <div class="">
+
+                                        <button type="submit" id="submitbutton" class="btn btn-success">Add</button>
+                                    </div>
+                                </div>
+                            </div>
+
+
+
+                        </form>
                     </div>
                 </div>
 
+
                 {{-- product data show fileds --}}
-                <div class="container mt-4 border rounded shadow">
+                {{-- <div class="container mt-4 border rounded shadow p-4">
                     <form id="addCategoryModal" action="{{ route('vendors.update', $vendor->id ?? '') }}" method="POST"
                         enctype="multipart/form-data" data-parsley-validate="true">
                         @csrf
@@ -419,17 +593,18 @@
                                     <div class="error text-danger ">{{ $message }}</div>
                                 @enderror
                             </div>
-                        </div>
+                            <div class="row mt-3">
+                                <div class="">
 
-
-                        <div class="row mt-3">
-                            <div class="">
-
-                                <button type="submit" id="submitbutton" class="btn btn-success">Add</button>
+                                    <button type="submit" id="submitbutton" class="btn btn-success">Add</button>
+                                </div>
                             </div>
                         </div>
+
+
+
                     </form>
-                </div>
+                </div> --}}
 
             </div>
 

@@ -5,13 +5,14 @@ namespace App\Http\Controllers;
 use App\Models\Category;
 use App\Models\City;
 use App\Models\Country;
-use App\Models\State;
+use App\Models\Invoice;
 use App\Models\Menu;
+use App\Models\State;
 use App\Models\SubCategory;
 use App\Models\SubMenu;
+use App\Models\Transaction;
 use App\Models\Vendor;
 use App\Services\FileUploadService;
-use App\Models\Invoice;
 use Illuminate\Http\Request;
 
 class InvoiceController extends Controller
@@ -29,28 +30,28 @@ class InvoiceController extends Controller
         $invoicesname = Invoice::with(['Category', 'cityName', 'stateName', 'subcategory', 'menu', 'submenu'])->get();
         $states = State::where('country_id', $countryId)->get(['name', 'id']);
         $invoices = Invoice::orderByDesc('created_at')->paginate(10);
-        $vendors = Vendor::select('id','vendor_name')->orderByDesc('created_at')->get();
-        $vendor = Vendor::select('id','vendor_name')->first();
-        return view('backend.invoice.index',compact('vendors','vendor', 'invoicesname','invoices','categories','subcategories','submenus','countryId','states'));
+        $vendors = Vendor::select('id', 'vendor_name')->orderByDesc('created_at')->get();
+        $vendor = Vendor::select('id', 'vendor_name')->first();
+        return view('backend.invoice.index', compact('vendors', 'vendor', 'invoicesname', 'invoices', 'categories', 'subcategories', 'submenus', 'countryId', 'states'));
     }
 
     /**
      * Show the form for creating a new resource.
      *
      */
-    public function create()
-    {
-        $categories = Category::where('status', 1)->orderByDesc('created_at')->get();
-        $subcategories = SubCategory::orderByDesc('created_at')->get();
-        $submenus = SubMenu::orderByDesc('created_at')->get();
-        $countryId = Country::where('name', 'India')->value('id');
-        $invoicesname = Invoice::with(['Category', 'cityName', 'stateName', 'subcategory', 'menu', 'submenu'])->get();
-        $states = State::where('country_id', $countryId)->get(['name', 'id']);
-        $invoices = Invoice::orderByDesc('created_at')->paginate(10);
-        $vendors = Vendor::select('id','vendor_name')->orderByDesc('created_at')->get();
-        return view('backend.invoice.create',compact('vendors', 'invoicesname','invoices','categories','subcategories','submenus','countryId','states'));
-
-    }
+    // public function create()
+    // {
+    //     $categories = Category::where('status', 1)->orderByDesc('created_at')->get();
+    //     $subcategories = SubCategory::orderByDesc('created_at')->get();
+    //     $submenus = SubMenu::orderByDesc('created_at')->get();
+    //     $countryId = Country::where('name', 'India')->value('id');
+    //     $invoicesname = Invoice::with(['Category', 'cityName', 'stateName', 'subcategory', 'menu', 'submenu'])->get();
+    //     $states = State::where('country_id', $countryId)->get(['name', 'id']);
+    //     $invoices = Invoice::orderByDesc('created_at')->paginate(10);
+    //     $vendors = Vendor::select('id', 'vendor_name')->orderByDesc('created_at')->get();
+    //     $vendor = Vendor::select('id', 'vendor_name')->first();
+    //     return view('backend.invoice.create', compact('vendors', 'vendor', 'invoicesname', 'invoices', 'categories', 'subcategories', 'submenus', 'countryId', 'states'));
+    // }
 
     /**
      * Store a newly created resource in storage.
@@ -93,7 +94,7 @@ class InvoiceController extends Controller
         $invoice->city = $request->city;
         $invoice->save();
 
-        return redirect(route('invoice.create'))->with('success', 'Invoice added successfully');
+        return redirect()->back()->with('success', 'Invoice added successfully');
     }
 
     /**
@@ -114,8 +115,16 @@ class InvoiceController extends Controller
      */
     public function edit($id)
     {
+        $categories = Category::where('status', 1)->orderByDesc('created_at')->get();
+        $subcategories = SubCategory::orderByDesc('created_at')->get();
+        $submenus = SubMenu::orderByDesc('created_at')->get();
+        $countryId = Country::where('name', 'India')->value('id');
+        $invoicesname = Invoice::with(['Category', 'cityName', 'subcategory', 'menu', 'submenu'])->get();
+        $states = State::where('country_id', $countryId)->get(['name', 'id']);
+        $invoices = Invoice::orderByDesc('created_at')->paginate(10);
+        $transactions = Transaction::select('id','transaction_id','utr','screenshot','payment_time')->get();
         $vendor = Vendor::findOrFail($id);
-        return view('backend.invoice.create',compact('vendor'));
+        return view('backend.invoice.create', compact( 'transactions','vendor', 'invoicesname', 'invoices', 'categories', 'subcategories', 'submenus', 'countryId', 'states'));
     }
 
     /**
@@ -126,8 +135,10 @@ class InvoiceController extends Controller
      */
     public function update(Request $request, $id)
     {
-       $vendor = Vendor::where('id',$id)->first();
-       return redirect(route('invoice.create',$vendor->id ??''));
+
+        $vendorId = $request->input('vendor_id', $id);
+        $vendor = Vendor::findOrFail($vendorId);
+        return redirect(route('invoice.edit', $vendor->id ?? ''));
 
         // return redirect(route('invoice.create'))->with('success', 'Invoice added successfully');
     }
@@ -141,4 +152,8 @@ class InvoiceController extends Controller
     {
         //
     }
+
+    // In your controller
+
+
 }

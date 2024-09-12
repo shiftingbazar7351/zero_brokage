@@ -44,11 +44,6 @@ class Invoice extends Model
         return $this->belongsTo(City::class, 'city', 'id');
     }
 
-    public function stateName()
-    {
-        return $this->belongsTo(State::class, 'state', 'id');
-    }
-
     public function submenu()
     {
         return $this->belongsTo(Submenu::class, 'submenu_id', 'id');

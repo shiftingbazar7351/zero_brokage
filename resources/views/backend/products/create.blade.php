@@ -22,7 +22,7 @@
                         <div class="row">
                             <div class="mb-3 col-md-3">
                                 <label for="category">Category<b style="color: red;">*</b></label>
-                                <select class="selectpicker" multiple="multiple" data-live-search="true"
+                                <select class="selectpickerr" multiple="multiple" data-live-search="true"
                                     data-selected-text-format="value" id="category" name="category_id[]">
                                     <option value="" selected disabled>Select category</option>
                                     @foreach ($categories as $category)
@@ -37,7 +37,7 @@
 
                             <div class="mb-3 col-md-3">
                                 <label for="subcategory">Sub Category<b style="color: red;">*</b></label>
-                                <select class="selectpicker" multiple="multiple" data-live-search="true"
+                                <select class="selectpickerr" multiple="multiple" data-live-search="true"
                                 data-selected-text-format="value" id="subcategory" name="subcategory_id[]" multiple>
                                     <option value=""  selected disabled>Select subcategory</option>
                                 </select>
@@ -51,7 +51,7 @@
 
                             <div class=" mb-3 col-md-3">
                                 <label for="menu">Menu<b style="color: red;">*</b></label>
-                                <select class="selectpicker" multiple="multiple" data-live-search="true"
+                                <select class="selectpickerr" multiple="multiple" data-live-search="true"
                                 data-selected-text-format="value" id="menu" name="menu_id[]" multiple>
                                     <option value=""  selected disabled>Select menu</option>
                                 </select>
@@ -61,7 +61,7 @@
                             </div>
                             <div class="mb-3 col-md-3">
                                 <label for="submenu" selected disabled>Sub-Menu<b style="color: red;">*</b></label>
-                                <select class="selectpicker" multiple="multiple" data-live-search="true"
+                                <select class="selectpickerr" multiple="multiple" data-live-search="true"
                                 data-selected-text-format="value" id="submenu" name="submenu_id[]" multiple>
                                     <option value="">Select submenu</option>
                                 </select>
@@ -72,7 +72,7 @@
 
                             <div class=" mb-3 col-md-3">
                                 <label for="state">State<b style="color: red;">*</b></label>
-                                <select class="selectpicker" multiple="multiple" data-live-search="true"
+                                <select class="selectpickerr" multiple="multiple" data-live-search="true"
                                 data-selected-text-format="value" id="state" name="state[]" multiple>
                                     <option value=""  selected disabled>Select state</option>
                                     @foreach ($states as $state)
@@ -85,7 +85,7 @@
                             </div>
                             <div class="mb-3 col-md-3">
                                 <label for="city">City<b style="color: red;">*</b></label>
-                                <select class="selectpicker" multiple="multiple" data-live-search="true"
+                                <select class="selectpickerr" multiple="multiple" data-live-search="true"
                                 data-selected-text-format="value" id="city" name="city[]" multiple>
                                     <option value="" selected disabled>Select city</option>
                                 </select>
@@ -351,17 +351,16 @@
         integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous">
     </script>
 
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
-        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous">
-    </script>
-
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
     <!-- Bootstrap-select CDN JS LINK -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.12/dist/js/bootstrap-select.min.js"></script>
 
     <script>
+
         $(document).ready(function() {
             // Initialize selectpicker
-            $('.selectpicker').selectpicker();
+
+            $('.selectpickerr').selectpicker();
 
             // Category -> Subcategory
             $('#category').on('change', function() {
@@ -392,6 +391,7 @@
                         error: function() {
                             $('#subcategory').empty().append(
                                 '<option value="" disabled>Error loading subcategories</option>');
+
                             $('#subcategory').selectpicker('refresh'); // Refresh the selectpicker
                         }
                     });
@@ -494,5 +494,6 @@
             });
         });
     </script>
+
 @endsection
 

@@ -24,6 +24,9 @@ use App\Http\Controllers\TransactionController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\VendorController;
 use App\Http\Controllers\VerifiedController;
+
+use Modules\Employee\Http\Controllers\CompanyController;
+
 use Illuminate\Support\Facades\Route;
 
 
@@ -210,6 +213,8 @@ Route::middleware(['auth', 'check.ip'])->group(function () {
     Route::post('invoice/{id}/edit', [InvoiceController::class, 'update'])->name('invoice.edit');
     // Route::post('invoice/create/{id}', [InvoiceController::class, 'create'])->name('invoice.create');
     Route::get('/transactions', [TransactionController::class, 'getTransactionDetails'])->name('transactions.details');
+
+    Route::resource('/employee-company', CompanyController::class);
 });
 
 require __DIR__ . '/auth.php';

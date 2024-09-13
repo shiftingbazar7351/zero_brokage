@@ -210,6 +210,8 @@ Route::middleware(['auth', 'check.ip'])->group(function () {
     Route::post('invoice/{id}/edit', [InvoiceController::class, 'update'])->name('invoice.edit');
     // Route::post('invoice/create/{id}', [InvoiceController::class, 'create'])->name('invoice.create');
     Route::get('/transactions', [TransactionController::class, 'getTransactionDetails'])->name('transactions.details');
+    Route::get('/generate-pdf', [InvoiceController::class, 'generatePDF']);
+
 });
 
 require __DIR__ . '/auth.php';

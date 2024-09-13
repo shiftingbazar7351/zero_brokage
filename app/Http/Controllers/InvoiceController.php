@@ -13,8 +13,10 @@ use App\Models\SubMenu;
 use App\Models\Transaction;
 use App\Models\Vendor;
 use App\Services\FileUploadService;
+use Barryvdh\DomPDF\Facade\Pdf as PDF;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
+
 
 class InvoiceController extends Controller
 {
@@ -36,23 +38,6 @@ class InvoiceController extends Controller
         return view('backend.invoice.index', compact('vendors', 'vendor', 'invoicesname', 'invoices', 'categories', 'subcategories', 'submenus', 'countryId', 'states'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     */
-    // public function create()
-    // {
-    //     $categories = Category::where('status', 1)->orderByDesc('created_at')->get();
-    //     $subcategories = SubCategory::orderByDesc('created_at')->get();
-    //     $submenus = SubMenu::orderByDesc('created_at')->get();
-    //     $countryId = Country::where('name', 'India')->value('id');
-    //     $invoicesname = Invoice::with(['Category', 'cityName', 'stateName', 'subcategory', 'menu', 'submenu'])->get();
-    //     $states = State::where('country_id', $countryId)->get(['name', 'id']);
-    //     $invoices = Invoice::orderByDesc('created_at')->paginate(10);
-    //     $vendors = Vendor::select('id', 'vendor_name')->orderByDesc('created_at')->get();
-    //     $vendor = Vendor::select('id', 'vendor_name')->first();
-    //     return view('backend.invoice.create', compact('vendors', 'vendor', 'invoicesname', 'invoices', 'categories', 'subcategories', 'submenus', 'countryId', 'states'));
-    // }
 
     /**
      * Store a newly created resource in storage.
@@ -97,18 +82,6 @@ class InvoiceController extends Controller
         Session::flash('success', 'Added Successfully');
         return redirect()->back();
     }
-
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     */
-    // public function show($id)
-    // {
-    //    return $invoice = Invoice::findOrFail($id);
-    //     return view("backend.invoice.index", compact('invoice', ));
-    // }
 
     /**
      * Show the form for editing the specified resource.
@@ -157,5 +130,14 @@ class InvoiceController extends Controller
             return redirect()->back()->with('success','Deleted Successfully');
         }
         return redirect()->back()->with('error','Something went wrong');
+    }
+
+    public function generatePDF()
+    {
+        $data = ['title' => 'Laravel PDF Example', 'date' => date('m/d/Y')];
+
+        $pdf = PDF::loadView('frontend.reciept', $data);
+
+        return $pdf->download('invoice.pdf');
     }
 }

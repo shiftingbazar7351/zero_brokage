@@ -9,17 +9,16 @@
 
 <body>
     <div>
-        <div style="margin: 4%">
+        <div>
             {{-- ..................For Logo................... --}}
             <div style="text-align:center">
-                <div style="margin-bottom: 3%">
+                <div style="margin-bottom: 1%">
                     <img src="{{ asset('assets/img/logofinal.webp') }}" alt=""
                         style="width: 200px; max-height:65px">
                 </div>
-
             </div>
-            <div style="line-height: 1.6";>
-                <h3>ZEROBROKAGE SERVICES INDIA PRIVATE LIMITED</h3>
+            <div style="line-height: 1.4";>
+                <h3 style="margin: 0">FLYBIZZ SERVICES INDIA PRIVATE LIMITED</h3>
                 <div>ADDRESS: G-187, G-Block,</div>
                 <div>Sector-63, Noida 201301 IN</div>
                 <div>9429690472, info@zerobrokage.com</div>
@@ -27,11 +26,11 @@
                 <div>PAN NO: AAECF5972H1ZA</div>
                 <div>CIN: U7499UP2021PTC147120</div>
                 <div>Uttar Pradesh State Code: 09</div>
-                <h3 style="text-align: center; margin: 20px 0px;">TAX INVOICE</h3>
+                <h3 style="text-align: center; margin: 10px 0px;">TAX INVOICE</h3>
             </div>
             <div style="display: flex; justify-content: space-between;">
-                <div style="line-height: 1.6;">
-                    <h4>Bill To</h4>
+                <div style="line-height: 1.4;">
+                    <h4 style="margin: 0">Bill To</h4>
                     <div>SAMRAT INTERNATIONAL PACKER AND MOVERS</div>
                     <div>OFFICE NO. 10, PETHKAR PLAZA,</div>
                     <div>MAKHMALABAD NAKA, NEAR SBI PANCHWATI</div>
@@ -40,7 +39,7 @@
                     <div>State Code :27</div>
                     <div>Yes</div>
                 </div>
-                <div style="line-height: 1.6;">
+                <div style="line-height: 1.4;">
                     <div>Invoice No. : SBZ12343224</div>
                     <div>Invoice Date : 09/09/2024</div>
                 </div>
@@ -49,7 +48,7 @@
 
 
 
-            <div style="margin: 2% 0%;">
+            <div style="margin: 1% 0%;">
                 <table style="border: 2px solid black; border-collapse: collapse; width: 100%;">
                     <thead>
                         <tr style="border: 2px solid black;">
@@ -120,7 +119,7 @@
 
 
 
-            <div style="line-height: 1.6";>
+            <div style="line-height: 1.3";>
                 Terms And Conditions This Invoice is being offered to you, the Advertiser, subject to the following
                 terms and conditions:
                 <ol>

@@ -62,16 +62,16 @@
                         <div class="social-icon">
                             <ul>
                                 <li>
-                                    <a href="javascript:void(0);"><i class="fa-brands fa-facebook"></i> </a>
+                                    <a href="https://www.facebook.com/zerobrokrage/"><i class="fa-brands fa-facebook"></i> </a>
                                 </li>
                                 <li>
-                                    <a href="javascript:void(0);"><i class="fab fa-twitter"></i> </a>
+                                    <a href="https://x.com/zerobrokage"><img src="{{ asset('assets/img/icons/twitter.svg') }}" alt="" style="width: 20px"></i></a>
                                 </li>
                                 <li>
-                                    <a href="javascript:void(0);"><i class="fa-brands fa-instagram"></i></a>
+                                    <a href="https://www.instagram.com/brokagezero"><i class="fa-brands fa-instagram"></i></a>
                                 </li>
                                 <li>
-                                    <a href="javascript:void(0);"><i class="fa-brands fa-linkedin"></i></a>
+                                    <a href="https://www.linkedin.com/in/zero-brokage-94334b327/"><i class="fa-brands fa-linkedin"></i></a>
                                 </li>
                             </ul>
                         </div>

@@ -12,30 +12,30 @@
                                 Your Home Services </h1>
                             <div class="search-box">
                                 {{-- <form> --}}
-                                    <div class="search-input line">
-                                        <div class="search-group-icon">
-                                            <i class="feather-map-pin"></i>
-                                        </div>
-                                        <div class="form-group mb-0">
-                                            <label>Your Location</label>
-                                            <input type="text" class="form-control border p-3" placeholder="Noida">
-                                        </div>
+                                <div class="search-input line">
+                                    <div class="search-group-icon">
+                                        <i class="feather-map-pin"></i>
                                     </div>
-                                    <div class="search-input">
-                                        <div class="search-group-icon search-icon">
-                                            <i class="feather-search"></i>
-                                        </div>
-                                        <div class="form-group mb-0">
-                                            <label>What are you looking for?</label>
-                                            <input type="text" class="form-control border p-3"
-                                                placeholder="e.g Car,AC,Electricians service etc">
-                                        </div>
+                                    <div class="form-group mb-0">
+                                        <label>Your Location</label>
+                                        <input type="text" class="form-control border p-3" placeholder="Noida">
                                     </div>
-                                    <div class="search-btn">
-                                        <button class="btn btn-primary mt-3" type="submit"><i
-                                                class="feather-search me-2"></i>Search
-                                        </button>
+                                </div>
+                                <div class="search-input">
+                                    <div class="search-group-icon search-icon">
+                                        <i class="feather-search"></i>
                                     </div>
+                                    <div class="form-group mb-0">
+                                        <label>What are you looking for?</label>
+                                        <input type="text" class="form-control border p-3"
+                                            placeholder="e.g Car,AC,Electricians service etc">
+                                    </div>
+                                </div>
+                                <div class="search-btn">
+                                    <button class="btn btn-primary mt-3" type="submit"><i
+                                            class="feather-search me-2"></i>Search
+                                    </button>
+                                </div>
                                 {{-- </form> --}}
                             </div>
                         </div>
@@ -116,6 +116,7 @@
                     @endforeach
 
                 </div>
+
             </div>
         </section>
     @endif
@@ -179,7 +180,7 @@
                         <div class="col-lg-3 col-sm-3">
                             <div class="providerset">
                                 <div class="providerset-img">
-                                    <a href="{{ route('vender-profile',$provider->id ??'') }}">
+                                    <a href="{{ route('vender-profile', $provider->id ?? '') }}">
                                         <img src="{{ asset('storage/vendor/vendor_image/' . $provider->vendor_image ?? '') }}"
                                             alt="img" style="height: 194px">
                                     </a>
@@ -187,7 +188,8 @@
                                 <div class="providerset-content">
                                     <div class="providerset-price">
                                         <div class="providerset-name">
-                                            <h4><a href="{{ route('vender-profile',$provider->id ??'') }}">{{ $provider->vendor_name ?? '' }}</a><i
+                                            <h4><a
+                                                    href="{{ route('vender-profile', $provider->id ?? '') }}">{{ $provider->vendor_name ?? '' }}</a><i
                                                     class="fa fa-check-circle" aria-hidden="true"></i></h4>
                                             <span>{{ $provider->subCategory->name ?? '' }}</span>
                                         </div>
@@ -201,7 +203,8 @@
                                             <i class="fas fa-star filled"></i>
                                             <i class="fas fa-star filled"></i>
                                             <i class="fas fa-star filled"></i>
-                                            <i class="fa-solid fa-star-half-stroke filled"></i><span>({{ $provider->review_count ?? '0' }})</span>
+                                            <i
+                                                class="fa-solid fa-star-half-stroke filled"></i><span>({{ $provider->review_count ?? '0' }})</span>
                                         </div>
                                     </div>
                                 </div>
@@ -382,11 +385,11 @@
                     </div> --}}
                     </div>
                 </div>
-                <div class="row">
+                {{-- <div class="row">
                     @foreach ($subcategories as $subcategory)
                         <div class="col-md-2">
-                            <a href="{{ route('services-in-india-city',$subcategory->slug ??'') }}" class="feature-box aos"
-                                data-aos="fade-up">
+                            <a href="{{ route('services-in-india-city', $subcategory->slug ?? '') }}"
+                                class="feature-box aos" data-aos="fade-up">
                                 <div class="feature-icon">
                                     <span>
                                         <img src="{{ asset('storage/icon/' . $subcategory->icon ?? '') }}" alt="img"
@@ -398,6 +401,46 @@
                         </div>
                     @endforeach
 
+                </div> --}}
+                 <div class="d-flex justify-content-center px-4 sticky-slider aos" data-aos="fade-up">
+                    <div class="wrapper-slider">
+                        <i id="left" class="fa-solid fas fa-angle-left"></i>
+                        <ul class="carousell" style="justify-content: center;gap:12px">
+                            <li class="card" style="width: 100%">
+                                <div class="img">
+                                    <img src="{{ asset('assets/img/services/AC_Cleaning.jpg') }}" alt=""
+                                        draggable="false" />
+                                </div>
+                                <h5 style="font-weight: bold;text-align:center; font-size:16px" class="pt-1">
+                                    AC</h5>
+                            </li>
+                            <li class="card" style="width: 100%">
+                                <div class="img">
+                                    <img src="{{ asset('assets/img/services/AC_Cleaning.jpg') }}" alt=""
+                                        draggable="false" />
+                                </div>
+                                <h5 style="font-weight: bold;text-align:center; font-size:16px" class="pt-1">
+                                    AC</h5>
+                            </li>
+                            <li class="card" style="width: 100%">
+                                <div class="img">
+                                    <img src="{{ asset('assets/img/services/AC_Cleaning.jpg') }}" alt=""
+                                        draggable="false" />
+                                </div>
+                                <h5 style="font-weight: bold;text-align:center; font-size:16px" class="pt-1">
+                                    AC</h5>
+                            </li>
+                            <li class="card" style="width: 100%">
+                                <div class="img">
+                                    <img src="{{ asset('assets/img/services/AC_Cleaning.jpg') }}" alt=""
+                                        draggable="false" />
+                                </div>
+                                <h5 style="font-weight: bold;text-align:center; font-size:16px" class="pt-1">
+                                    AC</h5>
+                            </li>
+                        </ul>
+                        <i id="right" class="fa-solid fas fa-angle-right"></i>
+                    </div>
                 </div>
             </div>
         </section>

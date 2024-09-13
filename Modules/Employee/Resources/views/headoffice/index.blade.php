@@ -13,12 +13,12 @@
     <div class="page-wrapper page-settings">
         <div class="content">
             <div class="content-page-header content-page-headersplit mb-0">
-                <h5>Company</h5>
+                <h5>Head Office</h5>
                 <div class="list-btn">
                     <ul>
                         <li>
                             <button class="btn btn-primary" type="button" data-bs-toggle="modal"
-                                data-bs-target="#add_company"><i class="fa fa-plus me-2"></i>Add Company Name</button>
+                                data-bs-target="#add_company"><i class="fa fa-plus me-2"></i>Add Head-Office</button>
                         </li>
                     </ul>
                 </div>
@@ -31,40 +31,42 @@
                                 <tr>
                                     <th>#</th>
                                     <th>Image</th>
-                                    <th>Brand-Company Name</th>
-                                    <th>Legel-Company Name</th>
+                                    <th>Name</th>
+                                    <th>Number</th>
+                                    <th>Address</th>
                                     <th>Status</th>
                                     <th>Action</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                @if ($companies->isEmpty())
+                                @if ($offices->isEmpty())
                                     <tr>
                                         <td colspan="4" class="text-center">No data found</td>
                                     </tr>
                                 @else
-                                    @foreach ($companies as $company)
+                                    @foreach ($offices as $office)
                                         <tr>
                                             <td>{{ $loop->iteration }}</td>
                                             <td>
                                                 <div class="table-imgname">
-                                                    @if ($company->image)
-                                                        <img src="{{ Storage::url('employee/company/' . $company->image) }}"
+                                                    @if ($office->image)
+                                                        <img src="{{ Storage::url('employee/office/' . $office->image) }}"
                                                             class="me-2 preview-img" alt="img">
                                                     @else
                                                         No Image
                                                     @endif
                                                 </div>
                                             </td>
-                                            <td>{{ $company->brand_name }}</td>
-                                            <td>{{ $company->legel_name }}</td>
+                                            <td> {{ $office->name ?? '' }} </td>
+                                            <td> {{ $office->number ?? '' }} </td>
+                                            <td> {{ $office->address ?? '' }} </td>
                                             <td>
                                                 <div class="active-switch">
                                                     <label class="switch">
                                                         <input type="checkbox" class="status-toggle"
-                                                            data-id="{{ $company->id }}"
+                                                            data-id="{{ $office->id }}"
                                                             onclick="return confirm('Are you sure want to change status?')"
-                                                            {{ $company->status ? 'checked' : '' }}>
+                                                            {{ $office->status ? 'checked' : '' }}>
                                                         <span class="sliders round"></span>
                                                     </label>
                                                 </div>
@@ -73,12 +75,12 @@
                                                 <div class="table-actions d-flex justify-content-center">
 
                                                     <button class="btn delete-table me-2"
-                                                        onclick="editCompany({{ $company->id }})" type="button"
-                                                        data-bs-toggle="modal" data-bs-target="#edit-company">
+                                                        onclick="editOffice({{ $office->id }})" type="button"
+                                                        data-bs-toggle="modal" data-bs-target="#edit-office">
                                                         <i class="fe fe-edit"></i>
                                                     </button>
 
-                                                    <form action="{{ route('employee-company.destroy', $company->id) }}"
+                                                    <form action="{{ route('employee-headoffice.destroy', $office->id) }}"
                                                         method="POST" style="display:inline;">
                                                         @csrf
                                                         @method('DELETE')
@@ -105,34 +107,29 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="addCompanyLabel">Add Company</h5>
+                    <h5 class="modal-title" id="addCompanyLabel">Add Head-Office</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body pt-0">
-                    <form id="addCompanyForm" action="{{ route('employee-company.store') }}" method="POST"
+                    <form id="addOfficeForm" action="{{ route('employee-headoffice.store') }}" method="POST"
                         enctype="multipart/form-data">
                         @csrf
                         <div class="mb-3">
-                            <label for="office">Head-Office</label>
-                            <select class="form-control" id="office" name="hoffice_id">
-                                <option value="">Select Head-Office</option>
-                                @foreach ($offices as $office)
-                                    <option value="{{ $office->id }}">{{ $office->name }}</option>
-                                @endforeach
-                            </select>
-                            <div id="hoffice_id_error" class="text-danger"></div>
-                        </div>
-                        <div class="mb-3">
-                            <label class="form-label">Brand-Company Name</label>
-                            <input type="text" class="form-control" id="addName" name="brand_name"
-                                placeholder="Enter Company Name">
+                            <label class="form-label">Head-Office Name</label>
+                            <input type="text" class="form-control" id="addName" name="name"
+                                placeholder="Enter Head-Office name">
                             <div id="name_error" class="text-danger"></div>
                         </div>
                         <div class="mb-3">
-                            <label class="form-label">Legel-Company Name</label>
-                            <input class="form-control" id="legel_name" name="legel_name"
-                                placeholder="Enter legel company name">
-                            <div id="legel_name_error" class="text-danger"></div>
+                            <label class="form-label">Number</label>
+                            <input type="text" class="form-control" id="number" name="number"
+                                placeholder="Enter number">
+                            <div id="number_error" class="text-danger"></div>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Address</label>
+                            <textarea class="form-control" id="address" name="address" placeholder="Enter Address"> </textarea>
+                            <div id="address_error" class="text-danger"></div>
                         </div>
                         <div class="mb-3">
                             <label class="form-label">Image </label>
@@ -163,39 +160,34 @@
     </div>
 
     <!-- Edit Company Modal -->
-    <div class="modal fade" id="edit-company" tabindex="-1" aria-labelledby="editCompanyLabel" aria-hidden="true">
+    <div class="modal fade" id="edit-office" tabindex="-1" aria-labelledby="editCompanyLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="editCompanyLabel">Edit Company</h5>
+                    <h5 class="modal-title" id="editCompanyLabel">Edit Head-Office</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body pt-0">
                     <form id="editCompanyForm" enctype="multipart/form-data">
                         <input type="hidden" name="_method" value="PUT">
                         @csrf
-                        <input type="hidden" id="editCompanyId" name="id">
+                        <input type="hidden" id="editOfficeId" name="id">
                         <div class="mb-3">
-                            <label for="office">Head-Office</label>
-                            <select class="form-control" id="editoffice" name="hoffice_id">
-                                <option value="">Select office</option>
-                                @foreach ($offices as $office)
-                                    <option value="{{ $office->id }}">{{ $office->name }}</option>
-                                @endforeach
-                            </select>
-                            <div id="edithoffice_id_error" class="text-danger"></div>
-                        </div>
-                        <div class="mb-3">
-                            <label class="form-label">Brand-Company Name</label>
-                            <input type="text" class="form-control" id="editName" name="brand_name"
-                                placeholder="Enter Company Name">
+                            <label class="form-label">Head-Office Name</label>
+                            <input type="text" class="form-control" id="editName" name="name"
+                                placeholder="Enter Head-Office name">
                             <div id="editname_error" class="text-danger"></div>
                         </div>
                         <div class="mb-3">
-                            <label class="form-label">Legel-Company Name</label>
-                            <input class="form-control" id="editlegel_name" name="legel_name"
-                                placeholder="Enter legel company name">
-                            <div id="editlegel_name_error" class="text-danger"></div>
+                            <label class="form-label">Number</label>
+                            <input type="text" class="form-control" id="editNumber" name="number"
+                                placeholder="Enter number">
+                            <div id="editnumber_error" class="text-danger"></div>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Address</label>
+                            <textarea type="text" class="form-control" id="editAddress" name="address" placeholder="Enter Address"> </textarea>
+                            <div id="editaddress_error" class="text-danger"></div>
                         </div>
                         <div class="mb-3">
                             <label class="form-label">Image </label>
@@ -261,7 +253,7 @@
     </script>
     <script>
         $(document).ready(function() {
-            $('#addCompanyForm').on('submit', function(e) {
+            $('#addOfficeForm').on('submit', function(e) {
                 e.preventDefault();
                 let formData = new FormData(this);
 
@@ -273,55 +265,58 @@
                     processData: false,
                     success: function(response) {
                         if (response.success) {
-                            location.reload(); // Refresh page to show new data       
+                            location.reload(); // Refresh page to show new data
                         }
                     },
                     error: function(xhr) {
-                        $('#name_error').text(xhr.responseJSON.errors.brand_name ? xhr.responseJSON
-                            .errors.brand_name[0] : '');
-                            $('#legel_name_error').text(xhr.responseJSON.errors.legel_name ? xhr.responseJSON
-                            .errors.legel_name[0] : '');
-                            
-                            $('#hoffice_id_error').text(xhr.responseJSON.errors.hoffice_id ? xhr.responseJSON
-                            .errors.hoffice_id[0] : '');
-
+                        $('#name_error').text(xhr.responseJSON.errors.name ? xhr.responseJSON
+                            .errors.name[0] : '');
+                        $('#number_error').text(xhr.responseJSON.errors.number ? xhr
+                            .responseJSON
+                            .errors.number[0] : '');
+                        $('#name_error').text(xhr.responseJSON.errors.name ? xhr.responseJSON
+                            .errors.name[0] : '');
+                        $('#address_error').text(xhr.responseJSON.errors.address ? xhr
+                            .responseJSON
+                            .errors.address[0] : ''); // Moved inside error function 
                         $('#image_error').text(xhr.responseJSON.errors.image ? xhr.responseJSON
-                            .errors.image[0] : ''); // Moved inside error function
+                            .errors.image[0] : '');
                     }
                 });
             });
         });
 
 
-        window.editCompany = function(id) {
+        window.editOffice = function(id) {
             $.ajax({
-                url: `/employee-company/${id}/edit`,
+                url: `/employee-headoffice/${id}/edit`,
                 method: 'GET',
                 success: function(response) {
-                    $('#editCompanyId').val(response.company.id);
-                    $('#editName').val(response.company.brand_name);
-                    $('#editlegel_name').val(response.company.legel_name);
-                    $('#editoffice').val(response.company.hoffice_id);
-                   
-                    if (response.company.image) {
+                    $('#editOfficeId').val(response.office.id);
+                    $('#editName').val(response.office.name);
+                    $('#editNumber').val(response.office.number);
+                    $('#editAddress').val(response.office.address);
+
+                    if (response.office.image) {
                         $('#edit-image-preview-icon').attr('src',
-                            `/storage/employee/company/${response.company.image}`);
+                            `/storage/employee/office/${response.office.image}`);
                     }
-                   
+
                 }
             });
         }
 
-
         $('#editCompanyForm').on('submit', function(e) {
             e.preventDefault();
             let formData = new FormData(this);
-            let id = $('#editCompanyId').val();
-            // alert(id);
-            // false
+            let id = $('#editOfficeId').val();
+
+            // Append '_method' field for Laravel to recognize this as a PUT request
+            // formData.append('_method', 'PUT');   
+
             $.ajax({
-                type: 'POST',
-                url: `/employee-company/${id}`,
+                type: 'POST', // Or 'PUT' if your Laravel route directly supports it
+                url: `/employee-headoffice/${id}`,
                 data: formData,
                 contentType: false,
                 processData: false,
@@ -331,17 +326,25 @@
                     }
                 },
                 error: function(xhr) {
-                    $('#editname_error').text(xhr.responseJSON.errors.brand_name ? xhr.responseJSON.errors
-                        .brand_name[0] : '');
-                        $('#edithoffice_id_error').text(xhr.responseJSON.errors.hoffice_id ? xhr.responseJSON.errors
-                        .hoffice_id[0] : '');
-                        $('#editlegel_name_error').text(xhr.responseJSON.errors.legel_name ? xhr.responseJSON.errors
-                        .legel_name[0] : '');    
-                    $('#image_error_edit').text(xhr.responseJSON.errors.image ? xhr.responseJSON.errors
-                        .image[0] : '');
+                    // Clear previous errors
+                    $('#editname_error').text('');
+                    $('#editnumber_error').text('');
+                    $('#editaddress_error').text('');
+                    $('#image_error_edit').text('');
+
+                    // Handle new errors
+                    if (xhr.responseJSON.errors) {
+                        $('#editname_error').text(xhr.responseJSON.errors.name ? xhr.responseJSON.errors
+                            .name[0] : '');
+                        $('#editnumber_error').text(xhr.responseJSON.errors.number ? xhr.responseJSON
+                            .errors.number[0] : '');
+                        $('#editaddress_error').text(xhr.responseJSON.errors.address ? xhr.responseJSON
+                            .errors.address[0] : '');
+                        $('#image_error_edit').text(xhr.responseJSON.errors.image ? xhr.responseJSON
+                            .errors.image[0] : '');
+                    }
                 }
             });
         });
-
     </script>
 @endsection

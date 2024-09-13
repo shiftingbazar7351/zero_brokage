@@ -89,6 +89,14 @@
                     <ul>
 
                         <li>
+                            <a href="{{ route('employee-headoffice.index') }}"
+                                class="{{ Route::currentRouteName() === 'employee-headoffice.index' ? 'active' : '' }}">
+                                <i class="fe fe-file-text"></i>
+                                <span>Office Head</span>
+                            </a>
+                        </li>
+
+                        <li>
                             <a href="{{ route('employee-company.index') }}"
                                 class="{{ Route::currentRouteName() === 'employee-company.index' ? 'active' : '' }}">
                                 <i class="fe fe-file-text"></i>
@@ -97,28 +105,20 @@
                         </li>
 
                         <li>
-                            <a href="{{ route('subcategories.index') }}"
-                                class="{{ Route::currentRouteName() === 'subcategories.index' ? 'active' : '' }}">
+                            <a href="{{ route('employee-product.index') }}"
+                                class="{{ Route::currentRouteName() === 'employee-product.index' ? 'active' : '' }}">
                                 <i class="fe fe-file-text"></i>
                                 <span>Product</span>
                             </a>
                         </li>
 
 
-                        <li>
-                            <a href="{{ route('menus.index') }}"
-                                class="{{ Route::currentRouteName() === 'menus.index' ? 'active' : '' }}">
-                                <i class="fe fe-file-text"></i>
-                                <span>Office Head</span>
-                            </a>
-                        </li>
-
 
                         <li>
                             <a href="{{ route('submenu.index') }}"
                                 class="{{ Route::currentRouteName() === 'submenu.index' ? 'active' : '' }}">
                                 <i class="fe fe-file-text"></i>
-                                <span>Brance</span>
+                                <span>Branch</span>
                             </a>
                         </li>
 

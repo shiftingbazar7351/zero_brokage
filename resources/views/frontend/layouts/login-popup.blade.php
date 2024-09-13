@@ -126,7 +126,7 @@
                 <span class="close" id="closePopup">&times;</span>
                 <h3>Login/Sign up</h3>
                 <img src="{{ asset('assets/img/icons/signup.png') }}" alt="">
-                <h5 class="sign-up-text">Enter your Mobile Number</h5>
+                <h5 class="sign-up-text mb-4">Enter your Mobile Number</h5>
                 <input type="tel" id="phoneNumberInput" class="phone-number-field" onkeyup="validateNum(this)"
                     maxlength="10" placeholder="Enter Mobile Number" required>
                 <div id="res"></div>

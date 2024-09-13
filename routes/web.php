@@ -215,8 +215,8 @@ Route::middleware(['auth', 'check.ip'])->group(function () {
     Route::post('invoice/{id}/edit', [InvoiceController::class, 'update'])->name('invoice.edit');
     // Route::post('invoice/create/{id}', [InvoiceController::class, 'create'])->name('invoice.create');
     Route::get('/transactions', [TransactionController::class, 'getTransactionDetails'])->name('transactions.details');
-    Route::get('/generate-pdf', [InvoiceController::class, 'generatePDF']);
-
+    Route::get('/generate-pdf', [InvoiceController::class, 'generatePDF'])->name('generate.pdf');
+    Route::post('/invoice/data/store/{id}', [InvoiceController::class, 'dataStore'])->name('invoice.data.store');
 
     Route::resource('/employee-company', CompanyController::class);
     Route::resource('/employee-product', EmployeeProductController::class);

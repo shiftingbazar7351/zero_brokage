@@ -52,7 +52,7 @@
                                     <option>MECHANIC</option>
                                     <option value="4">CLEANING</option>
                                     <option value="5">JAVA</option>
-                                    <option >PHP</option>
+                                    <option>PHP</option>
                                 </select>
                                 @error('category')
                                     <div class="error text-danger">{{ $message }}</div>
@@ -87,7 +87,7 @@
                                 <select class="multiOption" multiple name="native-select" placeholder="Select menu"
                                     data-silent-initial-value-set="false">
                                     <option>Menu</option>
-                                    <option >Uninstallation__</option>
+                                    <option>Uninstallation__</option>
                                     <option value="3">services__</option>
                                     <option value="4">CLEANING</option>
                                     <option value="5">JAVA</option>
@@ -104,14 +104,14 @@
                                     <option value="" selected disabled>Select submenu</option>
                                 </select> --}}
                                 <select class="multiOption" multiple name="native-select" placeholder="Select submenu"
-                                data-silent-initial-value-set="false">
-                                <option value="1">SubMenu</option>
-                                <option value="2">Uninstallation__</option>
-                                <option value="3">services__</option>
-                                <option value="4">CLEANING</option>
-                                <option value="5">JAVA</option>
-                                <option value="6">PHP</option>
-                            </select>
+                                    data-silent-initial-value-set="false">
+                                    <option value="1">SubMenu</option>
+                                    <option value="2">Uninstallation__</option>
+                                    <option value="3">services__</option>
+                                    <option value="4">CLEANING</option>
+                                    <option value="5">JAVA</option>
+                                    <option value="6">PHP</option>
+                                </select>
                                 @error('submenu_id')
                                     <div class="error text-danger">{{ $message }}</div>
                                 @enderror
@@ -296,18 +296,15 @@
                         </div>
                     </div>
                     <div class="row mt-3">
-                        <form id="addCategoryModal" action="{{ route('vendors.update', $vendor->id ?? '') }}"
+                        <form id="addCategoryModal" action="{{ route('invoice.data.store', $vendor->id ?? '') }}"
                             method="POST" enctype="multipart/form-data" data-parsley-validate="true">
                             @csrf
                             <div class="row mx-auto">
-
                                 <div class="col-md-6">
-
                                     <label class="form-label text-dark">Company Name<b style="color: red;">*</b></label>
                                     <input name="company_name" class="form-control bg-light-subtle"
                                         placeholder="Enter company name"
                                         value="{{ old('company_name', $vendor->company_name ?? '') }}" required></input>
-
                                     @error('company_name')
                                         <div class="error text-danger ">{{ $message }}</div>
                                     @enderror
@@ -360,7 +357,7 @@
                             <div class="row mx-auto mt-3">
                                 <div class="col-md-4">
                                     <label class="form-label text-dark">Email<b style="color: red;">*</b></label>
-                                    <input name="email" id="discount" class="form-control bg-light-subtle"
+                                    <input name="email" class="form-control bg-light-subtle"
                                         value="{{ $vendor->email ?? '' }}" placeholder="Enter company name" required />
 
                                     @error('email')
@@ -369,7 +366,7 @@
                                 </div>
                                 <div class="col-md-4">
                                     <label class="form-label text-dark">State<b style="color: red;">*</b></label>
-                                    <input name="state" id="discount" class="form-control bg-light-subtle"
+                                    <input name="state" id="discount" class="form-control bg-light-subtle" disabled
                                         value="{{ $vendor->cityName->state->name ?? '' }}"
                                         placeholder="Enter company name" required />
 
@@ -379,7 +376,7 @@
                                 </div>
                                 <div class="col-md-4">
                                     <label class="form-label text-dark">City<b style="color: red;">*</b></label>
-                                    <input name="city" id="discount" class="form-control bg-light-subtle"
+                                    <input name="city" id="discount" class="form-control bg-light-subtle" disabled
                                         value="{{ $vendor->cityName->name ?? '' }}" placeholder="Enter company name"
                                         required />
 
@@ -392,31 +389,23 @@
                                 <div class="col-md-4">
                                     <label class="form-label text-dark labeltransaction">Transaction Id<b
                                             style="color: red;">*</b></label>
-                                    {{-- <select class="selectpicker" multiple="multiple" data-live-search="true"
-                                            data-selected-text-format="value" id="transactionId" name="transaction_id[]">
-                                        <option value="" selected disabled>Select Transaction ID</option>
+                                    <select class="multiOption" multiple name="transaction_id[]" id="transactionId"
+                                        data-silent-initial-value-set="false">
+                                        <option value="" disabled>Select Transaction ID</option>
                                         @foreach ($transactions as $transaction)
-                                            <option value="{{ $transaction->id }}">{{ $transaction->transaction_id ?? '' }}</option>
+                                            <option value="{{ $transaction->id }}">
+                                                {{ $transaction->transaction_id ?? '' }}</option>
                                         @endforeach
-                                    </select> --}}
-                                    <select id="tansactionID" class="multiOption" multiple name="native-select"
-                                        placeholder="Native Select" data-silent-initial-value-set="false">
-                                        <option value="1">HTML</option>
-                                        <option value="2">CSS</option>
-                                        <option value="3">JavaScript</option>
-                                        <option value="4">Python</option>
-                                        <option value="5">JAVA</option>
-                                        <option value="6">PHP</option>
                                     </select>
-
                                     @error('transaction_id')
                                         <div class="error text-danger">{{ $message }}</div>
                                     @enderror
                                 </div>
 
+
                                 <div class="col-md-4">
                                     <label class="form-label">UTR<b style="color: red;">*</b></label>
-                                    <input class="form-control" type="text" name="utr"
+                                    <input class="form-control" type="text" name="utr[]"
                                         value="{{ old('utr') }}">
                                     @error('utr')
                                         <div class="text-danger">{{ $message }}</div>
@@ -425,7 +414,7 @@
 
                                 <div class="col-md-4">
                                     <label class="form-label">Payment Date<b style="color: red;">*</b></label>
-                                    <input class="form-control" type="text" name="payment_time"
+                                    <input class="form-control" type="text" name="payment_time[]"
                                         value="{{ old('payment_time') }}">
                                     @error('payment_time')
                                         <div class="text-danger">{{ $message }}</div>
@@ -460,8 +449,8 @@
 
                                 <div class="col-md-4">
                                     <label class="form-label text-dark">Date<b style="color: red;">*</b></label>
-                                    <input name="Date" class="form-control bg-light-subtle" placeholder="Enter Date"
-                                        required>{{ old('Date') }}</input>
+                                    <input name="date" type="date" class="form-control bg-light-subtle"
+                                        placeholder="Enter Date" required>{{ old('Date') }}</input>
 
                                     @error('Date')
                                         <div class="error text-danger ">{{ $message }}</div>
@@ -479,12 +468,12 @@
                                 </div>
                             </div>
 
-                                <div class="row mt-3">
-                                    <div class="">
+                            <div class="row mt-3">
+                                <div class="">
 
-                                        <button type="submit" id="submitbutton" class="btn btn-success">Add</button>
-                                    </div>
+                                    <button type="submit" id="submitbutton" class="btn btn-success">Add</button>
                                 </div>
+                            </div>
 
 
 

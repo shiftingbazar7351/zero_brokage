@@ -6,7 +6,6 @@ use App\Models\Category;
 use App\Models\City;
 use App\Models\Country;
 use App\Models\Invoice;
-use App\Models\Menu;
 use App\Models\State;
 use App\Models\SubCategory;
 use App\Models\SubMenu;
@@ -17,13 +16,19 @@ use Barryvdh\DomPDF\Facade\Pdf as PDF;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 
-
 class InvoiceController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
      */
+
+    protected $fileUploadService;
+
+    public function __construct(FileUploadService $fileUploadService)
+    {
+        $this->fileUploadService = $fileUploadService;
+    }
     public function index()
     {
         $categories = Category::where('status', 1)->orderByDesc('created_at')->get();
@@ -37,7 +42,6 @@ class InvoiceController extends Controller
         $vendor = Vendor::select('id', 'vendor_name')->first();
         return view('backend.invoice.index', compact('vendors', 'vendor', 'invoicesname', 'invoices', 'categories', 'subcategories', 'submenus', 'countryId', 'states'));
     }
-
 
     /**
      * Store a newly created resource in storage.
@@ -125,11 +129,11 @@ class InvoiceController extends Controller
     public function destroy($id)
     {
         $invoices = Invoice::findOrFail($id);
-        if($invoices){
+        if ($invoices) {
             $invoices->delete();
-            return redirect()->back()->with('success','Deleted Successfully');
+            return redirect()->back()->with('success', 'Deleted Successfully');
         }
-        return redirect()->back()->with('error','Something went wrong');
+        return redirect()->back()->with('error', 'Something went wrong');
     }
 
     public function generatePDF()
@@ -140,4 +144,78 @@ class InvoiceController extends Controller
 
         return $pdf->download('invoice.pdf');
     }
+    // public function dataStore(Request $request,$id)
+    // {
+    //    $vendor = Vendor::where('id',$id)->first();
+    //     $vendor->company_name = $request->company_name;
+    //     $vendor->location_lat = $request->location_lat;
+    //     $vendor->whatsapp = $request->whatsapp;
+    //     $vendor->number = $request->number;
+    //     $vendor->email = $request->email;
+    //     $vendor->address = $request->address;
+    //     // $vendor->update();
+
+    //  return  $tranId = $request->input('transaction_id');
+    //     $transaction = Transaction::where('id', $tranId)->first();
+    //     return redirect()->back()->with('success','Added');
+    // }
+
+    public function dataStore(Request $request, $id)
+    {
+        // Validate the request
+        // $request->validate([
+        //     'company_name' => 'required',
+        //     'location_lat' => 'required',
+        //     'whatsapp' => 'required',
+        //     'number' => 'required',
+        //     'email' => 'required|email',
+        //     'address' => 'required',
+        //     'transaction_id' => 'required|array', // Ensure transaction_id is an array
+        //     'transaction_id.*' => 'exists:transactions,id' // Each selected transaction must exist
+        // ]);
+
+        // Update vendor details
+        $vendor = Vendor::findOrFail($id);
+        $vendor->company_name = $request->company_name;
+        $vendor->location_lat = $request->location_lat;
+        $vendor->whatsapp = $request->whatsapp;
+        $vendor->number = $request->number;
+        $vendor->email = $request->email;
+        $vendor->address = $request->address;
+        // $vendor->save();
+
+        // Process the selected transaction IDs
+        // Process the selected transaction IDs and associated fields
+        $transactionIds = $request->input('transaction_id');
+        $utrs = $request->input('utr');
+        $paymentDates = $request->input('payment_date');
+        $screenshots = $request->file('screenshot');
+
+        foreach ($transactionIds as $index => $tranId) {
+            $transaction = Transaction::find($tranId);
+            if ($transaction) {
+                // Check if UTR and payment date exist before accessing
+                if (isset($utrs[$index])) {
+                    $transaction->utr = $utrs[$index];
+                }
+
+                if (isset($paymentDates[$index])) {
+                    $transaction->payment_date = $paymentDates[$index];
+                }
+
+                // Handle screenshot upload if the file exists for the specific transaction
+                if ($request->hasFile("screenshot.{$index}")) {
+                    // Use your fileUploadService to upload the screenshot
+                    $filename = $this->fileUploadService->uploadImage('transaction/', $screenshots[$index]);
+                    $transaction->screenshot = $filename;
+                }
+
+                $transaction->save();
+            }
+        }
+
+        // Redirect back with a success message
+        return redirect(route('generate.pdf'))->with('success', 'Vendor and transactions updated successfully.');
+    }
+
 }

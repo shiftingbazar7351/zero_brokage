@@ -408,24 +408,30 @@
                         <ul class="carousell" style="justify-content: center;gap:12px">
                             <li class="card" style="width: 100%">
                                 <div class="img">
-                                    <img src="{{ asset('assets/img/services/AC_Cleaning.jpg') }}" alt=""
+                                    <a href="">
+                                        <img src="{{ asset('assets/img/services/AC_Cleaning.jpg') }}" alt=""
                                         draggable="false" />
+                                    </a>
                                 </div>
                                 <h5 style="font-weight: bold;text-align:center; font-size:16px" class="pt-1">
                                     AC</h5>
                             </li>
                             <li class="card" style="width: 100%">
                                 <div class="img">
-                                    <img src="{{ asset('assets/img/services/AC_Cleaning.jpg') }}" alt=""
+                                    <a href="">
+                                        <img src="{{ asset('assets/img/services/AC_Cleaning.jpg') }}" alt=""
                                         draggable="false" />
+                                    </a>
                                 </div>
                                 <h5 style="font-weight: bold;text-align:center; font-size:16px" class="pt-1">
                                     AC</h5>
                             </li>
                             <li class="card" style="width: 100%">
                                 <div class="img">
-                                    <img src="{{ asset('assets/img/services/AC_Cleaning.jpg') }}" alt=""
+                                    <a href="">
+                                        <img src="{{ asset('assets/img/services/AC_Cleaning.jpg') }}" alt=""
                                         draggable="false" />
+                                    </a>
                                 </div>
                                 <h5 style="font-weight: bold;text-align:center; font-size:16px" class="pt-1">
                                     AC</h5>

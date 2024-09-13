@@ -81,6 +81,60 @@
 
                 </li>
 
+                <li class="submenu">
+                    <a href="javascript:void(0);"><i class="fe fe-briefcase"></i>
+                        <span>Employee Data</span>
+                        <span class="menu-arrow"><i class="fe fe-chevron-right"></i></span>
+                    </a>
+                    <ul>
+
+                        <li>
+                            <a href="{{ route('employee-company.index') }}"
+                                class="{{ Route::currentRouteName() === 'employee-company.index' ? 'active' : '' }}">
+                                <i class="fe fe-file-text"></i>
+                                <span>Company</span>
+                            </a>
+                        </li>
+
+                        <li>
+                            <a href="{{ route('subcategories.index') }}"
+                                class="{{ Route::currentRouteName() === 'subcategories.index' ? 'active' : '' }}">
+                                <i class="fe fe-file-text"></i>
+                                <span>Product</span>
+                            </a>
+                        </li>
+
+
+                        <li>
+                            <a href="{{ route('menus.index') }}"
+                                class="{{ Route::currentRouteName() === 'menus.index' ? 'active' : '' }}">
+                                <i class="fe fe-file-text"></i>
+                                <span>Office Head</span>
+                            </a>
+                        </li>
+
+
+                        <li>
+                            <a href="{{ route('submenu.index') }}"
+                                class="{{ Route::currentRouteName() === 'submenu.index' ? 'active' : '' }}">
+                                <i class="fe fe-file-text"></i>
+                                <span>Brance</span>
+                            </a>
+                        </li>
+
+
+                        <li>
+                            <a href="{{ route('service-detail.index') }}"
+                                class="{{ Route::currentRouteName() === 'service-detail.index' ? 'active' : '' }}">
+                                <i class="fe fe-file-text"></i>
+                                <span>Department</span>
+                            </a>
+                        </li>
+
+                    </ul>
+
+                </li>
+
 
 
                 <li class="{{ Route::currentRouteName() === 'enquiry.index' ? 'active' : '' }}{{ Route::currentRouteName() === 'enquiry.show' ? 'active' : '' }}">

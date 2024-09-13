@@ -24,6 +24,9 @@ use App\Http\Controllers\TransactionController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\VendorController;
 use App\Http\Controllers\VerifiedController;
+
+use Modules\Employee\Http\Controllers\CompanyController;
+
 use Illuminate\Support\Facades\Route;
 
 
@@ -212,6 +215,8 @@ Route::middleware(['auth', 'check.ip'])->group(function () {
     Route::get('/transactions', [TransactionController::class, 'getTransactionDetails'])->name('transactions.details');
     Route::get('/generate-pdf', [InvoiceController::class, 'generatePDF']);
 
+
+    Route::resource('/employee-company', CompanyController::class);
 });
 
 require __DIR__ . '/auth.php';

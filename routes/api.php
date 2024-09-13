@@ -22,7 +22,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 
 Route::controller(ApiController::class)->group(function () {
-    Route::get('/subcategories', 'categoryList');
+    Route::get('/categories', 'categoryList');
     Route::get('/menus/{id}', 'menuList');
 });
 

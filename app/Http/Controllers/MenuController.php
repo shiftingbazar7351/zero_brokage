@@ -95,7 +95,7 @@ class MenuController extends Controller
             $menu->image = $filename;
         }
 
-        $menu->save();
+        $menu->update();
 
         return response()->json(['success' => true, 'message' => 'Menu updated successfully!']);
 

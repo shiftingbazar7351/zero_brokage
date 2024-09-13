@@ -1,5 +1,28 @@
 @extends('backend.layouts.main')
 
+@section('styles')
+    <link rel="stylesheet" href="{{ asset('assets/css/virtual-select.min.css') }}">
+    <style>
+        #multi_option {
+            max-width: 100%;
+            width: 350px;
+        }
+
+        .labeltransaction {
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        .vscomp-toggle-button {
+            padding: 10px 30px 10px 10px;
+            border-radius: 5px;
+        }
+
+        .vscomp-ele {
+            max-width: 100%;
+        }
+    </style>
+@endsection
 
 @section('content')
     <div class="page-wrapper page-settings">
@@ -15,12 +38,15 @@
 
                             <div class="col-md-3">
                                 <label for="category">Category<b style="color: red;">*</b></label>
-                                <select class="form-control" id="category" name="category_id" required>
+                                <select id="category" class="multiOption" multiple
+                                placeholder="Select category" data-silent-initial-value-set="false" name="category_id" required>
                                     <option value="" selected disabled>Select category</option>
                                     @foreach ($categories as $category)
                                         <option value="{{ $category->id }}">{{ $category->name }}</option>
                                     @endforeach
                                 </select>
+
+
                                 @error('category')
                                     <div class="error text-danger">{{ $message }}</div>
                                 @enderror
@@ -28,9 +54,12 @@
 
                             <div class="col-md-3">
                                 <label for="subcategory">Sub Category<b style="color: red;">*</b></label>
-                                <select class="form-control" id="subcategory" name="subcategory_id" required>
+                                <select class="multiOption" multiple placeholder="Select Subcategory"
+                                data-silent-initial-value-set="false" id="subcategory" name="subcategory_id" required>
                                     <option value="" selected disabled>Select subcategory</option>
                                 </select>
+
+
                                 @error('sub_category')
                                     <div class="error text-danger">{{ $message }}</div>
                                 @enderror
@@ -38,9 +67,11 @@
 
                             <div class="col-md-3">
                                 <label for="menu">Menu<b style="color: red;">*</b></label>
-                                <select class="form-control" id="menu" name="menu_id" required>
+                                <select class="multiOption" multiple placeholder="Select menu"
+                                data-silent-initial-value-set="false" id="menu" name="menu_id" required>
                                     <option value="" selected disabled>Select menu</option>
                                 </select>
+
                                 @error('menu_id')
                                     <div class="error text-danger">{{ $message }}</div>
                                 @enderror
@@ -48,9 +79,11 @@
 
                             <div class="col-md-3">
                                 <label for="submenu">Sub-Menu<b style="color: red;">*</b></label>
-                                <select class="form-control" id="submenu" name="submenu_id" required>
+                                <select class="multiOption" multiple placeholder="Select submenu"
+                                data-silent-initial-value-set="false" id="submenu" name="submenu_id" required>
                                     <option value="" selected disabled>Select submenu</option>
                                 </select>
+
                                 @error('submenu_id')
                                     <div class="error text-danger">{{ $message }}</div>
                                 @enderror
@@ -235,8 +268,8 @@
                         </div>
                     </div>
                     <div class="row mt-3">
-                        <form id="addCategoryModal" action="{{ route('vendors.update', $vendor->id ?? '') }}" method="POST"
-                            enctype="multipart/form-data" data-parsley-validate="true">
+                        <form id="addCategoryModal" action="{{ route('vendors.update', $vendor->id ?? '') }}"
+                            method="POST" enctype="multipart/form-data" data-parsley-validate="true">
                             @csrf
                             <div class="row mx-auto">
 
@@ -276,7 +309,8 @@
                                     @enderror
                                 </div>
                                 <div class="col-md-4">
-                                    <label class="form-label text-dark">Whatsapp Number<b style="color: red;">*</b></label>
+                                    <label class="form-label text-dark">Whatsapp Number<b
+                                            style="color: red;">*</b></label>
                                     <input name="whatsapp" class="form-control bg-light-subtle" id="price"
                                         maxlength="10" value="{{ $vendor->whatsapp ?? '' }}"
                                         placeholder="Enter company name" required />
@@ -308,8 +342,8 @@
                                 <div class="col-md-4">
                                     <label class="form-label text-dark">State<b style="color: red;">*</b></label>
                                     <input name="state" id="discount" class="form-control bg-light-subtle"
-                                        value="{{ $vendor->cityName->state->name ?? '' }}" placeholder="Enter company name"
-                                        required />
+                                        value="{{ $vendor->cityName->state->name ?? '' }}"
+                                        placeholder="Enter company name" required />
 
                                     @error('state')
                                         <div class="error text-danger ">{{ $message }}</div>
@@ -328,14 +362,25 @@
                             </div>
                             <div class="row mx-auto mt-3">
                                 <div class="col-md-4">
-                                    <label class="form-label text-dark">Transaction Id<b style="color: red;">*</b></label>
-                                    <select class="selectpicker" multiple="multiple" data-live-search="true"
+                                    <label class="form-label text-dark labeltransaction">Transaction Id<b
+                                            style="color: red;">*</b></label>
+                                    {{-- <select class="selectpicker" multiple="multiple" data-live-search="true"
                                             data-selected-text-format="value" id="transactionId" name="transaction_id[]">
                                         <option value="" selected disabled>Select Transaction ID</option>
                                         @foreach ($transactions as $transaction)
                                             <option value="{{ $transaction->id }}">{{ $transaction->transaction_id ?? '' }}</option>
                                         @endforeach
+                                    </select> --}}
+                                    <select id="tansactionID" class="multiOption" multiple name="native-select"
+                                        placeholder="Native Select" data-silent-initial-value-set="false">
+                                        <option value="1">HTML</option>
+                                        <option value="2">CSS</option>
+                                        <option value="3">JavaScript</option>
+                                        <option value="4">Python</option>
+                                        <option value="5">JAVA</option>
+                                        <option value="6">PHP</option>
                                     </select>
+
                                     @error('transaction_id')
                                         <div class="error text-danger">{{ $message }}</div>
                                     @enderror
@@ -343,7 +388,8 @@
 
                                 <div class="col-md-4">
                                     <label class="form-label">UTR<b style="color: red;">*</b></label>
-                                    <input class="form-control" type="text" name="utr" value="{{ old('utr') }}">
+                                    <input class="form-control" type="text" name="utr"
+                                        value="{{ old('utr') }}">
                                     @error('utr')
                                         <div class="text-danger">{{ $message }}</div>
                                     @enderror
@@ -351,11 +397,15 @@
 
                                 <div class="col-md-4">
                                     <label class="form-label">Payment Date<b style="color: red;">*</b></label>
-                                    <input class="form-control" type="text" name="payment_time" value="{{ old('payment_time') }}">
+                                    <input class="form-control" type="text" name="payment_time"
+                                        value="{{ old('payment_time') }}">
                                     @error('payment_time')
                                         <div class="text-danger">{{ $message }}</div>
                                     @enderror
                                 </div>
+                            </div>
+
+                            <div class="row mx-auto mt-3">
 
                                 <div class="col-md-4">
                                     <label class="form-label">Screenshot<b style="color: red;">*</b></label>
@@ -389,22 +439,28 @@
                                         <div class="error text-danger ">{{ $message }}</div>
                                     @enderror
                                 </div>
+                            </div>
+                            <div class="row mx-auto mt-3">
                                 <div class="col-md-12">
                                     <label class="form-label text-dark">Address<b style="color: red;">*</b></label>
-                                    <textarea name="address" class="form-control bg-light-subtle" placeholder="Enter address"
-                                        required>{{ old('address',$vendor->address ??'') }}</textarea>
+                                    <textarea name="address" class="form-control bg-light-subtle" placeholder="Enter address" required>{{ old('address', $vendor->address ?? '') }}</textarea>
 
                                     @error('address')
                                         <div class="error text-danger ">{{ $message }}</div>
                                     @enderror
                                 </div>
+                            </div>
+
                                 <div class="row mt-3">
                                     <div class="">
 
                                         <button type="submit" id="submitbutton" class="btn btn-success">Add</button>
                                     </div>
                                 </div>
-                            </div>
+
+
+
+
                         </form>
                     </div>
                 </div>
@@ -416,6 +472,13 @@
 @endsection
 
 @section('scripts')
+    <script src="{{ asset('assets/js/virtual-select.min.js') }}"></script>
+
+    <script type="text/javascript">
+        VirtualSelect.init({
+            ele: '.multiOption'
+        });
+    </script>
     <script>
         $(document).ready(function() {
             $('#state').on('change', function() {

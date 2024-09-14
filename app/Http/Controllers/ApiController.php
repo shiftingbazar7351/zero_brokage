@@ -129,6 +129,7 @@ class ApiController extends Controller
     {
         try {
             $reviews = Review::where('status', 1)
+                ->orderByDesc('created_at')
                 ->get(['id', 'name', 'description', 'profession']);
 
             // Check if reviews are found

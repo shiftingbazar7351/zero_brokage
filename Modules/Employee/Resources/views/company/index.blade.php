@@ -254,10 +254,6 @@
             previewImage(this, 'edit-image-preview-icon');
         });
 
-        // Event listener for background image preview
-        $('#edit-image-input-bg').on('change', function() {
-            previewImage(this, 'edit-image-preview-bg');
-        });
     </script>
     <script>
         $(document).ready(function() {
@@ -317,8 +313,6 @@
             e.preventDefault();
             let formData = new FormData(this);
             let id = $('#editCompanyId').val();
-            // alert(id);
-            // false
             $.ajax({
                 type: 'POST',
                 url: `/employee-company/${id}`,

@@ -9,8 +9,6 @@ use App\Http\Controllers\IndiaServiceController;
 use App\Http\Controllers\InvoiceController;
 use App\Http\Controllers\IpAddressController;
 use App\Http\Controllers\MenuController;
-use App\Http\Controllers\MetaDescripConroller;
-use App\Http\Controllers\MetaTitleController;
 use App\Http\Controllers\MetaUrlController;
 use App\Http\Controllers\NewsletterController;
 use App\Http\Controllers\OTPController;
@@ -24,10 +22,6 @@ use App\Http\Controllers\TransactionController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\VendorController;
 use App\Http\Controllers\VerifiedController;
-
-use Modules\Employee\Http\Controllers\CompanyController;
-use Modules\Employee\Http\Controllers\EmployeeProductController;
-use Modules\Employee\Http\Controllers\HeadOfficeController;
 
 use Illuminate\Support\Facades\Route;
 
@@ -216,9 +210,6 @@ Route::middleware(['auth', 'check.ip'])->group(function () {
     // Route::post('invoice/create/{id}', [InvoiceController::class, 'create'])->name('invoice.create');
     Route::get('/transactions', [TransactionController::class, 'getTransactionDetails'])->name('transactions.details');
 
-    Route::resource('/employee-company', CompanyController::class);
-    Route::resource('/employee-product', EmployeeProductController::class);
-    Route::resource('/employee-headoffice', HeadOfficeController::class);
 });
 
 require __DIR__ . '/auth.php';

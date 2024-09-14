@@ -115,8 +115,8 @@
 
 
                         <li>
-                            <a href="{{ route('submenu.index') }}"
-                                class="{{ Route::currentRouteName() === 'submenu.index' ? 'active' : '' }}">
+                            <a href="{{ route('employee-branch.index') }}"
+                                class="{{ Route::currentRouteName() === 'employee-branch.index' ? 'active' : '' }}">
                                 <i class="fe fe-file-text"></i>
                                 <span>Branch</span>
                             </a>

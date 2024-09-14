@@ -5,15 +5,15 @@ namespace Modules\Employee\Http\Controllers;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
+
 use Modules\Employee\Entities\EmployeeProduct;
-use Modules\Employee\Entities\Companie;
-use Modules\Employee\Entities\HeadOffice;
+use Modules\Employee\Entities\Branch;
 
 use App\Services\FileUploadService;
 use Illuminate\Validation\Rule;
 use Exception;
 
-class EmployeeProductController extends Controller
+class BranchController extends Controller
 {
     protected $fileUploadService;
 
@@ -27,10 +27,11 @@ class EmployeeProductController extends Controller
      */
     public function index()
     {
-        $products = EmployeeProduct::orderByDesc('created_at')->paginate(10);
-        $companies = Companie::get();
-        return view('employee::product.index', compact('products', 'companies'));
+        $Branchs = Branch::orderByDesc('created_at')->paginate(10);
+        $products = EmployeeProduct::get();
+        return view('employee::branch.index',compact('Branchs','products'));
     }
+
 
     /**
      * Store a newly created resource in storage.
@@ -40,24 +41,25 @@ class EmployeeProductController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'company_id' => 'required',
-            'name' => 'required|unique:employee_products|max:255',
+            'product_id' => 'required',
+            'name' => 'required',
+            'address' => 'required',
             'image' => 'required',
         ]);
 
-
-        $product = new EmployeeProduct();
-        $product->company_id = $request->company_id;
+        $product = new Branch();
+        $product->product_id = $request->product_id;
         $product->name = $request->name;
+        $product->address = $request->address;
 
         if ($request->hasFile('image')) {
-            $filename = $this->fileUploadService->uploadImage('employee/hoffice/', $request->file('image'));
+            $filename = $this->fileUploadService->uploadImage('employee/branch/', $request->file('image'));
             $product->image = $filename;
         }
 
         $product->save();
 
-        return response()->json(['success' => true, 'message' => 'company created successfully.']);
+        return response()->json(['success' => true, 'message' => 'Branch created successfully.']);
     }
 
 
@@ -69,8 +71,8 @@ class EmployeeProductController extends Controller
      */
     public function edit($id)
     {
-        $products = EmployeeProduct::find($id);
-        return response()->json(['product' => $products]);
+        $branchs = Branch::find($id);
+        return response()->json(['branch' => $branchs]);
     }
 
     /**
@@ -81,26 +83,26 @@ class EmployeeProductController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $product = EmployeeProduct::findOrFail($id);
-
+        $branch = Branch::find($id);
         $request->validate([
-            'company_id' => 'required',
+            'product_id' => 'required',
             'name' => 'required',
+            'address' => 'required',
             'image' => 'nullable',
         ]);
 
-
-        $product->company_id = $request->company_id;
-        $product->name = $request->name;
+        $branch->product_id = $request->product_id;
+        $branch->name = $request->name;
+        $branch->address = $request->address;
 
         if ($request->hasFile('image')) {
-            $filename = $this->fileUploadService->uploadImage('employee/hoffice/', $request->file('image'));
-            $product->image = $filename;
+            $filename = $this->fileUploadService->uploadImage('employee/branch/', $request->file('image'));
+            $branch->image = $filename;
         }
 
-        $product->save();
+        $branch->save();
 
-        return response()->json(['success' => true, 'message' => 'company updated successfully.']);
+        return response()->json(['success' => true, 'message' => 'Branch updated successfully.']);
     }
 
     /**
@@ -110,20 +112,20 @@ class EmployeeProductController extends Controller
      */
     public function destroy($id)
     {
-        $hoffice = EmployeeProduct::findOrFail($id);
+        $Branch = Branch::findOrFail($id);
         $imageFields = [
-            'image' => 'employee/hoffice/',
+            'image' => 'employee/Branch/',
 
         ];
-        $hoffice->delete();
+        $Branch->delete();
 
         foreach ($imageFields as $field => $path) {
-            $image = $hoffice->$field; // Get the image name from the vendor object
+            $image = $Branch->$field; // Get the image name from the vendor object
             if ($image) {
                 $this->fileUploadService->removeImage($path, $image);
             }
         }
 
-        return redirect(route('employee-product.index'))->with('success', ' Deleted Successfully!');
+        return redirect(route('employee-branch.index'))->with('success', ' Deleted Successfully!');
     }
 }

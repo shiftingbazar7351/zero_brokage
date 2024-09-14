@@ -1,5 +1,12 @@
 <?php
 
+use Illuminate\Support\Facades\Route;
+use Modules\Employee\Http\Controllers\CompanyController;
+use Modules\Employee\Http\Controllers\EmployeeProductController;
+use Modules\Employee\Http\Controllers\HeadOfficeController;
+use Modules\Employee\Http\Controllers\BranchController;
+
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -11,6 +18,7 @@
 |
 */
 
-Route::prefix('employee')->group(function() {
-    Route::get('/', 'EmployeeController@index');
-});
+Route::resource('/employee-company', CompanyController::class);
+Route::resource('/employee-product', EmployeeProductController::class);
+Route::resource('/employee-headoffice', HeadOfficeController::class);
+Route::resource('/employee-branch', BranchController::class);

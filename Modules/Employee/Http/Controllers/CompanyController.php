@@ -122,8 +122,20 @@ class CompanyController extends Controller
     public function destroy($id)
     {
         $company = Companie::findOrFail($id);
+        $imageFields = [
+            'image' => 'employee/company/',
+
+        ];
         $company->delete();
 
-        return redirect()->back()->with('success', 'Deleted Successfully');
+        foreach ($imageFields as $field => $path) {
+            $image = $company->$field; // Get the image name from the vendor object
+            if ($image) {
+                $this->fileUploadService->removeImage($path, $image);
+            }
+        }
+
+        return redirect(route('employee-company.index'))->with('success', ' Deleted Successfully!');
+
     }
 }

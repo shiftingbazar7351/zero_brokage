@@ -13,12 +13,12 @@
     <div class="page-wrapper page-settings">
         <div class="content">
             <div class="content-page-header content-page-headersplit mb-0">
-                <h5>Products</h5>
+                <h5>Branchs</h5>
                 <div class="list-btn">
                     <ul>
                         <li>
                             <button class="btn btn-primary" type="button" data-bs-toggle="modal"
-                                data-bs-target="#add_product"><i class="fa fa-plus me-2"></i>Add Product</button>
+                                data-bs-target="#add_branch"><i class="fa fa-plus me-2"></i>Add Branch</button>
                         </li>
                     </ul>
                 </div>
@@ -37,32 +37,32 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @if ($products->isEmpty())
+                                @if ($Branchs->isEmpty())
                                     <tr>
                                         <td colspan="4" class="text-center">No data found</td>
                                     </tr>
                                 @else
-                                    @foreach ($products as $product)
+                                    @foreach ($Branchs as $Branch)
                                         <tr>
                                             <td>{{ $loop->iteration }}</td>
                                             <td>
                                                 <div class="table-imgname">
-                                                    @if ($product->image)
-                                                        <img src="{{ Storage::url('employee/hoffice/' . $product->image) }}"
+                                                    @if ($Branch->image)
+                                                        <img src="{{ Storage::url('employee/branch/' . $Branch->image) }}"
                                                             class="me-2 preview-img" alt="img">
                                                     @else
                                                         No Image
                                                     @endif
                                                 </div>
                                             </td>
-                                            <td>{{ $product->name ?? '' }}</td>
+                                            <td>{{ $Branch->name ?? '' }}</td>
                                             <td>
                                                 <div class="active-switch">
                                                     <label class="switch">
                                                         <input type="checkbox" class="status-toggle"
-                                                            data-id="{{ $product->id }}"
+                                                            data-id="{{ $Branch->id }}"
                                                             onclick="return confirm('Are you sure want to change status?')"
-                                                            {{ $product->status ? 'checked' : '' }}>
+                                                            {{ $Branch->status ? 'checked' : '' }}>
                                                         <span class="sliders round"></span>
                                                     </label>
                                                 </div>
@@ -70,12 +70,12 @@
                                             <td>
                                                 <div class="table-actions d-flex justify-content-center">
 
-                                                    <button class="btn delete-table me-2" onclick="editproduct({{ $product->id }})" type="button"
+                                                    <button class="btn delete-table me-2" onclick="editBranch({{ $Branch->id }})" type="button"
                                                         data-bs-toggle="modal" data-bs-target="#edit-product">
                                                         <i class="fe fe-edit"></i>
                                                     </button>
 
-                                                    <form action="{{ route('employee-product.destroy', $product->id) }}" method="POST" style="display:inline;">
+                                                    <form action="{{ route('employee-branch.destroy', $Branch->id) }}" method="POST" style="display:inline;">
                                                         @csrf
                                                         @method('DELETE')
                                                         <button class="btn delete-table" type="submit"
@@ -97,32 +97,37 @@
     </div>
 
     <!-- Add Company Modal -->
-    <div class="modal fade" id="add_product" tabindex="-1" aria-labelledby="addCompanyLabel" aria-hidden="true">
+    <div class="modal fade" id="add_branch" tabindex="-1" aria-labelledby="addCompanyLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="addCompanyLabel">Add Product</h5>
+                    <h5 class="modal-title" id="addCompanyLabel">Add Branch</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body pt-0">
-                    <form id="addProductForm" action="{{ route('employee-product.store') }}" method="POST">
+                    <form id="addBranchForm" action="{{ route('employee-branch.store') }}" method="POST">
                         @csrf
 
                         <div class="mb-3">
-                            <label for="company">Company Name</label>
-                            <select class="form-control" id="company" name="company_id">
-                                <option value="">Select company</option>
-                                @foreach ($companies as $company)
-                                    <option value="{{ $company->id }}">{{ $company->brand_name }}</option>
+                            <label for="product">Product Name</label>
+                            <select class="form-control" id="product" name="product_id">
+                                <option value="">Select product</option>
+                                @foreach ($products as $product)
+                                    <option value="{{ $product->id }}">{{ $product->name }}</option>
                                 @endforeach
                             </select>
-                            <div id="company_id_error" class="text-danger"></div>
+                            <div id="product_id_error" class="text-danger"></div>
                         </div>
                         <div class="mb-3">
-                            <label class="form-label">Product Name</label>
+                            <label class="form-label">Branch Name</label>
                             <input type="text" class="form-control" id="addName" name="name"
-                                placeholder="Enter Company Name">
+                                placeholder="Enter Branch Name">
                             <div id="name_error" class="text-danger"></div>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Address</label>
+                            <textarea class="form-control" id="address" name="address" placeholder="Enter Address"> </textarea>
+                            <div id="address_error" class="text-danger"></div>
                         </div>
                         <div class="mb-3">
                             <label class="form-label">Image </label>
@@ -162,26 +167,31 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body pt-0">
-                    <form id="editproductForm" enctype="multipart/form-data">
+                    <form id="editBranchForm" enctype="multipart/form-data">
                         <input type="hidden" name="_method" value="PUT">
                         @csrf
-                        <input type="hidden" id="editproductId" name="id">
+                        <input type="hidden" id="editbranchId" name="id">
 
                         <div class="mb-3">
-                            <label for="company">Company Name</label>
-                            <select class="form-control" id="editcompanyId" name="company_id">
-                                <option value="">Select company</option>
-                                @foreach ($companies as $company)
-                                    <option value="{{ $company->id }}">{{ $company->brand_name }}</option>
+                            <label for="product">product Name</label>
+                            <select class="form-control" id="editproductId" name="product_id">
+                                <option value="">Select product</option>
+                                @foreach ($products as $product)
+                                    <option value="{{ $product->id }}">{{ $product->name }}</option>
                                 @endforeach
                             </select>
-                            <div id="editcompany_id_error" class="text-danger"></div>
+                            <div id="editproduct_id_error" class="text-danger"></div>
                         </div>
                         <div class="mb-3">
                             <label class="form-label">Product Name</label>
                             <input type="text" class="form-control" id="editName" name="name"
                                 placeholder="Enter Product Name">
                             <div id="editname_error" class="text-danger"></div>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Address</label>
+                            <textarea class="form-control" id="editaddress" name="address" placeholder="Enter Address"> </textarea>
+                            <div id="editaddress_error" class="text-danger"></div>
                         </div>
 
                         <div class="mb-3">
@@ -244,7 +254,7 @@
     </script>
     <script>
         $(document).ready(function() {
-            $('#addProductForm').off('submit').on('submit', function(e) {
+            $('#addBranchForm').off('submit').on('submit', function(e) {
                 e.preventDefault();
                 let formData = new FormData(this);
                 $.ajax({
@@ -255,19 +265,19 @@
                     processData: false,
                     success: function(response) {
                         if (response.success) {
-                            location.reload(); // Refresh page to show new data
+                            location.reload(); // Refresh page to show new data 
                         }
                     },
                     error: function(xhr) {
-                        $('#office_id_error').text(xhr.responseJSON.errors
-                            .hoffice_id ? xhr
-                            .responseJSON.errors.hoffice_id[0] : '');
-                        $('#company_id_error').text(xhr.responseJSON.errors
-                            .company_id ? xhr
-                            .responseJSON.errors.company_id[0] : '');
+                        $('#product_id_error').text(xhr.responseJSON.errors
+                            .product_id ? xhr
+                            .responseJSON.errors.product_id[0] : '');
                         $('#name_error').text(xhr.responseJSON.errors.name ? xhr
                             .responseJSON
                             .errors.name[0] : '');
+                        $('#address_error').text(xhr.responseJSON.errors.address ? xhr
+                            .responseJSON
+                            .errors.address[0] : '');    
                         $('#image_error').text(xhr.responseJSON.errors.image ? xhr
                             .responseJSON
                             .errors.image[0] : '');
@@ -277,34 +287,35 @@
         });
 
 
-        window.editproduct = function(id) {
+        window.editBranch = function(id) {
             $.ajax({
-                url: `/employee-product/${id}/edit`,
+                url: `/employee-branch/${id}/edit`,
                 method: 'GET',
                 success: function(response) {
-                    $('#editproductId').val(response.product.id);
-                    $('#editcompanyId').val(response.product.company_id).trigger('change');
-                    $('#editName').val(response.product.name);
+                    $('#editbranchId').val(response.branch.id);
+                    $('#editproductId').val(response.branch.product_id).trigger('change');
+                    $('#editName').val(response.branch.name);
+                    $('#editaddress').val(response.branch.address);
 
-                    if (response.product.image) {
+                    if (response.branch.image) {
                         $('#edit-image-preview-icon').attr('src',
-                            `/storage/employee/hoffice/${response.product.image}`);
+                            `/storage/employee/branch/${response.branch.image}`);
                     }
                 },
                 error: function(xhr) {
-                    console.error('Error fetching the office data:', xhr);
+                    console.error('Error fetching the branch data:', xhr);
                 }
             });
         };
 
-        $('#editproductForm').on('submit', function(e) {
+        $('#editBranchForm').on('submit', function(e) {
             e.preventDefault();
             let formData = new FormData(this);
-            let id = $('#editproductId').val();
+            let id = $('#editbranchId').val();
 
             $.ajax({
                 type: 'POST',
-                url: `/employee-product/${id}`,
+                url: `/employee-branch/${id}`,
                 data: formData,
                 contentType: false,
                 processData: false,
@@ -316,8 +327,10 @@
                 error: function(xhr) {
                     $('#editname_error').text(xhr.responseJSON.errors.name ? xhr.responseJSON.errors
                         .name[0] : '');
-                        $('#editcompany_id_error').text(xhr.responseJSON.errors.company_id ? xhr.responseJSON.errors
-                        .company_id[0] : '');  
+                    $('#editproduct_id_error').text(xhr.responseJSON.errors.product_id ? xhr.responseJSON.errors
+                        .product_id[0] : '');
+                    $('#editaddress_error').text(xhr.responseJSON.errors.address ? xhr.responseJSON.errors
+                        .address[0] : '');    
                     $('#editimage_error').text(xhr.responseJSON.errors.image ? xhr.responseJSON.errors
                         .image[0] : '');
                 }

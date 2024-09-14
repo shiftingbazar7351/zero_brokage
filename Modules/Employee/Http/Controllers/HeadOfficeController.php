@@ -142,6 +142,6 @@ class HeadOfficeController extends Controller
             }
         }
 
-        return redirect(route('vendors.index'))->with('success', 'Vendor Deleted Successfully!');
+        return redirect(route('employee-headoffice.index'))->with('success', ' Deleted Successfully!');
     }
 }

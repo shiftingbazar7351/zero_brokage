@@ -144,21 +144,7 @@ class InvoiceController extends Controller
 
         return $pdf->download('invoice.pdf');
     }
-    // public function dataStore(Request $request,$id)
-    // {
-    //    $vendor = Vendor::where('id',$id)->first();
-    //     $vendor->company_name = $request->company_name;
-    //     $vendor->location_lat = $request->location_lat;
-    //     $vendor->whatsapp = $request->whatsapp;
-    //     $vendor->number = $request->number;
-    //     $vendor->email = $request->email;
-    //     $vendor->address = $request->address;
-    //     // $vendor->update();
 
-    //  return  $tranId = $request->input('transaction_id');
-    //     $transaction = Transaction::where('id', $tranId)->first();
-    //     return redirect()->back()->with('success','Added');
-    // }
 
     public function dataStore(Request $request, $id)
     {
@@ -209,7 +195,7 @@ class InvoiceController extends Controller
                     $filename = $this->fileUploadService->uploadImage('transaction/', $screenshots[$index]);
                     $transaction->screenshot = $filename;
                 }
-
+// return $transaction;
                 $transaction->save();
             }
         }

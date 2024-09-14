@@ -405,7 +405,7 @@
 
                                 <div class="col-md-4">
                                     <label class="form-label">UTR<b style="color: red;">*</b></label>
-                                    <input class="form-control" type="text" name="utr[]"
+                                    <input class="form-control" type="text" name="utr"
                                         value="{{ old('utr') }}">
                                     @error('utr')
                                         <div class="text-danger">{{ $message }}</div>
@@ -414,7 +414,7 @@
 
                                 <div class="col-md-4">
                                     <label class="form-label">Payment Date<b style="color: red;">*</b></label>
-                                    <input class="form-control" type="text" name="payment_time[]"
+                                    <input class="form-control" type="text" name="payment_time"
                                         value="{{ old('payment_time') }}">
                                     @error('payment_time')
                                         <div class="text-danger">{{ $message }}</div>

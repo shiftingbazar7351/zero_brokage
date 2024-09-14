@@ -45,7 +45,7 @@
                                                 id="role-{{ $role->id }}-permission-{{ $permission->id }}"
                                                 name="permission[{{ $role->id }}][]"
                                                 value='{{ $permission->id }}'
-                                                {{-- {{ AuthHelper::checkRolePermission($role, $permission->name) ? 'checked' : '' }} --}}
+                                                {{ \App\Helpers\AuthHelper::checkRolePermission($role, $permission->name) ? 'checked' : '' }}
                                                 >
                                         </td>
                                     @endforeach

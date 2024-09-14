@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\City;
 use App\Models\Menu;
+use App\Models\Review;
 use App\Models\SubCategory;
 use App\Models\SubMenu;
 use Illuminate\Http\Request;
@@ -123,4 +124,39 @@ class ApiController extends Controller
             ], Response::HTTP_INTERNAL_SERVER_ERROR);
         }
     }
+
+    public function reviews()
+    {
+        try {
+            $reviews = Review::where('status', 1)
+                ->orderByDesc('created_at')
+                ->get(['id', 'name', 'description', 'profession']);
+
+            // Check if reviews are found
+            if ($reviews->isEmpty()) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'No reviews found.',
+                    'data' => []
+                ], Response::HTTP_NOT_FOUND);
+            }
+
+            return response()->json([
+                'success' => true,
+                'message' => 'Reviews retrieved successfully.',
+                'data' => $reviews
+            ], Response::HTTP_OK);
+
+        } catch (\Exception $e) {
+            // Log the exception for debugging
+            Log::error('Error retrieving reviews: ' . $e->getMessage());
+
+            return response()->json([
+                'success' => false,
+                'message' => 'An error occurred while retrieving reviews.',
+                'error' => $e->getMessage()
+            ], Response::HTTP_INTERNAL_SERVER_ERROR);
+        }
+    }
+
 }

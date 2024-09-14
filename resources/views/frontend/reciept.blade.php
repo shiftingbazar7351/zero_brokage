@@ -1,56 +1,36 @@
 <!DOCTYPE html>
 <html lang="en">
 
-<!-- Mirrored from truelysell.dreamstechnologies.com/html/template/search.html by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 24 Jul 2024 07:55:15 GMT -->
-
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0">
-    <title>Truelysell | Template</title>
-
-    <link rel="shortcut icon" href="assets/img/favicon.png">
-
-    <link rel="stylesheet" href="assets/css/bootstrap.min.css">
-
-    <link rel="stylesheet" href="assets/plugins/fontawesome/css/fontawesome.min.css">
-    <link rel="stylesheet" href="assets/plugins/fontawesome/css/all.min.css">
-
-    <link rel="stylesheet" href="assets/css/feather.css">
-
-    <link rel="stylesheet" href="assets/plugins/select2/css/select2.min.css">
-
-    <link rel="stylesheet" href="assets/plugins/ion-rangeslider/css/ion.rangeSlider.min.css">
-
-    <link rel="stylesheet" href="assets/css/owl.carousel.min.css">
-
-    <link rel="stylesheet" href="assets/css/style.css">
+    <title>ZeroBrokage</title>
 </head>
 
 <body>
-    <div class="main-wrapper">
-        <div class="container border border-3">
+    <div>
+        <div>
             {{-- ..................For Logo................... --}}
-            <div class="row text-center mt-4">
-                <div class="img-reciept">
+            <div style="text-align:center">
+                <div style="margin-bottom: 1%">
                     <img src="{{ asset('assets/img/logofinal.webp') }}" alt=""
                         style="width: 200px; max-height:65px">
                 </div>
-
             </div>
-            <div class="row my-5">
-                <h5>ZEROBROKAGE SERVICES INDIA PRIVATE LIMITED</h5>
-                <div>ADRESS : G-187, G-Block,</div>
-                <div>Sector-63,Noida 201301 IN </div>
-                <div>9429690472 , info@zerobrokage.com</div>
-                <div>GSTIN : 09AAECF5972H1ZA</div>
-                <div>PAN NO : AAECF5972H1ZA</div>
-                <div>CIN : U7499UP2021PTC147120</div>
-                <div>Uttar Pradesh State Code :09</div>
-                <h4 style="text-align: center">TAX INVOICE</h4>
+            <div style="line-height: 1.4";>
+                <h3 style="margin: 0">FLYBIZZ SERVICES INDIA PRIVATE LIMITED</h3>
+                <div>ADDRESS: G-187, G-Block,</div>
+                <div>Sector-63, Noida 201301 IN</div>
+                <div>9429690472, info@zerobrokage.com</div>
+                <div>GSTIN: 09AAECF5972H1ZA</div>
+                <div>PAN NO: AAECF5972H1ZA</div>
+                <div>CIN: U7499UP2021PTC147120</div>
+                <div>Uttar Pradesh State Code: 09</div>
+                <h3 style="text-align: center; margin: 10px 0px;">TAX INVOICE</h3>
             </div>
-            <div class="row d-flex">
-                <div class="col-6">
-                    <h5>Bill To</h5>
+            <div style="display: flex; justify-content: space-between;">
+                <div style="line-height: 1.4;">
+                    <h4 style="margin: 0">Bill To</h4>
                     <div>SAMRAT INTERNATIONAL PACKER AND MOVERS</div>
                     <div>OFFICE NO. 10, PETHKAR PLAZA,</div>
                     <div>MAKHMALABAD NAKA, NEAR SBI PANCHWATI</div>
@@ -59,84 +39,90 @@
                     <div>State Code :27</div>
                     <div>Yes</div>
                 </div>
-                <div class="col-6 text-end">
+                <div style="line-height: 1.4;">
                     <div>Invoice No. : SBZ12343224</div>
                     <div>Invoice Date : 09/09/2024</div>
                 </div>
             </div>
-            <div class="row m-2">
-                <table class="table table-bordered text-center">
-                    <thead>
-                        <tr>
-                            <th class="text-wrap" style="padding: 15px 0px"  scope="col">#</th>
-                            <th class="text-wrap" style="padding: 15px 0px" scope="col">Description</th>
-                            <th class="text-wrap" style="padding: 15px 0px" scope="col">HSN/SAC</th>
-                            <th class="text-wrap" style="padding: 15px 0px" scope="col">QTY</th>
-                            <th class="text-wrap" style="padding: 15px 0px" scope="col">RATE</th>
-                            <th class="text-wrap" style="padding: 15px 0px" scope="col">CGST</th>
-                            <th class="text-wrap" style="padding: 15px 0px" scope="col">SGST</th>
-                            <th class="text-wrap" style="padding: 15px 0px" scope="col">GST</th>
-                            <th class="text-wrap" style="padding: 15px 0px" scope="col">AMOUNT</th>
 
+
+
+
+            <div style="margin: 1% 0%;">
+                <table style="border: 2px solid black; border-collapse: collapse; width: 100%;">
+                    <thead>
+                        <tr style="border: 2px solid black;">
+                            <th style="padding: 10px; border: 2px solid black;" scope="col">#</th>
+                            <th style="padding: 10px; border: 2px solid black;" scope="col">Description</th>
+                            <th style="padding: 10px; border: 2px solid black;" scope="col">HSN/SAC</th>
+                            <th style="padding: 10px; border: 2px solid black;" scope="col">QTY</th>
+                            <th style="padding: 10px; border: 2px solid black;" scope="col">RATE</th>
+                            <th style="padding: 10px; border: 2px solid black;" scope="col">CGST</th>
+                            <th style="padding: 10px; border: 2px solid black;" scope="col">SGST</th>
+                            <th style="padding: 10px; border: 2px solid black;" scope="col">GST</th>
+                            <th style="padding: 10px; border: 2px solid black;" scope="col">AMOUNT</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <th class="text-wrap" scope="row">1</th>
-                            <td class="text-wrap">Lorem ipsum dolor sit amet consectetur adipisicing elit. Fugiat vitae
-                                sapiente et iste expedita dolore doloribus suscipit aliquid rerum cupiditate eius porro
-                                animi, ullam libero consequuntur dicta dolor culpa assumenda sit perferendis quibusdam
-                                architecto. Aliquid obcaecati aut in minima neque.</td>
-                            <td class="text-wrap" style="padding: 15px 0px"> Otto</td>
-                            <td class="text-wrap" style="padding: 15px 0px">@mdo</td>
-                            <td class="text-wrap" style="padding: 15px 0px">Otto</td>
-                            <td class="text-wrap" style="padding: 15px 0px">@mdo</td>
-                            <td class="text-wrap" style="padding: 15px 0px">Otto</td>
-                            <td class="text-wrap" style="padding: 15px 0px">@mdo</td>
-                            <td class="text-wrap" style="padding: 15px 0px">Otto</td>
+                        <tr style="border: 2px solid black;">
+                            <th scope="row" style="padding: 10px; border: 2px solid black;">1</th>
+                            <td style="padding: 10px; border: 2px solid black;">Lorem ipsum dolor sit amet consectetur
+                                adipisicing elit...</td>
+                            <td style="padding: 10px; border: 2px solid black;">Otto</td>
+                            <td style="padding: 10px; border: 2px solid black;">@mdo</td>
+                            <td style="padding: 10px; border: 2px solid black;">Otto</td>
+                            <td style="padding: 10px; border: 2px solid black;">@mdo</td>
+                            <td style="padding: 10px; border: 2px solid black;">Otto</td>
+                            <td style="padding: 10px; border: 2px solid black;">@mdo</td>
+                            <td style="padding: 10px; border: 2px solid black;">Otto</td>
                         </tr>
-                        <tr>
-                            <th class="text-wrap"  style="padding: 15px 0px" scope="row">2</th>
-                            <td class="text-wrap">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Quo
-                                reiciendis voluptates, eaque similique dolorem voluptatum delectus veniam possimus
-                                magnam optio? Dignissimos quis tempore aliquid! Consectetur iste consequuntur et
-                                repellat velit?</td>
-                            <td class="text-wrap" style="padding: 15px 0px">Thor</td>
-                            <td class="text-wrap" style="padding: 15px 0px">@fat</td>
-                            <td class="text-wrap" style="padding: 15px 0px">Jacob</td>
-                            <td class="text-wrap" style="padding: 15px 0px">Thor</td>
-                            <td class="text-wrap" style="padding: 15px 0px">@fat</td>
-                            <td class="text-wrap" style="padding: 15px 0px">Thor</td>
-                            <td class="text-wrap" style="padding: 15px 0px">@fat</td>
+                        <tr style="border: 2px solid black;">
+                            <th scope="row" style="padding: 10px; border: 2px solid black;">2</th>
+                            <td style="padding: 10px; border: 2px solid black;">Lorem ipsum dolor, sit amet consectetur
+                                adipisicing elit...</td>
+                            <td style="padding: 10px; border: 2px solid black;">Thor</td>
+                            <td style="padding: 10px; border: 2px solid black;">@fat</td>
+                            <td style="padding: 10px; border: 2px solid black;">Jacob</td>
+                            <td style="padding: 10px; border: 2px solid black;">Thor</td>
+                            <td style="padding: 10px; border: 2px solid black;">@fat</td>
+                            <td style="padding: 10px; border: 2px solid black;">Thor</td>
+                            <td style="padding: 10px; border: 2px solid black;">@fat</td>
                         </tr>
-                        <tr>
-                            <th class="text-wrap text-start"   colspan="8" scope="row">Discount</th>
-                            <td class="text-wrap"> 0</td>
+                        <tr style="border: 2px solid black;">
+                            <th colspan="8" style="padding: 10px; border: 2px solid black;" scope="row">Discount
+                            </th>
+                            <td style="padding: 10px; border: 2px solid black;">0</td>
                         </tr>
-                        <tr>
-                            <th class="text-wrap text-start" colspan="8" scope="row">Total</th>
-                            <td class="text-wrap"> 1000</td>
+                        <tr style="border: 2px solid black;">
+                            <th colspan="8" style="padding: 10px; border: 2px solid black;" scope="row">Total</th>
+                            <td style="padding: 10px; border: 2px solid black;">1000</td>
                         </tr>
-                        <tr>
-                            <th class="text-wrap text-start" colspan="8" scope="row">Payable Amount</th>
-                            <td class="text-wrap" > 3000</td>
+                        <tr style="border: 2px solid black;">
+                            <th colspan="8" style="padding: 10px; border: 2px solid black;" scope="row">Payable
+                                Amount</th>
+                            <td style="padding: 10px; border: 2px solid black;">3000</td>
                         </tr>
-                        <tr>
-                            <th class="text-wrap text-start"  colspan="8" scope="row">Paid Amount</th>
-                            <td class="text-wrap" > 5000</td>
+                        <tr style="border: 2px solid black;">
+                            <th colspan="8" style="padding: 10px; border: 2px solid black;" scope="row">Paid
+                                Amount</th>
+                            <td style="padding: 10px; border: 2px solid black;">5000</td>
                         </tr>
-                        <tr>
-                            <th class="text-wrap text-start"  colspan="8" scope="row">Balance Amount</th>
-                            <td class="text-wrap" > 9000</td>
+                        <tr style="border: 2px solid black;">
+                            <th colspan="8" style="padding: 10px; border: 2px solid black;" scope="row">Balance
+                                Amount</th>
+                            <td style="padding: 10px; border: 2px solid black;">9000</td>
                         </tr>
                     </tbody>
                 </table>
             </div>
 
-            <div class="row p-4">
+
+
+
+            <div style="line-height: 1.3";>
                 Terms And Conditions This Invoice is being offered to you, the Advertiser, subject to the following
                 terms and conditions:
-                <ol class="m-2 ">
+                <ol>
                     <li>"Company" means "Flybizz Services India Private Limited" and includes
                         goservicexperts.com
                         where the context is required.</li>
@@ -216,11 +202,15 @@
 
                         only. 19. This proforma invoice shall be governed and construed in accordance with the laws of
                         India without reference to its conflict of laws principles.</li>
-                    <li>In addition to the terms and conditions set forth in the invoice, and unless repugnant to the meaning or context thereof, the Advertiser hereby agrees and acknowledges that the User Agreement/Terms and Conditions, as reproduced on the
+                    <li>In addition to the terms and conditions set forth in the invoice, and unless repugnant to the
+                        meaning or context thereof, the Advertiser hereby agrees and acknowledges that the User
+                        Agreement/Terms and Conditions, as reproduced on the
                         goservicexperts.com
                         [1] website '
                         goservicexperts.com
-                        [1 [1]] (T & Cs) are applicable to this proforma invoice and are deemed to be incorporated herein by reference. In the event of any conflict or inconsistency between this proforma invoice and the "T & Cs", the latter shall prevail.</li>
+                        [1 [1]] (T & Cs) are applicable to this proforma invoice and are deemed to be incorporated
+                        herein by reference. In the event of any conflict or inconsistency between this proforma invoice
+                        and the "T & Cs", the latter shall prevail.</li>
                     <li>All correspondence to the Advertiser shall be sent to the address set forth overleaf and all
                         correspondences to the Company should be addressed to us Registered Office</li>
                     <li>Jurisdictions and Arbitration - a. In case of disputes or differences arising between the
@@ -255,41 +245,8 @@
 
         </div>
 
-
-
-
-
-
-
-        <div class="mouse-cursor cursor-outer"></div>
-        <div class="mouse-cursor cursor-inner"></div>
-
     </div>
 
-    <script data-cfasync="false" src="../../cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script>
-    <script src="assets/js/jquery-3.7.0.min.js" type="63a50fbcc24dd2d380942ad3-text/javascript"></script>
-
-    <script src="assets/js/bootstrap.bundle.min.js" type="63a50fbcc24dd2d380942ad3-text/javascript"></script>
-
-    <script src="assets/js/feather.min.js" type="63a50fbcc24dd2d380942ad3-text/javascript"></script>
-
-    <script src="assets/plugins/theia-sticky-sidebar/ResizeSensor.js"
-        type="63a50fbcc24dd2d380942ad3-text/javascript"></script>
-    <script src="assets/plugins/theia-sticky-sidebar/theia-sticky-sidebar.js"
-        type="63a50fbcc24dd2d380942ad3-text/javascript"></script>
-
-    <script src="assets/plugins/ion-rangeslider/js/ion.rangeSlider.min.js"
-        type="63a50fbcc24dd2d380942ad3-text/javascript"></script>
-    <script src="assets/plugins/ion-rangeslider/js/custom-rangeslider.js"
-        type="63a50fbcc24dd2d380942ad3-text/javascript"></script>
-
-    <script src="assets/plugins/select2/js/select2.min.js" type="63a50fbcc24dd2d380942ad3-text/javascript"></script>
-
-    <script src="assets/js/owl.carousel.min.js" type="63a50fbcc24dd2d380942ad3-text/javascript"></script>
-
-    <script src="assets/js/script.js" type="63a50fbcc24dd2d380942ad3-text/javascript"></script>
-    <script src="../../cdn-cgi/scripts/7d0fa10a/cloudflare-static/rocket-loader.min.js"
-        data-cf-settings="63a50fbcc24dd2d380942ad3-|49" defer></script>
 </body>
 
 <!-- Mirrored from truelysell.dreamstechnologies.com/html/template/search.html by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 24 Jul 2024 07:55:16 GMT -->

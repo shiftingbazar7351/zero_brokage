@@ -42,7 +42,7 @@
                                 <tr>
                                     <th scope="row">Adress</th>
                                     {{-- <td class="text-wrap">{{ $vendor->address  }}</td> --}}
-                                    <td class="text-wrap">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Aliquam fuga esse quae perspiciatis sit perferendis deserunt, maxime a magni animi. Fugit asperiores iste dolore quasi dolores hic ut officia libero.</td>
+                                    <td class="text-wrap">Lorem, ipsum d asperiores iste dolore quasi dolores hic ut officia libero.</td>
                                 </tr>
                                 <tr>
                                     <th scope="row">city</th>
@@ -73,31 +73,32 @@
 
                             <tbody>
                                 <tr>
-                                    <th scope="row">Company Name :</th>
-                                    <td class="text-wrap"> {{ $vendor->company_name  }}</td>
+                                    <th scope="row">Name :</th>
+                                    <td class="text-wrap"> {{ $vendor->vendor_name  }}</td>
 
                                 </tr>
                                 <tr>
-                                    <th scope="row">Legal Company Name :</th>
-                                    <td class="text-wrap"> {{ $vendor->legal_company_name  }} </td>
+                                    <th scope="row">Number :</th>
+                                    <td class="text-wrap"> {{ $vendor->number  }} </td>
                                 </tr>
                                 <tr>
-                                    <th scope="row">Email Address</th>
-                                    <td class="text-wrap">{{ $vendor->email  }}</td>
+                                    <th scope="row">Adress</th>
+                                    {{-- <td class="text-wrap">{{ $vendor->address  }}</td> --}}
+                                    <td class="text-wrap">Lorem, ipsum dol maxime a mae dolore quasi dolores hic ut officia libero.</td>
                                 </tr>
                                 <tr>
-                                    <th scope="row">Whatsapp</th>
-                                    <td class="text-wrap">{{ $vendor->whatsapp  }}</td>
+                                    <th scope="row">city</th>
+                                    <td class="text-wrap">{{ $vendor->city  }}</td>
                                 </tr>
                                 <tr>
-                                    <th scope="row">Phone Number</th>
-                                    <td class="text-wrap">{{ $vendor->number  }}</td>
+                                    <th scope="row">Pin Code</th>
+                                    <td class="text-wrap">{{ $vendor->pincode  }}</td>
                                 </tr>
                                 <tr>
-                                    <th scope="row">Vendor Logo</th>
+                                    <th scope="row">Visiting Card</th>
                                     <td style="text-align: center">
-                                        <img src="{{ asset('storage/vendor/gst_image/'. $vendor->logo) }}" alt="" style="width: 120px;">
-                                        <a href="{{ asset('storage/vendor/gst_image/'. $vendor->logo) }}" target="_blank" style="display: block">Vendor Logo</a>
+                                        <img src="{{ asset('storage/vendor/visiting_card/' . $vendor->visiting_card) }}" alt="" style="width: 120px;">
+                                        <a href="{{ asset('storage/vendor/visiting_card/' . $vendor->visiting_card) }}" target="_blank" style="display: block">Visiting Card</a>
                                     </td>
                                 </tr>
                                 {{-- @empty
@@ -112,33 +113,33 @@
                         <table class="table table-sm table-bordered table-striped">
 
                             <tbody>
+                                <tr>
+                                    <th scope="row">Name :</th>
+                                    <td class="text-wrap"> {{ $vendor->vendor_name  }}</td>
 
-                                <tr>
-                                    <th scope="row">Owner name :</th>
-                                    <td class="text-wrap"> {{ $vendor->owner_name ?? ''  }}</td>
-
                                 </tr>
                                 <tr>
-                                    <th scope="row">Website :</th>
-                                    <td class="text-wrap"> {{ $vendor->website ?? ''  }} </td>
+                                    <th scope="row">Number :</th>
+                                    <td class="text-wrap"> {{ $vendor->number  }} </td>
                                 </tr>
                                 <tr>
-                                    <th scope="row">Adhar Number</th>
-                                    <td class="text-wrap">{{ $vendor->adhar_numbere ?? ''  }}</td>
+                                    <th scope="row">Adress</th>
+                                    {{-- <td class="text-wrap">{{ $vendor->address  }}</td> --}}
+                                    <td class="text-wrap">Lorem, dolore quasi dolores hic ut officia libero.</td>
                                 </tr>
                                 <tr>
-                                    <th scope="row">GST Number</th>
-                                    <td class="text-wrap">{{ $vendor->gst_number  ?? '' }}</td>
+                                    <th scope="row">city</th>
+                                    <td class="text-wrap">{{ $vendor->city  }}</td>
                                 </tr>
                                 <tr>
-                                    <th scope="row">Vendor Name</th>
-                                    <td class="text-wrap">{{ $vendor->vendor_name ?? '' }}</td>
+                                    <th scope="row">Pin Code</th>
+                                    <td class="text-wrap">{{ $vendor->pincode  }}</td>
                                 </tr>
                                 <tr>
-                                    <th scope="row">GST Image</th>
+                                    <th scope="row">Visiting Card</th>
                                     <td style="text-align: center">
-                                        <img src="{{ asset('storage/vendor/gst_image/' . $vendor->gst_image) }}" alt="" style="width: 120px;">
-                                        <a href="{{ asset('storage/vendor/gst_image/' . $vendor->gst_image) }}" target="_blank" style="display: block"> GST Image</a>
+                                        <img src="{{ asset('storage/vendor/visiting_card/' . $vendor->visiting_card) }}" alt="" style="width: 120px;">
+                                        <a href="{{ asset('storage/vendor/visiting_card/' . $vendor->visiting_card) }}" target="_blank" style="display: block">Visiting Card</a>
                                     </td>
                                 </tr>
                                 {{-- @empty

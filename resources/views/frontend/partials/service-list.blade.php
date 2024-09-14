@@ -53,9 +53,9 @@
     <div id="myPopup-booking1" class="popup">
         <div class="popup-content" style="width:36%">
             <span class="close" id="closePopup-booking1">&times;</span>
-            <h3>To Book a Service</h3>
+            <h4>To Book a Service</h4>
             <img src="{{ asset('assets/img/icons/signup.png') }}" alt="">
-            <h5 class="sign-up-text">Enter your Mobile Number</h5>
+            <h5 class="sign-up-text mb-3">Enter your Mobile Number</h5>
             <input type="tel" id="phoneNumberInput-booking" class="phone-number-field form-group input-detailss"
                 onkeyup="validateNumBookingg(this)" maxlength="10" placeholder="Enter Mobile Number" required>
             <div id="res-booking1"></div>
@@ -67,8 +67,8 @@
     <div id="myPopup-booking" class="popup">
         <div class="popup-content" style="width: 39%;">
             <span class="close" id="closePopup-booking">&times;</span>
-            <h3>Enter Your Details</h3>
-            <img src="{{ asset('assets/img/icons/write-icons.svg') }}" alt="" width="75px" class="mb-4">
+            <img src="{{ asset('assets/img/logofinal.webp') }}" alt="" width="120px" class="mb-4">
+            <h4 class="mb-4">Enter Your Details</h4>
 
             <div class="row px-5">
                 <div class="col-md-6">
@@ -100,14 +100,14 @@
     <div id="myPopup2-booking" class="popup">
         <div class="popup-content" style="width: 39%">
             <span class="close" id="closePopup2-booking">&times;</span>
-            <h3>Verify OTP</h3>
+            <h4>Verify OTP</h4>
             <img src="{{ asset('assets/img/icons/lock-icon.png') }}" alt="">
 
             <h5 class="sign-up-text">We've Sent you a 4 Digit Pin On Your Number</h5>
 
             <div class="edit-phone-cont">
                 <div class="Phone-Number"></div>
-                <div class="edit-icon" id="editnumber-booking"><img
+                <div class="edit-icon mb-4" id="editnumber-booking"><img
                         src="{{ asset('assets/img/icons/edit-icon.svg') }}" alt="">Edit
                 </div>
             </div>
@@ -129,7 +129,7 @@
                 <div id="counter-booking" class="text-danger"></div>
             </div>
             <div class="resend-container">
-                <h5 class="resend-otp" id="resendOtpTextBooking">Resend OTP</h5>
+                <h6 class="resend-otp" id="resendOtpTextBooking">Resend OTP</h6>
                 <p class="whatsapp-otp" id="otpOnWhatsappBooking">Get OTP on <img
                         src="{{ asset('assets/img/icons/icons8-whatsapp.gif') }}" alt="">
                 </p>

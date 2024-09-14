@@ -19199,7 +19199,7 @@ p.total-client-content {
     margin-right: 0;
 }
 .footer .social-icon ul li a {
-    color: #74788d;
+    color:black;
     display: -webkit-inline-box;
     display: -ms-inline-flexbox;
     display: inline-flex;
@@ -28477,8 +28477,7 @@ td.ant-table-column-sort {
 }
 
 #saveChanges {
-    width: 50%;
-    margin-top: 7%;
+    margin-top: 4%;
 }
 #saveChanges:hover {
     color: black;

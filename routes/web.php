@@ -15,15 +15,21 @@ use App\Http\Controllers\OTPController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ReviewController;
+use App\Http\Controllers\Security\PermissionController;
+use App\Http\Controllers\Security\RoleController;
+use App\Http\Controllers\Security\RolePermission;
 use App\Http\Controllers\ServiceDetailController;
 use App\Http\Controllers\SubCategoryController;
 use App\Http\Controllers\SubMenuController;
 use App\Http\Controllers\TransactionController;
+
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\VendorController;
 use App\Http\Controllers\VerifiedController;
-
 use Illuminate\Support\Facades\Route;
+
+
+
 
 
 
@@ -85,7 +91,7 @@ Route::post('/fetch-city/{stateId}', [SubMenuController::class, 'fetchCity']);
 Route::post('/get-otp', [OtpController::class, 'getOtp'])->name('getOtp');
 Route::post('/verify-otp', [OtpController::class, 'verifyOtp'])->name('verifyOtp');
 
-Route::middleware(['auth', 'check.ip'])->group(function () {
+Route::middleware(['auth', 'check.ip'])->prefix('admin')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
@@ -99,6 +105,12 @@ Route::middleware(['auth', 'check.ip'])->group(function () {
         Route::post('/user/{user}', 'show')->name('user.show')->middleware('can:user-show');
         Route::delete('/user/{user}', 'destroy')->name('user.destroy')->middleware('can:user-delete');
     });
+      // Permission Module
+      Route::get('/role-permission', [RolePermission::class, 'index'])->name('role.permission.list')->middleware('can:role-list');
+      Route::post('/store/role-permission', [RolePermission::class, 'store'])->name('role.permission.store')->middleware('can:role-list');
+      Route::resource('permission', PermissionController::class);
+      Route::resource('role', RoleController::class);
+      // Dashboard Routes
 
     Route::get('/dashboard', [AdminController::class, 'homepage'])->name('admin_page');
     Route::resource('categories', CategoryController::class);

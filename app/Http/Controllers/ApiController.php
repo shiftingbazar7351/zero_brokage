@@ -128,36 +128,34 @@ class ApiController extends Controller
     public function reviews()
     {
         try {
-            $reiews = Review::where('id', 'name', 'description','profession')
-                ->where('status', 1)
-                ->get();
+            $reviews = Review::where('status', 1)
+                ->get(['id', 'name', 'description', 'profession']);
 
-
-            // Check if reiews are found
-            if ($reiews->isEmpty()) {
+            // Check if reviews are found
+            if ($reviews->isEmpty()) {
                 return response()->json([
                     'success' => false,
-                    'message' => 'No reiews found.',
+                    'message' => 'No reviews found.',
                     'data' => []
                 ], Response::HTTP_NOT_FOUND);
             }
 
             return response()->json([
                 'success' => true,
-                'message' => 'reiews retrieved successfully.',
-                'data' => $reiews
+                'message' => 'Reviews retrieved successfully.',
+                'data' => $reviews
             ], Response::HTTP_OK);
 
         } catch (\Exception $e) {
             // Log the exception for debugging
-            Log::error('Error retrieving reiews: ' . $e->getMessage());
+            Log::error('Error retrieving reviews: ' . $e->getMessage());
 
             return response()->json([
                 'success' => false,
-                'message' => 'An error occurred while retrieving reiews.',
+                'message' => 'An error occurred while retrieving reviews.',
                 'error' => $e->getMessage()
             ], Response::HTTP_INTERNAL_SERVER_ERROR);
         }
-
     }
+
 }

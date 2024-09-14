@@ -45,49 +45,15 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
-Route::get('/category-listing', function () {
-    return view('frontend.categories');
-})->name('categories.listing');
-
-Route::get('/booking', function () {
-    return view('frontend.booking');
-})->name('booking');
-
-// Route::get('/service-details', function () {
-//     return view('frontend.service-details');
-// })->name('service-details');
-
-Route::get('/preview-details', function () {
-    return view('frontend.preview_details');
-})->name('preview-details');
 
 Route::get('/pricing-details', function () {
     return view('frontend.pricing');
 })->name('pricing');
 
-Route::get('/privacy-policy', function () {
-    return view('frontend.privacy-policy');
-})->name('privacy');
-
 Route::get('/term-condition', function () {
     return view('frontend.term-and-condition');
 })->name('term-condition');
 
-// Route::get('/services-in-india', function () {
-//     return view('frontend.services-in-india');
-// })->name('services-in-india');
-
-// Route::get('/vender-profile', function () {
-//     return view('frontend.vender-profile');
-// })->name('vender-profile');
-
-// Route::get('/services', function () {
-//     return view('frontend.service-detail');
-// })->name('services');
-
-Route::get('/create-vendor', function () {
-    return view('frontend.create-vendor');
-})->name('create-vendor');
 
 Route::get('/pricing', function () {
     return view('frontend.pricing');
@@ -150,11 +116,6 @@ Route::middleware(['auth', 'check.ip'])->group(function () {
     Route::resource('/menus', MenuController::class);
     Route::post('/menu-status', [MenuController::class, 'menuStatus'])->name('menu.status');
 
-    // Route::resource('/submenu', SubMenuController::class);
-    // Route::post('/submenu-status', [SubMenuController::class, 'subMenuStatus'])->name('submenu.status');
-    // Route::post('/fetch-subcategory/{id}', [SubMenuController::class, 'fetchsubcategory']);
-    // Route::post('/getMenus/{subcategoryId}', [SubMenuController::class, 'getMenus']);
-
     // Resource route for submenu
     Route::resource('/submenu', SubMenuController::class);
 
@@ -169,9 +130,6 @@ Route::middleware(['auth', 'check.ip'])->group(function () {
 
 
     Route::resource('service-detail', ServiceDetailController::class);
-    // Route::resource('/enquiry', EnquiryController::class);
-    // Route::post('/enquiry-status', [EnquiryController::class, 'enquiryStatus'])->name('enquiry.status');
-    // Route::get('/get-menus/{subcategoryId}', [EnquiryController::class, 'fetchMenu']);
 
     Route::resource('/enquiry', EnquiryController::class);
     Route::controller(EnquiryController::class)->group(function () {
@@ -191,7 +149,6 @@ Route::middleware(['auth', 'check.ip'])->group(function () {
         Route::post('/product-fetch-subcategory', 'fetchSubcategory')->name('fetch.subcategory');
         Route::post('/product-fetch-menu', 'fetchMenu')->name('fetch.menu');
         Route::post('/product-fetch-submenu', 'fetchSubmenu')->name('fetch.submenu');
-        // Route::post('/getMenus/{subcategoryId}', 'getMenus');
         Route::post('/getsubMenus/{menuId}', 'getsubMenus');
         Route::post('/vendor-send-otp', 'sendOtp')->name('vendor.send.otp');
         Route::post('/vendor-verify-otp', 'verifyOtp')->name('vendor.verify.otp');
@@ -213,7 +170,6 @@ Route::middleware(['auth', 'check.ip'])->group(function () {
 
     Route::resource('/invoice', InvoiceController::class);
     Route::post('invoice/{id}/edit', [InvoiceController::class, 'update'])->name('invoice.edit');
-    // Route::post('invoice/create/{id}', [InvoiceController::class, 'create'])->name('invoice.create');
     Route::get('/transactions', [TransactionController::class, 'getTransactionDetails'])->name('transactions.details');
     Route::get('/generate-pdf', [InvoiceController::class, 'generatePDF'])->name('generate.pdf');
     Route::post('/invoice/data/store/{id}', [InvoiceController::class, 'dataStore'])->name('invoice.data.store');

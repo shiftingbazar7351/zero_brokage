@@ -20,6 +20,10 @@
                     <a href="{{ route('admin_page') }}"><i class="fe fe-grid"></i> <span>Dashboard</span></a>
                 </li>
 
+                <li class ="{{ Route::currentRouteName() === 'role.permission.list' ? 'active' : '' }}">
+                    <a href="{{ route('role.permission.list') }}"><i class="fe fe-grid"></i> <span>Assign Permission</span></a>
+                </li>
+
                 <li class="submenu">
                     <a href="javascript:void(0);"><i class="fe fe-briefcase"></i>
                         <span>Services</span>

@@ -145,7 +145,6 @@ class InvoiceController extends Controller
         return $pdf->download('invoice.pdf');
     }
 
-
     public function dataStore(Request $request, $id)
     {
         // Validate the request
@@ -195,7 +194,6 @@ class InvoiceController extends Controller
                     $filename = $this->fileUploadService->uploadImage('transaction/', $screenshots[$index]);
                     $transaction->screenshot = $filename;
                 }
-// return $transaction;
                 $transaction->save();
             }
         }

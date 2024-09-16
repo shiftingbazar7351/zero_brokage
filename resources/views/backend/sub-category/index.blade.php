@@ -2,9 +2,14 @@
 
 @section('styles')
     <style>
-        img {
+        #image-preview-icon{
+            width: 100px;
+        }
+        #image-preview-bg{
+            width: 100px;
+        }
+        .form-uploads-path img{
             width: 150px;
-            height: 150px;
             object-fit: cover;
         }
     </style>

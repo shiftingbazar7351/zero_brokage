@@ -103,6 +103,8 @@ Route::middleware(['auth', 'check.ip'])->group(function () {
         Route::patch('/user/update/{user}', 'update')->name('update.user')->middleware('can:user-edit');
         Route::post('/user/{user}', 'show')->name('user.show')->middleware('can:user-show');
         Route::delete('/user/{user}', 'destroy')->name('user.destroy')->middleware('can:user-delete');
+        Route::post('/user-status', 'userStatus')->name('user.status')->middleware('can:user-status');
+
     });
     // Permission Module
     Route::get('/role-permission', [RolePermission::class, 'index'])->name('role.permission.list')->middleware('can:role-list');
@@ -123,14 +125,14 @@ Route::middleware(['auth', 'check.ip'])->group(function () {
     });
 
     Route::controller(SubCategoryController::class)->group(function () {
-        Route::get('/subcategories', 'index')->name('subcategories.index')->middleware('can:subcategories-list');
-        Route::get('/subcategories/create', 'create')->name('subcategories.create')->middleware('can:subcategories-create');
-        Route::post('/subcategories', 'store')->name('subcategories.store')->middleware('can:subcategories-create');
-        Route::get('/subcategories/{subcategories}/edit', 'edit')->name('subcategories.edit')->middleware('can:subcategories-edit');
-        Route::patch('/subcategories/update/{subcategories}', 'update')->name('subcategories.update')->middleware('can:subcategories-edit');
-        Route::post('/subcategories/{subcategories}', 'show')->name('subcategories.show')->middleware('can:subcategories-show');
-        Route::delete('/subcategories/{subcategories}', 'destroy')->name('subcategories.destroy')->middleware('can:subcategories-delete');
-        Route::post('/sub-category-status', 'subCategoryStatus')->name('subcategories.status')->middleware('can:subcategories-status');
+        Route::get('/subcategories', 'index')->name('subcategories.index')->middleware('can:subcategory-list');
+        Route::get('/subcategories/create', 'create')->name('subcategories.create')->middleware('can:subcategory-create');
+        Route::post('/subcategories', 'store')->name('subcategories.store')->middleware('can:subcategory-create');
+        Route::get('/subcategories/{subcategories}/edit', 'edit')->name('subcategories.edit')->middleware('can:subcategory-edit');
+        Route::patch('/subcategories/update/{subcategories}', 'update')->name('subcategories.update')->middleware('can:subcategory-edit');
+        Route::post('/subcategories/{subcategories}', 'show')->name('subcategories.show')->middleware('can:subcategory-show');
+        Route::delete('/subcategories/{subcategories}', 'destroy')->name('subcategories.destroy')->middleware('can:subcategory-delete');
+        Route::post('/sub-category-status', 'subCategoryStatus')->name('subcategories.status')->middleware('can:subcategory-status');
     });
 
     Route::controller(MenuController::class)->group(function () {

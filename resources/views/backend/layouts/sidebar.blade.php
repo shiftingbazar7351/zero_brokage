@@ -34,7 +34,7 @@
                 @endcan
 
 
-                @canany(['categories-list', 'subcategories-list', 'menus-list', 'submenu-list', 'india-services-list',
+                @canany(['categories-list', 'subcategory-list', 'menus-list', 'submenu-list', 'india-services-list',
                     'service-detail-list'])
                     <li class="submenu">
                         <a href="javascript:void(0);"><i class="fe fe-briefcase"></i>
@@ -52,7 +52,7 @@
                                     </a>
                                 </li>
                             @endcan
-                            @can(['subcategories-list'])
+                            @can(['subcategory-list'])
                                 <li>
                                     <a href="{{ route('subcategories.index') }}"
                                         class="{{ Route::currentRouteName() === 'subcategories.index' ? 'active' : '' }}">
@@ -168,13 +168,6 @@
                     </li>
                 @endcan
 
-
-                {{-- <li class="{{ Route::currentRouteName() === 'report.index' ? 'active' : '' }}">
-                    <a href="{{ route('report.index') }}">
-                        <i class="fe fe-file-text"></i>
-                        <span>Report</span>
-                    </a>
-                </li> --}}
                 @can(['faq-list'])
                     <li class="{{ Route::currentRouteName() === 'faq.index' ? 'active' : '' }}">
                         <a href="{{ route('faq.index') }}">

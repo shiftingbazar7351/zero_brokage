@@ -6,15 +6,31 @@ use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 
-class EmployeeController extends Controller
+use Modules\Employee\Entities\Department;
+use Modules\Employee\Entities\Branch;
+
+use App\Services\FileUploadService;
+use Illuminate\Validation\Rule;
+use Exception;
+class DepartmentController extends Controller
 {
+    protected $fileUploadService;
+
+    public function __construct(FileUploadService $fileUploadService)
+    {
+        $this->fileUploadService = $fileUploadService;
+    }
+
     /**
      * Display a listing of the resource.
      * @return Renderable
      */
     public function index()
     {
-        return view('employee::index');
+        $departments = Department::orderByDesc('created_at')->paginate(10);
+        $branchs = Branch::get();
+        $dep = Branch::get();
+        return view('employee::department.index',compact('departments','branchs'));
     }
 
     /**

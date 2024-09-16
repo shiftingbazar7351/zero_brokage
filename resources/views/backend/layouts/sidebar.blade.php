@@ -20,6 +20,10 @@
                     <a href="{{ route('admin_page') }}"><i class="fe fe-grid"></i> <span>Dashboard</span></a>
                 </li>
 
+                <li class ="{{ Route::currentRouteName() === 'role.permission.list' ? 'active' : '' }}">
+                    <a href="{{ route('role.permission.list') }}"><i class="fe fe-grid"></i> <span>Assign Permission</span></a>
+                </li>
+
                 <li class="submenu">
                     <a href="javascript:void(0);"><i class="fe fe-briefcase"></i>
                         <span>Services</span>
@@ -89,6 +93,14 @@
                     <ul>
 
                         <li>
+                            <a href="{{ route('employee-headoffice.index') }}"
+                                class="{{ Route::currentRouteName() === 'employee-headoffice.index' ? 'active' : '' }}">
+                                <i class="fe fe-file-text"></i>
+                                <span>Office Head</span>
+                            </a>
+                        </li>
+
+                        <li>
                             <a href="{{ route('employee-company.index') }}"
                                 class="{{ Route::currentRouteName() === 'employee-company.index' ? 'active' : '' }}">
                                 <i class="fe fe-file-text"></i>
@@ -97,8 +109,8 @@
                         </li>
 
                         <li>
-                            <a href="{{ route('subcategories.index') }}"
-                                class="{{ Route::currentRouteName() === 'subcategories.index' ? 'active' : '' }}">
+                            <a href="{{ route('employee-product.index') }}"
+                                class="{{ Route::currentRouteName() === 'employee-product.index' ? 'active' : '' }}">
                                 <i class="fe fe-file-text"></i>
                                 <span>Product</span>
                             </a>
@@ -106,26 +118,17 @@
 
 
                         <li>
-                            <a href="{{ route('menus.index') }}"
-                                class="{{ Route::currentRouteName() === 'menus.index' ? 'active' : '' }}">
+                            <a href="{{ route('employee-branch.index') }}"
+                                class="{{ Route::currentRouteName() === 'employee-branch.index' ? 'active' : '' }}">
                                 <i class="fe fe-file-text"></i>
-                                <span>Office Head</span>
+                                <span>Branch</span>
                             </a>
                         </li>
 
 
                         <li>
-                            <a href="{{ route('submenu.index') }}"
-                                class="{{ Route::currentRouteName() === 'submenu.index' ? 'active' : '' }}">
-                                <i class="fe fe-file-text"></i>
-                                <span>Brance</span>
-                            </a>
-                        </li>
-
-
-                        <li>
-                            <a href="{{ route('service-detail.index') }}"
-                                class="{{ Route::currentRouteName() === 'service-detail.index' ? 'active' : '' }}">
+                            <a href="{{ route('employee-department.index') }}"
+                                class="{{ Route::currentRouteName() === 'employee-department.index' ? 'active' : '' }}">
                                 <i class="fe fe-file-text"></i>
                                 <span>Department</span>
                             </a>

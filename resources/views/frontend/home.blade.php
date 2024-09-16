@@ -385,65 +385,24 @@
                     </div> --}}
                     </div>
                 </div>
-                {{-- <div class="row">
-                    @foreach ($subcategories as $subcategory)
-                        <div class="col-md-2">
-                            <a href="{{ route('services-in-india-city', $subcategory->slug ?? '') }}"
-                                class="feature-box aos" data-aos="fade-up">
-                                <div class="feature-icon">
-                                    <span>
-                                        <img src="{{ asset('storage/icon/' . $subcategory->icon ?? '') }}" alt="img"
-                                            class="rounded-circle">
-                                    </span>
-                                </div>
-                                <h5>{{ $subcategory->name ?? '' }}</h5>
-                            </a>
-                        </div>
-                    @endforeach
-
-                </div> --}}
+               
                  <div class="d-flex justify-content-center px-4 sticky-slider aos" data-aos="fade-up">
                     <div class="wrapper-slider">
                         <i id="left" class="fa-solid fas fa-angle-left"></i>
                         <ul class="carousell" style="justify-content: center;gap:12px">
+                            @foreach ($subcategories as $subcategory)
                             <li class="card" style="width: 100%">
                                 <div class="img">
-                                    <a href="">
-                                        <img src="{{ asset('assets/img/services/AC_Cleaning.jpg') }}" alt=""
+                                    <a href="{{ route('services-in-india-city', $subcategory->slug ?? '') }}">
+                                        <img src="{{ asset('storage/icon/' . $subcategory->icon ?? '') }}" alt=""
                                         draggable="false" />
                                     </a>
                                 </div>
                                 <h5 style="font-weight: bold;text-align:center; font-size:16px" class="pt-1">
-                                    AC</h5>
+                                    {{ $subcategory->name ?? '' }}</h5>
                             </li>
-                            <li class="card" style="width: 100%">
-                                <div class="img">
-                                    <a href="">
-                                        <img src="{{ asset('assets/img/services/AC_Cleaning.jpg') }}" alt=""
-                                        draggable="false" />
-                                    </a>
-                                </div>
-                                <h5 style="font-weight: bold;text-align:center; font-size:16px" class="pt-1">
-                                    AC</h5>
-                            </li>
-                            <li class="card" style="width: 100%">
-                                <div class="img">
-                                    <a href="">
-                                        <img src="{{ asset('assets/img/services/AC_Cleaning.jpg') }}" alt=""
-                                        draggable="false" />
-                                    </a>
-                                </div>
-                                <h5 style="font-weight: bold;text-align:center; font-size:16px" class="pt-1">
-                                    AC</h5>
-                            </li>
-                            <li class="card" style="width: 100%">
-                                <div class="img">
-                                    <img src="{{ asset('assets/img/services/AC_Cleaning.jpg') }}" alt=""
-                                        draggable="false" />
-                                </div>
-                                <h5 style="font-weight: bold;text-align:center; font-size:16px" class="pt-1">
-                                    AC</h5>
-                            </li>
+                            @endforeach
+
                         </ul>
                         <i id="right" class="fa-solid fas fa-angle-right"></i>
                     </div>

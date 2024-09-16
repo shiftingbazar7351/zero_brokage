@@ -29,7 +29,6 @@ class DepartmentController extends Controller
     {
         $departments = Department::orderByDesc('created_at')->paginate(10);
         $branchs = Branch::get();
-        $dep = Branch::get();
         return view('employee::department.index',compact('departments','branchs'));
     }
 
@@ -49,18 +48,32 @@ class DepartmentController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        // Validate the input data
+        $request->validate([
+            'branch_id' => 'required|exists:branches,id',
+            'department_id' => 'required',
+            'designation_id' => 'required',
+            'sub_designation_id' => 'nullable',
+            'image' => 'nullable|mimes:jpeg,png,pdf|max:2048', // Allow images or PDFs
+        ]);
+
+        $department = new Department();
+        $department->branch_id = $request->branch_id;
+        $department->department_id = $request->department_id;
+        $department->designation_id = $request->designation_id;
+        $department->sub_designation_id = $request->sub_designation_id;
+        // $department->address = $request->address;
+
+        if ($request->hasFile('image')) {
+            $filename = $this->fileUploadService->uploadImage('employee/departments/', $request->file('image'));
+            $department->image = $filename;
+        }
+
+        $department->save();
+        return response()->json(['success' => true, 'message' => 'Department created successfully!.']);
     }
 
-    /**
-     * Show the specified resource.
-     * @param int $id
-     * @return Renderable
-     */
-    public function show($id)
-    {
-        return view('employee::show');
-    }
+
 
     /**
      * Show the form for editing the specified resource.
@@ -69,9 +82,9 @@ class DepartmentController extends Controller
      */
     public function edit($id)
     {
-        return view('employee::edit');
+        $department = Department::find($id);
+        return response()->json(['department' => $department]);
     }
-
     /**
      * Update the specified resource in storage.
      * @param Request $request
@@ -80,7 +93,28 @@ class DepartmentController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $department =  Department::findOrFail($id);
+        $request->validate([
+            'branch_id' => 'required',
+            'department_id' => 'required',
+            'designation_id' => 'required',
+            'sub_designation_id' => 'nullable',
+            'image' => 'nullable|mimes:jpeg,png,pdf|max:2048', // Allow images or PDFs
+        ]);
+
+        $department->branch_id = $request->branch_id;
+        $department->department_id = $request->department_id;
+        $department->designation_id = $request->designation_id;
+        $department->sub_designation_id = $request->sub_designation_id;
+        // $department->address = $request->address;
+
+        if ($request->hasFile('image')) {
+            $filename = $this->fileUploadService->uploadImage('employee/departments/', $request->file('image'));
+            $department->image = $filename;
+        }
+
+        $department->save();
+        return response()->json(['success' => true, 'message' => 'Department updated successfully!.']);
     }
 
     /**
@@ -90,6 +124,20 @@ class DepartmentController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $department = Department::findOrFail($id);
+        $imageFields = [
+            'image' => 'employee/departments/',
+
+        ];
+        $department->delete();
+
+        foreach ($imageFields as $field => $path) {
+            $image = $department->$field; // Get the image name from the vendor object
+            if ($image) {
+                $this->fileUploadService->removeImage($path, $image);
+            }
+        }
+
+        return redirect(route('employee-department.index'))->with('success', ' Deleted Successfully!');
     }
 }

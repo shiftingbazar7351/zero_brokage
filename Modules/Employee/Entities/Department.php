@@ -11,12 +11,13 @@ class Department extends Model
 
     protected $fillable = [
         'branch_id',
-        'name',
+        'department_name',
         'image',
         'designation',
         'status',
         'created_by'
+
     ];
-    
+
 
 }

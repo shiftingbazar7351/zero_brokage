@@ -10,8 +10,7 @@
         }
 
         .preview-img {
-            width: 100px;
-            height: 100px;
+            width: 150px;
             object-fit: cover;
         }
     </style>

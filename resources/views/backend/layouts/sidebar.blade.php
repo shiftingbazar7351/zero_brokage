@@ -167,13 +167,6 @@
                     </li>
                 @endcan
 
-
-                {{-- <li class="{{ Route::currentRouteName() === 'report.index' ? 'active' : '' }}">
-                    <a href="{{ route('report.index') }}">
-                        <i class="fe fe-file-text"></i>
-                        <span>Report</span>
-                    </a>
-                </li> --}}
                 @can(['faq-list'])
                     <li class="{{ Route::currentRouteName() === 'faq.index' ? 'active' : '' }}">
                         <a href="{{ route('faq.index') }}">

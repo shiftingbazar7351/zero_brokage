@@ -20,7 +20,6 @@ class PermissionTableSeeder extends Seeder
             ['name' => 'permission', 'title' => 'Permission', 'guard_name' => 'web'],
             ['name' => 'permission-add', 'title' => 'Permission Add', 'guard_name' => 'web'],
             ['name' => 'permission-list', 'title' => 'Permission List', 'guard_name' => 'web'],
-            ['name' => 'role', 'title' => 'Role', 'guard_name' => 'web'],
 
             ['name' => 'user-list', 'title' => 'User List', 'guard_name' => 'web'],
             ['name' => 'user-create', 'title' => 'User Create', 'guard_name' => 'web'],

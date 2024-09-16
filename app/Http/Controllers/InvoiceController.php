@@ -145,7 +145,6 @@ class InvoiceController extends Controller
         return $pdf->download('invoice.pdf');
     }
 
-
     public function dataStore(Request $request, $id)
     {
         // Validate the request
@@ -160,7 +159,8 @@ class InvoiceController extends Controller
         //     'transaction_id.*' => 'exists:transactions,id' // Each selected transaction must exist
         // ]);
 
-        // Update vendor details
+
+
         $vendor = Vendor::findOrFail($id);
         $vendor->company_name = $request->company_name;
         $vendor->location_lat = $request->location_lat;
@@ -168,10 +168,9 @@ class InvoiceController extends Controller
         $vendor->number = $request->number;
         $vendor->email = $request->email;
         $vendor->address = $request->address;
-        // $vendor->save();
+        $vendor->invoice_number = $request->rand('SBZ1508'+rand(999999));
 
-        // Process the selected transaction IDs
-        // Process the selected transaction IDs and associated fields
+
         $transactionIds = $request->input('transaction_id');
         $utrs = $request->input('utr');
         $paymentDates = $request->input('payment_date');
@@ -195,7 +194,6 @@ class InvoiceController extends Controller
                     $filename = $this->fileUploadService->uploadImage('transaction/', $screenshots[$index]);
                     $transaction->screenshot = $filename;
                 }
-// return $transaction;
                 $transaction->save();
             }
         }

@@ -17,25 +17,33 @@ class UserTableSeeder extends Seeder
     {
         $users = [
             [
-                'name' => 'Admin',
+                'name' => 'systemadmin',
+                'email' => 'admin@flybizz.com',
+                'password' => bcrypt('admin@flybizz.com'),
+                'phone_number' => '+12398190255',
+                'user_type' => 'super_admin',
+                'status' => 1,
+            ],
+
+            [
+                'name' => 'systemadmin',
                 'email' => 'admin@example.com',
                 'password' => bcrypt('Password@123'),
                 'phone_number' => '+12398190255',
-                'email_verified_at' => now(),
-                'user_type' => 'super_admin', // Role for the first user
-                'status' => 'active',
+                'user_type' => 'super_admin',
+                'status' => 1,
             ],
-            [
-                'name' => 'admin',
-                'email' => 'admin@flybizz.com',
-                'password' => bcrypt('Flybizz@123'),
-                'phone_number' => '+9977882673',
-                'email_verified_at' => now(),
-                'user_type' => 'super_admin', // Role for the second user
-                'status' => 'active',
-            ],
-        ];
 
+            [
+                'name' => 'user',
+                'email' => 'testing@flybizz.com',
+                'password' => bcrypt('testing@flybizz.com'),
+                'phone_number' => '+12398190255',
+                'email_verified_at' => now(),
+                'user_type' => 'user',
+                'status' => 1
+            ]
+        ];
         foreach ($users as $key => $value) {
             $user = User::create($value);
             $user->assignRole($value['user_type']);

@@ -6,7 +6,7 @@ use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 
-use Modules\Employee\Entities\EmployeeProduct;
+use Modules\Employee\Entities\Department;
 use Modules\Employee\Entities\Branch;
 
 use App\Services\FileUploadService;
@@ -27,7 +27,10 @@ class DepartmentController extends Controller
      */
     public function index()
     {
-        return view('employee::index');
+        $departments = Department::orderByDesc('created_at')->paginate(10);
+        $branchs = Branch::get();
+        $dep = Branch::get();
+        return view('employee::department.index',compact('departments','branchs'));
     }
 
     /**

@@ -91,7 +91,7 @@ Route::post('/fetch-city/{stateId}', [SubMenuController::class, 'fetchCity']);
 Route::post('/get-otp', [OtpController::class, 'getOtp'])->name('getOtp');
 Route::post('/verify-otp', [OtpController::class, 'verifyOtp'])->name('verifyOtp');
 
-Route::middleware(['auth', 'check.ip'])->prefix('admin')->group(function () {
+Route::middleware(['auth', 'check.ip'])->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
@@ -111,6 +111,18 @@ Route::middleware(['auth', 'check.ip'])->prefix('admin')->group(function () {
       Route::resource('permission', PermissionController::class);
       Route::resource('role', RoleController::class);
       // Dashboard Routes
+
+
+    //   Route::controller(UserController::class)->group(function () {
+    //     Route::get('/categories', 'index')->name('categories.index')->middleware('can:categories-list');
+    //     Route::get('/categories/create', 'create')->name('categories.create')->middleware('can:categories-create');
+    //     Route::post('/categories', 'store')->name('categories.store')->middleware('can:categories-create');
+    //     Route::get('/categories/{categories}/edit', 'edit')->name('categories.edit')->middleware('can:categories-edit');
+    //     Route::patch('/categories/update/{categories}', 'update')->name('categories.update')->middleware('can:categories-edit');
+    //     Route::post('/categories/{categories}', 'show')->name('categories.show')->middleware('can:categories-show');
+    //     Route::delete('/categories/{categories}', 'destroy')->name('categories.destroy')->middleware('can:categories-delete');
+    // });
+
 
     Route::get('/dashboard', [AdminController::class, 'homepage'])->name('admin_page');
     Route::resource('categories', CategoryController::class);

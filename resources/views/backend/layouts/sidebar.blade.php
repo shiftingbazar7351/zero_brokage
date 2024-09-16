@@ -24,6 +24,7 @@
                     <a href="{{ route('role.permission.list') }}"><i class="fe fe-grid"></i> <span>Assign Permission</span></a>
                 </li>
 
+                {{-- @canany(['role-list', 'categories-list']) --}}
                 <li class="submenu">
                     <a href="javascript:void(0);"><i class="fe fe-briefcase"></i>
                         <span>Services</span>
@@ -31,6 +32,7 @@
                     </a>
                     <ul>
 
+                        {{-- @can(['categories-list']) --}}
                         <li>
                             <a href="{{ route('categories.index') }}"
                                 class="{{ Route::currentRouteName() === 'categories.index' ? 'active' : '' }}">
@@ -38,6 +40,7 @@
                                 <span>Category</span>
                             </a>
                         </li>
+                        {{-- @endcan --}}
 
                         <li>
                             <a href="{{ route('subcategories.index') }}"
@@ -84,6 +87,7 @@
                     </ul>
 
                 </li>
+                {{-- @endcanany --}}
 
                 <li class="submenu">
                     <a href="javascript:void(0);"><i class="fe fe-briefcase"></i>

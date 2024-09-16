@@ -91,7 +91,7 @@ Route::post('/fetch-city/{stateId}', [SubMenuController::class, 'fetchCity']);
 Route::post('/get-otp', [OtpController::class, 'getOtp'])->name('getOtp');
 Route::post('/verify-otp', [OtpController::class, 'verifyOtp'])->name('verifyOtp');
 
-Route::middleware(['auth', 'check.ip'])->prefix('admin')->group(function () {
+Route::middleware(['auth', 'check.ip'])->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');

@@ -385,11 +385,11 @@
                     </div> --}}
                     </div>
                 </div>
-               
+
                  <div class="d-flex justify-content-center px-4 sticky-slider aos" data-aos="fade-up">
                     <div class="wrapper-slider">
                         <i id="left" class="fa-solid fas fa-angle-left"></i>
-                        <ul class="carousell" style="justify-content: center;gap:12px">
+                        <ul class="carousell" style="gap:12px">
                             @foreach ($subcategories as $subcategory)
                             <li class="card" style="width: 100%">
                                 <div class="img">

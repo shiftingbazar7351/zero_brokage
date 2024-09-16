@@ -114,24 +114,25 @@ Route::middleware(['auth', 'check.ip'])->group(function () {
     // Dashboard Routes
 
     Route::controller(CategoryController::class)->group(function () {
-        Route::get('/categories', 'index')->name('categories.index')->middleware('can:categories-list');
-        Route::get('/categories/create', 'create')->name('categories.create')->middleware('can:categories-create');
-        Route::post('/categories', 'store')->name('categories.store')->middleware('can:categories-create');
-        Route::get('/categories/{categories}/edit', 'edit')->name('categories.edit')->middleware('can:categories-edit');
-        Route::patch('/categories/update/{categories}', 'update')->name('categories.update')->middleware('can:categories-edit');
-        Route::post('/categories/{categories}', 'show')->name('categories.show')->middleware('can:categories-show');
-        Route::delete('/categories/{categories}', 'destroy')->name('categories.destroy')->middleware('can:categories-delete');
-        Route::post('/category-status', 'categoryStatus')->name('categories.status')->middleware('can:categories-status');
+        Route::get('/categories', 'index')->name('categories.index')->middleware('can:categories-list'); // List all categories
+        Route::get('/categories/create', 'create')->name('categories.create')->middleware('can:categories-create'); // Show form to create a category
+        Route::post('/categories', 'store')->name('categories.store')->middleware('can:categories-create'); // Store a new category
+        Route::get('/categories/{category}/edit', 'edit')->name('categories.edit')->middleware('can:categories-edit'); // Edit category form
+        Route::put('/categories/{category}', 'update')->name('categories.update')->middleware('can:categories-edit'); // Update the category
+        Route::get('/categories/{category}', 'show')->name('categories.show')->middleware('can:categories-show'); // Show a single category (corrected to GET)
+        Route::delete('/categories/{category}', 'destroy')->name('categories.destroy')->middleware('can:categories-delete'); // Delete a category
+        Route::post('/category-status', 'categoryStatus')->name('categories.status')->middleware('can:categories-status'); // Change category status
     });
+
 
     Route::controller(SubCategoryController::class)->group(function () {
         Route::get('/subcategories', 'index')->name('subcategories.index')->middleware('can:subcategory-list');
         Route::get('/subcategories/create', 'create')->name('subcategories.create')->middleware('can:subcategory-create');
         Route::post('/subcategories', 'store')->name('subcategories.store')->middleware('can:subcategory-create');
-        Route::get('/subcategories/{subcategories}/edit', 'edit')->name('subcategories.edit')->middleware('can:subcategory-edit');
-        Route::patch('/subcategories/update/{subcategories}', 'update')->name('subcategories.update')->middleware('can:subcategory-edit');
-        Route::post('/subcategories/{subcategories}', 'show')->name('subcategories.show')->middleware('can:subcategory-show');
-        Route::delete('/subcategories/{subcategories}', 'destroy')->name('subcategories.destroy')->middleware('can:subcategory-delete');
+        Route::get('/subcategories/{subcategory}/edit', 'edit')->name('subcategories.edit')->middleware('can:subcategory-edit');
+        Route::patch('/subcategories/update/{subcategory}', 'update')->name('subcategories.update')->middleware('can:subcategory-edit');
+        Route::post('/subcategories/{subcategory}', 'show')->name('subcategories.show')->middleware('can:subcategory-show');
+        Route::delete('/subcategories/{subcategory}', 'destroy')->name('subcategories.destroy')->middleware('can:subcategory-delete');
         Route::post('/sub-category-status', 'subCategoryStatus')->name('subcategories.status')->middleware('can:subcategory-status');
     });
 
@@ -139,10 +140,10 @@ Route::middleware(['auth', 'check.ip'])->group(function () {
         Route::get('/menus', 'index')->name('menus.index')->middleware('can:menus-list');
         Route::get('/menus/create', 'create')->name('menus.create')->middleware('can:menus-create');
         Route::post('/menus', 'store')->name('menus.store')->middleware('can:menus-create');
-        Route::get('/menus/{menus}/edit', 'edit')->name('menus.edit')->middleware('can:menus-edit');
-        Route::patch('/menus/update/{menus}', 'update')->name('menus.update')->middleware('can:menus-edit');
-        Route::post('/menus/{menus}', 'show')->name('menus.show')->middleware('can:menus-show');
-        Route::delete('/menus/{menus}', 'destroy')->name('menus.destroy')->middleware('can:menus-delete');
+        Route::get('/menus/{menu}/edit', 'edit')->name('menus.edit')->middleware('can:menus-edit');
+        Route::patch('/menus/update/{menu}', 'update')->name('menus.update')->middleware('can:menus-edit');
+        Route::post('/menus/{menu}', 'show')->name('menus.show')->middleware('can:menus-show');
+        Route::delete('/menus/{menu}', 'destroy')->name('menus.destroy')->middleware('can:menus-delete');
         Route::post('/menu-status', 'menuStatus')->name('menu.status')->middleware('can:menus-status');
     });
 

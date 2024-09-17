@@ -1,7 +1,7 @@
 @extends('backend.layouts.main')
 @section('styles')
     <style>
-        img {
+        .preview-img{
             width: 150px;
             height: 150px;
             object-fit: cover;
@@ -39,7 +39,7 @@
                             <tbody>
                                 @if ($products->isEmpty())
                                     <tr>
-                                        <td colspan="4" class="text-center">No data found</td>
+                                        <td colspan="5" class="text-center">No data found</td>
                                     </tr>
                                 @else
                                     @foreach ($products as $product)
@@ -317,7 +317,7 @@
                     $('#editname_error').text(xhr.responseJSON.errors.name ? xhr.responseJSON.errors
                         .name[0] : '');
                         $('#editcompany_id_error').text(xhr.responseJSON.errors.company_id ? xhr.responseJSON.errors
-                        .company_id[0] : '');  
+                        .company_id[0] : '');
                     $('#editimage_error').text(xhr.responseJSON.errors.image ? xhr.responseJSON.errors
                         .image[0] : '');
                 }

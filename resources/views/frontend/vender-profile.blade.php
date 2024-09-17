@@ -352,7 +352,7 @@
         <div class="container mt-4 border">
             <div class="row">
                 <div class="col-md-3 d-flex align-items-center">
-                    <div class="img-prof">
+                    <div class="img-prof w-100">
                         <img src="{{ asset('storage/vendor/vendor_image/' . ($vendor->vendor_image ?? 'default-placeholder.png')) }}"
                             alt="" class="w-100 object-fit-contain">
                     </div>
@@ -696,7 +696,7 @@
             <div class="row text-center align-items-center">
                 @foreach ($subcategories as $subcategory)
                     <div class="col-lg-2 col-md-4 col-sm-6 d-flex">
-                        <div class="construct-box flex-fill ">
+                        <div class="construct-box flex-fill rounded">
                             <img src="{{ asset('storage/icon/' . $subcategory->icon ?? '') }}" alt="img"
                                 style="width: 150px; height:150px;" />
                             <h6>{{ $subcategory->name ?? '' }}</h6>

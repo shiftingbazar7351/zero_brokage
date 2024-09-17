@@ -2,16 +2,19 @@
 
 namespace App\Http\Controllers;
 
-use Exception;
-use App\Models\User;
-use App\Helpers\AuthHelper;
-use Illuminate\Http\Request;
 use App\DataTables\UsersDataTable;
+use App\Helpers\AuthHelper;
 use App\Http\Requests\UserRequest;
-use Spatie\Permission\Models\Role;
+use App\Models\User;
 use App\Services\FileUploadService;
+use Exception;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Validator;
+use Spatie\Permission\Models\Role;
 
 class UserController extends Controller
 {
@@ -29,7 +32,8 @@ class UserController extends Controller
     public function index()
     {
         $users = User::get();
-        return view('backend.user.index',compact('users'));
+        $roles = Role::get();
+        return view('backend.user.index', compact('users', 'roles'));
     }
 
     /**
@@ -49,17 +53,60 @@ class UserController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(UserRequest $request)
+    public function store(Request $request)
     {
-        $request['password'] = bcrypt($request->password);
-        $user = User::create($request->all());
-        $user->assignRole($request->user_role ?? 'user');
-        if ($request->hasFile('profile_picture')) {
-            $filename = $this->fileUploadService->uploadImage('images/user/', $request->file('profile_picture'));
-            $user->update(['profile_picture'=>$filename]);
+        // Validate the request data
+        $validated = $request->validate([
+            'name' => 'required|max:20',
+            'email' => 'required|email|max:100|unique:users,email',
+            'phone_number' => 'required|digits:10',
+            'user_type' => 'required',
+        ]);
+
+        try {
+            // Generate password: Capitalize first name and append '123'
+            $firstName = explode(' ', $validated['name'])[0]; // Get the first name from the full name
+            $passwordString = ucfirst(strtolower($firstName)) . '@123'; // First letter capitalized, then '123'
+            $hashedPassword = Hash::make($passwordString); // Hash the generated password
+
+            // Create new user
+            $user = new User();
+            $user->name = $validated['name'];
+            $user->email = $validated['email'];
+            $user->password = $hashedPassword;
+            $user->phone_number = $validated['phone_number'];
+            $user->user_type = $validated['user_type'];
+            $user->created_by = Auth::user()->id;
+            $user->status = 1;
+            $user->save();
+
+            // Send email with the credentials
+            $toUser = $validated['email'];
+            $subject = 'ZERO BROKAGE LOGIN CREDENTIAL';
+
+            Mail::send('emails.user-credential', ['email' => $validated['email'], 'password' => $passwordString], function ($message) use ($toUser, $subject) {
+                $message->to($toUser)
+                    ->subject($subject);
+            });
+
+            // Success notification
+            $notification = [
+                'message' => 'User Added Successfully !!',
+                'alert-type' => 'success',
+            ];
+
+            return redirect(route('user.index'))->with($notification);
+
+        } catch (Exception $e) {
+            // Log error and redirect back with error message
+            Log::error('User creation error: ' . $e->getMessage());
+            return redirect()
+                ->back()
+                ->with('error', 'An error occurred while creating the user: ' . $e->getMessage());
         }
-        return redirect()->route('user.index')->withSuccess(trans('users.store', ['name' => __('users.store')]));
     }
+
+
 
     /**
      * Display the specified resource.
@@ -86,16 +133,16 @@ class UserController extends Controller
      */
     public function edit($id)
     {
-        $roles =null;
-       $data = User::with('roles')->findOrFail($id);
+        $roles = null;
+        $data = User::with('roles')->findOrFail($id);
 
         $data['user_type'] = $data->roles->pluck('id')[0] ?? null;
-        if($id != auth()->user()->id){
-            $roles = Role::where('status', 1)->where('name','!=','super_admin')->get()->pluck('title', 'id');
+        if ($id != auth()->user()->id) {
+            $roles = Role::where('status', 1)->where('name', '!=', 'super_admin')->get()->pluck('title', 'id');
         }
-        if($data && $data->profile_picture){
-            $profileImage =config('app.url').$data->profile_picture;
-        }else{
+        if ($data && $data->profile_picture) {
+            $profileImage = config('app.url') . $data->profile_picture;
+        } else {
             $profileImage = getSingleMedia($data, 'profile_image');
         }
         return view('users.form', compact('data', 'id', 'roles', 'profileImage'));
@@ -113,13 +160,13 @@ class UserController extends Controller
         $user = User::with('userProfile')->findOrFail($id);
 
         $role = Role::find($request->user_role);
-        if($role){
+        if ($role) {
             $user->assignRole($role->name);
         }
         $user->fill($request->except('profile_picture'))->save();
         if ($request->hasFile('profile_picture')) {
             $filename = $this->fileUploadService->uploadImage('images/user/', $request->file('profile_picture'));
-             $this->fileUploadService->removeImage('images/user/', $user->profile_picture);
+            $this->fileUploadService->removeImage('images/user/', $user->profile_picture);
             $user->update(['profile_picture' => $filename]);
         }
         // Redirect the user back to the appropriate route with a success message

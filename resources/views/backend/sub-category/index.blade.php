@@ -2,11 +2,10 @@
 
 @section('styles')
     <style>
-        img {
+        
+         .preview-img{
             width: 150px;
-            height: 150px;
-            object-fit: cover;
-        }
+         }
     </style>
 @endsection
 

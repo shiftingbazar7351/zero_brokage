@@ -67,6 +67,10 @@ Route::get('/reciept', function () {
     return view('frontend.reciept');
 })->name('reciept');
 
+Route::get('/email-template', function () {
+    return view('emails.user-credential');
+})->name('email-template');
+
 Route::controller(FrontendController::class)->group(function () {
     Route::get('/', 'home')->name('home');
     Route::get('/service-list', 'serviceList')->name('service-list');

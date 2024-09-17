@@ -314,7 +314,9 @@
                 <div class="col-md-12 text-center">
                     <div class="section-heading aos " data-aos="fade-up">
                         <h2>How It Works</h2>
-                        <h4 class="process">Process of Hiring Best Movers</h4>
+                        <marquee direction="left" behavior="scroll" scrollamount="5" >
+                           <h4 class="process"> Process of Hiring Best Movers</h4>
+                        </marquee>
                     </div>
                 </div>
             </div>
@@ -326,7 +328,7 @@
                                 <img src="assets/img/icons/work-icon.svg" alt="img">
                             </span>
                         </div>
-                        <h5>Share Your Requiremen</h5>
+                        <h5>Share Your Requirement</h5>
                         <p class="workbox-p">Let us know what goods you need to shift and your preferred time.</p>
                         <h4>01</h4>
                     </div>
@@ -385,11 +387,11 @@
                     </div> --}}
                     </div>
                 </div>
-               
+
                  <div class="d-flex justify-content-center px-4 sticky-slider aos" data-aos="fade-up">
                     <div class="wrapper-slider">
                         <i id="left" class="fa-solid fas fa-angle-left"></i>
-                        <ul class="carousell" style="justify-content: center;gap:12px">
+                        <ul class="carousell" style="gap:12px">
                             @foreach ($subcategories as $subcategory)
                             <li class="card" style="width: 100%">
                                 <div class="img">

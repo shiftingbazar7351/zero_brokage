@@ -135,8 +135,8 @@
             <h1>Lets join the tribe of {{ $projectName }}</h1>
             <div class="body">
                 <h2>Welcome to {{ $projectName }} <br />you can now get onboard with credential.</h2>
-                <p><b>Email:</b>{{ $email }}</p>
-                <p><b>Password:</b> {{ $password }}</p>
+                <p><b>Email:</b>weew</p>
+                <p><b>Password:</b> weweewwewwee</p>
                 {{--  <a href="javascript:void(0)">Login</a>  --}}
             </div>
             <div class="footer">

@@ -225,13 +225,13 @@ Route::middleware(['auth', 'check.ip'])->group(function () {
     });
 
     Route::controller(ProductController::class)->group(function () {
-        Route::get('/products', 'index')->name('products.index')->middleware('can:products-list');
-        Route::get('/products/create', 'create')->name('products.create')->middleware('can:products-create');
-        Route::post('/products', 'store')->name('products.store')->middleware('can:products-create');
-        Route::get('/products/{products}/edit', 'edit')->name('products.edit')->middleware('can:products-edit');
-        Route::put('/products/{products}', 'update')->name('products.update')->middleware('can:products-edit');
-        Route::post('/products/{products}', 'show')->name('products.show')->middleware('can:products-show');
-        Route::delete('/products/{products}', 'destroy')->name('products.destroy')->middleware('can:products-delete');
+        Route::get('/products', 'index')->name('products.index')->middleware('can:product-list');
+        Route::get('/products/create', 'create')->name('products.create')->middleware('can:product-create');
+        Route::post('/products', 'store')->name('products.store')->middleware('can:product-create');
+        Route::get('/products/{products}/edit', 'edit')->name('products.edit')->middleware('can:product-edit');
+        Route::put('/products/{products}', 'update')->name('products.update')->middleware('can:product-edit');
+        Route::post('/products/{products}', 'show')->name('products.show')->middleware('can:product-show');
+        Route::delete('/products/{products}', 'destroy')->name('products.destroy')->middleware('can:product-delete');
     });
 
     Route::controller(IpAddressController::class)->group(function () {

@@ -89,8 +89,7 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body pt-0">
-                    <form id="addSubCategoryForm"  method="POST"
-                        enctype="multipart/form-data">
+                    <form id="addSubCategoryForm" method="POST" enctype="multipart/form-data">
                         @csrf
                         <div class="mb-3">
                             <label class="form-label">User Name</label>
@@ -125,8 +124,8 @@
                         <div class="mb-3">
                             <label class="form-label">Status</label>
                             <select class="form-control" name="status" id="status">
-                               <option value="1">Active</option>
-                               <option value="0">Inactive</option>
+                                <option value="1">Active</option>
+                                <option value="0">Inactive</option>
                             </select>
                             <div id="status_error" class="text-danger"></div>
                         </div>
@@ -167,35 +166,36 @@
 
                         <div class="mb-3">
                             <label class="form-label">Phone Number</label>
-                            <input type="text" class="form-control" name="phone_number" placeholder="Enter Phone Number">
+                            <input type="text" class="form-control" name="phone_number"
+                                placeholder="Enter Phone Number">
                             <div id="phone_number_error" class="text-danger"></div>
                         </div>
 
                         <div class="mb-3">
                             <label class="form-label">Role</label>
                             <select class="form-control" name="user_type" id="user_type">
-                                <option value="">Select Role</option>
                                 @foreach ($roles as $role)
-                                    <option value="{{ $role->id }}">{{ $role->name }}</option>
+                                    <option value="{{ $role->id }}" {{ $role->name == 'user' ? 'selected' : '' }}>
+                                        {{ $role->name }}
+                                    </option>
                                 @endforeach
                             </select>
                             <div id="role_error" class="text-danger"></div>
                         </div>
 
+
                         <div class="mb-3">
                             <label class="form-label">Status</label>
                             <select class="form-control" name="status" id="status">
-                                <option value="">Select Status</option>
-                               <option value="1">Active</option>
-                               <option value="0">Inactive</option>
+                                <option value="1">Active</option>
+                                <option value="0">Inactive</option>
                             </select>
                             <div id="status_error" class="text-danger"></div>
                         </div>
 
-
                         <div class="text-end">
                             <button type="button" class="btn btn-secondary me-2" data-bs-dismiss="modal">Cancel</button>
-                            <button type="submit" class="btn btn-primary">Update</button>
+                            <button type="submit" class="btn btn-primary">Save</button>
                         </div>
                     </form>
                 </div>
@@ -204,91 +204,90 @@
     </div>
 @endsection
 @section('scripts')
-<script>
-    $(document).ready(function() {
-        // Handle Create User
-        $('#addSubCategoryForm').on('submit', function(e) {
-            e.preventDefault();
-            let formData = new FormData(this);
+    <script>
+        $(document).ready(function() {
+            // Handle Create User
+            $('#addSubCategoryForm').on('submit', function(e) {
+                e.preventDefault();
+                let formData = new FormData(this);
 
-            $.ajax({
-                url: '{{ route('user.store') }}',  // Change to the correct route
-                method: 'POST',
-                data: formData,
-                contentType: false,
-                processData: false,
-                success: function(response) {
-                    if (response.success) {
-                        alert('User added successfully!');
-                        location.reload(); // Reload the page to show updated data
-                    } else {
-                        alert('Failed to add user.');
+                $.ajax({
+                    url: '{{ route('user.store') }}', // Change to the correct route
+                    method: 'POST',
+                    data: formData,
+                    contentType: false,
+                    processData: false,
+                    success: function(response) {
+                        if (response.success) {
+                            alert('User added successfully!');
+                            location.reload(); // Reload the page to show updated data
+                        } else {
+                            alert('Failed to add user.');
+                        }
+                    },
+                    error: function(response) {
+                        displayErrors(response.responseJSON.errors); // Handle validation errors
                     }
-                },
-                error: function(response) {
-                    displayErrors(response.responseJSON.errors); // Handle validation errors
-                }
+                });
             });
-        });
 
-        // Handle Edit User
-        $('#editSubCategoryForm').on('submit', function(e) {
-            e.preventDefault();
-            let formData = new FormData(this);
-            let id = $('#editSubCategoryId').val();
+            // Handle Edit User
+            $('#editSubCategoryForm').on('submit', function(e) {
+                e.preventDefault();
+                let formData = new FormData(this);
+                let id = $('#editSubCategoryId').val();
 
-            $.ajax({
-                url: '/user/' + id,  // Assuming RESTful route for update
-                method: 'POST',
-                data: formData,
-                contentType: false,
-                processData: false,
-                success: function(response) {
-                    if (response.success) {
-                        alert('User updated successfully!');
-                        location.reload(); // Reload the page to show updated data
-                    } else {
-                        alert('Failed to update user.');
+                $.ajax({
+                    url: '/user/' + id, // Assuming RESTful route for update
+                    method: 'POST',
+                    data: formData,
+                    contentType: false,
+                    processData: false,
+                    success: function(response) {
+                        if (response.success) {
+                            alert('User updated successfully!');
+                            location.reload(); // Reload the page to show updated data
+                        } else {
+                            alert('Failed to update user.');
+                        }
+                    },
+                    error: function(response) {
+                        displayErrors(response.responseJSON.errors); // Handle validation errors
                     }
-                },
-                error: function(response) {
-                    displayErrors(response.responseJSON.errors); // Handle validation errors
+                });
+            });
+
+            // Function to populate the edit form
+            window.edituser = function(id) {
+                $.get('/user/' + id, function(user) { // Assuming RESTful route for fetching the user
+                    $('#editSubCategoryId').val(user.id);
+                    $('#editSubCategoryForm input[name="name"]').val(user.name);
+                    $('#editSubCategoryForm input[name="email"]').val(user.email);
+                    $('#editSubCategoryForm input[name="phone_number"]').val(user.phone_number);
+                    $('#editSubCategoryForm select[name="user_type"]').val(user.user_type);
+                    $('#editSubCategoryForm select[name="status"]').val(user.status);
+                });
+            };
+
+            // Display validation errors
+            function displayErrors(errors) {
+                $('.text-danger').text(''); // Clear previous error messages
+                if (errors.name) {
+                    $('#name_error').text(errors.name[0]);
                 }
-            });
+                if (errors.email) {
+                    $('#email_error').text(errors.email[0]);
+                }
+                if (errors.phone_number) {
+                    $('#phone_number_error').text(errors.phone_number[0]);
+                }
+                if (errors.user_type) {
+                    $('#role_error').text(errors.user_type[0]);
+                }
+                if (errors.status) {
+                    $('#status_error').text(errors.status[0]);
+                }
+            }
         });
-
-        // Function to populate the edit form
-        window.edituser = function(id) {
-            $.get('/user/' + id, function(user) {  // Assuming RESTful route for fetching the user
-                $('#editSubCategoryId').val(user.id);
-                $('#editSubCategoryForm input[name="name"]').val(user.name);
-                $('#editSubCategoryForm input[name="email"]').val(user.email);
-                $('#editSubCategoryForm input[name="phone_number"]').val(user.phone_number);
-                $('#editSubCategoryForm select[name="user_type"]').val(user.user_type);
-                $('#editSubCategoryForm select[name="status"]').val(user.status);
-            });
-        };
-
-        // Display validation errors
-        function displayErrors(errors) {
-            $('.text-danger').text(''); // Clear previous error messages
-            if (errors.name) {
-                $('#name_error').text(errors.name[0]);
-            }
-            if (errors.email) {
-                $('#email_error').text(errors.email[0]);
-            }
-            if (errors.phone_number) {
-                $('#phone_number_error').text(errors.phone_number[0]);
-            }
-            if (errors.user_type) {
-                $('#role_error').text(errors.user_type[0]);
-            }
-            if (errors.status) {
-                $('#status_error').text(errors.status[0]);
-            }
-        }
-    });
-</script>
-
+    </script>
 @endsection

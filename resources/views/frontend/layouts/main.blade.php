@@ -67,8 +67,8 @@
 
             /* Popup Content */
             .popup-content {
-                background-color: #eee7e7;
-                margin: 4% auto;
+                background-color: white;
+                margin: 11% auto;
                 /* 15% from the top and centered */
                 padding: 20px;
                 border: 1px solid #888;

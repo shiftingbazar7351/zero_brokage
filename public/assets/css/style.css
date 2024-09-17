@@ -5540,7 +5540,7 @@ img.bgimg2 {
 .contact-img img {
     border-radius: 10px;
 }
-.contact-img:before {
+/* .contact-img:before {
     position: absolute;
     content: "";
     background: url("../img/bg/contact-bg.png") no-repeat;
@@ -5549,8 +5549,8 @@ img.bgimg2 {
     width: 113px;
     height: 113px;
     z-index: -1;
-}
-.contact-img:after {
+} */
+/* .contact-img:after {
     position: absolute;
     content: "";
     background: url("../img/bg/contact-bg.png") no-repeat;
@@ -5559,7 +5559,7 @@ img.bgimg2 {
     width: 113px;
     height: 113px;
     z-index: -1;
-}
+} */
 .contact-info {
     display: -webkit-box;
     display: -ms-flexbox;
@@ -12357,7 +12357,7 @@ fieldset#first-field {
 }
 .service-cont-img {
     position: relative;
-    margin-right: 15px;
+    margin-right: 25px;
     flex: 0 0 210px;
     max-width: 210px;
 }
@@ -24003,14 +24003,14 @@ td.ant-table-column-sort {
         position: relative;
     }
     .main-nav > li > a {
-        line-height: 85px;
+        /* line-height: 85px; */
         padding: 0 !important;
     }
     .header.header-nine .main-nav > li > a {
-        line-height: 56px;
+        /* line-height: 56px; */
     }
     .header.header-nine.fixed .main-nav > li > a {
-        line-height: 85px;
+        /* line-height: 85px; */
     }
     .main-nav > li > a > i {
         font-size: 12px;
@@ -24962,7 +24962,7 @@ td.ant-table-column-sort {
         margin-left: 0;
     }
     .main-nav > li > a {
-        line-height: 1.5;
+        /* line-height: 1.5; */
         padding: 15px 20px !important;
         font-size: 14px;
         font-weight: 500;

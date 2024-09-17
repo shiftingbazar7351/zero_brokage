@@ -188,7 +188,7 @@ class ApiController extends Controller
                         'next_page_url' => $submenus->nextPageUrl(),
                         'prev_page_url' => $submenus->previousPageUrl(),
                     ],
-                    'submenu-data' => $submenus->items() // Submenu data
+                    'submenu_data' => $submenus->items() // Submenu data
                 ],
                 'cities' => [
                     'pagination' => [
@@ -199,7 +199,7 @@ class ApiController extends Controller
                         'next_page_url' => $cities->nextPageUrl(),
                         'prev_page_url' => $cities->previousPageUrl(),
                     ],
-                    'cities-data' => $cities->items() // Cities data
+                    'cities_data' => $cities->items() // Cities data
                 ]
             ]
         ], Response::HTTP_OK);

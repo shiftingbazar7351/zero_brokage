@@ -23,6 +23,7 @@ use App\Http\Controllers\SubCategoryController;
 use App\Http\Controllers\SubMenuController;
 use App\Http\Controllers\TransactionController;
 
+use App\Http\Controllers\SearchController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\VendorController;
 use App\Http\Controllers\VerifiedController;
@@ -303,6 +304,11 @@ Route::middleware(['auth', 'check.ip'])->group(function () {
         Route::get('/generate-pdf', 'generatePDF')->name('generate.pdf');
         Route::post('/invoice/data/store/{id}', 'dataStore')->name('invoice.data.store')->middleware('can:invoice-create');
     });
+
+    Route::get('/search', [SearchController::class, 'search']);
+    Route::get('/subcategories/search', [SearchController::class, 'search'])->name('subcategories.search');
+    
+
 
     Route::get('/dashboard', [AdminController::class, 'homepage'])->name('admin_page');
     // Route::resource('categories', CategoryController::class);

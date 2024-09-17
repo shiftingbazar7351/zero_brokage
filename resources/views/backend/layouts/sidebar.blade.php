@@ -103,13 +103,14 @@
                     </li>
                 @endcanany
 
+                @canany(['employee-headoffice-list', 'employee-company-list', 'employee-product-list', 'employee-branch-list', 'employee-department-list'])
                 <li class="submenu">
                     <a href="javascript:void(0);"><i class="fe fe-briefcase"></i>
                         <span>Employee Data</span>
                         <span class="menu-arrow"><i class="fe fe-chevron-right"></i></span>
                     </a>
                     <ul>
-
+                        @can(['employee-headoffice-list'])
                         <li>
                             <a href="{{ route('employee-headoffice.index') }}"
                                 class="{{ Route::currentRouteName() === 'employee-headoffice.index' ? 'active' : '' }}">
@@ -117,7 +118,8 @@
                                 <span>Office Head</span>
                             </a>
                         </li>
-
+                        @endcan
+                        @can(['employee-company-list'])
                         <li>
                             <a href="{{ route('employee-company.index') }}"
                                 class="{{ Route::currentRouteName() === 'employee-company.index' ? 'active' : '' }}">
@@ -125,7 +127,8 @@
                                 <span>Company</span>
                             </a>
                         </li>
-
+                        @endcan
+                        @can(['employee-product-list'])
                         <li>
                             <a href="{{ route('employee-product.index') }}"
                                 class="{{ Route::currentRouteName() === 'employee-product.index' ? 'active' : '' }}">
@@ -133,8 +136,8 @@
                                 <span>Product</span>
                             </a>
                         </li>
-
-
+                        @endcan
+                        @can(['employee-branch-list'])
                         <li>
                             <a href="{{ route('employee-branch.index') }}"
                                 class="{{ Route::currentRouteName() === 'employee-branch.index' ? 'active' : '' }}">
@@ -142,8 +145,8 @@
                                 <span>Branch</span>
                             </a>
                         </li>
-
-
+                        @endcan
+                        @can(['employee-department-list'])
                         <li>
                             <a href="{{ route('employee-department.index') }}"
                                 class="{{ Route::currentRouteName() === 'employee-department.index' ? 'active' : '' }}">
@@ -151,11 +154,12 @@
                                 <span>Department</span>
                             </a>
                         </li>
+                        @endcan
 
                     </ul>
 
                 </li>
-
+                @endcanany
 
                 @can(['enquiry-list'])
                     <li

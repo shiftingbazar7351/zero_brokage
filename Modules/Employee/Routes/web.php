@@ -37,6 +37,17 @@ Route::controller(CompanyController::class)->group(function () {
 });
 
 Route::controller(EmployeeProductController::class)->group(function () {
+    Route::get('/employee-product', 'index')->name('employee-product.index')->middleware('can:employee-product-list'); // List all employee-product
+    Route::get('/employee-product/create', 'create')->name('employee-product.create')->middleware('can:employee-product-create'); // Show form to create a category
+    Route::post('/employee-product', 'store')->name('employee-product.store')->middleware('can:employee-product-create'); // Store a new category
+    Route::get('/employee-product/{product}/edit', 'edit')->name('employee-product.edit')->middleware('can:employee-product-edit'); // Edit category form
+    Route::put('/employee-product/{product}', 'update')->name('employee-product.update')->middleware('can:employee-product-edit'); // Update the category
+    Route::get('/employee-product/{product}', 'show')->name('employee-product.show')->middleware('can:employee-product-show'); // Show a single category (corrected to GET)
+    Route::delete('/employee-product/{product}', 'destroy')->name('employee-product.destroy')->middleware('can:employee-product-delete'); // Delete a category
+    Route::post('/employee-product-status', 'productStatus')->name('employee-product.status')->middleware('can:employee-product-status'); // Change category status
+});
+
+Route::controller(HeadOfficeController::class)->group(function () {
     Route::get('/employee-headoffice', 'index')->name('employee-headoffice.index')->middleware('can:employee-headoffice-list'); // List all employee-headoffice
     Route::get('/employee-headoffice/create', 'create')->name('employee-headoffice.create')->middleware('can:employee-headoffice-create'); // Show form to create a category
     Route::post('/employee-headoffice', 'store')->name('employee-headoffice.store')->middleware('can:employee-headoffice-create'); // Store a new category
@@ -46,7 +57,6 @@ Route::controller(EmployeeProductController::class)->group(function () {
     Route::delete('/employee-headoffice/{headoffice}', 'destroy')->name('employee-headoffice.destroy')->middleware('can:employee-headoffice-delete'); // Delete a category
     Route::post('/employee-headoffice-status', 'HeadOfficeStatus')->name('employee-headoffice.status')->middleware('can:employee-headoffice-status'); // Change category status
 });
-
 
 Route::controller(BranchController::class)->group(function () {
     Route::get('/employee-branch', 'index')->name('employee-branch.index')->middleware('can:employee-branch-list'); // List all employee-branch

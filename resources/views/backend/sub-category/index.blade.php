@@ -149,8 +149,7 @@
                                     <div class="file-browse">
                                         <h6>Drag & drop image or </h6>
                                         <div class="file-browse-path">
-                                            <input type="file" name="icon" id="image-input-icon"
-                                                accept="image/*">
+                                            <input type="file" name="icon" id="image-input-icon" accept="image/*">
                                             <a href="javascript:void(0);"> Browse</a>
                                         </div>
                                     </div>
@@ -233,7 +232,7 @@
                         </div>
 
                         <div class="mb-3">
-                            <label class="form-label">Image </label>
+                            <label class="form-label">Image</label>
                             <div class="form-uploads">
                                 <div class="form-uploads-path">
                                     <img id="edit-image-preview-icon"
@@ -242,8 +241,7 @@
                                     <div class="file-browse">
                                         <h6>Drag & drop image or </h6>
                                         <div class="file-browse-path">
-                                            <input type="file" name="icon" id="edit-image-input-icon"
-                                                accept="image/*">
+                                            <input type="file" name="icon" id="edit-image-input-icon" accept="image/*">
                                             <a href="javascript:void(0);"> Browse</a>
                                         </div>
                                     </div>
@@ -263,8 +261,7 @@
                                     <div class="file-browse">
                                         <h6>Drag & drop image or </h6>
                                         <div class="file-browse-path">
-                                            <input type="file" name="icon" id="edit-image-input-bg"
-                                                accept="image/jpeg, image/png">
+                                            <input type="file" name="background_image" id="edit-image-input-bg" accept="image/jpeg, image/png">
                                             <a href="javascript:void(0);"> Browse</a>
                                         </div>
                                     </div>
@@ -273,6 +270,7 @@
                             </div>
                             <div id="background_image_error_edit" class="text-danger"></div>
                         </div>
+
 
                         <div class="text-end">
                             <button type="button" class="btn btn-secondary me-2" data-bs-dismiss="modal">Cancel</button>
@@ -379,8 +377,17 @@
             e.preventDefault();
             let formData = new FormData(this);
             let id = $('#editSubCategoryId').val();
-            // alert(id);
-            // false
+
+            // Check if 'icon' file input is empty, if so, remove it from FormData
+            if (!$('#edit-image-input-icon').val()) {
+                formData.delete('icon');
+            }
+
+            // Check if 'background_image' file input is empty, if so, remove it from FormData
+            if (!$('#edit-image-input-bg').val()) {
+                formData.delete('background_image');
+            }
+
             $.ajax({
                 type: 'POST',
                 url: `/subcategories/${id}`,

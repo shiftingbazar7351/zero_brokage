@@ -17,8 +17,9 @@ class CreateDepartmentsTable extends Migration
             $table->id();
             $table->string('branch_id')->nullable();
             $table->string('image')->nullable();
-            $table->string('department_name')->nullable(); 
-            $table->string('designation')->nullable(); 
+            $table->string('department_id')->nullable();
+            $table->string('designation_id')->nullable();
+            $table->string('sub_designation_id')->nullable();
             $table->boolean('status')->default(1)->comment('0=>inactive,1=>active');
             $table->string('created_by')->nullable();
             $table->timestamps();

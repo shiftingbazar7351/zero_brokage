@@ -1,7 +1,7 @@
 @extends('backend.layouts.main')
 @section('styles')
     <style>
-        img {
+        .preview-img{
             width: 150px;
             height: 150px;
             object-fit: cover;
@@ -41,7 +41,7 @@
                             <tbody>
                                 @if ($offices->isEmpty())
                                     <tr>
-                                        <td colspan="4" class="text-center">No data found</td>
+                                        <td colspan="7" class="text-center">No data found</td>
                                     </tr>
                                 @else
                                     @foreach ($offices as $office)
@@ -278,7 +278,7 @@
                             .errors.name[0] : '');
                         $('#address_error').text(xhr.responseJSON.errors.address ? xhr
                             .responseJSON
-                            .errors.address[0] : ''); // Moved inside error function 
+                            .errors.address[0] : ''); // Moved inside error function
                         $('#image_error').text(xhr.responseJSON.errors.image ? xhr.responseJSON
                             .errors.image[0] : '');
                     }
@@ -312,7 +312,7 @@
             let id = $('#editOfficeId').val();
 
             // Append '_method' field for Laravel to recognize this as a PUT request
-            // formData.append('_method', 'PUT');   
+            // formData.append('_method', 'PUT');
 
             $.ajax({
                 type: 'POST', // Or 'PUT' if your Laravel route directly supports it

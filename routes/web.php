@@ -130,7 +130,7 @@ Route::middleware(['auth', 'check.ip'])->group(function () {
         Route::get('/subcategories/create', 'create')->name('subcategories.create')->middleware('can:subcategory-create');
         Route::post('/subcategories', 'store')->name('subcategories.store')->middleware('can:subcategory-create');
         Route::get('/subcategories/{subcategory}/edit', 'edit')->name('subcategories.edit')->middleware('can:subcategory-edit');
-        Route::patch('/subcategories/update/{subcategory}', 'update')->name('subcategories.update')->middleware('can:subcategory-edit');
+        Route::put('/subcategories/{subcategory}', 'update')->name('subcategories.update')->middleware('can:subcategory-edit');
         Route::post('/subcategories/{subcategory}', 'show')->name('subcategories.show')->middleware('can:subcategory-show');
         Route::delete('/subcategories/{subcategory}', 'destroy')->name('subcategories.destroy')->middleware('can:subcategory-delete');
         Route::post('/sub-category-status', 'subCategoryStatus')->name('subcategories.status')->middleware('can:subcategory-status');
@@ -141,7 +141,7 @@ Route::middleware(['auth', 'check.ip'])->group(function () {
         Route::get('/menus/create', 'create')->name('menus.create')->middleware('can:menus-create');
         Route::post('/menus', 'store')->name('menus.store')->middleware('can:menus-create');
         Route::get('/menus/{menu}/edit', 'edit')->name('menus.edit')->middleware('can:menus-edit');
-        Route::patch('/menus/update/{menu}', 'update')->name('menus.update')->middleware('can:menus-edit');
+        Route::put('/menus/{menu}', 'update')->name('menus.update')->middleware('can:menus-edit');
         Route::post('/menus/{menu}', 'show')->name('menus.show')->middleware('can:menus-show');
         Route::delete('/menus/{menu}', 'destroy')->name('menus.destroy')->middleware('can:menus-delete');
         Route::post('/menu-status', 'menuStatus')->name('menu.status')->middleware('can:menus-status');
@@ -152,7 +152,7 @@ Route::middleware(['auth', 'check.ip'])->group(function () {
         Route::get('/submenu/create', 'create')->name('submenu.create')->middleware('can:submenu-create');
         Route::post('/submenu', 'store')->name('submenu.store')->middleware('can:submenu-create');
         Route::get('/submenu/{submenu}/edit', 'edit')->name('submenu.edit')->middleware('can:submenu-edit');
-        Route::patch('/submenu/update/{submenu}', 'update')->name('submenu.update')->middleware('can:submenu-edit');
+        Route::put('/submenu/{submenu}', 'update')->name('submenu.update')->middleware('can:submenu-edit');
         Route::post('/submenu/{submenu}', 'show')->name('submenu.show')->middleware('can:submenu-show');
         Route::delete('/submenu/{submenu}', 'destroy')->name('submenu.destroy')->middleware('can:submenu-delete');
         Route::post('/submenu-status', 'subMenuStatus')->name('submenu.status')->middleware('can:submenu-status');
@@ -165,7 +165,7 @@ Route::middleware(['auth', 'check.ip'])->group(function () {
         Route::get('/enquiry/create', 'create')->name('enquiry.create')->middleware('can:enquiry-create');
         Route::post('/enquiry', 'store')->name('enquiry.store')->middleware('can:enquiry-create');
         Route::get('/enquiry/{enquiry}/edit', 'edit')->name('enquiry.edit')->middleware('can:enquiry-edit');
-        Route::patch('/enquiry/update/{enquiry}', 'update')->name('enquiry.update')->middleware('can:enquiry-edit');
+        Route::put('/enquiry/{enquiry}', 'update')->name('enquiry.update')->middleware('can:enquiry-edit');
         Route::post('/enquiry/{enquiry}', 'show')->name('enquiry.show')->middleware('can:enquiry-show');
         Route::delete('/enquiry/{enquiry}', 'destroy')->name('enquiry.destroy')->middleware('can:enquiry-delete');
         Route::post('/enquiry-status', 'enquiryStatus')->name('enquiry.status')->middleware('can:enquiry-status');
@@ -177,7 +177,7 @@ Route::middleware(['auth', 'check.ip'])->group(function () {
         Route::get('/service-detail/create', 'create')->name('service-detail.create')->middleware('can:service-detail-create');
         Route::post('/service-detail', 'store')->name('service-detail.store')->middleware('can:service-detail-create');
         Route::get('/service-detail/{service-detail}/edit', 'edit')->name('service-detail.edit')->middleware('can:service-detail-edit');
-        Route::patch('/service-detail/update/{service-detail}', 'update')->name('service-detail.update')->middleware('can:service-detail-edit');
+        Route::put('/service-detail/{service-detail}', 'update')->name('service-detail.update')->middleware('can:service-detail-edit');
         Route::post('/service-detail/{service-detail}', 'show')->name('service-detail.show')->middleware('can:service-detail-show');
         Route::delete('/service-detail/{service-detail}', 'destroy')->name('service-detail.destroy')->middleware('can:service-detail-delete');
     });
@@ -187,7 +187,7 @@ Route::middleware(['auth', 'check.ip'])->group(function () {
         Route::get('/meta/create', 'create')->name('meta.create')->middleware('can:meta-create');
         Route::post('/meta', 'store')->name('meta.store')->middleware('can:meta-create');
         Route::get('/meta/{meta}/edit', 'edit')->name('meta.edit')->middleware('can:meta-edit');
-        Route::patch('/meta/update/{meta}', 'update')->name('meta.update')->middleware('can:meta-edit');
+        Route::put('/meta/{meta}', 'update')->name('meta.update')->middleware('can:meta-edit');
         Route::post('/meta/{meta}', 'show')->name('meta.show')->middleware('can:meta-show');
         Route::delete('/meta/{meta}', 'destroy')->name('meta.destroy')->middleware('can:meta-delete');
     });
@@ -196,7 +196,7 @@ Route::middleware(['auth', 'check.ip'])->group(function () {
         Route::get('/verified/create', 'create')->name('verified.create')->middleware('can:verified-create');
         Route::post('/verified', 'store')->name('verified.store')->middleware('can:verified-create');
         Route::get('/verified/{verified}/edit', 'edit')->name('verified.edit')->middleware('can:verified-edit');
-        Route::patch('/verified/update/{verified}', 'update')->name('verified.update')->middleware('can:verified-edit');
+        Route::put('/verified/{verified}', 'update')->name('verified.update')->middleware('can:verified-edit');
         Route::post('/verified/{verified}', 'show')->name('verified.show')->middleware('can:verified-show');
         Route::delete('/verified/{verified}', 'destroy')->name('verified.destroy')->middleware('can:verified-delete');
         Route::post('/verified-status', 'verifyStatus')->name('verified.status')->middleware('can:verified-status');
@@ -207,7 +207,7 @@ Route::middleware(['auth', 'check.ip'])->group(function () {
         Route::get('/vendors/create', 'create')->name('vendors.create')->middleware('can:vendors-create');
         Route::post('/vendors', 'store')->name('vendors.store')->middleware('can:vendors-create');
         Route::get('/vendors/{vendors}/edit', 'edit')->name('vendors.edit')->middleware('can:vendors-edit');
-        Route::patch('/vendors/update/{vendors}', 'update')->name('vendors.update')->middleware('can:vendors-edit');
+        Route::put('/vendors/{vendors}', 'update')->name('vendors.update')->middleware('can:vendors-edit');
         Route::post('/vendors/{vendors}', 'show')->name('vendors.show')->middleware('can:vendors-show');
         Route::delete('/vendors/{vendors}', 'destroy')->name('vendors.destroy')->middleware('can:vendors-delete');
         Route::post('/vendors-status', 'verifyStatus')->name('vendors.status')->middleware('can:vendors-status');
@@ -225,7 +225,7 @@ Route::middleware(['auth', 'check.ip'])->group(function () {
         Route::get('/products/create', 'create')->name('products.create')->middleware('can:products-create');
         Route::post('/products', 'store')->name('products.store')->middleware('can:products-create');
         Route::get('/products/{products}/edit', 'edit')->name('products.edit')->middleware('can:products-edit');
-        Route::patch('/products/update/{products}', 'update')->name('products.update')->middleware('can:products-edit');
+        Route::put('/products/{products}', 'update')->name('products.update')->middleware('can:products-edit');
         Route::post('/products/{products}', 'show')->name('products.show')->middleware('can:products-show');
         Route::delete('/products/{products}', 'destroy')->name('products.destroy')->middleware('can:products-delete');
     });
@@ -235,7 +235,7 @@ Route::middleware(['auth', 'check.ip'])->group(function () {
         Route::get('/ipaddress/create', 'create')->name('ipaddress.create')->middleware('can:ipaddress-create');
         Route::post('/ipaddress', 'store')->name('ipaddress.store')->middleware('can:ipaddress-create');
         Route::get('/ipaddress/{ipaddress}/edit', 'edit')->name('ipaddress.edit')->middleware('can:ipaddress-edit');
-        Route::patch('/ipaddress/update/{ipaddress}', 'update')->name('ipaddress.update')->middleware('can:ipaddress-edit');
+        Route::put('/ipaddress/{ipaddress}', 'update')->name('ipaddress.update')->middleware('can:ipaddress-edit');
         Route::post('/ipaddress/{ipaddress}', 'show')->name('ipaddress.show')->middleware('can:ipaddress-show');
         Route::delete('/ipaddress/{ipaddress}', 'destroy')->name('ipaddress.destroy')->middleware('can:ipaddress-delete');
         Route::post('/ipaddress-status', 'ipaddressStatus')->name('ipaddress.status')->middleware('can:ipaddress-status');
@@ -246,7 +246,7 @@ Route::middleware(['auth', 'check.ip'])->group(function () {
         Route::get('/reviews/create', 'create')->name('reviews.create')->middleware('can:reviews-create');
         Route::post('/reviews', 'store')->name('reviews.store')->middleware('can:reviews-create');
         Route::get('/reviews/{reviews}/edit', 'edit')->name('reviews.edit')->middleware('can:reviews-edit');
-        Route::patch('/reviews/update/{reviews}', 'update')->name('reviews.update')->middleware('can:reviews-edit');
+        Route::put('/reviews/{reviews}', 'update')->name('reviews.update')->middleware('can:reviews-edit');
         Route::post('/reviews/{reviews}', 'show')->name('reviews.show')->middleware('can:reviews-show');
         Route::delete('/reviews/{reviews}', 'destroy')->name('reviews.destroy')->middleware('can:reviews-delete');
     });
@@ -256,7 +256,7 @@ Route::middleware(['auth', 'check.ip'])->group(function () {
         Route::get('/faq/create', 'create')->name('faq.create')->middleware('can:faq-create');
         Route::post('/faq', 'store')->name('faq.store')->middleware('can:faq-create');
         Route::get('/faq/{faq}/edit', 'edit')->name('faq.edit')->middleware('can:faq-edit');
-        Route::patch('/faq/update/{faq}', 'update')->name('faq.update')->middleware('can:faq-edit');
+        Route::put('/faq/{faq}', 'update')->name('faq.update')->middleware('can:faq-edit');
         Route::post('/faq/{faq}', 'show')->name('faq.show')->middleware('can:faq-show');
         Route::delete('/faq/{faq}', 'destroy')->name('faq.destroy')->middleware('can:faq-delete');
         Route::post('/faq-status', 'faqStatus')->name('faq.status')->middleware('can:faq-status');
@@ -267,7 +267,7 @@ Route::middleware(['auth', 'check.ip'])->group(function () {
         Route::get('/india-services/create', 'create')->name('india-services.create')->middleware('can:india-services-create');
         Route::post('/india-services', 'store')->name('india-services.store')->middleware('can:india-services-create');
         Route::get('/india-services/{india-services}/edit', 'edit')->name('india-services.edit')->middleware('can:india-services-edit');
-        Route::patch('/india-services/update/{india-services}', 'update')->name('india-services.update')->middleware('can:india-services-edit');
+        Route::put('/india-services/{india-services}', 'update')->name('india-services.update')->middleware('can:india-services-edit');
         Route::post('/india-services/{india-services}', 'show')->name('india-services.show')->middleware('can:india-services-show');
         Route::delete('/india-services/{india-services}', 'destroy')->name('india-services.destroy')->middleware('can:india-services-delete');
     });
@@ -278,7 +278,7 @@ Route::middleware(['auth', 'check.ip'])->group(function () {
         Route::get('/transaction/create', 'create')->name('transaction.create')->middleware('can:transaction-create');
         Route::post('/transaction', 'store')->name('transaction.store')->middleware('can:transaction-create');
         Route::get('/transaction/{transaction}/edit', 'edit')->name('transaction.edit')->middleware('can:transaction-edit');
-        Route::patch('/transaction/update/{transaction}', 'update')->name('transaction.update')->middleware('can:transaction-edit');
+        Route::put('/transaction/{transaction}', 'update')->name('transaction.update')->middleware('can:transaction-edit');
         Route::post('/transaction/{transaction}', 'show')->name('transaction.show')->middleware('can:transaction-show');
         Route::delete('/transaction/{transaction}', 'destroy')->name('transaction.destroy')->middleware('can:transaction-delete');
         Route::post('/transaction-status', 'transactionStatus')->name('transaction.status')->middleware('can:transaction-status');
@@ -292,7 +292,7 @@ Route::middleware(['auth', 'check.ip'])->group(function () {
         Route::get('/invoice/create', 'create')->name('invoice.create')->middleware('can:invoice-create');
         Route::post('/invoice', 'store')->name('invoice.store')->middleware('can:invoice-create');
         Route::get('/invoice/{invoice}/edit', 'edit')->name('invoice.edit')->middleware('can:invoice-edit');
-        Route::patch('/invoice/update/{invoice}', 'update')->name('invoice.update')->middleware('can:invoice-edit');
+        Route::put('/invoice/{invoice}', 'update')->name('invoice.update')->middleware('can:invoice-edit');
         Route::post('/invoice/{invoice}', 'show')->name('invoice.show')->middleware('can:invoice-show');
         Route::delete('/invoice/{invoice}', 'destroy')->name('invoice.destroy')->middleware('can:invoice-delete');
         Route::get('/generate-pdf', 'generatePDF')->name('generate.pdf');

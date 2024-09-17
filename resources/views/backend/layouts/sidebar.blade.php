@@ -135,7 +135,6 @@
                         </li>
 
 
-
                         <li>
                             <a href="{{ route('employee-branch.index') }}"
                                 class="{{ Route::currentRouteName() === 'employee-branch.index' ? 'active' : '' }}">
@@ -146,8 +145,8 @@
 
 
                         <li>
-                            <a href="{{ route('service-detail.index') }}"
-                                class="{{ Route::currentRouteName() === 'service-detail.index' ? 'active' : '' }}">
+                            <a href="{{ route('employee-department.index') }}"
+                                class="{{ Route::currentRouteName() === 'employee-department.index' ? 'active' : '' }}">
                                 <i class="fe fe-file-text"></i>
                                 <span>Department</span>
                             </a>

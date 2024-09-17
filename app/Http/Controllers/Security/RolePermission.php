@@ -17,34 +17,85 @@ class RolePermission extends Controller
         return view('backend.role-permission.permissions', compact('roles', 'permissions'));
     }
 
+    // public function store(Request $request)
+    // {
+    //     foreach ($request->permission as $roleId => $permissions) {
+    //         // Fetch the current permissions from the database for the given role
+    //         $currentPermissions = DB::table('role_has_permissions')
+    //             ->where('role_id', $roleId)
+    //             ->pluck('permission_id')
+    //             ->toArray();
+
+    //         // If the count or the permissions themselves differ, update them
+    //         if (count($currentPermissions) !== count($permissions) || array_diff($currentPermissions, $permissions)) {
+    //             // Delete the old permissions
+    //             DB::table('role_has_permissions')
+    //                 ->where('role_id', $roleId)
+    //                 ->delete();
+
+    //             // Insert the new permissions
+    //             $newPermissions = [];
+    //             foreach ($permissions as $permissionId) {
+    //                 $newPermissions[] = [
+    //                     'role_id' => $roleId,
+    //                     'permission_id' => $permissionId
+    //                 ];
+    //             }
+    //             DB::table('role_has_permissions')->insert($newPermissions);
+    //         }
+    //     }
+
+    //     return back()->with(['success' => 'Permissions updated successfully']);
+    // }
+
     public function store(Request $request)
     {
-        foreach ($request->permission as $roleId => $permissions) {
-            // Fetch the current permissions from the database for the given role
-            $currentPermissions = DB::table('role_has_permissions')
-                ->where('role_id', $roleId)
-                ->pluck('permission_id')
-                ->toArray();
+        // Start a transaction to ensure atomicity
+        DB::beginTransaction();
 
-            // If the count or the permissions themselves differ, update them
-            if (count($currentPermissions) !== count($permissions) || array_diff($currentPermissions, $permissions)) {
-                // Delete the old permissions
-                DB::table('role_has_permissions')
+        try {
+            foreach ($request->permission as $roleId => $permissions) {
+                // Fetch the current permissions from the database for the given role
+                $currentPermissions = DB::table('role_has_permissions')
                     ->where('role_id', $roleId)
-                    ->delete();
+                    ->pluck('permission_id')
+                    ->toArray();
 
-                // Insert the new permissions
-                $newPermissions = [];
-                foreach ($permissions as $permissionId) {
-                    $newPermissions[] = [
-                        'role_id' => $roleId,
-                        'permission_id' => $permissionId
-                    ];
+                // Calculate permissions to be added and removed
+                $newPermissions = array_diff($permissions, $currentPermissions);
+                $permissionsToRemove = array_diff($currentPermissions, $permissions);
+
+                // Delete the removed permissions
+                if (!empty($permissionsToRemove)) {
+                    DB::table('role_has_permissions')
+                        ->where('role_id', $roleId)
+                        ->whereIn('permission_id', $permissionsToRemove)
+                        ->delete();
                 }
-                DB::table('role_has_permissions')->insert($newPermissions);
-            }
-        }
 
-        return back()->with(['success' => 'Permissions updated successfully']);
+                // Insert new permissions
+                if (!empty($newPermissions)) {
+                    $insertData = [];
+                    foreach ($newPermissions as $permissionId) {
+                        $insertData[] = [
+                            'role_id' => $roleId,
+                            'permission_id' => $permissionId
+                        ];
+                    }
+                    DB::table('role_has_permissions')->insert($insertData);
+                }
+            }
+
+            // Commit the transaction
+            DB::commit();
+
+            return back()->with(['success' => 'Permissions updated successfully']);
+        } catch (\Exception $e) {
+            // Rollback the transaction if something goes wrong
+            DB::rollback();
+
+            return back()->with(['error' => 'Failed to update permissions']);
+        }
     }
+
 }

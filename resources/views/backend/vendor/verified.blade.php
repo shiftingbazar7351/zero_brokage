@@ -15,6 +15,7 @@
         <div class="content">
             <div class="content-page-header content-page-headersplit mb-0">
                 <h5>Categories</h5>
+                @can('verified-create')
                 <div class="list-btn">
                     <ul>
                         <li>
@@ -25,6 +26,7 @@
                         </li>
                     </ul>
                 </div>
+                @endcan
             </div>
             <div class="row">
                 <div class="col-12">
@@ -35,8 +37,12 @@
                                     <th>#</th>
                                     <th>Image</th>
                                     <th>Name</th>
+                                    @can('verified-status')
                                     <th>Status</th>
+                                    @endcan
+                                    @can(['verified-edit', 'verified-delete'])
                                     <th>Action</th>
+                                    @endcan
                                 </tr>
                             </thead>
                             <tbody>
@@ -54,6 +60,7 @@
                                             </div>
                                         </td>
                                         <td>{{ $verified->name ?? '' }}</td>
+                                        @can('verified-status')
                                         <td>
                                             <div class="active-switch">
                                                 <label class="switch">
@@ -65,6 +72,8 @@
                                                 </label>
                                             </div>
                                         </td>
+                                        @endcan
+                                        @can(['verified-edit', 'verified-delete'])
                                         <td>
                                             <div class="table-actions d-flex justify-content-center">
                                                 <button class="btn delete-table me-2"
@@ -83,6 +92,7 @@
                                                 </form>
                                             </div>
                                         </td>
+                                        @endcan
                                     </tr>
                                 @empty
                                     <tr>

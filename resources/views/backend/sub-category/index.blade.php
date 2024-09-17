@@ -15,6 +15,7 @@
         <div class="content">
             <div class="content-page-header content-page-headersplit mb-0">
                 <h5>Sub Categories</h5>
+                @can('subcategory-create')
                 <div class="list-btn">
                     <ul>
                         <li>
@@ -25,6 +26,7 @@
                         </li>
                     </ul>
                 </div>
+                @endcan
             </div>
             <div class="row text-center">
                 <div class="col-12">
@@ -36,8 +38,12 @@
                                     <th>Image</th>
                                     <th>Category Name</th>
                                     <th>Sub Category Name</th>
+                                    @can('subcategory-status')
                                     <th>Status</th>
+                                    @endcan
+                                    @can(['subcategory-edit', 'subcategory-delete'])
                                     <th>Action</th>
+                                    @endcan
                                 </tr>
                             </thead>
                             <tbody>
@@ -56,6 +62,7 @@
                                         </td>
                                         <td>{{ $subcategory->categoryName->name ?? '' }}</td>
                                         <td>{{ $subcategory->name ?? '' }}</td>
+                                        @can('subcategory-status')
                                         <td>
                                             <div class="active-switch">
                                                 <label class="switch">
@@ -67,6 +74,8 @@
                                                 </label>
                                             </div>
                                         </td>
+                                        @endcan
+                                        @can(['subcategory-edit', 'subcategory-delete'])
                                         <td>
                                             <div class="table-actions d-flex justify-content-center">
                                                 <button class="btn delete-table me-2"
@@ -85,6 +94,7 @@
                                                 </form>
                                             </div>
                                         </td>
+                                        @endcan
                                     </tr>
                                 @empty
                                     <tr>

@@ -47,7 +47,7 @@ class PermissionTableSeeder extends Seeder
             ['name' => 'menus-edit', 'title' => 'Menu Edit', 'guard_name' => 'web'],
             ['name' => 'menus-show', 'title' => 'Menu Show', 'guard_name' => 'web'],
             ['name' => 'menus-delete', 'title' => 'Menu Delete', 'guard_name' => 'web'],
-            ['name' => 'menus-status', 'title' => 'Menu Delete', 'guard_name' => 'web'],
+            ['name' => 'menus-status', 'title' => 'Menu Status', 'guard_name' => 'web'],
 
             ['name' => 'submenu-list', 'title' => 'Sub Menu List', 'guard_name' => 'web'],
             ['name' => 'submenu-create', 'title' => 'Sub Menu Create', 'guard_name' => 'web'],

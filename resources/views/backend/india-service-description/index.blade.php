@@ -6,6 +6,7 @@
         <div class="content">
             <div class="content-page-header content-page-headersplit mb-0">
                 <h5>India service Listing</h5>
+                @can('india-services-create')
                 <div class="list-btn">
                     <ul>
                         <li>
@@ -15,6 +16,7 @@
                         </li>
                     </ul>
                 </div>
+                @endcan
             </div>
             <div class="row">
                 <div class="col-12 ">
@@ -24,7 +26,9 @@
                                 <tr>
                                     <th>#</th>
                                     <th>Description</th>
+                                    @can(['india-services-edit', 'india-services-delete'])
                                     <th>Action</th>
+                                    @endcan
                                 </tr>
                             </thead>
                             <tbody>
@@ -39,6 +43,7 @@
                                             <td title="{{ $service->description }}">
                                                 {!! truncateCharacters($service->description, 500) !!}
                                             </td>
+                                            @can(['india-services-edit', 'india-services-delete'])
                                             <td>
                                                 <div class="d-flex">
                                                     <a class="btn delete-table me-2 edit-service" href="{{ route('india-services.edit', $service->id) }}">
@@ -56,6 +61,7 @@
                                                     </form>
                                                 </div>
                                             </td>
+                                            @endcan
 
                                         </tr>
                                     @endforeach

@@ -6,12 +6,10 @@
         <div class="content">
             <div class="content-page-header content-page-headersplit mb-0">
                 <h5>Service Detail Listing</h5>
+                @can('service-detail-create')
                 <div class="list-btn">
                     <ul>
                         <li>
-                            {{-- <a href="{{ route('service-detail.create') }}" class="btn btn-primary mb-3">
-                                Add Service Detail
-                            </a> --}}
 
                             <button class="btn btn-primary" type="button" onclick="window.location='{{ route('service-detail.create') }}'">
                                 <i class="fa fa-plus me-2"></i>Add Service details
@@ -19,6 +17,7 @@
                         </li>
                     </ul>
                 </div>
+                @endcan
             </div>
             <div class="row">
                 <div class="col-12 ">
@@ -30,7 +29,9 @@
                                     <th>Subcategory</th>
                                     <th>Description</th>
                                     <th>Summery</th>
-                                    <th>Action</th>
+                                    @can(['service-detail-edit', 'service-detail-delete'])
+                                        <th>Action</th>
+                                    @endcan
                                 </tr>
                             </thead>
                             <tbody>
@@ -42,7 +43,7 @@
                                     @foreach ($serviceDetails as $service)
                                         <tr class="text-wrap">
                                             <td>{{ $loop->iteration }}</td>
-                                            {{-- <td>{{ $service->category->name ?? '' }}</td> --}}
+
                                             <td>{{ $service->subCategory->name ?? '' }}</td>
                                             <td title="{{ $service->description }}">
                                                 {!! truncateCharacters($service->description, 500) !!}
@@ -50,6 +51,7 @@
                                             <td title="{{ $service->summery }}">
                                                 {!! truncateCharacters($service->summery, 500) !!}
                                             </td>
+                                            @can(['service-detail-edit', 'service-detail-delete'])
                                             <td>
                                                 <div class="d-flex">
                                                     <a class="btn delete-table me-2 edit-service" href="{{ route('service-detail.edit', $service->id) }}">
@@ -67,6 +69,7 @@
                                                     </form>
                                                 </div>
                                             </td>
+                                            @endcan
 
                                         </tr>
                                     @endforeach

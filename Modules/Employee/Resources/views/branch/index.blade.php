@@ -226,6 +226,9 @@
 
 @endsection
 @section('scripts')
+<script>
+    var statusRoute = `{{ route('subcategories.status') }}`;
+</script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="{{ asset('admin/assets/js/status-update.js') }}"></script>
     <script src="{{ asset('admin/assets/js/preview-img.js') }}"></script>
@@ -265,7 +268,7 @@
                     processData: false,
                     success: function(response) {
                         if (response.success) {
-                            location.reload(); // Refresh page to show new data 
+                            location.reload(); // Refresh page to show new data
                         }
                     },
                     error: function(xhr) {
@@ -277,7 +280,7 @@
                             .errors.name[0] : '');
                         $('#address_error').text(xhr.responseJSON.errors.address ? xhr
                             .responseJSON
-                            .errors.address[0] : '');    
+                            .errors.address[0] : '');
                         $('#image_error').text(xhr.responseJSON.errors.image ? xhr
                             .responseJSON
                             .errors.image[0] : '');
@@ -330,7 +333,7 @@
                     $('#editproduct_id_error').text(xhr.responseJSON.errors.product_id ? xhr.responseJSON.errors
                         .product_id[0] : '');
                     $('#editaddress_error').text(xhr.responseJSON.errors.address ? xhr.responseJSON.errors
-                        .address[0] : '');    
+                        .address[0] : '');
                     $('#editimage_error').text(xhr.responseJSON.errors.image ? xhr.responseJSON.errors
                         .image[0] : '');
                 }

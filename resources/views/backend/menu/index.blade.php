@@ -3,9 +3,7 @@
 @section('styles')
     <style>
         .preview-img {
-            width: 100px;
-            height: 100px;
-            object-fit: cover;
+            width: 150px;
         }
     </style>
 @endsection

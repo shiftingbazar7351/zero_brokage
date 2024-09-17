@@ -14,20 +14,20 @@
                 </ul>
             </div>
         </div>
-        <div class="row">
+        <div class="row mt-3">
             <div class="col-12 ">
-                <div class="table-responsive table-div">
+                <div class="table-responsive shadow">
                     <form action="{{ route('role.permission.store') }}" method="POST">
                     @csrf
                     <table class="table table-bordered">
                         <thead>
                             <tr>
-                                <th></th>
+                                <th class="text-center">Module</th>
                                 @foreach ($roles as $role)
-                                    <th class="text-center">{{ $role->title }}
-                                        <input type="checkbox" class="form-check-input role-checkbox"
+                                    <th class="text-center table-bordered">{{ $role->title }}
+                                        <input type="checkbox" class="form-check-input role-checkbox mx-2"
                                             data-role-id="{{ $role->id }}"
-                                            style="float:right; margin-right: 10px;">
+                                            >
 
                                     </th>
                                 @endforeach
@@ -53,7 +53,7 @@
                             @endforeach
                         </tbody>
                     </table>
-                    <div class="text-center">
+                    <div class="m-4">
                         <button type="submit" class="btn btn-md btn-primary">Submit</button>
                     </div>
                     </form>

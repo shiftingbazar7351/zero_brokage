@@ -9,9 +9,10 @@
             width: auto;
         }
 
-        .preview-img {
-            width: 100px;
-            height: 100px;
+        
+        .preview-img{
+            width: 150px;
+            height: 150px;
             object-fit: cover;
         }
     </style>

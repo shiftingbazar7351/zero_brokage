@@ -1,7 +1,7 @@
 @extends('backend.layouts.main')
 @section('styles')
     <style>
-        img {
+        .preview-img{
             width: 150px;
             height: 150px;
             object-fit: cover;
@@ -156,7 +156,7 @@
                             <div class="form-uploads">
                                 <div class="form-uploads-path">
                                     <img id="image-preview-icon" src="{{ asset('admin/assets/img/icons/upload.svg') }}"
-                                        alt="img" class="default-img preview-img">
+                                        alt="img" class="default-img">
                                     <div class="file-browse">
                                         <h6>Drag & drop image or </h6>
                                         <div class="file-browse-path">

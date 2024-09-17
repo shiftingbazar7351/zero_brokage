@@ -1,7 +1,7 @@
 @extends('backend.layouts.main')
 @section('styles')
     <style>
-        img {
+        .preview-img{
             width: 150px;
             height: 150px;
             object-fit: cover;
@@ -40,7 +40,7 @@
                             <tbody>
                                 @if ($companies->isEmpty())
                                     <tr>
-                                        <td colspan="4" class="text-center">No data found</td>
+                                        <td colspan="6" class="text-center">No data found</td>
                                     </tr>
                                 @else
                                     @foreach ($companies as $company)
@@ -269,7 +269,7 @@
                     processData: false,
                     success: function(response) {
                         if (response.success) {
-                            location.reload(); // Refresh page to show new data       
+                            location.reload(); // Refresh page to show new data
                         }
                     },
                     error: function(xhr) {
@@ -277,7 +277,7 @@
                             .errors.brand_name[0] : '');
                             $('#legel_name_error').text(xhr.responseJSON.errors.legel_name ? xhr.responseJSON
                             .errors.legel_name[0] : '');
-                            
+
                             $('#hoffice_id_error').text(xhr.responseJSON.errors.hoffice_id ? xhr.responseJSON
                             .errors.hoffice_id[0] : '');
 
@@ -298,12 +298,12 @@
                     $('#editName').val(response.company.brand_name);
                     $('#editlegel_name').val(response.company.legel_name);
                     $('#editoffice').val(response.company.hoffice_id);
-                   
+
                     if (response.company.image) {
                         $('#edit-image-preview-icon').attr('src',
                             `/storage/employee/company/${response.company.image}`);
                     }
-                   
+
                 }
             });
         }
@@ -330,7 +330,7 @@
                         $('#edithoffice_id_error').text(xhr.responseJSON.errors.hoffice_id ? xhr.responseJSON.errors
                         .hoffice_id[0] : '');
                         $('#editlegel_name_error').text(xhr.responseJSON.errors.legel_name ? xhr.responseJSON.errors
-                        .legel_name[0] : '');    
+                        .legel_name[0] : '');
                     $('#image_error_edit').text(xhr.responseJSON.errors.image ? xhr.responseJSON.errors
                         .image[0] : '');
                 }

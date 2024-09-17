@@ -66,7 +66,7 @@ class UserController extends Controller
         try {
             // Generate password: Capitalize first name and append '123'
             $firstName = explode(' ', $validated['name'])[0]; // Get the first name from the full name
-            $passwordString = ucfirst(strtolower($firstName)) . '123'; // First letter capitalized, then '123'
+            $passwordString = ucfirst(strtolower($firstName)) . '@123'; // First letter capitalized, then '123'
             $hashedPassword = Hash::make($passwordString); // Hash the generated password
 
             // Create new user

@@ -27,7 +27,7 @@
                                 <a href="javascript:void(0);">Blogs</a>
                             </li>
                             <li>
-                                <a href="javascript:void(0);">Contact Us</a>
+                                <a href="{{ route('contact-us') }}">Contact Us</a>
                             </li>
                             <li>
                                 <a href="provider-signup.html">Become a Professional</a>

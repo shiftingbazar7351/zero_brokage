@@ -1,5 +1,6 @@
 @extends('frontend.layouts.main')
 @section('styles')
+
     <style>
         .work-box {
             border: 2px solid #427de9;
@@ -349,7 +350,7 @@
     {{-- ..........................Provider Details container start...................... --}}
 
     @if ($vendor)
-        <div class="container mt-4 border">
+        <div class="container mt-4 border shadow">
             <div class="row">
                 <div class="col-md-3 d-flex align-items-center">
                     <div class="img-prof w-100">
@@ -358,7 +359,7 @@
                     </div>
 
                 </div>
-                <div class="col-md-9">
+                <div class="col-md-9 m-0 p-0">
 
                     <div class="provider-info">
                         <h2>{{ $vendor->vendor_name ?? '' }}</h2>

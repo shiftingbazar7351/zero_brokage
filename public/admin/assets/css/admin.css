@@ -12734,3 +12734,7 @@ fieldset#first-field {
 .parsley-errors-list.filled {
     margin-top: .46875rem !important
 }
+.cke_notification_warning
+{
+    display:none;
+}

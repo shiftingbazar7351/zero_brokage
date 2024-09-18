@@ -25,7 +25,7 @@ class MenuController extends Controller
     {
         $subcategories = SubCategory::orderByDesc('created_at')->get();
         $categories = Category::orderByDesc('created_at')->get();
-        $menusCat = Menu::orderByDesc('created_at')->paginate(10);
+        $menusCat = Menu::orderByDesc('created_at')->paginate(25);
         return view('backend.menu.index', compact('subcategories', 'categories', 'menusCat'));
     }
 

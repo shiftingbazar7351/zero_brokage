@@ -2,8 +2,8 @@
 
 @section('styles')
     <style>
-        
-         .preview-img{
+
+         .prev{
             width: 150px;
          }
     </style>

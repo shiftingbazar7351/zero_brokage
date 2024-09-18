@@ -70,6 +70,9 @@ Route::get('/reciept', function () {
 Route::get('/email-template', function () {
     return view('emails.user-credential');
 })->name('email-template');
+Route::get('/contact-us', function () {
+    return view('frontend.contact-us');
+})->name('contact-us');
 
 Route::controller(FrontendController::class)->group(function () {
     Route::get('/', 'home')->name('home');

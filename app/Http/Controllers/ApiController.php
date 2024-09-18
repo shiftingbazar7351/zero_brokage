@@ -149,7 +149,7 @@ class ApiController extends Controller
     public function menuList($id)
     {
         try {
-            $menus = Menu::select('id','name','image','subcategory_id')
+            $menus = Menu::select('id','name','subcategory_id')
             ->where('subcategory_id',$id)->where('status', 1)
                 ->get()
                 ->map(function ($subcategory) {

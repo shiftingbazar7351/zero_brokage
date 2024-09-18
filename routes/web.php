@@ -90,7 +90,7 @@ Route::controller(FrontendController::class)->group(function () {
     Route::get('/filter-submenus/{slug}', 'filterSubmenus')->name('filter.submenu');
     Route::post('/enquiry-verify-otp', 'verifyOtp')->name('enquiry.verify.otp');
     Route::get('/fetch-city-data', 'fetchDataOfProvider')->name('fetchDataOfProvider');
-
+    Route::get('/sitemap.xml', 'sitemapXML')->name('sitemap');
 });
 
 Route::post('/fetch-city/{stateId}', [SubMenuController::class, 'fetchCity']);

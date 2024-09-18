@@ -149,14 +149,16 @@ class ApiController extends Controller
     public function menuList($id)
     {
         try {
-            $menus = Menu::select('id','name','subcategory_id','image')
-            ->where('subcategory_id',$id)->where('status', 1)
-                ->get()
-                ->map(function ($subcategory) {
-                    // Include the URLs in the response
-                    $subcategory->image = $subcategory->icon_url; // This will call the accessor for the URL
-                    return $subcategory;
-                });
+            $menus = Menu::select('id', 'name', 'subcategory_id', 'image')
+        ->where('subcategory_id', $id)
+        ->where('status', 1)
+        ->get()
+        ->map(function ($menu) {
+            // Include the image URL as icon in the response
+            $menu->icon = $menu->icon_url; // This will call the accessor for the image URL and map it to 'icon'
+            unset($menu->image); // Optionally remove the 'image' field if you don't want it in the response
+            return $menu;
+        });
 
             // Check if menus are found
             if ($menus->isEmpty()) {

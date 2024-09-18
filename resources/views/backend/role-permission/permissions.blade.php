@@ -9,6 +9,8 @@
                     <ul>
                         <li>
                             <button class="btn btn-primary" type="button" data-bs-toggle="modal"
+                                data-bs-target="#add_category"><i class="fa fa-plus me-2"></i>Add Permissions</button>
+                                <button class="btn btn-primary" type="button" data-bs-toggle="modal"
                                 data-bs-target="#add_category"><i class="fa fa-plus me-2"></i>Add roles</button>
                         </li>
                     </ul>
@@ -66,27 +68,27 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="addCategoryLabel">Add Category</h5>
+                    <h5 class="modal-title" id="addCategoryLabel">Add Roles</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body pt-0">
-                    <form id="addCategoryForm" enctype="multipart/form-data">
+                    <form id="addCategoryForm" action="{{ route('role.store') }}" method="POST" enctype="multipart/form-data">
                         @csrf
                         <div class="mb-3">
                             <label class="form-label">Role Name</label>
-                            <input type="text" class="form-control" id="addName" name="name"
-                                placeholder="Enter Category Name">
-                            <span class="text-danger error-text name_error"></span>
+                            <input type="text" class="form-control" id="addName" name="title"
+                                placeholder="Enter Category title">
+                            <span class="text-danger error-text title_error"></span>
                         </div>
                         <div class="mb-3">
                             <label class="form-label">Status</label>
                             <div class="form-check form-check-inline">
-                                <input type="radio" class="form-check-input" id="status_yes" name="status" value="yes">
-                                <label class="form-check-label" for="status_yes">Yes</label>
+                                <input type="radio" class="form-check-input" id="status_yes" name="status" value="1">
+                                <label class="form-check-label" for="status_yes">Active</label>
                             </div>
                             <div class="form-check form-check-inline">
-                                <input type="radio" class="form-check-input" id="status_no" name="status" value="no">
-                                <label class="form-check-label" for="status_no">No</label>
+                                <input type="radio" class="form-check-input" id="status_no" name="status" value="0">
+                                <label class="form-check-label" for="status_no">Inactive</label>
                             </div>
                             <span class="text-danger error-text status_error"></span>
                         </div>

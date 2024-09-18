@@ -20,20 +20,21 @@ class RoleTableSeeder extends Seeder
                 'name' => 'super_admin',
                 'title' => 'Super Admin',
                 'status' => 1,
-                'permissions' => ['role','role-add', 'role-list', 'permission', 'permission-add', 'permission-list']
+                'permissions' => [
+                    'role',
+                    'role-add',
+                    'role-list',
+                    'permission',
+                    'permission-add',
+                    'permission-list' .
+                    'user-list',
+                    'user-create',
+                    'user-edit',
+                    'user-delete',
+                    'user-show',
+                    'user-status'
+                ]
             ],
-            [
-                'name' => 'admin',
-                'title' => 'Admin',
-                'status' => 1,
-                'permissions' => []
-            ],
-            [
-                'name' => 'user',
-                'title' => 'User',
-                'status' => 1,
-                'permissions' => []
-            ]
         ];
 
         foreach ($roles as $key => $value) {

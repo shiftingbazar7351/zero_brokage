@@ -305,10 +305,6 @@ Route::middleware(['auth', 'check.ip'])->group(function () {
         Route::post('/invoice/data/store/{id}', 'dataStore')->name('invoice.data.store')->middleware('can:invoice-create');
     });
 
-    Route::get('/search', [SearchController::class, 'search']);
-    Route::get('/subcategories/search', [SearchController::class, 'search'])->name('subcategories.search');
-    
-
 
     Route::get('/dashboard', [AdminController::class, 'homepage'])->name('admin_page');
     // Route::resource('categories', CategoryController::class);

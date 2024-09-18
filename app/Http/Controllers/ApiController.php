@@ -149,12 +149,12 @@ class ApiController extends Controller
     public function menuList($id)
     {
         try {
-            $menus = Menu::select('id','name','subcategory_id')
+            $menus = Menu::select('id','name','subcategory_id','image')
             ->where('subcategory_id',$id)->where('status', 1)
                 ->get()
                 ->map(function ($subcategory) {
                     // Include the URLs in the response
-                    $subcategory->icon = $subcategory->icon_url; // This will call the accessor for the URL
+                    $subcategory->image = $subcategory->icon_url; // This will call the accessor for the URL
                     return $subcategory;
                 });
 

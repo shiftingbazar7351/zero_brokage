@@ -22,18 +22,10 @@ use App\Http\Controllers\ServiceDetailController;
 use App\Http\Controllers\SubCategoryController;
 use App\Http\Controllers\SubMenuController;
 use App\Http\Controllers\TransactionController;
-
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\VendorController;
 use App\Http\Controllers\VerifiedController;
 use Illuminate\Support\Facades\Route;
-
-
-
-
-
-
-
 
 /*
 |--------------------------------------------------------------------------
@@ -118,8 +110,8 @@ Route::middleware(['auth', 'check.ip'])->group(function () {
     Route::post('/store/role-permission', [RolePermission::class, 'store'])->name('role.permission.store')->middleware('can:role-list');
     Route::resource('permission', PermissionController::class);
     Route::resource('role', RoleController::class);
-    // Dashboard Routes
 
+    // Dashboard Routes
     Route::controller(CategoryController::class)->group(function () {
         Route::get('/categories', 'index')->name('categories.index')->middleware('can:categories-list'); // List all categories
         Route::get('/categories/create', 'create')->name('categories.create')->middleware('can:categories-create'); // Show form to create a category
@@ -130,7 +122,6 @@ Route::middleware(['auth', 'check.ip'])->group(function () {
         Route::delete('/categories/{category}', 'destroy')->name('categories.destroy')->middleware('can:categories-delete'); // Delete a category
         Route::post('/category-status', 'categoryStatus')->name('categories.status')->middleware('can:categories-status'); // Change category status
     });
-
 
     Route::controller(SubCategoryController::class)->group(function () {
         Route::get('/subcategories', 'index')->name('subcategories.index')->middleware('can:subcategory-list');
@@ -333,9 +324,9 @@ Route::middleware(['auth', 'check.ip'])->group(function () {
 
     // Route::resource('/enquiry', EnquiryController::class);
     // Route::controller(EnquiryController::class)->group(function () {
-        // Route::post('/enquiry-status', 'enquiryStatus')->name('enquiry.status');
-        // Route::get('/get-menus/{subcategoryId}', 'fetchMenu');
-        // Route::get('/reporting-data', 'reportData')->name('report.index');
+    // Route::post('/enquiry-status', 'enquiryStatus')->name('enquiry.status');
+    // Route::get('/get-menus/{subcategoryId}', 'fetchMenu');
+    // Route::get('/reporting-data', 'reportData')->name('report.index');
     // });
 
 

@@ -60,6 +60,47 @@
             </div>
         </div>
     </div>
+
+    <!-- Add Category Modal -->
+    <div class="modal fade" id="add_category" tabindex="-1" aria-labelledby="addCategoryLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="addCategoryLabel">Add Category</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body pt-0">
+                    <form id="addCategoryForm" enctype="multipart/form-data">
+                        @csrf
+                        <div class="mb-3">
+                            <label class="form-label">Role Name</label>
+                            <input type="text" class="form-control" id="addName" name="name"
+                                placeholder="Enter Category Name">
+                            <span class="text-danger error-text name_error"></span>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Status</label>
+                            <div class="form-check form-check-inline">
+                                <input type="radio" class="form-check-input" id="status_yes" name="status" value="yes">
+                                <label class="form-check-label" for="status_yes">Yes</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input type="radio" class="form-check-input" id="status_no" name="status" value="no">
+                                <label class="form-check-label" for="status_no">No</label>
+                            </div>
+                            <span class="text-danger error-text status_error"></span>
+                        </div>
+
+                        <div class="text-end">
+                            <button type="button" class="btn btn-secondary me-2" data-bs-dismiss="modal">Cancel</button>
+                            <button type="submit" class="btn btn-primary">Save</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
 @endsection
 
 @section('scripts')

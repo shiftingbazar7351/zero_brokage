@@ -47,7 +47,7 @@ class PermissionTableSeeder extends Seeder
             ['name' => 'menus-edit', 'title' => 'Menu Edit', 'guard_name' => 'web'],
             ['name' => 'menus-show', 'title' => 'Menu Show', 'guard_name' => 'web'],
             ['name' => 'menus-delete', 'title' => 'Menu Delete', 'guard_name' => 'web'],
-            ['name' => 'menus-status', 'title' => 'Menu Delete', 'guard_name' => 'web'],
+            ['name' => 'menus-status', 'title' => 'Menu Status', 'guard_name' => 'web'],
 
             ['name' => 'submenu-list', 'title' => 'Sub Menu List', 'guard_name' => 'web'],
             ['name' => 'submenu-create', 'title' => 'Sub Menu Create', 'guard_name' => 'web'],
@@ -137,6 +137,34 @@ class PermissionTableSeeder extends Seeder
             ['name' => 'invoice-delete', 'title' => 'Invoice Delete', 'guard_name' => 'web'],
 
             ['name' => 'newsletter-list', 'title' => 'Newsletter List', 'guard_name' => 'web'],
+
+            ['name' => 'employee-product-list', 'title' => 'Employee-product List', 'guard_name' => 'web'],
+            ['name' => 'employee-product-create', 'title' => 'Employee-product Create', 'guard_name' => 'web'],
+            ['name' => 'employee-product-edit', 'title' => 'Employee-product Edit', 'guard_name' => 'web'],
+            ['name' => 'employee-product-status', 'title' => 'Employee-product Status', 'guard_name' => 'web'],
+            ['name' => 'employee-product-show', 'title' => 'Employee-product Show', 'guard_name' => 'web'],
+            ['name' => 'employee-product-delete', 'title' => 'Employee-product Delete', 'guard_name' => 'web'],
+
+            ['name' => 'employee-headoffice-list', 'title' => 'Employee-headoffice List', 'guard_name' => 'web'],
+            ['name' => 'employee-headoffice-create', 'title' => 'Employee-headoffice Create', 'guard_name' => 'web'],
+            ['name' => 'employee-headoffice-edit', 'title' => 'Employee-headoffice Edit', 'guard_name' => 'web'],
+            ['name' => 'employee-headoffice-status', 'title' => 'Employee-headoffice Status', 'guard_name' => 'web'],
+            ['name' => 'employee-headoffice-show', 'title' => 'Employee-headoffice Show', 'guard_name' => 'web'],
+            ['name' => 'employee-headoffice-delete', 'title' => 'Employee-headoffice Delete', 'guard_name' => 'web'],
+
+            ['name' => 'employee-branch-list', 'title' => 'Employee-branch List', 'guard_name' => 'web'],
+            ['name' => 'employee-branch-create', 'title' => 'Employee-branch Create', 'guard_name' => 'web'],
+            ['name' => 'employee-branch-edit', 'title' => 'Employee-branch Edit', 'guard_name' => 'web'],
+            ['name' => 'employee-branch-status', 'title' => 'Employee-branch Status', 'guard_name' => 'web'],
+            ['name' => 'employee-branch-show', 'title' => 'Employee-branch Show', 'guard_name' => 'web'],
+            ['name' => 'employee-branch-delete', 'title' => 'Employee-branch Delete', 'guard_name' => 'web'],
+
+            ['name' => 'employee-department-list', 'title' => 'Employee-department List', 'guard_name' => 'web'],
+            ['name' => 'employee-department-create', 'title' => 'Employee-department Create', 'guard_name' => 'web'],
+            ['name' => 'employee-department-edit', 'title' => 'Employee-department Edit', 'guard_name' => 'web'],
+            ['name' => 'employee-department-status', 'title' => 'Employee-department Status', 'guard_name' => 'web'],
+            ['name' => 'employee-department-show', 'title' => 'Employee-department Show', 'guard_name' => 'web'],
+            ['name' => 'employee-department-delete', 'title' => 'Employee-department Delete', 'guard_name' => 'web'],
 
         ];
         Permission::insert($permissions);

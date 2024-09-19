@@ -52,7 +52,9 @@
     @endforeach
     <div id="myPopup-booking1" class="popup">
         <div class="popup-content" style="width:36%">
-            <span class="close" id="closePopup-booking1">&times;</span>
+            {{-- <span class="close" id="closePopup-booking1">&times;</span>
+             --}}
+             <a><span class="close-icon" id="closePopup-booking1"><img src="{{ asset('assets/img/icons/close-detail.svg') }}" alt=""></span></a>
             <h4>To Book a Service</h4>
             <img src="{{ asset('assets/img/icons/signup.png') }}" alt="">
             <h5 class="sign-up-text mb-3">Enter your Mobile Number</h5>
@@ -65,29 +67,38 @@
 
 
     <div id="myPopup-booking" class="popup">
-        <div class="popup-content" style="width: 39%;">
-            <span class="close" id="closePopup-booking">&times;</span>
-            <img src="{{ asset('assets/img/logofinal.webp') }}" alt="" width="120px" class="mb-4">
-            <h4 class="mb-4">Enter Your Details</h4>
+        <div class="popup-content">
+            <a><span class="close-icon" id="closePopup-booking"><img src="{{ asset('assets/img/icons/close-detail.svg') }}" alt=""></span></a>
 
-            <div class="row px-5">
+            <img src="{{ asset('assets/img/logofinal.webp') }}" alt="" width="120px" class="mb-4">
+            <h4 class="">Enter Your Details</h4>
+
+            <div class="row px-5 mb-4">
                 <div class="col-md-6">
-                    <input type="text" class="input-detailss form-control mb-4" aria-label="Sizing example input"
-                        name="name" aria-describedby="inputGroup-sizing-default" placeholder="Enter your name"
-                        required>
+                    <div class="input-container">
+                        <span class="icon-symbol"><i class='bx bx-user'><img src="{{ asset('assets/img/icons/user-details.svg') }}" alt=""></i></span>
+                        <input type="text" required>
+                        <label>Username</label>
+                    </div>
                     <div class="error-message"></div>
-                    <input type="text" class="form-control mb-4 input-detailss" aria-label="Sizing example input"
-                        name="location" aria-describedby="inputGroup-sizing-default" placeholder="Enter your Location"
-                        required>
+                    <div class="input-container">
+                        <span class="icon-symbol"><i class='bx bx-envelope'><img src="{{ asset('assets/img/icons/mail-details.svg') }}" alt=""></i></span>
+                        <input type="email" required>
+                        <label>Email</label>
+                    </div>
                     <div class="error-message"></div>
                 </div>
                 <div class="col-md-6">
-                    <input type="text" class="form-control mb-4 input-detailss" aria-label="Sizing example input"
-                        name="email" aria-describedby="inputGroup-sizing-default" placeholder="Enter your email"
-                        required>
+                    <div class="input-container">
+                        <span class="icon-symbol"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAAAXNSR0IArs4c6QAAAgNJREFUSEu11cnrzlEUx/HXz5wyxIYUEaHMysKUYaGQ2ChiY9iIDTv/gI2UKEk2JJkWEtmYUkoUyawoJAtDSTJzT91Hj8fzHcLvbL717dz7PsPnnNuhk62jk+9XBzAUK7AQE3NAN3AGh/G8LMgyQF8cxJKSC37gKNbgQzu/IkBvXMU4fMJe7MTjfMkIbMZ69Mi+s/ClFVIEOIDVeIYFuFeQxQScTQEMxg5sqQMYj1v4muo8DVHvhkVJwpoDm41L+IzheNEMaZfBLmzEbmxqiagdIFwOYWWCbMW2KsAjjMz1v1MTMBfncTl9I6Nf1i6DaGo0riu+oxF1kZjijgEp29d4g4FVgLfojz54XxMQvu8QZwNWmsF1TE1DNDrV9WHNEo3FXVzLwigF7EvTuS43OBrdbEVNDnluxx5sqMpgHs7hJibXAHTB/aSkUZiBK1WAaNoTDEuQpQlysqi7+f+qvFIeYEyrb9EkL8cRvEQM3qsCyBDczqJYjNN1AeF3AXPylM7Ht5bDPXM5piRRnCpaimXbdBBi0EJ2+/NiazS5G47lEj7FpCzRPxKteg+mpywuojtiAa5Fr/wOREliRUdjQxBtrQoQh5altXEcoZZ4ZOKdmJnX+KKsuEId1AHE4ejBCfTLN0Xz4yGKwSq1uoC4JKY1lPUx1/63tfwvJaoK8r9l8Fegn6PCYRm1a4cNAAAAAElFTkSuQmCC"/></span>
+                        <input type="text" required>
+                        <label>Location</label>
+                    </div>
                     <div class="error-message"></div>
-                    <input type="date" class="form-control mb-4 input-detailss" aria-label="Sizing example input"
-                        name="date_time" aria-describedby="inputGroup-sizing-default" required>
+                    <div class="input-container">
+                        <input type="date" style="font-weight: normal;padding: 0 10px 0 5px;" required>
+                        <label></label>
+                    </div>
                     <div class="error-message"></div>
                 </div>
             </div>
@@ -96,10 +107,44 @@
         </div>
     </div>
 
+    {{-- <div class="container-wrapper register popup" id="myPopup-booking1">
+        <a href=""><span class="close-icon" id="closePopup-booking"><ion-icon name="close-outline"></ion-icon></span></a>
+
+        <h3 style="text-align: center;">Enter your details</h3>
+
+        <div class="input-container">
+            <span class="icon-symbol"><i class='bx bx-user'></i></span>
+            <input type="text" required>
+            <label>Username</label>
+        </div>
+
+        <div class="input-container">
+            <span class="icon-symbol"><i class='bx bx-envelope'></i></span>
+            <input type="email" required>
+            <label>Email</label>
+        </div>
+
+        <div class="input-container">
+            <span class="icon-symbol"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAAAXNSR0IArs4c6QAAAgNJREFUSEu11cnrzlEUx/HXz5wyxIYUEaHMysKUYaGQ2ChiY9iIDTv/gI2UKEk2JJkWEtmYUkoUyawoJAtDSTJzT91Hj8fzHcLvbL717dz7PsPnnNuhk62jk+9XBzAUK7AQE3NAN3AGh/G8LMgyQF8cxJKSC37gKNbgQzu/IkBvXMU4fMJe7MTjfMkIbMZ69Mi+s/ClFVIEOIDVeIYFuFeQxQScTQEMxg5sqQMYj1v4muo8DVHvhkVJwpoDm41L+IzheNEMaZfBLmzEbmxqiagdIFwOYWWCbMW2KsAjjMz1v1MTMBfncTl9I6Nf1i6DaGo0riu+oxF1kZjijgEp29d4g4FVgLfojz54XxMQvu8QZwNWmsF1TE1DNDrV9WHNEo3FXVzLwigF7EvTuS43OBrdbEVNDnluxx5sqMpgHs7hJibXAHTB/aSkUZiBK1WAaNoTDEuQpQlysqi7+f+qvFIeYEyrb9EkL8cRvEQM3qsCyBDczqJYjNN1AeF3AXPylM7Ht5bDPXM5piRRnCpaimXbdBBi0EJ2+/NiazS5G47lEj7FpCzRPxKteg+mpywuojtiAa5Fr/wOREliRUdjQxBtrQoQh5altXEcoZZ4ZOKdmJnX+KKsuEId1AHE4ejBCfTLN0Xz4yGKwSq1uoC4JKY1lPUx1/63tfwvJaoK8r9l8Fegn6PCYRm1a4cNAAAAAElFTkSuQmCC"/></span>
+            <input type="password" required>
+            <label>Location</label>
+        </div>
+
+        <div class="input-container">
+            <input type="date" required>
+            <label></label>
+        </div>
+
+        <div class="login-register-container">
+            <a href=""  class="register-link"><button class="action-btn" id="saveChanges-booking">Continuee</button></a>
+        </div>
+    </div> --}}
+
 
     <div id="myPopup2-booking" class="popup">
         <div class="popup-content" style="width: 39%">
-            <span class="close" id="closePopup2-booking">&times;</span>
+            {{-- <span class="close" id="closePopup2-booking">&times;</span> --}}
+            <a><span class="close-icon" id="closePopup2-booking"><img src="{{ asset('assets/img/icons/close-detail.svg') }}" alt=""></span></a>
             <h4>Verify OTP</h4>
             <img src="{{ asset('assets/img/icons/lock-icon.png') }}" alt="">
 

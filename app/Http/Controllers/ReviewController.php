@@ -13,7 +13,7 @@ class ReviewController extends Controller
      */
     public function index()
     {
-        $reviews = Review::orderByDesc('created_at')->pagnate(10);
+        $reviews = Review::orderByDesc('created_at')->paginate(10);
         return view('backend.review.index',compact('reviews'));
     }
 

@@ -24452,6 +24452,9 @@ td.ant-table-column-sort {
     .book-submit .btn + .btn {
         margin-left: 20px;
     }
+    .popup-content {
+        width: 60% !important;
+    }
 }
 @media only screen and (max-width: 1199.98px) {
     .logo img {
@@ -26508,7 +26511,7 @@ td.ant-table-column-sort {
         width: 900px;
     }
     .popup-content {
-        width: 75%;
+        width: 75% !important;
     }
     .input-div{
         width: 14%;

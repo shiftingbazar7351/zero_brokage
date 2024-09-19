@@ -13,6 +13,7 @@
         <div class="content">
             <div class="content-page-header content-page-headersplit mb-0">
                 <h5>Menus</h5>
+                @can('menus-create')
                 <div class="list-btn">
                     <ul>
                         <li>
@@ -23,6 +24,7 @@
                         </li>
                     </ul>
                 </div>
+                @endcan
             </div>
             <div class="row text-center">
                 <div class="col-12">
@@ -32,8 +34,12 @@
                                 <tr>
                                     <th>#</th>
                                     <th>Name</th>
-                                    <th>Status</th>
-                                    <th>Action</th>
+                                    @can('menus-status')
+                                        <th>Status</th>
+                                    @endcan
+                                    @can(['menus-edit', 'menus-delete'])
+                                        <th>Action</th>
+                                    @endcan
                                 </tr>
                             </thead>
                             <tbody>
@@ -51,6 +57,7 @@
                                                 <span>{{ $menu->name }}</span>
                                             </div>
                                         </td>
+                                        @can('menus-status')
                                         <td>
                                             <div class="active-switch">
                                                 <label class="switch">
@@ -60,6 +67,8 @@
                                                 </label>
                                             </div>
                                         </td>
+                                        @endcan
+                                        @can(['menus-edit', 'menus-delete'])
                                         <td>
                                             <div class="table-actions d-flex justify-content-center">
                                                 <button class="btn delete-table me-2"
@@ -78,6 +87,7 @@
                                                 </form>
                                             </div>
                                         </td>
+                                        @endcan
                                     </tr>
                                 @empty
                                     <tr>
@@ -92,7 +102,6 @@
         </div>
     </div>
 
-    <!-- Add Menu Modal -->
     <!-- Add Menu Modal -->
     <div class="modal fade" id="add-category">
         <div class="modal-dialog modal-dialog-centered">

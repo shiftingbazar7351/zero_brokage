@@ -14,6 +14,7 @@
         <div class="content">
             <div class="content-page-header content-page-headersplit mb-0">
                 <h5>Head Office</h5>
+                @can('employee-headoffice-create')
                 <div class="list-btn">
                     <ul>
                         <li>
@@ -22,6 +23,7 @@
                         </li>
                     </ul>
                 </div>
+                @endcan
             </div>
             <div class="row">
                 <div class="col-12 ">
@@ -34,8 +36,12 @@
                                     <th>Name</th>
                                     <th>Number</th>
                                     <th>Address</th>
+                                    @can('employee-headoffice-status')
                                     <th>Status</th>
+                                    @endcan
+                                    @can(['employee-headoffice-edit', 'employee-headoffice-delete'])
                                     <th>Action</th>
+                                    @endcan
                                 </tr>
                             </thead>
                             <tbody>
@@ -60,6 +66,7 @@
                                             <td> {{ $office->name ?? '' }} </td>
                                             <td> {{ $office->number ?? '' }} </td>
                                             <td> {{ $office->address ?? '' }} </td>
+                                            @can('employee-headoffice-status')
                                             <td>
                                                 <div class="active-switch">
                                                     <label class="switch">
@@ -71,6 +78,8 @@
                                                     </label>
                                                 </div>
                                             </td>
+                                            @endcan
+                                            @can(['employee-headoffice-edit', 'employee-headoffice-delete'])
                                             <td>
                                                 <div class="table-actions d-flex justify-content-center">
 
@@ -91,6 +100,7 @@
                                                     </form>
                                                 </div>
                                             </td>
+                                            @endcan
                                         </tr>
                                     @endforeach
                                 @endif

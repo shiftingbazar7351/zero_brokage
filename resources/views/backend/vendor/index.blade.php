@@ -13,7 +13,7 @@
                             <input type="text" placeholder="Search" class="form-control">
                         </div>
                     </div>
-
+                    @can('vendors-create')
                     <ul>
                         <li>
                             <button class="btn btn-primary" type="button"
@@ -22,6 +22,7 @@
                             </button>
                         </li>
                     </ul>
+                    @endcan
                 </div>
             </div>
 
@@ -34,7 +35,9 @@
                                     <th>#</th>
                                     <th>Name</th>
                                     <th>email</th>
+                                    @can('vendors-edit', 'vendors-delete' , 'vendors-show')
                                     <th>Action</th>
+                                    @endcan
                                 </tr>
                             </thead>
                             <tbody>
@@ -43,13 +46,14 @@
                                         <td>{{ $loop->iteration }}</td>
                                         <td>{{ $vendor->company_name }}</td>
                                         <td>{{ $vendor->email }}</td>
+                                        @can('vendors-edit', 'vendors-delete','vendors-show')
                                         <td>
                                             <div class="d-flex">
                                                 <a class="btn delete-table me-2 edit-service"
                                                 href="{{ route('vendors.show', $vendor->id) }}">
                                                  <i class="fe fe-eye"></i>
                                                 </a>
-                                                
+
                                                 <a class="btn delete-table me-2 edit-service"
                                                     href="{{ route('vendors.edit', $vendor->id) }}">
                                                     <i class="fe fe-edit"></i>
@@ -67,6 +71,7 @@
                                                 </form>
                                             </div>
                                         </td>
+                                        @endcan
                                     </tr>
                                 @empty
                                     <tr>

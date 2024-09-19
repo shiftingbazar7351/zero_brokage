@@ -254,6 +254,7 @@ Route::middleware(['auth', 'check.ip'])->group(function () {
         Route::put('/reviews/{reviews}', 'update')->name('reviews.update')->middleware('can:reviews-edit');
         Route::post('/reviews/{reviews}', 'show')->name('reviews.show')->middleware('can:reviews-show');
         Route::delete('/reviews/{reviews}', 'destroy')->name('reviews.destroy')->middleware('can:reviews-delete');
+        Route::post('/reviews-status', 'reviewStatus')->name('reviews.status')->middleware('can:reviews-status');
     });
 
     Route::controller(FaqController::class)->group(function () {
@@ -303,6 +304,7 @@ Route::middleware(['auth', 'check.ip'])->group(function () {
         Route::get('/generate-pdf', 'generatePDF')->name('generate.pdf');
         Route::post('/invoice/data/store/{id}', 'dataStore')->name('invoice.data.store')->middleware('can:invoice-create');
     });
+
 
     Route::get('/dashboard', [AdminController::class, 'homepage'])->name('admin_page');
     // Route::resource('categories', CategoryController::class);

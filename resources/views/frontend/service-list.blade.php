@@ -49,6 +49,142 @@
         .dropdown-content div:hover {
             background-color: #f1f1f1;
         }
+
+        .container-wrapper {
+        position: relative;
+        width: 400px;
+        background-color: transparent;
+        border: 2px solid rgba(255, 255, 255, .5);
+        backdrop-filter: blur(20px);
+        border-radius: 20px;
+        box-shadow: 0 0 4px 3px rgba(0, 0, 0, .5);
+        margin: auto;
+        margin-top: 150px;
+        padding: 40px;
+        overflow: hidden;
+    }
+
+    .container-wrapper h2 {
+        font-size: 2em;
+        color: #000;
+        text-align: center;
+    }
+
+    .input-container {
+        position: relative;
+        width: 100%;
+        height: 50px;
+        border-bottom: 2px solid #000;
+        margin: 30px 0 0 0;
+    }
+
+    .input-container label {
+        position: absolute;
+        top: 50%;
+        left: 5px;
+        transform: translateY(-50%);
+        color: #000;
+        font-weight: 500;
+        pointer-events: none;
+        transition: .5s;
+    }
+
+    .input-container input:focus~label,
+    .input-container input:valid~label {
+        top: -5px;
+    }
+
+    .input-container input {
+        width: 100%;
+        height: 100%;
+        background: transparent;
+        border: none;
+        outline: none;
+        font-size: 1em;
+        color: #000;
+        font-weight: 600;
+        padding: 0 35px 0 5px;
+    }
+
+    .input-container .icon-symbol {
+        position: absolute;
+        right: 8px;
+        font-size: 1.2rem;
+        color: #000;
+        line-height: 57px;
+    }
+
+    .remember-forgot-section {
+        font-size: .9em;
+        color: #000;
+        font-weight: 500;
+        margin: -15px 0 15px;
+        display: flex;
+        justify-content: space-between;
+    }
+
+    .remember-forgot-section label input {
+        accent-color: #000;
+        margin-right: 3px;
+    }
+
+    .remember-forgot-section a {
+        color: #000;
+        text-decoration: none;
+    }
+
+    .remember-forgot-section a:hover {
+        text-decoration: underline;
+    }
+
+    .action-btn {
+        width: 100%;
+        height: 45px;
+        background: #007dff;
+        border: none;
+        outline: none;
+        border-radius: 6px;
+        cursor: pointer;
+        font-size: 1em;
+        color: #fff;
+        font-weight: 500;
+    }
+
+    .login-register-container {
+        font-size: .9em;
+        color: #000;
+        text-align: center;
+        font-weight: 500;
+        margin: 25px 0 10px;
+    }
+
+    .login-register-container p a {
+        color: #000;
+        text-decoration: none;
+        font-weight: 600;
+    }
+
+    .login-register-container p a:hover {
+        text-decoration: underline;
+    }
+
+    .close-icon {
+        position: absolute;
+        top: 0;
+        right: 0;
+        width: 45px;
+        height: 45px;
+        background: #007dff;
+        font-size: 2em;
+        color: #fff;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        cursor: pointer;
+        z-index: 1;
+    }
+
+
     </style>
 @endsection
 @section('content')
@@ -228,7 +364,6 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>
     <script src="{{ asset('assets/js/booking_infoPopup.js') }}"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/intlTelInput.min.js"></script>
-
 
  {{-- ...........................OTP automatic go to next input fields (start)........................... --}}
     <script>
@@ -419,6 +554,7 @@
 
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/intlTelInput.min.js"></script>
+
     <script>
         const inputtestt = document.querySelector("#phoneNumberInput-booking");
         window.intlTelInput(inputtestt, {

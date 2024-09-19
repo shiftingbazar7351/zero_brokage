@@ -162,7 +162,7 @@ class SubMenuController extends Controller
         $sub_menu->category_id = $request->input('category_id');
         $sub_menu->subcategory_id = $request->input('subcategory_id');
         $sub_menu->menu_id = $request->input('menu_id');
-        $sub_menu->city_id = $request->input('city_id');
+        $sub_menu->city_id = $request->input('city');
         $sub_menu->total_price = $request->input('total_price');
         $sub_menu->discount = $request->input('discount');
         $sub_menu->discounted_price = $finalPrice;

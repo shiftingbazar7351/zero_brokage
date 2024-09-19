@@ -114,14 +114,12 @@ class MenuController extends Controller
             }
 
             $menu->delete();
-            return redirect()->back()->with('success', 'Menu Deleted.');
+            return redirect()->back()->with(['message' => 'Deleted Successfully', 'alert-type' => 'success']);
 
         } catch (Exception $e) {
-            return redirect()->back()->with('error', 'Something went wrong');
+            return redirect()->back()->with(['message' => 'Something went wrong', 'alert-type' => 'error']);
         }
     }
-
-
 
 
 

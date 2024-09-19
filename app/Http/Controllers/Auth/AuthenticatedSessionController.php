@@ -28,7 +28,9 @@ class AuthenticatedSessionController extends Controller
         $request->authenticate();
 
         $request->session()->regenerate();
-        toastr()->success('logged in successfully');
+        // toastr()->success('logged in successfully');
+        Session()->flash('message','Logged in Successfully');
+        Session()->flash('alert-type','success');
         return redirect()->intended(RouteServiceProvider::HOME);
     }
 

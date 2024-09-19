@@ -42,10 +42,8 @@ class IpAddressController extends Controller
             'created_by' => auth()->user()->id,
         ]);
 
-        return redirect()->back()->with('success', 'IP Address added successfully');
+        return redirect()->back()->with(['message' => 'Added Successfully', 'alert-type' => 'success']);
     }
-
-
 
     /**
      * Display the specified resource.
@@ -92,7 +90,7 @@ class IpAddressController extends Controller
             'created_by' => auth()->user()->id,
         ]);
 
-        return redirect()->back()->with('success', 'IP Address updated successfully');
+        return redirect()->back()->with(['message' => 'Updated Successfully', 'alert-type' => 'success']);
     }
 
     /**
@@ -105,7 +103,7 @@ class IpAddressController extends Controller
         $ipaddress = IpAddress::find($id);
         if ($ipaddress) {
             $ipaddress->delete();
-            return redirect(route('ipaddress.index'))->with('success', 'Ip Address deleted successfully!');
+            return redirect(route('ipaddress.index'))->with(['message' => 'Deleted Successfully', 'alert-type' => 'success']);
         }
         return redirect(route('ipaddress.index'))->with('error', 'Ip Address not found!');
     }

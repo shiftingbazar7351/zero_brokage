@@ -10,7 +10,6 @@ class ReviewController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
      */
     public function index()
     {
@@ -21,7 +20,6 @@ class ReviewController extends Controller
     /**
      * Show the form for creating a new resource.
      *
-     * @return \Illuminate\Http\Response
      */
     public function create()
     {
@@ -32,7 +30,6 @@ class ReviewController extends Controller
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
     {
@@ -45,7 +42,7 @@ class ReviewController extends Controller
         $review = new Review($request->all());
         $review->created_by = auth()->id();
         $review->save();
-        return redirect()->back()->with('success', 'Review Added Successfully');
+        return redirect()->back()->with(['message' => 'Added Successfully', 'alert-type' => 'success']);
     }
 
 
@@ -54,7 +51,6 @@ class ReviewController extends Controller
      * Show the form for editing the specified resource.
      *
      * @param  int  $id
-     * @return \Illuminate\Http\Response
      */
     public function edit($id)
     {
@@ -67,7 +63,6 @@ class ReviewController extends Controller
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
-     * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
     {
@@ -84,20 +79,19 @@ class ReviewController extends Controller
         $review->update($request->only(['name', 'description','profession']));
 
         // Redirect back with a success message
-        return redirect()->back()->with('success', 'Updated Successfully');
+        return redirect()->back()->with(['message' => 'Updated Successfully', 'alert-type' => 'success']);
     }
 
     /**
      * Remove the specified resource from storage.
      *
      * @param  int  $id
-     * @return \Illuminate\Http\Response
      */
     public function destroy(Review $review)
     {
         $review->delete();
 
-        return redirect()->back()->with('success', 'Review Deleted successfully.');
+        return redirect()->back()->with(['message' => 'Deleted Successfully', 'alert-type' => 'success']);
     }
 
     public function reviewStatus(Request $request)

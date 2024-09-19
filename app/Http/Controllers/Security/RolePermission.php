@@ -88,8 +88,7 @@ class RolePermission extends Controller
 
             // Commit the transaction
             DB::commit();
-
-            return back()->with(['success' => 'Permissions updated successfully']);
+            return redirect()->back()->with(['message' => 'Permissions updated successfully','alert-type' => 'success']);
         } catch (\Exception $e) {
             // Rollback the transaction if something goes wrong
             DB::rollback();

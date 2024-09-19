@@ -113,7 +113,9 @@
                     </div>
                 </div>
             </div>
+
         </div>
+
     </div>
 
     <!-- Add Category Modal -->
@@ -301,6 +303,7 @@
             </div>
         </div>
     </div>
+
 @endsection
 
 @section('scripts')

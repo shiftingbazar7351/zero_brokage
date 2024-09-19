@@ -53,7 +53,7 @@
                                     @endforeach
                                 </tbody>
                             </table>
-                            <div class="m-4">
+                            <div class="m-4 text-center">
                                 <button type="submit" class="btn btn-md btn-primary">Submit</button>
                             </div>
                         </form>

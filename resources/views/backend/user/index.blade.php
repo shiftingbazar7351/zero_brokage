@@ -51,8 +51,8 @@
                                             <td>
                                                 <div class="table-actions d-flex justify-content-center">
                                                     <button class="btn delete-table me-2"
-                                                        onclick="edituser({{ $user->id }})" type="button"
-                                                        data-bs-toggle="modal" data-bs-target="#edit-category">
+                                                        onclick="editUser({{ $user->id }})" type="button"
+                                                        data-bs-toggle="modal" data-bs-target="#edit-user">
                                                         <i class="fe fe-edit"></i>
                                                     </button>
                                                     <form action="{{ route('user.destroy', $user->id) }}" method="POST"
@@ -141,11 +141,11 @@
     </div>
 
     <!-- Edit Category Modal -->
-    <div class="modal fade" id="edit-category">
+    <div class="modal fade" id="edit-user">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title">Edit Category</h5>
+                    <h5 class="modal-title">Edit User</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body pt-0">
@@ -205,6 +205,11 @@
 @endsection
 @section('scripts')
     <script>
+        var statusRoute = `{{ route('user.status') }}`;
+    </script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="{{ asset('admin/assets/js/status-update.js') }}"></script>
+    <script>
         $(document).ready(function() {
             // Handle Create User
             $('#addSubCategoryForm').on('submit', function(e) {
@@ -219,7 +224,6 @@
                     processData: false,
                     success: function(response) {
                         if (response.success) {
-                            // alert('User added successfully!');
                             // Use window.location.href for redirection to the provided URL
                             window.location.href = response
                                 .redirectUrl; // Redirect to the URL provided in the response
@@ -291,6 +295,30 @@
                     $('#status_error').text(errors.status[0]);
                 }
             }
+
+            // Function to populate the edit form when the modal is opened
+            function editUser(id) {
+    $.ajax({
+        url: '/user/' + id + '/edit', // Make sure the route returns user data
+        method: 'GET',
+        success: function(user) {
+            // Populate the form fields with the user data
+            $('#editSubCategoryId').val(user.id); // Set user ID
+            $('#editSubCategoryForm input[name="name"]').val(user.name); // Populate user name
+            $('#editSubCategoryForm input[name="email"]').val(user.email); // Populate email
+            $('#editSubCategoryForm input[name="phone_number"]').val(user.phone_number); // Populate phone number
+            $('#editSubCategoryForm select[name="user_type"]').val(user.user_type); // Populate role
+            $('#editSubCategoryForm select[name="status"]').val(user.status); // Populate status
+
+            // Open the modal
+            $('#edit-user').modal('show'); // Correct ID for modal
+        },
+        error: function(response) {
+            alert('Failed to fetch user data.');
+        }
+    });
+}
+
         });
     </script>
 @endsection

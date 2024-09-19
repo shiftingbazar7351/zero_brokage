@@ -2,17 +2,17 @@
   "use strict";
 
 	// Variables declarations
-	
+
 	var $wrapper = $('.main-wrapper');
 	var $pageWrapper = $('.page-wrapper');
 	var $slimScrolls = $('.slimscroll');
-	
+
 	// Sidebar
-	
+
 	var Sidemenu = function() {
 		this.$menuItem = $('#sidebar-menu a');
 	};
-	
+
 	function init() {
 		var $this = Sidemenu;
 		$('#sidebar-menu a').on('click', function(e) {
@@ -31,12 +31,12 @@
 		});
 		$('#sidebar-menu ul li.submenu a.active').parents('li:last').children('a:first').addClass('active').trigger('click');
 	}
-	
+
 	// Sidebar Initiate
 	init();
-	
+
 	// Mobile menu sidebar overlay
-	
+
 	$('body').append('<div class="sidebar-overlay"></div>');
 	$(document).on('click', '#mobile_btn', function() {
 		$wrapper.toggleClass('slide-nav');
@@ -44,13 +44,13 @@
 		$('html').addClass('menu-opened');
 		return false;
 	});
-	
+
 	// Sidebar overlay
 	$(".sidebar-overlay").on("click", function () {
 		$wrapper.removeClass('slide-nav');
 		$(".sidebar-overlay").removeClass("opened");
 		$('html').removeClass('menu-opened');
-	});	
+	});
 
 	// radio btn hide show
 	  $(function() {
@@ -62,7 +62,7 @@
 		  }
 		});
 	  });
-	 
+
 	// editor
 	if ($('#editor').length > 0) {
 		ClassicEditor
@@ -91,7 +91,7 @@
 		.catch( err => {
 			console.error( err.stack );
 		} );
-	}	
+	}
 	if ($('.select').length > 0) {
 		$('.select').select2({
 			minimumResultsForSearch: -1,
@@ -104,7 +104,7 @@
 	});
 
 	// Datetimepicker
-	
+
 	if($('.datetimepicker').length > 0 ){
 		$('.datetimepicker').datetimepicker({
 			format: 'DD-MM-YYYY',
@@ -116,9 +116,9 @@
 			}
 		});
 	}
-	
+
 	// Datetimepicker time
-	
+
 	if($('.timepicker').length > 0 ){
 		$('.timepicker').datetimepicker({
 			format: 'HH:mm A',
@@ -130,20 +130,20 @@
 			}
 		});
 	}
-	
+
 	// Time Slot
-	
+
 	if($('#time-slot').length > 0) {
 		$('#time-slot').on('click', function() {
-			$(".timeslot-sec").show(); 
-			$(".timepicker-sec").hide(); 
+			$(".timeslot-sec").show();
+			$(".timepicker-sec").hide();
 		});
 		$('#time-picker').on('click', function() {
-			$(".timepicker-sec").show(); 
-			$(".timeslot-sec").hide(); 
+			$(".timepicker-sec").show();
+			$(".timeslot-sec").hide();
 		});
 	}
-	
+
 	// MultiStep Form Script
 
 	$(document).ready(function () {
@@ -169,16 +169,16 @@
 
 		});
 	});
-	
+
 	// Add Service Information
-	
+
     $(".addservice-info").on('click','.trash', function () {
 		$(this).closest('.service-cont').remove();
 		return false;
     });
 
     $(".add-extra").on('click', function () {
-		
+
 		var servicecontent = '<div class="row service-cont">' +
 			'<div class="col-md-4">' +
 				'<div class="form-group">' +
@@ -191,13 +191,13 @@
 					'<label>Price</label>' +
 					'<input type="text" class="form-control" placeholder="Enter Price">' +
 				'</div>' +
-			'</div>' +	
+			'</div>' +
 			'<div class="col-md-4">' +
 				'<div class="d-flex">' +
 					'<div class="form-group w-100">' +
 						'<label>Duration</label>' +
 						'<input type="text" class="form-control" placeholder="Enter Service Duration">' +
-					'</div>' +												
+					'</div>' +
 					'<div class="form-group">' +
 						'<label>&nbsp;</label>' +
 						'<a href="#" class="btn btn-danger-outline trash"><i class="far fa-trash-alt"></i></a>' +
@@ -205,20 +205,20 @@
 				'</div>' +
 			'</div>' +
 		'</div>';
-		
+
         $(".addservice-info").append(servicecontent);
-        return false;    
+        return false;
     });
-	
+
 	// Add Hours
-	
+
     $(".hours-info").on('click','.trash', function () {
 		$(this).closest('.hours-cont').remove();
 		return false;
     });
 
     $(".add-hours").on('click', function () {
-		
+
 		var hourscontent = '<div class="row hours-cont">' +
 			'<div class="col-md-4">' +
 				'<div class="form-group">' +
@@ -228,7 +228,7 @@
 						'<span class="cus-icon"><i class="fe fe-clock"></i></span>' +
 					'</div>' +
 				'</div>' +
-			'</div>' +	
+			'</div>' +
 			'<div class="col-md-4">' +
 				'<div class="form-group">' +
 					'<label>To</label>' +
@@ -237,13 +237,13 @@
 						'<span class="cus-icon"><i class="fe fe-clock"></i></span>' +
 					'</div>' +
 				'</div>' +
-			'</div>' +	
+			'</div>' +
 			'<div class="col-md-4">' +
 				'<div class="d-flex">' +
 					'<div class="form-group w-100">' +
 							'<label>Slots</label>' +
 							'<input type="text" class="form-control" placeholder="Enter Slot">' +
-					'</div>' +												
+					'</div>' +
 					'<div class="form-group">' +
 						'<label>&nbsp;</label>' +
 						'<a href="#" class="btn btn-danger-outline trash"><i class="far fa-trash-alt"></i></a>' +
@@ -251,7 +251,7 @@
 				'</div>' +
 			'</div>' +
 		'</div>';
-		
+
         $(this).parent().find(".hours-info").append(hourscontent);
 		$('.timepicker').datetimepicker({
 			format: 'HH:mm A',
@@ -261,19 +261,19 @@
 				next: 'fas fa-angle-right',
 				previous: 'fas fa-angle-left'
 			}
-		});		
-        return false;    
+		});
+        return false;
     });
-	
+
 	// Add Timepicker Hours
-	
+
     $(".hrs-info").on('click','.trash', function () {
 		$(this).closest('.hrs-cont').remove();
 		return false;
     });
 
     $(".add-hrs").on('click', function () {
-		
+
 		var hrscontent = '<div class="row hrs-cont">' +
 			'<div class="col-md-6">' +
 				'<div class="form-group form-info">' +
@@ -281,9 +281,9 @@
 					'<div class="form-icon">' +
 							'<input type="text" class="form-control timepicker"  placeholder="Select Time">' +
 							'<span class="cus-icon"><i class="fe fe-clock"></i></span>' +
-						'</div>' +	
+						'</div>' +
 				'</div>' +
-			'</div> ' +	
+			'</div> ' +
 			'<div class="col-md-6">' +
 				'<div class="d-flex">' +
 					'<div class="form-group form-info w-100">' +
@@ -291,8 +291,8 @@
 						'<div class="form-icon">' +
 							'<input type="text" class="form-control timepicker"  placeholder="Select Time">' +
 							'<span class="cus-icon"><i class="fe fe-clock"></i></span>' +
-						'</div>' +											
-						'</div>' +											
+						'</div>' +
+						'</div>' +
 						'<div class="form-group">' +
 							'<label class="col-form-label">&nbsp;</label>' +
 							'<a href="#" class="btn btn-danger-outline trash"><i class="far fa-trash-alt"></i></a>' +
@@ -301,8 +301,8 @@
 				'</div>' +
 			'</div>';
 		'</div>';
-		
-		
+
+
         $(this).parent().find(".hrs-info").append(hrscontent);
 		$('.timepicker').datetimepicker({
 			format: 'HH:mm A',
@@ -312,19 +312,19 @@
 				next: 'fas fa-angle-right',
 				previous: 'fas fa-angle-left'
 			}
-		});		
-        return false;    
+		});
+        return false;
     });
-	
+
 	// Add Timepicker Hours
-	
+
     $(".day-info").on('click','.trash', function () {
 		$(this).closest('.day-cont').remove();
 		return false;
     });
 
     $(".add-day").on('click', function () {
-		
+
 		var daycontent = '<div class="row day-cont">' +
 			'<div class="col-md-6">' +
 				'<div class="form-group">' +
@@ -343,7 +343,7 @@
 							'<input type="text" class="form-control timepicker" placeholder="Select Time">' +
 							'<span class="cus-icon"><i class="feather-clock"></i></span>' +
 						'</div>' +
-					'</div>' +							
+					'</div>' +
 					'<div class="form-group">' +
 						'<label class="col-form-label">&nbsp;</label>' +
 						'<a href="#" class="btn btn-danger-outline trash"><i class="far fa-trash-alt"></i></a>' +
@@ -351,7 +351,7 @@
 				'</div>' +
 			'</div>' +
 		'</div>';
-		
+
         $(this).parent().parent().find(".day-info").append(daycontent);
 		$('.timepicker').datetimepicker({
 			format: 'HH:mm A',
@@ -361,13 +361,13 @@
 				next: 'fas fa-angle-right',
 				previous: 'fas fa-angle-left'
 			}
-		});		
-        return false;    
+		});
+        return false;
     });
 
 	// Tooltip
-	
-	
+
+
 	// Tooltip
 	if($('[data-bs-toggle="tooltip"]').length > 0) {
 		var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
@@ -375,8 +375,8 @@
 			return new bootstrap.Tooltip(tooltipTriggerEl)
 		})
 	}
-	
-	
+
+
 
     // Owl Carousel
 
@@ -401,7 +401,7 @@
 			}
 		});
     }
-	
+
 	// Sidebar Slimscroll
 
 	if($slimScrolls.length > 0) {
@@ -424,7 +424,7 @@
 			$('.sidebar .slimScrollDiv').height(rHeight);
 		});
 	}
-	
+
 	// Small Sidebar
 
 	$(document).on('click', '#toggle_btn', function() {
@@ -435,13 +435,13 @@
 			$('body').addClass('mini-sidebar');
 			$('.subdrop + ul').slideUp();
 		}
-		setTimeout(function(){ 
+		setTimeout(function(){
 			// mA.redraw();
 			// mL.redraw();
 		}, 300);
 		return false;
 	});
-	
+
 if($('.win-maximize').length > 0) {
 		$('.win-maximize').on('click', function(e){
 			if (!document.fullscreenElement) {
@@ -469,7 +469,7 @@ if($('.win-maximize').length > 0) {
 			}
 			return false;
 		}
-		
+
 		// $(window).scroll(function() {
 		// 	if ($(window).scrollTop() >= 30) {
 		// 		$('.header').addClass('fixed-header');
@@ -477,11 +477,11 @@ if($('.win-maximize').length > 0) {
 		// 		$('.header').removeClass('fixed-header');
 		// 	}
 		// });
-		
+
 		$(document).on('click', '#loginSubmit', function() {
 			$("#adminSignIn").submit();
 		});
-		
+
 	});
 
 	// Range slider
@@ -489,7 +489,7 @@ if($('.win-maximize').length > 0) {
 		var slider = document.getElementById("myRange");
 		var output = document.getElementById("currencys");
 		output.innerHTML = slider.value;
-	  
+
 		slider.oninput = function() {
 		  output.innerHTML = this.value;
 		}
@@ -500,7 +500,7 @@ if($('.win-maximize').length > 0) {
 			this.style.background = 'linear-gradient(to right, #FF0080 0%, #FF0080 ' + value + '%, #c4c4c4 ' + value + '%, #c4c4c4 100%)'
 		  };
 		}
-		
+
 	// Logo Hide Btn
 
 	$(document).on("click",".logo-hide-btn",function () {
@@ -508,7 +508,7 @@ if($('.win-maximize').length > 0) {
 	});
 
 // Summernote
-	
+
 if($('.summernote').length > 0) {
 	$('.summernote').summernote({
 		height: 200,                 // set editor height
@@ -545,7 +545,7 @@ $(document).on("click",".addlinks",function () {
 	'</div>' +
 	'</div>' +
 	'</div>' ;
-	
+
 	$(".settings-form").append(experiencecontent);
 	return false;
 });
@@ -557,7 +557,7 @@ $(".settings-form").on('click','.delete_review_comment', function () {
 
 
 // add Formset
-												
+
 $(document).on("click",".addnew",function () {
 	var experiencecontent = '<div class="form-group links-conts">' +
 	'<div class="row align-items-center">' +
@@ -574,7 +574,7 @@ $(document).on("click",".addnew",function () {
 	'</div>' +
 	'</div>' +
 	'</div>' ;
-	
+
 	$(".settingset").append(experiencecontent);
 	return false;
 });
@@ -600,7 +600,7 @@ $(document).on("click",".addlinknew",function () {
 	'</div>' +
 	'</div>' +
 	'</div>' ;
-	
+
 	$(".settings-forms").append(experiencecontent);
 	return false;
 });
@@ -610,7 +610,7 @@ $(".settings-forms").on('click','.delete_review_comment', function () {
 	return false;
 });
 
-										
+
 // add social links Formset
 $(document).on("click",".addsocail",function () {
 	var experiencecontent = '<div class="form-group countset">' +
@@ -643,7 +643,7 @@ $(document).on("click",".addsocail",function () {
 	'</div>' +
 	'</div> ' +
 	'</div> ';
-	
+
 	$(".setings").append(experiencecontent);
 	return false;
 });
@@ -655,7 +655,7 @@ $(".setings").on('click','.delete_review_comment', function () {
 
 
 // add Faq
-												
+
 $(document).on("click",".addfaq",function () {
 	var experiencecontent = '<div class="row counts-list">' +
 	'<div class="col-md-11">' +
@@ -676,7 +676,7 @@ $(document).on("click",".addfaq",function () {
 	'</a>' +
 	'</div>' +
 	'</div> ';
-	
+
 	$(".faq").append(experiencecontent);
 	return false;
 });
@@ -699,12 +699,12 @@ $(document).on("click",".add-links",function () {
 			'<div><a href="javascript:void(0);" class="btn trash"><i class="feather-trash-2"></i></a></div>' +
 		'</div>' +
 	'</div>';
-	
+
 	$(".settings-form").append(experiencecontent);
 	return false;
 });
 // checkbox Select
-	
+
 $('.app-listing .selectbox').on("click", function() {
 	$(this).parent().find('#checkboxes').fadeToggle();
 	$(this).parent().parent().siblings().find('#checkboxes').fadeOut();
@@ -721,7 +721,7 @@ if($('.sortby').length > 0) {
 	var show = true;
 	var checkbox1 = document.getElementById("checkbox");
 	$('.selectboxes').on("click", function() {
-		
+
 		if (show) {
 			checkbox1.style.display = "block";
 			show = false;
@@ -729,7 +729,7 @@ if($('.sortby').length > 0) {
 			checkbox1.style.display = "none";
 			show = true;
 		}
-	});		
+	});
 }
 
 // Invoices checkbox Show
@@ -746,7 +746,7 @@ $(function() {
 
 
 	// Invoices Add More
-	
+
     $(".links-info-one").on('click','.service-trash', function () {
 		$(this).closest('.links-cont').remove();
 		return false;
@@ -758,7 +758,7 @@ $(function() {
 				'<a href="javascript:void(0);" class="service-trash"><i class="fe fe-minus-circle me-1"></i>Service Charge</a> <span>$ 4</span' +
 			'</div>' +
 		'</div>';
-		
+
         $(".links-info-one").append(experiencecontent);
         return false;
     });
@@ -774,13 +774,13 @@ $(function() {
 				'<a href="javascript:void(0);" class="service-trash-one"><i class="fe fe-minus-circle me-1"></i>Offer new</a> <span>$ 4 %</span' +
 			'</div>' +
 		'</div>';
-		
+
         $(".links-info-discount").append(experiencecontent);
         return false;
     });
 
     // Invoices Table Add More
-	
+
     $(".add-table-items").on('click','.remove-btn', function () {
 		$(this).closest('.add-row').remove();
 		return false;
@@ -812,7 +812,7 @@ $(function() {
 				'<a href="javascript:void(0);" class="remove-btn"><i class="fe fe-trash-2"></i></a>' +
 			'</td>' +
 		'</tr>';
-		
+
         $(".add-table-items").append(experiencecontent);
         return false;
     });
@@ -835,7 +835,7 @@ $(function() {
 		'</div>' +
 		'</div>' +
 		'</div>';
-		
+
         $(".add-headers").append(experiencecontent);
         return false;
     });
@@ -848,8 +848,8 @@ $(function() {
 	if($('.datatable').length > 0) {
 		$('.datatable').DataTable({
 			"bFilter": false,
-			"sDom": 'fBtlpi',  
-			'pagingType': 'numbers', 
+			"sDom": 'fBtlpi',
+			'pagingType': 'numbers',
 			"ordering": true,
 			"language": {
 				search: ' ',
@@ -860,10 +860,10 @@ $(function() {
 			initComplete: (settings, json)=>{
 				$('.dataTables_filter').appendTo('#tableSearch');
 				$('.dataTables_filter').appendTo('.search-input');
-			},	
+			},
 		});
 	}
-	
+
 
 
 	// toggle-password
@@ -887,7 +887,7 @@ $(function() {
 			} else {
 				input.attr("type", "password");
 			}
-		}); 
+		});
 	}
 	if($('.toggle-passworda').length > 0) {
 		$(document).on('click', '.toggle-passworda', function() {
@@ -917,22 +917,22 @@ $(function() {
 		readURL(this);
 	});
 
-	
+
 	//Custom Country Code Selector
-	
+
 	if($('#phone').length > 0) {
 		var input = document.querySelector("#phone");
 			window.intlTelInput(input, {
 			  utilsScript: "assets/plugins/intltelinput/js/utils.js",
-		}); 
+		});
 	}
 	if($('#phone1').length > 0) {
 		var input = document.querySelector("#phone1");
 			window.intlTelInput(input, {
 			  utilsScript: "assets/plugins/intltelinput/js/utils.js",
-		}); 
+		});
 	}
-	
+
 	$('.theme-image').on('click', function(){
 		$('.theme-image').removeClass('active');
 		$(this).addClass('active');
@@ -961,12 +961,12 @@ $(function() {
 			complete: function() {
 			$this.text(this.countNum);
 			}
-		
-		});  
-		
+
+		});
+
 	});
-	
-	
+
+
 	// Gallery slider
 	if($('.owl-carousel.gallery-slider').length > 0) {
 		$('.owl-carousel.gallery-slider').owlCarousel({
@@ -981,7 +981,7 @@ $(function() {
 				0:{
 					items:1
 				},
-				
+
 				550:{
 					items:2
 				},
@@ -994,7 +994,7 @@ $(function() {
 			}
 		})
 	}
-	
+
 	// Loader
 	setTimeout(function () {
 		$('#loader');
@@ -1013,14 +1013,14 @@ $(function() {
 	}
 
 	// Add Timepicker Hours
-	
+
     $(".social-info").on('click','.trash', function () {
 		$(this).closest('.social-cont').remove();
 		return false;
     });
 
     $(".social-add").on('click', function () {
-		
+
 		var socialcontent = '<div class="row align-items-center social-cont">' +
 		'<div class="col-lg-5 col-sm-12">' +
 			'<div class="form-group">' +
@@ -1053,7 +1053,7 @@ $(function() {
 			'</div>' +
 		'</div>' +
 	'</div>';
-		
+
 	$(this).parent().find(".social-info").append(socialcontent);
 	$('.select').select2({
 		minimumResultsForSearch: -1,
@@ -1061,19 +1061,19 @@ $(function() {
 	});
 	return false;
 	});
-	
+
 	$('.bank-box').on('click', function(){
 		$('.bank-box').removeClass('active');
 		$(this).addClass('active');
 	});
-	
+
 	// Social Authentication active
-	
+
 	$('.loc-set').on('click', function(){
 		$('.loc-set').removeClass('soc-active');
 		$(this).addClass('soc-active');
 	});
-	
+
 
   // Chat
 
@@ -1081,7 +1081,7 @@ $(function() {
 	(function() {
 		if ($(window).width() > 991)
 			chatAppTarget.removeClass('chat-slide');
-		
+
 		$(document).on("click",".chat-window .chat-users-list a.media",function () {
 			if ($(window).width() <= 991) {
 				chatAppTarget.addClass('chat-slide');
@@ -1091,19 +1091,19 @@ $(function() {
 		$(document).on("click","#back_user_list",function () {
 			if ($(window).width() <= 991) {
 				chatAppTarget.removeClass('chat-slide');
-			}	
+			}
 			return false;
 		});
 	})();
 
-	
+
 	// Remove Gallery
 	$(document).on("click",".remove-gallery",function () {
 		$(this).parent().parent().hide();
 	});
-	
+
 	// Chat sidebar overlay
-	
+
 	if ($(window).width() <= 1199) {
 		if($('#task_chat').length > 0) {
 			$(document).on('click', '#task_chat', function() {
@@ -1122,7 +1122,7 @@ $(function() {
 			});
 		}
 	}
-	
+
 	// Feather Icon
 	if( $('.feather-icon').length > 0 ){
 		feather.replace();

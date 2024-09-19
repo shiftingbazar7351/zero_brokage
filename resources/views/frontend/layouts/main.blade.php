@@ -22,15 +22,16 @@
     <link rel="stylesheet" href="{{ asset('assets/css/owl.carousel.min.css') }}">
 
     <link rel="stylesheet" href="{{ asset('assets/plugins/aos/aos.css') }} ">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 
     <link rel="stylesheet" href="{{ asset('assets/css/style.css') }} ">
     <link rel="stylesheet" href="{{ asset('assets/css/slider.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/css/intlTelInput.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     @yield('styles')
 </head>
 
 <body class="body-one">
-    <div class="main-wrapper">
+    <div class="main-wrapper" style="background-color: white">
         <style>
             .uppercase {
                 text-transform: uppercase;

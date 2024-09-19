@@ -13,7 +13,6 @@ class PermissionController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
      */
     public function index()
     {
@@ -23,7 +22,6 @@ class PermissionController extends Controller
     /**
      * Show the form for creating a new resource.
      *
-     * @return \Illuminate\Http\Response
      */
     public function create(Request $request)
     {
@@ -36,7 +34,6 @@ class PermissionController extends Controller
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
     {
@@ -46,7 +43,8 @@ class PermissionController extends Controller
         try {
             $modifiedTitle = strtolower(str_replace(' ', '-', $request->title));
             Permission::create(['title' => $request->title, 'name' => $modifiedTitle]);
-            return back()->with('success', 'Permission Added Successfully');
+            return back()->with(['message' => 'Permission Added Successfully','alert-type'=>'success']);
+
         } catch (Exception $e) {
             return back()->with('error', $e->getMessage());
         }
@@ -56,7 +54,6 @@ class PermissionController extends Controller
      * Display the specified resource.
      *
      * @param  int  $id
-     * @return \Illuminate\Http\Response
      */
     public function show($id)
     {
@@ -67,7 +64,6 @@ class PermissionController extends Controller
      * Show the form for editing the specified resource.
      *
      * @param  int  $id
-     * @return \Illuminate\Http\Response
      */
     public function edit($id)
     {
@@ -81,7 +77,6 @@ class PermissionController extends Controller
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
-     * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
     {
@@ -91,7 +86,8 @@ class PermissionController extends Controller
         try {
             $modifiedTitle = strtolower(str_replace(' ', '-', $request->title));
             $role = Permission::findOrFail($id)->update(['title' => $request->title, 'name' => $modifiedTitle]);
-            return back()->with('success', 'Permission updated successfully.');
+            return back()->with(['message' => 'Permission updated successfully.','alert-type'=>'success']);
+
         } catch (Exception $e) {
             return back()->with('error', 'SomeThing Went Wrong');
         }
@@ -101,7 +97,6 @@ class PermissionController extends Controller
      * Remove the specified resource from storage.
      *
      * @param  int  $id
-     * @return \Illuminate\Http\Response
      */
     public function destroy($id)
     {

@@ -27,7 +27,6 @@ class UserController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
      */
     public function index()
     {
@@ -39,7 +38,6 @@ class UserController extends Controller
     /**
      * Show the form for creating a new resource.
      *
-     * @return \Illuminate\Http\Response
      */
     public function create()
     {
@@ -51,7 +49,6 @@ class UserController extends Controller
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
      */
     // public function store(Request $request)
     // {
@@ -138,7 +135,8 @@ class UserController extends Controller
             $subject = 'ZERO BROKAGE LOGIN CREDENTIAL';
 
 
-            session()->flash('success', 'User Added Successfully ');
+            session()->flash('message', 'User Added Successfully ');
+            session()->flash('alert-type', 'Success ');
 
 
             Mail::send('emails.user-credential', ['email' => $validated['email'], 'password' => $passwordString], function ($message) use ($toUser, $subject) {
@@ -168,40 +166,31 @@ class UserController extends Controller
      * Display the specified resource.
      *
      * @param  int  $id
-     * @return \Illuminate\Http\Response
      */
     public function show($id)
     {
-        $data = User::with('userProfile', 'roles')->findOrFail($id);
+        // $data = User::with('userProfile', 'roles')->findOrFail($id);
 
-        $profileImage = getSingleMedia($data, 'profile_image');
+        // $profileImage = getSingleMedia($data, 'profile_image');
 
-        $user = User::where('id', Auth::user()->id)->first();
+        // $user = User::where('id', Auth::user()->id)->first();
 
-        return view('users.profile', compact('data', 'profileImage', 'user'));
+        // return view('users.profile', compact('data', 'profileImage', 'user'));
     }
 
     /**
      * Show the form for editing the specified resource.
      *
      * @param  int  $id
-     * @return \Illuminate\Http\Response
      */
     public function edit($id)
     {
-        $roles = null;
-        $data = User::with('roles')->findOrFail($id);
+        $user = User::find($id);
+        if (!$user) {
+            return response()->json(['error' => 'User not found'], 404);
+        }
 
-        $data['user_type'] = $data->roles->pluck('id')[0] ?? null;
-        if ($id != auth()->user()->id) {
-            $roles = Role::where('status', 1)->where('name', '!=', 'super_admin')->get()->pluck('title', 'id');
-        }
-        if ($data && $data->profile_picture) {
-            $profileImage = config('app.url') . $data->profile_picture;
-        } else {
-            $profileImage = getSingleMedia($data, 'profile_image');
-        }
-        return view('users.form', compact('data', 'id', 'roles', 'profileImage'));
+        return response()->json($user);
     }
 
     /**
@@ -209,7 +198,6 @@ class UserController extends Controller
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
-     * @return \Illuminate\Http\Response
      */
     public function update(UserRequest $request, $id)
     {
@@ -248,6 +236,16 @@ class UserController extends Controller
             return redirect()->back()->with('success', 'User Deleted Successfully');
         }
         return redirect()->back()->with('error', 'Something went wrong');
+    }
+    public function userStatus(Request $request)
+    {
+        $item = User::find($request->id);
+        if ($item) {
+            $item->status = $request->status;
+            $item->save();
+            return response()->json(['success' => true, 'message' => 'Status updated successfully.']);
+        }
+        return response()->json(['success' => false, 'message' => 'Item not found.']);
     }
 
 

@@ -13256,3 +13256,7 @@ fieldset#first-field {
 .form-check-input:disabled ~ .form-check-label {
     opacity: 0.5;
 }
+.cke_notification_warning
+{
+    display:none;
+}

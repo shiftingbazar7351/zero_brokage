@@ -70,52 +70,52 @@
             var newValue = this.value.replace(new RegExp(/[^\d]/, 'ig'), "");
             this.value = newValue;
         }
-        var userName = document.querySelector('#phoneNumVender','#number');
+        var userName = document.querySelector('#phoneNumVender', '#number');
         userName.addEventListener('input', restrictNumber);
     </script>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 
 
-<script>
-   @if (Session::has('message'))
-       var type = "{{ Session::get('alert-type', 'info') }}"
-       switch (type) {
-           case 'info':
+    <script>
+        @if (Session::has('message'))
+            var type = "{{ Session::get('alert-type', 'info') }}"
+            switch (type) {
+                case 'info':
 
-               toastr.options.timeOut = 10000;
-               toastr.info("{{ Session::get('message') }}");
-               var audio = new Audio('audio.mp3');
-               audio.play();
-               break;
-           case 'success':
+                    toastr.options.timeOut = 1500;
+                    toastr.info("{{ Session::get('message') }}");
+                    var audio = new Audio('audio.mp3');
+                    audio.play();
+                    break;
+                case 'success':
 
-               toastr.options.timeOut = 10000;
-               toastr.success("{{ Session::get('message') }}");
-               var audio = new Audio('audio.mp3');
-               audio.play();
+                    toastr.options.timeOut = 1500;
+                    toastr.success("{{ Session::get('message') }}");
+                    var audio = new Audio('audio.mp3');
+                    audio.play();
 
-               break;
-           case 'warning':
+                    break;
+                case 'warning':
 
-               toastr.options.timeOut = 10000;
-               toastr.warning("{{ Session::get('message') }}");
-               var audio = new Audio('audio.mp3');
-               audio.play();
+                    toastr.options.timeOut = 1500;
+                    toastr.warning("{{ Session::get('message') }}");
+                    var audio = new Audio('audio.mp3');
+                    audio.play();
 
-               break;
-           case 'error':
+                    break;
+                case 'error':
 
-               toastr.options.timeOut = 10000;
-               toastr.error("{{ Session::get('message') }}");
-               var audio = new Audio('audio.mp3');
-               audio.play();
+                    toastr.options.timeOut = 1500;
+                    toastr.error("{{ Session::get('message') }}");
+                    var audio = new Audio('audio.mp3');
+                    audio.play();
 
-               break;
-       }
-   @endif
-</script>
+                    break;
+            }
+        @endif
+    </script>
 
     @include('backend.layouts.scripts')
     <script src="{{ asset('plugins/parsleyjs/dist/parsley.js') }}"></script>

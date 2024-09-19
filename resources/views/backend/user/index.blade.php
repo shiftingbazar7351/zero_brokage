@@ -4,7 +4,13 @@
         <div class="content">
             <div class="content-page-header content-page-headersplit mb-0">
                 <h5>Users</h5>
-                <div class="list-btn">
+                <div class="list-btn d-flex gap-3">
+                    <div class="page-headers">
+                        <div class="search-bar">
+                            <span><i class="fe fe-search"></i></span>
+                            <input type="text" id="search" placeholder="Search" class="form-control">
+                        </div>
+                    </div>
                     <ul>
                         <li>
                             <button class="btn btn-primary" type="button" data-bs-toggle="modal"
@@ -17,64 +23,11 @@
             </div>
             <div class="row text-center">
                 <div class="col-12">
-                    <div class="table-resposnive table-div">
-                        <table class="table table-striped table-bordered">
-                            <thead>
-                                <tr>
-                                    <th>#</th>
-                                    <th>Name</th>
-                                    <th>Email</th>
-                                    <th>Role</th>
-                                    <th>Status</th>
-                                    <th>Action</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @forelse ($users as $user)
-                                    @if ($user->user_type !== 'super_admin')
-                                        <tr>
-                                            <td>{{ $user->id }}</td>
-                                            <td>{{ $user->name ?? '' }}</td>
-                                            <td>{{ $user->email ?? '' }}</td>
-                                            <td>{{ $user->user_type ?? '' }}</td>
-                                            <td>
-                                                <div class="active-switch">
-                                                    <label class="switch">
-                                                        <input type="checkbox" class="status-toggle"
-                                                            data-id="{{ $user->id }}"
-                                                            onclick="return confirm('Are you sure want to change status?')"
-                                                            {{ $user->status ? 'checked' : '' }}>
-                                                        <span class="sliders round"></span>
-                                                    </label>
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <div class="table-actions d-flex justify-content-center">
-                                                    <button class="btn delete-table me-2"
-                                                        onclick="editUser({{ $user->id }})" type="button"
-                                                        data-bs-toggle="modal" data-bs-target="#edit-user">
-                                                        <i class="fe fe-edit"></i>
-                                                    </button>
-                                                    <form action="{{ route('user.destroy', $user->id) }}" method="POST"
-                                                        style="display:inline;">
-                                                        @csrf
-                                                        @method('DELETE')
-                                                        <button class="btn delete-table" type="submit"
-                                                            onclick="return confirm('Are you sure want to delete this?')">
-                                                            <i class="fe fe-trash-2"></i>
-                                                        </button>
-                                                    </form>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                    @endif
-                                @empty
-                                    <tr>
-                                        <td colspan="6" class="text-center">No data found</td>
-                                    </tr>
-                                @endforelse
-                            </tbody>
-                        </table>
+                    <div class="table-responsive table-div">
+                        {{-- Users Table --}}
+                        <div id="usersTable">
+                            @include('backend.user.partials.users_list') {{-- Load the users list initially --}}
+                        </div>
                     </div>
                 </div>
             </div>
@@ -211,9 +164,11 @@
 @section('scripts')
     <script>
         var statusRoute = `{{ route('user.status') }}`;
+        var searchRoute = `{{ route('user.index') }}`;
     </script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="{{ asset('admin/assets/js/status-update.js') }}"></script>
+    <script src="{{ asset('admin/assets/js/search.js') }}"></script>
     <script>
         $(document).ready(function() {
             // Handle Create User
@@ -267,31 +222,34 @@
 
     <!-- Place the script at the end of the body -->
     <script>
-      function editUser(id) {
-    $.ajax({
-        url: '/user/' + id + '/edit', // Assuming this route returns user data
-        method: 'GET',
-        success: function(user) {
-            // Populate the form fields with the user data
-            $('#editSubCategoryId').val(user.id); // Set user ID
-            $('#editSubCategoryForm input[name="name"]').val(user.name); // Set user name
-            $('#editSubCategoryForm input[name="email"]').val(user.email); // Set email
-            $('#editSubCategoryForm input[name="phone_number"]').val(user.phone_number); // Set phone number
+        function editUser(id) {
+            $.ajax({
+                url: '/user/' + id + '/edit', // Assuming this route returns user data
+                method: 'GET',
+                success: function(user) {
+                    // Populate the form fields with the user data
+                    $('#editSubCategoryId').val(user.id); // Set user ID
+                    $('#editSubCategoryForm input[name="name"]').val(user.name); // Set user name
+                    $('#editSubCategoryForm input[name="email"]').val(user.email); // Set email
+                    $('#editSubCategoryForm input[name="phone_number"]').val(user
+                    .phone_number); // Set phone number
 
-            // Populate Role (select field)
-            $('#editSubCategoryForm select[name="user_type"]').val(user.user_type); // Assuming user.user_type holds the role ID
+                    // Populate Role (select field)
+                    $('#editSubCategoryForm select[name="user_type"]').val(user
+                    .user_type); // Assuming user.user_type holds the role ID
 
-            // Populate Status (select field)
-            $('#editSubCategoryForm select[name="status"]').val(user.status); // Assuming user.status holds the status (1 for Active, 0 for Inactive)
+                    // Populate Status (select field)
+                    $('#editSubCategoryForm select[name="status"]').val(user
+                    .status); // Assuming user.status holds the status (1 for Active, 0 for Inactive)
 
-            // Open the modal
-            $('#edit-user').modal('show');
-        },
-        error: function(response) {
-            alert('Failed to fetch user data.');
+                    // Open the modal
+                    $('#edit-user').modal('show');
+                },
+                error: function(response) {
+                    alert('Failed to fetch user data.');
+                }
+            });
         }
-    });
-}
-
     </script>
+
 @endsection

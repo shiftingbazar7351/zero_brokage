@@ -1,6 +1,5 @@
 @extends('backend.layouts.main')
 @section('content')
-
     <div class="page-wrapper page-settings">
         <div class="content">
             <div class="content-page-header content-page-headersplit mb-0">

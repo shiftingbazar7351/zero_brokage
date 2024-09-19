@@ -5,31 +5,31 @@
         <div class="content">
             <div class="content-page-header content-page-headersplit mb-0">
                 <h5>Meta Data</h5>
-                <div class="list-btn  d-flex gap-3">
+                <div class="list-btn d-flex gap-3">
                     <div class="page-headers">
                         <div class="search-bar">
                             <span><i class="fe fe-search"></i></span>
-                            <input type="text" placeholder="Search" class="form-control">
+                            <input type="text" id="search" placeholder="Search" class="form-control">
                         </div>
                     </div>
                     @can('meta-create')
-                    <ul>
+                        <ul>
 
-                        <li>
-                            {{-- @if ($metas->isEmpty()) --}}
+                            <li>
+                                {{-- @if ($metas->isEmpty()) --}}
                                 <button class="btn btn-primary" type="button" data-bs-toggle="modal"
                                     data-bs-target="#add-meta">
                                     <i class="fa fa-plus me-2"></i>Add Meta
                                 </button>
-                            {{-- @endif --}}
-                        </li>
-                    </ul>
+                                {{-- @endif --}}
+                            </li>
+                        </ul>
                     @endcan
                 </div>
             </div>
             <div class="row">
                 <div class="col-12">
-                    <div class="table-resposnive table-div">
+                    {{-- <div class="table-resposnive table-div">
                         <table class="table datatable">
                             <thead>
                                 <tr>
@@ -80,6 +80,12 @@
                                 @endif
                             </tbody>
                         </table>
+                    </div> --}}
+                    <div class="table-responsive table-div">
+                        {{-- Users Table --}}
+                        <div id="usersTable">
+                            @include('backend.meta.partials.meta-index') {{-- Load the users list initially --}}
+                        </div>
                     </div>
                 </div>
             </div>
@@ -120,8 +126,7 @@
 
                         <div class="mb-3">
                             <label class="form-label">Meta Description</label>
-                            <textarea type="text" class="form-control" name="description"
-                                placeholder="Enter Meta Description" >{{ old('description') }}</textarea>
+                            <textarea type="text" class="form-control" name="description" placeholder="Enter Meta Description">{{ old('description') }}</textarea>
                             <div id="description_error" class="text-danger"></div>
                         </div>
 
@@ -153,19 +158,22 @@
                         <input type="hidden" name="id" id="meta_id">
                         <div class="mb-3">
                             <label class="form-label">Meta Url</label>
-                            <input type="text" class="form-control" name="url" id="edit_url" placeholder="Enter Meta Url">
+                            <input type="text" class="form-control" name="url" id="edit_url"
+                                placeholder="Enter Meta Url">
                             <div id="editurl_error" class="text-danger"></div>
                         </div>
 
                         <div class="mb-3">
                             <label class="form-label">Meta Title</label>
-                            <input type="text" class="form-control" name="title" id="edit_title" placeholder="Enter Meta Title">
+                            <input type="text" class="form-control" name="title" id="edit_title"
+                                placeholder="Enter Meta Title">
                             <div id="edittitle_error" class="text-danger"></div>
                         </div>
 
                         <div class="mb-3">
                             <label class="form-label">Meta Keyword</label>
-                            <input type="text" class="form-control" name="keyword" id="edit_keyword" placeholder="Enter Meta Keyword">
+                            <input type="text" class="form-control" name="keyword" id="edit_keyword"
+                                placeholder="Enter Meta Keyword">
                             <div id="editkeyword_error" class="text-danger"></div>
                         </div>
 
@@ -184,10 +192,13 @@
             </div>
         </div>
     </div>
-
 @endsection
 
 @section('scripts')
+    <script>
+        var searchRoute = `{{ route('meta.index') }}`;
+    </script>
+    <script src="{{ asset('admin/assets/js/search.js') }}"></script>
     <script>
         $(document).ready(function() {
             $('#add-url-form').off('submit').on('submit', function(event) {

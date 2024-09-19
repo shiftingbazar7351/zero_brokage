@@ -141,6 +141,7 @@
     </div>
 
     <!-- Edit Category Modal -->
+    <!-- Edit User Modal -->
     <div class="modal fade" id="edit-user">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
@@ -153,11 +154,13 @@
                         @csrf
                         @method('PUT')
                         <input type="hidden" id="editSubCategoryId" name="id">
+
                         <div class="mb-3">
                             <label class="form-label">User Name</label>
                             <input type="text" class="form-control" name="name" placeholder="Enter Name">
                             <div id="name_error" class="text-danger"></div>
                         </div>
+
                         <div class="mb-3">
                             <label class="form-label">Email</label>
                             <input type="text" class="form-control" name="email" placeholder="Enter Email">
@@ -175,24 +178,26 @@
                             <label class="form-label">Role</label>
                             <select class="form-control" name="user_type" id="user_type">
                                 @foreach ($roles as $role)
-                                    <option value="{{ $role->id }}" {{ $role->name == 'user' ? 'selected' : '' }}>
+                                    <option value="{{ $role->id }}"
+                                        {{ $role->id == old('user_type', $user->user_type ?? '') ? 'selected' : '' }}>
                                         {{ $role->name }}
                                     </option>
                                 @endforeach
                             </select>
+
                             <div id="role_error" class="text-danger"></div>
                         </div>
-
 
                         <div class="mb-3">
                             <label class="form-label">Status</label>
                             <select class="form-control" name="status" id="status">
-                                <option value="1">Active</option>
-                                <option value="0">Inactive</option>
+                                <option value="1" {{ old('status', $user->status ?? '') == 1 ? 'selected' : '' }}>
+                                    Active</option>
+                                <option value="0" {{ old('status', $user->status ?? '') == 0 ? 'selected' : '' }}>
+                                    Inactive</option>
                             </select>
                             <div id="status_error" class="text-danger"></div>
                         </div>
-
                         <div class="text-end">
                             <button type="button" class="btn btn-secondary me-2" data-bs-dismiss="modal">Cancel</button>
                             <button type="submit" class="btn btn-primary">Save</button>
@@ -236,46 +241,6 @@
                     }
                 });
             });
-
-            // Handle Edit User
-            $('#editSubCategoryForm').on('submit', function(e) {
-                e.preventDefault();
-                let formData = new FormData(this);
-                let id = $('#editSubCategoryId').val();
-
-                $.ajax({
-                    url: '/user/' + id, // Assuming RESTful route for update
-                    method: 'POST',
-                    data: formData,
-                    contentType: false,
-                    processData: false,
-                    success: function(response) {
-                        if (response.success) {
-                            // alert('User updated successfully!');
-                            window.location
-                                .reload(); // Reload the page to reflect updated user data
-                        } else {
-                            alert('Failed to update user.');
-                        }
-                    },
-                    error: function(response) {
-                        displayErrors(response.responseJSON.errors); // Handle validation errors
-                    }
-                });
-            });
-
-            // Function to populate the edit form
-            window.edituser = function(id) {
-                $.get('/user/' + id, function(user) { // Assuming RESTful route for fetching the user
-                    $('#editSubCategoryId').val(user.id);
-                    $('#editSubCategoryForm input[name="name"]').val(user.name);
-                    $('#editSubCategoryForm input[name="email"]').val(user.email);
-                    $('#editSubCategoryForm input[name="phone_number"]').val(user.phone_number);
-                    $('#editSubCategoryForm select[name="user_type"]').val(user.user_type);
-                    $('#editSubCategoryForm select[name="status"]').val(user.status);
-                });
-            };
-
             // Display validation errors
             function displayErrors(errors) {
                 $('.text-danger').text(''); // Clear previous error messages
@@ -295,23 +260,32 @@
                     $('#status_error').text(errors.status[0]);
                 }
             }
+        });
+    </script>
 
-            // Function to populate the edit form when the modal is opened
-            function editUser(id) {
+    <!-- Your HTML content here -->
+
+    <!-- Place the script at the end of the body -->
+    <script>
+      function editUser(id) {
     $.ajax({
-        url: '/user/' + id + '/edit', // Make sure the route returns user data
+        url: '/user/' + id + '/edit', // Assuming this route returns user data
         method: 'GET',
         success: function(user) {
             // Populate the form fields with the user data
             $('#editSubCategoryId').val(user.id); // Set user ID
-            $('#editSubCategoryForm input[name="name"]').val(user.name); // Populate user name
-            $('#editSubCategoryForm input[name="email"]').val(user.email); // Populate email
-            $('#editSubCategoryForm input[name="phone_number"]').val(user.phone_number); // Populate phone number
-            $('#editSubCategoryForm select[name="user_type"]').val(user.user_type); // Populate role
-            $('#editSubCategoryForm select[name="status"]').val(user.status); // Populate status
+            $('#editSubCategoryForm input[name="name"]').val(user.name); // Set user name
+            $('#editSubCategoryForm input[name="email"]').val(user.email); // Set email
+            $('#editSubCategoryForm input[name="phone_number"]').val(user.phone_number); // Set phone number
+
+            // Populate Role (select field)
+            $('#editSubCategoryForm select[name="user_type"]').val(user.user_type); // Assuming user.user_type holds the role ID
+
+            // Populate Status (select field)
+            $('#editSubCategoryForm select[name="status"]').val(user.status); // Assuming user.status holds the status (1 for Active, 0 for Inactive)
 
             // Open the modal
-            $('#edit-user').modal('show'); // Correct ID for modal
+            $('#edit-user').modal('show');
         },
         error: function(response) {
             alert('Failed to fetch user data.');
@@ -319,6 +293,5 @@
     });
 }
 
-        });
     </script>
 @endsection

@@ -44,14 +44,19 @@ class EnquiryController extends Controller
         $enquiry = Enquiry::create($request->all());
         $enquiry->created_by = auth()->user()->id;
         $enquiry->save();
-        session()->flash('success', 'Submitted Successfully');
+        session()->flash('notification', [
+            'message' => 'Submitted Successfully',
+            'alert-type' => 'success'
+        ]);
+
+
         return response()->json(['redirect' => url()->previous()]);
     }
 
     public function show($id)
     {
         $enquirys = Enquiry::with('categoryName','subcategory')->findOrFail($id);
-        return view("backend.enquiry.show",compact('enquirys',));
+        return view("backend.enquiry.show",compact('enquirys'));
     }
 
 

@@ -154,7 +154,7 @@ class VendorController extends Controller
         // Save the vendor model with the updated image fields
         $vendor->save();
 
-        return redirect(route('vendors.index'))->with('success', 'Vendor Created Successfully!');
+        return redirect(route('vendors.index'))->with(['message' => 'Added Successfully', 'alert-type' => 'success']);
 
     }
 
@@ -269,7 +269,7 @@ class VendorController extends Controller
 
         $vendor->save(); // Save the changes
 
-        return redirect(route('vendors.index'))->with('success', 'Vendor Updated Successfully!');
+        return redirect(route('vendors.index'))->with(['message' => 'Updated Successfully', 'alert-type' => 'success']);
     }
 
 
@@ -304,7 +304,7 @@ class VendorController extends Controller
                 }
             }
 
-            return redirect(route('vendors.index'))->with('success', 'Vendor Deleted Successfully!');
+            return redirect(route('vendors.index'))->with(['message' => 'Deleted Successfully', 'alert-type' => 'success']);
 
         } catch (Exception $e) {
             return redirect()->back()->with('error', 'Something went wrong');
@@ -327,11 +327,11 @@ class VendorController extends Controller
     public function fetchSubcategory(Request $request)
     {
         $categoryIds = $request->category_ids;
-    
+
         if (!empty($categoryIds)) {
             // Fetch subcategories that belong to the selected categories
             $subcategories = SubCategory::whereIn('category_id', $categoryIds)->get();
-    
+
             return response()->json([
                 'status' => 1,
                 'data' => [
@@ -340,33 +340,33 @@ class VendorController extends Controller
                 ],
             ]);
         }
-    
+
         return response()->json([
             'status' => 0,
             'data' => [],
             'message' => 'No categories selected',
         ]);
     }
-    
+
     // Similarly for fetching menus and submenus
     public function fetchSubMenu(Request $request)
     {
         $menuIds = $request->menu_ids;
-    
+
         // Fetch menus based on the selected menu IDs
         $menus = Menu::whereIn('id', $menuIds)->get();
-    
+
         // Fetch submenus related to the selected menus
         $submenus = SubMenu::whereIn('menu_id', $menuIds)->get();
-    
+
         // Return response
         if ($submenus->isEmpty()) {
             return response()->json(['status' => 0, 'data' => ['menus' => $menus, 'submenus' => []]]);
         }
-    
+
         return response()->json(['status' => 1, 'data' => ['menus' => $menus, 'submenus' => $submenus]]);
     }
-    
+
 
         public function fetchMenu(Request $request)
     {
@@ -382,7 +382,7 @@ class VendorController extends Controller
         return response()->json(['status' => 1, 'data' => $menus]);
     }
 
-    
+
 
     public function getMenus(Request $request, $subcategoryId)
     {

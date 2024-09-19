@@ -29,7 +29,7 @@ class IndiaServiceController extends Controller
         $categories = Category::where('status', 1)->orderByDesc('created_at')->get();
         $subcategories = SubCategory::orderByDesc('created_at')->get();
         $submenus = SubMenu::orderByDesc('created_at')->get();
-        return view('backend.india-service-description.create',compact('categories','subcategories','submenus'));
+        return view('backend.india-service-description.create', compact('categories', 'subcategories', 'submenus'));
     }
 
     /**
@@ -56,7 +56,7 @@ class IndiaServiceController extends Controller
         $india = IndiaServiceDescription::create($request->all());
         $india->created_by = auth()->id();
 
-        return redirect(route('india-services.index'))->with('success', 'Added successfully');
+        return redirect(route('india-services.index'))->with(['message' => 'Added Successfully', 'alert-type' => 'success']);
     }
 
     /**
@@ -101,9 +101,8 @@ class IndiaServiceController extends Controller
             'menu_id.required' => 'Please select a menu.',
             'submenu_id.required' => 'Please select a submenu.',
         ]);
-
         IndiaServiceDescription::findOrFail($id)->update($request->all());
-        return redirect(route('india-services.index'))->with('success', 'Updated Successfully');
+        return redirect(route('india-services.index'))->with(['message' => 'Updated Successfully', 'alert-type' => 'success']);
     }
 
     /**
@@ -115,10 +114,9 @@ class IndiaServiceController extends Controller
     {
 
         $service = IndiaServiceDescription::find($id);
-
         if ($service) {
             $service->delete();
-            return redirect()->back()->with('success', 'Deleted Successfully');
+            return redirect()->back()->with(['message' => 'Deleted Successfully', 'alert-type' => 'success']);
         } else {
             return redirect()->back()->with('error', 'Service not found');
         }

@@ -26,7 +26,7 @@ class NewsletterController extends Controller
     public function store(Request $request)
     {
         Newsletter::create($request->all());
-        return redirect()->back()->with('success','Email saved successfully');
+        return redirect()->back()->with(['message' => 'Email Saved Successfully', 'alert-type' => 'success']);
     }
 
     /**
@@ -38,6 +38,6 @@ class NewsletterController extends Controller
     {
         $newsletter = Newsletter::findOrFail($id);
         $newsletter->delete();
-        return redirect()->back()->with('success','Newsletter Deleted Successfully');
+        return redirect()->back()->with(['message' => 'Deleted Successfully', 'alert-type' => 'success']);
     }
 }

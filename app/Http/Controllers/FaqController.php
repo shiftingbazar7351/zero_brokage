@@ -34,7 +34,7 @@ class FaqController extends Controller
         $faq = new Faq($request->all());
         $faq->created_by = auth()->id();
         $faq->save();
-        return redirect()->back()->with('success', 'Added Successfully');
+        return redirect()->back()->with(['message' => 'FAQ Added Successfully.','alert-type'=>'success']);
     }
 
 
@@ -56,7 +56,6 @@ class FaqController extends Controller
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
-     * @return \Illuminate\Http\RedirectResponse
      */
     public function update(Request $request, $id)
     {
@@ -73,7 +72,7 @@ class FaqController extends Controller
         $faq->update($request->only(['question', 'answer']));
 
         // Redirect back with a success message
-        return redirect()->back()->with('success', 'Updated Successfully');
+        return redirect()->back()->with(['message' => 'Updated Successfully','alert-type'=>'success']);
     }
 
 
@@ -84,7 +83,8 @@ class FaqController extends Controller
     {
         $faq = Faq::findOrFail($id);
         $faq->delete();
-        return redirect()->back()->with('success', 'Faq Deleted successfully.');
+        return redirect()->back()->with(['message' => 'Faq Deleted successfully.','alert-type'=>'success']);
+
     }
 
     public function faqStatus(Request $request)

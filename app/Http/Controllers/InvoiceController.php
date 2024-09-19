@@ -83,8 +83,8 @@ class InvoiceController extends Controller
 
         // Store the invoice in the session
         Session::put('new_invoice', $invoice);
-        Session::flash('success', 'Added Successfully');
-        return redirect()->back();
+        // Session::flash('success', 'Added Successfully');
+        return redirect()->back()->with(['message' => 'Added Successfully', 'alert-type' => 'success']);
     }
 
     /**
@@ -117,7 +117,7 @@ class InvoiceController extends Controller
 
         $vendorId = $request->input('vendor_id', $id);
         $vendor = Vendor::findOrFail($vendorId);
-        return redirect(route('invoice.edit', $vendor->id ?? ''));
+        return redirect(route('invoice.edit', $vendor->id ?? ''))->with(['message' => 'Updated Successfully', 'alert-type' => 'success']);;
         // return redirect(route('invoice.create'))->with('success', 'Invoice added successfully');
     }
 
@@ -131,9 +131,9 @@ class InvoiceController extends Controller
         $invoices = Invoice::findOrFail($id);
         if ($invoices) {
             $invoices->delete();
-            return redirect()->back()->with('success', 'Deleted Successfully');
+            return redirect()->back()->with(['message' => 'Deleted Successfully', 'alert-type' => 'success']);;
         }
-        return redirect()->back()->with('error', 'Something went wrong');
+        return redirect()->back()->with(['message' => 'Something went wrong', 'alert-type' => 'error']);;
     }
 
     public function generatePDF()

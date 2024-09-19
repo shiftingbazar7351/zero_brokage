@@ -91,7 +91,8 @@ class CategoryController extends Controller
 
         $category->delete();
 
-        return redirect()->back()->with('success', 'Category deleted successfully.');
+        return back()->with(['message' => 'Category deleted successfully.','alert-type'=>'success']);
+
     }
 
     public function categoryStatus(Request $request)

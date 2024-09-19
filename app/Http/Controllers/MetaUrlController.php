@@ -56,13 +56,13 @@ class MetaUrlController extends Controller
         $meta->description = $request->description;
         $meta->update();
 
-        return redirect()->back()->with('success', 'Updated Successfully');
+        return redirect()->back()->with(['message' => 'Updated Successfully', 'alert-type' => 'success']);
     }
 
     public function destroy(MetaUrl $meta)
     {
         $meta->delete();
 
-        return redirect()->back()->with('success', ' Deleted successfully.');
+        return redirect()->back()->with(['message' => 'Deleted Successfully', 'alert-type' => 'success']);
     }
 }

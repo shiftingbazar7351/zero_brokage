@@ -32,6 +32,8 @@ class MetaUrlController extends Controller
         $meta->description = $request->description;
         $meta->save();
 
+        Session()->flash('message','Added Successfully');
+        Session()->flash('alert-type','success');
     return response()->json(['success' => true, 'message' => 'Meta created successfully']);
     }
 

@@ -297,30 +297,31 @@
             }
 
             // Function to populate the edit form when the modal is opened
-function editUser(id) {
-    $.ajax({
-        url: '/user/' + id + '/edit', // Assuming RESTful route for fetching user data
-        method: 'GET',
-        success: function(user) {
-            // Populate the form fields with the user data
-            $('#editSubCategoryId').val(user.id); // Set user ID
-            $('#editSubCategoryForm input[name="name"]').val(user.name); // Populate user name
-            $('#editSubCategoryForm input[name="email"]').val(user.email); // Populate email
-            $('#editSubCategoryForm input[name="phone_number"]').val(user.phone_number); // Populate phone number
-            $('#editSubCategoryForm select[name="user_type"]').val(user.user_type); // Populate role
-            $('#editSubCategoryForm select[name="status"]').val(user.status); // Populate status
+            function editUser(id) {
+                $.ajax({
+                    url: '/user/' + id + '/edit', // Assuming RESTful route for fetching user data
+                    method: 'GET',
+                    success: function(user) {
+                        // Populate the form fields with the user data
+                        $('#editSubCategoryId').val(user.id); // Set user ID
+                        $('#editSubCategoryForm input[name="name"]').val(user
+                        .name); // Populate user name
+                        $('#editSubCategoryForm input[name="email"]').val(user.email); // Populate email
+                        $('#editSubCategoryForm input[name="phone_number"]').val(user
+                        .phone_number); // Populate phone number
+                        $('#editSubCategoryForm select[name="user_type"]').val(user
+                        .user_type); // Populate role
+                        $('#editSubCategoryForm select[name="status"]').val(user
+                        .status); // Populate status
 
-            // Open the modal
-            $('#edit-category').modal('show');
-        },
-        error: function(response) {
-            alert('Failed to fetch user data.');
-        }
-    });
-}
-
+                        // Open the modal
+                        $('#edit-category').modal('show');
+                    },
+                    error: function(response) {
+                        alert('Failed to fetch user data.');
+                    }
+                });
+            }
         });
-
-
     </script>
 @endsection

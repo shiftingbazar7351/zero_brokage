@@ -18,7 +18,7 @@
             <div class="row text-center">
                 <div class="col-12">
                     <div class="table-resposnive table-div">
-                        <table class="table datatable table-striped table-bordered">
+                        <table class="table table-striped table-bordered">
                             <thead>
                                 <tr>
                                     <th>#</th>
@@ -55,8 +55,8 @@
                                                         data-bs-toggle="modal" data-bs-target="#edit-category">
                                                         <i class="fe fe-edit"></i>
                                                     </button>
-                                                    <form action="{{ route('subcategories.destroy', $user->id) }}"
-                                                        method="POST" style="display:inline;">
+                                                    <form action="{{ route('user.destroy', $user->id) }}" method="POST"
+                                                        style="display:inline;">
                                                         @csrf
                                                         @method('DELETE')
                                                         <button class="btn delete-table" type="submit"
@@ -112,7 +112,7 @@
                             <label class="form-label">Role</label>
                             <select class="form-control" name="user_type" id="user_type">
                                 @foreach ($roles as $role)
-                                    <option value="{{ $role->id }}" {{ $role->name == 'user' ? 'selected' : '' }}>
+                                    <option value="{{ $role->name }}" {{ $role->name == 'employee' ? 'selected' : '' }}>
                                         {{ $role->name }}
                                     </option>
                                 @endforeach
@@ -219,8 +219,10 @@
                     processData: false,
                     success: function(response) {
                         if (response.success) {
-                            alert('User added successfully!');
-                            location.reload(); // Reload the page to show updated data
+                            // alert('User added successfully!');
+                            // Use window.location.href for redirection to the provided URL
+                            window.location.href = response
+                                .redirectUrl; // Redirect to the URL provided in the response
                         } else {
                             alert('Failed to add user.');
                         }
@@ -245,8 +247,9 @@
                     processData: false,
                     success: function(response) {
                         if (response.success) {
-                            alert('User updated successfully!');
-                            location.reload(); // Reload the page to show updated data
+                            // alert('User updated successfully!');
+                            window.location
+                                .reload(); // Reload the page to reflect updated user data
                         } else {
                             alert('Failed to update user.');
                         }

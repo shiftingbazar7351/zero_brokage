@@ -7,7 +7,6 @@ use Spatie\Permission\Models\Role;
 
 class RoleTableSeeder extends Seeder
 {
-
     /**
      * Auto generated seed file
      *
@@ -26,7 +25,7 @@ class RoleTableSeeder extends Seeder
                     'role-list',
                     'permission',
                     'permission-add',
-                    'permission-list' .
+                    'permission-list',
                     'user-list',
                     'user-create',
                     'user-edit',

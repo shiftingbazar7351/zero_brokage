@@ -9,9 +9,9 @@
                     <ul>
                         <li>
                             <button class="btn btn-primary" type="button" data-bs-toggle="modal"
-                                data-bs-target="#add_category"><i class="fa fa-plus me-2"></i>Add Permissions</button>
+                                data-bs-target="#addPermissions"><i class="fa fa-plus me-2"></i>Add Permissions</button>
                                 <button class="btn btn-primary" type="button" data-bs-toggle="modal"
-                                data-bs-target="#add_category"><i class="fa fa-plus me-2"></i>Add roles</button>
+                                data-bs-target="#addRoles"><i class="fa fa-plus me-2"></i>Add roles</button>
                         </li>
                     </ul>
                 </div>
@@ -64,7 +64,7 @@
     </div>
 
     <!-- Add Category Modal -->
-    <div class="modal fade" id="add_category" tabindex="-1" aria-labelledby="addCategoryLabel" aria-hidden="true">
+    <div class="modal fade" id="addRoles" tabindex="-1" aria-labelledby="addCategoryLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
@@ -75,7 +75,7 @@
                     <form id="addCategoryForm" action="{{ route('role.store') }}" method="POST" enctype="multipart/form-data">
                         @csrf
                         <div class="mb-3">
-                            <label class="form-label">Role Name</label>
+                            <label class="form-label">Role Title</label>
                             <input type="text" class="form-control" id="addName" name="title"
                                 placeholder="Enter Category title">
                             <span class="text-danger error-text title_error"></span>
@@ -93,6 +93,33 @@
                             <span class="text-danger error-text status_error"></span>
                         </div>
 
+                        <div class="text-end">
+                            <button type="button" class="btn btn-secondary me-2" data-bs-dismiss="modal">Cancel</button>
+                            <button type="submit" class="btn btn-primary">Save</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+     <!-- Add Category Modal -->
+     <div class="modal fade" id="addPermissions" tabindex="-1" aria-labelledby="addCategoryLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="addCategoryLabel">Add Roles</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body pt-0">
+                    <form id="addCategoryForm" action="{{ route('permission.store') }}" method="POST" enctype="multipart/form-data">
+                        @csrf
+                        <div class="mb-3">
+                            <label class="form-label">Permission Title</label>
+                            <input type="text" class="form-control" id="addName" name="title"
+                                placeholder="Enter Category title">
+                            <span class="text-danger error-text title_error"></span>
+                        </div>
                         <div class="text-end">
                             <button type="button" class="btn btn-secondary me-2" data-bs-dismiss="modal">Cancel</button>
                             <button type="submit" class="btn btn-primary">Save</button>

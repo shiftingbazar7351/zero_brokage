@@ -185,19 +185,12 @@ class UserController extends Controller
      */
     public function edit($id)
     {
-        // $roles = null;
-        // $data = User::with('roles')->findOrFail($id);
+        $user = User::find($id);
+        if (!$user) {
+            return response()->json(['error' => 'User not found'], 404);
+        }
 
-        // $data['user_type'] = $data->roles->pluck('id')[0] ?? null;
-        // if ($id != auth()->user()->id) {
-        //     $roles = Role::where('status', 1)->where('name', '!=', 'super_admin')->get()->pluck('title', 'id');
-        // }
-        // if ($data && $data->profile_picture) {
-        //     $profileImage = config('app.url') . $data->profile_picture;
-        // } else {
-        //     $profileImage = getSingleMedia($data, 'profile_image');
-        // }
-        // return view('users.form', compact('data', 'id', 'roles', 'profileImage'));
+        return response()->json($user);
     }
 
     /**
@@ -243,6 +236,16 @@ class UserController extends Controller
             return redirect()->back()->with('success', 'User Deleted Successfully');
         }
         return redirect()->back()->with('error', 'Something went wrong');
+    }
+    public function userStatus(Request $request)
+    {
+        $item = User::find($request->id);
+        if ($item) {
+            $item->status = $request->status;
+            $item->save();
+            return response()->json(['success' => true, 'message' => 'Status updated successfully.']);
+        }
+        return response()->json(['success' => false, 'message' => 'Item not found.']);
     }
 
 

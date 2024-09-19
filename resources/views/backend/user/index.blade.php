@@ -145,7 +145,7 @@
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title">Edit Category</h5>
+                    <h5 class="modal-title">Edit User</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body pt-0">
@@ -205,6 +205,11 @@
 @endsection
 @section('scripts')
     <script>
+        var statusRoute = `{{ route('user.status') }}`;
+    </script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="{{ asset('admin/assets/js/status-update.js') }}"></script>
+    <script>
         $(document).ready(function() {
             // Handle Create User
             $('#addSubCategoryForm').on('submit', function(e) {
@@ -219,7 +224,6 @@
                     processData: false,
                     success: function(response) {
                         if (response.success) {
-                            // alert('User added successfully!');
                             // Use window.location.href for redirection to the provided URL
                             window.location.href = response
                                 .redirectUrl; // Redirect to the URL provided in the response
@@ -291,6 +295,32 @@
                     $('#status_error').text(errors.status[0]);
                 }
             }
+
+            // Function to populate the edit form when the modal is opened
+function editUser(id) {
+    $.ajax({
+        url: '/user/' + id + '/edit', // Assuming RESTful route for fetching user data
+        method: 'GET',
+        success: function(user) {
+            // Populate the form fields with the user data
+            $('#editSubCategoryId').val(user.id); // Set user ID
+            $('#editSubCategoryForm input[name="name"]').val(user.name); // Populate user name
+            $('#editSubCategoryForm input[name="email"]').val(user.email); // Populate email
+            $('#editSubCategoryForm input[name="phone_number"]').val(user.phone_number); // Populate phone number
+            $('#editSubCategoryForm select[name="user_type"]').val(user.user_type); // Populate role
+            $('#editSubCategoryForm select[name="status"]').val(user.status); // Populate status
+
+            // Open the modal
+            $('#edit-category').modal('show');
+        },
+        error: function(response) {
+            alert('Failed to fetch user data.');
+        }
+    });
+}
+
         });
+
+
     </script>
 @endsection

@@ -14,7 +14,7 @@
                 <table width="492" border="0" cellpadding="0" cellspacing="0" style="background-color: #FFFFFF; border: 1px solid #D9D9D9; border-radius: 3px; padding: 30px; box-sizing: border-box;">
                     <tr>
                         <td align="center" style="padding-bottom: 49.3px;">
-                            <img src="https://zerobrokage.com/assets/img/logofinal.webp" alt="Logo" style="max-width: 190px; display: block;" />
+                            <img src="https://zerobrokage.com/assets/img/logofinal.webp" alt="Logo" style="max-width: 190px;background-color:white" />
                         </td>
                     </tr>
                     <tr>
@@ -22,13 +22,13 @@
                             Lets join the tribe of {{ $projectName }}
                         </td>
                     </tr>
-                    
+
                     <tr>
                         <td align="center" style="padding: 20px; background-color: #EFF6FC; border-radius: 3px;">
                             <h2 style="margin: 31px 0 40px 0; font-size: 18px; line-height: 34px; color: #323130;">Welcome to {{ $projectName }}<br />you can now get onboard with your credentials.</h2>
                             <p style="font-size: 16px; color: #323130;"><strong>Url:</strong> https://zerobrokage.com/login</p>
-                            <p style="font-size: 16px; color: #323130;"><strong>Email:</strong> {{ $email }}</p>
-                            <p style="font-size: 16px; color: #323130;"><strong>Password:</strong> {{ $password }}</p>
+                            <p style="font-size: 16px; color: #323130;"><strong>Email:</strong>{{ $email }}</p>
+                            <p style="font-size: 16px; color: #323130;"><strong>Password:</strong>{{ $password }}</p>
                         </td>
                     </tr>
                     <tr>

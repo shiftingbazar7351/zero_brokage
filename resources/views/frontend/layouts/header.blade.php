@@ -10,7 +10,7 @@
                     </span>
                 </a>
                 <a href="{{ route('home') }}" class="navbar-brand logo">
-                    <img src="{{ asset('assets/img/logofinal.webp') }}" class="img-fluid" alt="Logo">
+                    <img src="{{ asset('assets/img/logopng.jpeg') }}" class="img-fluid" alt="Logo">
                 </a>
                 <a href="{{ route('home') }}" class="navbar-brand logo-small">
                     <img src="{{ asset('assets/img/logofinal.webp') }}" class="img-fluid" alt="Logo" />

@@ -18,7 +18,8 @@
                 <div class="group-img" style="position: relative; display:block;">
                     <input type="text" placeholder="Search.." id="myInput" name="location"
                         onkeyup="filterFunction()" class="form-control" style="font-size: small; padding-right: 30px;">
-                    <i class="fa fa-map-marker" style="position: absolute; right: 15px; top: 50%; transform: translateY(-50%);"></i>
+                    {{-- <i class="fa fa-map-marker" style="position: absolute; right: 15px; top: 50%; transform: translateY(-50%);"></i> --}}
+                    <img src="{{ asset('assets/img/icons/location_google.svg') }}" alt="">
                 </div>
                 <div id="myDropdown" class="dropdown-content">
                     @foreach ($cities as $city)

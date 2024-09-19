@@ -12,7 +12,9 @@
                             <input type="text" placeholder="Search" class="form-control">
                         </div>
                     </div>
+                    @can('meta-create')
                     <ul>
+
                         <li>
                             {{-- @if ($metas->isEmpty()) --}}
                                 <button class="btn btn-primary" type="button" data-bs-toggle="modal"
@@ -22,6 +24,7 @@
                             {{-- @endif --}}
                         </li>
                     </ul>
+                    @endcan
                 </div>
             </div>
             <div class="row">
@@ -34,7 +37,9 @@
                                     <th>Url</th>
                                     <th>Title</th>
                                     <th>Description</th>
-                                    <th>Action</th>
+                                    @can(['meta-edit', 'meta-delete'])
+                                        <th>Action</th>
+                                    @endcan
                                 </tr>
                             </thead>
                             <tbody>
@@ -49,6 +54,7 @@
                                             <td>{{ $meta->url }}</td>
                                             <td>{{ $meta->title }}</td>
                                             <td>{{ $meta->description }}</td>
+                                            @can(['meta-edit', 'meta-delete'])
                                             <td>
                                                 <div class="table-actions d-flex justify-content-center">
                                                     <button class="btn delete-table me-2"
@@ -68,6 +74,7 @@
                                                     </form>
                                                 </div>
                                             </td>
+                                            @endcan
                                         </tr>
                                     @endforeach
                                 @endif

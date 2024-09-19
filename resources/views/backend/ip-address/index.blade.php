@@ -4,6 +4,7 @@
         <div class="content">
             <div class="content-page-header content-page-headersplit mb-0">
                 <h5>Ip Addresss</h5>
+                @can('ipaddress-create')
                 <div class="list-btn">
                     <ul>
                         <li>
@@ -14,6 +15,7 @@
                         </li>
                     </ul>
                 </div>
+                @endcan
             </div>
             <div class="row text-center">
                 <div class="col-12">
@@ -24,8 +26,12 @@
                                     <th>#</th>
                                     <th>Ip Address</th>
                                     <th>Creted By</th>
+                                    @can('ipaddress-status')
                                     <th>Status</th>
+                                    @endcan
+                                    @can(['ipaddress-edit', 'ipaddress-delete'])
                                     <th>Action</th>
+                                    @endcan
                                 </tr>
                             </thead>
                             @foreach ($ipaddresses as $ipaddress)
@@ -33,6 +39,7 @@
                                     <td>{{ $ipaddress->id ?? '' }}</td>
                                     <td>{{ $ipaddress->ip_address ?? '' }}</td>
                                     <td>{{ $ipaddress->createdBy->name ?? '' }}</td>
+                                    @can('ipaddress-status')
                                     <td>
                                         <div class="active-switch">
                                             <label class="switch">
@@ -42,6 +49,8 @@
                                             </label>
                                         </div>
                                     </td>
+                                    @endcan
+                                    @can(['ipaddress-edit', 'ipaddress-delete'])
                                     <td>
                                         <div class="table-actions d-flex justify-content-center">
                                             <button class="btn delete-table me-2"
@@ -60,6 +69,7 @@
                                             </form>
                                         </div>
                                     </td>
+                                    @endcan
                                 </tbody>
                             @endforeach
                         </table>

@@ -12,7 +12,7 @@
                             <input type="text" placeholder="Search" class="form-control">
                         </div>
                     </div>
-
+                    @can('reviews-create')
                     <ul>
                         <li>
                             <button class="btn btn-primary" type="button" data-bs-toggle="modal" data-bs-target="#add-review">
@@ -20,6 +20,7 @@
                             </button>
                         </li>
                     </ul>
+                    @endcan
                 </div>
             </div>
             <div class="row">
@@ -32,10 +33,14 @@
                                     <th>Name</th>
                                     <th>Description</th>
                                     <th>Profession</th>
+                                    @can('reviews-status')
                                     <th>Status</th>
+                                    @endcan
                                     <th>Date</th>
                                     <th>Created by</th>
+                                    @can(['reviews-edit', 'reviews-delete'])
                                     <th>Action</th>
+                                    @endcan
                                 </tr>
                             </thead>
                             <tbody>
@@ -46,7 +51,7 @@
                                         <td>{{ $review->description ?? '' }}</td>
                                         <td>{{ $review->profession ?? '' }}</td>
 
-
+                                        @can('reviews-status')
                                         <td>
                                             <div class="active-switch">
                                                 <label class="switch">
@@ -56,8 +61,10 @@
                                                 </label>
                                             </div>
                                         </td>
+                                        @endcan
                                         <td>{{ $review->created_at ? $review->created_at->format('d M Y') : '' }}</td>
                                         <td>{{ $review->createdBy->name ?? '' }}</td>
+                                        @can(['reviews-edit', 'reviews-delete'])
                                         <td>
                                             <div class="table-actions d-flex justify-content-center">
                                                 <button class="btn delete-table me-2"
@@ -76,6 +83,7 @@
                                                 </form>
                                             </div>
                                         </td>
+                                        @endcan
                                     </tr>
                                 @empty
                                     <tr>

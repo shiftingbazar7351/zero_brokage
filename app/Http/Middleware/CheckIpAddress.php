@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Http;
+use Exception;
 
 class CheckIpAddress
 {
@@ -20,18 +21,33 @@ class CheckIpAddress
      */
     public function handle(Request $request, Closure $next)
     {
-        // Fetch the real public IP address using an external service
-        $response = Http::withoutVerifying()->get('https://api.ipify.org?format=json');
-        $userIp = $response->json('ip');
+        try {
+            // Fetch the real public IP address using an external service with a timeout
+            $response = Http::timeout(5)->withoutVerifying()->get('https://api.ipify.org?format=json');
 
-        Log::info('Public User IP: ' . $userIp);
+            if ($response->successful()) {
+                $userIp = $response->json('ip');
+                Log::info('Public User IP: ' . $userIp);
 
-        if (!$this->isAllowedIp($userIp)) {
-            Auth::guard('web')->logout();
-            $request->session()->invalidate();
-            $request->session()->regenerateToken();
-            session()->flash('error', 'Unauthorized IP address.');
-            return redirect('/login')->withErrors(['ip' => 'Unauthorized IP address.']);
+                if (!$this->isAllowedIp($userIp)) {
+                    Auth::guard('web')->logout();
+                    $request->session()->invalidate();
+                    $request->session()->regenerateToken();
+                    session()->flash('error', 'Unauthorized IP address.');
+                    return redirect('/login')->withErrors(['ip' => 'Unauthorized IP address.']);
+                }
+            } else {
+                // Handle the scenario where the response is not successful
+                Log::warning('Failed to fetch public IP. Response: ' . $response->status());
+            }
+
+        } catch (Exception $e) {
+            // Handle any exception, like a network error
+            Log::error('Failed to fetch public IP. Error: ' . $e->getMessage());
+
+            // Optionally, you can handle what happens if the IP fetch fails.
+            // session()->flash('error', 'Unable to verify your IP address due to network issues.');
+            return redirect('/login')->withErrors(['ip' => 'Unable to verify your IP address.']);
         }
 
         return $next($request);

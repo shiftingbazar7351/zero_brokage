@@ -14,6 +14,7 @@
         <div class="content">
             <div class="content-page-header content-page-headersplit mb-0">
                 <h5>Company</h5>
+                @can('employee-company-create')
                 <div class="list-btn">
                     <ul>
                         <li>
@@ -22,6 +23,7 @@
                         </li>
                     </ul>
                 </div>
+                @endcan
             </div>
             <div class="row">
                 <div class="col-12 ">
@@ -33,8 +35,12 @@
                                     <th>Image</th>
                                     <th>Brand-Company Name</th>
                                     <th>Legel-Company Name</th>
+                                    @can('employee-company-status')
                                     <th>Status</th>
+                                    @endcan
+                                    @can(['employee-company-edit', 'employee-company-delete'])
                                     <th>Action</th>
+                                    @endcan
                                 </tr>
                             </thead>
                             <tbody>
@@ -58,6 +64,7 @@
                                             </td>
                                             <td>{{ $company->brand_name }}</td>
                                             <td>{{ $company->legel_name }}</td>
+                                            @can('employee-company-status')
                                             <td>
                                                 <div class="active-switch">
                                                     <label class="switch">
@@ -69,6 +76,8 @@
                                                     </label>
                                                 </div>
                                             </td>
+                                            @endcan
+                                            @can(['employee-company-edit', 'employee-company-delete'])
                                             <td>
                                                 <div class="table-actions d-flex justify-content-center">
 
@@ -89,6 +98,7 @@
                                                     </form>
                                                 </div>
                                             </td>
+                                            @endcan
                                         </tr>
                                     @endforeach
                                 @endif

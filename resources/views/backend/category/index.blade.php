@@ -25,10 +25,10 @@
                                     <th>#</th>
                                     <th>Name</th>
                                     @can('categories-status')
-                                        <th>Status</th>
+                                    <th>Status</th>
                                     @endcan
                                     @can(['categories-edit', 'categories-delete'])
-                                        <th>Action</th>
+                                    <th>Action</th>
                                     @endcan
                                 </tr>
                             </thead>

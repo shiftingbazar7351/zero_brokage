@@ -26,7 +26,7 @@ class SubCategoryController extends Controller
      */
     public function index()
     {
-        $categories = Category::get();  
+        $categories = Category::get();
         $subcategories = SubCategory::with('categoryName')->orderByDesc('created_at')->paginate(10);
         return view('backend.sub-category.index', compact('subcategories','categories'));
     }
@@ -114,17 +114,17 @@ class SubCategoryController extends Controller
         $subcategory->trending = $request->has('trending') ? 1 : 0;
         $subcategory->featured = $request->has('featured') ? 1 : 0;
 
-        
+
         if ($request->hasFile('icon')) {
             $filename = $this->fileUploadService->uploadImage('icon/', $request->file('icon'));
             $subcategory->icon = $filename;
         }
-        
+
         if ($request->hasFile('background_image')) {
             $filename = $this->fileUploadService->uploadImage('background_image/', $request->file('background_image'));
             $subcategory->background_image = $filename;
         }
-        
+
         $subcategory->save();
 
         return response()->json(['success' => true, 'message' => 'Subcategory updated successfully.']);
@@ -166,6 +166,6 @@ class SubCategoryController extends Controller
         }
         return response()->json(['success' => false, 'message' => 'Item not found.']);
     }
-    
+
 
 }

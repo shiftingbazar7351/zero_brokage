@@ -22,17 +22,11 @@ use App\Http\Controllers\ServiceDetailController;
 use App\Http\Controllers\SubCategoryController;
 use App\Http\Controllers\SubMenuController;
 use App\Http\Controllers\TransactionController;
-
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\VendorController;
 use App\Http\Controllers\VerifiedController;
+use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Route;
-
-
-
-
-
-
 
 
 /*
@@ -67,9 +61,17 @@ Route::get('/reciept', function () {
     return view('frontend.reciept');
 })->name('reciept');
 
+Route::get('/email-template', function () {
+    return view('emails.user-credential');
+})->name('email-template');
 Route::get('/contact-us', function () {
     return view('frontend.contact-us');
 })->name('contact-us');
+
+Route::get('/cache', function () {
+    Artisan::call('optimize:clear');
+    return back();
+})->name('cache.clear');
 
 Route::controller(FrontendController::class)->group(function () {
     Route::get('/', 'home')->name('home');
@@ -87,7 +89,7 @@ Route::controller(FrontendController::class)->group(function () {
     Route::get('/filter-submenus/{slug}', 'filterSubmenus')->name('filter.submenu');
     Route::post('/enquiry-verify-otp', 'verifyOtp')->name('enquiry.verify.otp');
     Route::get('/fetch-city-data', 'fetchDataOfProvider')->name('fetchDataOfProvider');
-
+    Route::get('/sitemap.xml', 'sitemapXML')->name('sitemap');
 });
 
 Route::post('/fetch-city/{stateId}', [SubMenuController::class, 'fetchCity']);
@@ -115,8 +117,8 @@ Route::middleware(['auth', 'check.ip'])->group(function () {
     Route::post('/store/role-permission', [RolePermission::class, 'store'])->name('role.permission.store')->middleware('can:role-list');
     Route::resource('permission', PermissionController::class);
     Route::resource('role', RoleController::class);
-    // Dashboard Routes
 
+    // Dashboard Routes
     Route::controller(CategoryController::class)->group(function () {
         Route::get('/categories', 'index')->name('categories.index')->middleware('can:categories-list'); // List all categories
         Route::get('/categories/create', 'create')->name('categories.create')->middleware('can:categories-create'); // Show form to create a category
@@ -127,7 +129,6 @@ Route::middleware(['auth', 'check.ip'])->group(function () {
         Route::delete('/categories/{category}', 'destroy')->name('categories.destroy')->middleware('can:categories-delete'); // Delete a category
         Route::post('/category-status', 'categoryStatus')->name('categories.status')->middleware('can:categories-status'); // Change category status
     });
-
 
     Route::controller(SubCategoryController::class)->group(function () {
         Route::get('/subcategories', 'index')->name('subcategories.index')->middleware('can:subcategory-list');
@@ -225,13 +226,13 @@ Route::middleware(['auth', 'check.ip'])->group(function () {
     });
 
     Route::controller(ProductController::class)->group(function () {
-        Route::get('/products', 'index')->name('products.index')->middleware('can:products-list');
-        Route::get('/products/create', 'create')->name('products.create')->middleware('can:products-create');
-        Route::post('/products', 'store')->name('products.store')->middleware('can:products-create');
-        Route::get('/products/{products}/edit', 'edit')->name('products.edit')->middleware('can:products-edit');
-        Route::put('/products/{products}', 'update')->name('products.update')->middleware('can:products-edit');
-        Route::post('/products/{products}', 'show')->name('products.show')->middleware('can:products-show');
-        Route::delete('/products/{products}', 'destroy')->name('products.destroy')->middleware('can:products-delete');
+        Route::get('/products', 'index')->name('products.index')->middleware('can:product-list');
+        Route::get('/products/create', 'create')->name('products.create')->middleware('can:product-create');
+        Route::post('/products', 'store')->name('products.store')->middleware('can:product-create');
+        Route::get('/products/{products}/edit', 'edit')->name('products.edit')->middleware('can:product-edit');
+        Route::put('/products/{products}', 'update')->name('products.update')->middleware('can:product-edit');
+        Route::post('/products/{products}', 'show')->name('products.show')->middleware('can:product-show');
+        Route::delete('/products/{products}', 'destroy')->name('products.destroy')->middleware('can:product-delete');
     });
 
     Route::controller(IpAddressController::class)->group(function () {
@@ -253,6 +254,7 @@ Route::middleware(['auth', 'check.ip'])->group(function () {
         Route::put('/reviews/{reviews}', 'update')->name('reviews.update')->middleware('can:reviews-edit');
         Route::post('/reviews/{reviews}', 'show')->name('reviews.show')->middleware('can:reviews-show');
         Route::delete('/reviews/{reviews}', 'destroy')->name('reviews.destroy')->middleware('can:reviews-delete');
+        Route::post('/reviews-status', 'reviewStatus')->name('reviews.status')->middleware('can:reviews-status');
     });
 
     Route::controller(FaqController::class)->group(function () {
@@ -303,6 +305,7 @@ Route::middleware(['auth', 'check.ip'])->group(function () {
         Route::post('/invoice/data/store/{id}', 'dataStore')->name('invoice.data.store')->middleware('can:invoice-create');
     });
 
+
     Route::get('/dashboard', [AdminController::class, 'homepage'])->name('admin_page');
     // Route::resource('categories', CategoryController::class);
     // Route::post('/category-status', [CategoryController::class, 'categoryStatus'])->name('categories.status');
@@ -330,9 +333,9 @@ Route::middleware(['auth', 'check.ip'])->group(function () {
 
     // Route::resource('/enquiry', EnquiryController::class);
     // Route::controller(EnquiryController::class)->group(function () {
-        // Route::post('/enquiry-status', 'enquiryStatus')->name('enquiry.status');
-        // Route::get('/get-menus/{subcategoryId}', 'fetchMenu');
-        // Route::get('/reporting-data', 'reportData')->name('report.index');
+    // Route::post('/enquiry-status', 'enquiryStatus')->name('enquiry.status');
+    // Route::get('/get-menus/{subcategoryId}', 'fetchMenu');
+    // Route::get('/reporting-data', 'reportData')->name('report.index');
     // });
 
 

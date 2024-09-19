@@ -2,10 +2,9 @@
 
 @section('styles')
     <style>
-
-         .prev{
+        .preview-img {
             width: 150px;
-         }
+        }
     </style>
 @endsection
 
@@ -14,15 +13,26 @@
         <div class="content">
             <div class="content-page-header content-page-headersplit mb-0">
                 <h5>Sub Categories</h5>
-                <div class="list-btn">
-                    <ul>
-                        <li>
-                            <button class="btn btn-primary" type="button" data-bs-toggle="modal"
-                                data-bs-target="#add-category">
-                                <i class="fa fa-plus me-2"></i>Add Sub-Category
-                            </button>
-                        </li>
-                    </ul>
+                <div class="list-btn d-flex gap-3">
+                    <div class="page-headers">
+                        <div class="search-bar">
+                            <span><i class="fe fe-search"></i></span>
+                            <input type="text" placeholder="Search" id="searchInput" class="form-control">
+                        </div>
+                        <div id="searchResults"></div>
+                    </div>
+                    @can('subcategory-create')
+                        <div class="list-btn">
+                            <ul>
+                                <li>
+                                    <button class="btn btn-primary" type="button" data-bs-toggle="modal"
+                                        data-bs-target="#add-category">
+                                        <i class="fa fa-plus me-2"></i>Add Sub-Category
+                                    </button>
+                                </li>
+                            </ul>
+                        </div>
+                    @endcan
                 </div>
             </div>
             <div class="row text-center">
@@ -35,8 +45,12 @@
                                     <th>Image</th>
                                     <th>Category Name</th>
                                     <th>Sub Category Name</th>
-                                    <th>Status</th>
-                                    <th>Action</th>
+                                    @can('subcategory-status')
+                                        <th>Status</th>
+                                    @endcan
+                                    @can(['subcategory-edit', 'subcategory-delete'])
+                                        <th>Action</th>
+                                    @endcan
                                 </tr>
                             </thead>
                             <tbody>
@@ -55,35 +69,39 @@
                                         </td>
                                         <td>{{ $subcategory->categoryName->name ?? '' }}</td>
                                         <td>{{ $subcategory->name ?? '' }}</td>
-                                        <td>
-                                            <div class="active-switch">
-                                                <label class="switch">
-                                                    <input type="checkbox" class="status-toggle"
-                                                        data-id="{{ $subcategory->id }}"
-                                                        onclick="return confirm('Are you sure want to change status?')"
-                                                        {{ $subcategory->status ? 'checked' : '' }}>
-                                                    <span class="sliders round"></span>
-                                                </label>
-                                            </div>
-                                        </td>
-                                        <td>
-                                            <div class="table-actions d-flex justify-content-center">
-                                                <button class="btn delete-table me-2"
-                                                    onclick="editSubCategory({{ $subcategory->id }})" type="button"
-                                                    data-bs-toggle="modal" data-bs-target="#edit-category">
-                                                    <i class="fe fe-edit"></i>
-                                                </button>
-                                                <form action="{{ route('subcategories.destroy', $subcategory->id) }}"
-                                                    method="POST" style="display:inline;">
-                                                    @csrf
-                                                    @method('DELETE')
-                                                    <button class="btn delete-table" type="submit"
-                                                        onclick="return confirm('Are you sure want to delete this?')">
-                                                        <i class="fe fe-trash-2"></i>
+                                        @can('subcategory-status')
+                                            <td>
+                                                <div class="active-switch">
+                                                    <label class="switch">
+                                                        <input type="checkbox" class="status-toggle"
+                                                            data-id="{{ $subcategory->id }}"
+                                                            onclick="return confirm('Are you sure want to change status?')"
+                                                            {{ $subcategory->status ? 'checked' : '' }}>
+                                                        <span class="sliders round"></span>
+                                                    </label>
+                                                </div>
+                                            </td>
+                                        @endcan
+                                        @can(['subcategory-edit', 'subcategory-delete'])
+                                            <td>
+                                                <div class="table-actions d-flex justify-content-center">
+                                                    <button class="btn delete-table me-2"
+                                                        onclick="editSubCategory({{ $subcategory->id }})" type="button"
+                                                        data-bs-toggle="modal" data-bs-target="#edit-category">
+                                                        <i class="fe fe-edit"></i>
                                                     </button>
-                                                </form>
-                                            </div>
-                                        </td>
+                                                    <form action="{{ route('subcategories.destroy', $subcategory->id) }}"
+                                                        method="POST" style="display:inline;">
+                                                        @csrf
+                                                        @method('DELETE')
+                                                        <button class="btn delete-table" type="submit"
+                                                            onclick="return confirm('Are you sure want to delete this?')">
+                                                            <i class="fe fe-trash-2"></i>
+                                                        </button>
+                                                    </form>
+                                                </div>
+                                            </td>
+                                        @endcan
                                     </tr>
                                 @empty
                                     <tr>
@@ -243,7 +261,8 @@
                                     <div class="file-browse">
                                         <h6>Drag & drop image or </h6>
                                         <div class="file-browse-path">
-                                            <input type="file" name="icon" id="edit-image-input-icon" accept="image/*">
+                                            <input type="file" name="icon" id="edit-image-input-icon"
+                                                accept="image/*">
                                             <a href="javascript:void(0);"> Browse</a>
                                         </div>
                                     </div>
@@ -263,7 +282,8 @@
                                     <div class="file-browse">
                                         <h6>Drag & drop image or </h6>
                                         <div class="file-browse-path">
-                                            <input type="file" name="background_image" id="edit-image-input-bg" accept="image/jpeg, image/png">
+                                            <input type="file" name="background_image" id="edit-image-input-bg"
+                                                accept="image/jpeg, image/png">
                                             <a href="javascript:void(0);"> Browse</a>
                                         </div>
                                     </div>
@@ -414,5 +434,6 @@
                 }
             });
         });
+
     </script>
 @endsection

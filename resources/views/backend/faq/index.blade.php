@@ -4,6 +4,7 @@
         <div class="content">
             <div class="content-page-header content-page-headersplit mb-0">
                 <h5>FAQs</h5>
+
                 <div class="list-btn d-flex gap-3">
 
                     <div class="page-headers">
@@ -12,7 +13,7 @@
                             <input type="text" placeholder="Search" class="form-control">
                         </div>
                     </div>
-
+                    @can('faq-create')
                     <ul>
                         <li>
                             <button class="btn btn-primary" type="button" data-bs-toggle="modal"
@@ -21,6 +22,7 @@
                             </button>
                         </li>
                     </ul>
+                    @endcan
                 </div>
             </div>
             <div class="row">
@@ -34,8 +36,12 @@
                                     <th>Answer</th>
                                     <th>Date</th>
                                     <th>Created by</th>
-                                    <th>Status</th>
-                                    <th>Action</th>
+                                    @can('faq-status')
+                                        <th>Status</th>
+                                    @endcan
+                                    @can(['faq-edit', 'faq-delete'])
+                                        <th>Action</th>
+                                    @endcan
                                 </tr>
                             </thead>
                             <tbody>
@@ -46,7 +52,7 @@
                                         <td>{{ $faq->answer ?? '' }}</td>
                                         <td>{{ $faq->created_at ? $faq->created_at->format('d M Y') : '' }}</td>
                                         <td>{{ $faq->createdBy->name ?? '' }}</td>
-
+                                        @can('faq-status')
                                         <td>
                                             <div class="active-switch">
                                                 <label class="switch">
@@ -56,6 +62,8 @@
                                                 </label>
                                             </div>
                                         </td>
+                                        @endcan
+                                        @can(['faq-edit', 'faq-delete'])
                                         <td>
                                             <div class="table-actions d-flex justify-content-center">
                                                 <button class="btn delete-table me-2"
@@ -74,6 +82,7 @@
                                                 </form>
                                             </div>
                                         </td>
+                                        @endcan
                                     </tr>
                                 @empty
                                     <tr>

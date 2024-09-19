@@ -23,17 +23,19 @@
         <div class="content">
             <div class="content-page-header content-page-headersplit mb-0">
                 <h5>Sub Menu</h5>
-                <div class="list-btn">
-                    <ul>
-                        <li>
-                            <button type="button" class="btn btn-primary mb-3" data-toggle="modal"
-                                data-target="#addCategoryModal">
-                                Add Sub Menu
-                            </button>
+                @can('submenu-create')
+                    <div class="list-btn">
+                        <ul>
+                            <li>
+                                <button type="button" class="btn btn-primary mb-3" data-toggle="modal"
+                                    data-target="#addCategoryModal">
+                                    Add Sub Menu
+                                </button>
 
-                        </li>
-                    </ul>
-                </div>
+                            </li>
+                        </ul>
+                    </div>
+                @endcan
             </div>
             <div class="row">
                 <div class="col-12 ">
@@ -44,8 +46,12 @@
                                     <th>ID</th>
                                     <th>Name</th>
                                     <th>Image</th>
-                                    <th>Status</th>
-                                    <th>Actions</th>
+                                    @can('submenu-status')
+                                        <th>Status</th>
+                                    @endcan
+                                    @can(['submenu-edit', 'submenu-delete'])
+                                        <th>Action</th>
+                                    @endcan
                                 </tr>
                             </thead>
                             <tbody>
@@ -67,7 +73,7 @@
                                                     No Image
                                                 @endif
                                             </td>
-
+                                            @can('submenu-status')
                                             <td>
                                                 <div class="active-switch">
                                                     <label class="switch">
@@ -78,7 +84,8 @@
                                                     </label>
                                                 </div>
                                             </td>
-
+                                            @endcan
+                                            @can(['submenu-edit', 'submenu-delete'])
                                             <td>
                                                 <div class="d-flex" style="justify-content: center">
                                                     <button class="btn delete-table me-2"
@@ -100,6 +107,7 @@
                                                     </form>
                                                 </div>
                                             </td>
+                                            @endcan
                                         </tr>
                                     @endforeach
                                 @endif

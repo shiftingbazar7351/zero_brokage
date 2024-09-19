@@ -158,6 +158,14 @@
                         </li>
                         @endcan
 
+                        <li>
+                            <a href="{{ route('employee-headoffice.index') }}"
+                                class="{{ Route::currentRouteName() === 'employee-headoffice.index' ? 'active' : '' }}">
+                                <i class="fe fe-file-text"></i>
+                                <span>Employee</span>
+                            </a>
+                        </li>
+
                     </ul>
 
                 </li>

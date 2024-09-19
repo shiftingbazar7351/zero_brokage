@@ -169,13 +169,13 @@ class UserController extends Controller
      */
     public function show($id)
     {
-        $data = User::with('userProfile', 'roles')->findOrFail($id);
+        // $data = User::with('userProfile', 'roles')->findOrFail($id);
 
-        $profileImage = getSingleMedia($data, 'profile_image');
+        // $profileImage = getSingleMedia($data, 'profile_image');
 
-        $user = User::where('id', Auth::user()->id)->first();
+        // $user = User::where('id', Auth::user()->id)->first();
 
-        return view('users.profile', compact('data', 'profileImage', 'user'));
+        // return view('users.profile', compact('data', 'profileImage', 'user'));
     }
 
     /**
@@ -185,19 +185,19 @@ class UserController extends Controller
      */
     public function edit($id)
     {
-        $roles = null;
-        $data = User::with('roles')->findOrFail($id);
+        // $roles = null;
+        // $data = User::with('roles')->findOrFail($id);
 
-        $data['user_type'] = $data->roles->pluck('id')[0] ?? null;
-        if ($id != auth()->user()->id) {
-            $roles = Role::where('status', 1)->where('name', '!=', 'super_admin')->get()->pluck('title', 'id');
-        }
-        if ($data && $data->profile_picture) {
-            $profileImage = config('app.url') . $data->profile_picture;
-        } else {
-            $profileImage = getSingleMedia($data, 'profile_image');
-        }
-        return view('users.form', compact('data', 'id', 'roles', 'profileImage'));
+        // $data['user_type'] = $data->roles->pluck('id')[0] ?? null;
+        // if ($id != auth()->user()->id) {
+        //     $roles = Role::where('status', 1)->where('name', '!=', 'super_admin')->get()->pluck('title', 'id');
+        // }
+        // if ($data && $data->profile_picture) {
+        //     $profileImage = config('app.url') . $data->profile_picture;
+        // } else {
+        //     $profileImage = getSingleMedia($data, 'profile_image');
+        // }
+        // return view('users.form', compact('data', 'id', 'roles', 'profileImage'));
     }
 
     /**

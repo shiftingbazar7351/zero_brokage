@@ -108,7 +108,7 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title">Add Menu</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                    <button type="button" class="btn-close close-modal" data-bs-dismiss="modal" aria-label="Close">
                         <i class="fe fe-x"></i>
                     </button>
                 </div>

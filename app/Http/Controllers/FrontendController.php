@@ -390,11 +390,14 @@ class FrontendController extends Controller
         // Return success response
         return response()->json(['success' => true, 'message' => 'Review submitted successfully!']);
     }
+    public function sitemapXML()
+    {
+        $services = subcategory::all(); // Fetch your services
+        $cities = City::all();      // Fetch your cities
 
-    // public function getMenus($subcategory_id)
-    // {
-    //     $menus = Menu::where('subcategory_id', $subcategory_id)->get();
-    //     return response()->json($menus);
-    // }
+        $content = view('sitemap', compact('services', 'cities'))->render();
 
+        return response($content, 200)
+            ->header('Content-Type', 'application/xml');
+    }
 }

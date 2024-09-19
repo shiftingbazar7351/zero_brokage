@@ -31,8 +31,8 @@ class UserController extends Controller
      */
     public function index()
     {
-        $users = User::get();
-        $roles = Role::get();
+        $users = User::orderByDesc('created_at')->get();
+        $roles = Role::orderByDesc('created_at')->get();
         return view('backend.user.index', compact('users', 'roles'));
     }
 
@@ -53,6 +53,59 @@ class UserController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
+    // public function store(Request $request)
+    // {
+    //     // Validate the request data
+    //     $validated = $request->validate([
+    //         'name' => 'required|max:20',
+    //         'email' => 'required|email|max:100|unique:users,email',
+    //         'phone_number' => 'required|digits:10',
+    //         'user_type' => 'required',
+    //     ]);
+
+    //     try {
+    //         // Generate password: Capitalize first name and append '123'
+    //         $firstName = explode(' ', $validated['name'])[0]; // Get the first name from the full name
+    //         $passwordString = ucfirst(strtolower($firstName)) . '@123'; // First letter capitalized, then '123'
+    //         $hashedPassword = Hash::make($passwordString); // Hash the generated password
+
+    //         // Create new user
+    //         $user = new User();
+    //         $user->name = $validated['name'];
+    //         $user->email = $validated['email'];
+    //         $user->password = $hashedPassword;
+    //         $user->phone_number = $validated['phone_number'];
+    //         $user->user_type = $validated['user_type'];
+    //         $user->created_by = Auth::user()->id;
+    //         $user->status = 1;
+    //         $user->save();
+
+    //         // Send email with the credentials
+    //         $toUser = $validated['email'];
+    //         $subject = 'ZERO BROKAGE LOGIN CREDENTIAL';
+
+    //         Mail::send('emails.user-credential', ['email' => $validated['email'], 'password' => $passwordString], function ($message) use ($toUser, $subject) {
+    //             $message->to($toUser)
+    //                 ->subject($subject);
+    //         });
+
+    //         // Return JSON success response with redirect URL
+    //         return response()->json([
+    //             'success' => true,
+    //             'message' => 'User Added Successfully !!',
+    //             'redirectUrl' => route('user.index') // URL to redirect after success
+    //         ]);
+
+    //     } catch (Exception $e) {
+    //         // Log error and return JSON error response
+    //         Log::error('User creation error: ' . $e->getMessage());
+    //         return response()->json([
+    //             'success' => false,
+    //             'message' => 'An error occurred while creating the user: ' . $e->getMessage()
+    //         ], 500);
+    //     }
+    // }
+
     public function store(Request $request)
     {
         // Validate the request data
@@ -84,25 +137,28 @@ class UserController extends Controller
             $toUser = $validated['email'];
             $subject = 'ZERO BROKAGE LOGIN CREDENTIAL';
 
+
+            session()->flash('success', 'User Added Successfully ');
+
+
             Mail::send('emails.user-credential', ['email' => $validated['email'], 'password' => $passwordString], function ($message) use ($toUser, $subject) {
                 $message->to($toUser)
                     ->subject($subject);
             });
-
-            // Success notification
-            $notification = [
+            // Return JSON success response with redirect URL
+            return response()->json([
+                'success' => true,
                 'message' => 'User Added Successfully !!',
-                'alert-type' => 'success',
-            ];
-
-            return redirect(route('user.index'))->with($notification);
+                'redirectUrl' => route('user.index') // URL to redirect after success
+            ]);
 
         } catch (Exception $e) {
-            // Log error and redirect back with error message
+            // Log error and return JSON error response
             Log::error('User creation error: ' . $e->getMessage());
-            return redirect()
-                ->back()
-                ->with('error', 'An error occurred while creating the user: ' . $e->getMessage());
+            return response()->json([
+                'success' => false,
+                'message' => 'An error occurred while creating the user: ' . $e->getMessage()
+            ], 500);
         }
     }
 
@@ -182,25 +238,16 @@ class UserController extends Controller
      * Remove the specified resource from storage.
      *
      * @param  int  $id
-     * @return \Illuminate\Http\Response
      */
     public function destroy($id)
     {
         $user = User::findOrFail($id);
-        $status = 'errors';
-        $message = __('global-message.delete_form', ['form' => __('users.title')]);
 
-        if ($user != '') {
+        if ($user) {
             $user->delete();
-            $status = 'success';
-            $message = __('global-message.delete_form', ['form' => __('users.title')]);
+            return redirect()->back()->with('success', 'User Deleted Successfully');
         }
-
-        if (request()->ajax()) {
-            return response()->json(['status' => true, 'message' => $message, 'datatable_reload' => 'dataTable_wrapper']);
-        }
-
-        return redirect()->back()->with($status, $message);
+        return redirect()->back()->with('error', 'Something went wrong');
     }
 
 

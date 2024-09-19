@@ -249,7 +249,7 @@
                         </a>
                     </li>
                 @endcan
-                @can('transaction')
+                @can('transaction-list')
                     <li class="{{ Route::currentRouteName() === 'transaction.index' ? 'active' : '' }}">
                         <a href="{{ route('transaction.index') }}">
                             <i class="fe fe-file-text"></i>
@@ -257,7 +257,7 @@
                         </a>
                     </li>
                 @endcan
-                @can('transaction')
+                @can('invoice-list')
                     <li class="{{ Route::currentRouteName() === 'invoice.index' ? 'active' : '' }}">
                         <a href="{{ route('invoice.index') }}">
                             <i class="fe fe-file-text"></i>

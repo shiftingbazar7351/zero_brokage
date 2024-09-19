@@ -21,7 +21,7 @@
     <link rel="stylesheet" href="{{ asset('admin/assets/plugins/jvectormap/jquery-jvectormap-2.0.3.css') }} ">
     <link rel="stylesheet" href="{{ asset('admin/assets/css/dataTables.bootstrap4.min.css') }} ">
     <link rel="stylesheet" href="{{ asset('admin/assets/plugins/feather/feather.css') }} ">
-    <link rel="stylesheet" href="{{ asset('admin/assets/css/admin.css') }} ">   
+    <link rel="stylesheet" href="{{ asset('admin/assets/css/admin.css') }} ">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/css/intlTelInput.min.css">

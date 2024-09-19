@@ -52,7 +52,7 @@
                                                 <div class="table-actions d-flex justify-content-center">
                                                     <button class="btn delete-table me-2"
                                                         onclick="edituser({{ $user->id }})" type="button"
-                                                        data-bs-toggle="modal" data-bs-target="#edit-category">
+                                                        data-bs-toggle="modal" data-bs-target="#edit-user">
                                                         <i class="fe fe-edit"></i>
                                                     </button>
                                                     <form action="{{ route('user.destroy', $user->id) }}" method="POST"
@@ -141,7 +141,7 @@
     </div>
 
     <!-- Edit Category Modal -->
-    <div class="modal fade" id="edit-category">
+    <div class="modal fade" id="edit-user">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">

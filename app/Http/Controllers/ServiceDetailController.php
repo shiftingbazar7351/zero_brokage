@@ -43,7 +43,7 @@ class ServiceDetailController extends Controller
             'summery' => 'nullable',
         ]);
         ServiceDetail::create($validatedData);
-        return redirect(route('service-detail.index'))->with('success', 'Enquiry submitted successfully!');
+        return redirect(route('service-detail.index'))->with('success', 'serviceDetail submitted successfully!');
     }
 
 

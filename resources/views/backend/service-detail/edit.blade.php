@@ -11,12 +11,12 @@
     <div class="page-wrapper page-settings">
         <div class="content">
             <div class="row">
-                <div class="col-12">
+                <div>
                     <form action="{{ route('service-detail.update', $serviceDetail->id) }}" method="POST">
                         @csrf
                         @method('PUT')
 
-                        <div class="mb-3">
+                        <div class="mb-3 col-md-6">
                             <label for="category">Category</label>
                             <select class="form-control" id="category" name="category_id">
                                 <option value="">Select Category</option>
@@ -28,19 +28,15 @@
                             </select>
                         </div>
 
-                        <div class="mb-3">
+                        <div class="mb-3 col-md-6">
                             <label for="subcategory">Subcategory</label>
                             <select class="form-control" id="subcategory" name="subcategory_id">
                                 <option value="">Select Subcategory</option>
-                                @foreach ($subcategories as $subcategory)
-                                    <option value="{{ $subcategory->id }}" {{ $serviceDetail->subcategory_id == $subcategory->id ? 'selected' : '' }}>
-                                        {{ $subcategory->name }}
-                                    </option>
-                                @endforeach
+                                <!-- Options will be populated dynamically -->
                             </select>
                         </div>
 
-                        <div class="mb-3">
+                        <div class="mb-3 col-md-6">
                             <label for="description" class="col-form-label">Description <span class="text-danger">*</span></label>
                             <textarea class="form-control" id="description" name="description">{{ old('description', $serviceDetail->description) }}</textarea>
                             @error('description')
@@ -48,7 +44,7 @@
                             @enderror
                         </div>
 
-                        <div class="mb-3">
+                        <div class="mb-3 col-md-6">
                             <label for="summery" class="col-form-label">Summary</label>
                             <textarea class="form-control" id="summery" name="summery">{{ old('summery', $serviceDetail->summery) }}</textarea>
                             @error('summery')
@@ -74,7 +70,7 @@
             $('#description').summernote({
                 placeholder: "Write short description.....",
                 tabsize: 2,
-                height: 100
+                height: 330
             });
         });
 
@@ -82,10 +78,51 @@
             $('#summery').summernote({
                 placeholder: "Write short description.....",
                 tabsize: 2,
-                height: 100
+                height: 330
             });
         });
 
 
     </script>
+
+<script>
+    // Populate subcategories based on the selected category
+    document.addEventListener('DOMContentLoaded', function () {
+        const categorySelect = document.getElementById('category');
+        const subcategorySelect = document.getElementById('subcategory');
+        const selectedCategoryId = '{{ $serviceDetail->subcategory->category_id }}';
+        const selectedSubcategoryId = '{{ $serviceDetail->subcategory_id }}';
+
+        // Fetch subcategories for the initially selected category
+        if (selectedCategoryId) {
+            fetchSubcategories(selectedCategoryId, selectedSubcategoryId);
+        }
+
+        // Fetch subcategories when the category changes
+        categorySelect.addEventListener('change', function () {
+            const categoryId = this.value;
+            fetchSubcategories(categoryId);
+        });
+
+        function fetchSubcategories(categoryId, selectedSubcategoryId = null) {
+            subcategorySelect.innerHTML = '<option value="">Select Subcategory</option>'; // Clear existing options
+
+            if (categoryId) {
+                fetch(`/subcategories/${categoryId}`)
+                    .then(response => response.json())
+                    .then(data => {
+                        data.subcategories.forEach(subcategory => {
+                            const option = document.createElement('option');
+                            option.value = subcategory.id;
+                            option.text = subcategory.name;
+                            if (subcategory.id == selectedSubcategoryId) {
+                                option.selected = true;
+                            }
+                            subcategorySelect.add(option);
+                        });
+                    });
+            }
+        }
+    });
+</script>
 @endsection

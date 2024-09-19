@@ -1,16 +1,16 @@
 @extends('backend.layouts.main')
 
 @section('styles')
-    <script src="https://cdn.ckeditor.com/4.20.1/standard/ckeditor.js"></script>
     {{-- <script src="https://cdn.jsdelivr.net/npm/ckeditor4@4.25.0/ckeditor.js"></script> --}}
+    <script src="https://cdn.ckeditor.com/4.22.0/standard/ckeditor.js"></script>
 
     <style>
         .default-img {
             width: auto;
         }
 
-        
-        .preview-img{
+
+        .preview-img {
             width: 150px;
             height: 150px;
             object-fit: cover;
@@ -74,39 +74,39 @@
                                                 @endif
                                             </td>
                                             @can('submenu-status')
-                                            <td>
-                                                <div class="active-switch">
-                                                    <label class="switch">
-                                                        <input type="checkbox" class="status-toggle"
-                                                            data-id="{{ $subcategory->id }}"
-                                                            {{ $subcategory->status ? 'checked' : '' }}>
-                                                        <span class="sliders round"></span>
-                                                    </label>
-                                                </div>
-                                            </td>
+                                                <td>
+                                                    <div class="active-switch">
+                                                        <label class="switch">
+                                                            <input type="checkbox" class="status-toggle"
+                                                                data-id="{{ $subcategory->id }}"
+                                                                {{ $subcategory->status ? 'checked' : '' }}>
+                                                            <span class="sliders round"></span>
+                                                        </label>
+                                                    </div>
+                                                </td>
                                             @endcan
                                             @can(['submenu-edit', 'submenu-delete'])
-                                            <td>
-                                                <div class="d-flex" style="justify-content: center">
-                                                    <button class="btn delete-table me-2"
-                                                        onclick="editCategory({{ $subcategory->id }})" type="button"
-                                                        data-bs-toggle="modal" data-bs-target="#edit-category">
-                                                        <i class="fe fe-edit"></i>
-                                                    </button>
-
-
-                                                    <!-- Delete Button -->
-                                                    <form action="{{ route('submenu.destroy', $subcategory->id) }}"
-                                                        method="POST" style="display:inline;">
-                                                        @csrf
-                                                        @method('DELETE')
-                                                        <button type="submit" class="btn delete-table"
-                                                            onclick="return confirm('Are you sure you want to delete this Sub Menu?');">
-                                                            <i class="fe fe-trash-2"></i>
+                                                <td>
+                                                    <div class="d-flex" style="justify-content: center">
+                                                        <button class="btn delete-table me-2"
+                                                            onclick="editCategory({{ $subcategory->id }})" type="button"
+                                                            data-bs-toggle="modal" data-bs-target="#edit-category">
+                                                            <i class="fe fe-edit"></i>
                                                         </button>
-                                                    </form>
-                                                </div>
-                                            </td>
+
+
+                                                        <!-- Delete Button -->
+                                                        <form action="{{ route('submenu.destroy', $subcategory->id) }}"
+                                                            method="POST" style="display:inline;">
+                                                            @csrf
+                                                            @method('DELETE')
+                                                            <button type="submit" class="btn delete-table"
+                                                                onclick="return confirm('Are you sure you want to delete this Sub Menu?');">
+                                                                <i class="fe fe-trash-2"></i>
+                                                            </button>
+                                                        </form>
+                                                    </div>
+                                                </td>
                                             @endcan
                                         </tr>
                                     @endforeach
@@ -230,7 +230,7 @@
                         <div class="form-group">
                             <label for="details" class="col-form-label">Details <span
                                     class="text-danger">*</span></label>
-                            <textarea class="f    orm-control" id="details" placeholder="Enter Details" name="details">{{ old('details') }}</textarea>
+                            <textarea class="form-control" id="test-editor" name="details">{{ old('details') }}</textarea>
                             <div id="details-error" class="text-danger"></div>
                         </div>
 
@@ -246,11 +246,10 @@
             </div>
         </div>
     </div>
-
     <script>
-        // Initialize CKEditor for t    he Details and Description fields
-        CKEDITOR.replace('details');
+        CKEDITOR.replace('test-editor');
     </script>
+
 
 
     <div class="modal fade" id="edit-category" tabindex="-1" aria-labelledby="editCategoryModalLabel"
@@ -502,7 +501,6 @@
                     contentType: false,
                     processData: false,
                     success: function(response) {
-                        console.log(response);
                         if (response.success) {
                             location.reload();
                         }
@@ -627,7 +625,6 @@
                             }
                         },
                         error: function(xhr) {
-                            console.error('Error loading menus:', xhr);
                             menuElement.empty().append(
                                 '<option value="" disabled>Error loading menus</option>'
                             );
@@ -737,7 +734,10 @@
                         $('#edit-price').val(response.data.total_price);
                         $('#edit-discount').val(response.data.discount);
                         $('#edit-final-price').val(response.data.discounted_price);
-                        $('#edit-details').val(response.data.details);
+                        // $('#edit-details').val(response.data.details);
+                        if (CKEDITOR.instances['edit-details']) {
+                            CKEDITOR.instances['edit-details'].setData(response.data.details);
+                        }
                         $('#edit-description').val(response.data.description);
                         $('#editCategorySelect').val(response.data.category_id).trigger('change');
                         $('#edit-state').val(response.state.id).trigger('change');
@@ -755,7 +755,6 @@
                                 _token: '{{ csrf_token() }}'
                             },
                             success: function(subResponse) {
-                                console.log(subResponse);
                                 $('#editSubcategorySelect').empty().append(
                                     '<option value="" selected>Select Subcategory</option>'
                                 );
@@ -766,10 +765,7 @@
                                         );
                                 });
                             },
-                            error: function(xhr) {
-                                console.error('Error fetching subcategories:', xhr
-                                    .responseText);
-                            }
+                            error: function(xhr) {}
                         });
 
                         // Fetch and populate menus based on the selected subcategory
@@ -790,10 +786,7 @@
                                         );
                                 });
                             },
-                            error: function(xhr) {
-                                console.error('Error fetching menus:', xhr
-                                    .responseText);
-                            }
+                            error: function(xhr) {}
                         });
 
                         $.ajax({

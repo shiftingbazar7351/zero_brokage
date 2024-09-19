@@ -80,7 +80,8 @@
                                     </a>
                                 </li>
                             @endcan
-                            @can(['service-detail-list'])
+                            {{-- ---------------------This Route currently not in use --------------------------------------------------}}
+                            {{-- @can(['service-detail-list'])
                                 <li>
                                     <a href="{{ route('service-detail.index') }}"
                                         class="{{ Route::currentRouteName() === 'service-detail.index' ? 'active' : '' }}">
@@ -88,11 +89,12 @@
                                         <span>Service details</span>
                                     </a>
                                 </li>
-                            @endcan
+                            @endcan --}}
+                            {{-- ----------------------------------------------------------------------------------------------------- --}}
                             @can(['india-services-list'])
                                 <li>
                                     <a href="{{ route('india-services.index') }}"
-                                        class="{{ Route::currentRouteName() === 'india-services.index' ? 'active' : '' }}">
+                                        class="{{ Route::currentRouteName() === 'india-services.index' ? 'active' : '' }} {{ Route::currentRouteName() === 'india-services.edit' ? 'active' : '' }}">
                                         <i class="fe fe-file-text"></i>
                                         <span>India Services</span>
                                     </a>

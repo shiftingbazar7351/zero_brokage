@@ -76,8 +76,11 @@ class IndiaServiceController extends Controller
      */
     public function edit($id)
     {
+        $categories = Category::where('status', 1)->orderByDesc('created_at')->get();
+        $subcategories = SubCategory::orderByDesc('created_at')->get();
+        $submenus = SubMenu::orderByDesc('created_at')->get();
         $services = IndiaServiceDescription::findOrFail($id);
-        return view('backend.india-service-description.edit', compact('services'));
+        return view('backend.india-service-description.edit', compact('services','categories','subcategories','submenus'));
     }
 
     /**

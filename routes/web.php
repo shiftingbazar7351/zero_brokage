@@ -181,10 +181,10 @@ Route::middleware(['auth', 'check.ip'])->group(function () {
         Route::get('/service-detail', 'index')->name('service-detail.index')->middleware('can:service-detail-list');
         Route::get('/service-detail/create', 'create')->name('service-detail.create')->middleware('can:service-detail-create');
         Route::post('/service-detail', 'store')->name('service-detail.store')->middleware('can:service-detail-create');
-        Route::get('/service-detail/{service-detail}/edit', 'edit')->name('service-detail.edit')->middleware('can:service-detail-edit');
-        Route::put('/service-detail/{service-detail}', 'update')->name('service-detail.update')->middleware('can:service-detail-edit');
+        Route::get('/service-detail/{id}/edit', 'edit')->name('service-detail.edit')->middleware('can:service-detail-edit');
+        Route::put('/service-detail/{id}', 'update')->name('service-detail.update')->middleware('can:service-detail-edit');
         Route::post('/service-detail/{service-detail}', 'show')->name('service-detail.show')->middleware('can:service-detail-show');
-        Route::delete('/service-detail/{service-detail}', 'destroy')->name('service-detail.destroy')->middleware('can:service-detail-delete');
+        Route::delete('/service-detail/{id}', 'destroy')->name('service-detail.destroy')->middleware('can:service-detail-delete');
     });
 
     Route::controller(MetaUrlController::class)->group(function () {
@@ -272,10 +272,10 @@ Route::middleware(['auth', 'check.ip'])->group(function () {
         Route::get('/india-services', 'index')->name('india-services.index')->middleware('can:india-services-list');
         Route::get('/india-services/create', 'create')->name('india-services.create')->middleware('can:india-services-create');
         Route::post('/india-services', 'store')->name('india-services.store')->middleware('can:india-services-create');
-        Route::get('/india-services/{india-services}/edit', 'edit')->name('india-services.edit')->middleware('can:india-services-edit');
-        Route::put('/india-services/{india-services}', 'update')->name('india-services.update')->middleware('can:india-services-edit');
-        Route::post('/india-services/{india-services}', 'show')->name('india-services.show')->middleware('can:india-services-show');
-        Route::delete('/india-services/{india-services}', 'destroy')->name('india-services.destroy')->middleware('can:india-services-delete');
+        Route::get('/india-services/{id}/edit', 'edit')->name('india-services.edit')->middleware('can:india-services-edit');
+        Route::put('/india-services/{id}', 'update')->name('india-services.update')->middleware('can:india-services-edit');
+        Route::post('/india-services/{id}', 'show')->name('india-services.show')->middleware('can:india-services-show');
+        Route::delete('/india-services/{id}', 'destroy')->name('india-services.destroy')->middleware('can:india-services-delete');
     });
 
     Route::resource('/newsletter', NewsletterController::class);

@@ -122,7 +122,7 @@ class VerifiedController extends Controller
     {
         $verified->delete();
 
-        return redirect()->back()->with('success', 'Deleted successfully.');
+        return redirect()->back()->with(['message' => 'Deleted Successfully', 'alert-type' => 'success']);
     }
 
     public function verifyStatus(Request $request)

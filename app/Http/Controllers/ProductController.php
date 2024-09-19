@@ -76,7 +76,7 @@ class ProductController extends Controller
 
         // return $product;
         // Redirect back with a success message
-        return redirect()->route('products.index')->with('success', 'Product added successfully.');
+        return redirect()->route('products.index')->with(['message' => 'Added Successfully', 'alert-type' => 'success']);
     }
 
 
@@ -91,23 +91,23 @@ class ProductController extends Controller
     public function show($id)
     {
         $products = Product::findOrFail($id);
-    
+
         // Decode the stored JSON array for category and subcategory IDs
         $categoryIds = json_decode($products->category_id);
         $subcategoryIds = json_decode($products->subcategory_id);
         $menuIds = json_decode($products->menu_id);
         $submenuIds = json_decode($products->submenu_id);
-    
+
         // Fetch the related categories and subcategories using the decoded IDs
         $categories = Category::whereIn('id', $categoryIds)->get();
         $subcategories = SubCategory::whereIn('id', $subcategoryIds)->get();
         $menus = Menu::whereIn('id', $menuIds)->get();
         $submenus = SubMenu::whereIn('id', $submenuIds)->get();
-    
+
         return view('backend.products.show', compact('products', 'categories', 'subcategories','menus','submenus'));
     }
-    
-    
+
+
 
     /**
      * Show the form for editing the specified resource.
@@ -125,7 +125,6 @@ class ProductController extends Controller
         $submenus = SubMenu::orderByDesc('created_at')->get();
         $product = Product::findOrFail($id);
         return view('backend.products.edit', compact('product', 'subcategories', 'submenus','categories','states'));
-
     }
 
     /**
@@ -133,7 +132,6 @@ class ProductController extends Controller
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
-     * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
     {
@@ -172,7 +170,7 @@ class ProductController extends Controller
 
         // Redirect back with a success message
         // return redirect()->back()->with('success', 'Updated Successfully');
-        return redirect()->route('products.index')->with('success', 'Updated  Successfully.');
+        return redirect()->route('products.index')->with(['message' => 'Updated Successfully', 'alert-type' => 'success']);
     }
 
 
@@ -180,7 +178,6 @@ class ProductController extends Controller
      * Remove the specified resource from storage.
      *
      * @param  int  $id
-     * @return \Illuminate\Http\Response
      */
     public function destroy($id)
     {
@@ -188,7 +185,7 @@ class ProductController extends Controller
 
         if ($service) {
             $service->delete();
-            return redirect()->back()->with('success', 'Deleted Successfully');
+            return redirect()->back()->with(['message' => 'Deleted Successfully', 'alert-type' => 'success']);
         } else {
             return redirect()->back()->with('error', 'Product not found');
         }

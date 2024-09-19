@@ -36,7 +36,6 @@ class RoleController extends Controller
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
     {
@@ -47,7 +46,7 @@ class RoleController extends Controller
         try {
             $modifiedTitle = strtolower(str_replace(' ', '_', $request->title));
             Role::create(['title' => $request->title, 'name' => $modifiedTitle, 'status' => $request->status]);
-            return back()->with('success', 'Role Added Successfully');
+            return back()->with(['message' => 'Role Added Successfully','alert-type'=>'success']);
         } catch (Exception $e) {
             return back()->with('error', $e->getMessage());
         }
@@ -83,7 +82,6 @@ class RoleController extends Controller
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
-     * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
     {
@@ -94,7 +92,8 @@ class RoleController extends Controller
         try {
             $modifiedTitle = strtolower(str_replace(' ', '_', $request->title));
             $role = Role::findOrFail($id)->update(['title' => $request->title, 'name' => $modifiedTitle, 'status' => $request->status]);
-            return back()->with('success', 'Role updated successfully.');
+            return back()->with(['message' => 'Role updated successfully.','alert-type'=>'success']);
+
         } catch (\Exception $e) {
             return  back()->with('error', $e->getMessage());
         }
@@ -104,7 +103,6 @@ class RoleController extends Controller
      * Remove the specified resource from storage.
      *
      * @param  int  $id
-     * @return \Illuminate\Http\Response
      */
     public function destroy($id)
     {

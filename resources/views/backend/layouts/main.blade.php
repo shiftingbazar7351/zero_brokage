@@ -74,50 +74,48 @@
         userName.addEventListener('input', restrictNumber);
     </script>
 
-    <link rel="stylesheet" type="text/css"
-        href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
-    <script>
-        @if (Session::has('message'))
-            toastr.options = {
-                "closeButton": true,
-                "progressBar": true
-            }
-            toastr.success("{{ session('message') }}");
-        @endif
+<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 
-        @if (Session::has('success'))
-            toastr.options = {
-                "closeButton": true,
-                "progressBar": true
-            }
-            toastr.success("{{ session('success') }}");
-        @endif
 
-        @if (Session::has('error'))
-            toastr.options = {
-                "closeButton": true,
-                "progressBar": true
-            }
-            toastr.error("{{ session('error') }}");
-        @endif
+<script>
+   @if (Session::has('message'))
+       var type = "{{ Session::get('alert-type', 'info') }}"
+       switch (type) {
+           case 'info':
 
-        @if (Session::has('info'))
-            toastr.options = {
-                "closeButton": true,
-                "progressBar": true
-            }
-            toastr.info("{{ session('info') }}");
-        @endif
+               toastr.options.timeOut = 10000;
+               toastr.info("{{ Session::get('message') }}");
+               var audio = new Audio('audio.mp3');
+               audio.play();
+               break;
+           case 'success':
 
-        @if (Session::has('warning'))
-            toastr.options = {
-                "closeButton": true,
-                "progressBar": true
-            }
-            toastr.warning("{{ session('warning') }}");
-        @endif
-    </script>
+               toastr.options.timeOut = 10000;
+               toastr.success("{{ Session::get('message') }}");
+               var audio = new Audio('audio.mp3');
+               audio.play();
+
+               break;
+           case 'warning':
+
+               toastr.options.timeOut = 10000;
+               toastr.warning("{{ Session::get('message') }}");
+               var audio = new Audio('audio.mp3');
+               audio.play();
+
+               break;
+           case 'error':
+
+               toastr.options.timeOut = 10000;
+               toastr.error("{{ Session::get('message') }}");
+               var audio = new Audio('audio.mp3');
+               audio.play();
+
+               break;
+       }
+   @endif
+</script>
 
     @include('backend.layouts.scripts')
     <script src="{{ asset('plugins/parsleyjs/dist/parsley.js') }}"></script>

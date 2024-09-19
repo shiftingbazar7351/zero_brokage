@@ -150,9 +150,9 @@ class SubCategoryController extends Controller
             if ($old_icon) {
                 $this->fileUploadService->removeImage('icon/', $old_icon);
             }
-            return redirect()->back()->with('success' , 'Deleted Successfully');
+            return redirect()->back()->with(['message' => 'Deleted Successfully', 'alert-type' => 'success']);
         } catch (Exception $e) {
-            return redirect()->back()->with('error', 'Something went wrong');
+            return redirect()->back()->with(['message' => 'Something went wrong', 'alert-type' => 'error']);
         }
     }
 

@@ -55,7 +55,7 @@ class TransactionController extends Controller
         }
 
         $transactions->save();
-        return redirect()->back()->with(['success' => 'Added Successfully']);
+        return redirect()->back()->with(['message' => 'Added Successfully', 'alert-type' => 'success']);
     }
 
     /**
@@ -95,7 +95,7 @@ class TransactionController extends Controller
         $transaction = Transaction::findOrFail($id);
         $transaction->update($request->all());
 
-        return redirect()->back()->with('success', 'Transaction updated successfully.');
+        return redirect()->back()->with(['message' => 'Updated Successfully', 'alert-type' => 'success']);
     }
 
     /**
@@ -108,7 +108,7 @@ class TransactionController extends Controller
         try {
             $menu = Transaction::findOrFail($id);
             $menu->delete();
-            return redirect()->back()->with('success', 'Menu Deleted Successfully.');
+            return redirect()->back()->with(['message' => 'Deleted Successfully', 'alert-type' => 'success']);
 
         } catch (Exception $e) {
             return redirect()->back()->with('error', 'Something went wrong');
@@ -134,7 +134,7 @@ class TransactionController extends Controller
         $transaction->payment_status = 1; // 1 means Approved
         $transaction->save();
 
-        return redirect()->back()->with('status', 'Transaction approved successfully.');
+        return redirect()->back()->with(['message' => 'Status updated Successfully', 'alert-type' => 'success']);
     }
 
 
@@ -145,7 +145,7 @@ class TransactionController extends Controller
         $transaction->reason = $request->input('reason'); // Save rejection reason
         $transaction->created_by = auth()->user()->id; // Save rejection reason
         $transaction->save();
-        return redirect()->back()->with('status', 'Transaction rejected successfully.');
+        return redirect()->back()->with(['message' => 'Status rejected Successfully', 'alert-type' => 'success']);
     }
 
 //     // In your controller

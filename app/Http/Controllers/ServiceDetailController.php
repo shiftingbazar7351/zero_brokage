@@ -43,7 +43,7 @@ class ServiceDetailController extends Controller
             'summery' => 'nullable',
         ]);
         ServiceDetail::create($validatedData);
-        return redirect(route('service-detail.index'))->with('success', 'Enquiry submitted successfully!');
+        return redirect(route('service-detail.index'))->with(['message' => 'Added Successfully', 'alert-type' => 'success']);
     }
 
 
@@ -68,7 +68,7 @@ class ServiceDetailController extends Controller
 
         $serviceDetail = ServiceDetail::findOrFail($id);
         $serviceDetail->update($validatedData);
-        return redirect(route('service-detail.index'))->with('success', 'Service detail updated successfully!');
+        return redirect(route('service-detail.index'))->with(['message' => 'Updated Successfully', 'alert-type' => 'success']);
     }
 
 
@@ -80,7 +80,7 @@ class ServiceDetailController extends Controller
         $service = ServiceDetail::findOrFail($id);
         if ($service) {
             $service->delete();
-            return redirect()->back()->with('success', 'Deleted Successfully');
+            return redirect()->back()->with(['message' => 'Deleted Successfully', 'alert-type' => 'success']);
         }
         return redirect()->back()->with('error', 'Something went wrong');
     }

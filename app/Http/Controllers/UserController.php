@@ -138,7 +138,8 @@ class UserController extends Controller
             $subject = 'ZERO BROKAGE LOGIN CREDENTIAL';
 
 
-            session()->flash('success', 'User Added Successfully ');
+            session()->flash('message', 'User Added Successfully ');
+            session()->flash('alert-type', 'Success ');
 
 
             Mail::send('emails.user-credential', ['email' => $validated['email'], 'password' => $passwordString], function ($message) use ($toUser, $subject) {

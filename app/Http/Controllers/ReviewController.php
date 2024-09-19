@@ -45,7 +45,7 @@ class ReviewController extends Controller
         $review = new Review($request->all());
         $review->created_by = auth()->id();
         $review->save();
-        return redirect()->back()->with('success', 'Review Added Successfully');
+        return redirect()->back()->with(['message' => 'Added Successfully', 'alert-type' => 'success']);
     }
 
 
@@ -84,7 +84,7 @@ class ReviewController extends Controller
         $review->update($request->only(['name', 'description','profession']));
 
         // Redirect back with a success message
-        return redirect()->back()->with('success', 'Updated Successfully');
+        return redirect()->back()->with(['message' => 'Updated Successfully', 'alert-type' => 'success']);
     }
 
     /**
@@ -97,7 +97,7 @@ class ReviewController extends Controller
     {
         $review->delete();
 
-        return redirect()->back()->with('success', 'Review Deleted successfully.');
+        return redirect()->back()->with(['message' => 'Deleted Successfully', 'alert-type' => 'success']);
     }
 
     public function reviewStatus(Request $request)

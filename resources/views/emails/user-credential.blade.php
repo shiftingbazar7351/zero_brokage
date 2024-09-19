@@ -22,6 +22,7 @@
                             Lets join the tribe of {{ $projectName }}
                         </td>
                     </tr>
+                    
                     <tr>
                         <td align="center" style="padding: 20px; background-color: #EFF6FC; border-radius: 3px;">
                             <h2 style="margin: 31px 0 40px 0; font-size: 18px; line-height: 34px; color: #323130;">Welcome to {{ $projectName }}<br />you can now get onboard with your credentials.</h2>

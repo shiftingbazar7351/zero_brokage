@@ -14,21 +14,21 @@
                         </div>
                     </div>
                     @can('faq-create')
-                    <ul>
-                        <li>
-                            <button class="btn btn-primary" type="button" data-bs-toggle="modal"
-                                data-bs-target="#add-faqs">
-                                <i class="fa fa-plus me-2"></i>Add FAQ
-                            </button>
-                        </li>
-                    </ul>
+                        <ul>
+                            <li>
+                                <button class="btn btn-primary" type="button" data-bs-toggle="modal"
+                                    data-bs-target="#add-faqs">
+                                    <i class="fa fa-plus me-2"></i>Add FAQ
+                                </button>
+                            </li>
+                        </ul>
                     @endcan
                 </div>
             </div>
             <div class="row">
                 <div class="col-12">
                     <div class="table-resposnive table-div">
-                        <table class="table  table-striped">
+                        {{-- <table class="table  table-striped">
                             <thead>
                                 <tr>
                                     <th>#</th>
@@ -90,7 +90,10 @@
                                     </tr>
                                 @endforelse
                             </tbody>
-                        </table>
+                        </table> --}}
+                        <div id="usersTable">
+                            @include('backend.faq.partials.faq-index') {{-- Load the users list initially --}}
+                        </div>
                     </div>
                 </div>
             </div>
@@ -151,8 +154,7 @@
                         <input type="hidden" id="editFaqId" name="faq_id">
                         <div class="mb-3">
                             <label class="form-label">Question</label>
-                            <textarea type="text" class="form-control" id="editQuestion" name="question" placeholder="Enter question"
-                                required></textarea>
+                            <textarea type="text" class="form-control" id="editQuestion" name="question" placeholder="Enter question" required></textarea>
                             <div id="editQuestion_error" class="text-danger"></div>
                         </div>
 
@@ -176,7 +178,9 @@
 @section('scripts')
     <script>
         var statusRoute = `{{ route('faq.status') }}`;
+        var searchRoute = `{{ route('categories.index') }}`;
     </script>
+    <script src="{{ asset('admin/assets/js/search.js') }}"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="{{ asset('admin/assets/js/status-update.js') }}"></script>
     <script>
@@ -219,7 +223,7 @@
                         },
                         error: function(xhr) {
                             console.log(xhr
-                            .responseJSON); // Debugging message for error response
+                                .responseJSON); // Debugging message for error response
                             var errors = xhr.responseJSON.errors;
                             if (errors) {
                                 $('#question_error').text('');
@@ -236,6 +240,5 @@
                 });
             });
         });
-
     </script>
 @endsection

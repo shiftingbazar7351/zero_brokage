@@ -27,14 +27,25 @@ class SubMenuController extends Controller
     {
         $this->fileUploadService = $fileUploadService;
     }
-    public function index()
+    public function index(Request $request)
     {
+        $query = submenu::query();
+        // Filter based on search query
+        if ($request->has('search')) {
+            $query->where('name', 'like', '%' . $request->search . '%')
+            ->orderByDesc('created_at');
+        }
+        // Paginate the users (adjust pagination number as needed)
+        $submenus = $query->paginate(10);
+        // Check if it's an AJAX request
+        if ($request->ajax()) {
+            return view('backend.sub-menu.partials.submenu-index', compact('submenus'))->render();
+        }
         $menus = Menu::where('status', 1)->orderBydesc('created_at')->get();
         $categories = Category::where('status', 1)->orderByDesc('created_at')->get();
         $subcategories = Subcategory::where('status', 1)->orderByDesc('created_at')->get();
         $countryId = Country::where('name', 'India')->value('id');
         $states = State::where('country_id', $countryId)->get(['name', 'id']);
-        $submenus = SubMenu::orderByDesc('created_at')->paginate(25);
         return view('backend.sub-menu.index', compact('submenus', 'categories', 'states', 'menus', 'subcategories'));
     }
 

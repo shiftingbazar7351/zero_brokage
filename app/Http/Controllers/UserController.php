@@ -28,9 +28,23 @@ class UserController extends Controller
      * Display a listing of the resource.
      *
      */
-    public function index()
+    public function index(Request $request)
     {
-        $users = User::orderByDesc('created_at')->get();
+        $query = User::query();
+
+        // Filter based on search query
+        if ($request->has('search')) {
+            $query->where('name', 'like', '%' . $request->search . '%')
+                  ->orWhere('email', 'like', '%' . $request->search . '%');
+        }
+
+        // Paginate the users (adjust pagination number as needed)
+        $users = $query->paginate(10);
+
+        // Check if it's an AJAX request
+        if ($request->ajax()) {
+            return view('backend.user.partials.users_list', compact('users'))->render();
+        }
         $roles = Role::orderByDesc('created_at')->get();
         return view('backend.user.index', compact('users', 'roles'));
     }
@@ -190,8 +204,10 @@ class UserController extends Controller
             return response()->json(['error' => 'User not found'], 404);
         }
 
-        return response()->json($user);
+        return response()->json($user); // Return user data as JSON
     }
+
+
 
     /**
      * Update the specified resource in storage.

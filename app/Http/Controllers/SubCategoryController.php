@@ -23,10 +23,22 @@ class SubCategoryController extends Controller
      * Display a listing of the resource.
      *
      */
-    public function index()
+    public function index(Request $request)
     {
+        $query = SubCategory::query();
+        // Filter based on search query
+        if ($request->has('search')) {
+            $query->where('name', 'like', '%' . $request->search . '%')
+            ->orderByDesc('created_at');
+        }
+        // Paginate the users (adjust pagination number as needed)
+        $subcategories = $query->paginate(10);
+        // Check if it's an AJAX request
+        if ($request->ajax()) {
+            return view('backend.sub-category.partials.subcategory-index', compact('subcategories'))->render();
+        }
         $categories = Category::get();
-        $subcategories = SubCategory::with('categoryName')->orderByDesc('created_at')->paginate(10);
+        // $subcategories = SubCategory::with('categoryName')->orderByDesc('created_at')->paginate(10);
         return view('backend.sub-category.index', compact('subcategories','categories'));
     }
 

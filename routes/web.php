@@ -213,7 +213,7 @@ Route::middleware(['auth', 'check.ip'])->group(function () {
         Route::post('/vendors', 'store')->name('vendors.store')->middleware('can:vendors-create');
         Route::get('/vendors/{vendors}/edit', 'edit')->name('vendors.edit')->middleware('can:vendors-edit');
         Route::put('/vendors/{vendors}', 'update')->name('vendors.update')->middleware('can:vendors-edit');
-        Route::post('/vendors/{vendors}', 'show')->name('vendors.show')->middleware('can:vendors-show');
+        Route::get('/vendors/{vendors}', 'show')->name('vendors.show')->middleware('can:vendors-show');
         Route::delete('/vendors/{vendors}', 'destroy')->name('vendors.destroy')->middleware('can:vendors-delete');
         Route::post('/vendors-status', 'verifyStatus')->name('vendors.status')->middleware('can:vendors-status');
         Route::post('/fetch-city-vendor/{stateId}', 'fetchCity');
@@ -231,7 +231,7 @@ Route::middleware(['auth', 'check.ip'])->group(function () {
         Route::post('/products', 'store')->name('products.store')->middleware('can:product-create');
         Route::get('/products/{products}/edit', 'edit')->name('products.edit')->middleware('can:product-edit');
         Route::put('/products/{products}', 'update')->name('products.update')->middleware('can:product-edit');
-        Route::post('/products/{products}', 'show')->name('products.show')->middleware('can:product-show');
+        Route::get('/products/{products}', 'show')->name('products.show')->middleware('can:product-show');
         Route::delete('/products/{products}', 'destroy')->name('products.destroy')->middleware('can:product-delete');
     });
 

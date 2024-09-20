@@ -8,9 +8,26 @@ use Illuminate\Support\Facades\Validator;
 
 class MetaUrlController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $metas = MetaUrl::paginate(10);
+
+        $query = MetaUrl::query();
+
+        // Filter based on search query
+        if ($request->has('search')) {
+            $query->where('url', 'like', '%' . $request->search . '%')
+                  ->orWhere('title', 'like', '%' . $request->search . '%')
+                  ->orWhere('description', 'like', '%' . $request->search . '%')
+                  ->orWhere('keyword', 'like', '%' . $request->search . '%');
+        }
+
+        // Paginate the users (adjust pagination number as needed)
+        $metas = $query->paginate(10);
+
+        // Check if it's an AJAX request
+        if ($request->ajax()) {
+            return view('backend.meta.partials.meta-index', compact('metas'))->render();
+        }
         return view('backend.meta.index', compact('metas'));
     }
 

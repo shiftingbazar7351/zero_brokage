@@ -1,4 +1,4 @@
-<table class="table datatable">
+<table class="table">
     <thead>
         <tr>
             <th>#</th>
@@ -50,3 +50,40 @@
         @endforelse
     </tbody>
 </table>
+
+@if ($newsletters->lastPage() > 1)
+    <div class="d-flex justify-content-between align-items-center">
+        <!-- Showing X to Y of Z entries -->
+        <div>
+            Showing {{ $newsletters->firstItem() }} to {{ $newsletters->lastItem() }} of {{ $newsletters->total() }}
+            entries
+        </div>
+
+        <nav aria-label="Page navigation">
+            <ul class="pagination mb-0">
+                <!-- Previous Button -->
+                <li class="page-item {{ $newsletters->onFirstPage() ? 'disabled' : '' }}">
+                    <a class="page-link" href="{{ $newsletters->previousPageUrl() }}" tabindex="-1">Previous</a>
+                </li>
+
+                <!-- Page numbers with ellipsis -->
+                @foreach (range(1, $newsletters->lastPage()) as $i)
+                    @if ($i == 1 || $i == $newsletters->lastPage() || abs($i - $newsletters->currentPage()) <= 2)
+                        <li class="page-item {{ $newsletters->currentPage() == $i ? 'active' : '' }}">
+                            <a class="page-link" href="{{ $newsletters->url($i) }}">{{ $i }}</a>
+                        </li>
+                    @elseif ($i == 2 || $i == $newsletters->lastPage() - 1)
+                        <li class="page-item disabled">
+                            <span class="page-link">...</span>
+                        </li>
+                    @endif
+                @endforeach
+
+                <!-- Next Button -->
+                <li class="page-item {{ !$newsletters->hasMorePages() ? 'disabled' : '' }}">
+                    <a class="page-link" href="{{ $newsletters->nextPageUrl() }}">Next</a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+@endif

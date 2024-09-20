@@ -148,13 +148,13 @@ class TransactionController extends Controller
         return redirect()->back()->with(['message' => 'Status rejected Successfully', 'alert-type' => 'success']);
     }
 
-//     // In your controller
+    //     // In your controller
 //     public function getTransactionDetails($id)
 // {
 //     // Fetch the transaction by its ID
 //     $transaction = Transaction::find($id);
 
-//     // Return the transaction details in JSON format
+    //     // Return the transaction details in JSON format
 //     if ($transaction) {
 //         return response()->json([
 //             'utr' => $transaction->utr,
@@ -163,40 +163,39 @@ class TransactionController extends Controller
 //         ]);
 //     }
 
-//     // Return an error response if the transaction is not found
+    //     // Return an error response if the transaction is not found
 //     return response()->json(['error' => 'Transaction not found'], 404);
 // }
 
 
-public function getTransactionDetails(Request $request)
-{
-    $transactionIds = $request->input('transaction_ids'); // Expect an array
+    public function getTransactionDetails(Request $request)
+    {
+        $transactionIds = $request->input('transaction_ids'); // Expect an array
 
-    if (!is_array($transactionIds) || empty($transactionIds)) {
-        return response()->json(['error' => 'Invalid input'], 400);
+        if (!is_array($transactionIds) || empty($transactionIds)) {
+            return response()->json(['error' => 'Invalid input'], 400);
+        }
+
+        // Fetch transactions by IDs
+        $transactions = Transaction::whereIn('id', $transactionIds)->get();
+
+        if ($transactions->isEmpty()) {
+            return response()->json(['error' => 'No transactions found'], 404);
+        }
+
+        // Prepare data to return
+        $data = $transactions->mapWithKeys(function ($transaction) {
+            return [
+                $transaction->id => [
+                    'utr' => $transaction->utr,
+                    'payment_time' => $transaction->payment_time,
+                    'screenshot' => $transaction->screenshot ? Storage::url('transaction/' . $transaction->screenshot) : null,
+                ]
+            ];
+        });
+
+        return response()->json($data);
     }
-
-    // Fetch transactions by IDs
-    $transactions = Transaction::whereIn('id', $transactionIds)->get();
-
-    if ($transactions->isEmpty()) {
-        return response()->json(['error' => 'No transactions found'], 404);
-    }
-
-    // Prepare data to return
-    $data = $transactions->mapWithKeys(function($transaction) {
-        return [
-            $transaction->id => [
-                'utr' => $transaction->utr,
-                'payment_time' => $transaction->payment_time,
-                'screenshot' => $transaction->screenshot ? Storage::url('transaction/' . $transaction->screenshot) : null,
-            ]
-        ];
-    });
-
-    return response()->json($data);
-}
-
 
 
 }

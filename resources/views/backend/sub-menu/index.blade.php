@@ -9,8 +9,7 @@
             width: auto;
         }
 
-        
-        .preview-img{
+        .preview-img {
             width: 150px;
             height: 150px;
             object-fit: cover;
@@ -23,8 +22,14 @@
         <div class="content">
             <div class="content-page-header content-page-headersplit mb-0">
                 <h5>Sub Menu</h5>
-                @can('submenu-create')
-                    <div class="list-btn">
+                <div class="list-btn d-flex gap-3">
+                    <div class="page-headers">
+                        <div class="search-bar">
+                            <span><i class="fe fe-search"></i></span>
+                            <input type="text" id="search" placeholder="Search" class="form-control">
+                        </div>
+                    </div>
+                    @can('submenu-create')
                         <ul>
                             <li>
                                 <button type="button" class="btn btn-primary mb-3" data-toggle="modal"
@@ -34,85 +39,15 @@
 
                             </li>
                         </ul>
-                    </div>
-                @endcan
+                    @endcan
+                </div>
             </div>
             <div class="row">
                 <div class="col-12 ">
                     <div class="table-resposnive table-div text-center">
-                        <table class="table table-bordered table-striped">
-                            <thead class="thead-dark">
-                                <tr>
-                                    <th>ID</th>
-                                    <th>Name</th>
-                                    <th>Image</th>
-                                    @can('submenu-status')
-                                        <th>Status</th>
-                                    @endcan
-                                    @can(['submenu-edit', 'submenu-delete'])
-                                        <th>Action</th>
-                                    @endcan
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @if ($submenus->isEmpty())
-                                    <tr>
-                                        <td colspan="5" class="text-center">No data found</td>
-                                    </tr>
-                                @else
-                                    @foreach ($submenus as $subcategory)
-                                        <tr>
-                                            <td>{{ $loop->iteration }}</td>
-                                            <td>{{ $subcategory->name }}</td>
-
-                                            <td>
-                                                @if ($subcategory->image)
-                                                    <img src="{{ Storage::url('submenu/' . $subcategory->image) }}"
-                                                        class="img-thumbnail" width="50px">
-                                                @else
-                                                    No Image
-                                                @endif
-                                            </td>
-                                            @can('submenu-status')
-                                            <td>
-                                                <div class="active-switch">
-                                                    <label class="switch">
-                                                        <input type="checkbox" class="status-toggle"
-                                                            data-id="{{ $subcategory->id }}"
-                                                            {{ $subcategory->status ? 'checked' : '' }}>
-                                                        <span class="sliders round"></span>
-                                                    </label>
-                                                </div>
-                                            </td>
-                                            @endcan
-                                            @can(['submenu-edit', 'submenu-delete'])
-                                            <td>
-                                                <div class="d-flex" style="justify-content: center">
-                                                    <button class="btn delete-table me-2"
-                                                        onclick="editCategory({{ $subcategory->id }})" type="button"
-                                                        data-bs-toggle="modal" data-bs-target="#edit-category">
-                                                        <i class="fe fe-edit"></i>
-                                                    </button>
-
-
-                                                    <!-- Delete Button -->
-                                                    <form action="{{ route('submenu.destroy', $subcategory->id) }}"
-                                                        method="POST" style="display:inline;">
-                                                        @csrf
-                                                        @method('DELETE')
-                                                        <button type="submit" class="btn delete-table"
-                                                            onclick="return confirm('Are you sure you want to delete this Sub Menu?');">
-                                                            <i class="fe fe-trash-2"></i>
-                                                        </button>
-                                                    </form>
-                                                </div>
-                                            </td>
-                                            @endcan
-                                        </tr>
-                                    @endforeach
-                                @endif
-                            </tbody>
-                        </table>
+                        <div id="usersTable">
+                            @include('backend.sub-menu.partials.submenu-index') {{-- Load the users list initially --}}
+                        </div>
                     </div>
                 </div>
             </div>
@@ -419,9 +354,11 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <script>
         var statusRoute = `{{ route('submenu.status') }}`;
+        var searchRoute = `{{ route('submenu.index') }}`;
     </script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="{{ asset('admin/assets/js/status-update.js') }}"></script>
+    <script src="{{ asset('admin/assets/js/search.js') }}"></script>
     <script src="{{ asset('admin/assets/js/preview-img.js') }}"></script>
     <script>
         // Function to preview the image

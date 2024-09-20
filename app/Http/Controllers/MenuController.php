@@ -21,11 +21,21 @@ class MenuController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
+        $query = Menu::query();
+        // Filter based on search query
+        if ($request->has('search')) {
+            $query->where('name', 'like', '%' . $request->search . '%');
+        }
+        // Paginate the users (adjust pagination number as needed)
+        $menusCat = $query->paginate(10);
+        // Check if it's an AJAX request
+        if ($request->ajax()) {
+            return view('backend.menu.partials.menu-index', compact('menusCat'))->render();
+        }
         $subcategories = SubCategory::orderByDesc('created_at')->get();
         $categories = Category::orderByDesc('created_at')->get();
-        $menusCat = Menu::orderByDesc('created_at')->paginate(25);
         return view('backend.menu.index', compact('subcategories', 'categories', 'menusCat'));
     }
 

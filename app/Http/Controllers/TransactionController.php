@@ -21,9 +21,24 @@ class TransactionController extends Controller
     {
         $this->fileUploadService = $fileUploadService;
     }
-    public function index()
+    public function index(Request $request)
     {
-        $transactions = Transaction::orderByDesc('id')->paginate(10);
+        $query = Transaction::query();
+        // Filter based on search query
+        if ($request->has('search')) {
+            $query->where('url', 'like', '%' . $request->search . '%')
+                ->orWhere('title', 'like', '%' . $request->search . '%')
+                ->orWhere('description', 'like', '%' . $request->search . '%')
+                ->orWhere('keyword', 'like', '%' . $request->search . '%');
+        }
+
+        // Paginate the users (adjust pagination number as needed)
+        $transactions = $query->paginate(10);
+
+        // Check if it's an AJAX request
+        if ($request->ajax()) {
+            return view('backend.transaction.partials.transaction-index', compact('transactions'))->render();
+        }
         return view('backend.transaction.index', compact('transactions'));
     }
 
@@ -137,7 +152,6 @@ class TransactionController extends Controller
         return redirect()->back()->with(['message' => 'Status updated Successfully', 'alert-type' => 'success']);
     }
 
-
     public function reject(Request $request, $id)
     {
         $transaction = Transaction::findOrFail($id);
@@ -167,7 +181,6 @@ class TransactionController extends Controller
 //     return response()->json(['error' => 'Transaction not found'], 404);
 // }
 
-
     public function getTransactionDetails(Request $request)
     {
         $transactionIds = $request->input('transaction_ids'); // Expect an array
@@ -190,12 +203,11 @@ class TransactionController extends Controller
                     'utr' => $transaction->utr,
                     'payment_time' => $transaction->payment_time,
                     'screenshot' => $transaction->screenshot ? Storage::url('transaction/' . $transaction->screenshot) : null,
-                ]
+                ],
             ];
         });
 
         return response()->json($data);
     }
-
 
 }

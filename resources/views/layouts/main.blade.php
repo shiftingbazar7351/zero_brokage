@@ -22,7 +22,8 @@
 </head>
 
 <body class="login-body">
-    <div class="main-wrapper h-100" style="background: radial-gradient(circle at 18.7% 37.8%, rgb(250, 250, 250) 0%, rgb(225, 234, 238) 90%);">
+    <div class="main-wrapper h-100"
+        style="background: radial-gradient(circle at 18.7% 37.8%, rgb(250, 250, 250) 0%, rgb(225, 234, 238) 90%);">
 
         {{-- <header class="header">
             <div class="container">
@@ -78,15 +79,15 @@
                                 <h6>Sign in with <a href="login-phone.html">Phone Number</a></h6> --}}
                             </div>
 
-                        @yield('content')
+                            @yield('content')
 
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
 
-    <!-- <div class="mouse-cursor cursor-outer"></div>
+        <!-- <div class="mouse-cursor cursor-outer"></div>
         <div class="mouse-cursor cursor-inner"></div> -->
 
     </div>

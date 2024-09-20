@@ -5,7 +5,13 @@
         <div class="content">
             <div class="content-page-header content-page-headersplit mb-0">
                 <h5>Transactions</h5>
-                <div class="list-btn">
+                <div class="list-btn d-flex gap-3">
+                    <div class="page-headers">
+                        <div class="search-bar">
+                            <span><i class="fe fe-search"></i></span>
+                            <input type="text" id="search" placeholder="Search" class="form-control">
+                        </div>
+                    </div>
                     <ul>
                         <li>
                             <button class="btn btn-primary" type="button" data-bs-toggle="modal"
@@ -187,6 +193,10 @@
 @endsection
 
 @section('scripts')
+    <script>
+        var searchRoute = `{{ route('meta.index') }}`;
+    </script>
+    <script src="{{ asset('admin/assets/js/search.js') }}"></script>
     <script>
         function editTransaction(id) {
             $.ajax({

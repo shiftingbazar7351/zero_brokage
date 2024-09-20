@@ -17,9 +17,8 @@
                     <div class="page-headers">
                         <div class="search-bar">
                             <span><i class="fe fe-search"></i></span>
-                            <input type="text" placeholder="Search" id="searchInput" class="form-control">
+                            <input type="text" id="search" placeholder="Search" class="form-control">
                         </div>
-                        <div id="searchResults"></div>
                     </div>
                     @can('subcategory-create')
                         <div class="list-btn">
@@ -38,7 +37,7 @@
             <div class="row text-center">
                 <div class="col-12">
                     <div class="table-resposnive table-div">
-                        <table class="table datatable table-striped table-bordered">
+                        {{-- <table class="table table-striped table-bordered">
                             <thead>
                                 <tr>
                                     <th>#</th>
@@ -109,13 +108,14 @@
                                     </tr>
                                 @endforelse
                             </tbody>
-                        </table>
+                        </table> --}}
+                        <div id="usersTable">
+                            @include('backend.sub-category.partials.subcategory-index') {{-- Load the users list initially --}}
+                        </div>
                     </div>
                 </div>
             </div>
-
         </div>
-
     </div>
 
     <!-- Add Category Modal -->
@@ -309,8 +309,10 @@
 @section('scripts')
     <script>
         var statusRoute = `{{ route('subcategories.status') }}`;
+        var searchRoute = `{{ route('subcategories.index') }}`;
     </script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="{{ asset('admin/assets/js/search.js') }}"></script>
     <script src="{{ asset('admin/assets/js/status-update.js') }}"></script>
     <script src="{{ asset('admin/assets/js/preview-img.js') }}"></script>
     <script>

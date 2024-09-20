@@ -27,11 +27,24 @@ class UserController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $users = User::orderByDesc('created_at')->get();
+        $query = User::query();
+
+        // Filter based on search query
+        if ($request->has('search')) {
+            $query->where('name', 'like', '%' . $request->search . '%')
+                  ->orWhere('email', 'like', '%' . $request->search . '%');
+        }
+
+        // Paginate the users (adjust pagination number as needed)
+        $users = $query->paginate(10);
+
+        // Check if it's an AJAX request
+        if ($request->ajax()) {
+            return view('backend.user.partials.users_list', compact('users'))->render();
+        }
         $roles = Role::orderByDesc('created_at')->get();
         return view('backend.user.index', compact('users', 'roles'));
     }
@@ -39,7 +52,6 @@ class UserController extends Controller
     /**
      * Show the form for creating a new resource.
      *
-     * @return \Illuminate\Http\Response
      */
     public function create()
     {
@@ -51,7 +63,6 @@ class UserController extends Controller
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
      */
     // public function store(Request $request)
     // {
@@ -169,48 +180,40 @@ class UserController extends Controller
      * Display the specified resource.
      *
      * @param  int  $id
-     * @return \Illuminate\Http\Response
      */
     public function show($id)
     {
-        $data = User::with('userProfile', 'roles')->findOrFail($id);
+        // $data = User::with('userProfile', 'roles')->findOrFail($id);
 
-        $profileImage = getSingleMedia($data, 'profile_image');
+        // $profileImage = getSingleMedia($data, 'profile_image');
 
-        $user = User::where('id', Auth::user()->id)->first();
+        // $user = User::where('id', Auth::user()->id)->first();
 
-        return view('users.profile', compact('data', 'profileImage', 'user'));
+        // return view('users.profile', compact('data', 'profileImage', 'user'));
     }
 
     /**
      * Show the form for editing the specified resource.
      *
      * @param  int  $id
-     * @return \Illuminate\Http\Response
      */
     public function edit($id)
     {
-        $roles = null;
-        $data = User::with('roles')->findOrFail($id);
+        $user = User::find($id);
+        if (!$user) {
+            return response()->json(['error' => 'User not found'], 404);
+        }
 
-        $data['user_type'] = $data->roles->pluck('id')[0] ?? null;
-        if ($id != auth()->user()->id) {
-            $roles = Role::where('status', 1)->where('name', '!=', 'super_admin')->get()->pluck('title', 'id');
-        }
-        if ($data && $data->profile_picture) {
-            $profileImage = config('app.url') . $data->profile_picture;
-        } else {
-            $profileImage = getSingleMedia($data, 'profile_image');
-        }
-        return view('users.form', compact('data', 'id', 'roles', 'profileImage'));
+        return response()->json($user); // Return user data as JSON
     }
+
+
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
-     * @return \Illuminate\Http\Response
      */
     public function update(UserRequest $request, $id)
     {
@@ -249,6 +252,16 @@ class UserController extends Controller
             return redirect()->back()->with('success', 'User Deleted Successfully');
         }
         return redirect()->back()->with('error', 'Something went wrong');
+    }
+    public function userStatus(Request $request)
+    {
+        $item = User::find($request->id);
+        if ($item) {
+            $item->status = $request->status;
+            $item->save();
+            return response()->json(['success' => true, 'message' => 'Status updated successfully.']);
+        }
+        return response()->json(['success' => false, 'message' => 'Item not found.']);
     }
 
 

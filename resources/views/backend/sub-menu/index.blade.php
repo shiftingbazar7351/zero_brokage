@@ -1,15 +1,15 @@
 @extends('backend.layouts.main')
 
 @section('styles')
-    <script src="https://cdn.ckeditor.com/4.20.1/standard/ckeditor.js"></script>
     {{-- <script src="https://cdn.jsdelivr.net/npm/ckeditor4@4.25.0/ckeditor.js"></script> --}}
+    <script src="https://cdn.ckeditor.com/4.22.0/standard/ckeditor.js"></script>
 
     <style>
         .default-img {
             width: auto;
         }
 
-        
+
         .preview-img{
             width: 150px;
             height: 150px;
@@ -23,8 +23,14 @@
         <div class="content">
             <div class="content-page-header content-page-headersplit mb-0">
                 <h5>Sub Menu</h5>
-                @can('submenu-create')
-                    <div class="list-btn">
+                <div class="list-btn d-flex gap-3">
+                    <div class="page-headers">
+                        <div class="search-bar">
+                            <span><i class="fe fe-search"></i></span>
+                            <input type="text" id="search" placeholder="Search" class="form-control">
+                        </div>
+                    </div>
+                    @can('submenu-create')
                         <ul>
                             <li>
                                 <button type="button" class="btn btn-primary mb-3" data-toggle="modal"
@@ -34,8 +40,8 @@
 
                             </li>
                         </ul>
-                    </div>
-                @endcan
+                    @endcan
+                </div>
             </div>
             <div class="row">
                 <div class="col-12 ">
@@ -230,7 +236,7 @@
                         <div class="form-group">
                             <label for="details" class="col-form-label">Details <span
                                     class="text-danger">*</span></label>
-                            <textarea class="f    orm-control" id="details" placeholder="Enter Details" name="details">{{ old('details') }}</textarea>
+                            <textarea class="form-control" id="test-editor" name="details">{{ old('details') }}</textarea>
                             <div id="details-error" class="text-danger"></div>
                         </div>
 
@@ -246,11 +252,10 @@
             </div>
         </div>
     </div>
-
     <script>
-        // Initialize CKEditor for t    he Details and Description fields
-        CKEDITOR.replace('details');
+        CKEDITOR.replace('test-editor');
     </script>
+
 
 
     <div class="modal fade" id="edit-category" tabindex="-1" aria-labelledby="editCategoryModalLabel"
@@ -419,9 +424,11 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <script>
         var statusRoute = `{{ route('submenu.status') }}`;
+        var searchRoute = `{{ route('submenu.index') }}`;
     </script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="{{ asset('admin/assets/js/status-update.js') }}"></script>
+    <script src="{{ asset('admin/assets/js/search.js') }}"></script>
     <script src="{{ asset('admin/assets/js/preview-img.js') }}"></script>
     <script>
         // Function to preview the image
@@ -502,7 +509,6 @@
                     contentType: false,
                     processData: false,
                     success: function(response) {
-                        console.log(response);
                         if (response.success) {
                             location.reload();
                         }
@@ -627,7 +633,6 @@
                             }
                         },
                         error: function(xhr) {
-                            console.error('Error loading menus:', xhr);
                             menuElement.empty().append(
                                 '<option value="" disabled>Error loading menus</option>'
                             );
@@ -737,7 +742,10 @@
                         $('#edit-price').val(response.data.total_price);
                         $('#edit-discount').val(response.data.discount);
                         $('#edit-final-price').val(response.data.discounted_price);
-                        $('#edit-details').val(response.data.details);
+                        // $('#edit-details').val(response.data.details);
+                        if (CKEDITOR.instances['edit-details']) {
+                            CKEDITOR.instances['edit-details'].setData(response.data.details);
+                        }
                         $('#edit-description').val(response.data.description);
                         $('#editCategorySelect').val(response.data.category_id).trigger('change');
                         $('#edit-state').val(response.state.id).trigger('change');
@@ -755,7 +763,6 @@
                                 _token: '{{ csrf_token() }}'
                             },
                             success: function(subResponse) {
-                                console.log(subResponse);
                                 $('#editSubcategorySelect').empty().append(
                                     '<option value="" selected>Select Subcategory</option>'
                                 );
@@ -766,10 +773,7 @@
                                         );
                                 });
                             },
-                            error: function(xhr) {
-                                console.error('Error fetching subcategories:', xhr
-                                    .responseText);
-                            }
+                            error: function(xhr) {}
                         });
 
                         // Fetch and populate menus based on the selected subcategory
@@ -790,10 +794,7 @@
                                         );
                                 });
                             },
-                            error: function(xhr) {
-                                console.error('Error fetching menus:', xhr
-                                    .responseText);
-                            }
+                            error: function(xhr) {}
                         });
 
                         $.ajax({

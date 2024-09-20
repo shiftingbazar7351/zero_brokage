@@ -110,7 +110,7 @@ Route::middleware(['auth', 'check.ip'])->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
     Route::controller(UserController::class)->group(function () {
-        Route::get('/user', 'index')->name('user.index')->middleware('can:user-list');
+        Route::get('/user', 'index')->name('user.index');
         Route::get('/user/create', 'create')->name('user.create')->middleware('can:user-create');
         Route::post('/user', 'store')->name('user.store')->middleware('can:user-create');
         Route::get('/user/{user}/edit', 'edit')->name('user.edit')->middleware('can:user-edit');
@@ -221,7 +221,7 @@ Route::middleware(['auth', 'check.ip'])->group(function () {
         Route::post('/vendors', 'store')->name('vendors.store')->middleware('can:vendors-create');
         Route::get('/vendors/{vendors}/edit', 'edit')->name('vendors.edit')->middleware('can:vendors-edit');
         Route::put('/vendors/{vendors}', 'update')->name('vendors.update')->middleware('can:vendors-edit');
-        Route::post('/vendors/{vendors}', 'show')->name('vendors.show')->middleware('can:vendors-show');
+        Route::get('/vendors/{vendors}', 'show')->name('vendors.show')->middleware('can:vendors-show');
         Route::delete('/vendors/{vendors}', 'destroy')->name('vendors.destroy')->middleware('can:vendors-delete');
         Route::post('/vendors-status', 'verifyStatus')->name('vendors.status')->middleware('can:vendors-status');
         Route::post('/fetch-city-vendor/{stateId}', 'fetchCity');
@@ -239,7 +239,7 @@ Route::middleware(['auth', 'check.ip'])->group(function () {
         Route::post('/products', 'store')->name('products.store')->middleware('can:product-create');
         Route::get('/products/{products}/edit', 'edit')->name('products.edit')->middleware('can:product-edit');
         Route::put('/products/{products}', 'update')->name('products.update')->middleware('can:product-edit');
-        Route::post('/products/{products}', 'show')->name('products.show')->middleware('can:product-show');
+        Route::get('/products/{products}', 'show')->name('products.show')->middleware('can:product-show');
         Route::delete('/products/{products}', 'destroy')->name('products.destroy')->middleware('can:product-delete');
     });
 

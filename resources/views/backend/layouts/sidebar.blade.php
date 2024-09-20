@@ -9,7 +9,6 @@
                 <img src="{{ asset('assets/img/logofinal.webp') }}" class="img-fluid logo-small" alt="Logo">
             </a>
         </div>
-
     </div>
     <div class="sidebar-inner slimscroll">
         <div id="sidebar-menu" class="sidebar-menu">
@@ -32,8 +31,6 @@
                         <a href="{{ route('user.index') }}"><i class="fe fe-grid"></i> <span>Users</span></a>
                     </li>
                 @endcan
-
-
                 @canany(['categories-list', 'subcategory-list', 'menus-list', 'submenu-list', 'india-services-list',
                     'service-detail-list'])
                     <li class="submenu">
@@ -61,7 +58,6 @@
                                     </a>
                                 </li>
                             @endcan
-
                             @can(['menus-list'])
                                 <li>
                                     <a href="{{ route('menus.index') }}"
@@ -80,7 +76,8 @@
                                     </a>
                                 </li>
                             @endcan
-                            @can(['service-detail-list'])
+                            {{-- ---------------------This Route currently not in use --------------------------------------------------}}
+                            {{-- @can(['service-detail-list'])
                                 <li>
                                     <a href="{{ route('service-detail.index') }}"
                                         class="{{ Route::currentRouteName() === 'service-detail.index' ? 'active' : '' }}">
@@ -88,22 +85,22 @@
                                         <span>Service details</span>
                                     </a>
                                 </li>
-                            @endcan
+                            @endcan --}}
+                            {{-- ----------------------------------------------------------------------------------------------------- --}}
                             @can(['india-services-list'])
                                 <li>
                                     <a href="{{ route('india-services.index') }}"
-                                        class="{{ Route::currentRouteName() === 'india-services.index' ? 'active' : '' }}">
+                                        class="{{ Route::currentRouteName() === 'india-services.index' ? 'active' : '' }} {{ Route::currentRouteName() === 'india-services.edit' ? 'active' : '' }}">
                                         <i class="fe fe-file-text"></i>
                                         <span>India Services</span>
                                     </a>
                                 </li>
                             @endcan
                         </ul>
-
                     </li>
                 @endcanany
 
-                @canany(['employee-headoffice-list', 'employee-company-list', 'employee-product-list', 'employee-branch-list', 'employee-department-list'])
+                @canany(['employee-headoffice-list', 'employee-company-list', 'employee-product-list', 'employee-branch-list', 'employee-department-list','employee-list'])
                 <li class="submenu">
                     <a href="javascript:void(0);"><i class="fe fe-briefcase"></i>
                         <span>Employee Data</span>
@@ -155,9 +152,17 @@
                             </a>
                         </li>
                         @endcan
+                        @can(['employee-list'])
+                        <li>
+                            <a href="{{ route('employee.index') }}"
+                                class="{{ Route::currentRouteName() === 'employee.index' ? 'active' : '' }}">
+                                <i class="fe fe-file-text"></i>
+                                <span>Employee</span>
+                            </a>
+                        </li>
+                        @endcan
 
                     </ul>
-
                 </li>
                 @endcanany
 
@@ -170,7 +175,6 @@
                         </a>
                     </li>
                 @endcan
-
                 @can(['faq-list'])
                     <li class="{{ Route::currentRouteName() === 'faq.index' ? 'active' : '' }}">
                         <a href="{{ route('faq.index') }}">
@@ -189,15 +193,13 @@
                 @endcan
                 @can('product-list')
                     <li
-                        class="{{ in_array(Route::currentRouteName(), ['products.index', 'products.create', 'products.edit']) ? 'active' : '' }}">
+                        class="{{ in_array(Route::currentRouteName(), ['products.index', 'products.create', 'products.edit','products.show']) ? 'active' : '' }}">
                         <a href="{{ route('products.index') }}">
                             <i class="fe fe-file-text"></i>
                             <span>Products</span>
                         </a>
                     </li>
                 @endcan
-
-
                 @canany(['vendors-list', 'verified-list'])
                     <li class="submenu">
                         <a href="javascript:void(0);"><i class="fe fe-briefcase"></i>
@@ -208,7 +210,7 @@
                             @can('vendors-list')
                                 <li>
                                     <a href="{{ route('vendors.index') }}"
-                                        class="{{ in_array(Route::currentRouteName(), ['vendors.index', 'vendors.create', 'vendors.edit']) ? 'active' : '' }}">
+                                        class="{{ in_array(Route::currentRouteName(), ['vendors.index', 'vendors.create', 'vendors.edit','vendors.show']) ? 'active' : '' }}">
                                         <i class="fe fe-file-text"></i>
                                         <span>Vendor</span>
                                     </a>

@@ -11,7 +11,6 @@ class VerifiedController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
      */
     protected $fileUploadService;
      public function __construct(FileUploadService $fileUploadService)
@@ -28,7 +27,6 @@ class VerifiedController extends Controller
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
     {
@@ -56,7 +54,6 @@ class VerifiedController extends Controller
      * Display the specified resource.
      *
      * @param  int  $id
-     * @return \Illuminate\Http\Response
      */
     public function show($id)
     {
@@ -67,7 +64,6 @@ class VerifiedController extends Controller
      * Show the form for editing the specified resource.
      *
      * @param  int  $id
-     * @return \Illuminate\Http\Response
      */
     public function edit(Verified $verified)
     {
@@ -86,7 +82,6 @@ class VerifiedController extends Controller
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
-     * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
     {
@@ -116,7 +111,6 @@ class VerifiedController extends Controller
      * Remove the specified resource from storage.
      *
      * @param  int  $id
-     * @return \Illuminate\Http\Response
      */
     public function destroy(Verified $verified)
     {

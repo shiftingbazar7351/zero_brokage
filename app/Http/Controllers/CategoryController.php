@@ -13,9 +13,19 @@ class CategoryController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $categories = Category::orderByDesc('created_at')->paginate(10);
+        $query = Category::query();
+        // Filter based on search query
+        if ($request->has('search')) {
+            $query->where('name', 'like', '%' . $request->search . '%');
+        }
+        // Paginate the users (adjust pagination number as needed)
+        $categories = $query->paginate(10);
+        // Check if it's an AJAX request
+        if ($request->ajax()) {
+            return view('backend.category.partials.category-index', compact('categories'))->render();
+        }
         return view('backend.category.index', compact('categories'));
     }
 
@@ -91,7 +101,7 @@ class CategoryController extends Controller
 
         $category->delete();
 
-        return back()->with(['message' => 'Category deleted successfully.','alert-type'=>'success']);
+        return back()->with(['message' => 'Category deleted successfully.', 'alert-type' => 'success']);
 
     }
 

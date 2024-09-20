@@ -35,9 +35,9 @@
                                     <th>#</th>
                                     <th>Name</th>
                                     <th>email</th>
-                                    @can('vendors-edit', 'vendors-delete' , 'vendors-show')
+                                    @canany(['vendors-edit', 'vendors-delete' , 'vendors-show'])
                                     <th>Action</th>
-                                    @endcan
+                                    @endcanany
                                 </tr>
                             </thead>
                             <tbody>
@@ -46,7 +46,7 @@
                                         <td>{{ $loop->iteration }}</td>
                                         <td>{{ $vendor->company_name }}</td>
                                         <td>{{ $vendor->email }}</td>
-                                        @can('vendors-edit', 'vendors-delete','vendors-show')
+                                        @canany(['vendors-edit', 'vendors-delete' , 'vendors-show'])
                                         <td>
                                             <div class="d-flex">
                                                 <a class="btn delete-table me-2 edit-service"
@@ -71,7 +71,7 @@
                                                 </form>
                                             </div>
                                         </td>
-                                        @endcan
+                                        @endcanany
                                     </tr>
                                 @empty
                                     <tr>

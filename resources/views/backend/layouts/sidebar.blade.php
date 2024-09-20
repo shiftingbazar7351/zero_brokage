@@ -9,7 +9,6 @@
                 <img src="{{ asset('assets/img/logofinal.webp') }}" class="img-fluid logo-small" alt="Logo">
             </a>
         </div>
-
     </div>
     <div class="sidebar-inner slimscroll">
         <div id="sidebar-menu" class="sidebar-menu">
@@ -32,8 +31,6 @@
                         <a href="{{ route('user.index') }}"><i class="fe fe-grid"></i> <span>Users</span></a>
                     </li>
                 @endcan
-
-
                 @canany(['categories-list', 'subcategory-list', 'menus-list', 'submenu-list', 'india-services-list',
                     'service-detail-list'])
                     <li class="submenu">
@@ -61,7 +58,6 @@
                                     </a>
                                 </li>
                             @endcan
-
                             @can(['menus-list'])
                                 <li>
                                     <a href="{{ route('menus.index') }}"
@@ -99,7 +95,6 @@
                                 </li>
                             @endcan
                         </ul>
-
                     </li>
                 @endcanany
 
@@ -155,9 +150,7 @@
                             </a>
                         </li>
                         @endcan
-
                     </ul>
-
                 </li>
                 @endcanany
 
@@ -189,7 +182,7 @@
                 @endcan
                 @can('product-list')
                     <li
-                        class="{{ in_array(Route::currentRouteName(), ['products.index', 'products.create', 'products.edit']) ? 'active' : '' }}">
+                        class="{{ in_array(Route::currentRouteName(), ['products.index', 'products.create', 'products.edit','products.show']) ? 'active' : '' }}">
                         <a href="{{ route('products.index') }}">
                             <i class="fe fe-file-text"></i>
                             <span>Products</span>
@@ -208,7 +201,7 @@
                             @can('vendors-list')
                                 <li>
                                     <a href="{{ route('vendors.index') }}"
-                                        class="{{ in_array(Route::currentRouteName(), ['vendors.index', 'vendors.create', 'vendors.edit']) ? 'active' : '' }}">
+                                        class="{{ in_array(Route::currentRouteName(), ['vendors.index', 'vendors.create', 'vendors.edit','vendors.show']) ? 'active' : '' }}">
                                         <i class="fe fe-file-text"></i>
                                         <span>Vendor</span>
                                     </a>

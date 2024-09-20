@@ -12,9 +12,19 @@ class FaqController extends Controller
      *
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $faqs = Faq::paginate(10);
+        $query = Faq::query();
+        // Filter based on search query
+        if ($request->has('search')) {
+            $query->where('name', 'like', '%' . $request->search . '%');
+        }
+        // Paginate the users (adjust pagination number as needed)
+        $faqs = $query->paginate(10);
+        // Check if it's an AJAX request
+        if ($request->ajax()) {
+            return view('backend.category.partials.category-index', compact('faqs'))->render();
+        }
         return view('backend.faq.index', compact('faqs'));
     }
 

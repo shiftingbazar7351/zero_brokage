@@ -47,35 +47,38 @@
         @endif
     </tbody>
 </table>
-{{-- Pagination Links --}}
-<div class="d-flex justify-content-center">
-    <nav aria-label="Page navigation">
-        <ul class="pagination">
-            @if ($metas->onFirstPage())
-                <li class="page-item disabled">
-                    <span class="page-link">Previous</span>
-                </li>
-            @else
-                <li class="page-item">
-                    <a class="page-link" href="{{ $metas->previousPageUrl() }}">Previous</a>
-                </li>
-            @endif
+@if ($metas->lastPage() > 1)
+    <div class="d-flex justify-content-between align-items-center">
+        <!-- Showing X to Y of Z entries -->
+        <div>
+            Showing {{ $metas->firstItem() }} to {{ $metas->lastItem() }} of {{ $metas->total() }} entries
+        </div>
 
-            @for ($i = 1; $i <= $metas->lastPage(); $i++)
-                <li class="page-item {{ $metas->currentPage() == $i ? 'active' : '' }}">
-                    <a class="page-link" href="{{ $metas->url($i) }}">{{ $i }}</a>
+        <nav aria-label="Page navigation">
+            <ul class="pagination mb-0">
+                <!-- Previous Button -->
+                <li class="page-item {{ $metas->onFirstPage() ? 'disabled' : '' }}">
+                    <a class="page-link" href="{{ $metas->previousPageUrl() }}" tabindex="-1">Previous</a>
                 </li>
-            @endfor
 
-            @if ($metas->hasMorePages())
-                <li class="page-item">
+                <!-- Page numbers with ellipsis -->
+                @foreach (range(1, $metas->lastPage()) as $i)
+                    @if ($i == 1 || $i == $metas->lastPage() || abs($i - $metas->currentPage()) <= 2)
+                        <li class="page-item {{ $metas->currentPage() == $i ? 'active' : '' }}">
+                            <a class="page-link" href="{{ $metas->url($i) }}">{{ $i }}</a>
+                        </li>
+                    @elseif ($i == 2 || $i == $metas->lastPage() - 1)
+                        <li class="page-item disabled">
+                            <span class="page-link">...</span>
+                        </li>
+                    @endif
+                @endforeach
+
+                <!-- Next Button -->
+                <li class="page-item {{ !$metas->hasMorePages() ? 'disabled' : '' }}">
                     <a class="page-link" href="{{ $metas->nextPageUrl() }}">Next</a>
                 </li>
-            @else
-                <li class="page-item disabled">
-                    <span class="page-link">Next</span>
-                </li>
-            @endif
-        </ul>
-    </nav>
-</div>
+            </ul>
+        </nav>
+    </div>
+@endif

@@ -163,7 +163,6 @@
                         </a>
                     </li>
                 @endcan
-
                 @can(['faq-list'])
                     <li class="{{ Route::currentRouteName() === 'faq.index' ? 'active' : '' }}">
                         <a href="{{ route('faq.index') }}">
@@ -189,8 +188,6 @@
                         </a>
                     </li>
                 @endcan
-
-
                 @canany(['vendors-list', 'verified-list'])
                     <li class="submenu">
                         <a href="javascript:void(0);"><i class="fe fe-briefcase"></i>

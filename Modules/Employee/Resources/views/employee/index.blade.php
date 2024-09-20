@@ -169,14 +169,14 @@
                                     value="{{ old('official_email') }}" placeholder="Enter official email">
                             </div>
 
-                            <div class="mb-3 col-md-3">
+                            <div class="mb-3 col-md-6">
                                 <label for="current_address" class="form-label text-dark">Current Address<b
                                             style="color: red;">*</b></label>
                                 <textarea name="current_address" class="form-control" placeholder="Enter Current_address"
                                      id="current_address" rows="3" required>{{ old('current_address') }}</textarea>
                             </div>
 
-                            <div class="mb-3 col-md-3">
+                            <div class="mb-3 col-md-6">
                                 <label for="permanent_address" class="form-label text-dark">Permanent Address<b
                                             style="color: red;">*</b></label>
                                 <textarea name="permanent_address" class="form-control" placeholder="Enter Permanent_address"

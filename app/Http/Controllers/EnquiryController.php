@@ -15,13 +15,23 @@ class EnquiryController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
+        $query = Enquiry::query();
+        // Filter based on search query
+        if ($request->has('search')) {
+            $query->where('name', 'like', '%' . $request->search . '%');
+        }
+        // Paginate the users (adjust pagination number as needed)
+        $enquiries = $query->orderByDesc('created_at')->paginate(10);
+        // Check if it's an AJAX request
+        if ($request->ajax()) {
+            return view('backend.enquiry.partials.enquiry-index', compact('enquiries'))->render();
+        }
         $subcategories = SubCategory::orderByDesc('created_at')->get();
         $categories = Category::orderByDesc('created_at')->get();
         $menus = Menu::orderByDesc('created_at')->get();
         $submenus = SubMenu::orderByDesc('created_at')->get();
-        $enquiries = Enquiry::with('subcategory.categoryName')->orderByDesc('created_at')->paginate(10);
         return view('backend.enquiry.index', compact('enquiries', 'subcategories', 'categories','menus','submenus'));
     }
 

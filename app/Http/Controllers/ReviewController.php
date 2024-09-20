@@ -11,10 +11,31 @@ class ReviewController extends Controller
      * Display a listing of the resource.
      *
      */
-    public function index()
+    public function index(Request $request)
     {
-        $reviews = Review::orderByDesc('created_at')->paginate(10);
-        return view('backend.review.index',compact('reviews'));
+        $query = Review::query();
+        // Filter based on search query
+        if ($request->has('search')) {
+            $searchTerm = $request->search;
+
+            $query->where(function ($q) use ($searchTerm) {
+                $q->where('name', 'like', '%' . $searchTerm . '%')
+                    ->orWhere('description', 'like', '%' . $searchTerm . '%')
+                    ->orWhere('profession', 'like', '%' . $searchTerm . '%')
+                    ->orWhere('created_at', 'like', '%' . $searchTerm . '%')
+                    ->orWhereHas('createdBy', function ($query) use ($searchTerm) {
+                        $query->where('name', 'like', '%' . $searchTerm . '%'); // assuming 'name' is a column in 'createdBy' relationship
+                    });
+            })->orderByDesc('created_at');
+        }
+
+        // Paginate the users (adjust pagination number as needed)
+        $reviews = $query->orderByDesc('created_at')->paginate(10);
+        // Check if it's an AJAX request
+        if ($request->ajax()) {
+            return view('backend.review.partials.review-index', compact('reviews'))->render();
+        }
+        return view('backend.review.index', compact('reviews'));
     }
 
     /**
@@ -76,7 +97,7 @@ class ReviewController extends Controller
         $review = Review::findOrFail($id);
 
         // Update the FAQ with the new data
-        $review->update($request->only(['name', 'description','profession']));
+        $review->update($request->only(['name', 'description', 'profession']));
 
         // Redirect back with a success message
         return redirect()->back()->with(['message' => 'Updated Successfully', 'alert-type' => 'success']);

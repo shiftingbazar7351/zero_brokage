@@ -17,9 +17,20 @@ class VerifiedController extends Controller
      {
          $this->fileUploadService = $fileUploadService;
      }
-    public function index()
-    {
-        $verifieds = Verified::orderByDesc('created_at')->paginate(10);
+     public function index(Request $request)
+     {
+         $query = Verified::query();
+         // Filter based on search query
+         if ($request->has('search')) {
+             $query->where('name', 'like', '%' . $request->search . '%')
+             ->orderByDesc('created_at');
+         }
+         // Paginate the users (adjust pagination number as needed)
+         $verifieds = $query->paginate(10);
+         // Check if it's an AJAX request
+         if ($request->ajax()) {
+             return view('backend.vendor.partials.verified-index', compact('verifieds'))->render();
+         }
         return view("backend.vendor.verified", compact("verifieds"));
     }
 
@@ -45,7 +56,6 @@ class VerifiedController extends Controller
         }
 
         $review->save();
-
         // Return a JSON response
         return response()->json(['success' => true, 'message' => 'Added Successfully']);
     }

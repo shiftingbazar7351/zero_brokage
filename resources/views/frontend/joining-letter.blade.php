@@ -91,6 +91,33 @@
     <div>
         Date : 20-09-2024 &nbsp &nbsp 12:07
     </div>
+    <div>
+        <p>
+            To
+        </p>
+        <p style="margin-top:2%"><b>Ghyoor Qasim</b><br>Noida</p>
+
+    </div>
+    <div style="text-align:center"><h3>Appointment Letter</h3></div>
+    <div>
+        <p>Dear <b>Ghyoor Qasim</b></p>
+        <p>This has reference to your application and subsequent discussion you had with us, we are pleased to offer you the position of Front-end Developer in the following terms and conditions:</p>
+        <ol>
+            <li>
+                Date of Commencement:
+                <p>Your date of commencement of employment in our Company shall be the date of your joining the duties and you have to report for joining the company not later than 2024-07-22 else this offer stands automatically cancelled.
+                </p>
+            </li>
+            <li>Services:</li>
+            <p>You will be responsible to discharge all the services as were assigned to you from time to time efficiently to the satisfaction of the management and you will be responsible for the efficient functioning of our Section / Department. You will abide by the rules and regulations those that were framed from time to time by the Company. If it is required company will provide required training etc. to you in updating your relevant knowledge for discharge of your duties efficiently & effectively from time to time.</p>
+            <li>Location/Transferability:
+                <p>Your services are presently placed at our G-187, L/W Ground Floor, G Block, Sector 63, Noida - 201301 and your services may be transferred to any other department, subsidiary, associate company or joint venture at any other location on the same terms& conditions subjects to our business requirement. You may be required to report to any other Officer of the Company Depending on the nature of assignment / task given to you. As the Company or such one of its subsidiaries or associated companies is involved in a regional business and may have interests and business dealings overseas, in the performance of your duties of employment with Company or such one of its subsidiaries or associated companies, you shall be required from time to time to travel and render your services throughout the world at any given time by the company.</p>
+            </li>
+            <li>Probation Period:
+                <p>You will be on the probation period for initial 365 Days. After the successful completion of the probation period, Confirmation Letter will be issued to you, failing to successfully complete the probation periods, your services can be terminated. In probation period (365 Days), company can ask you to leave the organization without giving any notice period or financial compensation. If you leave organization then you need to serve minimum 60 days of notice period otherwise 60 days salary would be deducted. In notice period you can’t take any leave otherwise notice period would be increased accordingly.</p>
+            </li>
+        </ol>
+    </div>
 </div>
 
 

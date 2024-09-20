@@ -105,7 +105,7 @@
                     </li>
                 @endcanany
 
-                @canany(['employee-headoffice-list', 'employee-company-list', 'employee-product-list', 'employee-branch-list', 'employee-department-list'])
+                @canany(['employee-headoffice-list', 'employee-company-list', 'employee-product-list', 'employee-branch-list', 'employee-department-list','employee-list'])
                 <li class="submenu">
                     <a href="javascript:void(0);"><i class="fe fe-briefcase"></i>
                         <span>Employee Data</span>
@@ -157,14 +157,15 @@
                             </a>
                         </li>
                         @endcan
-
+                        @can(['employee-list'])
                         <li>
-                            <a href="{{ route('employee-headoffice.index') }}"
-                                class="{{ Route::currentRouteName() === 'employee-headoffice.index' ? 'active' : '' }}">
+                            <a href="{{ route('employee.index') }}"
+                                class="{{ Route::currentRouteName() === 'employee.index' ? 'active' : '' }}">
                                 <i class="fe fe-file-text"></i>
                                 <span>Employee</span>
                             </a>
                         </li>
+                        @endcan
 
                     </ul>
 

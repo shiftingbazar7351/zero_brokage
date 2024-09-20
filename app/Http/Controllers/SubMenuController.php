@@ -90,27 +90,26 @@ class SubMenuController extends Controller
             $finalPrice = $request->input('total_price');
         }
 
-        $subcategory = new SubMenu();
-        $subcategory->name = $request->name;
-        $subcategory->category_id = $request->category;
-        $subcategory->subcategory_id = $request->subcategory_id;
-        $subcategory->menu_id = $request->menu;
-        $subcategory->city_id = $request->city;
-        $subcategory->description = $request->description;
-        $subcategory->details = $request->details;
-        $subcategory->slug = generateSlug($request->name);
-        $subcategory->total_price = $request->total_price;
-        $subcategory->discount = $request->discount;
-        $subcategory->discounted_price = $finalPrice;
+        $sub_menu = new SubMenu();
+        $sub_menu->name = $request->name;
+        $sub_menu->category_id = $request->category;
+        $sub_menu->subcategory_id = $request->subcategory_id;
+        $sub_menu->menu_id = $request->menu;
+        $sub_menu->city_id = $request->city;
+        $sub_menu->description = $request->description;
+        $sub_menu->details = $request->details;
+        $sub_menu->slug = generateSlug($request->name);
+        $sub_menu->total_price = $request->total_price;
+        $sub_menu->discount = $request->discount;
+        $sub_menu->discounted_price = $finalPrice;
 
         if ($request->hasFile('image')) {
             $filename = $this->fileUploadService->uploadImage('submenu/', $request->file('image'));
-            $subcategory->image = $filename;
+            $sub_menu->image = $filename;
         }
 
-        $subcategory->save();
+        $sub_menu->save();
         return response()->json(['success' => true, 'message' => 'Sub-Menu added successfully!']);
-        // return redirect()->back()->with('success', 'Sub-menu created successfully.');
     }
 
 
@@ -167,7 +166,7 @@ class SubMenuController extends Controller
             $finalPrice = $request->input('total_price');
         }
 
-        // Update submenu fields
+        // Update submenu fields  details
         $sub_menu->name = $request->input('name');
         $sub_menu->slug = generateSlug($request->name);
         $sub_menu->category_id = $request->input('category_id');
@@ -177,6 +176,7 @@ class SubMenuController extends Controller
         $sub_menu->total_price = $request->input('total_price');
         $sub_menu->discount = $request->input('discount');
         $sub_menu->discounted_price = $finalPrice;
+        $sub_menu->details = $request->details;
         $sub_menu->description = $request->input('description');
 
         // Handle image upload

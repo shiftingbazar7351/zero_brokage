@@ -102,7 +102,7 @@ Route::middleware(['auth', 'check.ip'])->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
     Route::controller(UserController::class)->group(function () {
-        Route::get('/user', 'index')->name('user.index')->middleware('can:user-list');
+        Route::get('/user', 'index')->name('user.index');
         Route::get('/user/create', 'create')->name('user.create')->middleware('can:user-create');
         Route::post('/user', 'store')->name('user.store')->middleware('can:user-create');
         Route::get('/user/{user}/edit', 'edit')->name('user.edit')->middleware('can:user-edit');

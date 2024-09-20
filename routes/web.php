@@ -165,7 +165,7 @@ Route::middleware(['auth', 'check.ip'])->group(function () {
         Route::post('/getMenus/{subcatId}', 'getMenus');
     });
 
-    Route::controller(controller: EnquiryController::class)->group(function () {
+    Route::controller(EnquiryController::class)->group(function () {
         Route::get('/enquiry', 'index')->name('enquiry.index')->middleware('can:enquiry-list');
         Route::get('/enquiry/create', 'create')->name('enquiry.create')->middleware('can:enquiry-create');
         Route::post('/enquiry', 'store')->name('enquiry.store')->middleware('can:enquiry-create');

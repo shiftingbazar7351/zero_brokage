@@ -25,9 +25,21 @@ class DepartmentController extends Controller
      * Display a listing of the resource.
      * @return Renderable
      */
-    public function index()
+    public function index(Request $request)
     {
-        $departments = Department::orderByDesc('created_at')->paginate(10);
+        $query = Department::query();
+        // Filter based on search query
+        if ($request->has('search')) {
+            $query->where('department_id', 'like', '%' . $request->search . '%');
+            $query->where('designation_id', 'like', '%' . $request->search . '%');
+            // $query->where('address', 'like', '%' . $request->search . '%');
+        }
+        // Paginate the users (adjust pagination number as needed)
+        $departments = $query->orderByDesc('created_at')->paginate(10);
+        // Check if it's an AJAX request
+        if ($request->ajax()) {
+            return view('employee::department.partials.department-index', compact('departments'))->render();
+        }
         $branchs = Branch::get();
         return view('employee::department.index',compact('departments','branchs'));
     }

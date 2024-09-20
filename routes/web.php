@@ -61,6 +61,14 @@ Route::get('/reciept', function () {
     return view('frontend.reciept');
 })->name('reciept');
 
+Route::get('/offer-letter', function () {
+    return view('frontend.offer-letter');
+})->name('offer-letter');
+
+Route::get('/joining-letter', function () {
+    return view('frontend.joining-letter');
+})->name('joining-letter');
+
 Route::get('/email-template', function () {
     return view('emails.user-credential');
 })->name('email-template');

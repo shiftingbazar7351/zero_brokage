@@ -14,7 +14,7 @@
                 <table width="492" border="0" cellpadding="0" cellspacing="0" style="background-color: #FFFFFF; border: 1px solid #D9D9D9; border-radius: 3px; padding: 30px; box-sizing: border-box;">
                     <tr>
                         <td align="center" style="padding-bottom: 49.3px;">
-                            <img src="https://zerobrokage.com/assets/img/logofinal.webp" alt="Logo" style="max-width: 190px;background-color:white" />
+                            <img src="https://zerobrokage.com/assets/img/logopng.jpeg" alt="Logo" style="max-width: 190px;background-color:white" />
                         </td>
                     </tr>
                     <tr>

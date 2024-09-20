@@ -15,6 +15,7 @@ class CreateEmployeesTable extends Migration
     {
         Schema::create('employees', function (Blueprint $table) {
             $table->id();
+            $table->string('employee_code')->nullable();
             $table->string('fname')->nullable();
             $table->string('lname')->nullable();
             $table->enum('gender', ['male', 'female', 'other'])->nullable();
@@ -35,13 +36,14 @@ class CreateEmployeesTable extends Migration
             $table->string('hr_executive')->nullable();
             $table->string('official_mobile')->nullable();
             $table->string('official_email')->nullable()->unique();
+            $table->enum('experience_type', ['fresher', 'experienced'])->default('fresher');
             $table->string('high_school_certificate')->nullable();
             $table->string('intermediate_certificate')->nullable();
             $table->string('graduation_certificate')->nullable();
             $table->string('experience_letter')->nullable();
             $table->string('relieving_letter')->nullable();
             $table->string('offer_letter')->nullable();
-            $table->string('salary_slip ')->nullable();
+            $table->string('salary_slip')->nullable(); // Make sure there is no trailing space here
             $table->string('bank_statement')->nullable();
             $table->string('current_address')->nullable();
             $table->string('permanent_address')->nullable();

@@ -3,7 +3,8 @@
 namespace Modules\Employee\Http\Controllers;
 
 use Illuminate\Contracts\Support\Renderable;
-use Modules\Employee\Entities\Employees;
+
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use App\Services\FileUploadService;
@@ -25,7 +26,7 @@ class EmployeeController extends Controller
      */
     public function index()
     {
-        $employees = Employees::orderByDesc('created_at')->paginate(10);
+        $employees = User::orderByDesc('created_at')->paginate(10);
         return view('employee::employee.index',compact('employees'));
     }
 
@@ -34,8 +35,8 @@ class EmployeeController extends Controller
      * @return Renderable
      */
     public function create()
-    {
-        return view('employee::employee.create');
+    {   $roles = User::get();
+        return view('employee::employee.create',compact('roles'));
     }
 
     /**
@@ -53,9 +54,7 @@ class EmployeeController extends Controller
             'gender' => 'required|in:male,female,other',
             'dob' => 'required|date',
             'email' => 'required|email|unique:employees,email',
-            'role' => 'nullable|string|max:191',
-            'password' => 'required|string|min:8',
-            'country' => 'nullable|string|max:191',
+            'user_type' => 'nullable|string|max:191',
             'number' => 'nullable|string|max:191',
             'joining_date' => 'required|date',
             'company' => 'nullable|string|max:191',
@@ -75,16 +74,16 @@ class EmployeeController extends Controller
             'bank_statement' => 'nullable|file|mimes:pdf,jpg,jpeg,png|max:2048',
             'current_address' => 'nullable|string|max:191',
             'permanent_address' => 'nullable|string|max:191',
-            'character_certificate' => 'nullable|file|mimes:pdf,jpg,jpeg,png|max:2048',
-            'medical_certificate' => 'nullable|file|mimes:pdf,jpg,jpeg,png|max:2048',
-            'previous_ref_name' => 'nullable|string|max:191',
-            'previous_ref_email' => 'nullable|email|max:191',
-            'previous_ref_number' => 'nullable|string|max:191',
-            'previous_ref_designation' => 'nullable|string|max:191',
+            // 'character_certificate' => 'nullable|file|mimes:pdf,jpg,jpeg,png|max:2048',
+            // 'medical_certificate' => 'nullable|file|mimes:pdf,jpg,jpeg,png|max:2048',
+            // 'previous_ref_name' => 'nullable|string|max:191',
+            // 'previous_ref_email' => 'nullable|email|max:191',
+            // 'previous_ref_number' => 'nullable|string|max:191',
+            // 'previous_ref_designation' => 'nullable|string|max:191',
         ]);
 
         // Create a new employee
-        $employee = Employees::create( $validatedData);
+        $employee = User::create( $validatedData);
 
         // Set created_by to the current authenticated user
         $employee->created_by = auth()->user()->id;
@@ -131,7 +130,7 @@ class EmployeeController extends Controller
             $filename = $this->fileUploadService->uploadImage('employee/medical_certificate/', $request->file('medical_certificate'));
             $employee->medical_certificate = $filename;
         }
-
+        return $employee;
         $employee->save();
 
         // Redirect with success message
@@ -156,7 +155,7 @@ class EmployeeController extends Controller
      */
     public function edit($id)
     {
-        $employee = Employees::findOrFail($id);
+        $employee = User::findOrFail($id);
         return view('employee::employee.edit',compact('employee'));
     }
 
@@ -176,9 +175,7 @@ class EmployeeController extends Controller
             'gender' => 'required|in:male,female,other',
             'dob' => 'required|date',
             'email' => 'required|email|unique:employees,email,' . $id, // Allow current email
-            'role' => 'nullable|string|max:191',
-            'password' => 'required|string|min:8',
-            'country' => 'nullable|string|max:191',
+            'user_type' => 'nullable|string|max:191',
             'number' => 'nullable|string|max:191',
             'joining_date' => 'required|date',
             'company' => 'nullable|string|max:191',
@@ -206,7 +203,7 @@ class EmployeeController extends Controller
             // 'previous_ref_designation' => 'nullable|string|max:191',
         ]);
 
-        $employee = Employees::findOrFail($id);
+        $employee = User::findOrFail($id);
 
         $employee->update($validatedData);
 
@@ -278,7 +275,7 @@ class EmployeeController extends Controller
     public function destroy($id)
     {
         try {
-            $employee = Employees::findOrFail($id);
+            $employee = User::findOrFail($id);
 
             $imageFields = [
                 'medical_certificate' => 'employee/medical_certificate/',

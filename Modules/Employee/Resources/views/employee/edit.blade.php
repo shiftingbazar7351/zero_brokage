@@ -27,7 +27,7 @@
 
                             <!-- Last Name -->
                             <div class="mb-3 col-md-3">
-                                <label for="lname" class="form-label">Last Name</label><b style="color: red;">*</b>
+                                <label for="lname" class="form-label">Last Name</label>
                                 <input type="text" class="form-control" id="lname" name="lname"
                                     value="{{ old('lname', $employee->lname ?? '') }}" placeholder="Enter last name"
                                     required>
@@ -69,31 +69,17 @@
                                     <div class="error text-danger ">{{ $message }}</div>
                                 @enderror
                             </div>
-
-                            <!-- Role -->
+                            {{-- Role --}}
                             <div class="mb-3 col-md-3">
-                                <label for="role" class="form-label">Role</label><b style="color: red;">*</b>
-                                <input type="text" class="form-control" id="role" name="role"
-                                    value="{{ old('role', $employee->role ?? '') }}" placeholder="Enter role" required>
-                            </div>
-
-                            <!-- Password -->
-                            <div class="mb-3 col-md-3">
-                                <label for="password" class="form-label">Password</label><b style="color: red;">*</b>
-                                <input type="password" class="form-control" id="password" name="password"
-                                    placeholder="Enter password" required>
-                                @error('password')
-                                    <div class="error text-danger ">{{ $message }}</div>
-                                @enderror
-                            </div>
-
-                            <!-- Country -->
-                            <div class="mb-3 col-md-3">
-                                <label for="country" class="form-label">Country</label><b style="color: red;">*</b>
-                                <input type="text" class="form-control" id="country" name="country"
-                                    value="{{ old('country', $employee->country ?? '') }}" placeholder="Enter country"
-                                    required>
-                                @error('country')
+                                <label for="role" class="form-label">Role</label><b
+                                    style="color: red;">*</b>
+                                <select class="form-control" id="role" name="role" required>
+                                    <option value="">Select Role</option>
+                                    @foreach ($roles as $role)
+                                        <option value="{{ $role->id }}">{{ $role->user_type }}</option>
+                                    @endforeach
+                                </select>
+                                @error('role')
                                     <div class="error text-danger ">{{ $message }}</div>
                                 @enderror
                             </div>

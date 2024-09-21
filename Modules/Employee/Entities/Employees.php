@@ -18,7 +18,6 @@ class Employees extends Model
         'dob',
         'email',
         'role',
-        'password',
         'country',
         'number',
         'joining_date',

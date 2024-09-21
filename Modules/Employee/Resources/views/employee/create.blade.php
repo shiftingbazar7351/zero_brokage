@@ -28,7 +28,7 @@
 
                             <!-- Last Name -->
                             <div class="mb-3 col-md-3">
-                                <label for="lname" class="form-label">Last Name</label><b style="color: red;">*</b>
+                                <label for="lname" class="form-label">Last Name</label>
                                 <input type="text" class="form-control" id="lname" name="lname"
                                     value="{{ old('lname') }}" placeholder="Enter last name" required>
                                 @error('lname')
@@ -69,30 +69,18 @@
                                     <div class="error text-danger ">{{ $message }}</div>
                                 @enderror
                             </div>
-
                             <!-- Role -->
-                            <div class="mb-3 col-md-3">
-                                <label for="role" class="form-label">Role</label><b style="color: red;">*</b>
-                                <input type="text" class="form-control" id="role" name="role"
-                                    value="{{ old('role') }}" placeholder="Enter role" required>
-                            </div>
 
-                            <!-- Password -->
                             <div class="mb-3 col-md-3">
-                                <label for="password" class="form-label">Password</label><b style="color: red;">*</b>
-                                <input type="password" class="form-control" id="password" name="password"
-                                    placeholder="Enter password" required>
-                                @error('password')
-                                    <div class="error text-danger ">{{ $message }}</div>
-                                @enderror
-                            </div>
-
-                            <!-- Country -->
-                            <div class="mb-3 col-md-3">
-                                <label for="country" class="form-label">Country</label><b style="color: red;">*</b>
-                                <input type="text" class="form-control" id="country" name="country"
-                                    value="{{ old('country') }}" placeholder="Enter country" required>
-                                @error('country')
+                                <label for="role" class="form-label">Role</label><b
+                                    style="color: red;">*</b>
+                                <select class="form-control" id="role" name="user_type" required>
+                                    <option value="">Select Role</option>
+                                    @foreach ($roles as $role)
+                                        <option value="{{ $role->id }}">{{ $role->user_type }}</option>
+                                    @endforeach
+                                </select>
+                                @error('role')
                                     <div class="error text-danger ">{{ $message }}</div>
                                 @enderror
                             </div>
@@ -101,7 +89,7 @@
                             <div class="mb-3 col-md-3">
                                 <label for="number" class="form-label">Phone Number</label><b style="color: red;">*</b>
                                 <input type="text" class="form-control" id="phoneNumVender" name="number"
-                                    value="{{ old('number') }}" placeholder="Enter phone number" required>
+                                    value="{{ old('number') }}" placeholder="Enter phone number"  maxlength="10" required>
                                 @error('number')
                                     <div class="error text-danger ">{{ $message }}</div>
                                 @enderror
@@ -349,6 +337,7 @@
 @endsection
 
 @section('scripts')
+<script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/intlTelInput.min.js"></script>
     <script>
         const whatsappvender = document.querySelector("#phoneNumVender");
         window.intlTelInput(whatsappvender, {
@@ -356,6 +345,7 @@
             separateDialCode: true
         });
     </script>
+
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {

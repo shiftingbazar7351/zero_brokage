@@ -34,8 +34,8 @@
                         <span class="animate-circle"></span>
                     </span>
                     <span class="user-content">
-                        <span class="user-name">John Smith</span>
-                        <span class="user-details">Demo User</span>
+                        <span class="user-name">{{ Auth::user()->name ??'No Name' }}</span>
+                        <span class="user-details">{{ Auth::user()->designation ??'' }}</span>
                     </span>
                 </a>
                 <div class="dropdown-menu menu-drop-user">
@@ -46,10 +46,16 @@
                                     <img src="{{asset('admin/assets/img/user.jpg')}}" alt="img" class="profilesidebar">
                                 </span>
                                 <span class="profile-content">
-                                    <span>John Smith</span>
-                                    <span><span class="__cf_email__"
+                                    <span>{{ Auth::user()->name ??'' }}</span>
+                                    {{-- <span><span class="__cf_email__"
                                             data-cfemail="b7fdd8dfd9f7d2cfd6dac7dbd299d4d8da">[email&#160;protected]</span></span>
+                                </span> --}}
+                                <span>
+                                    <span class="__cf_email__">
+                                        {{ Auth::user()->email ?? '' }}
+                                    </span>
                                 </span>
+
                             </a>
                         </div>
                         <div class="subscription-menu">

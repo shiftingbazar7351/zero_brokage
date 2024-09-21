@@ -2,14 +2,16 @@
 
 namespace Modules\Employee\Http\Controllers;
 
-use Illuminate\Contracts\Support\Renderable;
-
 use App\Models\User;
+
+use App\Services\FileUploadService;
+use Exception;
+use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
-use App\Services\FileUploadService;
+use Illuminate\Support\Facades\Hash;
+use Spatie\Permission\Models\Role;
 use Validator;
-use Exception;
 
 class EmployeeController extends Controller
 {
@@ -24,10 +26,23 @@ class EmployeeController extends Controller
      * Display a listing of the resource.
      * @return Renderable
      */
-    public function index()
+    public function index(Request $request)
     {
-        $employees = User::orderByDesc('created_at')->paginate(10);
-        return view('employee::employee.index',compact('employees'));
+        $query = User::query();
+        // Filter based on search query
+        if ($request->has('search')) {
+            $query->where('name', 'like', '%' . $request->search . '%')
+                ->orWhere('company', 'like', '%' . $request->search . '%')
+                ->orWhere('email', 'like', '%' . $request->search . '%');
+        }
+        // Paginate the users (adjust pagination number as needed)
+        $employees = $query->orderByDesc('created_at')->where('user_type','employee')->paginate(10);
+        // Check if it's an AJAX request
+        if ($request->ajax()) {
+            return view('employee::employee.partials.employee-index', compact('employees'))->render();
+        }
+        // $employees = User::orderByDesc('created_at')->paginate(10);
+        return view('employee::employee.index', compact('employees'));
     }
 
     /**
@@ -35,8 +50,9 @@ class EmployeeController extends Controller
      * @return Renderable
      */
     public function create()
-    {   $roles = User::get();
-        return view('employee::employee.create',compact('roles'));
+    {
+        $roles = Role::where('name' ,'!=' ,'super_admin')->get();
+        return view('employee::employee.create', compact('roles'));
     }
 
     /**
@@ -50,13 +66,14 @@ class EmployeeController extends Controller
         $validatedData = $request->validate([
             'employee_code' => 'nullable|string|max:191',
             'fname' => 'required|string|max:191',
-            'lname' => 'required|string|max:191',
-            'gender' => 'required|in:male,female,other',
-            'dob' => 'required|date',
-            'email' => 'required|email|unique:employees,email',
+            'lname' => 'nullable|string|max:191',
+            'gender' => 'nullable|in:male,female,other',
+            'dob' => 'nullable|date',
+            'password' => 'nullable',
+            'email' => 'nullable|email|unique:employees,email',
             'user_type' => 'nullable|string|max:191',
             'number' => 'nullable|string|max:191',
-            'joining_date' => 'required|date',
+            'joining_date' => 'nullable|date',
             'company' => 'nullable|string|max:191',
             'no_of_experience' => 'nullable|string|max:191',
             'department' => 'nullable|string|max:191',
@@ -83,10 +100,12 @@ class EmployeeController extends Controller
         ]);
 
         // Create a new employee
-        $employee = User::create( $validatedData);
+        $validatedData['password'] = Hash::make('123456');
+        $employee = User::create($validatedData);
 
         // Set created_by to the current authenticated user
         $employee->created_by = auth()->user()->id;
+        $employee->password = Hash::make('123456');
 
         // Handle file uploads
         if ($request->hasFile('high_school_certificate')) {
@@ -134,7 +153,7 @@ class EmployeeController extends Controller
         $employee->save();
 
         // Redirect with success message
-        return redirect()->route('employee.index')->with(['message'=> 'Employee created successfully.','alert-type'=>'success']);
+        return redirect()->route('employee.index')->with(['message' => 'Employee created successfully.', 'alert-type' => 'success']);
     }
 
 
@@ -156,7 +175,7 @@ class EmployeeController extends Controller
     public function edit($id)
     {
         $employee = User::findOrFail($id);
-        return view('employee::employee.edit',compact('employee'));
+        return view('employee::employee.edit', compact('employee'));
     }
 
     /**

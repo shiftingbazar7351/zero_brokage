@@ -1,7 +1,7 @@
 @extends('backend.layouts.main')
 @section('styles')
     <style>
-        .preview-img{
+        .preview-img {
             width: 150px;
             height: 150px;
             object-fit: cover;
@@ -9,97 +9,33 @@
     </style>
 @endsection
 @section('content')
-
     <div class="page-wrapper page-settings">
         <div class="content">
             <div class="content-page-header content-page-headersplit mb-0">
                 <h5>Branchs</h5>
-                @can('employee-branch-create')
-                <div class="list-btn">
-                    <ul>
-                        <li>
-                            <button class="btn btn-primary" type="button" data-bs-toggle="modal"
-                                data-bs-target="#add_branch"><i class="fa fa-plus me-2"></i>Add Branch</button>
-                        </li>
-                    </ul>
+                <div class="list-btn d-flex gap-3">
+                    <div class="page-headers">
+                        <div class="search-bar">
+                            <span><i class="fe fe-search"></i></span>
+                            <input type="text" id="search" placeholder="Search" class="form-control">
+                        </div>
+                    </div>
+                    @can('employee-branch-create')
+                        <ul>
+                            <li>
+                                <button class="btn btn-primary" type="button" data-bs-toggle="modal"
+                                    data-bs-target="#add_branch"><i class="fa fa-plus me-2"></i>Add Branch</button>
+                            </li>
+                        </ul>
+                    @endcan
                 </div>
-                @endcan
             </div>
             <div class="row">
                 <div class="col-12 ">
                     <div class="table-responsive table-div">
-                        <table class="table datatable table-striped text-center table-bordered">
-                            <thead>
-                                <tr>
-                                    <th>#</th>
-                                    <th>Image</th>
-                                    <th>Name</th>
-                                    @can('employee-branch-status')
-                                    <th>Status</th>
-                                    @endcan
-                                    @can(['employee-branch-edit', 'employee-branch-delete'])
-                                    <th>Action</th>
-                                    @endcan
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @if ($Branchs->isEmpty())
-                                    <tr>
-                                        <td colspan="5" class="text-center">No data found</td>
-                                    </tr>
-                                @else
-                                    @foreach ($Branchs as $Branch)
-                                        <tr>
-                                            <td>{{ $loop->iteration }}</td>
-                                            <td>
-                                                <div class="table-imgname">
-                                                    @if ($Branch->image)
-                                                        <img src="{{ Storage::url('employee/branch/' . $Branch->image) }}"
-                                                            class="me-2 preview-img" alt="img">
-                                                    @else
-                                                        No Image
-                                                    @endif
-                                                </div>
-                                            </td>
-                                            <td>{{ $Branch->name ?? '' }}</td>
-                                            @can('employee-branch-status')
-                                            <td>
-                                                <div class="active-switch">
-                                                    <label class="switch">
-                                                        <input type="checkbox" class="status-toggle"
-                                                            data-id="{{ $Branch->id }}"
-                                                            onclick="return confirm('Are you sure want to change status?')"
-                                                            {{ $Branch->status ? 'checked' : '' }}>
-                                                        <span class="sliders round"></span>
-                                                    </label>
-                                                </div>
-                                            </td>
-                                            @endcan
-                                            @can(['employee-branch-edit', 'employee-branch-delete'])
-                                            <td>
-                                                <div class="table-actions d-flex justify-content-center">
-
-                                                    <button class="btn delete-table me-2" onclick="editBranch({{ $Branch->id }})" type="button"
-                                                        data-bs-toggle="modal" data-bs-target="#edit-product">
-                                                        <i class="fe fe-edit"></i>
-                                                    </button>
-
-                                                    <form action="{{ route('employee-branch.destroy', $Branch->id) }}" method="POST" style="display:inline;">
-                                                        @csrf
-                                                        @method('DELETE')
-                                                        <button class="btn delete-table" type="submit"
-                                                            onclick="return confirm('Are you sure want to delete this?')">
-                                                            <i class="fe fe-trash-2"></i>
-                                                        </button>
-                                                    </form>
-                                                </div>
-                                            </td>
-                                            @endcan
-                                        </tr>
-                                    @endforeach
-                                @endif
-                            </tbody>
-                        </table>
+                        <div id="usersTable">
+                            @include('employee::branch.partials.branch-index') {{-- Load the users list initially --}}
+                        </div>
                     </div>
                 </div>
             </div>
@@ -233,12 +169,13 @@
             </div>
         </div>
     </div>
-
 @endsection
 @section('scripts')
-<script>
-    var statusRoute = `{{ route('subcategories.status') }}`;
-</script>
+    <script>
+        var statusRoute = `{{ route('employee-branch.status') }}`;
+        var searchRoute = `{{ route('employee-branch.index') }}`;
+    </script>
+    <script src="{{ asset('admin/assets/js/search.js') }}"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="{{ asset('admin/assets/js/status-update.js') }}"></script>
     <script src="{{ asset('admin/assets/js/preview-img.js') }}"></script>
@@ -263,7 +200,6 @@
         $('#edit-image-input-icon').on('change', function() {
             previewImage(this, 'edit-image-preview-icon');
         });
-
     </script>
     <script>
         $(document).ready(function() {
@@ -340,9 +276,11 @@
                 error: function(xhr) {
                     $('#editname_error').text(xhr.responseJSON.errors.name ? xhr.responseJSON.errors
                         .name[0] : '');
-                    $('#editproduct_id_error').text(xhr.responseJSON.errors.product_id ? xhr.responseJSON.errors
+                    $('#editproduct_id_error').text(xhr.responseJSON.errors.product_id ? xhr
+                        .responseJSON.errors
                         .product_id[0] : '');
-                    $('#editaddress_error').text(xhr.responseJSON.errors.address ? xhr.responseJSON.errors
+                    $('#editaddress_error').text(xhr.responseJSON.errors.address ? xhr.responseJSON
+                        .errors
                         .address[0] : '');
                     $('#editimage_error').text(xhr.responseJSON.errors.image ? xhr.responseJSON.errors
                         .image[0] : '');

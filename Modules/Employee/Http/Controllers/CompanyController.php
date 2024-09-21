@@ -23,9 +23,21 @@ class CompanyController extends Controller
      * Display a listing of the resource.
      * @return Renderable
      */
-    public function index()
+    public function index(Request $request)
     {
-        $companies = Companie::orderByDesc('created_at')->paginate(10);
+        $query = Companie::query();
+        // Filter based on search query
+        if ($request->has('search')) {
+            $query->where('brand_name', 'like', '%' . $request->search . '%');
+            $query->where('legel_name', 'like', '%' . $request->search . '%');
+        }
+        // Paginate the users (adjust pagination number as needed)
+        $companies = $query->orderByDesc('created_at')->paginate(10);
+        // Check if it's an AJAX request
+        if ($request->ajax()) {
+            return view('employee::company.partials.company-index', compact('companies'))->render();
+        }
+        // $companies = Companie::orderByDesc('created_at')->paginate(10);
         $offices = HeadOffice::orderByDesc('created_at')->paginate(10);
         return view('employee::company.index', compact('companies','offices'));
     }

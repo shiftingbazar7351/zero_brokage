@@ -23,7 +23,7 @@ class FaqController extends Controller
         $faqs = $query->paginate(10);
         // Check if it's an AJAX request
         if ($request->ajax()) {
-            return view('backend.category.partials.category-index', compact('faqs'))->render();
+            return view('backend.faq.partials.faq-index', compact('faqs'))->render();
         }
         return view('backend.faq.index', compact('faqs'));
     }

@@ -14,9 +14,19 @@ class IndiaServiceController extends Controller
      * Display a listing of the resource.
      *
      */
-    public function index()
+    public function index(Request $request)
     {
-        $services = IndiaServiceDescription::paginate(10);
+        $query = IndiaServiceDescription::query();
+        // Filter based on search query
+        if ($request->has('search')) {
+            $query->where('description', 'like', '%' . $request->search . '%');
+        }
+        // Paginate the users (adjust pagination number as needed)
+        $services = $query->paginate(10);
+        // Check if it's an AJAX request
+        if ($request->ajax()) {
+            return view('backend.india-service-description.partials.india-index', compact('services'))->render();
+        }
         return view('backend.india-service-description.index', compact('services'));
     }
 

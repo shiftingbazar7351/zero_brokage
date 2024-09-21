@@ -25,9 +25,20 @@ class BranchController extends Controller
      * Display a listing of the resource.
      * @return Renderable
      */
-    public function index()
+    public function index(Request $request)
     {
-        $Branchs = Branch::orderByDesc('created_at')->paginate(10);
+        $query = Branch::query();
+        // Filter based on search query
+        if ($request->has('search')) {
+            $query->where('name', 'like', '%' . $request->search . '%');
+            // $query->where('address', 'like', '%' . $request->search . '%');
+        }
+        // Paginate the users (adjust pagination number as needed)
+        $Branchs = $query->orderByDesc('created_at')->paginate(10);
+        // Check if it's an AJAX request
+        if ($request->ajax()) {
+            return view('employee::branch.partials.branch-index', compact('Branchs'))->render();
+        }
         $products = EmployeeProduct::get();
         return view('employee::branch.index',compact('Branchs','products'));
     }

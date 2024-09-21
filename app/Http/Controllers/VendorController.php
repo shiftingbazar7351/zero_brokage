@@ -31,11 +31,24 @@ class VendorController extends Controller
      * Display a listing of the resource.
      *
      */
-    public function index()
+    public function index(Request $request)
     {
+        $query = Vendor::query();
+        // Filter based on search query
+        if ($request->has('search')) {
+            $query->where('vendor_name', 'like', '%' . $request->search . '%')
+            ->orWhere('email', 'like', '%' . $request->search . '%')
+            ->orderByDesc('created_at');
+        }
+        // Paginate the users (adjust pagination number as needed)
+        $vendors = $query->paginate(10);
+        // Check if it's an AJAX request
+        if ($request->ajax()) {
+            return view('backend.vendor.partials.vendor-index', compact('vendors'))->render();
+        }
         $subcategories = SubCategory::orderByDesc('created_at')->get();
         $submenus = SubMenu::orderByDesc('created_at')->get();
-        $vendors = Vendor::orderByDesc('created_at')->paginate(10);
+        // $vendors = Vendor::orderByDesc('created_at')->paginate(10);
         return view("backend.vendor.index", compact('subcategories', 'submenus', 'vendors'));
     }
 

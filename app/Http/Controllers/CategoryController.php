@@ -21,7 +21,7 @@ class CategoryController extends Controller
             $query->where('name', 'like', '%' . $request->search . '%');
         }
         // Paginate the users (adjust pagination number as needed)
-        $categories = $query->paginate(10);
+        $categories = $query->orderByDesc('created_at')->paginate(10);
         // Check if it's an AJAX request
         if ($request->ajax()) {
             return view('backend.category.partials.category-index', compact('categories'))->render();

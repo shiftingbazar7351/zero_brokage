@@ -25,9 +25,19 @@ class EmployeeProductController extends Controller
      * Display a listing of the resource.
      * @return Renderable
      */
-    public function index()
+    public function index(Request $request)
     {
-        $products = EmployeeProduct::orderByDesc('created_at')->paginate(10);
+        $query = EmployeeProduct::query();
+        // Filter based on search query
+        if ($request->has('search')) {
+            $query->where('name', 'like', '%' . $request->search . '%');
+        }
+        // Paginate the users (adjust pagination number as needed)
+        $products = $query->orderByDesc('created_at')->paginate(10);
+        // Check if it's an AJAX request
+        if ($request->ajax()) {
+            return view('employee::product.partials.product-index', compact('products'))->render();
+        }
         $companies = Companie::get();
         return view('employee::product.index', compact('products', 'companies'));
     }

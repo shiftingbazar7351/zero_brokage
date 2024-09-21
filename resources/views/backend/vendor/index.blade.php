@@ -10,7 +10,7 @@
                     <div class="page-headers">
                         <div class="search-bar">
                             <span><i class="fe fe-search"></i></span>
-                            <input type="text" placeholder="Search" class="form-control">
+                            <input type="text" id="search" placeholder="Search" class="form-control">
                         </div>
                     </div>
                     @can('vendors-create')
@@ -29,60 +29,18 @@
             <div class="row">
                 <div class="col-12">
                     <div class="table-responsive table-div">
-                        <table class="table datatable">
-                            <thead>
-                                <tr>
-                                    <th>#</th>
-                                    <th>Name</th>
-                                    <th>email</th>
-                                    @canany(['vendors-edit', 'vendors-delete' , 'vendors-show'])
-                                    <th>Action</th>
-                                    @endcanany
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @forelse ($vendors as $vendor)
-                                    <tr>
-                                        <td>{{ $loop->iteration }}</td>
-                                        <td>{{ $vendor->company_name }}</td>
-                                        <td>{{ $vendor->email }}</td>
-                                        @canany(['vendors-edit', 'vendors-delete' , 'vendors-show'])
-                                        <td>
-                                            <div class="d-flex">
-                                                <a class="btn delete-table me-2 edit-service"
-                                                href="{{ route('vendors.show', $vendor->id) }}">
-                                                 <i class="fe fe-eye"></i>
-                                                </a>
-
-                                                <a class="btn delete-table me-2 edit-service"
-                                                    href="{{ route('vendors.edit', $vendor->id) }}">
-                                                    <i class="fe fe-edit"></i>
-                                                </a>
-
-                                                <!-- Delete Button -->
-                                                <form action="{{ route('vendors.destroy', $vendor->id) }}"
-                                                    method="POST" style="display:inline;">
-                                                    @csrf
-                                                    @method('DELETE')
-                                                    <button type="submit" class="btn delete-table"
-                                                        onclick="return confirm('Are you sure you want to delete this sub-category?');">
-                                                        <i class="fe fe-trash-2"></i>
-                                                    </button>
-                                                </form>
-                                            </div>
-                                        </td>
-                                        @endcanany
-                                    </tr>
-                                @empty
-                                    <tr>
-                                        <td colspan="4" class="text-center">No data found</td>
-                                    </tr>
-                                @endforelse
-                            </tbody>
-                        </table>
+                        <div id="usersTable">
+                            @include('backend.vendor.partials.vendor-index') {{-- Load the users list initially --}}
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+@endsection
+@section('scripts')
+<script>
+    var searchRoute = `{{ route('vendors.index') }}`;
+</script>
+<script src="{{ asset('admin/assets/js/search.js') }}"></script>
 @endsection

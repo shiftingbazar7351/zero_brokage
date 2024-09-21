@@ -5,7 +5,13 @@
         <div class="content">
             <div class="content-page-header content-page-headersplit mb-0">
                 <h5>Transactions</h5>
-                <div class="list-btn">
+                <div class="list-btn d-flex gap-3">
+                    <div class="page-headers">
+                        <div class="search-bar">
+                            <span><i class="fe fe-search"></i></span>
+                            <input type="text" id="search" placeholder="Search" class="form-control">
+                        </div>
+                    </div>
                     <ul>
                         <li>
                             <button class="btn btn-primary" type="button" data-bs-toggle="modal"
@@ -19,106 +25,9 @@
             <div class="row text-center">
                 <div class="col-12">
                     <div class="table-responsive table-div">
-                        <table class="table datatable table-striped table-bordered">
-                            <thead>
-                                <tr>
-                                    <th>#</th>
-                                    <th>Transaction Id</th>
-                                    <th>Payment Time</th>
-                                    <th>Payment Method</th>
-                                    <th>Created By</th>
-                                    <th>Created At</th>
-                                    <th>Status</th>
-                                    <th>Action</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @forelse ($transactions as $transaction)
-                                    <tr>
-                                        <td>{{ $transaction->id ??'' }}</td>
-                                        <td>{{ $transaction->transaction_id ?? '' }}</td>
-                                        {{-- <td>{{ $transaction->payment_time ? \Carbon\Carbon::parse($transaction->payment_time)->format('h:i A, d M Y') : '' }}</td> --}}
-                                        <td>
-                                            @if ($transaction->payment_time)
-                                                {{ \Carbon\Carbon::parse($transaction->payment_time)->format('h:i A') }} <br>
-                                                {{ \Carbon\Carbon::parse($transaction->payment_time)->format('d M Y') }}
-                                            @endif
-                                        </td>
-
-                                        <td>{{ $transaction->payment_method ?? '' }}</td>
-                                        <td>{{ $transaction->createdBy->name ?? '' }}</td>
-                                        <td>
-                                            @if ($transaction->created_at)
-                                                @if ($transaction->created_at->isToday())
-                                                        <span class="badge bg-success">Today</span>
-                                                @elseif ($transaction->created_at->isYesterday())
-                                                        <span class="badge bg-secondary">Yesterday</span>
-
-                                                @else
-                                                    {{ $transaction->created_at->format('d M Y') }}
-                                                @endif
-                                            @else
-                                                <!-- Handle the case if created_at is null -->
-                                                N/A
-                                            @endif
-                                        </td>
-
-
-                                        <td>
-                                            @if ($transaction->payment_status == 2)
-                                                <div class="status-actions d-flex justify-content-center">
-                                                    <!-- Approve Form -->
-                                                    <form action="{{ route('transaction.approve', $transaction->id) }}"
-                                                        method="POST" class="me-2">
-                                                        @csrf
-                                                        <button type="submit" class="btn btn-success"
-                                                            {{ $transaction->payment_status == 1 ? 'disabled' : '' }}
-                                                            title="Approve">
-                                                            <i class="fa fa-check"></i>
-                                                        </button>
-                                                    </form>
-                                                    <!-- Reject Button (Triggers Modal for Rejection Reason) -->
-                                                    <button type="button" class="btn btn-danger" data-bs-toggle="modal"
-                                                        data-bs-target="#rejectModal-{{ $transaction->id }}"
-                                                        {{ $transaction->payment_status == 0 ? 'disabled' : '' }}
-                                                        title="Reject">
-                                                        <i class="fa fa-times"></i>
-                                                    </button>
-                                                </div>
-                                            @elseif($transaction->payment_status == 0)
-                                                <span class="badge bg-danger">Rejected</span>
-                                                <br>
-                                                <span class="text-wrap">{{ $transaction->reason ??'' }}</span>
-                                            @else
-                                                <span class="badge bg-success">Approved</span>
-                                            @endif
-                                        </td>
-                                        <td>
-                                            <div class="table-actions d-flex justify-content-center">
-                                                <button class="btn delete-table me-2"
-                                                    onclick="editTransaction({{ $transaction->id }})" type="button"
-                                                    data-bs-toggle="modal" data-bs-target="#edit-transaction-modal">
-                                                    <i class="fe fe-edit"></i>
-                                                </button>
-                                                <form action="{{ route('transaction.destroy', $transaction->id) }}"
-                                                    method="POST" style="display:inline;">
-                                                    @csrf
-                                                    @method('DELETE')
-                                                    <button class="btn delete-table" type="submit"
-                                                        onclick="return confirm('Are you sure you want to delete this?')">
-                                                        <i class="fe fe-trash-2"></i>
-                                                    </button>
-                                                </form>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                @empty
-                                    <tr>
-                                        <td colspan="10" class="text-center">No data found</td>
-                                    </tr>
-                                @endforelse
-                            </tbody>
-                        </table>
+                        <div id="usersTable">
+                            @include('backend.transaction.partials.transaction-index') {{-- Load the users list initially --}}
+                        </div>
                     </div>
                 </div>
             </div>
@@ -284,6 +193,10 @@
 @endsection
 
 @section('scripts')
+    <script>
+        var searchRoute = `{{ route('meta.index') }}`;
+    </script>
+    <script src="{{ asset('admin/assets/js/search.js') }}"></script>
     <script>
         function editTransaction(id) {
             $.ajax({

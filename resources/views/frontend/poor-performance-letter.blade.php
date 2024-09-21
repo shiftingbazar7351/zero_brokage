@@ -66,62 +66,44 @@
 <body>
     <div>
         <div>
-            {{-- ..................For Logo................... --}}
-            {{-- <div style="position: relative">
-                <div class="background">
-                    <img src="{{ asset('assets/img/logofinal.webp') }}" alt="" style="width: 300px;padding:30px">
-                </div>
-                <div style="position: absolute;right:20px;top:0px">
-                    <p><b>FLYBIZZ SERVICES INDIA PRIVATE LIMITED</b></p>
-                    <p><b>GST : 09AAECF5972H1ZA</b></p>
-                    <p><b>PAN : AAECF5972H</b></p>
-                    <p><b>CIN : U74999UP2021PTC147120</b></p>
-                </div>
-            </div> --}}
-
             <div class="background">
                 <div class="content">
                     <div class="left-side">
-                        <img src="{{ asset('assets/img/logofinal.webp') }}" alt="" style="width: 300px;padding:15px">
+                        <img src="{{ asset('assets/img/logofinal.webp') }}" alt=""
+                            style="width: 300px;padding:15px">
                     </div>
                     <div class="right-side">
-                    <p style="margin:0px"><b>FLYBIZZ SERVICES INDIA PRIVATE LIMITED</b></p>
-                    <p style="margin:0px"><b>GST : 09AAECF5972H1ZA</b></p>
-                    <p style="margin:0px"><b>PAN : AAECF5972H</b></p>
-                    <p style="margin:0px"><b>CIN : U74999UP2021PTC147120</b></p>
+                        <p style="margin:0px"><b>FLYBIZZ SERVICES INDIA PRIVATE LIMITED</b></p>
+                        <p style="margin:0px"><b>GST : 09AAECF5972H1ZA</b></p>
+                        <p style="margin:0px"><b>PAN : AAECF5972H</b></p>
+                        <p style="margin:0px"><b>CIN : U74999UP2021PTC147120</b></p>
                     </div>
                 </div>
             </div>
 
             <div style="position: relative;padding:5px;margin-top:2%">
-                <div><b>Dear Vikas Kumar</b></div>
-                <div style="position: absolute;right:2%">Date:19-09;1999 15:38</div>
-                <p>Sector 22, Noida 201301</p>
+
+                <div style="position: absolute;right:2%">Date:19-09;1999 15:38:12</div>
+                <h3 style="text-align:center">Poor Performance Warning Letter</h3>
+
                 <p><b>Dear Ghyoor Qasim</b></p>
-                <p>Congratulations We are pleased to confirm that you have been selected to work for <b>Flybizz Services
-                        India Private Limited</b>.
-                    We are delighted to make you the following job offer.
+                <p>
+                    I am writing this letter to bring to your attention concerns we have about your performance in Customer relationship manager at Flybizz Services India Pvt. Ltd. We have identified several areas where your performance has not met the expectations set for your role, which we need to address.
+
                 </p>
-                <p>The position we are offering you is that of <b>"PHP DEVELOPER"</b> monthly salary of
-                    <b>&#8377;21300</b> per month with an annual cost to
-                    company Annual CTC [Fixed+Variable] - <b>&#8377;255600</b> . This position report to your Team
-                    Leader Head <b>Ishan Sir</b>.
+                <p>
+                    Specifically, we have observed that . These issues are significant and need to be addressed promptly.
+
                 </p>
-                <p>Your working hours will be from 9:30 AM to 6:30PM, <b>Monday to Saturday</b>.</p>
-                <b>
-                    <p>Benefits for the positons include :</p>
-                </b>
-                <ul>
-                    <li>Working will be 6 days.</li>
-                    <li>Employer state insurance </li>
-                </ul>
-                <p>We would like you to start on <b>22-07-2024</b>, Please report to Team Lead Head on 22-07-2024 for
-                    documentation and orientation. If this date is not acceptable,please contact me immediately.</p>
-                <p>Please sign the endosed copyof this letter and return it to me before 22-07-2024 to indicate your
-                    acceptance of this offer.</p>
-                <p>We are confidient you will be able to make a significant contribution to success of our <b>Flybizz
-                        Services India Pvt Ltd</b>and look forword to working with you.</p>
-            </div>
+                <p>We understand that you may be experiencing challenges, and we want to help you overcome them. Therefore, we are providing you with this warning to alert you to the situation and to provide an opportunity for you to improve your performance.
+                    To address these concerns, we expect that you will [provide specific performance expectations that the employee needs to meet within a certain timeframe]. We are confident that you can make the necessary changes and improvements and meet our expectations.
+                    .</p>
+                    <p>Please be advised that failure to improve your performance within the given timeframe may lead to further disciplinary action, up to and including termination of your employment.</p>
+                <p>If you have any questions or require assistance in improving your performance, please do not hesitate to contact us.
+                </p>
+                </div>
+
+
 
             <div style="margin-top: 5%;padding:5px">
                 <p>Anchal Saini</p>
@@ -153,9 +135,9 @@
                     <div class="left-side">
 
                     </div>
-                    <div class="right-side;" style="padding: 35px;color:white;">
-                    <p style="margin:0px"><b>Email : info@zerobrokage@gmail.com</b></p>
-                    <p style="margin:0px"><b>Website : www.shiftingbazar.com</b></p>
+                    <div class="right-side;" style="padding: 35px; color:white;">
+                        <p style="margin:0px"><b>Email : info@zerobrokage@gmail.com</b></p>
+                        <p style="margin:0px"><b>Website : www.shiftingbazar.com</b></p>
 
                     </div>
                 </div>

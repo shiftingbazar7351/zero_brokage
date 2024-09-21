@@ -6,12 +6,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0">
     <title>ZeroBrokage</title>
     <style>
-        /* * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-} */
-
         body,
         html {
             margin: 0;
@@ -64,15 +58,15 @@
             max-width: 100%;
             height: auto;
         }
+
+
     </style>
 </head>
 
 <body>
     <div>
         <div>
-
-
-            <div class="background">
+            <div class="background header">
                 <div class="content">
                     <div class="left-side">
                         <img src="{{ asset('assets/img/logofinal.webp') }}" alt=""
@@ -87,8 +81,8 @@
                 </div>
             </div>
             <div style="padding: 18px 8px;">
-                <div>
-                    Date : 20-09-2024 &nbsp &nbsp 12:07
+                <div style="text-align: end">
+                    Date : 20-09-2024 &nbsp &nbsp 12:07:19
                 </div>
                 <div>
                     <p>
@@ -158,37 +152,69 @@
                                 <tbody>
                                     <tr style="background-color: #ffffff;">
                                         <td style="padding: 8px;">Basic</td>
-                                        <td style="padding: 8px;">2323</td>
-                                        <td style="padding: 8px;">2323</td>
+                                        <td style="padding: 8px;">12212</td>
+                                        <td style="padding: 8px;">12212</td>
                                     </tr>
                                     <tr style="background-color: #f2f2f2;">
                                         <td style="padding: 8px;">HRA</td>
-                                        <td style="padding: 8px;">2132</td>
-                                        <td style="padding: 8px;">2313</td>
+                                        <td style="padding: 8px;">12212</td>
+                                        <td style="padding: 8px;">12212</td>
                                     </tr>
                                     <tr style="background-color: #ffffff;">
                                         <td style="padding: 8px;">CCA</td>
-                                        <td style="padding: 8px;">21332</td>
-                                        <td style="padding: 8px;">132</td>
+                                        <td style="padding: 8px;">12212</td>
+                                        <td style="padding: 8px;">12212</td>
                                     </tr>
                                     <tr style="background-color: #f2f2f2;">
-                                        <td style="padding: 8px;">In hand</td>
-                                        <td style="padding: 8px;">2132</td>
-                                        <td style="padding: 8px;">231</td>
+                                        <td style="padding: 8px;">Other Allowance</td>
+                                        <td style="padding: 8px;">12212</td>
+                                        <td style="padding: 8px;">12212</td>
+                                    </tr>
+                                     <tr style="background-color: #ffffff;">
+                                        <td style="padding: 8px;">Conveyance Allowance</td>
+                                        <td style="padding: 8px;">12212</td>
+                                        <td style="padding: 8px;">12212</td>
+                                    </tr>
+                                    <tr style="background-color: #f2f2f2;">
+                                        <td style="padding: 8px;">Personal Pay</td>
+                                        <td style="padding: 8px;">12212</td>
+                                        <td style="padding: 8px;">12212</td>
+                                    </tr>
+                                    <tr style="background-color: #ffffff;">
+                                        <td style="padding: 8px;">Food Allowance</td>
+                                        <td style="padding: 8px;">12212</td>
+                                        <td style="padding: 8px;">12212</td>
+                                    </tr>
+                                    <tr style="background-color: #f2f2f2;">
+                                        <td style="padding: 8px;">Medical Allowance</td>
+                                        <td style="padding: 8px;">12212</td>
+                                        <td style="padding: 8px;">12212</td>
+                                    </tr>
+                                    <tr style="background-color: #ffffff;">
+                                        <td style="padding: 8px;">Telephone Allowance</td>
+                                        <td style="padding: 8px;">12212</td>
+                                        <td style="padding: 8px;">12212</td>
+                                    </tr>
+                                    <tr style="background-color: #f2f2f2;">
+                                        <td style="padding: 8px;">In Hand</td>
+                                        <td style="padding: 8px;">12212</td>
+                                        <td style="padding: 8px;">12212</td>
                                     </tr>
                                     <tr style="background-color: #ffffff;">
                                         <td style="padding: 8px;">CTC</td>
-                                        <td style="padding: 8px;">13212</td>
-                                        <td style="padding: 8px;">13212</td>
+                                        <td style="padding: 8px;">12212</td>
+                                        <td style="padding: 8px;">12212</td>
                                     </tr>
                                     <tr style="background-color: #f2f2f2;">
-                                        <td style="padding: 8px;">Salary credit</td>
-                                        <td style="padding: 8px;">13212</td>
-                                        <td style="padding: 8px;">13212</td>
+                                        <td style="padding: 8px;">Salary offered</td>
+                                        <td style="padding: 8px;">12212</td>
+                                        <td style="padding: 8px;">12212</td>
                                     </tr>
 
                                 </tbody>
                             </table>
+
+
                         </div>
                         <p>Terms and Conditions -: *Salary will be given in 10th of every month.<br>
                             *Incentive Perks will be given 25th of every month.
@@ -236,7 +262,7 @@
                                 <li>
                                     Paid Leave: At present the number of Paid Leave in a year is 48(Including week off)
                                     for all categories of staff. It can be availed after the completion of 6 months.
-                                    This should not exceed more than two days in a row & can’t be clubbed with the
+                                    This should not exceed more than two days in a 12212be clubbed with the
                                     Casual Leave or availed before or after the Public Holiday or Sunday. These leaves
                                     have to be sanctioned from the reporting authority on the prior basis. Paid leave
                                     can be carried forward to next year.
@@ -564,7 +590,7 @@
 
 
 
-            <div style="display: flex;justify-content:space-between;padding:5px">
+            <div style="display: flex;justify-content:space-between;padding:5px;margin-bottom:6px;">
                 <div></div>
                 <div style="text-align:end;margin-right: 30px">
                     <div style="text-align: end">
@@ -584,7 +610,7 @@
                 </div>
             </div>
 
-            <div class="background">
+            <div class="background footer">
                 <div class="content" style="justify-content: space-around">
                     <div class="left-side">
 

@@ -11,10 +11,20 @@ class NewsletterController extends Controller
      * Display a listing of the resource.
      *
      */
-    public function index()
+    public function index(Request $request)
     {
-        $newsletters = Newsletter::orderByDesc('created_at')->paginate(10);
-        return view('backend.newsletter.index',compact('newsletters'));
+        $query = Newsletter::query();
+        // Filter based on search query
+        if ($request->has('search')) {
+            $query->where('email', 'like', '%' . $request->search . '%');
+        }
+        // Paginate the users (adjust pagination number as needed)
+        $newsletters = $query->orderByDesc('created_at')->paginate(10);
+        // Check if it's an AJAX request
+        if ($request->ajax()) {
+            return view('backend.newsletter.partials.newsletter-index', compact('newsletters'))->render();
+        }
+        return view('backend.newsletter.index', compact('newsletters'));
     }
 
 

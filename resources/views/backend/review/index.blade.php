@@ -9,89 +9,27 @@
                     <div class="page-headers">
                         <div class="search-bar">
                             <span><i class="fe fe-search"></i></span>
-                            <input type="text" placeholder="Search" class="form-control">
+                            <input type="text" id="search" placeholder="Search" class="form-control">
                         </div>
                     </div>
                     @can('reviews-create')
-                    <ul>
-                        <li>
-                            <button class="btn btn-primary" type="button" data-bs-toggle="modal" data-bs-target="#add-review">
-                                <i class="fa fa-plus me-2"></i>Add Review
-                            </button>
-                        </li>
-                    </ul>
+                        <ul>
+                            <li>
+                                <button class="btn btn-primary" type="button" data-bs-toggle="modal"
+                                    data-bs-target="#add-review">
+                                    <i class="fa fa-plus me-2"></i>Add Review
+                                </button>
+                            </li>
+                        </ul>
                     @endcan
                 </div>
             </div>
             <div class="row">
                 <div class="col-12">
                     <div class="table-resposnive table-div">
-                        <table class="table datatable table-striped">
-                            <thead>
-                                <tr>
-                                    <th>#</th>
-                                    <th>Name</th>
-                                    <th>Description</th>
-                                    <th>Profession</th>
-                                    @can('reviews-status')
-                                    <th>Status</th>
-                                    @endcan
-                                    <th>Date</th>
-                                    <th>Created by</th>
-                                    @can(['reviews-edit', 'reviews-delete'])
-                                    <th>Action</th>
-                                    @endcan
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @forelse ($reviews as $review)
-                                    <tr>
-                                        <td>{{ $loop->iteration }}</td>
-                                        <td>{{ $review->name ?? '' }}</td>
-                                        <td>{{ $review->description ?? '' }}</td>
-                                        <td>{{ $review->profession ?? '' }}</td>
-
-                                        @can('reviews-status')
-                                        <td>
-                                            <div class="active-switch">
-                                                <label class="switch">
-                                                    <input type="checkbox" class="status-toggle"
-                                                        data-id="{{ $review->id }}" {{ $review->status ? 'checked' : '' }}>
-                                                    <span class="sliders round"></span>
-                                                </label>
-                                            </div>
-                                        </td>
-                                        @endcan
-                                        <td>{{ $review->created_at ? $review->created_at->format('d M Y') : '' }}</td>
-                                        <td>{{ $review->createdBy->name ?? '' }}</td>
-                                        @can(['reviews-edit', 'reviews-delete'])
-                                        <td>
-                                            <div class="table-actions d-flex justify-content-center">
-                                                <button class="btn delete-table me-2"
-                                                    onclick="editCategory({{ $review->id }})" type="button"
-                                                    data-bs-toggle="modal" data-bs-target="#edit-review">
-                                                    <i class="fe fe-edit"></i>
-                                                </button>
-                                                <form action="{{ route('reviews.destroy', $review->id) }}" method="POST"
-                                                    style="display:inline;">
-                                                    @csrf
-                                                    @method('DELETE')
-                                                    <button class="btn delete-table" type="subm it"
-                                                        onclick="return confirm('Are you sure want to delete this?')">
-                                                        <i class="fe fe-trash-2"></i>
-                                                    </button>
-                                                </form>
-                                            </div>
-                                        </td>
-                                        @endcan
-                                    </tr>
-                                @empty
-                                    <tr>
-                                        <td colspan="7" class="text-center">No data found</td>
-                                    </tr>
-                                @endforelse
-                            </tbody>
-                        </table>
+                        <div id="usersTable">
+                            @include('backend.review.partials.review-index') {{-- Load the users list initially --}}
+                        </div>
                     </div>
                 </div>
             </div>
@@ -112,7 +50,8 @@
                         @csrf
                         <div class="mb-3">
                             <label class="form-label">Name</label>
-                            <input type="text" class="form-control" name="name" placeholder="Enter name">{{ old('name') }}</input>
+                            <input type="text" class="form-control" name="name"
+                                placeholder="Enter name">{{ old('name') }}</input>
                             <div id="name_error" class="text-danger"></div>
                         </div>
 
@@ -124,7 +63,8 @@
 
                         <div class="mb-3">
                             <label class="form-label">Profession</label>
-                            <input type="text" class="form-control" name="profession" placeholder="Enter profession">{{ old('profession') }}</input>
+                            <input type="text" class="form-control" name="profession"
+                                placeholder="Enter profession">{{ old('profession') }}</input>
                             <div id="profession_error" class="text-danger"></div>
                         </div>
 
@@ -158,7 +98,8 @@
                         <input type="hidden" id="editReviewId" name="review_id">
                         <div class="mb-3">
                             <label class="form-label">Name</label>
-                            <input type="text" class="form-control" id="editname" name="name" placeholder="Enter name"></input>
+                            <input type="text" class="form-control" id="editname" name="name"
+                                placeholder="Enter name"></input>
                             <div id="editName_error" class="text-danger"></div>
                         </div>
 
@@ -171,7 +112,8 @@
 
                         <div class="mb-3">
                             <label class="form-label">Profession</label>
-                            <input type="text" class="form-control" id="editprofession" name="profession" placeholder="Enter profession"></input>
+                            <input type="text" class="form-control" id="editprofession" name="profession"
+                                placeholder="Enter profession"></input>
                             <div id="editProfession_error" class="text-danger"></div>
                         </div>
 
@@ -189,8 +131,10 @@
 @section('scripts')
     <script>
         var statusRoute = `{{ route('reviews.status') }}`;
+        var searchRoute = `{{ route('reviews.index') }}`;
     </script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="{{ asset('admin/assets/js/search.js') }}"></script>
     <script src="{{ asset('admin/assets/js/status-update.js') }}"></script>
     <script>
         function editCategory(id) {
@@ -228,7 +172,7 @@
                     success: function(response) {
                         $('#add-review').modal('hide'); // Hide the modal
                         if (response) {
-                        location.reload(); // Refresh page to show updated data
+                            location.reload(); // Refresh page to show updated data
                         }
                     },
                     error: function(xhr) {

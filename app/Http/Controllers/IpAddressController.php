@@ -11,9 +11,19 @@ class IpAddressController extends Controller
      * Display a listing of the resource.
      *
      */
-    public function index()
+    public function index(Request $request)
     {
-        $ipaddresses = IpAddress::paginate(10);
+        $query = IpAddress::query();
+        // Filter based on search query
+        if ($request->has('search')) {
+            $query->where('name', 'like', '%' . $request->search . '%');
+        }
+        // Paginate the users (adjust pagination number as needed)
+        $ipaddresses = $query->orderByDesc('created_at')->paginate(10);
+        // Check if it's an AJAX request
+        if ($request->ajax()) {
+            return view('backend.ip-address.partials.ip-address-index', compact('ipaddresses'))->render();
+        }
         return view('backend.ip-address.index', compact('ipaddresses'));
     }
 

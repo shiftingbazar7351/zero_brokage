@@ -33,7 +33,9 @@ class CheckIpAddress
                     Auth::guard('web')->logout();
                     $request->session()->invalidate();
                     $request->session()->regenerateToken();
-                    session()->flash('error', 'Unauthorized IP address.');
+                    // session()->flash('message', 'Unauthorized IP address.');
+                    // session()->flash('alert-type', 'error');
+                    toastr()->success('Unauthorized IP address.');
                     return redirect('/login')->withErrors(['ip' => 'Unauthorized IP address.']);
                 }
             } else {

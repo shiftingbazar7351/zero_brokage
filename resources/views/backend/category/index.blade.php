@@ -4,7 +4,6 @@
         <div class="content">
             <div class="content-page-header content-page-headersplit mb-0">
                 <h5>Categories</h5>
-                @can('categories-create')
                 <div class="list-btn d-flex gap-3">
                     <div class="page-headers">
                         <div class="search-bar">
@@ -12,14 +11,15 @@
                             <input type="text" id="search" placeholder="Search" class="form-control">
                         </div>
                     </div>
+                    @can('categories-create')
                         <ul>
                             <li>
                                 <button class="btn btn-primary" type="button" data-bs-toggle="modal"
                                     data-bs-target="#add_category"><i class="fa fa-plus me-2"></i>Add Category</button>
                             </li>
                         </ul>
-                    </div>
-                @endcan
+                    @endcan
+                </div>
             </div>
             <div class="row">
                 <div class="col-12 ">
@@ -88,7 +88,6 @@
             </div>
         </div>
     </div>
-
 @endsection
 
 <!-- Ensure jQuery is loaded before these scripts -->

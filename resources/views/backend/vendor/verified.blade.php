@@ -15,8 +15,15 @@
         <div class="content">
             <div class="content-page-header content-page-headersplit mb-0">
                 <h5>Categories</h5>
-                @can('verified-create')
-                <div class="list-btn">
+                <div class="list-btn d-flex gap-3">
+
+                    <div class="page-headers">
+                        <div class="search-bar">
+                            <span><i class="fe fe-search"></i></span>
+                            <input type="text" id="search" placeholder="Search" class="form-control">
+                        </div>
+                    </div>
+                    @can('verified-create')
                     <ul>
                         <li>
                             <button class="btn btn-primary" type="button" data-bs-toggle="modal"
@@ -25,82 +32,15 @@
                             </button>
                         </li>
                     </ul>
+                    @endcan
                 </div>
-                @endcan
             </div>
             <div class="row">
                 <div class="col-12">
                     <div class="table-resposnive table-div">
-                        <table class="table datatable">
-                            <thead>
-                                <tr>
-                                    <th>#</th>
-                                    <th>Image</th>
-                                    <th>Name</th>
-                                    @can('verified-status')
-                                    <th>Status</th>
-                                    @endcan
-                                    @can(['verified-edit', 'verified-delete'])
-                                    <th>Action</th>
-                                    @endcan
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @forelse ($verifieds as $verified)
-                                    <tr>
-                                        <td>{{ $loop->iteration }}</td>
-                                        <td>
-                                            <div class="table-imgname">
-                                                @if ($verified->image)
-                                                    <img src="{{ Storage::url('verified/' . $verified->image) }}"
-                                                        class="me-2 preview-img" alt="img">
-                                                @else
-                                                    No Image
-                                                @endif
-                                            </div>
-                                        </td>
-                                        <td>{{ $verified->name ?? '' }}</td>
-                                        @can('verified-status')
-                                        <td>
-                                            <div class="active-switch">
-                                                <label class="switch">
-                                                    <input type="checkbox" class="status-toggle"
-                                                        data-id="{{ $verified->id }}"
-                                                        onclick="return confirm('Are you sure want to change status?')"
-                                                        {{ $verified->status ? 'checked' : '' }}>
-                                                    <span class="sliders round"></span>
-                                                </label>
-                                            </div>
-                                        </td>
-                                        @endcan
-                                        @can(['verified-edit', 'verified-delete'])
-                                        <td>
-                                            <div class="table-actions d-flex justify-content-center">
-                                                <button class="btn delete-table me-2"
-                                                    onclick="editVerified({{ $verified->id }})" type="button"
-                                                    data-bs-toggle="modal" data-bs-target="#edit-category">
-                                                    <i class="fe fe-edit"></i>
-                                                </button>
-                                                <form action="{{ route('verified.destroy', $verified->id) }}" method="POST"
-                                                    style="display:inline;">
-                                                    @csrf
-                                                    @method('DELETE')
-                                                    <button class="btn delete-table" type="submit"
-                                                        onclick="return confirm('Are you sure want to delete this?')">
-                                                        <i class="fe fe-trash-2"></i>
-                                                    </button>
-                                                </form>
-                                            </div>
-                                        </td>
-                                        @endcan
-                                    </tr>
-                                @empty
-                                    <tr>
-                                        <td colspan="6" class="text-center">No data found</td>
-                                    </tr>
-                                @endforelse
-                            </tbody>
-                        </table>
+                        <div id="usersTable">
+                            @include('backend.vendor.partials.verified-index') {{-- Load the users list initially --}}
+                        </div>
                     </div>
                 </div>
             </div>
@@ -211,8 +151,10 @@
 @section('scripts')
     <script>
         var statusRoute = `{{ route('verified.status') }}`;
+        var searchRoute = `{{ route('verified.index') }}`;
     </script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="{{ asset('admin/assets/js/search.js') }}"></script>
     <script src="{{ asset('admin/assets/js/status-update.js') }}"></script>
     <script src="{{ asset('admin/assets/js/preview-img.js') }}"></script>
     <script>

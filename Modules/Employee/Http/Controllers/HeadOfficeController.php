@@ -21,9 +21,19 @@ class HeadOfficeController extends Controller
      * Display a listing of the resource.
      * @return Renderable
      */
-    public function index()
+    public function index(Request $request)
     {
-        $offices = HeadOffice::orderByDesc('created_at')->paginate(10);
+        $query = HeadOffice::query();
+        // Filter based on search query
+        if ($request->has('search')) {
+            $query->where('name', 'like', '%' . $request->search . '%');
+        }
+        // Paginate the users (adjust pagination number as needed)
+        $offices = $query->orderByDesc('created_at')->paginate(10);
+        // Check if it's an AJAX request
+        if ($request->ajax()) {
+            return view('employee::headoffice.partials.headoffice-index', compact('offices'))->render();
+        }
         return view('employee::headoffice.index',compact('offices'));
     }
 
@@ -89,7 +99,7 @@ class HeadOfficeController extends Controller
     {
         // Find the existing office record by ID
         $office = HeadOffice::findOrFail($id);
-    
+
         // Validate the request data
         $request->validate([
             'name' => [
@@ -101,25 +111,25 @@ class HeadOfficeController extends Controller
             'number'=> 'required',
             'address'=> 'required'
         ]);
-    
+
         // Update the office with the new data
         $office->name = $request->name;
         $office->number = $request->number;
         $office->address = $request->address;
-    
+
         // If a new image is uploaded, handle the file upload
         if ($request->hasFile('image')) {
             $filename = $this->fileUploadService->uploadImage('employee/office/', $request->file('image'));
             $office->image = $filename;
         }
-    
+
         // Save the updated office data
         $office->save();
-    
+
         // Return a JSON response indicating success
         return response()->json(['success' => true, 'message' => 'Office updated successfully.']);
     }
-    
+
 
     /**
      * Remove the specified resource from storage.

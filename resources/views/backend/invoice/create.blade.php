@@ -45,15 +45,6 @@
                                     @endforeach
                                 </select>
 
-                                {{-- <select id="category" class="multiOption" multiple name="native-select"
-                                    placeholder="Select category" data-silent-initial-value-set="false">
-                                    <option value="1">AC</option>
-                                    <option value="2">PLUMBER</option>
-                                    <option>MECHANIC</option>
-                                    <option value="4">CLEANING</option>
-                                    <option value="5">JAVA</option>
-                                    <option>PHP</option>
-                                </select> --}}
                                 @error('category')
                                     <div class="error text-danger">{{ $message }}</div>
                                 @enderror
@@ -65,15 +56,6 @@
                                     <option value="" selected disabled>Select subcategory</option>
                                 </select>
 
-                                {{-- <select class="multiOption" multiple name="native-select" placeholder="Select Subcategory"
-                                    data-silent-initial-value-set="false">
-                                    <option value="1">Installation__</option>
-                                    <option value="2">Uninstallation__</option>
-                                    <option value="3">services__</option>
-                                    <option value="4">CLEANING</option>
-                                    <option value="5">JAVA</option>
-                                    <option value="6">PHP</option>
-                                </select> --}}
                                 @error('sub_category')
                                     <div class="error text-danger">{{ $message }}</div>
                                 @enderror
@@ -84,15 +66,7 @@
                                 <select class="form-control" id="menu" name="menu_id" required>
                                     <option value="" selected disabled>Select menu</option>
                                 </select>
-                                {{-- <select class="multiOption" multiple name="native-select" placeholder="Select menu"
-                                    data-silent-initial-value-set="false">
-                                    <option>Menu</option>
-                                    <option>Uninstallation__</option>
-                                    <option value="3">services__</option>
-                                    <option value="4">CLEANING</option>
-                                    <option value="5">JAVA</option>
-                                    <option value="6">PHP</option>
-                                </select> --}}
+
                                 @error('menu_id')
                                     <div class="error text-danger">{{ $message }}</div>
                                 @enderror
@@ -103,15 +77,7 @@
                                 <select class="form-control" id="submenu" name="submenu_id" required>
                                     <option value="" selected disabled>Select submenu</option>
                                 </select>
-                                {{-- <select class="multiOption" multiple name="native-select" placeholder="Select submenu"
-                                    data-silent-initial-value-set="false">
-                                    <option value="1">SubMenu</option>
-                                    <option value="2">Uninstallation__</option>
-                                    <option value="3">services__</option>
-                                    <option value="4">CLEANING</option>
-                                    <option value="5">JAVA</option>
-                                    <option value="6">PHP</option>
-                                </select> --}}
+
                                 @error('submenu_id')
                                     <div class="error text-danger">{{ $message }}</div>
                                 @enderror
@@ -266,9 +232,9 @@
                                             <td> {{ $invoice->quantity ?? '' }} </td>
                                             <td> {{ $invoice->total_ammount ?? '' }} </td>
                                             <td> {{ $invoice->grand_total ?? '' }} </td>
-                                            <td> {{ $invoice->city_name->name ?? '' }} </td>
+                                            <td> {{ $invoice->cityName->name ?? '' }} </td>
 
-                                            <td> {{ $invoice->state_name->name ?? '' }} </td>
+                                            <td> {{ $invoice->cityName->state->name ?? '' }} </td>
                                             <td>
                                                 <div class="table-actions d-flex justify-content-center">
                                                     <button class="btn delete-table me-2" onclick="#" type="button"
@@ -288,7 +254,7 @@
                                         </tr>
                                     @empty
                                         <tr>
-                                            <td colspan="4" class="text-center">No data found</td>
+                                            <td colspan="12" class="text-center">No data found</td>
                                         </tr>
                                     @endforelse
                                 </tbody>
@@ -442,6 +408,7 @@
                                     <input name="gst" class="form-control bg-light-subtle" placeholder="Enter gst"
                                         required>{{ old('gst') }}</input>
 
+                                        <a href="https://services.gst.gov.in/services/searchtp" class="text-danger ml-2" target="_blank"><b>verify gst</b></a>
                                     @error('gst')
                                         <div class="error text-danger ">{{ $message }}</div>
                                     @enderror
@@ -481,7 +448,6 @@
                         </form>
                     </div>
                 </div>
-
             </div>
 
         </div>
@@ -496,10 +462,6 @@
             ele: '.multiOption'
         });
     </script>
-
-
-
-
     <script>
         $(document).ready(function() {
             $('#state').on('change', function() {

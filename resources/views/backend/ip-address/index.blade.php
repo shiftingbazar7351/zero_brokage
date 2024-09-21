@@ -20,59 +20,9 @@
             <div class="row text-center">
                 <div class="col-12">
                     <div class="table-responsive table-div">
-                        <table class="table datatable table-striped table-bordered">
-                            <thead>
-                                <tr>
-                                    <th>#</th>
-                                    <th>Ip Address</th>
-                                    <th>Creted By</th>
-                                    @can('ipaddress-status')
-                                    <th>Status</th>
-                                    @endcan
-                                    @can(['ipaddress-edit', 'ipaddress-delete'])
-                                    <th>Action</th>
-                                    @endcan
-                                </tr>
-                            </thead>
-                            @foreach ($ipaddresses as $ipaddress)
-                                <tbody>
-                                    <td>{{ $ipaddress->id ?? '' }}</td>
-                                    <td>{{ $ipaddress->ip_address ?? '' }}</td>
-                                    <td>{{ $ipaddress->createdBy->name ?? '' }}</td>
-                                    @can('ipaddress-status')
-                                    <td>
-                                        <div class="active-switch">
-                                            <label class="switch">
-                                                <input type="checkbox" class="status-toggle" data-id="{{ $ipaddress->id }}"
-                                                    {{ $ipaddress->status ? 'checked' : '' }}>
-                                                <span class="sliders round"></span>
-                                            </label>
-                                        </div>
-                                    </td>
-                                    @endcan
-                                    @can(['ipaddress-edit', 'ipaddress-delete'])
-                                    <td>
-                                        <div class="table-actions d-flex justify-content-center">
-                                            <button class="btn delete-table me-2"
-                                                onclick="editCategory({{ $ipaddress->id }})" type="button"
-                                                data-bs-toggle="modal" data-bs-target="#edit-category">
-                                                <i class="fe fe-edit"></i>
-                                            </button>
-                                            <form action="{{ route('ipaddress.destroy', $ipaddress->id) }}" method="POST"
-                                                style="display:inline;">
-                                                @csrf
-                                                @method('DELETE')
-                                                <button class="btn delete-table" type="subm it"
-                                                    onclick="return confirm('Are you sure want to delete this?')">
-                                                    <i class="fe fe-trash-2"></i>
-                                                </button>
-                                            </form>
-                                        </div>
-                                    </td>
-                                    @endcan
-                                </tbody>
-                            @endforeach
-                        </table>
+                        <div id="usersTable">
+                            @include('backend.ip-address.partials.ip-address-index') {{-- Load the users list initially --}}
+                        </div>
                     </div>
                 </div>
             </div>
@@ -141,8 +91,10 @@
 @section('scripts')
     <script>
         var statusRoute = `{{ route('ipaddress.status') }}`;
+        var statusRoute = `{{ route('ipaddress.index') }}`;
     </script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="{{ asset('admin/assets/js/search.js') }}"></script>
     <script>
         document.getElementById('ipAddress').addEventListener('input', function(e) {
             let value = e.target.value;

@@ -1,26 +1,25 @@
 @extends('backend.layouts.main')
-@section('styles')
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/css/intlTelInput.min.css">
-@endsection
 
 @section('content')
     <div class="page-wrapper page-settings">
         <div class="content">
             <div class="row">
                 <div class="container border p-2 shadow-sm my-3">
-                    <h4> Create Employee</h4>
+                    <h4> Edit Employee</h4>
                 </div>
                 <div>
-                    <form action="{{ route('employee.store') }}" method="POST" enctype="multipart/form-data"
-                        data-parsley-validate="true">
+                    <form action="{{ route('employee.update', $employee->id ?? '') }}" method="POST"
+                        enctype="multipart/form-data" data-parsley-validate="true">
                         @csrf
+                        @method('PUT')
 
                         <div class="row">
                             <!-- First Name -->
                             <div class="mb-3 col-md-3">
                                 <label for="fname" class="form-label">First Name</label><b style="color: red;">*</b>
                                 <input type="text" class="form-control" id="fname" name="fname"
-                                    value="{{ old('fname') }}" placeholder="Enter first name" required>
+                                    value="{{ old('fname', $employee->fname ?? '') }}" placeholder="Enter first name"
+                                    required>
                                 @error('fname')
                                     <div class="error text-danger ">{{ $message }}</div>
                                 @enderror
@@ -30,7 +29,8 @@
                             <div class="mb-3 col-md-3">
                                 <label for="lname" class="form-label">Last Name</label>
                                 <input type="text" class="form-control" id="lname" name="lname"
-                                    value="{{ old('lname') }}" placeholder="Enter last name" required>
+                                    value="{{ old('lname', $employee->lname ?? '') }}" placeholder="Enter last name"
+                                    required>
                                 @error('lname')
                                     <div class="error text-danger ">{{ $message }}</div>
                                 @enderror
@@ -54,7 +54,7 @@
                             <div class="mb-3 col-md-3">
                                 <label for="dob" class="form-label">Date of Birth</label><b style="color: red;">*</b>
                                 <input type="date" class="form-control" id="dob" name="dob"
-                                    value="{{ old('dob') }}" required>
+                                    value="{{ old('dob', $employee->dob ?? '') }}" required>
                                 @error('dob')
                                     <div class="error text-danger ">{{ $message }}</div>
                                 @enderror
@@ -64,17 +64,16 @@
                             <div class="mb-3 col-md-3">
                                 <label for="email" class="form-label">Email</label><b style="color: red;">*</b>
                                 <input type="email" class="form-control" id="email" name="email"
-                                    value="{{ old('email') }}" placeholder="Enter email" required>
+                                    value="{{ old('email', $employee->email ?? '') }}" placeholder="Enter email" required>
                                 @error('email')
                                     <div class="error text-danger ">{{ $message }}</div>
                                 @enderror
                             </div>
-                            <!-- Role -->
-
+                            {{-- Role --}}
                             <div class="mb-3 col-md-3">
                                 <label for="role" class="form-label">Role</label><b
                                     style="color: red;">*</b>
-                                <select class="form-control" id="role" name="user_type" required>
+                                <select class="form-control" id="role" name="role" required>
                                     <option value="">Select Role</option>
                                     @foreach ($roles as $role)
                                         <option value="{{ $role->id }}">{{ $role->user_type }}</option>
@@ -88,8 +87,9 @@
                             <!-- Phone Number -->
                             <div class="mb-3 col-md-3">
                                 <label for="number" class="form-label">Phone Number</label><b style="color: red;">*</b>
-                                <input type="text" class="form-control" id="phoneNumVender" name="number"
-                                    value="{{ old('number') }}" placeholder="Enter phone number"  maxlength="10" required>
+                                <input type="text" class="form-control" id="number" name="number"
+                                    value="{{ old('number', $employee->number ?? '') }}" placeholder="Enter phone number"
+                                    required>
                                 @error('number')
                                     <div class="error text-danger ">{{ $message }}</div>
                                 @enderror
@@ -100,7 +100,7 @@
                                 <label for="joining_date" class="form-label">Joining Date</label><b
                                     style="color: red;">*</b>
                                 <input type="date" class="form-control" id="joining_date" name="joining_date"
-                                    value="{{ old('joining_date') }}" required>
+                                    value="{{ old('joining_date', $employee->joining_date ?? '') }}" required>
                                 @error('joining_date')
                                     <div class="error text-danger ">{{ $message }}</div>
                                 @enderror
@@ -110,7 +110,8 @@
                             <div class="mb-3 col-md-3">
                                 <label for="company" class="form-label">Company</label><b style="color: red;">*</b>
                                 <input type="text" class="form-control" id="company" name="company"
-                                    value="{{ old('company') }}" placeholder="Enter company name" required>
+                                    value="{{ old('company', $employee->company ?? '') }}"
+                                    placeholder="Enter company name" required>
                                 @error('company')
                                     <div class="error text-danger ">{{ $message }}</div>
                                 @enderror
@@ -121,8 +122,8 @@
                                 <label for="no_of_experience" class="form-label">Years of Experience</label><b
                                     style="color: red;">*</b>
                                 <input type="text" class="form-control" id="no_of_experience" name="no_of_experience"
-                                    value="{{ old('no_of_experience') }}" placeholder="Enter years of experience"
-                                    required>
+                                    value="{{ old('no_of_experience', $employee->no_of_experience ?? '') }}"
+                                    placeholder="Enter years of experience" required>
                                 @error('no_of_experience')
                                     <div class="error text-danger ">{{ $message }}</div>
                                 @enderror
@@ -132,7 +133,8 @@
                             <div class="mb-3 col-md-3">
                                 <label for="department" class="form-label">Department</label><b style="color: red;">*</b>
                                 <input type="text" class="form-control" id="department" name="department"
-                                    value="{{ old('department') }}" placeholder="Enter department" required>
+                                    value="{{ old('department', $employee->department ?? '') }}"
+                                    placeholder="Enter department" required>
                                 @error('department')
                                     <div class="error text-danger ">{{ $message }}</div>
                                 @enderror
@@ -143,13 +145,15 @@
                                 <label for="designation" class="form-label">Designation</label><b
                                     style="color: red;">*</b>
                                 <input type="text" class="form-control" id="designation" name="designation"
-                                    value="{{ old('designation') }}" placeholder="Enter designation" required>
+                                    value="{{ old('designation', $employee->designation ?? '') }}"
+                                    placeholder="Enter designation" required>
                                 @error('designation')
                                     <div class="error text-danger ">{{ $message }}</div>
                                 @enderror
                             </div>
 
                             <!-- Office Shift -->
+
                             <div class="mb-3 col-md-3">
                                 <label for="office_shift" class="form-label">Office Shift</label><b
                                     style="color: red;">*</b>
@@ -175,7 +179,8 @@
                                 <label for="reporting_head" class="form-label">Reporting Head</label><b
                                     style="color: red;">*</b>
                                 <input type="text" class="form-control" id="reporting_head" name="reporting_head"
-                                    value="{{ old('reporting_head') }}" placeholder="Enter reporting head" required>
+                                    value="{{ old('reporting_head', $employee->reporting_head ?? '') }}"
+                                    placeholder="Enter reporting head" required>
                                 @error('reporting_head')
                                     <div class="error text-danger ">{{ $message }}</div>
                                 @enderror
@@ -219,7 +224,8 @@
                                 <label for="official_mobile" class="form-label">Official Mobile</label><b
                                     style="color: red;">*</b>
                                 <input type="text" class="form-control" id="official_mobile" name="official_mobile"
-                                    value="{{ old('official_mobile') }}" placeholder="Enter official mobile" required>
+                                    value="{{ old('official_mobile', $employee->official_mobile ?? '') }}"
+                                    placeholder="Enter official mobile" required>
                                 @error('official_mobile')
                                     <div class="error text-danger ">{{ $message }}</div>
                                 @enderror
@@ -230,7 +236,8 @@
                                 <label for="official_email" class="form-label">Official Email</label><b
                                     style="color: red;">*</b>
                                 <input type="email" class="form-control" id="official_email" name="official_email"
-                                    value="{{ old('official_email') }}" placeholder="Enter official email" required>
+                                    value="{{ old('official_email', $employee->official_email ?? '') }}"
+                                    placeholder="Enter official email" required>
                                 @error('official_email')
                                     <div class="error text-danger ">{{ $message }}</div>
                                 @enderror
@@ -240,7 +247,7 @@
                                 <label for="current_address" class="form-label text-dark">Current Address<b
                                         style="color: red;">*</b></label>
                                 <textarea name="current_address" class="form-control" placeholder="Enter current address" id="current_address"
-                                    rows="3" required>{{ old('current_address') }}</textarea>
+                                    rows="3" required>{{ $employee->current_address ?? '' }}</textarea>
                                 @error('current_address')
                                     <div class="error text-danger ">{{ $message }}</div>
                                 @enderror
@@ -250,7 +257,7 @@
                                 <label for="permanent_address" class="form-label text-dark">Permanent Address<b
                                         style="color: red;">*</b></label>
                                 <textarea name="permanent_address" class="form-control" placeholder="Enter permanent address" id="permanent_address"
-                                    rows="3" required>{{ old('permanent_address') }}</textarea>
+                                    rows="3" required>{{ $employee->permanent_address ?? '' }}</textarea>
                                 @error('permanent_address')
                                     <div class="error text-danger ">{{ $message }}</div>
                                 @enderror
@@ -261,29 +268,68 @@
                                 <label for="high_school_certificate" class="form-label">High School Certificate</label><b
                                     style="color: red;">*</b>
                                 <input type="file" class="form-control" id="high_school_certificate"
-                                    name="high_school_certificate" required>
+                                    name="high_school_certificate">
                                 @error('high_school_certificate')
-                                    <div class="error text-danger ">{{ $message }}</div>
+                                    <div class="error text-danger">{{ $message }}</div>
                                 @enderror
+
+                                @if ($employee && $employee->high_school_certificate)
+                                    <div class="mt-2">
+                                        <a href="{{ asset('storage/employee/high_school_certificate/' . $employee->high_school_certificate) }}"
+                                            target="_blank">
+                                            View High School Certificate
+                                        </a>
+                                        <br>
+                                        <img src="{{ asset('storage/employee/high_school_certificate/' . $employee->high_school_certificate) }}"
+                                            width="100" alt="High School Certificate">
+                                    </div>
+                                @endif
                             </div>
+
                             <div class="mb-3 col-md-3">
                                 <label for="intermediate_certificate" class="form-label">Intermediate
                                     Certificate</label><b style="color: red;">*</b>
                                 <input type="file" class="form-control" id="intermediate_certificate"
-                                    name="intermediate_certificate" required>
+                                    name="intermediate_certificate">
                                 @error('intermediate_certificate')
-                                    <div class="error text-danger ">{{ $message }}</div>
+                                    <div class="error text-danger">{{ $message }}</div>
                                 @enderror
+
+                                @if ($employee && $employee->intermediate_certificate)
+                                    <div class="mt-2">
+                                        <a href="{{ asset('storage/employee/intermediate_certificate/' . $employee->intermediate_certificate) }}"
+                                            target="_blank">
+                                            View Intermediate Certificate
+                                        </a>
+                                        <br>
+                                        <img src="{{ asset('storage/employee/intermediate_certificate/' . $employee->intermediate_certificate) }}"
+                                            width="100" alt="Intermediate Certificate">
+                                    </div>
+                                @endif
                             </div>
+
                             <div class="mb-3 col-md-3">
                                 <label for="graduation_certificate" class="form-label">Graduation Certificate</label><b
                                     style="color: red;">*</b>
                                 <input type="file" class="form-control" id="graduation_certificate"
-                                    name="graduation_certificate" required>
+                                    name="graduation_certificate">
                                 @error('graduation_certificate')
-                                    <div class="error text-danger ">{{ $message }}</div>
+                                    <div class="error text-danger">{{ $message }}</div>
                                 @enderror
+
+                                @if ($employee && $employee->graduation_certificate)
+                                    <div class="mt-2">
+                                        <a href="{{ asset('storage/employee/graduation_certificate/' . $employee->graduation_certificate) }}"
+                                            target="_blank">
+                                            View Graduation Certificate
+                                        </a>
+                                        <br>
+                                        <img src="{{ asset('storage/employee/graduation_certificate/' . $employee->graduation_certificate) }}"
+                                            width="100" alt="Graduation Certificate">
+                                    </div>
+                                @endif
                             </div>
+
                             {{-- checkbox of experience --}}
                             <div class="mb-3 col-md-3">
                                 <label for="experience" class="form-label">Experience</label><b
@@ -337,16 +383,6 @@
 @endsection
 
 @section('scripts')
-<script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/intlTelInput.min.js"></script>
-    <script>
-        const whatsappvender = document.querySelector("#phoneNumVender");
-        window.intlTelInput(whatsappvender, {
-            initialCountry: "in",
-            separateDialCode: true
-        });
-    </script>
-
-
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             const fresherRadio = document.getElementById('fresher');

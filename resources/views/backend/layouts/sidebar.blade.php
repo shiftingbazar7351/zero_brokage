@@ -12,7 +12,7 @@
     </div>
     <div class="sidebar-inner slimscroll">
         <div id="sidebar-menu" class="sidebar-menu">
-            <ul>
+            <ul class="mb-4">
                 <li class="menu-title m-0">
                     <h6>Home</h6>
                 </li>

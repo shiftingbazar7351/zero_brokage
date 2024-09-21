@@ -29,19 +29,19 @@
                 <h3 style="text-align: center; margin: 10px 0px;">TAX INVOICE</h3>
             </div>
             <div style="display: flex; justify-content: space-between;">
-                <div style="line-height: 1.4;">
+                <div style="line-height: 1.4;width:50%" >
                     <h4 style="margin: 0">Bill To</h4>
-                    <div>SAMRAT INTERNATIONAL PACKER AND MOVERS</div>
-                    <div>OFFICE NO. 10, PETHKAR PLAZA,</div>
-                    <div>MAKHMALABAD NAKA, NEAR SBI PANCHWATI</div>
+                    <div>{{ $vendor->company_name ??'' }}</div>
+                    <div class="text-wrap">{{ $vendor->address ??'' }}</div>
+                    {{-- <div>MAKHMALABAD NAKA, NEAR SBI PANCHWATI</div>
                     <div>BRANCH PANCHVATI 22, Naaik</div>
-                    <div>GSTIN: 27DLAPA1432C1</div>
-                    <div>State Code :27</div>
+                    <div>GSTIN: 27DLAPA1432C1</div> --}}
+                    {{-- <div>State Code :27</div> --}}
                     <div>Yes</div>
                 </div>
-                <div style="line-height: 1.4;">
-                    <div>Invoice No. : SBZ12343224</div>
-                    <div>Invoice Date : 09/09/2024</div>
+                <div style="line-height: 1.4;width:50% text-align:end;">
+                    <div>Invoice No. : {{ $invoice->invoice_number ??'' }}</div>
+                    <div>Invoice Date : {{ $invoice->created_at ??'' }}</div>
                 </div>
             </div>
 

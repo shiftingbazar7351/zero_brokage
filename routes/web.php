@@ -57,9 +57,9 @@ Route::get('/privacy-policy', function () {
     return view('frontend.privacy-policy');
 })->name('privacy-policy');
 
-Route::get('/reciept', function () {
-    return view('frontend.reciept');
-})->name('reciept');
+// Route::get('/reciept', function () {
+//     return view('frontend.reciept');
+// })->name('reciept');
 
 Route::get('/email-template', function () {
     return view('emails.user-credential');
@@ -303,8 +303,8 @@ Route::middleware(['auth', 'check.ip'])->group(function () {
         Route::delete('/invoice/{invoice}', 'destroy')->name('invoice.destroy')->middleware('can:invoice-delete');
         Route::get('/generate-pdf', 'generatePDF')->name('generate.pdf');
         Route::post('/invoice/data/store/{id}', 'dataStore')->name('invoice.data.store')->middleware('can:invoice-create');
+        Route::get('/reciept/{id}', 'reciept')->name('reciept');
     });
-
 
     Route::get('/dashboard', [AdminController::class, 'homepage'])->name('admin_page');
     // Route::resource('categories', CategoryController::class);

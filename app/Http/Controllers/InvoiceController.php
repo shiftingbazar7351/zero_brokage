@@ -24,7 +24,6 @@ class InvoiceController extends Controller
      */
 
     protected $fileUploadService;
-
     public function __construct(FileUploadService $fileUploadService)
     {
         $this->fileUploadService = $fileUploadService;
@@ -200,6 +199,12 @@ class InvoiceController extends Controller
 
         // Redirect back with a success message
         return redirect(route('generate.pdf'))->with('success', 'Vendor and transactions updated successfully.');
+    }
+
+    public function reciept($id)
+    {
+        $vendor = Vendor::find($id);
+        return view('frontend.reciept',compact('vendor'));
     }
 
 }

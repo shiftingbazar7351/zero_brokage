@@ -53,25 +53,25 @@
 
 
         // for no paste in passwords fields
-        document.addEventListener('DOMContentLoaded', function() {
-            const passwordField = document.getElementById('password');
-            if (passwordField) {
-                passwordField.addEventListener('paste', function(e) {
-                    e.preventDefault();
-                });
-                passwordField.addEventListener('contextmenu', function(e) {
-                    e.preventDefault();
-                });
-            }
-        });
+        // document.addEventListener('DOMContentLoaded', function() {
+        //     const passwordField = document.getElementById('password');
+        //     if (passwordField) {
+        //         passwordField.addEventListener('paste', function(e) {
+        //             e.preventDefault();
+        //         });
+        //         passwordField.addEventListener('contextmenu', function(e) {
+        //             e.preventDefault();
+        //         });
+        //     }
+        // });
 
-        // for accept only numbers in phone number fields
-        function restrictNumber(e) {
-            var newValue = this.value.replace(new RegExp(/[^\d]/, 'ig'), "");
-            this.value = newValue;
-        }
-        var userName = document.querySelector('#phoneNumVender', '#number');
-        userName.addEventListener('input', restrictNumber);
+        // // for accept only numbers in phone number fields
+        // function restrictNumber(e) {
+        //     var newValue = this.value.replace(new RegExp(/[^\d]/, 'ig'), "");
+        //     this.value = newValue;
+        // }
+        // var userName = document.querySelector('#phoneNumVender', '#number');
+        // userName.addEventListener('input', restrictNumber);
     </script>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>

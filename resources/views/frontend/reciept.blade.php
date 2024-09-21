@@ -32,7 +32,7 @@
                 <div style="line-height: 1.4;width:50%" >
                     <h4 style="margin: 0">Bill To</h4>
                     <div>{{ $vendor->company_name ??'' }}</div>
-                    <div class="text-wrap">{{ $vendor->address ??'' }}</div>
+                    <div>{{ $vendor->address ??'' }}</div>
                     {{-- <div>MAKHMALABAD NAKA, NEAR SBI PANCHWATI</div>
                     <div>BRANCH PANCHVATI 22, Naaik</div>
                     <div>GSTIN: 27DLAPA1432C1</div> --}}
@@ -66,8 +66,7 @@
                     <tbody>
                         <tr style="border: 2px solid black;">
                             <th scope="row" style="padding: 10px; border: 2px solid black;">1</th>
-                            <td style="padding: 10px; border: 2px solid black;">Lorem ipsum dolor sit amet consectetur
-                                adipisicing elit...</td>
+                            <td style="padding: 10px; border: 2px solid black;"></td>
                             <td style="padding: 10px; border: 2px solid black;">Otto</td>
                             <td style="padding: 10px; border: 2px solid black;">@mdo</td>
                             <td style="padding: 10px; border: 2px solid black;">Otto</td>

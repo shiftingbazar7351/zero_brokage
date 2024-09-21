@@ -28,15 +28,49 @@ class InvoiceController extends Controller
     {
         $this->fileUploadService = $fileUploadService;
     }
-    public function index()
+    public function index(Request $request)
     {
+
+        $query = Invoice::query();
+
+        // Filter based on search query
+        if ($request->has('search')) {
+            $searchTerm = $request->search;
+
+            $query->where(function ($q) use ($searchTerm) {
+                $q->where('total_ammount', 'like', '%' . $searchTerm . '%')
+                    ->orWhere('quantity', 'like', '%' . $searchTerm . '%')
+                    ->orWhere('grand_total', 'like', '%' . $searchTerm . '%')
+                    ->orWhere('price', 'like', '%' . $searchTerm . '%')
+                    ->orWhereHas('Category', function ($query) use ($searchTerm) {
+                        $query->where('name', 'like', '%' . $searchTerm . '%'); // assuming 'name' is a column in 'createdBy' relationship
+                    })
+                    ->orWhereHas('subCategory', function ($query) use ($searchTerm) {
+                        $query->where('name', 'like', '%' . $searchTerm . '%'); // assuming 'name' is a column in 'createdBy' relationship
+                    })
+                    ->orWhereHas('menu', function ($query) use ($searchTerm) {
+                        $query->where('name', 'like', '%' . $searchTerm . '%'); // assuming 'name' is a column in 'createdBy' relationship
+                    })
+                    ->orWhereHas('submenu', function ($query) use ($searchTerm) {
+                        $query->where('name', 'like', '%' . $searchTerm . '%'); // assuming 'name' is a column in 'createdBy' relationship
+                    });
+            })->orderByDesc('created_at');
+        }
+
+        // Paginate the users (adjust pagination number as needed)
+        $invoices = $query->paginate(10);
+
+        // Check if it's an AJAX request
+        if ($request->ajax()) {
+            return view('backend.invoice.partials.invoice-index', compact('invoices'))->render();
+        }
         $categories = Category::where('status', 1)->orderByDesc('created_at')->get();
         $subcategories = SubCategory::orderByDesc('created_at')->get();
         $submenus = SubMenu::orderByDesc('created_at')->get();
         $countryId = Country::where('name', 'India')->value('id');
         $invoicesname = Invoice::with(['Category', 'cityName', 'subcategory', 'menu', 'submenu'])->get();
         $states = State::where('country_id', $countryId)->get(['name', 'id']);
-        $invoices = Invoice::orderByDesc('created_at')->paginate(10);
+        // $invoices = Invoice::orderByDesc('created_at')->paginate(10);
         $vendors = Vendor::select('id', 'vendor_name')->orderByDesc('created_at')->get();
         $vendor = Vendor::select('id', 'vendor_name')->first();
         return view('backend.invoice.index', compact('vendors', 'vendor', 'invoicesname', 'invoices', 'categories', 'subcategories', 'submenus', 'countryId', 'states'));
@@ -116,7 +150,8 @@ class InvoiceController extends Controller
 
         $vendorId = $request->input('vendor_id', $id);
         $vendor = Vendor::findOrFail($vendorId);
-        return redirect(route('invoice.edit', $vendor->id ?? ''))->with(['message' => 'Updated Successfully', 'alert-type' => 'success']);;
+        return redirect(route('invoice.edit', $vendor->id ?? ''))->with(['message' => 'Updated Successfully', 'alert-type' => 'success']);
+        ;
         // return redirect(route('invoice.create'))->with('success', 'Invoice added successfully');
     }
 
@@ -130,9 +165,11 @@ class InvoiceController extends Controller
         $invoices = Invoice::findOrFail($id);
         if ($invoices) {
             $invoices->delete();
-            return redirect()->back()->with(['message' => 'Deleted Successfully', 'alert-type' => 'success']);;
+            return redirect()->back()->with(['message' => 'Deleted Successfully', 'alert-type' => 'success']);
+            ;
         }
-        return redirect()->back()->with(['message' => 'Something went wrong', 'alert-type' => 'error']);;
+        return redirect()->back()->with(['message' => 'Something went wrong', 'alert-type' => 'error']);
+        ;
     }
 
     public function generatePDF()
@@ -167,7 +204,7 @@ class InvoiceController extends Controller
         $vendor->number = $request->number;
         $vendor->email = $request->email;
         $vendor->address = $request->address;
-        $vendor->invoice_number = $request->rand('SBZ1508'+rand(999999));
+        $vendor->invoice_number = $request->rand('SBZ1508' + rand(999999));
 
 
         $transactionIds = $request->input('transaction_id');
@@ -204,7 +241,7 @@ class InvoiceController extends Controller
     public function reciept($id)
     {
         $vendor = Vendor::find($id);
-        return view('frontend.reciept',compact('vendor'));
+        return view('frontend.reciept', compact('vendor'));
     }
 
 }

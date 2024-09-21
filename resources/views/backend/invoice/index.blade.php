@@ -3,7 +3,14 @@
     <div class="page-wrapper page-settings">
         <div class="content">
             <div class="main-wrapper">
-                <div class="list-btn d-flex my-3 justify-content-end">
+                <div class="list-btn d-flex my-3 justify-content-end d-flex gap-3">
+                    {{-- <div class="list-btn d-flex gap-3"> --}}
+                        <div class="page-headers">
+                            <div class="search-bar">
+                                <span><i class="fe fe-search"></i></span>
+                                <input type="text" id="search" placeholder="Search" class="form-control">
+                            </div>
+                        </div>
                     <ul>
                         <li>
                             <button class="btn btn-primary" type="button" data-bs-toggle="modal" data-bs-target="#add-invoice">
@@ -14,57 +21,9 @@
                 </div>
                 <div class="col-12">
                     <div class="table-responsive table-div">
-                        <table class="table datatable table-striped table-bordered">
-                            <thead>
-                                <tr>
-                                    <th>#</th>
-                                    <th>Category</th>
-                                    <th>Sub Category</th>
-                                    <th>Menu</th>
-                                    <th>Sub Menu</th>
-                                    <th>Price</th>
-                                    <th>Quantity</th>
-                                    <th>Total Ammount</th>
-                                    <th>Grand Total</th>
-                                    <th>Action</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @forelse ($invoices as $invoice)
-                                    <tr>
-                                        <td>{{ $loop->iteration }}</td>
-                                        <td> {{ $invoice->category->name ?? '' }} </td>
-                                        <td> {{ $invoice->subcategory->name ?? '' }} </td>
-                                        <td> {{ $invoice->menu->name ?? '' }} </td>
-                                        <td> {{ $invoice->submenu->name ?? '' }} </td>
-                                        <td> {{ $invoice->price ?? '' }} </td>
-                                        <td> {{ $invoice->quantity ?? '' }} </td>
-                                        <td> {{ $invoice->total_ammount ?? '' }} </td>
-                                        <td> {{ $invoice->grand_total ?? '' }} </td>
-                                        <td>
-                                            <div class="table-actions d-flex justify-content-center">
-                                                <button class="btn delete-table me-2" onclick="#" type="button"
-                                                    data-bs-toggle="modal" data-bs-target="#edit-category">
-                                                    <i class="fe fe-edit"></i>
-                                                </button>
-                                                <form action="#" method="POST" style="display:inline;">
-                                                    @csrf
-                                                    @method('DELETE')
-                                                    <button class="btn delete-table" type="submit"
-                                                        onclick="return confirm('Are you sure want to delete this?')">
-                                                        <i class="fe fe-trash-2"></i>
-                                                    </button>
-                                                </form>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                @empty
-                                    <tr>
-                                        <td colspan="12" class="text-center">No data found</td>
-                                    </tr>
-                                @endforelse
-                            </tbody>
-                        </table>
+                        <div id="usersTable">
+                            @include('backend.invoice.partials.invoice-index') {{-- Load the users list initially --}}
+                        </div>
                     </div>
                 </div>
             </div>
@@ -102,3 +61,9 @@
         </div>
     </div>
 @endsection
+@section('scripts')
+    <script>
+        var searchRoute = `{{ route('meta.index') }}`;
+    </script>
+    <script src="{{ asset('admin/assets/js/search.js') }}"></script>
+

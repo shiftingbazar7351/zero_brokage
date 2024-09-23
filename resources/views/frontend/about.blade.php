@@ -57,7 +57,7 @@
                                     <span>5+ years of experiences</span>
                                 </div>
                                 <div class="abt-img">
-                                    <img src="{{ asset('assets/img/services/service-01.jpg') }}" class="img-fluid" alt="img">
+                                    <img src="{{ asset('assets/img/services/multiple-service.webp') }}" class="img-fluid" alt="img">
                                 </div>
                             </div>
                         </div>

@@ -39,7 +39,7 @@
                             <div class="mb-3 col-md-3">
                                 <label for="gender" class="form-label">Gender</label><b style="color: red;">*</b>
                                 <select class="form-control" id="gender" name="gender">
-                                    <option value="">Select Gender</option>
+                                    <option value="" selected disabled>Select Gender</option>
                                     <option value="male" {{ old('gender') == 'male' ? 'selected' : '' }}>Male</option>
                                     <option value="female" {{ old('gender') == 'female' ? 'selected' : '' }}>Female</option>
                                     <option value="other" {{ old('gender') == 'other' ? 'selected' : '' }}>Other</option>
@@ -70,7 +70,7 @@
                             </div>
 
                             <!-- Role -->
-                            <div class="mb-3 col-md-3">
+                            {{-- <div class="mb-3 col-md-3">
                                 <label for="role" class="form-label">Role</label><b style="color: red;">*</b>
                                 <select class="form-control" id="role" name="user_type">
                                     @foreach ($roles as $role)
@@ -80,7 +80,7 @@
                                 @error('role')
                                     <div class="error text-danger ">{{ $message }}</div>
                                 @enderror
-                            </div>
+                            </div> --}}
 
                             <!-- Phone Number -->
                             <div class="mb-3 col-md-3">
@@ -121,36 +121,38 @@
 
 
 
+                            <!-- Department Dropdown -->
                             <div class="mb-3 col-md-3">
                                 <label for="department">Department Name</label>
                                 <select class="form-control" id="department" name="department_id">
-                                    <option value=""> Select Department </option>
-                                    <option value="IT Department"> IT Department </option>
-                                    <option value="HR Department"> HR Department </option>
-                                    <option value="Sales Department"> Sales Department</option>
-                                    <option value="Support Department"> Support Department </option>
-                                    <option value="Account Department"> Account Department </option>
-                                    <option value="Management Department"> Management Department </option>
+                                    <option value="" selected disabled>Select Department</option>
+                                    <option value="IT Department">IT Department</option>
+                                    <option value="HR Department">HR Department</option>
+                                    <option value="Sales Department">Sales Department</option>
+                                    <option value="Support Department">Support Department</option>
+                                    <option value="Account Department">Account Department</option>
+                                    <option value="Management Department">Management Department</option>
                                 </select>
                                 <div id="department_id_error" class="text-danger"></div>
                             </div>
 
-                            <!-- Designation -->
+                            <!-- Designation Dropdown -->
                             <div class="mb-3 col-md-3">
                                 <label for="designation">Designation</label>
                                 <select class="form-control" id="designation" name="designation_id">
-                                    <option value="">Select IT Designation</option>
+                                    <option value="" selected disabled>Select Designation</option>
                                 </select>
                                 <div id="designation_id_error" class="text-danger"></div>
                             </div>
 
-                            <div class="mb-3 col-md-3">
+
+                            {{-- <div class="mb-3 col-md-3">
                                 <label for="sub-designation">Sub-Designation</label>
                                 <select class="form-control" id="sub-designation" name="sub_designation_id">
                                     <option value="">Select Sub-Designation</option>
                                 </select>
                                 <div id="sub_designation_id_error" class="text-danger"></div>
-                            </div>
+                            </div> --}}
 
 
                             <!-- Office Shift -->
@@ -182,7 +184,7 @@
                             <div class="mb-3 col-md-3">
                                 <label for="hr_head" class="form-label">HR Head</label><b style="color: red;">*</b>
                                 <select class="form-control" id="hr_head" name="hr_head">
-                                    <option value="">Select HR Head</option>
+                                    <option value="" selected disabled>Select HR Head</option>
                                     <option value="hr1" {{ old('hr_head') == 'hr1' ? 'selected' : '' }}>Hr1</option>
                                     <option value="hr2" {{ old('hr_head') == 'hr2' ? 'selected' : '' }}>Hr2</option>
                                     <option value="hr3" {{ old('hr_head') == 'hr3' ? 'selected' : '' }}>Hr3</option>
@@ -197,7 +199,7 @@
                                 <label for="hr_executive" class="form-label">HR Executive</label><b
                                     style="color: red;">*</b>
                                 <select class="form-control" id="hr_executive" name="hr_executive">
-                                    <option value="">Select HR Head</option>
+                                    <option value="" selected disabled>Select HR Head</option>
                                     <option value="hr1" {{ old('hr_executive') == 'hr1' ? 'selected' : '' }}>Hr1
                                     </option>
                                     <option value="hr2" {{ old('hr_executive') == 'hr2' ? 'selected' : '' }}>Hr2
@@ -382,185 +384,144 @@
         });
     </script>
 
+
+
+
     <script>
-        // Helper function to populate dropdown
-        function populateDropdown(dropdown, options) {
-            dropdown.innerHTML = '<option value="">Select</option>';
-            options.forEach(option => {
-                dropdown.innerHTML += `<option value="${option.value}">${option.text}</option>`;
-            });
-        }
+        document.addEventListener('DOMContentLoaded', function() {
+            // Get department and designation dropdown elements
+            const departmentDropdown = document.getElementById('department');
+            const designationDropdown = document.getElementById('designation');
 
-        // Handle Department Dropdown Change
-        function handleDepartmentChange(departmentDropdownId, designationDropdownId, subDesignationDropdownId) {
-            const departmentDropdown = document.getElementById(departmentDropdownId);
-            const designationDropdown = document.getElementById(designationDropdownId);
-            const subDesignationDropdown = document.getElementById(subDesignationDropdownId);
-
+            // Department change event handler
             departmentDropdown.addEventListener('change', function() {
                 const department = this.value;
 
-                // Clear existing options
-                designationDropdown.innerHTML = '<option value="">Select Designation</option>';
-                subDesignationDropdown.innerHTML = '<option value="">Select Sub-Designation</option>';
+                // Clear existing options in the designation dropdown
+                designationDropdown.innerHTML = '<option value="" selected disabled>Select Designation</option>';
 
-                // Populate Designations based on selected department
+                // Populate designations based on selected department
                 let designations = [];
-                if (department === 'IT Department') {
-                    designations = [{
-                            value: 'Software Engineer',
-                            text: 'Software Engineer'
-                        },
-                        {
-                            value: 'System Administrator',
-                            text: 'System Administrator'
-                        },
-                        {
-                            value: 'Digital Marketing',
-                            text: 'Digital Marketing'
-                        }
-                    ];
-                } else if (department === 'HR Department') {
-                    designations = [{
-                            value: 'HR Manager',
-                            text: 'HR Manager'
-                        },
-                        {
-                            value: 'HR Executive',
-                            text: 'HR Executive'
-                        },
-                        {
-                            value: 'HR Intern',
-                            text: 'HR Intern'
-                        }
-                    ];
-                } else if (department === 'Sales Department') {
-                    designations = [{
-                            value: 'Branch Manager',
-                            text: 'Branch Manager'
-                        },
-                        {
-                            value: 'Assistant Branch Manager',
-                            text: 'Assistant Branch Manager'
-                        },
-                        {
-                            value: 'Territory Manager',
-                            text: 'Territory Manager'
-                        },
-                        {
-                            value: 'Regional Sales Manager',
-                            text: 'Regional Sales Manager'
-                        },
-                        {
-                            value: 'Area Sales Manager',
-                            text: 'Area Sales Manager'
-                        },
-                        {
-                            value: 'Relationship Manager',
-                            text: 'Relationship Manager'
-                        },
-                        {
-                            value: 'Sr. Business Consultant',
-                            text: 'Sr. Business Consultant'
-                        }
-                    ];
-                } else if (department === 'Support Department') {
-                    designations = [{
-                            value: 'Customer Support',
-                            text: 'Customer Support'
-                        },
-                        {
-                            value: 'SEO Manager',
-                            text: 'SEO Manager'
-                        },
-                        {
-                            value: 'Sr. Key Account Manager',
-                            text: 'Sr. Key Account Manager'
-                        }
-                    ];
-                } else if (department === 'Account Department') {
-                    designations = [{
-                            value: 'Account Manager',
-                            text: 'Account Manager'
-                        },
-                        {
-                            value: 'Account Executive',
-                            text: 'Account Executive'
-                        }
-                    ];
-                } else if (department === 'Management Department') {
-                    designations = [{
-                            value: 'Director',
-                            text: 'Director'
-                        },
-                        {
-                            value: 'CEO',
-                            text: 'CEO'
-                        },
-                        {
-                            value: 'HR',
-                            text: 'HR'
-                        }
-                    ];
+                switch (department) {
+                    case 'IT Department':
+                        designations = [{
+                                value: 'Frontend Developer',
+                                text: 'Frontend Developer'
+                            },
+                            {
+                                value: 'Backend Developer',
+                                text: 'Backend Developer'
+                            },
+                            {
+                                value: 'Mobile Application Developer',
+                                text: 'Mobile Application Developer'
+                            },
+                            {
+                                value: 'System Administrator',
+                                text: 'System Administrator'
+                            },
+                            {
+                                value: 'Digital Marketing',
+                                text: 'Digital Marketing'
+                            },
+                        ];
+                        break;
+                    case 'HR Department':
+                        designations = [{
+                                value: 'HR Manager',
+                                text: 'HR Manager'
+                            },
+                            {
+                                value: 'HR Executive',
+                                text: 'HR Executive'
+                            },
+                            {
+                                value: 'HR Intern',
+                                text: 'HR Intern'
+                            },
+                        ];
+                        break;
+                    case 'Sales Department':
+                        designations = [{
+                                value: 'Branch Manager',
+                                text: 'Branch Manager'
+                            },
+                            {
+                                value: 'Assistant Branch Manager',
+                                text: 'Assistant Branch Manager'
+                            },
+                            {
+                                value: 'Territory Manager',
+                                text: 'Territory Manager'
+                            },
+                            {
+                                value: 'Regional Sales Manager',
+                                text: 'Regional Sales Manager'
+                            },
+                            {
+                                value: 'Area Sales Manager',
+                                text: 'Area Sales Manager'
+                            },
+                            {
+                                value: 'Relationship Manager',
+                                text: 'Relationship Manager'
+                            },
+                            {
+                                value: 'Sr. Business Consultant',
+                                text: 'Sr. Business Consultant'
+                            },
+                        ];
+                        break;
+                    case 'Support Department':
+                        designations = [{
+                                value: 'Customer Support',
+                                text: 'Customer Support'
+                            },
+                            {
+                                value: 'SEO Manager',
+                                text: 'SEO Manager'
+                            },
+                            {
+                                value: 'Sr. Key Account Manager',
+                                text: 'Sr. Key Account Manager'
+                            },
+                        ];
+                        break;
+                    case 'Account Department':
+                        designations = [{
+                                value: 'Account Manager',
+                                text: 'Account Manager'
+                            },
+                            {
+                                value: 'Account Executive',
+                                text: 'Account Executive'
+                            },
+                        ];
+                        break;
+                    case 'Management Department':
+                        designations = [{
+                                value: 'Director',
+                                text: 'Director'
+                            },
+                            {
+                                value: 'CEO',
+                                text: 'CEO'
+                            },
+                            {
+                                value: 'HR',
+                                text: 'HR'
+                            },
+                        ];
+                        break;
                 }
-
-                populateDropdown(designationDropdown, designations);
+                // Add new designation options to the dropdown
+                designations.forEach(designation => {
+                    const option = document.createElement('option');
+                    option.value = designation.value;
+                    option.textContent = designation.text;
+                    designationDropdown.appendChild(option);
+                });
             });
-        }
-
-        // Handle Designation Dropdown Change
-        function handleDesignationChange(designationDropdownId, subDesignationDropdownId) {
-            const designationDropdown = document.getElementById(designationDropdownId);
-            const subDesignationDropdown = document.getElementById(subDesignationDropdownId);
-
-            designationDropdown.addEventListener('change', function() {
-                const designation = this.value;
-
-                // Clear existing options
-                subDesignationDropdown.innerHTML = '<option value="">Select Sub-Designation</option>';
-
-                // Populate Sub-Designations based on selected designation
-                let subDesignations = [];
-                if (designation === 'Software Engineer') {
-                    subDesignations = [{
-                            value: 'Frontend Developer',
-                            text: 'Frontend Developer'
-                        },
-                        {
-                            value: 'Backend Developer',
-                            text: 'Backend Developer'
-                        },
-                        {
-                            value: 'Android Developer',
-                            text: 'Android Developer'
-                        }
-                    ];
-                } else if (designation === 'Digital Marketing') {
-                    subDesignations = [{
-                            value: 'Digital Marketing Intern',
-                            text: 'Digital Marketing Intern'
-                        },
-                        {
-                            value: 'SEO Manager',
-                            text: 'SEO Manager'
-                        },
-                        {
-                            value: 'SEO Intern',
-                            text: 'SEO Intern'
-                        }
-                    ];
-                }
-
-                populateDropdown(subDesignationDropdown, subDesignations);
-            });
-        }
-
-        // Initialize for Add Modal
-        handleDepartmentChange('department', 'designation', 'sub-designation');
-        handleDesignationChange('designation', 'sub-designation');
-
-        // Initialize for Edit Modal
-        handleDepartmentChange('editdepartment', 'editdesignation', 'editsub-designation');
-        handleDesignationChange('editdesignation', 'editsub-designation');
+        });
     </script>
 @endsection

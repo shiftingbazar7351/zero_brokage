@@ -110,6 +110,7 @@ class EmployeeController extends Controller
         // Set created_by to the current authenticated user
         $employee->created_by = auth()->user()->id;
         $employee->password = Hash::make('123456');
+        // $employee->user_type = $request->user_type;
 
         // Handle file uploads
         if ($request->hasFile('high_school_certificate')) {
@@ -153,7 +154,7 @@ class EmployeeController extends Controller
             $filename = $this->fileUploadService->uploadImage('employee/medical_certificate/', $request->file('medical_certificate'));
             $employee->medical_certificate = $filename;
         }
-        return $employee;
+        // return $employee;
         $employee->save();
 
         // Redirect with success message

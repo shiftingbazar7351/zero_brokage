@@ -102,6 +102,7 @@ class EmployeeController extends Controller
             // 'previous_ref_designation' => 'nullable|string|max:191',
         ]);
 
+        // return $request->all();
         // Create a new employee
         $validatedData['password'] = Hash::make('123456');
         $employee = User::create($validatedData);
@@ -152,7 +153,7 @@ class EmployeeController extends Controller
             $filename = $this->fileUploadService->uploadImage('employee/medical_certificate/', $request->file('medical_certificate'));
             $employee->medical_certificate = $filename;
         }
-        // return $employee;
+        return $employee;
         $employee->save();
 
         // Redirect with success message
@@ -224,6 +225,7 @@ class EmployeeController extends Controller
             // 'previous_ref_number' => 'nullable|string|max:191',
             // 'previous_ref_designation' => 'nullable|string|max:191',
         ]);
+        return $request->all();
 
         $employee = User::findOrFail($id);
 
@@ -282,6 +284,7 @@ class EmployeeController extends Controller
         }
 
         // Save updated employee data
+        // return $employee;
         $employee->save();
 
         // Redirect with success message

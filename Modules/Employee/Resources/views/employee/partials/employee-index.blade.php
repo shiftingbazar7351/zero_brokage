@@ -14,11 +14,11 @@
     <tbody>
         @forelse ($employees as $employee)
             <tr>
-                <td>{{ $loop->iteration }}</td>
-                <td>{{ $employee->fname}}</td>
-                <td>{{ $employee->company}}</td>
-                <td>{{ $employee->email }}</td>
-                <td>{{ $employee->department }}</td>
+                <td>{{ $employee->id ??'' }}</td>
+                <td>{{ $employee->name??''}}</td>
+                <td>{{ $employee->company??''}}</td>
+                <td>{{ $employee->email ??''}}</td>
+                <td>{{ $employee->department ??''}}</td>
                 @canany(['employee-edit', 'employee-delete', 'employee-show'])
                     <td>
                         <div class="d-flex">

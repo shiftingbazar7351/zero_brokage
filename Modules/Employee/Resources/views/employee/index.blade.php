@@ -4,9 +4,7 @@
         <div class="content">
             <div class="content-page-header content-page-headersplit mb-0">
                 <h5>Vendors</h5>
-
                 <div class="list-btn d-flex gap-3">
-
                     <div class="page-headers">
                         <div class="search-bar">
                             <span><i class="fe fe-search"></i></span>

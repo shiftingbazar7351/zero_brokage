@@ -10,6 +10,7 @@ use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Hash;
+use Modules\Employee\Entities\Companie;
 use Spatie\Permission\Models\Role;
 use Validator;
 
@@ -41,6 +42,7 @@ class EmployeeController extends Controller
         if ($request->ajax()) {
             return view('employee::employee.partials.employee-index', compact('employees'))->render();
         }
+
         // $employees = User::orderByDesc('created_at')->paginate(10);
         return view('employee::employee.index', compact('employees'));
     }
@@ -51,8 +53,9 @@ class EmployeeController extends Controller
      */
     public function create()
     {
-        $roles = Role::where('name' ,'!=' ,'super_admin')->get();
-        return view('employee::employee.create', compact('roles'));
+        $roles = Role::where('name' ,'employee')->get();
+        $companies = Companie::where('status',1)->get();
+        return view('employee::employee.create', compact('roles','companies'));
     }
 
     /**
@@ -65,7 +68,7 @@ class EmployeeController extends Controller
         // Validation for the form inputs
         $validatedData = $request->validate([
             'employee_code' => 'nullable|string|max:191',
-            'fname' => 'required|string|max:191',
+            'name' => 'required|string|max:191',
             'lname' => 'nullable|string|max:191',
             'gender' => 'nullable|in:male,female,other',
             'dob' => 'nullable|date',
@@ -149,7 +152,7 @@ class EmployeeController extends Controller
             $filename = $this->fileUploadService->uploadImage('employee/medical_certificate/', $request->file('medical_certificate'));
             $employee->medical_certificate = $filename;
         }
-        return $employee;
+        // return $employee;
         $employee->save();
 
         // Redirect with success message

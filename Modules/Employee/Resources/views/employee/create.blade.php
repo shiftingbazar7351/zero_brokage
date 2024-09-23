@@ -1,6 +1,6 @@
 @extends('backend.layouts.main')
 @section('styles')
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/css/intlTelInput.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/css/intlTelInput.min.css">
 @endsection
 
 @section('content')
@@ -14,14 +14,13 @@
                     <form action="{{ route('employee.store') }}" method="POST" enctype="multipart/form-data"
                         data-parsley-validate="true">
                         @csrf
-
                         <div class="row">
                             <!-- First Name -->
                             <div class="mb-3 col-md-3">
-                                <label for="fname" class="form-label">First Name</label><b style="color: red;">*</b>
-                                <input type="text" class="form-control" id="fname" name="fname"
-                                    value="{{ old('fname') }}" placeholder="Enter first name">
-                                @error('fname')
+                                <label for="name" class="form-label">First Name</label><b style="color: red;">*</b>
+                                <input type="text" class="form-control" id="name" name="name"
+                                    value="{{ old('name') }}" placeholder="Enter first name">
+                                @error('name')
                                     <div class="error text-danger ">{{ $message }}</div>
                                 @enderror
                             </div>
@@ -69,13 +68,11 @@
                                     <div class="error text-danger ">{{ $message }}</div>
                                 @enderror
                             </div>
-                            <!-- Role -->
 
+                            <!-- Role -->
                             <div class="mb-3 col-md-3">
-                                <label for="role" class="form-label">Role</label><b
-                                    style="color: red;">*</b>
+                                <label for="role" class="form-label">Role</label><b style="color: red;">*</b>
                                 <select class="form-control" id="role" name="user_type">
-                                    <option value="" selected disabled>Select Role</option>
                                     @foreach ($roles as $role)
                                         <option value="{{ $role->id }}">{{ $role->name }}</option>
                                     @endforeach
@@ -89,7 +86,7 @@
                             <div class="mb-3 col-md-3">
                                 <label for="number" class="form-label">Phone Number</label><b style="color: red;">*</b>
                                 <input type="text" class="form-control" id="phoneNumVender" name="number"
-                                    value="{{ old('number') }}" placeholder="Enter phone number"  maxlength="10">
+                                    value="{{ old('number') }}" placeholder="Enter phone number" maxlength="10">
                                 @error('number')
                                     <div class="error text-danger ">{{ $message }}</div>
                                 @enderror
@@ -109,60 +106,60 @@
                             <!-- Company -->
                             <div class="mb-3 col-md-3">
                                 <label for="company" class="form-label">Company</label><b style="color: red;">*</b>
-                                <input type="text" class="form-control" id="company" name="company"
-                                    value="{{ old('company') }}" placeholder="Enter company name">
+                                {{-- <input type="text" class="form-control" id="company" name="company"
+                                    value="{{ old('company') }}" placeholder="Enter company name"> --}}
+                                <select name="company" class="form-select">
+                                    <option value="" selected disabled>Select Company</option>
+                                    @foreach ($companies as $comapny)
+                                        <option value="{{ $comapny->id }}">{{ $comapny->legel_name ?? '' }}</option>
+                                    @endforeach
+                                </select>
                                 @error('company')
                                     <div class="error text-danger ">{{ $message }}</div>
                                 @enderror
                             </div>
 
-                            <!-- No of Experience -->
-                            <div class="mb-3 col-md-3">
-                                <label for="no_of_experience" class="form-label">Years of Experience</label><b
-                                    style="color: red;">*</b>
-                                <input type="text" class="form-control" id="no_of_experience" name="no_of_experience"
-                                    value="{{ old('no_of_experience') }}" placeholder="Enter years of experience"
-                                >
-                                @error('no_of_experience')
-                                    <div class="error text-danger ">{{ $message }}</div>
-                                @enderror
-                            </div>
 
-                            <!-- Department -->
+
                             <div class="mb-3 col-md-3">
-                                <label for="department" class="form-label">Department</label><b style="color: red;">*</b>
-                                <input type="text" class="form-control" id="department" name="department"
-                                    value="{{ old('department') }}" placeholder="Enter department">
-                                @error('department')
-                                    <div class="error text-danger ">{{ $message }}</div>
-                                @enderror
+                                <label for="department">Department Name</label>
+                                <select class="form-control" id="department" name="department_id">
+                                    <option value=""> Select Department </option>
+                                    <option value="IT Department"> IT Department </option>
+                                    <option value="HR Department"> HR Department </option>
+                                    <option value="Sales Department"> Sales Department</option>
+                                    <option value="Support Department"> Support Department </option>
+                                    <option value="Account Department"> Account Department </option>
+                                    <option value="Management Department"> Management Department </option>
+                                </select>
+                                <div id="department_id_error" class="text-danger"></div>
                             </div>
 
                             <!-- Designation -->
                             <div class="mb-3 col-md-3">
-                                <label for="designation" class="form-label">Designation</label><b
-                                    style="color: red;">*</b>
-                                <input type="text" class="form-control" id="designation" name="designation"
-                                    value="{{ old('designation') }}" placeholder="Enter designation">
-                                @error('designation')
-                                    <div class="error text-danger ">{{ $message }}</div>
-                                @enderror
+                                <label for="designation">Designation</label>
+                                <select class="form-control" id="designation" name="designation_id">
+                                    <option value="">Select IT Designation</option>
+                                </select>
+                                <div id="designation_id_error" class="text-danger"></div>
                             </div>
+
+                            <div class="mb-3 col-md-3">
+                                <label for="sub-designation">Sub-Designation</label>
+                                <select class="form-control" id="sub-designation" name="sub_designation_id">
+                                    <option value="">Select Sub-Designation</option>
+                                </select>
+                                <div id="sub_designation_id_error" class="text-danger"></div>
+                            </div>
+
 
                             <!-- Office Shift -->
                             <div class="mb-3 col-md-3">
                                 <label for="office_shift" class="form-label">Office Shift</label><b
                                     style="color: red;">*</b>
                                 <select class="form-control" id="office_shift" name="office_shift">
-                                    <option value="">Select Office Shift</option>
-                                    <option value="hr1" {{ old('office_shift') == 'hr1' ? 'selected' : '' }}>9:00am -
-                                        6:00pm
-                                    </option>
-                                    <option value="hr2" {{ old('office_shift') == 'hr2' ? 'selected' : '' }}>10:00am -
-                                        7:00pm
-                                    </option>
-                                    <option value="hr3" {{ old('office_shift') == 'hr3' ? 'selected' : '' }}>11:00am -
-                                        8:00pm
+                                    <option value="hr1"
+                                        {{ old('office_shift') == '9:30am - 6:30pm' ? 'selected' : '' }}>9:30am - 6:30pm
                                     </option>
                                 </select>
                                 @error('office_shift')
@@ -275,7 +272,7 @@
                                     <div class="error text-danger ">{{ $message }}</div>
                                 @enderror
                             </div>
-                            <div class="mb-3 col-md-3">
+                            <div class="mb-3 col-md-4">
                                 <label for="graduation_certificate" class="form-label">Graduation Certificate</label><b
                                     style="color: red;">*</b>
                                 <input type="file" class="form-control" id="graduation_certificate"
@@ -284,8 +281,12 @@
                                     <div class="error text-danger ">{{ $message }}</div>
                                 @enderror
                             </div>
+                            <div class="mb-3 col-md-4">
+                                <label for="bank_statement" class="form-label">Bank Statement</label>
+                                <input type="file" class="form-control" id="bank_statement" name="bank_statement">
+                            </div>
                             {{-- checkbox of experience --}}
-                            <div class="mb-3 col-md-3">
+                            <div class="mb-3 col-md-4">
                                 <label for="experience" class="form-label">Experience</label><b
                                     style="color: red;">*</b><br>
                                 <input type="radio" id="fresher" name="experience_type" value="fresher" checked>
@@ -318,11 +319,21 @@
                                     <label for="salary_slip" class="form-label">Salary Slip</label>
                                     <input type="file" class="form-control" id="salary_slip" name="salary_slip">
                                 </div>
+                                <div class="mb-3 col-md-3">
+                                    <label for="no_of_experience" class="form-label">Years of Experience</label><b
+                                        style="color: red;">*</b>
+                                    <input type="text" class="form-control" id="no_of_experience"
+                                        name="no_of_experience" value="{{ old('no_of_experience') }}"
+                                        placeholder="Enter years of experience">
+                                    @error('no_of_experience')
+                                        <div class="error text-danger ">{{ $message }}</div>
+                                    @enderror
+                                </div>
                             </div>
-                            <div class="mb-3 col-md-3">
-                                <label for="bank_statement" class="form-label">Bank Statement</label>
-                                <input type="file" class="form-control" id="bank_statement" name="bank_statement">
-                            </div>
+
+                            <!-- No of Experience -->
+
+
                         </div>
 
                         <!-- Submit Button -->
@@ -337,7 +348,7 @@
 @endsection
 
 @section('scripts')
-<script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/intlTelInput.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/intlTelInput.min.js"></script>
     <script>
         const whatsappvender = document.querySelector("#phoneNumVender");
         window.intlTelInput(whatsappvender, {
@@ -369,5 +380,187 @@
             // Initial check on page load
             toggleExperienceFields();
         });
+    </script>
+
+    <script>
+        // Helper function to populate dropdown
+        function populateDropdown(dropdown, options) {
+            dropdown.innerHTML = '<option value="">Select</option>';
+            options.forEach(option => {
+                dropdown.innerHTML += `<option value="${option.value}">${option.text}</option>`;
+            });
+        }
+
+        // Handle Department Dropdown Change
+        function handleDepartmentChange(departmentDropdownId, designationDropdownId, subDesignationDropdownId) {
+            const departmentDropdown = document.getElementById(departmentDropdownId);
+            const designationDropdown = document.getElementById(designationDropdownId);
+            const subDesignationDropdown = document.getElementById(subDesignationDropdownId);
+
+            departmentDropdown.addEventListener('change', function() {
+                const department = this.value;
+
+                // Clear existing options
+                designationDropdown.innerHTML = '<option value="">Select Designation</option>';
+                subDesignationDropdown.innerHTML = '<option value="">Select Sub-Designation</option>';
+
+                // Populate Designations based on selected department
+                let designations = [];
+                if (department === 'IT Department') {
+                    designations = [{
+                            value: 'Software Engineer',
+                            text: 'Software Engineer'
+                        },
+                        {
+                            value: 'System Administrator',
+                            text: 'System Administrator'
+                        },
+                        {
+                            value: 'Digital Marketing',
+                            text: 'Digital Marketing'
+                        }
+                    ];
+                } else if (department === 'HR Department') {
+                    designations = [{
+                            value: 'HR Manager',
+                            text: 'HR Manager'
+                        },
+                        {
+                            value: 'HR Executive',
+                            text: 'HR Executive'
+                        },
+                        {
+                            value: 'HR Intern',
+                            text: 'HR Intern'
+                        }
+                    ];
+                } else if (department === 'Sales Department') {
+                    designations = [{
+                            value: 'Branch Manager',
+                            text: 'Branch Manager'
+                        },
+                        {
+                            value: 'Assistant Branch Manager',
+                            text: 'Assistant Branch Manager'
+                        },
+                        {
+                            value: 'Territory Manager',
+                            text: 'Territory Manager'
+                        },
+                        {
+                            value: 'Regional Sales Manager',
+                            text: 'Regional Sales Manager'
+                        },
+                        {
+                            value: 'Area Sales Manager',
+                            text: 'Area Sales Manager'
+                        },
+                        {
+                            value: 'Relationship Manager',
+                            text: 'Relationship Manager'
+                        },
+                        {
+                            value: 'Sr. Business Consultant',
+                            text: 'Sr. Business Consultant'
+                        }
+                    ];
+                } else if (department === 'Support Department') {
+                    designations = [{
+                            value: 'Customer Support',
+                            text: 'Customer Support'
+                        },
+                        {
+                            value: 'SEO Manager',
+                            text: 'SEO Manager'
+                        },
+                        {
+                            value: 'Sr. Key Account Manager',
+                            text: 'Sr. Key Account Manager'
+                        }
+                    ];
+                } else if (department === 'Account Department') {
+                    designations = [{
+                            value: 'Account Manager',
+                            text: 'Account Manager'
+                        },
+                        {
+                            value: 'Account Executive',
+                            text: 'Account Executive'
+                        }
+                    ];
+                } else if (department === 'Management Department') {
+                    designations = [{
+                            value: 'Director',
+                            text: 'Director'
+                        },
+                        {
+                            value: 'CEO',
+                            text: 'CEO'
+                        },
+                        {
+                            value: 'HR',
+                            text: 'HR'
+                        }
+                    ];
+                }
+
+                populateDropdown(designationDropdown, designations);
+            });
+        }
+
+        // Handle Designation Dropdown Change
+        function handleDesignationChange(designationDropdownId, subDesignationDropdownId) {
+            const designationDropdown = document.getElementById(designationDropdownId);
+            const subDesignationDropdown = document.getElementById(subDesignationDropdownId);
+
+            designationDropdown.addEventListener('change', function() {
+                const designation = this.value;
+
+                // Clear existing options
+                subDesignationDropdown.innerHTML = '<option value="">Select Sub-Designation</option>';
+
+                // Populate Sub-Designations based on selected designation
+                let subDesignations = [];
+                if (designation === 'Software Engineer') {
+                    subDesignations = [{
+                            value: 'Frontend Developer',
+                            text: 'Frontend Developer'
+                        },
+                        {
+                            value: 'Backend Developer',
+                            text: 'Backend Developer'
+                        },
+                        {
+                            value: 'Android Developer',
+                            text: 'Android Developer'
+                        }
+                    ];
+                } else if (designation === 'Digital Marketing') {
+                    subDesignations = [{
+                            value: 'Digital Marketing Intern',
+                            text: 'Digital Marketing Intern'
+                        },
+                        {
+                            value: 'SEO Manager',
+                            text: 'SEO Manager'
+                        },
+                        {
+                            value: 'SEO Intern',
+                            text: 'SEO Intern'
+                        }
+                    ];
+                }
+
+                populateDropdown(subDesignationDropdown, subDesignations);
+            });
+        }
+
+        // Initialize for Add Modal
+        handleDepartmentChange('department', 'designation', 'sub-designation');
+        handleDesignationChange('designation', 'sub-designation');
+
+        // Initialize for Edit Modal
+        handleDepartmentChange('editdepartment', 'editdesignation', 'editsub-designation');
+        handleDesignationChange('editdesignation', 'editsub-designation');
     </script>
 @endsection

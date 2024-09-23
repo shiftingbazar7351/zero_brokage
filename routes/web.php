@@ -88,9 +88,14 @@ Route::get('/target-performance', function () {
 Route::get('/email-template', function () {
     return view('emails.user-credential');
 })->name('email-template');
+
 Route::get('/contact-us', function () {
     return view('frontend.contact-us');
 })->name('contact-us');
+
+Route::get('/about', function () {
+    return view('frontend.about');
+})->name('about');
 
 Route::get('/cache', function () {
     Artisan::call('optimize:clear');

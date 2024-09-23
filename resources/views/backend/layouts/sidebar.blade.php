@@ -111,7 +111,7 @@
                         <li>
                             <a href="{{ route('employee-headoffice.index') }}"
                                 class="{{ Route::currentRouteName() === 'employee-headoffice.index' ? 'active' : '' }}">
-                                <i class="fe fe-file-text"></i>
+                                <i class="fa fa-building" aria-hidden="true"></i>
                                 <span>Office Head</span>
                             </a>
                         </li>
@@ -129,7 +129,7 @@
                         <li>
                             <a href="{{ route('employee-product.index') }}"
                                 class="{{ Route::currentRouteName() === 'employee-product.index' ? 'active' : '' }}">
-                                <i class="fe fe-file-text"></i>
+                                <i class="fa fa-product-hunt" aria-hidden="true"></i>
                                 <span>Product</span>
                             </a>
                         </li>
@@ -138,7 +138,7 @@
                         <li>
                             <a href="{{ route('employee-branch.index') }}"
                                 class="{{ Route::currentRouteName() === 'employee-branch.index' ? 'active' : '' }}">
-                                <i class="fe fe-file-text"></i>
+                                <i class="fa fa-code-fork" aria-hidden="true"></i>
                                 <span>Branch</span>
                             </a>
                         </li>
@@ -147,7 +147,7 @@
                         <li>
                             <a href="{{ route('employee-department.index') }}"
                                 class="{{ Route::currentRouteName() === 'employee-department.index' ? 'active' : '' }}">
-                                <i class="fe fe-file-text"></i>
+                                <i class="fa fa-building" aria-hidden="true"></i>
                                 <span>Department</span>
                             </a>
                         </li>

@@ -34,20 +34,27 @@ class UserController extends Controller
 
         // Filter based on search query
         if ($request->has('search')) {
-            $query->where('name', 'like', '%' . $request->search . '%')
-                  ->orWhere('email', 'like', '%' . $request->search . '%');
+            $searchTerm = $request->search;
+            $query->where(function ($q) use ($searchTerm) {
+                $q->where('name', 'like', '%' . $searchTerm . '%')
+                    ->orWhere('email', 'like', '%' . $searchTerm . '%');
+            });
         }
 
-        // Paginate the users (adjust pagination number as needed)
-        $users = $query->paginate(10);
+        // Apply user_type filter and paginate the results
+        $users = $query->where('user_type', '!=', 1)->paginate(10);
 
         // Check if it's an AJAX request
         if ($request->ajax()) {
             return view('backend.user.partials.users_list', compact('users'))->render();
         }
-        $roles = Role::orderByDesc('created_at')->get();
+
+        // Fetch roles that are not 'super_admin'
+        $roles = Role::where('name', '!=', 'super_admin')->orderByDesc('created_at')->get();
+
         return view('backend.user.index', compact('users', 'roles'));
     }
+
 
     /**
      * Show the form for creating a new resource.
@@ -262,6 +269,11 @@ class UserController extends Controller
             return response()->json(['success' => true, 'message' => 'Status updated successfully.']);
         }
         return response()->json(['success' => false, 'message' => 'Item not found.']);
+    }
+
+    public function profile()
+    {
+        return view('backend.profile');
     }
 
 

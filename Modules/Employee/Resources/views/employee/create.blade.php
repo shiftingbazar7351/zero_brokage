@@ -20,7 +20,7 @@
                             <div class="mb-3 col-md-3">
                                 <label for="fname" class="form-label">First Name</label><b style="color: red;">*</b>
                                 <input type="text" class="form-control" id="fname" name="fname"
-                                    value="{{ old('fname') }}" placeholder="Enter first name" required>
+                                    value="{{ old('fname') }}" placeholder="Enter first name">
                                 @error('fname')
                                     <div class="error text-danger ">{{ $message }}</div>
                                 @enderror
@@ -30,7 +30,7 @@
                             <div class="mb-3 col-md-3">
                                 <label for="lname" class="form-label">Last Name</label>
                                 <input type="text" class="form-control" id="lname" name="lname"
-                                    value="{{ old('lname') }}" placeholder="Enter last name" required>
+                                    value="{{ old('lname') }}" placeholder="Enter last name">
                                 @error('lname')
                                     <div class="error text-danger ">{{ $message }}</div>
                                 @enderror
@@ -39,7 +39,7 @@
                             <!-- Gender -->
                             <div class="mb-3 col-md-3">
                                 <label for="gender" class="form-label">Gender</label><b style="color: red;">*</b>
-                                <select class="form-control" id="gender" name="gender" required>
+                                <select class="form-control" id="gender" name="gender">
                                     <option value="">Select Gender</option>
                                     <option value="male" {{ old('gender') == 'male' ? 'selected' : '' }}>Male</option>
                                     <option value="female" {{ old('gender') == 'female' ? 'selected' : '' }}>Female</option>
@@ -54,7 +54,7 @@
                             <div class="mb-3 col-md-3">
                                 <label for="dob" class="form-label">Date of Birth</label><b style="color: red;">*</b>
                                 <input type="date" class="form-control" id="dob" name="dob"
-                                    value="{{ old('dob') }}" required>
+                                    value="{{ old('dob') }}">
                                 @error('dob')
                                     <div class="error text-danger ">{{ $message }}</div>
                                 @enderror
@@ -64,7 +64,7 @@
                             <div class="mb-3 col-md-3">
                                 <label for="email" class="form-label">Email</label><b style="color: red;">*</b>
                                 <input type="email" class="form-control" id="email" name="email"
-                                    value="{{ old('email') }}" placeholder="Enter email" required>
+                                    value="{{ old('email') }}" placeholder="Enter email">
                                 @error('email')
                                     <div class="error text-danger ">{{ $message }}</div>
                                 @enderror
@@ -74,10 +74,10 @@
                             <div class="mb-3 col-md-3">
                                 <label for="role" class="form-label">Role</label><b
                                     style="color: red;">*</b>
-                                <select class="form-control" id="role" name="user_type" required>
-                                    <option value="">Select Role</option>
+                                <select class="form-control" id="role" name="user_type">
+                                    <option value="" selected disabled>Select Role</option>
                                     @foreach ($roles as $role)
-                                        <option value="{{ $role->id }}">{{ $role->user_type }}</option>
+                                        <option value="{{ $role->id }}">{{ $role->name }}</option>
                                     @endforeach
                                 </select>
                                 @error('role')
@@ -89,7 +89,7 @@
                             <div class="mb-3 col-md-3">
                                 <label for="number" class="form-label">Phone Number</label><b style="color: red;">*</b>
                                 <input type="text" class="form-control" id="phoneNumVender" name="number"
-                                    value="{{ old('number') }}" placeholder="Enter phone number"  maxlength="10" required>
+                                    value="{{ old('number') }}" placeholder="Enter phone number"  maxlength="10">
                                 @error('number')
                                     <div class="error text-danger ">{{ $message }}</div>
                                 @enderror
@@ -100,7 +100,7 @@
                                 <label for="joining_date" class="form-label">Joining Date</label><b
                                     style="color: red;">*</b>
                                 <input type="date" class="form-control" id="joining_date" name="joining_date"
-                                    value="{{ old('joining_date') }}" required>
+                                    value="{{ old('joining_date') }}">
                                 @error('joining_date')
                                     <div class="error text-danger ">{{ $message }}</div>
                                 @enderror
@@ -110,7 +110,7 @@
                             <div class="mb-3 col-md-3">
                                 <label for="company" class="form-label">Company</label><b style="color: red;">*</b>
                                 <input type="text" class="form-control" id="company" name="company"
-                                    value="{{ old('company') }}" placeholder="Enter company name" required>
+                                    value="{{ old('company') }}" placeholder="Enter company name">
                                 @error('company')
                                     <div class="error text-danger ">{{ $message }}</div>
                                 @enderror
@@ -122,7 +122,7 @@
                                     style="color: red;">*</b>
                                 <input type="text" class="form-control" id="no_of_experience" name="no_of_experience"
                                     value="{{ old('no_of_experience') }}" placeholder="Enter years of experience"
-                                    required>
+                                >
                                 @error('no_of_experience')
                                     <div class="error text-danger ">{{ $message }}</div>
                                 @enderror
@@ -132,7 +132,7 @@
                             <div class="mb-3 col-md-3">
                                 <label for="department" class="form-label">Department</label><b style="color: red;">*</b>
                                 <input type="text" class="form-control" id="department" name="department"
-                                    value="{{ old('department') }}" placeholder="Enter department" required>
+                                    value="{{ old('department') }}" placeholder="Enter department">
                                 @error('department')
                                     <div class="error text-danger ">{{ $message }}</div>
                                 @enderror
@@ -143,7 +143,7 @@
                                 <label for="designation" class="form-label">Designation</label><b
                                     style="color: red;">*</b>
                                 <input type="text" class="form-control" id="designation" name="designation"
-                                    value="{{ old('designation') }}" placeholder="Enter designation" required>
+                                    value="{{ old('designation') }}" placeholder="Enter designation">
                                 @error('designation')
                                     <div class="error text-danger ">{{ $message }}</div>
                                 @enderror
@@ -153,7 +153,7 @@
                             <div class="mb-3 col-md-3">
                                 <label for="office_shift" class="form-label">Office Shift</label><b
                                     style="color: red;">*</b>
-                                <select class="form-control" id="office_shift" name="office_shift" required>
+                                <select class="form-control" id="office_shift" name="office_shift">
                                     <option value="">Select Office Shift</option>
                                     <option value="hr1" {{ old('office_shift') == 'hr1' ? 'selected' : '' }}>9:00am -
                                         6:00pm
@@ -175,7 +175,7 @@
                                 <label for="reporting_head" class="form-label">Reporting Head</label><b
                                     style="color: red;">*</b>
                                 <input type="text" class="form-control" id="reporting_head" name="reporting_head"
-                                    value="{{ old('reporting_head') }}" placeholder="Enter reporting head" required>
+                                    value="{{ old('reporting_head') }}" placeholder="Enter reporting head">
                                 @error('reporting_head')
                                     <div class="error text-danger ">{{ $message }}</div>
                                 @enderror
@@ -184,7 +184,7 @@
                             <!-- HR Head -->
                             <div class="mb-3 col-md-3">
                                 <label for="hr_head" class="form-label">HR Head</label><b style="color: red;">*</b>
-                                <select class="form-control" id="hr_head" name="hr_head" required>
+                                <select class="form-control" id="hr_head" name="hr_head">
                                     <option value="">Select HR Head</option>
                                     <option value="hr1" {{ old('hr_head') == 'hr1' ? 'selected' : '' }}>Hr1</option>
                                     <option value="hr2" {{ old('hr_head') == 'hr2' ? 'selected' : '' }}>Hr2</option>
@@ -199,7 +199,7 @@
                             <div class="mb-3 col-md-3">
                                 <label for="hr_executive" class="form-label">HR Executive</label><b
                                     style="color: red;">*</b>
-                                <select class="form-control" id="hr_executive" name="hr_executive" required>
+                                <select class="form-control" id="hr_executive" name="hr_executive">
                                     <option value="">Select HR Head</option>
                                     <option value="hr1" {{ old('hr_executive') == 'hr1' ? 'selected' : '' }}>Hr1
                                     </option>
@@ -219,7 +219,7 @@
                                 <label for="official_mobile" class="form-label">Official Mobile</label><b
                                     style="color: red;">*</b>
                                 <input type="text" class="form-control" id="official_mobile" name="official_mobile"
-                                    value="{{ old('official_mobile') }}" placeholder="Enter official mobile" required>
+                                    value="{{ old('official_mobile') }}" placeholder="Enter official mobile">
                                 @error('official_mobile')
                                     <div class="error text-danger ">{{ $message }}</div>
                                 @enderror
@@ -230,7 +230,7 @@
                                 <label for="official_email" class="form-label">Official Email</label><b
                                     style="color: red;">*</b>
                                 <input type="email" class="form-control" id="official_email" name="official_email"
-                                    value="{{ old('official_email') }}" placeholder="Enter official email" required>
+                                    value="{{ old('official_email') }}" placeholder="Enter official email">
                                 @error('official_email')
                                     <div class="error text-danger ">{{ $message }}</div>
                                 @enderror
@@ -240,7 +240,7 @@
                                 <label for="current_address" class="form-label text-dark">Current Address<b
                                         style="color: red;">*</b></label>
                                 <textarea name="current_address" class="form-control" placeholder="Enter current address" id="current_address"
-                                    rows="3" required>{{ old('current_address') }}</textarea>
+                                    rows="3">{{ old('current_address') }}</textarea>
                                 @error('current_address')
                                     <div class="error text-danger ">{{ $message }}</div>
                                 @enderror
@@ -250,7 +250,7 @@
                                 <label for="permanent_address" class="form-label text-dark">Permanent Address<b
                                         style="color: red;">*</b></label>
                                 <textarea name="permanent_address" class="form-control" placeholder="Enter permanent address" id="permanent_address"
-                                    rows="3" required>{{ old('permanent_address') }}</textarea>
+                                    rows="3">{{ old('permanent_address') }}</textarea>
                                 @error('permanent_address')
                                     <div class="error text-danger ">{{ $message }}</div>
                                 @enderror
@@ -261,7 +261,7 @@
                                 <label for="high_school_certificate" class="form-label">High School Certificate</label><b
                                     style="color: red;">*</b>
                                 <input type="file" class="form-control" id="high_school_certificate"
-                                    name="high_school_certificate" required>
+                                    name="high_school_certificate">
                                 @error('high_school_certificate')
                                     <div class="error text-danger ">{{ $message }}</div>
                                 @enderror
@@ -270,7 +270,7 @@
                                 <label for="intermediate_certificate" class="form-label">Intermediate
                                     Certificate</label><b style="color: red;">*</b>
                                 <input type="file" class="form-control" id="intermediate_certificate"
-                                    name="intermediate_certificate" required>
+                                    name="intermediate_certificate">
                                 @error('intermediate_certificate')
                                     <div class="error text-danger ">{{ $message }}</div>
                                 @enderror
@@ -279,7 +279,7 @@
                                 <label for="graduation_certificate" class="form-label">Graduation Certificate</label><b
                                     style="color: red;">*</b>
                                 <input type="file" class="form-control" id="graduation_certificate"
-                                    name="graduation_certificate" required>
+                                    name="graduation_certificate">
                                 @error('graduation_certificate')
                                     <div class="error text-danger ">{{ $message }}</div>
                                 @enderror

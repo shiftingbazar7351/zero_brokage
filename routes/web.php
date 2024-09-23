@@ -134,6 +134,7 @@ Route::middleware(['auth', 'check.ip'])->group(function () {
         Route::post('/user/{user}', 'show')->name('user.show')->middleware('can:user-show');
         Route::delete('/user/{user}', 'destroy')->name('user.destroy')->middleware('can:user-delete');
         Route::post('/user-status', 'userStatus')->name('user.status')->middleware('can:user-status');
+        Route::get('/profile', 'profile')->name('user.profile');
 
     });
     // Permission Module

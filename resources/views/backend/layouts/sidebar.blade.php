@@ -22,13 +22,13 @@
 
                 @can(['permission-list'])
                     <li class ="{{ Route::currentRouteName() === 'role.permission.list' ? 'active' : '' }}">
-                        <a href="{{ route('role.permission.list') }}"><i class="fe fe-grid"></i> <span>Assign
+                        <a href="{{ route('role.permission.list') }}"><i class="fa fa-flag" aria-hidden="true"></i> <span>Assign
                                 Permission</span></a>
                     </li>
                 @endcan
                 @can(['user-list'])
                     <li class ="{{ Route::currentRouteName() === 'user.index' ? 'active' : '' }}">
-                        <a href="{{ route('user.index') }}"><i class="fe fe-grid"></i> <span>Users</span></a>
+                        <a href="{{ route('user.index') }}"><i class="fa fa-users" aria-hidden="true"></i> <span>Users</span></a>
                     </li>
                 @endcan
                 @canany(['categories-list', 'subcategory-list', 'menus-list', 'submenu-list', 'india-services-list',
@@ -102,7 +102,7 @@
 
                 @canany(['employee-headoffice-list', 'employee-company-list', 'employee-product-list', 'employee-branch-list', 'employee-department-list','employee-list'])
                 <li class="submenu">
-                    <a href="javascript:void(0);"><i class="fe fe-briefcase"></i>
+                    <a href="javascript:void(0);"><i class="fa fa-database" aria-hidden="true"></i>
                         <span>Employee Data</span>
                         <span class="menu-arrow"><i class="fe fe-chevron-right"></i></span>
                     </a>
@@ -170,7 +170,7 @@
                     <li
                         class="{{ Route::currentRouteName() === 'enquiry.index' ? 'active' : '' }}{{ Route::currentRouteName() === 'enquiry.show' ? 'active' : '' }}">
                         <a href="{{ route('enquiry.index') }}">
-                            <i class="fe fe-file-text"></i>
+                            <i class="fa fa-phone-square" aria-hidden="true"></i>
                             <span>Enquiry</span>
                         </a>
                     </li>
@@ -178,7 +178,7 @@
                 @can(['faq-list'])
                     <li class="{{ Route::currentRouteName() === 'faq.index' ? 'active' : '' }}">
                         <a href="{{ route('faq.index') }}">
-                            <i class="fe fe-file-text"></i>
+                            <i class="fa fa-bars" aria-hidden="true"></i>
                             <span>FAQ</span>
                         </a>
                     </li>
@@ -186,7 +186,7 @@
                 @can('meta-list')
                     <li class="{{ Route::currentRouteName() === 'meta.index' ? 'active' : '' }}">
                         <a href="{{ route('meta.index') }}">
-                            <i class="fe fe-file-text"></i>
+                            <i class="fa fa-cloud" aria-hidden="true"></i>
                             <span>Meta Data</span>
                         </a>
                     </li>
@@ -195,14 +195,14 @@
                     <li
                         class="{{ in_array(Route::currentRouteName(), ['products.index', 'products.create', 'products.edit','products.show']) ? 'active' : '' }}">
                         <a href="{{ route('products.index') }}">
-                            <i class="fe fe-file-text"></i>
+                            <i class="fa fa-product-hunt" aria-hidden="true"></i>
                             <span>Products</span>
                         </a>
                     </li>
                 @endcan
                 @canany(['vendors-list', 'verified-list'])
                     <li class="submenu">
-                        <a href="javascript:void(0);"><i class="fe fe-briefcase"></i>
+                        <a href="javascript:void(0);"><i class="fa fa-venus-double" aria-hidden="true"></i>
                             <span>Vendors</span>
                             <span class="menu-arrow"><i class="fe fe-chevron-right"></i></span>
                         </a>
@@ -232,21 +232,21 @@
                 @can('reviews-list')
                     <li class="{{ Route::currentRouteName() === 'reviews.index' ? 'active' : '' }}">
                         <a href="{{ route('reviews.index') }}">
-                            <i class="fe fe-file-text"></i>
+                            <i class="fa fa-star" aria-hidden="true"></i>
                             <span>Review</span>
                         </a>
                     </li>
                 @endcan
                 <li class="{{ Route::currentRouteName() === 'newsletter.index' ? 'active' : '' }}">
                     <a href="{{ route('newsletter.index') }}">
-                        <i class="fe fe-file-text"></i>
+                        <i class="fa fa-newspaper" aria-hidden="true"></i>
                         <span>Newsletter</span>
                     </a>
                 </li>
                 @can('ipaddress-list')
                     <li class="{{ Route::currentRouteName() === 'ipaddress.index' ? 'active' : '' }}">
                         <a href="{{ route('ipaddress.index') }}">
-                            <i class="fe fe-file-text"></i>
+                            <i class="fa fa-location-arrow" aria-hidden="true"></i>
                             <span>Ip Address</span>
                         </a>
                     </li>
@@ -254,7 +254,7 @@
                 @can('transaction-list')
                     <li class="{{ Route::currentRouteName() === 'transaction.index' ? 'active' : '' }}">
                         <a href="{{ route('transaction.index') }}">
-                            <i class="fe fe-file-text"></i>
+                            <i class="fa fa-exchange" aria-hidden="true"></i>
                             <span>Transactions</span>
                         </a>
                     </li>
@@ -262,7 +262,7 @@
                 @can('invoice-list')
                     <li class="{{ Route::currentRouteName() === 'invoice.index' ? 'active' : '' }}">
                         <a href="{{ route('invoice.index') }}">
-                            <i class="fe fe-file-text"></i>
+                            <i class="fa fa-sticky-note" aria-hidden="true"></i>
                             <span>Invoices</span>
                         </a>
                     </li>

@@ -20,7 +20,7 @@ class FaqController extends Controller
             $query->where('name', 'like', '%' . $request->search . '%');
         }
         // Paginate the users (adjust pagination number as needed)
-        $faqs = $query->paginate(10);
+        $faqs = $query->orderByDesc('created_at')->paginate(10);
         // Check if it's an AJAX request
         if ($request->ajax()) {
             return view('backend.faq.partials.faq-index', compact('faqs'))->render();

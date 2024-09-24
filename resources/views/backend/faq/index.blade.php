@@ -48,7 +48,7 @@
                     </button>
                 </div>
                 <div class="modal-body pt-0">
-                    <form id="addFaqForm" method="POST">
+                    <form action="{{ route('faq.store') }}" id="addFaqForm" method="POST">
                         @csrf
                         <div class="mb-3">
                             <label class="form-label">Question</label>
@@ -113,7 +113,7 @@
     </div>
 @endsection
 
-@section('scripts')
+{{-- @section('scripts')
     <script>
         var statusRoute = `{{ route('faq.status') }}`;
         var searchRoute = `{{ route('categories.index') }}`;
@@ -145,56 +145,123 @@
 
         // for validation in addition
 
+
+    </script>
+@endsection --}}
+@section('scripts')
+    <script>
+        var statusRoute = `{{ route('faq.status') }}`;
+        var searchRoute = `{{ route('categories.index') }}`;
+    </script>
+    <script src="{{ asset('admin/assets/js/search.js') }}"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="{{ asset('admin/assets/js/status-update.js') }}"></script>
+    <script>
         $(document).ready(function() {
-            // Event listener when the modal is shown
-            $('#add-faqs').on('shown.bs.modal', function() {
-                // Unbind any previous submit handlers and bind the new one
-                $('#addFaqForm').off('submit').on('submit', function(event) {
-                    event.preventDefault(); // Prevent the default form submission
+            // Handle the Add FAQ Form Submission
+            $('#addFaqForm').off('submit').on('submit', function(event) {
+                event.preventDefault(); // Prevent the default form submission
 
-                    // Debugging message to check if form submission is triggered
-                    console.log("Submitting form...");
+                // Debugging message to confirm form submission
+                console.log("Submitting Add FAQ Form...");
 
-                    $.ajax({
-                        url: $(this).attr('action') ||
-                        '{{ route('faq.store') }}', // Ensure the correct URL is used
-                        type: 'POST', // Use 'type' instead of 'method' for compatibility
-                        data: $(this).serialize(), // Serialize the form data
-                        headers: {
-                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr(
-                                'content') // Include CSRF token in headers
-                        },
-                        success: function(response) {
-                            // Debugging message for successful response
-                            console.log("Form submitted successfully:", response);
+                $.ajax({
+                    url: $(this).attr('action'), // Form action URL from the form's action attribute
+                    type: 'POST', // The request method
+                    data: $(this).serialize(), // Serialize form data
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr(
+                            'content') // Include CSRF token
+                    },
+                    success: function(response) {
+                        console.log("FAQ added successfully:", response); // Debugging message
+                        $('#add-faqs').modal('hide'); // Hide the modal after success
+                        window.location.reload(); // Reload the page to update the FAQ list
+                    },
+                    error: function(xhr) {
+                        console.log("Error occurred:", xhr.responseJSON); // Debugging message
 
-                            // Hide the modal and reload the page
-                            $('#add-faqs').modal('hide');
-                            window.location
-                        .reload(); // Reload the page to reflect changes
-                        },
-                        error: function(xhr) {
-                            // Debugging message for error response
-                            console.log("Error occurred:", xhr.responseJSON);
+                        // Clear previous error messages
+                        $('#question_error').text('');
+                        $('#answer_error').text('');
 
-                            // Clear any previous error messages
-                            $('#question_error').text('');
-                            $('#answer_error').text('');
-
-                            // Extract and display validation errors if they exist
-                            if (xhr.responseJSON && xhr.responseJSON.errors) {
-                                const errors = xhr.responseJSON.errors;
-                                if (errors.question) {
-                                    $('#question_error').text(errors.question[0]);
-                                }
-                                if (errors.answer) {
-                                    $('#answer_error').text(errors.answer[0]);
-                                }
+                        // Display validation errors if they exist
+                        if (xhr.responseJSON && xhr.responseJSON.errors) {
+                            const errors = xhr.responseJSON.errors;
+                            if (errors.question) {
+                                $('#question_error').text(errors.question[0]);
+                            }
+                            if (errors.answer) {
+                                $('#answer_error').text(errors.answer[0]);
                             }
                         }
-                    });
+                    }
                 });
             });
+
+            // Handle the Edit FAQ Form Submission
+            $('#editFaqForm').on('submit', function(event) {
+                event.preventDefault(); // Prevent the default form submission
+
+                // Debugging message to confirm form submission
+                console.log("Submitting Edit FAQ Form...");
+
+                $.ajax({
+                    url: $(this).attr(
+                        'action'), // Form action URL (set dynamically when edit modal is shown)
+                    type: 'POST', // Use 'POST' since we're simulating a PUT request with _method
+                    data: $(this).serialize(), // Serialize the form data
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr(
+                            'content') // Include CSRF token
+                    },
+                    success: function(response) {
+                        console.log("FAQ edited successfully:", response); // Debugging message
+                        $('#edit-faq').modal('hide'); // Hide the modal after success
+                        window.location.reload(); // Reload the page to update the FAQ list
+                    },
+                    error: function(xhr) {
+                        console.log("Error occurred:", xhr.responseJSON); // Debugging message
+
+                        // Clear previous error messages
+                        $('#editQuestion_error').text('');
+                        $('#editAnswer_error').text('');
+
+                        // Display validation errors if they exist
+                        if (xhr.responseJSON && xhr.responseJSON.errors) {
+                            const errors = xhr.responseJSON.errors;
+                            if (errors.question) {
+                                $('#editQuestion_error').text(errors.question[0]);
+                            }
+                            if (errors.answer) {
+                                $('#editAnswer_error').text(errors.answer[0]);
+                            }
+                        }
+                    }
+                });
+            });
+
+            // Edit button handler (edit modal)
+            function editCategory(id) {
+                $.ajax({
+                    url: `/faq/${id}/edit`,
+                    method: 'GET',
+                    success: function(data) {
+                        $('#editFaqId').val(data.id);
+                        $('#editQuestion').val(data.question);
+                        $('#editAnswer').val(data.answer);
+
+                        // Update form action URL dynamically with the FAQ ID
+                        $('#editFaqForm').attr('action', `/faq/${data.id}`);
+
+                        // Show the modal for editing
+                        $('#edit-faq').modal('show');
+                    },
+                    error: function() {
+                        alert('Error fetching FAQ data.');
+                    }
+                });
+            }
         });
     </script>
 @endsection

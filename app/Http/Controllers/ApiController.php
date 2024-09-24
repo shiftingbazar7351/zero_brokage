@@ -151,15 +151,15 @@ class ApiController extends Controller
     {
         try {
             $menus = Menu::select('id', 'name', 'subcategory_id', 'image')
-        ->where('subcategory_id', $id)
-        ->where('status', 1)
-        ->get()
-        ->map(function ($menu) {
-            // Include the image URL as icon in the response
-            $menu->icon = $menu->icon_url; // This will call the accessor for the image URL and map it to 'icon'
-            unset($menu->image); // Optionally remove the 'image' field if you don't want it in the response
-            return $menu;
-        });
+                ->where('subcategory_id', $id)
+                ->where('status', 1)
+                ->get()
+                ->map(function ($menu) {
+                    // Include the image URL as icon in the response
+                    $menu->icon = $menu->icon_url; // This will call the accessor for the image URL and map it to 'icon'
+                    unset($menu->image); // Optionally remove the 'image' field if you don't want it in the response
+                    return $menu;
+                });
 
             // Check if menus are found
             if ($menus->isEmpty()) {
@@ -225,40 +225,36 @@ class ApiController extends Controller
     }
 
 
-    public function faqs($id)
+    public function faqs()
     {
         try {
-            $menus = Faq::where('status', 1)
-        ->get()
-        ->map(function ($menu) {
-            // Include the image URL as icon in the response
-            $menu->icon = $menu->icon_url; // This will call the accessor for the image URL and map it to 'icon'
-            unset($menu->image); // Optionally remove the 'image' field if you don't want it in the response
-            return $menu;
-        });
+            $faqs = Faq::select('id', 'question', 'answer')
+                ->orderByDesc('created_at')->where('status', 1)
+                ->get();
 
-            // Check if menus are found
-            if ($menus->isEmpty()) {
+
+            // Check if faqs are found
+            if ($faqs->isEmpty()) {
                 return response()->json([
                     'success' => false,
-                    'message' => 'No menus found.',
+                    'message' => 'No faqs found.',
                     'data' => []
                 ], Response::HTTP_NOT_FOUND);
             }
 
             return response()->json([
                 'success' => true,
-                'message' => 'menus retrieved successfully.',
-                'data' => $menus
+                'message' => 'faqs retrieved successfully.',
+                'faqs_data' => $faqs
             ], Response::HTTP_OK);
 
         } catch (\Exception $e) {
             // Log the exception for debugging
-            Log::error('Error retrieving menus: ' . $e->getMessage());
+            Log::error('Error retrieving faqs: ' . $e->getMessage());
 
             return response()->json([
                 'success' => false,
-                'message' => 'An error occurred while retrieving menus.',
+                'message' => 'An error occurred while retrieving faqs.',
                 'error' => $e->getMessage()
             ], Response::HTTP_INTERNAL_SERVER_ERROR);
         }

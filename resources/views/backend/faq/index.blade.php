@@ -10,7 +10,7 @@
                     <div class="page-headers">
                         <div class="search-bar">
                             <span><i class="fe fe-search"></i></span>
-                            <input type="text" placeholder="Search" class="form-control">
+                            <input type="text" id="search" placeholder="Search" class="form-control">
                         </div>
                     </div>
                     @can('faq-create')

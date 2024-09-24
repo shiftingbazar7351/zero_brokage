@@ -83,7 +83,7 @@
                 <div class="col-md-12 my-4">
                     <div class="breadcrumb-title text-dark">Fill this form to get the best quotes</div>
                     <div id="div1"
-                        class="d-flex flex-column flex-sm-row justify-content-center gap-3 col-12 col-md-9 mx-auto my-4">
+                        class="d-flex flex-column flex-sm-row justify-content-center align-items-baseline gap-3 col-12 col-md-9 mx-auto my-4">
                         <div class="col-md-3">
                             <input id="name" class="form-control" type="text" placeholder="Enter your name">
                             <span id="name-error" class="text-danger"></span>
@@ -101,7 +101,7 @@
                         <div class="col-md-3 d-flex flex-column">
                             <div><input class="form-control" id="venderprofileNum" name="mobile_number" type="text"
                                     placeholder="Enter Mobile No" maxlength="10"></div>
-                            <div class="text-danger" id="mobile-error">Don't use +91</p>
+                            <div class="text-danger" id="mobile-error"></p>
                             </div>
                         </div>
                         <div>

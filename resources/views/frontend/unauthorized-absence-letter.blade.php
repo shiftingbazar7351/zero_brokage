@@ -66,62 +66,47 @@
 <body>
     <div>
         <div>
-            {{-- ..................For Logo................... --}}
-            {{-- <div style="position: relative">
-                <div class="background">
-                    <img src="{{ asset('assets/img/logofinal.webp') }}" alt="" style="width: 300px;padding:30px">
-                </div>
-                <div style="position: absolute;right:20px;top:0px">
-                    <p><b>FLYBIZZ SERVICES INDIA PRIVATE LIMITED</b></p>
-                    <p><b>GST : 09AAECF5972H1ZA</b></p>
-                    <p><b>PAN : AAECF5972H</b></p>
-                    <p><b>CIN : U74999UP2021PTC147120</b></p>
-                </div>
-            </div> --}}
-
             <div class="background">
                 <div class="content">
                     <div class="left-side">
-                        <img src="{{ asset('assets/img/logofinal.webp') }}" alt="" style="width: 300px;padding:15px">
+                        <img src="{{ asset('assets/img/logofinal.webp') }}" alt=""
+                            style="width: 300px;padding:15px">
                     </div>
                     <div class="right-side">
-                    <p style="margin:0px"><b>FLYBIZZ SERVICES INDIA PRIVATE LIMITED</b></p>
-                    <p style="margin:0px"><b>GST : 09AAECF5972H1ZA</b></p>
-                    <p style="margin:0px"><b>PAN : AAECF5972H</b></p>
-                    <p style="margin:0px"><b>CIN : U74999UP2021PTC147120</b></p>
+                        <p style="margin:0px"><b>FLYBIZZ SERVICES INDIA PRIVATE LIMITED</b></p>
+                        <p style="margin:0px"><b>GST : 09AAECF5972H1ZA</b></p>
+                        <p style="margin:0px"><b>PAN : AAECF5972H</b></p>
+                        <p style="margin:0px"><b>CIN : U74999UP2021PTC147120</b></p>
                     </div>
                 </div>
             </div>
 
             <div style="position: relative;padding:5px;margin-top:2%">
-                <div><b>Dear Vikas Kumar</b></div>
-                <div style="position: absolute;right:2%">Date:19-09;1999 15:38</div>
-                <p>Sector 22, Noida 201301</p>
+
+                <div style="position: absolute;right:2%">Date:19-09;1999 15:38:12</div>
+                <h3 style="text-align:center">Warning for Unauthorized Absence letter</h3>
+
                 <p><b>Dear Ghyoor Qasim</b></p>
-                <p>Congratulations We are pleased to confirm that you have been selected to work for <b>Flybizz Services
-                        India Private Limited</b>.
-                    We are delighted to make you the following job offer.
+                <p>
+                    I hope this message finds you well. I am writing to formally address your recent attendance issues,
+                    specifically your unauthorized absences on [list dates of absence].
+
+
                 </p>
-                <p>The position we are offering you is that of <b>"PHP DEVELOPER"</b> monthly salary of
-                    <b>&#8377;21300</b> per month with an annual cost to
-                    company Annual CTC [Fixed+Variable] - <b>&#8377;255600</b> . This position report to your Team
-                    Leader Head <b>Ishan Sir</b>.
+                <p>
+                    Attendance is crucial to maintaining a productive work environment, and your absence has impacted both your team and the overall operations of the company. We value your contributions, but we must emphasize the importance of regular attendance and adherence to our company policies.
+
                 </p>
-                <p>Your working hours will be from 9:30 AM to 6:30PM, <b>Monday to Saturday</b>.</p>
-                <b>
-                    <p>Benefits for the positons include :</p>
-                </b>
-                <ul>
-                    <li>Working will be 6 days.</li>
-                    <li>Employer state insurance </li>
-                </ul>
-                <p>We would like you to start on <b>22-07-2024</b>, Please report to Team Lead Head on 22-07-2024 for
-                    documentation and orientation. If this date is not acceptable,please contact me immediately.</p>
-                <p>Please sign the endosed copyof this letter and return it to me before 22-07-2024 to indicate your
-                    acceptance of this offer.</p>
-                <p>We are confidient you will be able to make a significant contribution to success of our <b>Flybizz
-                        Services India Pvt Ltd</b>and look forword to working with you.</p>
+                <p>As per our employee handbook, [insert relevant policy details, e.g., “employees are required to notify their supervisor at least [insert time frame] prior to any absence”]. Unfortunately, you did not comply with this policy during your recent absences.
+                </p>
+                <p>This letter serves as a formal warning. We urge you to improve your attendance moving forward. Continued unauthorized absences may lead to further disciplinary action, up to and including termination.</p>
+                <p>If you are experiencing personal difficulties or issues affecting your attendance, I encourage you to discuss them with me or HR. We are here to support you.
+
+                </p>
+                <p>Please sign and return the attached copy of this letter to acknowledge your receipt.</p>
             </div>
+
+
 
             <div style="margin-top: 5%;padding:5px">
                 <p>Anchal Saini</p>
@@ -154,8 +139,8 @@
 
                     </div>
                     <div class="right-side;" style="padding: 35px;color:white;">
-                    <p style="margin:0px"><b>Email : info@zerobrokage@gmail.com</b></p>
-                    <p style="margin:0px"><b>Website : www.shiftingbazar.com</b></p>
+                        <p style="margin:0px"><b>Email : info@zerobrokage@gmail.com</b></p>
+                        <p style="margin:0px"><b>Website : www.shiftingbazar.com</b></p>
 
                     </div>
                 </div>

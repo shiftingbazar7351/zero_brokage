@@ -28,69 +28,7 @@
             <div class="row">
                 <div class="col-12">
                     <div class="table-resposnive table-div">
-                        {{-- <table class="table  table-striped">
-                            <thead>
-                                <tr>
-                                    <th>#</th>
-                                    <th>Question</th>
-                                    <th>Answer</th>
-                                    <th>Date</th>
-                                    <th>Created by</th>
-                                    @can('faq-status')
-                                        <th>Status</th>
-                                    @endcan
-                                    @can(['faq-edit', 'faq-delete'])
-                                        <th>Action</th>
-                                    @endcan
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @forelse ($faqs as $faq)
-                                    <tr>
-                                        <td>{{ $loop->iteration }}</td>
-                                        <td>{{ $faq->question ?? '' }}</td>
-                                        <td>{{ $faq->answer ?? '' }}</td>
-                                        <td>{{ $faq->created_at ? $faq->created_at->format('d M Y') : '' }}</td>
-                                        <td>{{ $faq->createdBy->name ?? '' }}</td>
-                                        @can('faq-status')
-                                        <td>
-                                            <div class="active-switch">
-                                                <label class="switch">
-                                                    <input type="checkbox" class="status-toggle"
-                                                        data-id="{{ $faq->id }}" {{ $faq->status ? 'checked' : '' }}>
-                                                    <span class="sliders round"></span>
-                                                </label>
-                                            </div>
-                                        </td>
-                                        @endcan
-                                        @can(['faq-edit', 'faq-delete'])
-                                        <td>
-                                            <div class="table-actions d-flex justify-content-center">
-                                                <button class="btn delete-table me-2"
-                                                    onclick="editCategory({{ $faq->id }})" type="button"
-                                                    data-bs-toggle="modal" data-bs-target="#edit-faq">
-                                                    <i class="fe fe-edit"></i>
-                                                </button>
-                                                <form action="{{ route('faq.destroy', $faq->id) }}" method="POST"
-                                                    style="display:inline;">
-                                                    @csrf
-                                                    @method('DELETE')
-                                                    <button class="btn delete-table" type="subm it"
-                                                        onclick="return confirm('Are you sure want to delete this?')">
-                                                        <i class="fe fe-trash-2"></i>
-                                                    </button>
-                                                </form>
-                                            </div>
-                                        </td>
-                                        @endcan
-                                    </tr>
-                                @empty
-                                    <tr>
-                                        <td colspan="7" class="text-center">No data found</td>
-                                    </tr>
-                                @endforelse
-                            </tbody>
-                        </table> --}}
+
                         <div id="usersTable">
                             @include('backend.faq.partials.faq-index') {{-- Load the users list initially --}}
                         </div>
@@ -110,17 +48,17 @@
                     </button>
                 </div>
                 <div class="modal-body pt-0">
-                    <form id="addFaqForm" method="POST" data-parsley-validate="true">
+                    <form id="addFaqForm" method="POST">
                         @csrf
                         <div class="mb-3">
                             <label class="form-label">Question</label>
-                            <textarea type="text" class="form-control" name="question" placeholder="Enter question" required>{{ old('question') }}</textarea>
+                            <textarea type="text" class="form-control" name="question" placeholder="Enter question">{{ old('question') }}</textarea>
                             <div id="question_error" class="text-danger"></div>
                         </div>
 
                         <div class="mb-3">
                             <label class="form-label">Answer</label>
-                            <textarea type="text" class="form-control" name="answer" placeholder="Enter answer" required>{{ old('answer') }}</textarea>
+                            <textarea type="text" class="form-control" name="answer" placeholder="Enter answer">{{ old('answer') }}</textarea>
                             <div id="answer_error" class="text-danger"></div>
                         </div>
 
@@ -148,19 +86,19 @@
                 </div>
                 <div class="modal-body pt-0">
                     <form id="editFaqForm" method="POST" action="{{ route('faq.update', 'faq_id') }}"
-                        enctype="multipart/form-data" data-parsley-validate="true">
+                        enctype="multipart/form-data">
                         @csrf
                         @method('PUT')
                         <input type="hidden" id="editFaqId" name="faq_id">
                         <div class="mb-3">
                             <label class="form-label">Question</label>
-                            <textarea type="text" class="form-control" id="editQuestion" name="question" placeholder="Enter question" required></textarea>
+                            <textarea type="text" class="form-control" id="editQuestion" name="question" placeholder="Enter question"></textarea>
                             <div id="editQuestion_error" class="text-danger"></div>
                         </div>
 
                         <div class="mb-3">
                             <label class="form-label">Answer</label>
-                            <textarea type="text" class="form-control" id="editAnswer" name="answer" placeholder="Enter answer" required></textarea>
+                            <textarea type="text" class="form-control" id="editAnswer" name="answer" placeholder="Enter answer"></textarea>
                             <div id="editAnswer_error" class="text-danger"></div>
                         </div>
 
@@ -208,26 +146,44 @@
         // for validation in addition
 
         $(document).ready(function() {
+            // Event listener when the modal is shown
             $('#add-faqs').on('shown.bs.modal', function() {
+                // Unbind any previous submit handlers and bind the new one
                 $('#addFaqForm').off('submit').on('submit', function(event) {
-                    console.log("Form submitted"); // Debugging message
                     event.preventDefault(); // Prevent the default form submission
 
+                    // Debugging message to check if form submission is triggered
+                    console.log("Submitting form...");
+
                     $.ajax({
-                        url: $(this).attr('action'), // Form action URL
-                        method: 'POST',
-                        data: $(this).serialize(), // Serialize form data
+                        url: $(this).attr('action') ||
+                        '{{ route('faq.store') }}', // Ensure the correct URL is used
+                        type: 'POST', // Use 'type' instead of 'method' for compatibility
+                        data: $(this).serialize(), // Serialize the form data
+                        headers: {
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr(
+                                'content') // Include CSRF token in headers
+                        },
                         success: function(response) {
-                            $('#add-faqs').modal('hide'); // Hide the modal
-                            window.location.reload(); // Reload the page
+                            // Debugging message for successful response
+                            console.log("Form submitted successfully:", response);
+
+                            // Hide the modal and reload the page
+                            $('#add-faqs').modal('hide');
+                            window.location
+                        .reload(); // Reload the page to reflect changes
                         },
                         error: function(xhr) {
-                            console.log(xhr
-                                .responseJSON); // Debugging message for error response
-                            var errors = xhr.responseJSON.errors;
-                            if (errors) {
-                                $('#question_error').text('');
-                                $('#answer_error').text('');
+                            // Debugging message for error response
+                            console.log("Error occurred:", xhr.responseJSON);
+
+                            // Clear any previous error messages
+                            $('#question_error').text('');
+                            $('#answer_error').text('');
+
+                            // Extract and display validation errors if they exist
+                            if (xhr.responseJSON && xhr.responseJSON.errors) {
+                                const errors = xhr.responseJSON.errors;
                                 if (errors.question) {
                                     $('#question_error').text(errors.question[0]);
                                 }

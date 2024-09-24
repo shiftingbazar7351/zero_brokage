@@ -33,7 +33,7 @@
 
                     </li>
                     <li class="has-submenu">
-                        <a href="javascript:void(0);" style="color: black;font-weight:bold"><img src="{{ asset('assets/img/icons/about-us-blue.svg') }}" alt="" class="suuport-icons"> About Us
+                        <a href="" style="color: black;font-weight:bold"><img src="{{ asset('assets/img/icons/about-us-blue.svg') }}" alt="" class="suuport-icons"> About Us
                         </a>
 
                     </li>

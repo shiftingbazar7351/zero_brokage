@@ -3459,7 +3459,7 @@ padding-top: 8px;
 }
 .about-img .about-exp {
     position: absolute;
-    background: #4c40ed;
+    background: #9bf154;
     border-radius: 10px;
     width: 370px;
     height: 100%;
@@ -26839,6 +26839,9 @@ td.ant-table-column-sort {
     .search-btn .btn,
     .price-toggle {
         font-size: 15px;
+    }
+    .search-btn {
+        float: none;
     }
     .header-navbar-rht .lang-nav,
     .header-navbar-rht .flag-nav,

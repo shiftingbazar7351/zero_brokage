@@ -69,12 +69,37 @@ Route::get('/joining-letter', function () {
     return view('frontend.joining-letter');
 })->name('joining-letter');
 
+Route::get('/increment-letter', function () {
+    return view('frontend.increment-letter');
+})->name('increment-letter');
+
+Route::get('/poor-performance-letter', function () {
+    return view('frontend.poor-performance-letter');
+})->name('poor-performance-letter');
+
+Route::get('/unauthorized-absence-letter', function () {
+    return view('frontend.unauthorized-absence-letter');
+})->name('unauthorized-absence-letter');
+
+Route::get('/target-performance', function () {
+    return view('frontend.target-performance');
+})->name('target-performance');
+
 Route::get('/email-template', function () {
     return view('emails.user-credential');
 })->name('email-template');
+
 Route::get('/contact-us', function () {
     return view('frontend.contact-us');
 })->name('contact-us');
+
+Route::get('/about', function () {
+    return view('frontend.about');
+})->name('about');
+
+Route::get('/disclaimer', function () {
+    return view('frontend.disclaimer');
+})->name('disclaimer');
 
 Route::get('/cache', function () {
     Artisan::call('optimize:clear');

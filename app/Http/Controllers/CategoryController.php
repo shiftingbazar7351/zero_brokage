@@ -92,13 +92,6 @@ class CategoryController extends Controller
      */
     public function destroy(Category $category)
     {
-        if ($category->image) {
-            Storage::delete('public/assets/category/' . $category->image);
-        }
-        if ($category->icon) {
-            Storage::delete('public/assets/icon/' . $category->icon);
-        }
-
         $category->delete();
 
         return back()->with(['message' => 'Category deleted successfully.', 'alert-type' => 'success']);

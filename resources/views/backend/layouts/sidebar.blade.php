@@ -162,6 +162,15 @@
                         </li>
                         @endcan
 
+                        @can(['employee-salary-list'])
+                        <li>
+                            <a href="{{ route('employee-salary.index') }}"
+                                class="{{ Route::currentRouteName() === 'employee-salary.index' ? 'active' : '' }}">
+                                <i class="fa fa-building" aria-hidden="true"></i>
+                                <span>Salary</span>
+                            </a>
+                        </li>
+                        @endcan
                     </ul>
                 </li>
                 @endcanany

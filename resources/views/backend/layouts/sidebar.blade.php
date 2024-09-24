@@ -155,7 +155,8 @@
                         @can(['employee-list'])
                         <li>
                             <a href="{{ route('employee.index') }}"
-                                class="{{ Route::currentRouteName() === 'employee.index' ? 'active' : '' }}">
+                                class="{{ Route::currentRouteName() === 'employee.index' ? 'active' : '' }}
+                                {{ Route::currentRouteName() === 'employee.create' ? 'active' : '' }}">
                                 <i class="fe fe-file-text"></i>
                                 <span>Employee</span>
                             </a>

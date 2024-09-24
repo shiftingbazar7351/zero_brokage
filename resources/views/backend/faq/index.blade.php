@@ -30,7 +30,7 @@
                     <div class="table-resposnive table-div">
 
                         <div id="usersTable">
-                            @include('backend.faq.partials.faq-index') {{-- Load the users list initially --}}
+                            @include('backend.faq.partials.faq-index')
                         </div>
                     </div>
                 </div>
@@ -151,7 +151,7 @@
 @section('scripts')
     <script>
         var statusRoute = `{{ route('faq.status') }}`;
-        var searchRoute = `{{ route('categories.index') }}`;
+        var searchRoute = `{{ route('faq.index') }}`;
     </script>
     <script src="{{ asset('admin/assets/js/search.js') }}"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>

@@ -7,6 +7,7 @@ use Modules\Employee\Http\Controllers\HeadOfficeController;
 use Modules\Employee\Http\Controllers\BranchController;
 use Modules\Employee\Http\Controllers\DepartmentController;
 use Modules\Employee\Http\Controllers\EmployeeController;
+use Modules\Employee\Http\Controllers\SalaryController;
 
 
 /*
@@ -91,4 +92,15 @@ Route::controller(EmployeeController::class)->group(function () {
     Route::get('/employee/{id}', 'show')->name('employee.show')->middleware('can:employee-show'); // Show a single department (corrected to GET)
     Route::delete('/employee/{id}', 'destroy')->name('employee.destroy')->middleware('can:employee-delete'); // Delete a category
     Route::post('/employee-status', 'DepartmentStatus')->name('employee.status')->middleware('can:employee-status'); // Change category status
+});
+
+Route::controller(SalaryController::class)->group(function () {
+    Route::get('/employee-salary', 'index')->name('employee-salary.index')->middleware('can:employee-salary-list'); // List all employee-headoffice
+    Route::get('/employee-salary/create', 'create')->name('employee-salary.create')->middleware('can:employee-salary-create'); // Show form to create a category
+    Route::post('/employee-salary', 'store')->name('employee-salary.store')->middleware('can:employee-salary-create'); // Store a new category
+    Route::get('/employee-salary/{salary}/edit', 'edit')->name('employee-salary.edit')->middleware('can:employee-salary-edit'); // Edit category form
+    Route::put('/employee-salary/{salary}', 'update')->name('employee-salary.update')->middleware('can:employee-salary-edit'); // Update the category
+    Route::get('/employee-salary/{salary}', 'show')->name('employee-salary.show')->middleware('can:employee-salary-show'); // Show a single category (corrected to GET)
+    Route::delete('/employee-salary/{salary}', 'destroy')->name('employee-salary.destroy')->middleware('can:employee-salary-delete'); // Delete a category
+    Route::post('/employee-salary-status', 'SalaryStatus')->name('employee-salary.status')->middleware('can:employee-salary-status'); // Change category status
 });

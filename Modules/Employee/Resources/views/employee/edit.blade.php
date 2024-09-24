@@ -73,13 +73,13 @@
                             <div class="mb-3 col-md-3">
                                 <label for="role" class="form-label">Role</label><b
                                     style="color: red;">*</b>
-                                <select class="form-control" id="role" name="role" required>
+                                <select class="form-control" id="role" name="user_type" required>
                                     <option value="">Select Role</option>
                                     @foreach ($roles as $role)
                                         <option value="{{ $role->id }}">{{ $role->user_type }}</option>
                                     @endforeach
                                 </select>
-                                @error('role')
+                                @error('user_type')
                                     <div class="error text-danger ">{{ $message }}</div>
                                 @enderror
                             </div>

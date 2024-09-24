@@ -17,7 +17,7 @@ class Employees extends Model
         'gender',
         'dob',
         'email',
-        'role',
+        'user_type',
         'country',
         'number',
         'joining_date',

@@ -1,18 +1,18 @@
 <div class="sidebar" id="sidebar">
     <div class="sidebar-header">
         <div class="sidebar-logo">
-            <a href="#">
+            <a href="{{ route('admin_page') }}">
                 <img src="{{ asset('assets/img/logofinal.webp') }}" class="img-fluid logo rounded" alt="Logo"
                     style="background-color: white">
             </a>
-            <a href="#">
+            <a href="{{ route('admin_page') }}">
                 <img src="{{ asset('assets/img/logofinal.webp') }}" class="img-fluid logo-small" alt="Logo">
             </a>
         </div>
     </div>
     <div class="sidebar-inner slimscroll">
         <div id="sidebar-menu" class="sidebar-menu">
-            <ul>
+            <ul class="mb-4">
                 <li class="menu-title m-0">
                     <h6>Home</h6>
                 </li>

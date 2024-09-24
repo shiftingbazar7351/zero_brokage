@@ -26,7 +26,9 @@ class HeadOfficeController extends Controller
         $query = HeadOffice::query();
         // Filter based on search query
         if ($request->has('search')) {
-            $query->where('name', 'like', '%' . $request->search . '%');
+            $query->where('name', 'like', '%' . $request->search . '%')
+            ->orWhere('number', 'like', '%' . $request->search . '%')
+            ->orWhere('address', 'like', '%' . $request->search . '%');
         }
         // Paginate the users (adjust pagination number as needed)
         $offices = $query->orderByDesc('created_at')->paginate(10);

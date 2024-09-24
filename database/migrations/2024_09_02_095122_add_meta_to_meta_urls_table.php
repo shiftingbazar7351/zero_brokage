@@ -14,9 +14,9 @@ return new class extends Migration
     public function up()
     {
         Schema::table('meta_urls', function (Blueprint $table) {
-            $table->string('title')->nullable();
+            $table->longText('title')->nullable();
             $table->longText('description')->nullable();
-            $table->string('keyword')->nullable();
+            $table->longText('keyword')->nullable();
         });
     }
 

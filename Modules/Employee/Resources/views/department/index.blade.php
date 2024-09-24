@@ -74,7 +74,7 @@
                                 <option value="Sales Department"> Sales Department</option>
                                 <option value="Support Department"> Support Department </option>
                                 <option value="Account Department"> Account Department </option>
-                                <option value="Managenment Department"> Managenment Department </option>
+                                <option value="Management Department"> Management Department </option>
                             </select>
                             <div id="department_id_error" class="text-danger"></div>
                         </div>

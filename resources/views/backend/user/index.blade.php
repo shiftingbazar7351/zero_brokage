@@ -64,8 +64,9 @@
                         <div class="mb-3">
                             <label class="form-label">Role</label>
                             <select class="form-control" name="user_type" id="user_type">
+                            <option value="" selected disabled>Select Role</option>
                                 @foreach ($roles as $role)
-                                    <option value="{{ $role->name }}" {{ $role->name == 'employee' ? 'selected' : '' }}>
+                                    <option value="{{ $role->id }}" {{ $role->name == 'employee' ? 'selected' : '' }}>
                                         {{ $role->name }}
                                     </option>
                                 @endforeach
@@ -130,6 +131,7 @@
                         <div class="mb-3">
                             <label class="form-label">Role</label>
                             <select class="form-control" name="user_type" id="user_type">
+                                <option value="" selected disabled>Select Role</option>
                                 @foreach ($roles as $role)
                                     <option value="{{ $role->id }}"
                                         {{ $role->id == old('user_type', $user->user_type ?? '') ? 'selected' : '' }}>

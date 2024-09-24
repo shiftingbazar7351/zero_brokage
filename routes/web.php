@@ -97,6 +97,10 @@ Route::get('/about', function () {
     return view('frontend.about');
 })->name('about');
 
+Route::get('/disclaimer', function () {
+    return view('frontend.disclaimer');
+})->name('disclaimer');
+
 Route::get('/cache', function () {
     Artisan::call('optimize:clear');
     return back();

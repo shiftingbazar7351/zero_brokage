@@ -25,7 +25,8 @@ class Enquiry extends Model
         'created_by',
         'email',
         'mobile_number',
-        'otp'
+        'otp',
+        'otp_verified_at'
     ];
 
     public function categoryName()

@@ -119,8 +119,6 @@
                                 @enderror
                             </div>
 
-
-
                             <!-- Department Dropdown -->
                             <div class="mb-3 col-md-3">
                                 <label for="department">Department Name</label>

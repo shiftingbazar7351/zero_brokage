@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Category;
 use App\Models\City;
+use App\Models\Enquiry;
 use App\Models\Faq;
 use App\Models\Menu;
 use App\Models\Review;
@@ -12,6 +13,7 @@ use App\Models\SubMenu;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Validator;
 
 class ApiController extends Controller
 {
@@ -259,6 +261,54 @@ class ApiController extends Controller
             ], Response::HTTP_INTERNAL_SERVER_ERROR);
         }
 
+    }
+
+
+    public function sendOtp(Request $request)
+    {
+        // Validate the incoming request
+        $validator = Validator::make($request->all(), [
+            'mobile_number' => 'required|digits:10',
+            'name' => 'required|string|max:255',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Validation errors',
+                'errors' => $validator->errors()
+            ], Response::HTTP_UNPROCESSABLE_ENTITY);
+        }
+
+        try {
+            // Generate a new OTP
+            $otp = rand(1000, 9999);
+
+            // Find the enquiry by mobile number or create a new one
+            $enquiry = Enquiry::updateOrCreate(
+                ['mobile_number' => $request->mobile_number],
+                [
+                    'name' => $request->name,
+                    'otp' => $otp,
+                ]
+            );
+            return response()->json([
+                'success' => true,
+                'message' => $enquiry->wasRecentlyCreated ? 'OTP created and sent successfully.' : 'OTP updated successfully.',
+                'otp' => $otp,
+                'otp_verified_at' => $enquiry->otp_verified_at
+            ], Response::HTTP_OK);
+
+        } catch (\Exception $e) {
+            // Log the exception for debugging
+            Log::error('Error sending OTP: ' . $e->getMessage());
+
+            return response()->json([
+                'success' => false,
+                'message' => 'An error occurred while sending OTP.',
+                'error' => $e->getMessage()
+            ], Response::HTTP_INTERNAL_SERVER_ERROR);
+        }
     }
 
 }

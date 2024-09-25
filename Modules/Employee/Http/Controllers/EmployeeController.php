@@ -102,17 +102,13 @@ class EmployeeController extends Controller
             // 'previous_ref_designation' => 'nullable|string|max:191',
         ]);
 
-        // return $request->all();
-        // Create a new employee
         $validatedData['password'] = Hash::make('123456');
         $employee = User::create($validatedData);
 
         // Set created_by to the current authenticated user
         $employee->created_by = auth()->user()->id;
         $employee->password = Hash::make('123456');
-        // $employee->user_type = $request->user_type;
 
-        // Handle file uploads
         if ($request->hasFile('high_school_certificate')) {
             $filename = $this->fileUploadService->uploadImage('employee/high_school_certificate/', $request->file('high_school_certificate'));
             $employee->high_school_certificate = $filename;

@@ -166,9 +166,19 @@
                         @can(['employee-salary-list'])
                         <li>
                             <a href="{{ route('employee-salary.index') }}"
-                                class="{{ Route::currentRouteName() === 'employee-salary.index' ? 'active' : '' }}">
+                                class="{{ Route::currentRouteName() === 'employee-salary.index' ? 'active' : '' }} {{ Route::currentRouteName() === 'employee-salary.create' ? 'active' : '' }} {{ Route::currentRouteName() === 'employee-salary.edit' ? 'active' : '' }}">
                                 <i class="fa fa-building" aria-hidden="true"></i>
                                 <span>Salary</span>
+                            </a>
+                        </li>
+                        @endcan
+
+                        @can(['employee-bank-list'])
+                        <li>
+                            <a href="{{ route('employee-bank.index') }}"
+                                class="{{ Route::currentRouteName() === 'employee-bank.index' ? 'active' : '' }} {{ Route::currentRouteName() === 'employee-bank.edit' ? 'active' : '' }}">
+                                <i class="fa fa-building" aria-hidden="true"></i>
+                                <span>Bank</span>
                             </a>
                         </li>
                         @endcan

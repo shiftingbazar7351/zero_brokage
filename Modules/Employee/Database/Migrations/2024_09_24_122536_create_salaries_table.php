@@ -15,6 +15,8 @@ class CreateSalariesTable extends Migration
     {
         Schema::create('salaries', function (Blueprint $table) {
             $table->id();
+            $table->string('department_id')->nullable();
+            $table->string('employee_id')->nullable();
             $table->string('basic_salary')->nullable();
             $table->string('house_rent_allowance')->nullable();
             $table->string('conveyance_allowance')->nullable();

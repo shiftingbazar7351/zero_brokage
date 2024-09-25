@@ -13,6 +13,54 @@
                         data-parsley-validate="true">
                         @csrf
                         <div class="row">
+
+                            <div class="mb-3 col-md-4">
+                                <label for="department">Department Name</label>
+                                <select class="form-control" id="department" name="department">
+                                    <option value="" selected disabled>Select Department</option>
+                                    <option value="IT Department">IT Department</option>
+                                    <option value="HR Department">HR Department</option>
+                                    <option value="Sales Department">Sales Department</option>
+                                    <option value="Support Department">Support Department</option>
+                                    <option value="Account Department">Account Department</option>
+                                    <option value="Management Department">Management Department</option>
+                                </select>
+                                <div id="department_id_error" class="text-danger"></div>
+                            </div>
+
+                            <!-- Designation Dropdown -->
+                            <div class="mb-3 col-md-4">
+                                <label for="designation">Designation</label>
+                                <select class="form-control" id="designation" name="designation">
+                                    <option value="" selected disabled>Select Designation</option>
+                                </select>
+                                <div id="designation_id_error" class="text-danger"></div>
+                            </div>
+
+                            <div class="mb-3 col-md-4">
+                                <label for="employee_name">Employee Name</label>
+                                <select class="form-control" id="employee_name" name="employee_name">
+                                    <option value="" selected disabled>Select Department</option>
+                                    @foreach ($departments as $department)
+                                        <option value="{{ $department->id }}">{{ $department->name }}</option>
+                                    @endforeach
+                                </select>
+                                <div id="department_id_error" class="text-danger"></div>
+                            </div>
+
+                            <div class="mb-3 col-md-4">
+                                <label for="hr_head" class="form-label">HR Head</label><b style="color: red;">*</b>
+                                <select class="form-control" id="hr_head" name="hr_head">
+                                    <option value="" selected disabled>Select HR Head</option>
+                                    <option value="hr1" {{ old('hr_head') == 'hr1' ? 'selected' : '' }}>Hr1</option>
+                                    <option value="hr2" {{ old('hr_head') == 'hr2' ? 'selected' : '' }}>Hr2</option>
+                                    <option value="hr3" {{ old('hr_head') == 'hr3' ? 'selected' : '' }}>Hr3</option>
+                                </select>
+                                @error('hr_head')
+                                    <div class="error text-danger ">{{ $message }}</div>
+                                @enderror
+                            </div>
+
                             <!-- Basic Salary -->
                             <div class="mb-3 col-md-4">
                                 <label for="basic_salary">Basic Salary</label>
@@ -176,4 +224,152 @@
             </div>
         </div>
     </div>
+@endsection
+@section('scripts')
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Get department and designation dropdown elements
+        const departmentDropdown = document.getElementById('department');
+        const designationDropdown = document.getElementById('designation');
+
+        // Department change event handler
+        departmentDropdown.addEventListener('change', function() {
+            const department = this.value;
+
+            // Clear existing options in the designation dropdown
+            designationDropdown.innerHTML = '<option value="" selected disabled>Select Designation</option>';
+
+            // Populate designations based on selected department
+            let designations = [];
+            switch (department) {
+                case 'IT Department':
+                    designations = [{
+                            value: 'Frontend Developer',
+                            text: 'Frontend Developer'
+                        },
+                        {
+                            value: 'Backend Developer',
+                            text: 'Backend Developer'
+                        },
+                        {
+                            value: 'Mobile Application Developer',
+                            text: 'Mobile Application Developer'
+                        },
+                        {
+                            value: 'System Administrator',
+                            text: 'System Administrator'
+                        },
+                        {
+                            value: 'Digital Marketing Intern',
+                            text: 'Digital Marketing Intern'
+                        },
+
+                        {
+                            value: 'SEO Manager',
+                            text: 'SEO Manager'
+                        },
+                         {
+                            value: 'SEO Intern',
+                            text: 'SEO Intern'
+                        },
+                    ];
+                    break;
+                case 'HR Department':
+                    designations = [{
+                            value: 'HR Manager',
+                            text: 'HR Manager'
+                        },
+                        {
+                            value: 'HR Executive',
+                            text: 'HR Executive'
+                        },
+                        {
+                            value: 'HR Intern',
+                            text: 'HR Intern'
+                        },
+                    ];
+                    break;
+                case 'Sales Department':
+                    designations = [{
+                            value: 'Branch Manager',
+                            text: 'Branch Manager'
+                        },
+                        {
+                            value: 'Assistant Branch Manager',
+                            text: 'Assistant Branch Manager'
+                        },
+                        {
+                            value: 'Territory Manager',
+                            text: 'Territory Manager'
+                        },
+                        {
+                            value: 'Regional Sales Manager',
+                            text: 'Regional Sales Manager'
+                        },
+                        {
+                            value: 'Area Sales Manager',
+                            text: 'Area Sales Manager'
+                        },
+                        {
+                            value: 'Relationship Manager',
+                            text: 'Relationship Manager'
+                        },
+                        {
+                            value: 'Sr. Business Consultant',
+                            text: 'Sr. Business Consultant'
+                        },
+                    ];
+                    break;
+                case 'Support Department':
+                    designations = [{
+                            value: 'Customer Support',
+                            text: 'Customer Support'
+                        },
+                        {
+                            value: 'SEO Manager',
+                            text: 'SEO Manager'
+                        },
+                        {
+                            value: 'Sr. Key Account Manager',
+                            text: 'Sr. Key Account Manager'
+                        },
+                    ];
+                    break;
+                case 'Account Department':
+                    designations = [{
+                            value: 'Account Manager',
+                            text: 'Account Manager'
+                        },
+                        {
+                            value: 'Account Executive',
+                            text: 'Account Executive'
+                        },
+                    ];
+                    break;
+                case 'Management Department':
+                    designations = [{
+                            value: 'Director',
+                            text: 'Director'
+                        },
+                        {
+                            value: 'CEO',
+                            text: 'CEO'
+                        },
+                        {
+                            value: 'HR',
+                            text: 'HR'
+                        },
+                    ];
+                    break;
+            }
+            // Add new designation options to the dropdown
+            designations.forEach(designation => {
+                const option = document.createElement('option');
+                option.value = designation.value;
+                option.textContent = designation.text;
+                designationDropdown.appendChild(option);
+            });
+        });
+    });
+</script>
 @endsection

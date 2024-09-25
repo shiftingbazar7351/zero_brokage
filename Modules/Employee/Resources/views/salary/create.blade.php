@@ -13,6 +13,38 @@
                         data-parsley-validate="true">
                         @csrf
                         <div class="row">
+
+                            <div class="mb-3 col-md-4">
+                                <label for="department">Department Name</label>
+                                <select class="form-control" id="department" name="department">
+                                    <option value="" selected disabled>Select Department</option>
+                                    
+                                </select>
+                                <div id="department_id_error" class="text-danger"></div>
+                            </div>
+
+                            <!-- Designation Dropdown -->
+                            <div class="mb-3 col-md-4">
+                                <label for="designation">Designation</label>
+                                <select class="form-control" id="designation" name="designation_id">
+                                    <option value="" selected disabled>Select Designation</option>
+                                </select>
+                                <div id="designation_id_error" class="text-danger"></div>
+                            </div>
+
+                            <div class="mb-3 col-md-4">
+                                <label for="hr_head" class="form-label">HR Head</label><b style="color: red;">*</b>
+                                <select class="form-control" id="hr_head" name="hr_head">
+                                    <option value="" selected disabled>Select HR Head</option>
+                                    <option value="hr1" {{ old('hr_head') == 'hr1' ? 'selected' : '' }}>Hr1</option>
+                                    <option value="hr2" {{ old('hr_head') == 'hr2' ? 'selected' : '' }}>Hr2</option>
+                                    <option value="hr3" {{ old('hr_head') == 'hr3' ? 'selected' : '' }}>Hr3</option>
+                                </select>
+                                @error('hr_head')
+                                    <div class="error text-danger ">{{ $message }}</div>
+                                @enderror
+                            </div>
+
                             <!-- Basic Salary -->
                             <div class="mb-3 col-md-4">
                                 <label for="basic_salary">Basic Salary</label>

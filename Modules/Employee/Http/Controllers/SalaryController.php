@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Modules\Employee\Entities\HeadOffice;
 use Modules\Employee\Entities\Salary;
+use App\Models\User;
 
 class SalaryController extends Controller
 {
@@ -37,6 +38,7 @@ class SalaryController extends Controller
      */
     public function create()
     {
+        $departments = User::where('status', 1)->orderByDesc('created_at')->get();
         return view('employee::salary.create');
     }
 
@@ -49,20 +51,20 @@ class SalaryController extends Controller
     {
         // Validate the input data according to your migration structure
         $validatedData = $request->validate([
-            'basic_salary' => 'nullable|string|max:255',
-            'house_rent_allowance' => 'nullable|string|max:255',
-            'conveyance_allowance' => 'nullable|string|max:255',
-            'other_allowance' => 'nullable|string|max:255',
-            'personal_pay' => 'nullable|string|max:255',
-            'food_allowance' => 'nullable|string|max:255',
-            'medical_allowance' => 'nullable|string|max:255',
-            'telephone_allowance' => 'nullable|string|max:255',
-            'provident_fund' => 'nullable|string|max:255',
-            'voluntary_provident_fund' => 'nullable|string|max:255',
-            'professional_tax' => 'nullable|string|max:255',
-            'personal_loan_principal' => 'nullable|string|max:255',
-            'personal_loan_interest' => 'nullable|string|max:255',
-            'food_relief' => 'nullable|string|max:255',
+            'basic_salary' => 'required|string|max:255',
+            'house_rent_allowance' => 'required|string|max:255',
+            'conveyance_allowance' => 'required|string|max:255',
+            'other_allowance' => 'required|string|max:255',
+            'personal_pay' => 'required|string|max:255',
+            'food_allowance' => 'required|string|max:255',
+            'medical_allowance' => 'required|string|max:255',
+            'telephone_allowance' => 'required|string|max:255',
+            'provident_fund' => 'required|string|max:255',
+            'voluntary_provident_fund' => 'required|string|max:255',
+            'professional_tax' => 'required|string|max:255',
+            'personal_loan_principal' => 'required|string|max:255',
+            'personal_loan_interest' => 'required|string|max:255',
+            'food_relief' => 'required|string|max:255',
         ]);
 
         // Create the salary record

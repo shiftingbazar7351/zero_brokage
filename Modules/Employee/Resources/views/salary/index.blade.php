@@ -4,7 +4,7 @@
     <div class="page-wrapper page-settings">
         <div class="content">
             <div class="content-page-header content-page-headersplit mb-0">
-                <h5>Head Office</h5>
+                <h5>Salaries</h5>
                 <div class="list-btn d-flex gap-3">
                     <div class="page-headers">
                         <div class="search-bar">
@@ -16,7 +16,7 @@
                     <ul>
                         <button class="btn btn-primary" type="button"
                                     onclick="window.location='{{ route('employee-salary.create') }}'">
-                                    <i class="fa fa-plus me-2"></i>Add Employee
+                                    <i class="fa fa-plus me-2"></i>Add Salaries
                         </button>
                     </ul>
                     @endcan

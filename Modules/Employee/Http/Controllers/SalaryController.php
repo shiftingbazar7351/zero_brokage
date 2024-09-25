@@ -38,8 +38,12 @@ class SalaryController extends Controller
      */
     public function create()
     {
-        $departments = User::where('status', 1)->orderByDesc('created_at')->get();
-        return view('employee::salary.create');
+        $departments = User::where('department', 'IT Department')
+        ->where('designation', 'Backend Developer')
+        ->orderByDesc('created_at')
+        ->get();
+
+        return view('employee::salary.create', compact('departments'));
     }
 
     /**

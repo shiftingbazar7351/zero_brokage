@@ -224,7 +224,6 @@ class SubMenuController extends Controller
             'status' => 1,
             'data' => $data,
         ]);
-
     }
 
 

@@ -16,7 +16,7 @@
             <tr>
                 <td>{{ $employee->id ??'' }}</td>
                 <td>{{ $employee->name??''}}</td>
-                <td>{{ $employee->company??''}}</td>
+                <td>{{ $employee->companyName->legel_name??''}}</td>
                 <td>{{ $employee->email ??''}}</td>
                 <td>{{ $employee->department ??''}}</td>
                 @canany(['employee-edit', 'employee-delete', 'employee-show'])

@@ -108,7 +108,7 @@
                 <div>
                     <p>Disclaimer -  ZeroBrokage has been developed by Flybizz Services India Private Limited, You are kindly advised
                         to check the genuineness of all companies listed above on your own behalf prior to signing a
-                        contract with them. We are in no way responsible for any loss. <a href=""
+                        contract with them. We are in no way responsible for any loss. <a href="{{ route('disclaimer') }}"
                             style="color: blue">Read More</a></p>
                 </div>
             </div>

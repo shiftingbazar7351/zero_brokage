@@ -103,7 +103,9 @@ Route::controller(SalaryController::class)->group(function () {
     Route::get('/employee-salary/{salary}', 'show')->name('employee-salary.show')->middleware('can:employee-salary-show'); // Show a single category (corrected to GET)
     Route::delete('/employee-salary/{salary}', 'destroy')->name('employee-salary.destroy')->middleware('can:employee-salary-delete'); // Delete a category
     Route::post('/employee-salary-status', 'SalaryStatus')->name('employee-salary.status')->middleware('can:employee-salary-status'); // Change category status
+
 });
+Route::get('/employees', [SalaryController::class, 'getEmployees']);
 
 Route::controller(SalaryController::class)->group(function () {
     Route::get('/employee-bank', 'index')->name('employee-bank.index')->middleware('can:employee-bank-list'); // List all employee-headoffice

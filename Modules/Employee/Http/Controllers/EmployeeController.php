@@ -103,6 +103,8 @@ class EmployeeController extends Controller
             'permanent_address' => 'nullable|string|max:191',
         ]);
 
+
+
         try {
             // Format the designation for the role name and title
             $designation = $validatedData['designation'];
@@ -433,4 +435,5 @@ class EmployeeController extends Controller
             return redirect()->back()->with('error', 'Something went wrong');
         }
     }
+    
 }

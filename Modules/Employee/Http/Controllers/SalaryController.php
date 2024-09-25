@@ -6,6 +6,7 @@ use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Modules\Employee\Entities\HeadOffice;
+use Modules\Employee\Entities\Department;
 use Modules\Employee\Entities\Salary;
 use App\Models\User;
 
@@ -38,12 +39,11 @@ class SalaryController extends Controller
      */
     public function create()
     {
-        $departments = User::where('department', 'IT Department')
-        ->where('designation', 'Backend Developer')
+         $departments = Department::where('status',1)
         ->orderByDesc('created_at')
         ->get();
 
-        return view('employee::salary.create', compact('departments'));
+        return view('employee::salary.create',compact('departments'));
     }
 
     /**
@@ -154,4 +154,20 @@ class SalaryController extends Controller
 
         return back()->with(['message' => 'Salary deleted successfully.', 'alert-type' => 'success']);
     }
+
+    public function getEmployees(Request $request)
+    {
+    $department = $request->get('department');
+    $designation = $request->get('designation');
+
+    return $employees = User::where('department', $department)
+                    ->where('designation', $designation)
+                    ->where('status', 1) // assuming status 1 means active
+                    ->orderBy('name')
+                    ->get(['id', 'name']); // fetching only id and name for dropdown
+
+    return response()->json($employees);
+
+    }
+
 }

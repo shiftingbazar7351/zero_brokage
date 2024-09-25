@@ -124,7 +124,7 @@
                             <!-- Department Dropdown -->
                             <div class="mb-3 col-md-3">
                                 <label for="department">Department Name</label>
-                                <select class="form-control" id="department" name="department_id">
+                                <select class="form-control" id="department" name="department">
                                     <option value="" selected disabled>Select Department</option>
                                     <option value="IT Department">IT Department</option>
                                     <option value="HR Department">HR Department</option>

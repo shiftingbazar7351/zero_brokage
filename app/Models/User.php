@@ -86,11 +86,6 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-    // public function roles()
-    // {
-    //     return $this->belongsTo(Role::class, '');
-    // }
-
     public function companyName()
     {
         return $this->belongsTo(Companie::class,'company','id');

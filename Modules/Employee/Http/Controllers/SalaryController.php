@@ -71,7 +71,6 @@ class SalaryController extends Controller
             'food_relief' => 'required|string|max:255',
         ]);
 
-        // Create the salary record
         $salary = new Salary($request->all());
 
         $salary->created_by = auth()->user()->id;

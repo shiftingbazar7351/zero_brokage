@@ -8,6 +8,7 @@ use Modules\Employee\Http\Controllers\BranchController;
 use Modules\Employee\Http\Controllers\DepartmentController;
 use Modules\Employee\Http\Controllers\EmployeeController;
 use Modules\Employee\Http\Controllers\SalaryController;
+use Modules\Employee\Http\Controllers\BankController;
 
 
 /*
@@ -107,7 +108,7 @@ Route::controller(SalaryController::class)->group(function () {
 });
 Route::get('/employees', [SalaryController::class, 'getEmployees']);
 
-Route::controller(SalaryController::class)->group(function () {
+Route::controller(BankController::class)->group(function () {
     Route::get('/employee-bank', 'index')->name('employee-bank.index')->middleware('can:employee-bank-list'); // List all employee-headoffice
     Route::get('/employee-bank/create', 'create')->name('employee-bank.create')->middleware('can:employee-bank-create'); // Show form to create a category
     Route::post('/employee-bank', 'store')->name('employee-bank.store')->middleware('can:employee-bank-create'); // Store a new category

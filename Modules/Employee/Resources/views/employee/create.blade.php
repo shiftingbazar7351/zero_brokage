@@ -18,7 +18,7 @@
                             <!-- First Name -->
                             <div class="mb-3 col-md-3">
                                 <label for="name" class="form-label">First Name</label><b style="color: red;">*</b>
-                                <input type="text" class="form-control" id="name" name="name"
+                                <input type="text" class="form-control" id="name" name="fname"
                                     value="{{ old('name') }}" placeholder="Enter first name">
                                 @error('name')
                                     <div class="error text-danger ">{{ $message }}</div>

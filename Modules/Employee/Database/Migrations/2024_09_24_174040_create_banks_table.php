@@ -15,8 +15,9 @@ class CreateBanksTable extends Migration
     {
         Schema::create('banks', function (Blueprint $table) {
             $table->id();
-            $table->string('emp_id')->nullable(); 
+            $table->string('emp_id')->nullable();
             $table->string('account_number')->nullable();
+            $table->string('bank_name')->nullable();
             $table->string('branch')->nullable();
             $table->string('permanent_acc_number')->nullable();
             $table->string('employee_type')->nullable();

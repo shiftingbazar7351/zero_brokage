@@ -5,6 +5,8 @@ namespace Modules\Employee\Http\Controllers;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
+use Modules\Employee\Entities\Bank;
+use App\Models\User;
 
 class BankController extends Controller
 {
@@ -12,9 +14,21 @@ class BankController extends Controller
      * Display a listing of the resource.
      * @return Renderable
      */
-    public function index()
+    public function index(Request $request)
     {
-        return view('employee::index');
+        $query = Bank::query();
+        // Filter based on search query
+        if ($request->has('search')) {
+            $query->where('name', 'like', '%' . $request->search . '%')
+            ->orderByDesc('created_at');
+        }
+        // Paginate the users (adjust pagination number as needed)
+        $banks = $query->paginate(10);
+        // Check if it's an AJAX request
+        if ($request->ajax()) {
+            return view('employee::bank.partials.bank-index', compact('banks'))->render();
+        }
+        return view('employee::bank.index',compact('banks'));
     }
 
     /**
@@ -23,7 +37,7 @@ class BankController extends Controller
      */
     public function create()
     {
-        return view('employee::create');
+        return view('employee::bank.create');
     }
 
     /**
@@ -33,8 +47,34 @@ class BankController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        // Validate the form inputs
+        $validatedData = $request->validate([
+            'emp_id' => 'required|string|max:255',
+            'account_number' => 'required|string|max:255',
+            'branch' => 'required|string|max:255',
+            'bank_name'=> 'required',
+            'permanent_acc_number' => 'required|string|max:255',
+            // 'employee_type' => 'required|string|max:255',
+            'band' => 'required|string|max:255',
+            'uan' => 'required|string|max:255',
+        ]);
+
+        // Create a new Bank instance with the validated data
+        $bank = new Bank($validatedData);
+
+        // Set the created_by field to the authenticated user's ID
+        $bank->created_by = auth()->user()->id;
+
+        // Save the bank data to the database
+        $bank->save();
+
+        // Redirect back to the index page with a success message
+        return redirect()->route('employee-bank.index')->with([
+            'message' => 'Bank added successfully',
+            'alert-type' => 'success'
+        ]);
     }
+
 
     /**
      * Show the specified resource.
@@ -43,7 +83,7 @@ class BankController extends Controller
      */
     public function show($id)
     {
-        return view('employee::show');
+        return view('employee::bank.show');
     }
 
     /**
@@ -53,8 +93,12 @@ class BankController extends Controller
      */
     public function edit($id)
     {
-        return view('employee::edit');
+         $bank = Bank::with('usern')->findOrFail($id);
+
+        return view('employee::bank.edit', compact('bank', ));
     }
+
+
 
     /**
      * Update the specified resource in storage.
@@ -64,16 +108,44 @@ class BankController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        // Validate the form inputs
+        $validatedData = $request->validate([
+            'emp_id' => 'required|string|max:255',
+            'account_number' => 'required|string|max:255',
+            'branch' => 'required|string|max:255',
+            'bank_name'=> 'required',
+            'permanent_acc_number' => 'required|string|max:255',
+            // 'employee_type' => 'required|string|max:255',
+            'band' => 'required|string|max:255',
+            'uan' => 'required|string|max:255',
+        ]);
+
+        // Find the bank record by its ID
+        $bank = Bank::findOrFail($id);
+
+        // Update the bank record with the validated data
+        $bank->update($validatedData);
+
+        // Redirect back with a success message
+        return redirect()->route('employee-bank.index')->with([
+            'message' => 'Bank updated successfully',
+            'alert-type' => 'success'
+        ]);
     }
 
-    /**
-     * Remove the specified resource from storage.
-     * @param int $id
-     * @return Renderable
-     */
     public function destroy($id)
     {
-        //
+        // Find the bank record by its ID
+        $bank = Bank::findOrFail($id);
+
+        // Delete the bank record
+        $bank->delete();
+
+        // Redirect back with a success message
+        return redirect()->route('employee-bank.index')->with([
+            'message' => 'Bank deleted successfully',
+            'alert-type' => 'success'
+        ]);
     }
+
 }

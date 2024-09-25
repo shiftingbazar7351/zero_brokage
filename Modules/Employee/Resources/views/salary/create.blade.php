@@ -40,7 +40,7 @@
                             <!-- Employee Name Dropdown -->
                             <div class="mb-3 col-md-4">
                                 <label for="employee_name">Employee Name</label>
-                                <select class="form-control" id="employee_name" name="employee_name">
+                                <select class="form-control" id="employee_name" name="employee_id">
                                     <option value="" selected disabled>Select Employee</option>
                                 </select>
                                 <div id="employee_name_error" class="text-danger"></div>

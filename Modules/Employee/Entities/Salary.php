@@ -13,6 +13,7 @@ class Salary extends Model
     // Define the fillable fields for mass assignment
     protected $fillable = [
         'basic_salary',
+        'employee_id',
         'house_rent_allowance',
         'conveyance_allowance',
         'other_allowance',

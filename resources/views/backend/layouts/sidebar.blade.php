@@ -156,7 +156,8 @@
                         <li>
                             <a href="{{ route('employee.index') }}"
                                 class="{{ Route::currentRouteName() === 'employee.index' ? 'active' : '' }}
-                                {{ Route::currentRouteName() === 'employee.create' ? 'active' : '' }}">
+                                {{ Route::currentRouteName() === 'employee.create' ? 'active' : '' }}
+                                 {{ Route::currentRouteName() === 'employee.edit' ? 'active' : '' }}">
                                 <i class="fe fe-file-text"></i>
                                 <span>Employee</span>
                             </a>
@@ -176,7 +177,7 @@
                         @can(['employee-bank-list'])
                         <li>
                             <a href="{{ route('employee-bank.index') }}"
-                                class="{{ Route::currentRouteName() === 'employee-bank.index' ? 'active' : '' }} {{ Route::currentRouteName() === 'employee-bank.edit' ? 'active' : '' }}">
+                                class="{{ Route::currentRouteName() === 'employee-bank.index' ? 'active' : '' }} {{ Route::currentRouteName() === 'employee-bank.create' ? 'active' : '' }} {{ Route::currentRouteName() === 'employee-bank.edit' ? 'active' : '' }}">
                                 <i class="fa fa-building" aria-hidden="true"></i>
                                 <span>Bank</span>
                             </a>

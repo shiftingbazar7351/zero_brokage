@@ -81,7 +81,7 @@ class EmployeeController extends Controller
             'gender' => 'nullable|in:male,female,other',
             'dob' => 'nullable|date',
             'email' => 'nullable|email|unique:employees,email',
-            'user_type' => 'nullable|string|max:191',
+            // 'user_type' => 'nullable|string|max:191',
             'number' => 'nullable|string|max:191',
             'joining_date' => 'nullable|date',
             'company' => 'nullable|string|max:191',
@@ -336,58 +336,26 @@ class EmployeeController extends Controller
 
         $employee->created_by = auth()->user()->id;
 
-        if ($request->hasFile('experience_letter')) {
-            if ($employee->experience_letter) {
-                $this->fileUploadService->removeImage('employee/experience_letter/', $employee->experience_letter);
+        $fileFields = [
+            'high_school_certificate' => 'employee/high_school_certificate/',
+            'intermediate_certificate' => 'employee/intermediate_certificate/',
+            'graduation_certificate' => 'employee/graduation_certificate/',
+            'experience_letter' => 'employee/experience_letter/',
+            'relieving_letter' => 'employee/relieving_letter/',
+            'offer_letter' => 'employee/offer_letter/',
+            'salary_slip' => 'employee/salary_slip/',
+            'bank_statement' => 'employee/bank_statement/',
+            'character_certificate' => 'employee/character_certificate/',
+            'medical_certificate' => 'employee/medical_certificate/',
+        ];
+
+        foreach ($fileFields as $field => $path) {
+            if ($request->hasFile($field)) {
+                $filename = $this->fileUploadService->uploadImage($path, $request->file($field));
+                $employee->$field = $filename;
             }
-            $filename = $this->fileUploadService->uploadImage('employee/experience_letter/', $request->file('experience_letter'));
-            $employee->experience_letter = $filename;
-        }
-        if ($request->hasFile('relieving_letter')) {
-            if ($employee->relieving_letter) {
-                $this->fileUploadService->removeImage('employee/relieving_letter/', $employee->relieving_letter);
-            }
-            $filename = $this->fileUploadService->uploadImage('employee/relieving_letter/', $request->file('relieving_letter'));
-            $employee->relieving_letter = $filename;
-        }
-        if ($request->hasFile('offer_letter')) {
-            if ($employee->offer_letter) {
-                $this->fileUploadService->removeImage('employee/offer_letter/', $employee->offer_letter);
-            }
-            $filename = $this->fileUploadService->uploadImage('employee/offer_letter/', $request->file('offer_letter'));
-            $employee->offer_letter = $filename;
-        }
-        if ($request->hasFile('salary_slip')) {
-            if ($employee->salary_slip) {
-                $this->fileUploadService->removeImage('employee/salary_slip/', $employee->salary_slip);
-            }
-            $filename = $this->fileUploadService->uploadImage('employee/salary_slip/', $request->file('salary_slip'));
-            $employee->salary_slip = $filename;
-        }
-        if ($request->hasFile('bank_statement')) {
-            if ($employee->bank_statement) {
-                $this->fileUploadService->removeImage('employee/bank_statement/', $employee->bank_statement);
-            }
-            $filename = $this->fileUploadService->uploadImage('employee/bank_statement/', $request->file('bank_statement'));
-            $employee->bank_statement = $filename;
-        }
-        if ($request->hasFile('character_certificate')) {
-            if ($employee->character_certificate) {
-                $this->fileUploadService->removeImage('employee/character_certificate/', $employee->character_certificate);
-            }
-            $filename = $this->fileUploadService->uploadImage('employee/character_certificate/', $request->file('character_certificate'));
-            $employee->character_certificate = $filename;
-        }
-        if ($request->hasFile('medical_certificate')) {
-            if ($employee->medical_certificate) {
-                $this->fileUploadService->removeImage('employee/medical_certificate/', $employee->medical_certificate);
-            }
-            $filename = $this->fileUploadService->uploadImage('employee/medical_certificate/', $request->file('medical_certificate'));
-            $employee->medical_certificate = $filename;
         }
 
-        // Save updated employee data
-        // return $employee;
         $employee->save();
 
         // Redirect with success message
@@ -435,5 +403,5 @@ class EmployeeController extends Controller
             return redirect()->back()->with('error', 'Something went wrong');
         }
     }
-    
+
 }

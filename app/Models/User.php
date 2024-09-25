@@ -4,13 +4,14 @@ namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Spatie\Permission\Traits\HasRoles;
+use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
+use Modules\Employee\Entities\Companie;
 use Spatie\Permission\Models\Role;
+use Spatie\Permission\Traits\HasRoles;
 
 class User extends Authenticatable
 {
@@ -85,8 +86,8 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-    // public function roles()
-    // {
-    //     return $this->belongsTo(Role::class, '');
-    // }
+    public function companyName()
+    {
+        return $this->belongsTo(Companie::class,'company','id');
+    }
 }

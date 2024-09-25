@@ -20,7 +20,7 @@ class FaqController extends Controller
             $query->where('name', 'like', '%' . $request->search . '%');
         }
         // Paginate the users (adjust pagination number as needed)
-        $faqs = $query->paginate(10);
+        $faqs = $query->orderByDesc('created_at')->paginate(10);
         // Check if it's an AJAX request
         if ($request->ajax()) {
             return view('backend.faq.partials.faq-index', compact('faqs'))->render();
@@ -37,16 +37,22 @@ class FaqController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'question' => 'required',
-            'answer' => 'required',
+            'question' => 'required|string|max:255',
+            'answer' => 'required|string',
         ]);
 
-        $faq = new Faq($request->all());
-        $faq->created_by = auth()->id();
-        $faq->save();
-        return redirect()->back()->with(['message' => 'FAQ Added Successfully.','alert-type'=>'success']);
-    }
+        // Save FAQ data
+        Faq::create([
+            'question' => $request->question,
+            'answer' => $request->answer,
+            'created_by' => auth()->id(),
+        ]);
 
+        Session()->flash('message', 'Added Successfully');
+        Session()->flash('alert-type', 'success');
+        // Return a JSON response for successful addition
+        return response()->json(['message' => 'FAQ added successfully!'], 200);
+    }
 
     /**
      * Show the form for editing the specified resource.
@@ -82,18 +88,18 @@ class FaqController extends Controller
         $faq->update($request->only(['question', 'answer']));
 
         // Redirect back with a success message
-        return redirect()->back()->with(['message' => 'Updated Successfully','alert-type'=>'success']);
+        return redirect()->back()->with(['message' => 'Updated Successfully', 'alert-type' => 'success']);
     }
 
 
-     /**
+    /**
      * Remove the specified resource from storage.
      */
     public function destroy($id)
     {
         $faq = Faq::findOrFail($id);
         $faq->delete();
-        return redirect()->back()->with(['message' => 'Faq Deleted successfully.','alert-type'=>'success']);
+        return redirect()->back()->with(['message' => 'Faq Deleted successfully.', 'alert-type' => 'success']);
 
     }
 

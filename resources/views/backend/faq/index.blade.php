@@ -10,7 +10,7 @@
                     <div class="page-headers">
                         <div class="search-bar">
                             <span><i class="fe fe-search"></i></span>
-                            <input type="text" placeholder="Search" class="form-control">
+                            <input type="text" id="search" placeholder="Search" class="form-control">
                         </div>
                     </div>
                     @can('faq-create')
@@ -28,71 +28,9 @@
             <div class="row">
                 <div class="col-12">
                     <div class="table-resposnive table-div">
-                        {{-- <table class="table  table-striped">
-                            <thead>
-                                <tr>
-                                    <th>#</th>
-                                    <th>Question</th>
-                                    <th>Answer</th>
-                                    <th>Date</th>
-                                    <th>Created by</th>
-                                    @can('faq-status')
-                                        <th>Status</th>
-                                    @endcan
-                                    @can(['faq-edit', 'faq-delete'])
-                                        <th>Action</th>
-                                    @endcan
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @forelse ($faqs as $faq)
-                                    <tr>
-                                        <td>{{ $loop->iteration }}</td>
-                                        <td>{{ $faq->question ?? '' }}</td>
-                                        <td>{{ $faq->answer ?? '' }}</td>
-                                        <td>{{ $faq->created_at ? $faq->created_at->format('d M Y') : '' }}</td>
-                                        <td>{{ $faq->createdBy->name ?? '' }}</td>
-                                        @can('faq-status')
-                                        <td>
-                                            <div class="active-switch">
-                                                <label class="switch">
-                                                    <input type="checkbox" class="status-toggle"
-                                                        data-id="{{ $faq->id }}" {{ $faq->status ? 'checked' : '' }}>
-                                                    <span class="sliders round"></span>
-                                                </label>
-                                            </div>
-                                        </td>
-                                        @endcan
-                                        @can(['faq-edit', 'faq-delete'])
-                                        <td>
-                                            <div class="table-actions d-flex justify-content-center">
-                                                <button class="btn delete-table me-2"
-                                                    onclick="editCategory({{ $faq->id }})" type="button"
-                                                    data-bs-toggle="modal" data-bs-target="#edit-faq">
-                                                    <i class="fe fe-edit"></i>
-                                                </button>
-                                                <form action="{{ route('faq.destroy', $faq->id) }}" method="POST"
-                                                    style="display:inline;">
-                                                    @csrf
-                                                    @method('DELETE')
-                                                    <button class="btn delete-table" type="subm it"
-                                                        onclick="return confirm('Are you sure want to delete this?')">
-                                                        <i class="fe fe-trash-2"></i>
-                                                    </button>
-                                                </form>
-                                            </div>
-                                        </td>
-                                        @endcan
-                                    </tr>
-                                @empty
-                                    <tr>
-                                        <td colspan="7" class="text-center">No data found</td>
-                                    </tr>
-                                @endforelse
-                            </tbody>
-                        </table> --}}
+
                         <div id="usersTable">
-                            @include('backend.faq.partials.faq-index') {{-- Load the users list initially --}}
+                            @include('backend.faq.partials.faq-index')
                         </div>
                     </div>
                 </div>
@@ -110,17 +48,17 @@
                     </button>
                 </div>
                 <div class="modal-body pt-0">
-                    <form id="addFaqForm" method="POST" data-parsley-validate="true">
+                    <form action="{{ route('faq.store') }}" id="addFaqForm" method="POST">
                         @csrf
                         <div class="mb-3">
                             <label class="form-label">Question</label>
-                            <textarea type="text" class="form-control" name="question" placeholder="Enter question" required>{{ old('question') }}</textarea>
+                            <textarea type="text" class="form-control" name="question" placeholder="Enter question">{{ old('question') }}</textarea>
                             <div id="question_error" class="text-danger"></div>
                         </div>
 
                         <div class="mb-3">
                             <label class="form-label">Answer</label>
-                            <textarea type="text" class="form-control" name="answer" placeholder="Enter answer" required>{{ old('answer') }}</textarea>
+                            <textarea type="text" class="form-control" name="answer" placeholder="Enter answer">{{ old('answer') }}</textarea>
                             <div id="answer_error" class="text-danger"></div>
                         </div>
 
@@ -148,19 +86,19 @@
                 </div>
                 <div class="modal-body pt-0">
                     <form id="editFaqForm" method="POST" action="{{ route('faq.update', 'faq_id') }}"
-                        enctype="multipart/form-data" data-parsley-validate="true">
+                        enctype="multipart/form-data">
                         @csrf
                         @method('PUT')
                         <input type="hidden" id="editFaqId" name="faq_id">
                         <div class="mb-3">
                             <label class="form-label">Question</label>
-                            <textarea type="text" class="form-control" id="editQuestion" name="question" placeholder="Enter question" required></textarea>
+                            <textarea type="text" class="form-control" id="editQuestion" name="question" placeholder="Enter question"></textarea>
                             <div id="editQuestion_error" class="text-danger"></div>
                         </div>
 
                         <div class="mb-3">
                             <label class="form-label">Answer</label>
-                            <textarea type="text" class="form-control" id="editAnswer" name="answer" placeholder="Enter answer" required></textarea>
+                            <textarea type="text" class="form-control" id="editAnswer" name="answer" placeholder="Enter answer"></textarea>
                             <div id="editAnswer_error" class="text-danger"></div>
                         </div>
 
@@ -175,7 +113,7 @@
     </div>
 @endsection
 
-@section('scripts')
+{{-- @section('scripts')
     <script>
         var statusRoute = `{{ route('faq.status') }}`;
         var searchRoute = `{{ route('categories.index') }}`;
@@ -207,38 +145,123 @@
 
         // for validation in addition
 
-        $(document).ready(function() {
-            $('#add-faqs').on('shown.bs.modal', function() {
-                $('#addFaqForm').off('submit').on('submit', function(event) {
-                    console.log("Form submitted"); // Debugging message
-                    event.preventDefault(); // Prevent the default form submission
 
-                    $.ajax({
-                        url: $(this).attr('action'), // Form action URL
-                        method: 'POST',
-                        data: $(this).serialize(), // Serialize form data
-                        success: function(response) {
-                            $('#add-faqs').modal('hide'); // Hide the modal
-                            window.location.reload(); // Reload the page
-                        },
-                        error: function(xhr) {
-                            console.log(xhr
-                                .responseJSON); // Debugging message for error response
-                            var errors = xhr.responseJSON.errors;
-                            if (errors) {
-                                $('#question_error').text('');
-                                $('#answer_error').text('');
-                                if (errors.question) {
-                                    $('#question_error').text(errors.question[0]);
-                                }
-                                if (errors.answer) {
-                                    $('#answer_error').text(errors.answer[0]);
-                                }
+    </script>
+@endsection --}}
+@section('scripts')
+    <script>
+        var statusRoute = `{{ route('faq.status') }}`;
+        var searchRoute = `{{ route('faq.index') }}`;
+    </script>
+    <script src="{{ asset('admin/assets/js/search.js') }}"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="{{ asset('admin/assets/js/status-update.js') }}"></script>
+    <script>
+        $(document).ready(function() {
+            // Handle the Add FAQ Form Submission
+            $('#addFaqForm').off('submit').on('submit', function(event) {
+                event.preventDefault(); // Prevent the default form submission
+
+                // Debugging message to confirm form submission
+                console.log("Submitting Add FAQ Form...");
+
+                $.ajax({
+                    url: $(this).attr('action'), // Form action URL from the form's action attribute
+                    type: 'POST', // The request method
+                    data: $(this).serialize(), // Serialize form data
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr(
+                            'content') // Include CSRF token
+                    },
+                    success: function(response) {
+                        console.log("FAQ added successfully:", response); // Debugging message
+                        $('#add-faqs').modal('hide'); // Hide the modal after success
+                        window.location.reload(); // Reload the page to update the FAQ list
+                    },
+                    error: function(xhr) {
+                        console.log("Error occurred:", xhr.responseJSON); // Debugging message
+
+                        // Clear previous error messages
+                        $('#question_error').text('');
+                        $('#answer_error').text('');
+
+                        // Display validation errors if they exist
+                        if (xhr.responseJSON && xhr.responseJSON.errors) {
+                            const errors = xhr.responseJSON.errors;
+                            if (errors.question) {
+                                $('#question_error').text(errors.question[0]);
+                            }
+                            if (errors.answer) {
+                                $('#answer_error').text(errors.answer[0]);
                             }
                         }
-                    });
+                    }
                 });
             });
+
+            // Handle the Edit FAQ Form Submission
+            $('#editFaqForm').on('submit', function(event) {
+                event.preventDefault(); // Prevent the default form submission
+
+                // Debugging message to confirm form submission
+                console.log("Submitting Edit FAQ Form...");
+
+                $.ajax({
+                    url: $(this).attr(
+                        'action'), // Form action URL (set dynamically when edit modal is shown)
+                    type: 'POST', // Use 'POST' since we're simulating a PUT request with _method
+                    data: $(this).serialize(), // Serialize the form data
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr(
+                            'content') // Include CSRF token
+                    },
+                    success: function(response) {
+                        console.log("FAQ edited successfully:", response); // Debugging message
+                        $('#edit-faq').modal('hide'); // Hide the modal after success
+                        window.location.reload(); // Reload the page to update the FAQ list
+                    },
+                    error: function(xhr) {
+                        console.log("Error occurred:", xhr.responseJSON); // Debugging message
+
+                        // Clear previous error messages
+                        $('#editQuestion_error').text('');
+                        $('#editAnswer_error').text('');
+
+                        // Display validation errors if they exist
+                        if (xhr.responseJSON && xhr.responseJSON.errors) {
+                            const errors = xhr.responseJSON.errors;
+                            if (errors.question) {
+                                $('#editQuestion_error').text(errors.question[0]);
+                            }
+                            if (errors.answer) {
+                                $('#editAnswer_error').text(errors.answer[0]);
+                            }
+                        }
+                    }
+                });
+            });
+
+            // Edit button handler (edit modal)
+            function editCategory(id) {
+                $.ajax({
+                    url: `/faq/${id}/edit`,
+                    method: 'GET',
+                    success: function(data) {
+                        $('#editFaqId').val(data.id);
+                        $('#editQuestion').val(data.question);
+                        $('#editAnswer').val(data.answer);
+
+                        // Update form action URL dynamically with the FAQ ID
+                        $('#editFaqForm').attr('action', `/faq/${data.id}`);
+
+                        // Show the modal for editing
+                        $('#edit-faq').modal('show');
+                    },
+                    error: function() {
+                        alert('Error fetching FAQ data.');
+                    }
+                });
+            }
         });
     </script>
 @endsection

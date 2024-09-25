@@ -124,7 +124,7 @@
                             <!-- Department Dropdown -->
                             <div class="mb-3 col-md-3">
                                 <label for="department">Department Name</label>
-                                <select class="form-control" id="department" name="department_id">
+                                <select class="form-control" id="department" name="department">
                                     <option value="" selected disabled>Select Department</option>
                                     <option value="IT Department">IT Department</option>
                                     <option value="HR Department">HR Department</option>
@@ -139,7 +139,7 @@
                             <!-- Designation Dropdown -->
                             <div class="mb-3 col-md-3">
                                 <label for="designation">Designation</label>
-                                <select class="form-control" id="designation" name="designation_id">
+                                <select class="form-control" id="designation" name="designation">
                                     <option value="" selected disabled>Select Designation</option>
                                 </select>
                                 <div id="designation_id_error" class="text-danger"></div>
@@ -384,9 +384,6 @@
         });
     </script>
 
-
-
-
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             // Get department and designation dropdown elements
@@ -421,8 +418,17 @@
                                 text: 'System Administrator'
                             },
                             {
-                                value: 'Digital Marketing',
-                                text: 'Digital Marketing'
+                                value: 'Digital Marketing Intern',
+                                text: 'Digital Marketing Intern'
+                            },
+
+                            {
+                                value: 'SEO Manager',
+                                text: 'SEO Manager'
+                            },
+                             {
+                                value: 'SEO Intern',
+                                text: 'SEO Intern'
                             },
                         ];
                         break;

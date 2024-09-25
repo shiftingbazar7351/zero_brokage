@@ -52,4 +52,9 @@ class Employees extends Model
         'created_by'
     ];
 
+    public function companyName()
+    {
+        return $this->belongsTo(Companie::class,'company','id');
+    }
+
 }

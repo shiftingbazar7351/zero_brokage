@@ -6,7 +6,8 @@
 
                     <div class="footer-widget">
                         <div class="footer-logo">
-                            <a href="{{ route('home') }}"><img src="{{ asset('assets/img/logofinal.webp') }}" alt="logo"></a>
+                            <a href="{{ route('home') }}"><img src="{{ asset('assets/img/logofinal.webp') }}"
+                                    alt="logo"></a>
                         </div>
                         <div class="footer-content">
                             <p>Your satisfaction is our priority. Reach out to us anytime. </p>
@@ -45,7 +46,8 @@
                         <h2 class="footer-title">Contact Us</h2>
                         <div class="footer-contact-info">
                             <div class="footer-address">
-                                <p><span><i class="feather-map-pin"></i></span> VILL HOSHIYARPUR HOSHIYARPUR C/O-SUSHIL YADAV NOIDA Gautam Buddha Nagar UP 201307 IN</p>
+                                <p><span><i class="feather-map-pin"></i></span> VILL HOSHIYARPUR HOSHIYARPUR C/O-SUSHIL
+                                    YADAV NOIDA Gautam Buddha Nagar UP 201307 IN</p>
                             </div>
                             <p><span><i class="feather-phone"></i></span> 09429690472</p>
                             <p class="mb-0"><span><i class="feather-mail"></i></span>
@@ -62,24 +64,30 @@
                         <div class="social-icon">
                             <ul>
                                 <li>
-                                    <a href="https://www.facebook.com/zerobrokrage/"><i class="fa-brands fa-facebook"></i> </a>
+                                    <a href="https://www.facebook.com/zerobrokrage/"><i
+                                            class="fa-brands fa-facebook"></i> </a>
                                 </li>
                                 <li>
-                                    <a href="https://x.com/zerobrokage"><img src="{{ asset('assets/img/icons/twitter.svg') }}" alt="" style="width: 20px"></i></a>
+                                    <a href="https://x.com/zerobrokage"><img
+                                            src="{{ asset('assets/img/icons/twitter.svg') }}" alt=""
+                                            style="width: 20px"></i></a>
                                 </li>
                                 <li>
-                                    <a href="https://www.instagram.com/brokagezero"><i class="fa-brands fa-instagram"></i></a>
+                                    <a href="https://www.instagram.com/brokagezero"><i
+                                            class="fa-brands fa-instagram"></i></a>
                                 </li>
                                 <li>
-                                    <a href="https://www.linkedin.com/in/zero-brokage-94334b327/"><i class="fa-brands fa-linkedin"></i></a>
+                                    <a href="https://www.linkedin.com/in/zero-brokage-94334b327/"><i
+                                            class="fa-brands fa-linkedin"></i></a>
                                 </li>
                             </ul>
                         </div>
                         <h2 class="footer-subtitle">Newsletter Signup</h2>
                         <div class="subscribe-form">
                             <form action="{{ route('newsletter.store') }}" method="POST">
-                            @csrf
-                                <input type="email" class="form-control" name="email" placeholder="Enter Email Address">
+                                @csrf
+                                <input type="email" class="form-control" name="email"
+                                    placeholder="Enter Email Address">
                                 <button type="submit" class="btn footer-btn">
                                     <i class="feather-send"></i>
                                 </button>
@@ -95,37 +103,24 @@
 
     <div class="footer-bottom">
         <div class="container">
-
+            <hr>
+            <div class="disclaimer">
+                <div>
+                    <p>Disclaimer -  ZeroBrokage has been developed by Flybizz Services India Private Limited, You are kindly advised
+                        to check the genuineness of all companies listed above on your own behalf prior to signing a
+                        contract with them. We are in no way responsible for any loss. <a href="{{ route('disclaimer') }}"
+                            style="color: blue">Read More</a></p>
+                </div>
+            </div>
             <div class="copyright">
                 <div class="row align-items-center">
-                    <div class="col-md-4">
+                    <div class="col-md-6">
                         <div class="copyright-text">
                             <p class="mb-0"> &copy;2024 Copyright Flybizz.com. All Rights Reserved.</p>
                         </div>
                     </div>
-                    <div class="col-md-4">
-                        <div class="payment-image">
-                            <ul>
-                                <li>
-                                    <a href="javascript:void(0);"><img src="{{ asset('assets/img/payment/visa.png') }}"
-                                            alt="img"></a>
-                                </li>
-                                <li>
-                                    <a href="javascript:void(0);"><img
-                                            src="{{ asset('assets/img/payment/mastercard.png') }}" alt="img"></a>
-                                </li>
-                                <li>
-                                    <a href="javascript:void(0);"><img
-                                            src="{{ asset('assets/img/payment/stripe.png') }}" alt="img"></a>
-                                </li>
-                                <li>
-                                    <a href="javascript:void(0);"><img
-                                            src="{{ asset('assets/img/payment/discover.png') }}" alt="img"></a>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="col-md-4">
+
+                    <div class="col-md-6">
 
                         <div class="copyright-menu">
                             <ul class="policy-menu">
@@ -139,6 +134,7 @@
                         </div>
                     </div>
                 </div>
+
             </div>
 
         </div>

@@ -25,4 +25,5 @@ Route::controller(ApiController::class)->group(function () {
     Route::get('/submenus/{id}', 'subMenuList');
     Route::get('/menus/{id}', 'menuList');
     Route::get('/reviews', 'reviews');
+    Route::get('/faqs', 'faqs');
 });

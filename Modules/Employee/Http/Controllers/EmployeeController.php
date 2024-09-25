@@ -10,6 +10,7 @@ use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Log;
 use Modules\Employee\Entities\Companie;
 use Spatie\Permission\Models\Role;
 use Validator;
@@ -29,6 +30,7 @@ class EmployeeController extends Controller
      */
     public function index(Request $request)
     {
+
         $query = User::query();
         // Filter based on search query
         if ($request->has('search')) {
@@ -37,12 +39,11 @@ class EmployeeController extends Controller
                 ->orWhere('email', 'like', '%' . $request->search . '%');
         }
         // Paginate the users (adjust pagination number as needed)
-        $employees = $query->orderByDesc('created_at')->where('user_type','employee')->paginate(10);
+        $employees = $query->orderByDesc('created_at')->paginate(10);
         // Check if it's an AJAX request
         if ($request->ajax()) {
             return view('employee::employee.partials.employee-index', compact('employees'))->render();
         }
-
         // $employees = User::orderByDesc('created_at')->paginate(10);
         return view('employee::employee.index', compact('employees'));
     }
@@ -53,9 +54,13 @@ class EmployeeController extends Controller
      */
     public function create()
     {
-        $roles = Role::where('name' ,'employee')->get();
-        $companies = Companie::where('status',1)->get();
-        return view('employee::employee.create', compact('roles','companies'));
+        $roles = Role::where('name', 'employee')->get();
+        $role = Role::where('name', 'employee')->first();
+        $employee = User::where('status', 1)
+            ->where('user_type', $role->id ?? '')
+            ->get();
+        $companies = Companie::where('status', 1)->get();
+        return view('employee::employee.create', compact('roles', 'companies'));
     }
 
     /**
@@ -63,6 +68,7 @@ class EmployeeController extends Controller
      * @param Request $request
      * @return Renderable
      */
+
     public function store(Request $request)
     {
         // Validation for the form inputs
@@ -94,69 +100,57 @@ class EmployeeController extends Controller
             'bank_statement' => 'nullable|file|mimes:pdf,jpg,jpeg,png|max:2048',
             'current_address' => 'nullable|string|max:191',
             'permanent_address' => 'nullable|string|max:191',
-            // 'character_certificate' => 'nullable|file|mimes:pdf,jpg,jpeg,png|max:2048',
-            // 'medical_certificate' => 'nullable|file|mimes:pdf,jpg,jpeg,png|max:2048',
-            // 'previous_ref_name' => 'nullable|string|max:191',
-            // 'previous_ref_email' => 'nullable|email|max:191',
-            // 'previous_ref_number' => 'nullable|string|max:191',
-            // 'previous_ref_designation' => 'nullable|string|max:191',
         ]);
 
+        // Format the designation for the role name and title
+        $designation = $validatedData['designation'];
+        $roleName = strtolower(str_replace(' ', '_', $designation)); // e.g., "frontend_developer"
+        $roleTitle = $designation; // e.g., "Frontend Developer"
+
+        // Check if the designation exists in the roles table
+        $role = Role::firstOrCreate(
+            ['name' => $roleName],
+            ['title' => $roleTitle]
+        );
+        // Set a default password
         $validatedData['password'] = Hash::make('123456');
+        // Create the employee with validated data
         $employee = User::create($validatedData);
+        $employee->user_type = $role->id;
+        if ($employee->user_type != $role->id) {
+            // Debugging: Log error message if the user_type is not set correctly
+            Log::error('Role ID not stored in user_type', ['role_id' => $role->id, 'user_type' => $employee->user_type]);
+        }
 
         // Set created_by to the current authenticated user
         $employee->created_by = auth()->user()->id;
-        $employee->password = Hash::make('123456');
 
-        if ($request->hasFile('high_school_certificate')) {
-            $filename = $this->fileUploadService->uploadImage('employee/high_school_certificate/', $request->file('high_school_certificate'));
-            $employee->high_school_certificate = $filename;
-        }
-        if ($request->hasFile('intermediate_certificate')) {
-            $filename = $this->fileUploadService->uploadImage('employee/intermediate_certificate/', $request->file('intermediate_certificate'));
-            $employee->intermediate_certificate = $filename;
-        }
-        if ($request->hasFile('graduation_certificate')) {
-            $filename = $this->fileUploadService->uploadImage('employee/graduation_certificate/', $request->file('graduation_certificate'));
-            $employee->graduation_certificate = $filename;
+        // Handle file uploads
+        $fileFields = [
+            'high_school_certificate' => 'employee/high_school_certificate/',
+            'intermediate_certificate' => 'employee/intermediate_certificate/',
+            'graduation_certificate' => 'employee/graduation_certificate/',
+            'experience_letter' => 'employee/experience_letter/',
+            'relieving_letter' => 'employee/relieving_letter/',
+            'offer_letter' => 'employee/offer_letter/',
+            'salary_slip' => 'employee/salary_slip/',
+            'bank_statement' => 'employee/bank_statement/',
+            'character_certificate' => 'employee/character_certificate/',
+            'medical_certificate' => 'employee/medical_certificate/',
+        ];
+
+        foreach ($fileFields as $field => $path) {
+            if ($request->hasFile($field)) {
+                $filename = $this->fileUploadService->uploadImage($path, $request->file($field));
+                $employee->$field = $filename;
+            }
         }
 
-        if ($request->hasFile('experience_letter')) {
-            $filename = $this->fileUploadService->uploadImage('employee/experience_letter/', $request->file('experience_letter'));
-            $employee->experience_letter = $filename;
-        }
-        if ($request->hasFile('relieving_letter')) {
-            $filename = $this->fileUploadService->uploadImage('employee/relieving_letter/', $request->file('relieving_letter'));
-            $employee->relieving_letter = $filename;
-        }
-        if ($request->hasFile('offer_letter')) {
-            $filename = $this->fileUploadService->uploadImage('employee/offer_letter/', $request->file('offer_letter'));
-            $employee->offer_letter = $filename;
-        }
-        if ($request->hasFile('salary_slip')) {
-            $filename = $this->fileUploadService->uploadImage('employee/salary_slip/', $request->file('salary_slip'));
-            $employee->salary_slip = $filename;
-        }
-        if ($request->hasFile('bank_statement')) {
-            $filename = $this->fileUploadService->uploadImage('employee/bank_statement/', $request->file('bank_statement'));
-            $employee->bank_statement = $filename;
-        }
-        if ($request->hasFile('character_certificate')) {
-            $filename = $this->fileUploadService->uploadImage('employee/character_certificate/', $request->file('character_certificate'));
-            $employee->character_certificate = $filename;
-        }
-        if ($request->hasFile('medical_certificate')) {
-            $filename = $this->fileUploadService->uploadImage('employee/medical_certificate/', $request->file('medical_certificate'));
-            $employee->medical_certificate = $filename;
-        }
-        // return $employee;
         $employee->save();
 
         // Redirect with success message
         return redirect()->route('employee.index')->with(['message' => 'Employee created successfully.', 'alert-type' => 'success']);
     }
-
 
     /**
      * Show the specified resource.
@@ -222,7 +216,7 @@ class EmployeeController extends Controller
             // 'previous_ref_number' => 'nullable|string|max:191',
             // 'previous_ref_designation' => 'nullable|string|max:191',
         ]);
-        return $request->all();
+        // return $request->all();
 
         $employee = User::findOrFail($id);
 

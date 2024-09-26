@@ -199,7 +199,7 @@ class ApiController extends Controller
             return response()->json([
                 'success' => true,
                 'message' => 'SubMenu details retrieved successfully.',
-                'data' => [
+                'submenu_data' => [
                     'menu_id' => $menu->id,
                     'menu_name' => $menu->name, // Include the menu name here
                     'submenus' => $submenus, // All submenu data (with city and state names)

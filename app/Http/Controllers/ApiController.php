@@ -149,6 +149,98 @@ class ApiController extends Controller
         }
     }
 
+    public function subMenu($id)
+    {
+        try {
+            // Fetch the menu by ID
+            $menu = Menu::select('id', 'name', 'image', 'slug', 'subcategory_id')
+                ->where('id', $id)
+                ->where('status', 1)
+                ->first();
+
+            // Check if the menu exists
+            if (!$menu) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Menu not found.',
+                    'data' => null
+                ]);
+            }
+
+            // Fetch the subcategory associated with the menu
+            $subcategory = SubCategory::select('id')
+                ->where('id', $menu->subcategory_id)
+                ->first();
+
+            // Fetch the submenus associated with the menu
+            $submenus = SubMenu::where('menu_id', $menu->id)
+                ->where('status', 1)
+                ->orderByDesc('created_at')
+                ->select(
+                    'sub_menus.id as submenu_id',
+                    'sub_menus.id',
+                    'sub_menus.name',
+                    'sub_menus.image',
+                    'sub_menus.slug',
+                    'sub_menus.total_price',
+                    'sub_menus.discounted_price',
+                    'sub_menus.discount',
+                    'sub_menus.subcategory_id',
+                    'sub_menus.menu_id',
+                    'sub_menus.city_id',
+                    'sub_menus.description',
+                    'sub_menus.details'
+                )
+                ->paginate(10);
+                // ->paginate(10);
+
+            // Fetch the cities
+            $cities = City::paginate(10);
+
+            return response()->json([
+                'success' => true,
+                'message' => 'SubMenu details retrieved successfully.',
+                'data' => [
+                    // 'menu' => $menu,
+                    // 'subcategory' => $subcategory,
+                    'submenus' => [
+                        'pagination' => [
+                            'total' => $submenus->total(),
+                            'per_page' => $submenus->perPage(),
+                            'current_page' => $submenus->currentPage(),
+                            'last_page' => $submenus->lastPage(),
+                            'next_page_url' => $submenus->nextPageUrl(),
+                            'prev_page_url' => $submenus->previousPageUrl(),
+                        ],
+                        'submenu_data' => $submenus->items() // Submenu data
+                    ],
+                    'cities' => [
+                        'pagination' => [
+                            'total' => $cities->total(),
+                            'per_page' => $cities->perPage(),
+                            'current_page' => $cities->currentPage(),
+                            'last_page' => $cities->lastPage(),
+                            'next_page_url' => $cities->nextPageUrl(),
+                            'prev_page_url' => $cities->previousPageUrl(),
+                        ],
+                        'cities_data' => $cities->items() // Cities data
+                    ]
+                ]
+            ], Response::HTTP_OK);
+
+        } catch (\Exception $e) {
+            // Log the exception for debugging
+            Log::error('Error retrieving SubMenu details: ' . $e->getMessage());
+
+            return response()->json([
+                'success' => false,
+                'message' => 'An error occurred while retrieving SubMenu details.',
+                'error' => $e->getMessage()
+            ], Response::HTTP_INTERNAL_SERVER_ERROR);
+        }
+    }
+
+
     public function menuList($id)
     {
         try {

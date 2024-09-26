@@ -12,8 +12,8 @@
     <tbody>
         @forelse ($salaries as $salary)
             <tr>
-                <td>{{ $employee->id ??'' }}</td>
-                <td>{{ $salary->basic_salary??''}}</td>
+                <td>{{ $salary->id ?? '' }}</td>
+                <td>{{ $salary->basic_salary ?? ''}}</td>
 
                 @canany(['employee-salary-edit', 'employee-salary-delete', 'employee-salary-show'])
                     <td>

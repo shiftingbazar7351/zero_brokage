@@ -1,40 +1,40 @@
-<table class="table datatable">
+<table class="table">
     <thead>
         <tr>
             <th>#</th>
-            <th>Name</th>
+            <th>Bank Name</th>
 
-            @canany(['employee-salary-edit', 'employee-salary-delete', 'employee-salary-show'])
+            @canany(['employee-bank-edit', 'employee-bank-delete', 'employee-bank-show'])
                 <th>Action</th>
             @endcanany
         </tr>
     </thead>
     <tbody>
-        @forelse ($salaries as $salary)
+        @forelse ($banks as $bank)
             <tr>
-                <td>{{ $salary->id ?? '' }}</td>
-                <td>{{ $salary->basic_salary ?? ''}}</td>
+                <td>{{ $bank->id ?? '' }}</td>
+                <td>{{ $bank->bank_name ??'' }}</td>
 
-                @canany(['employee-salary-edit', 'employee-salary-delete', 'employee-salary-show'])
+                @canany(['employee-bank-edit', 'employee-bank-delete', 'employee-bank-show'])
                     <td>
                         <div class="d-flex">
                             <a class="btn delete-table me-2 edit-service"
-                                href="{{ route('employee-salary.show', $salary->id) }}">
+                                href="{{ route('employee-bank.show', $bank->id) }}">
                                 <i class="fe fe-eye"></i>
                             </a>
 
                             <a class="btn delete-table me-2 edit-service"
-                                href="{{ route('employee-salary.edit', $salary->id) }}">
+                                href="{{ route('employee-bank.edit', $bank->id) }}">
                                 <i class="fe fe-edit"></i>
                             </a>
 
                             <!-- Delete Button -->
-                            <form action="{{ route('employee-salary.destroy', $salary->id) }}" method="POST"
+                            <form action="{{ route('employee-bank.destroy', $bank->id) }}" method="POST"
                                 style="display:inline;">
                                 @csrf
                                 @method('DELETE')
                                 <button type="submit" class="btn delete-table"
-                                    onclick="return confirm('Are you sure you want to delete this Salary?');">
+                                    onclick="return confirm('Are you sure you want to delete this Bank?');">
                                     <i class="fe fe-trash-2"></i>
                                 </button>
                             </form>

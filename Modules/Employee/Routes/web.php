@@ -8,7 +8,8 @@ use Modules\Employee\Http\Controllers\BranchController;
 use Modules\Employee\Http\Controllers\DepartmentController;
 use Modules\Employee\Http\Controllers\EmployeeController;
 use Modules\Employee\Http\Controllers\SalaryController;
-
+use Modules\Employee\Http\Controllers\BankController;
+use Modules\Employee\Http\Controllers\HrNameController;
 
 /*
 |--------------------------------------------------------------------------
@@ -103,9 +104,11 @@ Route::controller(SalaryController::class)->group(function () {
     Route::get('/employee-salary/{salary}', 'show')->name('employee-salary.show')->middleware('can:employee-salary-show'); // Show a single category (corrected to GET)
     Route::delete('/employee-salary/{salary}', 'destroy')->name('employee-salary.destroy')->middleware('can:employee-salary-delete'); // Delete a category
     Route::post('/employee-salary-status', 'SalaryStatus')->name('employee-salary.status')->middleware('can:employee-salary-status'); // Change category status
-});
 
-Route::controller(SalaryController::class)->group(function () {
+});
+Route::get('/employees', [SalaryController::class, 'getEmployees']);
+
+Route::controller(BankController::class)->group(function () {
     Route::get('/employee-bank', 'index')->name('employee-bank.index')->middleware('can:employee-bank-list'); // List all employee-headoffice
     Route::get('/employee-bank/create', 'create')->name('employee-bank.create')->middleware('can:employee-bank-create'); // Show form to create a category
     Route::post('/employee-bank', 'store')->name('employee-bank.store')->middleware('can:employee-bank-create'); // Store a new category
@@ -114,4 +117,15 @@ Route::controller(SalaryController::class)->group(function () {
     Route::get('/employee-bank/{bank}', 'show')->name('employee-bank.show')->middleware('can:employee-bank-show'); // Show a single category (corrected to GET)
     Route::delete('/employee-bank/{bank}', 'destroy')->name('employee-bank.destroy')->middleware('can:employee-bank-delete'); // Delete a category
     Route::post('/employee-bank-status', 'BankStatus')->name('employee-bank.status')->middleware('can:employee-bank-status'); // Change category status
+});
+
+Route::controller(HrNameController::class)->group(function () {
+    Route::get('/employee-hr', 'index')->name('employee-hr.index')->middleware('can:employee-hr-list'); // List all employee-headoffice
+    Route::get('/employee-hr/create', 'create')->name('employee-hr.create')->middleware('can:employee-hr-create'); // Show form to create a category
+    Route::post('/employee-hr', 'store')->name('employee-hr.store')->middleware('can:employee-hr-create'); // Store a new category
+    Route::get('/employee-hr/{hr}/edit', 'edit')->name('employee-hr.edit')->middleware('can:employee-hr-edit'); // Edit category form
+    Route::put('/employee-hr/{hr}', 'update')->name('employee-hr.update')->middleware('can:employee-hr-edit'); // Update the category
+    Route::get('/employee-hr/{hr}', 'show')->name('employee-hr.show')->middleware('can:employee-hr-show'); // Show a single category (corrected to GET)
+    Route::delete('/employee-hr/{hr}', 'destroy')->name('employee-hr.destroy')->middleware('can:employee-hr-delete'); // Delete a category
+    Route::post('/employee-hr-status', 'HrStatus')->name('employee-hr.status')->middleware('can:employee-hr-status'); // Change category status
 });

@@ -17,8 +17,8 @@
                             <!-- First Name -->
                             <div class="mb-3 col-md-3">
                                 <label for="fname" class="form-label">First Name</label><b style="color: red;">*</b>
-                                <input type="text" class="form-control" id="fname" name="fname"
-                                    value="{{ old('fname', $employee->fname ?? '') }}" placeholder="Enter first name"
+                                <input type="text" class="form-control" id="fname" name="name"
+                                    value="{{ old('name', $employee->name ?? '') }}" placeholder="Enter first name"
                                     required>
                                 @error('fname')
                                     <div class="error text-danger ">{{ $message }}</div>
@@ -70,7 +70,7 @@
                                 @enderror
                             </div>
                             {{-- Role --}}
-                            <div class="mb-3 col-md-3">
+                            {{-- <div class="mb-3 col-md-3">
                                 <label for="role" class="form-label">Role</label><b
                                     style="color: red;">*</b>
                                 <select class="form-control" id="role" name="user_type" required>
@@ -82,7 +82,7 @@
                                 @error('user_type')
                                     <div class="error text-danger ">{{ $message }}</div>
                                 @enderror
-                            </div>
+                            </div> --}}
 
                             <!-- Phone Number -->
                             <div class="mb-3 col-md-3">
@@ -189,11 +189,11 @@
                             <!-- HR Head -->
                             <div class="mb-3 col-md-3">
                                 <label for="hr_head" class="form-label">HR Head</label><b style="color: red;">*</b>
-                                <select class="form-control" id="hr_head" name="hr_head" required>
-                                    <option value="">Select HR Head</option>
-                                    <option value="hr1" {{ old('hr_head') == 'hr1' ? 'selected' : '' }}>Hr1</option>
-                                    <option value="hr2" {{ old('hr_head') == 'hr2' ? 'selected' : '' }}>Hr2</option>
-                                    <option value="hr3" {{ old('hr_head') == 'hr3' ? 'selected' : '' }}>Hr3</option>
+                                <select class="form-control" id="hr_head" name="hr_head">
+                                    <option value="" selected disabled>Select HR Head</option>
+                                    @foreach ($hr_names as $hr_name)
+                                        <option value="{{ $hr_name->id }}">{{ $hr_name->name ?? '' }}</option>
+                                    @endforeach
                                 </select>
                                 @error('hr_head')
                                     <div class="error text-danger ">{{ $message }}</div>
@@ -204,20 +204,16 @@
                             <div class="mb-3 col-md-3">
                                 <label for="hr_executive" class="form-label">HR Executive</label><b
                                     style="color: red;">*</b>
-                                <select class="form-control" id="hr_executive" name="hr_executive" required>
-                                    <option value="">Select HR Head</option>
-                                    <option value="hr1" {{ old('hr_executive') == 'hr1' ? 'selected' : '' }}>Hr1
-                                    </option>
-                                    <option value="hr2" {{ old('hr_executive') == 'hr2' ? 'selected' : '' }}>Hr2
-                                    </option>
-                                    <option value="hr3" {{ old('hr_executive') == 'hr3' ? 'selected' : '' }}>Hr3
-                                    </option>
+                                <select class="form-control" id="hr_executive" name="hr_executive">
+                                    <option value="" selected disabled>Select HR Executive</option>
+                                    @foreach ($hr_exe as $hr_name)
+                                    <option value="{{ $hr_name->id }}">{{ $hr_name->name ?? '' }}</option>
+                                @endforeach
                                 </select>
                                 @error('hr_executive')
                                     <div class="error text-danger ">{{ $message }}</div>
                                 @enderror
                             </div>
-
 
                             <!-- Official Mobile -->
                             <div class="mb-3 col-md-3">

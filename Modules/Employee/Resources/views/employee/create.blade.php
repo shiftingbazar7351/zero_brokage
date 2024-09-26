@@ -18,7 +18,7 @@
                             <!-- First Name -->
                             <div class="mb-3 col-md-3">
                                 <label for="name" class="form-label">First Name</label><b style="color: red;">*</b>
-                                <input type="text" class="form-control" id="name" name="fname"
+                                <input type="text" class="form-control" id="name" name="name"
                                     value="{{ old('name') }}" placeholder="Enter first name">
                                 @error('name')
                                     <div class="error text-danger ">{{ $message }}</div>
@@ -185,9 +185,9 @@
                                 <label for="hr_head" class="form-label">HR Head</label><b style="color: red;">*</b>
                                 <select class="form-control" id="hr_head" name="hr_head">
                                     <option value="" selected disabled>Select HR Head</option>
-                                    <option value="hr1" {{ old('hr_head') == 'hr1' ? 'selected' : '' }}>Hr1</option>
-                                    <option value="hr2" {{ old('hr_head') == 'hr2' ? 'selected' : '' }}>Hr2</option>
-                                    <option value="hr3" {{ old('hr_head') == 'hr3' ? 'selected' : '' }}>Hr3</option>
+                                    @foreach ($hr_names as $hr_name)
+                                        <option value="{{ $hr_name->id }}">{{ $hr_name->name ?? '' }}</option>
+                                    @endforeach
                                 </select>
                                 @error('hr_head')
                                     <div class="error text-danger ">{{ $message }}</div>
@@ -199,13 +199,10 @@
                                 <label for="hr_executive" class="form-label">HR Executive</label><b
                                     style="color: red;">*</b>
                                 <select class="form-control" id="hr_executive" name="hr_executive">
-                                    <option value="" selected disabled>Select HR Head</option>
-                                    <option value="hr1" {{ old('hr_executive') == 'hr1' ? 'selected' : '' }}>Hr1
-                                    </option>
-                                    <option value="hr2" {{ old('hr_executive') == 'hr2' ? 'selected' : '' }}>Hr2
-                                    </option>
-                                    <option value="hr3" {{ old('hr_executive') == 'hr3' ? 'selected' : '' }}>Hr3
-                                    </option>
+                                    <option value="" selected disabled>Select HR Executive</option>
+                                    @foreach ($hr_exe as $hr_name)
+                                    <option value="{{ $hr_name->id }}">{{ $hr_name->name ?? '' }}</option>
+                                @endforeach
                                 </select>
                                 @error('hr_executive')
                                     <div class="error text-danger ">{{ $message }}</div>

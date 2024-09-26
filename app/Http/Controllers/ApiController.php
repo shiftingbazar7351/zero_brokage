@@ -149,6 +149,7 @@ class ApiController extends Controller
         }
     }
 
+
     public function subMenu($id)
     {
         try {
@@ -167,67 +168,44 @@ class ApiController extends Controller
                 ]);
             }
 
-            // Fetch the subcategory associated with the menu
-            $subcategory = SubCategory::select('id')
-                ->where('id', $menu->subcategory_id)
-                ->first();
-
-            // Fetch the submenus associated with the menu
+            // Fetch the submenus associated with the menu without pagination
             $submenus = SubMenu::where('menu_id', $menu->id)
                 ->where('status', 1)
                 ->orderByDesc('created_at')
-                ->select(
-                    'sub_menus.id as submenu_id',
-                    'sub_menus.id',
-                    'sub_menus.name',
-                    'sub_menus.image',
-                    'sub_menus.slug',
-                    'sub_menus.total_price',
-                    'sub_menus.discounted_price',
-                    'sub_menus.discount',
-                    'sub_menus.subcategory_id',
-                    'sub_menus.menu_id',
-                    'sub_menus.city_id',
-                    'sub_menus.description',
-                    'sub_menus.details'
-                )
-                ->paginate(10);
-                // ->paginate(10);
+                ->select('id', 'name', 'image', 'total_price', 'discounted_price', 'menu_id', 'city_id', 'description', 'details')
+                ->get();
 
-            // Fetch the cities
-            $cities = City::paginate(10);
+            // Fetch city and state for each submenu
+            $submenus = $submenus->map(function ($submenu) {
+                // Fetch the city and its state
+                $city = City::find($submenu->city_id);
+                $state = $city ? $city->state : null; // Assuming City model has a relation to State
+
+                // Format city and state name
+                $cityState = $city && $state ? $city->name . ', ' . $state->name : null;
+
+                return [
+                    'id' => $submenu->id,
+                    'name' => $submenu->name,
+                    'image' => $submenu->image,
+                    'total_price' => $submenu->total_price,
+                    'discounted_price' => $submenu->discounted_price,
+                    'menu_id' => $submenu->menu_id,
+                    'city' => $cityState, // Adding the city and state here
+                    'description' => $submenu->description,
+                    'details' => $submenu->details,
+                ];
+            });
 
             return response()->json([
                 'success' => true,
                 'message' => 'SubMenu details retrieved successfully.',
                 'data' => [
-                    // 'menu' => $menu,
-                    // 'subcategory' => $subcategory,
-                    'submenus' => [
-                        'pagination' => [
-                            'total' => $submenus->total(),
-                            'per_page' => $submenus->perPage(),
-                            'current_page' => $submenus->currentPage(),
-                            'last_page' => $submenus->lastPage(),
-                            'next_page_url' => $submenus->nextPageUrl(),
-                            'prev_page_url' => $submenus->previousPageUrl(),
-                        ],
-                        'submenu_data' => $submenus->items() // Submenu data
-                    ],
-                    'cities' => [
-                        'pagination' => [
-                            'total' => $cities->total(),
-                            'per_page' => $cities->perPage(),
-                            'current_page' => $cities->currentPage(),
-                            'last_page' => $cities->lastPage(),
-                            'next_page_url' => $cities->nextPageUrl(),
-                            'prev_page_url' => $cities->previousPageUrl(),
-                        ],
-                        'cities_data' => $cities->items() // Cities data
-                    ]
+                    'menu_id' => $menu->id,
+                    'menu_name' => $menu->name, // Include the menu name here
+                    'submenus' => $submenus, // All submenu data (with city and state names)
                 ]
             ], Response::HTTP_OK);
-
         } catch (\Exception $e) {
             // Log the exception for debugging
             Log::error('Error retrieving SubMenu details: ' . $e->getMessage());
@@ -239,6 +217,67 @@ class ApiController extends Controller
             ], Response::HTTP_INTERNAL_SERVER_ERROR);
         }
     }
+
+
+
+    // public function subMenu($id)
+    // {
+    //     try {
+    //         // Fetch the menu by ID
+    //         $menu = Menu::select('id', 'name', 'image', 'slug', 'subcategory_id')
+    //             ->where('id', $id)
+    //             ->where('status', 1)
+    //             ->first();
+
+    //         // Check if the menu exists
+    //         if (!$menu) {
+    //             return response()->json([
+    //                 'success' => false,
+    //                 'message' => 'Menu not found.',
+    //                 'data' => null
+    //             ]);
+    //         }
+    //         // Fetch the submenus associated with the menu without pagination
+    //         $submenus = SubMenu::where('menu_id', $menu->id)
+    //             ->where('status', 1)
+    //             ->orderByDesc('created_at')
+    //             ->select('id','name','image','slug','total_price','discount','discounted_price','menu_id','city_id','description','details')
+    //             ->get();
+    //             // Fetch all submenus without pagination
+
+    //         // Fetch cities with pagination
+    //         $cities = City::paginate(10);
+
+    //         return response()->json([
+    //             'success' => true,
+    //             'message' => 'SubMenu details retrieved successfully.',
+    //             'data' => [
+    //                 'submenus' => $submenus, // All submenu data (without pagination)
+    //                 'cities' => [
+    //                     'pagination' => [
+    //                         'total' => $cities->total(),
+    //                         'per_page' => $cities->perPage(),
+    //                         'current_page' => $cities->currentPage(),
+    //                         'last_page' => $cities->lastPage(),
+    //                         'next_page_url' => $cities->nextPageUrl(),
+    //                         'prev_page_url' => $cities->previousPageUrl(),
+    //                     ],
+    //                     'cities_data' => $cities->items() // Paginated cities data
+    //                 ]
+    //             ]
+    //         ], Response::HTTP_OK);
+    //     } catch (\Exception $e) {
+    //         // Log the exception for debugging
+    //         Log::error('Error retrieving SubMenu details: ' . $e->getMessage());
+
+    //         return response()->json([
+    //             'success' => false,
+    //             'message' => 'An error occurred while retrieving SubMenu details.',
+    //             'error' => $e->getMessage()
+    //         ], Response::HTTP_INTERNAL_SERVER_ERROR);
+    //     }
+    // }
+
 
 
     public function menuList($id)

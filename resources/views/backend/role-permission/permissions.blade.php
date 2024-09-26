@@ -18,18 +18,19 @@
             </div>
             <div class="row mt-3">
                 <div class="col-12 ">
-                    <div class="table-responsive shadow">
+                    <div class="table-responsive shadow" style="overflow-x: auto;">
                         <form action="{{ route('role.permission.store') }}" method="POST">
                             @csrf
-                            <table class="table table-bordered">
+                            <table class="table table-bordered" style="min-width: 100%;">
                                 <thead>
                                     <tr>
-                                        <th class="text-center">Module</th>
+                                        <!-- Make the first column sticky -->
+                                        <th class="text-center sticky-column" style="position: sticky; left: 0; background-color: #ebf3f9; z-index: 10;">
+                                            Module
+                                        </th>
                                         @foreach ($roles as $role)
                                             <th class="text-center table-bordered">{{ $role->title }}
-                                                <input type="checkbox" class="form-check-input role-checkbox mx-2"
-                                                    data-role-id="{{ $role->id }}">
-
+                                                <input type="checkbox" class="form-check-input role-checkbox mx-2" data-role-id="{{ $role->id }}">
                                             </th>
                                         @endforeach
                                     </tr>
@@ -37,8 +38,9 @@
                                 <tbody>
                                     @foreach ($permissions as $permission)
                                         <tr class="{{ !isset($permission->parent_id) ? 'bg-body' : '' }}">
-                                            <td>{{ $permission->title }}
-
+                                            <!-- Make the first column sticky in the body as well -->
+                                            <td style="position: sticky; left: 0; background-color: white; z-index: 1;">
+                                                {{ $permission->title }}
                                             </td>
                                             @foreach ($roles as $role)
                                                 <td class="text-center">
@@ -53,14 +55,20 @@
                                     @endforeach
                                 </tbody>
                             </table>
-                            <div class="m-4 text-center">
-                                <button type="submit" class="btn btn-md btn-primary">Submit</button>
-                            </div>
+
                         </form>
                     </div>
+
                 </div>
             </div>
         </div>
+    </div>
+    <div class="row">
+        <div class="offset-md-3 col-md-8">
+        <div class="mb-4 text-center">
+            <button type="submit" class="btn btn-md btn-primary">Submit</button>
+        </div>
+    </div>
     </div>
 
     <!-- Add Category Modal -->

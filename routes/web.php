@@ -101,6 +101,14 @@ Route::get('/disclaimer', function () {
     return view('frontend.disclaimer');
 })->name('disclaimer');
 
+Route::get('/blog-grid', function () {
+    return view('frontend.blog');
+})->name('blog');
+
+Route::get('/blog-details', function () {
+    return view('frontend.blog-details');
+})->name('blog-details');
+
 Route::get('/cache', function () {
     Artisan::call('optimize:clear');
     return back();

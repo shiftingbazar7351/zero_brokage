@@ -6349,8 +6349,8 @@ table.dataTable > thead .sorting_desc_disabled:focus:before {
 .profile-upload-file input {
     position: absolute;
     opacity: 0;
-    width: 75px;
-    left: 8px;
+    width: 38px;
+
 }
 
 .btn-upload {

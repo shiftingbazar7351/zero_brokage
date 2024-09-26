@@ -55,6 +55,12 @@
                                     @endforeach
                                 </tbody>
                             </table>
+                            <div class="row">
+                                <div class="offset-md-3 col-md-8">
+                                <div class="mb-4 text-center">
+                                    <button type="submit" class="btn btn-md btn-primary">Submit</button>
+                                </div>
+                            </div>
 
                         </form>
                     </div>
@@ -63,12 +69,7 @@
             </div>
         </div>
     </div>
-    <div class="row">
-        <div class="offset-md-3 col-md-8">
-        <div class="mb-4 text-center">
-            <button type="submit" class="btn btn-md btn-primary">Submit</button>
-        </div>
-    </div>
+
     </div>
 
     <!-- Add Category Modal -->

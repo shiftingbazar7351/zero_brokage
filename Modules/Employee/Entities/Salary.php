@@ -5,6 +5,7 @@ namespace Modules\Employee\Entities;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use App\Models\User;
 
 class Salary extends Model
 {
@@ -30,6 +31,10 @@ class Salary extends Model
         'status',
         'created_by'
     ];
+
+    public function userdata(){
+        return $this->belongsTo(User::class,'employee_id','id');
+    }
 
 
 }

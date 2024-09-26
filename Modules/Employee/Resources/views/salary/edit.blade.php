@@ -18,21 +18,28 @@
                                 <label for="department">Department Name</label>
                                 <select class="form-control" id="department" name="department">
                                     <option value="" selected disabled>Select Department</option>
-                                    <option value="IT Department">IT Department</option>
-                                    <option value="HR Department">HR Department</option>
-                                    <option value="Sales Department">Sales Department</option>
-                                    <option value="Support Department">Support Department</option>
-                                    <option value="Account Department">Account Department</option>
-                                    <option value="Management Department">Management Department</option>
+                                    @foreach ($users as $user)
+                                        <option value="{{ $user->department }}"
+                                            {{ $salary->employee_id == $user->id ? 'selected' : '' }}>
+                                            {{ $user->department }}
+                                        </option>
+                                    @endforeach
                                 </select>
                                 <div id="department_id_error" class="text-danger"></div>
                             </div>
+
 
                             <!-- Designation Dropdown -->
                             <div class="mb-3 col-md-4">
                                 <label for="designation">Designation</label>
                                 <select class="form-control" id="designation" name="designation">
                                     <option value="" selected disabled>Select Designation</option>
+                                    @foreach ($users as $user)
+                                    <option value="{{ $user->designation }}"
+                                        {{ $salary->employee_id == $user->id ? 'selected' : '' }}>
+                                        {{ $user->designation }}
+                                    </option>
+                                @endforeach
                                 </select>
                                 <div id="designation_id_error" class="text-danger"></div>
                             </div>
@@ -42,6 +49,12 @@
                                 <label for="employee_name">Employee Name</label>
                                 <select class="form-control" id="employee_name" name="employee_id">
                                     <option value="" selected disabled>Select Employee</option>
+                                    @foreach ($users as $user)
+                                        <option value="{{ $user->name }}"
+                                            {{ $salary->employee_id == $user->id ? 'selected' : '' }}>
+                                            {{ $user->name }}
+                                        </option>
+                                    @endforeach
                                 </select>
                                 <div id="employee_name_error" class="text-danger"></div>
                             </div>
@@ -74,7 +87,8 @@
                                 <label for="house_rent_allowance">House Rent Allowance</label>
                                 <input type="text" class="form-control" id="house_rent_allowance"
                                     placeholder="Enter House Rent Allowance" name="house_rent_allowance"
-                                    value="{{ old('house_rent_allowance', $salary->house_rent_allowance ?? '') }}" required>
+                                    value="{{ old('house_rent_allowance', $salary->house_rent_allowance ?? '') }}"
+                                    required>
                                 @error('house_rent_allowance')
                                     <div class="error text-danger ">{{ $message }}</div>
                                 @enderror
@@ -85,7 +99,8 @@
                                 <label for="conveyance_allowance">Conveyance Allowance</label>
                                 <input type="text" class="form-control" id="conveyance_allowance"
                                     placeholder="Enter Conveyance Allowance" name="conveyance_allowance"
-                                    value="{{ old('conveyance_allowance', $salary->house_rent_allowance ?? '') }}" required>
+                                    value="{{ old('conveyance_allowance', $salary->house_rent_allowance ?? '') }}"
+                                    required>
                                 @error('conveyance_allowance')
                                     <div class="error text-danger ">{{ $message }}</div>
                                 @enderror
@@ -127,8 +142,8 @@
                             <!-- Medical Allowance -->
                             <div class="mb-3 col-md-4">
                                 <label for="medical_allowance">Medical Allowance</label>
-                                <input type="text" class="form-control" id="medical_allowance" name="medical_allowance"
-                                    placeholder="Enter Medical Allowance"
+                                <input type="text" class="form-control" id="medical_allowance"
+                                    name="medical_allowance" placeholder="Enter Medical Allowance"
                                     value="{{ old('medical_allowance', $salary->medical_allowance ?? '') }}" required>
                                 @error('medical_allowance')
                                     <div class="error text-danger ">{{ $message }}</div>
@@ -162,7 +177,8 @@
                                 <label for="voluntary_provident_fund">Voluntary Provident Fund</label>
                                 <input type="text" class="form-control" id="voluntary_provident_fund"
                                     placeholder="Enter Voluntary Provident Fund" name="voluntary_provident_fund"
-                                    value="{{ old('voluntary_provident_fund', $salary->voluntary_provident_fund ?? '') }}" required>
+                                    value="{{ old('voluntary_provident_fund', $salary->voluntary_provident_fund ?? '') }}"
+                                    required>
                                 @error('voluntary_provident_fund')
                                     <div class="error text-danger ">{{ $message }}</div>
                                 @enderror
@@ -172,7 +188,8 @@
                             <div class="mb-3 col-md-4">
                                 <label for="professional_tax">Professional Tax</label>
                                 <input type="text" class="form-control" id="professional_tax" name="professional_tax"
-                                    placeholder="Enter Professional Tax" value="{{ old('professional_tax', $salary->professional_tax ?? '') }}" required>
+                                    placeholder="Enter Professional Tax"
+                                    value="{{ old('professional_tax', $salary->professional_tax ?? '') }}" required>
                                 @error('professional_tax')
                                     <div class="error text-danger ">{{ $message }}</div>
                                 @enderror
@@ -183,7 +200,8 @@
                                 <label for="personal_loan_principal">Personal Loan Principal</label>
                                 <input type="text" class="form-control" id="personal_loan_principal"
                                     placeholder="Enter Personal Loan Principal" name="personal_loan_principal"
-                                    value="{{ old('personal_loan_principal', $salary->personal_loan_principal ?? '') }}" required>
+                                    value="{{ old('personal_loan_principal', $salary->personal_loan_principal ?? '') }}"
+                                    required>
                                 @error('personal_loan_principal')
                                     <div class="error text-danger ">{{ $message }}</div>
                                 @enderror
@@ -194,7 +212,8 @@
                                 <label for="personal_loan_interest">Personal Loan Interest</label>
                                 <input type="text" class="form-control" id="personal_loan_interest"
                                     placeholder="Enter Personal Loan Interest" name="personal_loan_interest"
-                                    value="{{ old('personal_loan_interest', $salary->personal_loan_interest ?? '') }}" required>
+                                    value="{{ old('personal_loan_interest', $salary->personal_loan_interest ?? '') }}"
+                                    required>
                                 @error('personal_loan_interest')
                                     <div class="error text-danger ">{{ $message }}</div>
                                 @enderror
@@ -204,7 +223,8 @@
                             <div class="mb-3 col-md-4">
                                 <label for="food_relief">Food Relief</label>
                                 <input type="text" class="form-control" id="food_relief" name="food_relief"
-                                    placeholder="Enter Food Relief" value="{{ old('food_relief', $salary->food_relief ?? '') }}" required>
+                                    placeholder="Enter Food Relief"
+                                    value="{{ old('food_relief', $salary->food_relief ?? '') }}" required>
                                 @error('food_relief')
                                     <div class="error text-danger ">{{ $message }}</div>
                                 @enderror

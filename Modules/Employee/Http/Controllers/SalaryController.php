@@ -100,9 +100,12 @@ class SalaryController extends Controller
      */
     public function edit($id)
     {
+        $users = User::orderByDesc('created_at')->get(['id', 'department', 'designation','name']);
         $salary = Salary::findOrFail($id);
-        return view('employee::salary.edit', compact('salary'));
+
+        return view('employee::salary.edit', compact('salary', 'users'));
     }
+
 
     /**
      * Update the specified resource in storage.

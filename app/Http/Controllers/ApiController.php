@@ -369,5 +369,53 @@ class ApiController extends Controller
         }
     }
 
+    public function resendOtp(Request $request)
+    {
+        // Validate the incoming request
+        $validator = Validator::make($request->all(), [
+            'mobile_number' => 'required|digits:10',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Validation errors',
+                'errors' => $validator->errors()
+            ], Response::HTTP_UNPROCESSABLE_ENTITY);
+        }
+
+        try {
+            // Find the enquiry by mobile number
+            $enquiry = Enquiry::where('mobile_number', $request->mobile_number)->first();
+
+            if (!$enquiry) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Mobile number not found.'
+                ], Response::HTTP_NOT_FOUND);
+            }
+
+            // Resend the existing OTP
+            $otp = $enquiry->otp;
+
+            return response()->json([
+                'success' => true,
+                'message' => 'OTP resent successfully.',
+                'otp' => $otp,
+            ], Response::HTTP_OK);
+
+        } catch (\Exception $e) {
+            // Log the exception for debugging
+            Log::error('Error resending OTP: ' . $e->getMessage());
+
+            return response()->json([
+                'success' => false,
+                'message' => 'An error occurred while resending OTP.',
+                'error' => $e->getMessage()
+            ], Response::HTTP_INTERNAL_SERVER_ERROR);
+        }
+    }
+
+
 
 }

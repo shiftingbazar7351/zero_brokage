@@ -263,7 +263,6 @@ class ApiController extends Controller
 
     }
 
-
     public function sendOtp(Request $request)
     {
         // Validate the incoming request
@@ -295,6 +294,7 @@ class ApiController extends Controller
             return response()->json([
                 'success' => true,
                 'message' => $enquiry->wasRecentlyCreated ? 'OTP created and sent successfully.' : 'OTP updated successfully.',
+                'name' => $request->name,
                 'otp' => $otp,
                 'otp_verified_at' => $enquiry->otp_verified_at
             ], Response::HTTP_OK);
@@ -310,5 +310,64 @@ class ApiController extends Controller
             ], Response::HTTP_INTERNAL_SERVER_ERROR);
         }
     }
+
+    public function verifyOtp(Request $request)
+    {
+        // Validate the incoming request
+        $validator = Validator::make($request->all(), [
+            'mobile_number' => 'required|digits:10',
+            'otp' => 'required|digits:4',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Validation errors',
+                'errors' => $validator->errors()
+            ], Response::HTTP_UNPROCESSABLE_ENTITY);
+        }
+
+        try {
+            // Find the enquiry by mobile number
+            $enquiry = Enquiry::where('mobile_number', $request->mobile_number)->first();
+
+            if (!$enquiry) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Mobile number not found.'
+                ], Response::HTTP_NOT_FOUND);
+            }
+
+            // Check if the OTP matches
+            if ($enquiry->otp == $request->otp) {
+                // Update the otp_verified_at timestamp
+                $enquiry->update([
+                    'otp_verified_at' => now(),
+                ]);
+
+                return response()->json([
+                    'success' => true,
+                    'message' => 'OTP verified successfully.',
+                    'otp_verified_at' => $enquiry->otp_verified_at,
+                ], Response::HTTP_OK);
+            } else {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Invalid OTP.',
+                ], Response::HTTP_UNAUTHORIZED);
+            }
+
+        } catch (\Exception $e) {
+            // Log the exception for debugging
+            Log::error('Error verifying OTP: ' . $e->getMessage());
+
+            return response()->json([
+                'success' => false,
+                'message' => 'An error occurred while verifying OTP.',
+                'error' => $e->getMessage()
+            ], Response::HTTP_INTERNAL_SERVER_ERROR);
+        }
+    }
+
 
 }

@@ -27,4 +27,5 @@ Route::controller(ApiController::class)->group(function () {
     Route::get('/reviews', 'reviews');
     Route::get('/faqs', 'faqs');
     Route::get('/send-otp', 'sendOtp');
+    Route::get('/verify-otp', 'verifyOtp');
 });

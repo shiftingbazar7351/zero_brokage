@@ -41,8 +41,8 @@ return new class extends Migration
             $table->string('offer_letter')->nullable();
             $table->string('salary_slip')->nullable(); // Make sure there is no trailing space here
             $table->string('bank_statement')->nullable();
-            $table->string('current_address')->nullable();
-            $table->string('permanent_address')->nullable();
+            $table->longText('current_address')->nullable();
+            $table->longText('permanent_address')->nullable();
             $table->string('character_certificate')->nullable();
             $table->string('medical_certificate')->nullable();
             $table->string('previous_ref_name')->nullable();

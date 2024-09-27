@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 use Spatie\Permission\Models\Role;
 
@@ -171,26 +172,43 @@ class UserController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
      */
-    public function update(UserRequest $request, $id)
+    public function update(Request $request)
     {
-        $user = User::with('userProfile')->findOrFail($id);
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'lname' => 'nullable|string|max:255',
+            'email' => 'required|email|max:255|unique:users,email,' . Auth::id(),
+            'phone_number' => 'nullable|string|max:15',
+            'current_address' => 'nullable|string|max:255',
+            'permanent_address' => 'nullable|string|max:255',
+            'profile_picture' => 'nullable|image|mimes:jpg,png,jpeg|max:500', // Validate image
+        ]);
 
-        $role = Role::find($request->user_role);
-        if ($role) {
-            $user->assignRole($role->name);
-        }
-        $user->fill($request->except('profile_picture'))->save();
+        $user = Auth::user();
+
+        // Update user information
+        $user->name = $request->name;
+        $user->lname = $request->lname;
+        $user->email = $request->email;
+        $user->phone_number = $request->phone_number;
+        $user->current_address = $request->current_address;
+        $user->permanent_address = $request->permanent_address;
+
+        // Handle profile picture upload
         if ($request->hasFile('profile_picture')) {
-            $filename = $this->fileUploadService->uploadImage('images/user/', $request->file('profile_picture'));
-            $this->fileUploadService->removeImage('images/user/', $user->profile_picture);
-            $user->update(['profile_picture' => $filename]);
-        }
-        // Redirect the user back to the appropriate route with a success message
-        if (auth()->check()) {
-            return redirect()->route('user.index')->withSuccess(trans('users.update', ['name' => __('message.user')]));
+            // Delete old profile picture if exists
+            if ($user->profile_picture) {
+                Storage::delete($user->profile_picture);
+            }
+
+            // Store new profile picture
+            $path = $request->file('profile_picture')->store('profile_pictures', 'public');
+            $user->profile_picture = $path;
         }
 
-        return redirect()->back()->withSuccess(trans('users.update', ['name' => 'My Profile']));
+        $user->save();
+
+        return redirect()->route('user.profile.edit')->with('success', 'Profile updated successfully!');
     }
 
 
@@ -222,8 +240,8 @@ class UserController extends Controller
 
     public function profile()
     {
-        $users = User::where('id',Auth::user()->id)->first();
-        return view('backend.profile',compact('users'));
+        $user = User::where('id', Auth::user()->id)->first();
+        return view('backend.profile', compact('user'));
     }
 
 

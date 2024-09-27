@@ -158,8 +158,8 @@
                                 <label for="office_shift" class="form-label">Office Shift</label><b
                                     style="color: red;">*</b>
                                 <select class="form-control" id="office_shift" name="office_shift">
-                                    <option value="hr1"
-                                        {{ old('office_shift') == '9:30am - 6:30pm' ? 'selected' : '' }}>9:30am - 6:30pm
+                                    <option value="9:30am-6:30pm"
+                                        {{ old('office_shift') == '9:30am - 6:30pm' ? 'selected' : '' }}>9:30am-6:30pm
                                     </option>
                                 </select>
                                 @error('office_shift')

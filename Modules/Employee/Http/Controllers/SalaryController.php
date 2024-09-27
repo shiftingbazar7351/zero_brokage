@@ -2,13 +2,14 @@
 
 namespace Modules\Employee\Http\Controllers;
 
+use App\Models\User;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
-use Modules\Employee\Entities\HeadOffice;
 use Modules\Employee\Entities\Department;
+use Modules\Employee\Entities\HeadOffice;
+use Modules\Employee\Entities\HrName;
 use Modules\Employee\Entities\Salary;
-use App\Models\User;
 
 class SalaryController extends Controller
 {
@@ -30,6 +31,7 @@ class SalaryController extends Controller
         if ($request->ajax()) {
             return view('employee::salary.partials.salary-index', compact('salaries'))->render();
         }
+
         return view('employee::salary.index',compact('salaries'));
     }
 
@@ -42,8 +44,9 @@ class SalaryController extends Controller
          $departments = Department::where('status',1)
         ->orderByDesc('created_at')
         ->get();
+        $hrs = HrName::where('designation','HR Head')->get(['id','name']);
 
-        return view('employee::salary.create',compact('departments'));
+        return view('employee::salary.create',compact('departments','hrs'));
     }
 
     /**
@@ -102,8 +105,8 @@ class SalaryController extends Controller
     {
         $users = User::orderByDesc('created_at')->get(['id', 'department', 'designation','name']);
         $salary = Salary::findOrFail($id);
-
-        return view('employee::salary.edit', compact('salary', 'users'));
+        $hrs = HrName::where('designation', 'HR Head')->get(['id', 'name']);
+        return view('employee::salary.edit', compact('salary', 'users','hrs'));
     }
 
 
@@ -130,6 +133,7 @@ class SalaryController extends Controller
             'personal_loan_principal' => 'nullable|string|max:255',
             'personal_loan_interest' => 'nullable|string|max:255',
             'food_relief' => 'nullable|string|max:255',
+            'hr_head' => 'nullable'
         ]);
 
         $salary = Salary::findOrFail($id);

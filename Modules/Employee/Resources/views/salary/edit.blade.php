@@ -28,18 +28,17 @@
                                 <div id="department_id_error" class="text-danger"></div>
                             </div>
 
-
                             <!-- Designation Dropdown -->
                             <div class="mb-3 col-md-4">
                                 <label for="designation">Designation</label>
                                 <select class="form-control" id="designation" name="designation">
                                     <option value="" selected disabled>Select Designation</option>
                                     @foreach ($users as $user)
-                                    <option value="{{ $user->designation }}"
-                                        {{ $salary->employee_id == $user->id ? 'selected' : '' }}>
-                                        {{ $user->designation }}
-                                    </option>
-                                @endforeach
+                                        <option value="{{ $user->designation }}"
+                                            {{ $salary->employee_id == $user->id ? 'selected' : '' }}>
+                                            {{ $user->designation }}
+                                        </option>
+                                    @endforeach
                                 </select>
                                 <div id="designation_id_error" class="text-danger"></div>
                             </div>
@@ -50,7 +49,7 @@
                                 <select class="form-control" id="employee_name" name="employee_id">
                                     <option value="" selected disabled>Select Employee</option>
                                     @foreach ($users as $user)
-                                        <option value="{{ $user->name }}"
+                                        <option value="{{ $user->id }}"  {{-- Use user ID here --}}
                                             {{ $salary->employee_id == $user->id ? 'selected' : '' }}>
                                             {{ $user->name }}
                                         </option>
@@ -59,18 +58,24 @@
                                 <div id="employee_name_error" class="text-danger"></div>
                             </div>
 
+
                             <div class="mb-3 col-md-4">
                                 <label for="hr_head" class="form-label">HR Head</label><b style="color: red;">*</b>
                                 <select class="form-control" id="hr_head" name="hr_head">
                                     <option value="" selected disabled>Select HR Head</option>
-                                    <option value="hr1" {{ old('hr_head') == 'hr1' ? 'selected' : '' }}>Hr1</option>
-                                    <option value="hr2" {{ old('hr_head') == 'hr2' ? 'selected' : '' }}>Hr2</option>
-                                    <option value="hr3" {{ old('hr_head') == 'hr3' ? 'selected' : '' }}>Hr3</option>
+                                    @foreach($hrs as $hr)
+                                        <option value="{{ $hr->id }}"
+                                            {{ (old('hr_head') == $hr->id || (isset($salary->hr_head) && $salary->hr_head == $hr->id)) ? 'selected' : '' }}>
+                                            {{ $hr->name }}
+                                        </option>
+                                    @endforeach
                                 </select>
                                 @error('hr_head')
-                                    <div class="error text-danger ">{{ $message }}</div>
+                                    <div class="error text-danger">{{ $message }}</div>
                                 @enderror
                             </div>
+
+
                             <!-- Basic Salary -->
                             <div class="mb-3 col-md-4">
                                 <label for="basic_salary">Basic Salary</label>
@@ -243,7 +248,7 @@
     </div>
 @endsection
 @section('scripts')
-    <script>
+    {{-- <script>
         document.addEventListener('DOMContentLoaded', function() {
             // Get department and designation dropdown elements
             const departmentDropdown = document.getElementById('department');
@@ -433,5 +438,51 @@
                 }
             });
         });
+    </script> --}}
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+    const departmentDropdown = document.getElementById('department');
+    const designationDropdown = document.getElementById('designation');
+    const employeeNameDropdown = document.getElementById('employee_name');
+
+    function fetchEmployees(department, designation) {
+        // AJAX request to fetch employees based on department and designation
+        fetch(`/employees?department=${department}&designation=${designation}`)
+            .then(response => response.json())
+            .then(data => {
+                // Clear existing options
+                employeeNameDropdown.innerHTML = '<option value="" selected disabled>Select Employee</option>';
+
+                // Populate employee options
+                data.forEach(employee => {
+                    const option = document.createElement('option');
+                    option.value = employee.id;  // Use employee.id (user_id) here
+                    option.textContent = employee.name;
+                    employeeNameDropdown.appendChild(option);
+                });
+            })
+            .catch(error => console.error('Error:', error));
+    }
+
+    // Department change event
+    departmentDropdown.addEventListener('change', function() {
+        const department = this.value;
+        const designation = designationDropdown.value;
+        if (designation) {
+            fetchEmployees(department, designation);
+        }
+    });
+
+    // Designation change event
+    designationDropdown.addEventListener('change', function() {
+        const designation = this.value;
+        const department = departmentDropdown.value;
+        if (department) {
+            fetchEmployees(department, designation);
+        }
+    });
+});
+
     </script>
 @endsection

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Category;
 use App\Models\City;
+use App\Models\Enquiry;
 use App\Models\Faq;
 use App\Models\Menu;
 use App\Models\Review;
@@ -12,6 +13,8 @@ use App\Models\SubMenu;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Validator;
 
 class ApiController extends Controller
 {
@@ -100,7 +103,6 @@ class ApiController extends Controller
                     'sub_menus.details'
                 )
                 ->paginate(10);
-
             // Fetch the cities
             $cities = City::paginate(10);
 
@@ -147,6 +149,73 @@ class ApiController extends Controller
         }
     }
 
+
+    public function subMenu($id)
+    {
+        try {
+            // Fetch the menu by ID
+            $menu = Menu::select('id', 'name', 'image', 'slug', 'subcategory_id')
+                ->where('id', $id)
+                ->where('status', 1)
+                ->first();
+
+            // Check if the menu exists
+            if (!$menu) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Menu not found.',
+                    'data' => null
+                ]);
+            }
+
+            // Fetch the submenus associated with the menu without pagination
+            $submenus = SubMenu::where('menu_id', $menu->id)
+                ->where('status', 1)
+                ->orderByDesc('created_at')
+                ->select('id', 'name', 'image', 'total_price', 'discounted_price', 'menu_id', 'city_id', 'description', 'details')
+                ->get();
+
+            // Fetch city and state for each submenu
+            $submenus = $submenus->map(function ($submenu) {
+                // Fetch the city and its state
+                $city = City::find($submenu->city_id);
+                $state = $city ? $city->state : null; // Assuming City model has a relation to State
+
+                // Format city and state name
+                $cityState = $city && $state ? $city->name . ', ' . $state->name : null;
+                $baseUrl = env('BASE_URL');
+                $imageUrl = $submenu->image ? $baseUrl . Storage::url($submenu->image) : null;
+                return [
+                    'id' => $submenu->id,
+                    'name' => $submenu->name,
+                    'image' => $imageUrl, // Adding the image URL here
+                    'total_price' => $submenu->total_price,
+                    'discounted_price' => $submenu->discounted_price,
+                    'menu_id' => $submenu->menu_id,
+                    'city' => $cityState, // Adding the city and state here
+                    'description' => $submenu->description,
+                    'details' => $submenu->details,
+                ];
+            });
+
+            return response()->json([
+                'success' => true,
+                'message' => 'SubMenu details retrieved successfully.',
+                'submenus_data' => $submenus,
+
+            ], Response::HTTP_OK);
+        } catch (\Exception $e) {
+            // Log the exception for debugging
+            Log::error('Error retrieving SubMenu details: ' . $e->getMessage());
+
+            return response()->json([
+                'success' => false,
+                'message' => 'An error occurred while retrieving SubMenu details.',
+                'error' => $e->getMessage()
+            ], Response::HTTP_INTERNAL_SERVER_ERROR);
+        }
+    }
+
     public function menuList($id)
     {
         try {
@@ -155,7 +224,6 @@ class ApiController extends Controller
                 ->where('status', 1)
                 ->get()
                 ->map(function ($menu) {
-                    // Include the image URL as icon in the response
                     $menu->icon = $menu->icon_url; // This will call the accessor for the image URL and map it to 'icon'
                     unset($menu->image); // Optionally remove the 'image' field if you don't want it in the response
                     return $menu;
@@ -186,9 +254,7 @@ class ApiController extends Controller
                 'error' => $e->getMessage()
             ], Response::HTTP_INTERNAL_SERVER_ERROR);
         }
-
     }
-
 
     public function reviews()
     {
@@ -260,5 +326,160 @@ class ApiController extends Controller
         }
 
     }
+
+    public function sendOtp(Request $request)
+    {
+        // Validate the incoming request
+        $validator = Validator::make($request->all(), [
+            'mobile_number' => 'required|digits:10',
+            'name' => 'required|string|max:255',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Validation errors',
+                'errors' => $validator->errors()
+            ], Response::HTTP_UNPROCESSABLE_ENTITY);
+        }
+
+        try {
+            // Generate a new OTP
+            $otp = rand(1000, 9999);
+
+            // Find the enquiry by mobile number or create a new one
+            $enquiry = Enquiry::updateOrCreate(
+                ['mobile_number' => $request->mobile_number],
+                [
+                    'name' => $request->name,
+                    'otp' => $otp,
+                ]
+            );
+            return response()->json([
+                'success' => true,
+                'message' => $enquiry->wasRecentlyCreated ? 'OTP created and sent successfully.' : 'OTP updated successfully.',
+                'name' => $request->name,
+                'otp' => $otp,
+                'otp_verified_at' => $enquiry->otp_verified_at
+            ], Response::HTTP_OK);
+
+        } catch (\Exception $e) {
+            // Log the exception for debugging
+            Log::error('Error sending OTP: ' . $e->getMessage());
+
+            return response()->json([
+                'success' => false,
+                'message' => 'An error occurred while sending OTP.',
+                'error' => $e->getMessage()
+            ], Response::HTTP_INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    public function verifyOtp(Request $request)
+    {
+        // Validate the incoming request
+        $validator = Validator::make($request->all(), [
+            'mobile_number' => 'required|digits:10',
+            'otp' => 'required|digits:4',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Validation errors',
+                'errors' => $validator->errors()
+            ], Response::HTTP_UNPROCESSABLE_ENTITY);
+        }
+
+        try {
+            // Find the enquiry by mobile number
+            $enquiry = Enquiry::where('mobile_number', $request->mobile_number)->first();
+
+            if (!$enquiry) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Mobile number not found.'
+                ], Response::HTTP_NOT_FOUND);
+            }
+
+            // Check if the OTP matches
+            if ($enquiry->otp == $request->otp) {
+                // Update the otp_verified_at timestamp
+                $enquiry->update([
+                    'otp_verified_at' => now(),
+                ]);
+
+                return response()->json([
+                    'success' => true,
+                    'message' => 'OTP verified successfully.',
+                    'otp_verified_at' => $enquiry->otp_verified_at,
+                ], Response::HTTP_OK);
+            } else {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Invalid OTP.',
+                ], Response::HTTP_UNAUTHORIZED);
+            }
+
+        } catch (\Exception $e) {
+            // Log the exception for debugging
+            Log::error('Error verifying OTP: ' . $e->getMessage());
+
+            return response()->json([
+                'success' => false,
+                'message' => 'An error occurred while verifying OTP.',
+                'error' => $e->getMessage()
+            ], Response::HTTP_INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    public function resendOtp(Request $request)
+    {
+        // Validate the incoming request
+        $validator = Validator::make($request->all(), [
+            'mobile_number' => 'required|digits:10',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Validation errors',
+                'errors' => $validator->errors()
+            ], Response::HTTP_UNPROCESSABLE_ENTITY);
+        }
+
+        try {
+            // Find the enquiry by mobile number
+            $enquiry = Enquiry::where('mobile_number', $request->mobile_number)->first();
+
+            if (!$enquiry) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Mobile number not found.'
+                ], Response::HTTP_NOT_FOUND);
+            }
+
+            // Resend the existing OTP
+            $otp = $enquiry->otp;
+
+            return response()->json([
+                'success' => true,
+                'message' => 'OTP resent successfully.',
+                'otp' => $otp,
+            ], Response::HTTP_OK);
+
+        } catch (\Exception $e) {
+            // Log the exception for debugging
+            Log::error('Error resending OTP: ' . $e->getMessage());
+
+            return response()->json([
+                'success' => false,
+                'message' => 'An error occurred while resending OTP.',
+                'error' => $e->getMessage()
+            ], Response::HTTP_INTERNAL_SERVER_ERROR);
+        }
+    }
+
+
 
 }

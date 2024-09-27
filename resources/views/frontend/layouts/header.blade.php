@@ -28,12 +28,14 @@
 
 
                     <li class="has-submenu" >
-                        <a href="javascript:void(0);" style="color: black;font-weight:bold"><img src="{{ asset('assets/img/icons/get-quotes.svg') }}" alt="" class="suuport-icons">Get Quote
+                        {{-- <a href="javascript:void(0);" style="color: black;font-weight:bold"><img src="{{ asset('assets/img/icons/get-quotes.svg') }}" alt="" class="suuport-icons">Get Quote
+                        </a> --}}
+                        <a href="{{ route('blog') }}" style="color: black;font-weight:bold"><img src="{{ asset('assets/img/icons/get-quotes.svg') }}" alt="" class="support-icons">Blog
                         </a>
 
                     </li>
                     <li class="has-submenu">
-                        <a href="" style="color: black;font-weight:bold"><img src="{{ asset('assets/img/icons/about-us-blue.svg') }}" alt="" class="suuport-icons"> About Us
+                        <a href="{{ route('about') }}" style="color: black; font-weight:bold;"><img src="{{ asset('assets/img/icons/about-us-blue.svg') }}" alt="" class="suuport-icons"> About Us
                         </a>
 
                     </li>

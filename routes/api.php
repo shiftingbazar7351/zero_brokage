@@ -26,4 +26,8 @@ Route::controller(ApiController::class)->group(function () {
     Route::get('/menus/{id}', 'menuList');
     Route::get('/reviews', 'reviews');
     Route::get('/faqs', 'faqs');
+    Route::post('/send-otp', 'sendOtp');
+    Route::post('/verify-otp', 'verifyOtp');
+    Route::post('/resend-otp', 'resendOtp');
+    Route::get('/submenu/{id}', 'subMenu');
 });

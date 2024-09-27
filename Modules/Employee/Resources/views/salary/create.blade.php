@@ -50,12 +50,12 @@
                                 <label for="hr_head" class="form-label">HR Head</label><b style="color: red;">*</b>
                                 <select class="form-control" id="hr_head" name="hr_head">
                                     <option value="" selected disabled>Select HR Head</option>
-                                    <option value="hr1" {{ old('hr_head') == 'hr1' ? 'selected' : '' }}>Hr1</option>
-                                    <option value="hr2" {{ old('hr_head') == 'hr2' ? 'selected' : '' }}>Hr2</option>
-                                    <option value="hr3" {{ old('hr_head') == 'hr3' ? 'selected' : '' }}>Hr3</option>
+                                    @foreach($hrs as $hr)
+                                        <option value="{{ $hr->id }}" {{ old('hr_head') == $hr->id ? 'selected' : '' }}>{{ $hr->name }}</option>
+                                    @endforeach
                                 </select>
                                 @error('hr_head')
-                                    <div class="error text-danger ">{{ $message }}</div>
+                                    <div class="error text-danger">{{ $message }}</div>
                                 @enderror
                             </div>
 

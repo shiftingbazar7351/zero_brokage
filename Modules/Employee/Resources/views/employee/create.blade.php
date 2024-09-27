@@ -171,8 +171,12 @@
                             <div class="mb-3 col-md-3">
                                 <label for="reporting_head" class="form-label">Reporting Head</label><b
                                     style="color: red;">*</b>
-                                <input type="text" class="form-control" id="reporting_head" name="reporting_head"
-                                    value="{{ old('reporting_head') }}" placeholder="Enter reporting head">
+                                    <select name="reporting_head" class="form-select">
+                                        <option value="" selected disabled>Select Employee</option>
+                                        @foreach ($employees as $employee)
+                                            <option value="{{ $employee->name }}">{{ $employee->name ?? '' }}</option>
+                                        @endforeach
+                                    </select>
                                 @error('reporting_head')
                                     <div class="error text-danger ">{{ $message }}</div>
                                 @enderror

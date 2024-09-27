@@ -33,7 +33,14 @@
             </div>
         </div>
     </div>
-
+@endsection
+@section('scripts')
+    <script>
+        var statusRoute = `{{ route('employee-bank.status') }}`;
+        var searchRoute = `{{ route('employee-bank.index') }}`;
+    </script>
+    <script src="{{ asset('admin/assets/js/search.js') }}"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="{{ asset('admin/assets/js/status-update.js') }}"></script>
 
 @endsection
-

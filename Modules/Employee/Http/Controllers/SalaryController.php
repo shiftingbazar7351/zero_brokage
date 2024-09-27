@@ -172,4 +172,15 @@ class SalaryController extends Controller
 
     }
 
+    public function SalaryStatus(Request $request)
+    {
+        $item = Salary::find($request->id);
+        if ($item) {
+            $item->status = $request->status;
+            $item->save();
+            return response()->json(['success' => true, 'message' => 'Status updated successfully.']);
+        }
+        return response()->json(['success' => false, 'message' => 'Item not found.']);
+    }
+
 }

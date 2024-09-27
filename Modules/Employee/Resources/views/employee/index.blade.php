@@ -38,7 +38,13 @@
 @endsection
 @section('scripts')
     <script>
+        var statusRoute = `{{ route('employee.status') }}`;
         var searchRoute = `{{ route('employee.index') }}`;
     </script>
     <script src="{{ asset('admin/assets/js/search.js') }}"></script>
-    @endsection
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="{{ asset('admin/assets/js/status-update.js') }}"></script>
+    <script src="{{ asset('admin/assets/js/preview-img.js') }}"></script>
+
+@endsection
+

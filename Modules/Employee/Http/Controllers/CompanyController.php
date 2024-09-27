@@ -150,4 +150,15 @@ class CompanyController extends Controller
         return redirect(route('employee-company.index'))->with('success', ' Deleted Successfully!');
 
     }
+
+    public function productStatus(Request $request)
+    {
+        $item = Companie::find($request->id);
+        if ($item) {
+            $item->status = $request->status;
+            $item->save();
+            return response()->json(['success' => true, 'message' => 'Status updated successfully.']);
+        }
+        return response()->json(['success' => false, 'message' => 'Item not found.']);
+    }
 }

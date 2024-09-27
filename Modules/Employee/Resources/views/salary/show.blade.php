@@ -62,6 +62,18 @@
                                     <th scope="row">Telephone allowance</th>
                                     <td class="text-wrap">{{ $salary->telephone_allowance ?? '' }}</td>
                                 </tr>
+                                <tr>
+                                    <th scope="row">Provident fund</th>
+                                    <td class="text-wrap">{{ $salary->provident_fund ?? ''}}</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">Voluntary Provident fund</th>
+                                    <td class="text-wrap">{{ $salary->voluntary_provident_fund ?? '' }}</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">Professional tax</th>
+                                    <td class="text-wrap">{{ $salary->professional_tax ?? '' }}</td>
+                                </tr>
 
 
                             </tbody>

@@ -72,7 +72,7 @@ class UserController extends Controller
      * @param  \Illuminate\Http\Request  $request
      */
 
-     
+
     public function store(Request $request)
     {
         // Validate the request data
@@ -222,7 +222,8 @@ class UserController extends Controller
 
     public function profile()
     {
-        return view('backend.profile');
+        $users = User::where('id',Auth::user()->id)->first();
+        return view('backend.profile',compact('users'));
     }
 
 

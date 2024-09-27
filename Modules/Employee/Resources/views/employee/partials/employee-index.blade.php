@@ -53,3 +53,38 @@
         @endforelse
     </tbody>
 </table>
+@if ($employees->lastPage() > 1)
+    <div class="d-flex justify-content-between align-items-center">
+        <!-- Showing X to Y of Z entries -->
+        <div>
+            Showing {{ $employees->firstItem() }} to {{ $employees->lastItem() }} of {{ $employees->total() }} entries
+        </div>
+
+        <nav aria-label="Page navigation">
+            <ul class="pagination mb-0">
+                <!-- Previous Button -->
+                <li class="page-item {{ $employees->onFirstPage() ? 'disabled' : '' }}">
+                    <a class="page-link" href="{{ $employees->previousPageUrl() }}" tabindex="-1">Previous</a>
+                </li>
+
+                <!-- Page numbers with ellipsis -->
+                @foreach (range(1, $employees->lastPage()) as $i)
+                    @if ($i == 1 || $i == $employees->lastPage() || abs($i - $employees->currentPage()) <= 2)
+                        <li class="page-item {{ $employees->currentPage() == $i ? 'active' : '' }}">
+                            <a class="page-link" href="{{ $employees->url($i) }}">{{ $i }}</a>
+                        </li>
+                    @elseif ($i == 2 || $i == $employees->lastPage() - 1)
+                        <li class="page-item disabled">
+                            <span class="page-link">...</span>
+                        </li>
+                    @endif
+                @endforeach
+
+                <!-- Next Button -->
+                <li class="page-item {{ !$employees->hasMorePages() ? 'disabled' : '' }}">
+                    <a class="page-link" href="{{ $employees->nextPageUrl() }}">Next</a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+@endif

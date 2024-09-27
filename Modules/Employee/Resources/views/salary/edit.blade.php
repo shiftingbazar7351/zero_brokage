@@ -14,16 +14,29 @@
                         @csrf
                         @method('PUT')
                         <div class="row">
+                            <!-- Department Dropdown -->
                             <div class="mb-3 col-md-4">
                                 <label for="department">Department Name</label>
-                                <select class="form-control" id="department" name="department">
-                                    <option value="" selected disabled>Select Department</option>
-                                    @foreach ($users as $user)
-                                        <option value="{{ $user->department }}"
-                                            {{ $salary->employee_id == $user->id ? 'selected' : '' }}>
-                                            {{ $user->department }}
-                                        </option>
-                                    @endforeach
+                                <select class="form-control" id="department" name="department_id">
+                                    <option value="" disabled>Select Department</option>
+                                    <option value="IT Department"
+                                        {{ old('department_id', $salary->department_id) == 'IT Department' ? 'selected' : '' }}>
+                                        IT Department</option>
+                                    <option value="HR Department"
+                                        {{ old('department_id', $salary->department_id) == 'HR Department' ? 'selected' : '' }}>
+                                        HR Department</option>
+                                    <option value="Sales Department"
+                                        {{ old('department_id', $salary->department_id) == 'Sales Department' ? 'selected' : '' }}>
+                                        Sales Department</option>
+                                    <option value="Support Department"
+                                        {{ old('department_id', $salary->department_id) == 'Support Department' ? 'selected' : '' }}>
+                                        Support Department</option>
+                                    <option value="Account Department"
+                                        {{ old('department_id', $salary->department_id) == 'Account Department' ? 'selected' : '' }}>
+                                        Account Department</option>
+                                    <option value="Management Department"
+                                        {{ old('department_id', $salary->department_id) == 'Management Department' ? 'selected' : '' }}>
+                                        Management Department</option>
                                 </select>
                                 <div id="department_id_error" class="text-danger"></div>
                             </div>
@@ -33,12 +46,7 @@
                                 <label for="designation">Designation</label>
                                 <select class="form-control" id="designation" name="designation">
                                     <option value="" selected disabled>Select Designation</option>
-                                    @foreach ($users as $user)
-                                        <option value="{{ $user->designation }}"
-                                            {{ $salary->employee_id == $user->id ? 'selected' : '' }}>
-                                            {{ $user->designation }}
-                                        </option>
-                                    @endforeach
+                                    <!-- Designation options will be populated by JavaScript -->
                                 </select>
                                 <div id="designation_id_error" class="text-danger"></div>
                             </div>
@@ -48,24 +56,139 @@
                                 <label for="employee_name">Employee Name</label>
                                 <select class="form-control" id="employee_name" name="employee_id">
                                     <option value="" selected disabled>Select Employee</option>
-                                    @foreach ($users as $user)
-                                        <option value="{{ $user->id }}"  {{-- Use user ID here --}}
-                                            {{ $salary->employee_id == $user->id ? 'selected' : '' }}>
-                                            {{ $user->name }}
+                                    @foreach ($users as $hr)
+                                        <option value="{{ $hr->id }}"
+                                            {{ old('employee_id') == $hr->id || (isset($salary->employee_id) && $salary->employee_id == $hr->id) ? 'selected' : '' }}>
+                                            {{ $hr->name }}
                                         </option>
                                     @endforeach
                                 </select>
                                 <div id="employee_name_error" class="text-danger"></div>
                             </div>
 
+                            <script>
+                                document.addEventListener('DOMContentLoaded', function() {
+                                    const departmentDropdown = document.getElementById('department');
+                                    const designationDropdown = document.getElementById('designation');
+                                    const employeeNameDropdown = document.getElementById('employee_name');
+
+                                    // Function to populate designations based on department
+                                    function populateDesignations(department, selectedDesignation = null) {
+                                        designationDropdown.innerHTML = '<option value="" disabled>Select Designation</option>';
+
+                                        let designations = [];
+                                        switch (department) {
+                                            case 'IT Department':
+                                                designations = ['Frontend Developer', 'Backend Developer', 'Mobile Application Developer',
+                                                    'System Administrator', 'Digital Marketing Intern', 'SEO Manager', 'SEO Intern'
+                                                ];
+                                                break;
+                                            case 'HR Department':
+                                                designations = ['HR Manager', 'HR Executive', 'HR Intern'];
+                                                break;
+                                            case 'Sales Department':
+                                                designations = ['Branch Manager', 'Assistant Branch Manager', 'Territory Manager',
+                                                    'Regional Sales Manager', 'Area Sales Manager', 'Relationship Manager',
+                                                    'Sr. Business Consultant'
+                                                ];
+                                                break;
+                                            case 'Support Department':
+                                                designations = ['Customer Support', 'SEO Manager', 'Sr. Key Account Manager'];
+                                                break;
+                                            case 'Account Department':
+                                                designations = ['Account Manager', 'Account Executive'];
+                                                break;
+                                            case 'Management Department':
+                                                designations = ['Director', 'CEO', 'HR'];
+                                                break;
+                                            default:
+                                                designations = [];
+                                        }
+
+                                        designations.forEach(function(designation) {
+                                            const option = document.createElement('option');
+                                            option.value = designation;
+                                            option.textContent = designation;
+                                            if (designation === selectedDesignation) {
+                                                option.selected = true;
+                                            }
+                                            designationDropdown.appendChild(option);
+                                        });
+                                    }
+
+                                    // Function to populate employees based on department and designation
+                                    function populateEmployees(department, designation, selectedEmployeeId = null) {
+                                        fetch(`/employees?department=${department}&designation=${designation}`)
+                                            .then(response => response.json())
+                                            .then(data => {
+                                                employeeNameDropdown.innerHTML = '<option value="" disabled>Select Employee</option>';
+
+                                                if (data.length === 0) {
+                                                    // If no employees found
+                                                    const option = document.createElement('option');
+                                                    option.value = '';
+                                                    option.textContent = 'No employees found';
+                                                    employeeNameDropdown.appendChild(option);
+                                                } else {
+                                                    data.forEach(employee => {
+                                                        const option = document.createElement('option');
+                                                        option.value = employee.id;
+                                                        option.textContent = employee.name;
+                                                        if (employee.id == selectedEmployeeId) {
+                                                            option.selected = true; // Ensure selected employee remains selected
+                                                        }
+                                                        employeeNameDropdown.appendChild(option);
+                                                    });
+                                                }
+                                            })
+                                            .catch(error => console.error('Error fetching employees:', error));
+                                    }
+
+                                    // Function to handle form population when editing
+                                    function initializeForm() {
+                                        const selectedDepartment = '{{ old('department_id', $salary->department_id) }}';
+                                        const selectedDesignation = '{{ old('designation', $salary->designation) }}';
+                                        const selectedEmployeeId = '{{ old('employee_id', $salary->employee_id) }}';
+
+                                        if (selectedDepartment) {
+                                            populateDesignations(selectedDepartment, selectedDesignation);
+                                            if (selectedDesignation) {
+                                                populateEmployees(selectedDepartment, selectedDesignation, selectedEmployeeId);
+                                            }
+                                        }
+                                    }
+
+                                    // Trigger form population on page load
+                                    initializeForm();
+
+                                    // Handle department change event
+                                    departmentDropdown.addEventListener('change', function() {
+                                        const department = this.value;
+                                        populateDesignations(department); // Reset designations on department change
+                                        employeeNameDropdown.innerHTML =
+                                            '<option value="" disabled>Select Employee</option>'; // Clear employees
+                                    });
+
+                                    // Handle designation change event
+                                    designationDropdown.addEventListener('change', function() {
+                                        const designation = this.value;
+                                        const department = departmentDropdown.value;
+                                        if (department) {
+                                            populateEmployees(department,
+                                                designation); // Populate employees based on the new designation
+                                        }
+                                    });
+                                });
+                            </script>
+
 
                             <div class="mb-3 col-md-4">
                                 <label for="hr_head" class="form-label">HR Head</label><b style="color: red;">*</b>
                                 <select class="form-control" id="hr_head" name="hr_head">
                                     <option value="" selected disabled>Select HR Head</option>
-                                    @foreach($hrs as $hr)
+                                    @foreach ($hrs as $hr)
                                         <option value="{{ $hr->id }}"
-                                            {{ (old('hr_head') == $hr->id || (isset($salary->hr_head) && $salary->hr_head == $hr->id)) ? 'selected' : '' }}>
+                                            {{ old('hr_head') == $hr->id || (isset($salary->hr_head) && $salary->hr_head == $hr->id) ? 'selected' : '' }}>
                                             {{ $hr->name }}
                                         </option>
                                     @endforeach
@@ -235,7 +358,6 @@
                                 @enderror
                             </div>
 
-
                             <!-- Submit Button -->
                             <div class="text-center">
                                 <button type="submit" class="btn btn-primary">Submit</button>
@@ -247,8 +369,8 @@
         </div>
     </div>
 @endsection
-@section('scripts')
-    {{-- <script>
+{{-- @section('scripts')
+    <script>
         document.addEventListener('DOMContentLoaded', function() {
             // Get department and designation dropdown elements
             const departmentDropdown = document.getElementById('department');
@@ -438,51 +560,5 @@
                 }
             });
         });
-    </script> --}}
-
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-    const departmentDropdown = document.getElementById('department');
-    const designationDropdown = document.getElementById('designation');
-    const employeeNameDropdown = document.getElementById('employee_name');
-
-    function fetchEmployees(department, designation) {
-        // AJAX request to fetch employees based on department and designation
-        fetch(`/employees?department=${department}&designation=${designation}`)
-            .then(response => response.json())
-            .then(data => {
-                // Clear existing options
-                employeeNameDropdown.innerHTML = '<option value="" selected disabled>Select Employee</option>';
-
-                // Populate employee options
-                data.forEach(employee => {
-                    const option = document.createElement('option');
-                    option.value = employee.id;  // Use employee.id (user_id) here
-                    option.textContent = employee.name;
-                    employeeNameDropdown.appendChild(option);
-                });
-            })
-            .catch(error => console.error('Error:', error));
-    }
-
-    // Department change event
-    departmentDropdown.addEventListener('change', function() {
-        const department = this.value;
-        const designation = designationDropdown.value;
-        if (designation) {
-            fetchEmployees(department, designation);
-        }
-    });
-
-    // Designation change event
-    designationDropdown.addEventListener('change', function() {
-        const designation = this.value;
-        const department = departmentDropdown.value;
-        if (department) {
-            fetchEmployees(department, designation);
-        }
-    });
-});
-
     </script>
-@endsection
+@endsection --}}

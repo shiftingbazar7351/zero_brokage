@@ -29,6 +29,7 @@ class Salary extends Model
         'personal_loan_interest',
         'food_relief',
         'hr_head',
+        'department_id',
         'status',
         'created_by'
     ];
@@ -37,6 +38,10 @@ class Salary extends Model
         return $this->belongsTo(User::class,'employee_id','id');
     }
 
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 
 }
 

@@ -22,6 +22,7 @@ class ApiController extends Controller
         try {
             $subcategories = Subcategory::select('id', 'name', 'slug', 'icon', 'background_image', 'featured', 'trending')
                 ->where('status', 1)
+                ->orderByDesc('created_at')
                 ->get()
                 ->map(function ($subcategory) {
                     // Include the URLs in the response
@@ -63,7 +64,7 @@ class ApiController extends Controller
     {
         try {
             // Fetch the subcategory by ID
-            $subcategory = SubCategory::select('id')->find($id);
+            $subcategory = SubCategory::select('id')->orderByDesc('created_at')->find($id);
 
             // Check if the subcategory exists
             if (!$subcategory) {
@@ -156,6 +157,7 @@ class ApiController extends Controller
             $menu = Menu::select('id', 'name', 'image', 'slug', 'subcategory_id')
                 ->where('id', $id)
                 ->where('status', 1)
+                ->orderByDesc('created_at')
                 ->first();
 
             // Check if the menu exists
@@ -225,6 +227,7 @@ class ApiController extends Controller
             $menus = Menu::select('id', 'name', 'subcategory_id', 'image')
                 ->where('subcategory_id', $id)
                 ->where('status', 1)
+                ->orderByDesc('created_at')
                 ->get()
                 ->map(function ($menu) {
                     $menu->icon = $menu->icon_url; // This will call the accessor for the image URL and map it to 'icon'
@@ -298,7 +301,8 @@ class ApiController extends Controller
     {
         try {
             $faqs = Faq::select('id', 'question', 'answer')
-                ->orderByDesc('created_at')->where('status', 1)
+                ->orderByDesc('created_at')
+                ->where('status', 1)
                 ->get();
 
 
@@ -396,7 +400,9 @@ class ApiController extends Controller
 
         try {
             // Find the enquiry by mobile number
-            $enquiry = Enquiry::where('mobile_number', $request->mobile_number)->first();
+            $enquiry = Enquiry::where('mobile_number', $request->mobile_number)
+            ->orderByDesc('created_at')
+            ->first();
 
             if (!$enquiry) {
                 return response()->json([

@@ -22,9 +22,10 @@ class Bank extends Model
         'created_by',
     ];
 
-    public function usern(){
-        return $this->belongsTo(User::class,'emp_id','id');
+    public function userdata(){
+        return $this->belongsTo(User::class,'emp_id','name');
     }
+
 
 
 }

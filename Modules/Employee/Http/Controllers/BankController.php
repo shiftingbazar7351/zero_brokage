@@ -83,7 +83,8 @@ class BankController extends Controller
      */
     public function show($id)
     {
-        return view('employee::bank.show');
+        $bank = Bank::with('userdata')->findOrFail($id);
+        return view('employee::bank.show',compact('bank'));
     }
 
     /**

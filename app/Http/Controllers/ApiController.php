@@ -202,7 +202,7 @@ class ApiController extends Controller
                 // 'submenu_data' => [
                 //     'menu_id' => $menu->id,
                 //     'menu_name' => $menu->name, // Include the menu name here
-                    'submenus' => $submenus, // All submenu data (with city and state names)
+                    'submenus_data' => $submenus, // All submenu data (with city and state names)
                 // ]
             ], Response::HTTP_OK);
         } catch (\Exception $e) {

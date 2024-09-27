@@ -13,6 +13,7 @@ use App\Models\SubMenu;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 
 class ApiController extends Controller
@@ -182,11 +183,12 @@ class ApiController extends Controller
 
                 // Format city and state name
                 $cityState = $city && $state ? $city->name . ', ' . $state->name : null;
-
+                $baseUrl = env('BASE_URL');
+                $imageUrl = $submenu->image ? $baseUrl . Storage::url($submenu->image) : null;
                 return [
                     'id' => $submenu->id,
                     'name' => $submenu->name,
-                    'image' => $submenu->image,
+                    'image' => $imageUrl, // Adding the image URL here
                     'total_price' => $submenu->total_price,
                     'discounted_price' => $submenu->discounted_price,
                     'menu_id' => $submenu->menu_id,
@@ -199,11 +201,8 @@ class ApiController extends Controller
             return response()->json([
                 'success' => true,
                 'message' => 'SubMenu details retrieved successfully.',
-                // 'submenu_data' => [
-                //     'menu_id' => $menu->id,
-                //     'menu_name' => $menu->name, // Include the menu name here
-                    'submenus_data' => $submenus, // All submenu data (with city and state names)
-                // ]
+                'submenus_data' => $submenus,
+
             ], Response::HTTP_OK);
         } catch (\Exception $e) {
             // Log the exception for debugging
@@ -225,7 +224,6 @@ class ApiController extends Controller
                 ->where('status', 1)
                 ->get()
                 ->map(function ($menu) {
-                    // Include the image URL as icon in the response
                     $menu->icon = $menu->icon_url; // This will call the accessor for the image URL and map it to 'icon'
                     unset($menu->image); // Optionally remove the 'image' field if you don't want it in the response
                     return $menu;
@@ -256,9 +254,7 @@ class ApiController extends Controller
                 'error' => $e->getMessage()
             ], Response::HTTP_INTERNAL_SERVER_ERROR);
         }
-
     }
-
 
     public function reviews()
     {

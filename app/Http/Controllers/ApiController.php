@@ -13,7 +13,6 @@ use App\Models\SubMenu;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 
 class ApiController extends Controller
@@ -173,7 +172,12 @@ class ApiController extends Controller
                 ->where('status', 1)
                 ->orderByDesc('created_at')
                 ->select('id', 'name', 'image', 'total_price', 'discounted_price', 'menu_id', 'city_id', 'description', 'details')
-                ->get();
+                ->get()
+                ->map(function ($submenus) {
+                    // Include the URLs in the response
+                    $submenus->image = $submenus->image_url; // This will call the accessor for the URL
+                    return $submenus;
+                });
 
             // Fetch city and state for each submenu
             $submenus = $submenus->map(function ($submenu) {
@@ -183,12 +187,11 @@ class ApiController extends Controller
 
                 // Format city and state name
                 $cityState = $city && $state ? $city->name . ', ' . $state->name : null;
-                $baseUrl = env('BASE_URL');
-                $imageUrl = $submenu->image ? $baseUrl . Storage::url($submenu->image) : null;
+
                 return [
                     'id' => $submenu->id,
                     'name' => $submenu->name,
-                    'image' => $imageUrl, // Adding the image URL here
+                    'image' => $submenu->image,
                     'total_price' => $submenu->total_price,
                     'discounted_price' => $submenu->discounted_price,
                     'menu_id' => $submenu->menu_id,

@@ -28,6 +28,7 @@ class Salary extends Model
         'personal_loan_principal',
         'personal_loan_interest',
         'food_relief',
+        'hr_head',
         'status',
         'created_by'
     ];

@@ -92,9 +92,10 @@ class CategoryController extends Controller
      */
     public function destroy(Category $category)
     {
+
         $category->delete();
 
-        return back()->with(['message' => 'Category deleted successfully.', 'alert-type' => 'success']);
+        return redirect()->back()->with(['message' => 'Category deleted successfully.', 'alert-type' => 'success']);
 
     }
 

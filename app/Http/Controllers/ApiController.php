@@ -199,11 +199,11 @@ class ApiController extends Controller
             return response()->json([
                 'success' => true,
                 'message' => 'SubMenu details retrieved successfully.',
-                'submenu_data' => [
-                    'menu_id' => $menu->id,
-                    'menu_name' => $menu->name, // Include the menu name here
+                // 'submenu_data' => [
+                //     'menu_id' => $menu->id,
+                //     'menu_name' => $menu->name, // Include the menu name here
                     'submenus' => $submenus, // All submenu data (with city and state names)
-                ]
+                // ]
             ], Response::HTTP_OK);
         } catch (\Exception $e) {
             // Log the exception for debugging

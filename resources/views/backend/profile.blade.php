@@ -46,7 +46,6 @@
                             </div>
                             <div class="col-md-8 p-4">
                                 <div class="row">
-
                                     <div class="col-md-6 form-group">
                                         <label>First Name</label>
                                         <input type="text" class="form-control" name="name"
@@ -80,12 +79,10 @@
                                         <label>Permanent Address</label>
                                         <textarea type="text" class="form-control" rows="3" name="permanent_address">{{ old('permanent_address', $user->permanent_address ?? '') }}</textarea>
                                     </div>
-
-
                                 </div>
                                 <div class="row">
                                     <div class="btn-path">
-                                        <a href="{{ route('home') }}" class="btn btn-cancel me-3">Cancel</a>
+                                        <a href="{{ route('admin_page') }}" class="btn btn-cancel me-3">Cancel</a>
                                         <button type="submit" class="btn btn-primary">Save Changes</button>
                                     </div>
                                 </div>

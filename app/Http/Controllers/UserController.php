@@ -185,7 +185,6 @@ class UserController extends Controller
         ]);
 
         $user = Auth::user();
-
         // Update user information
         $user->name = $request->name;
         $user->lname = $request->lname;
@@ -200,9 +199,7 @@ class UserController extends Controller
             $user->profile_picture = $filename;
         }
 
-
         $user->save();
-
         return redirect()->back()->with(['message' => 'profile updated successfully', 'alert-type' => 'success']);
     }
 

@@ -45,7 +45,6 @@
                         </div>
                         <div class="col-md-8 p-4">
                             <div class="row">
-
                                 <div class="col-md-6 form-group">
                                     <label>First Name</label>
                                     <input type="text" class="form-control" name="name"

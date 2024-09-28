@@ -181,7 +181,7 @@ class UserController extends Controller
             'phone_number' => 'nullable|string|max:15',
             'current_address' => 'nullable|string|max:255',
             'permanent_address' => 'nullable|string|max:255',
-            'profile_picture' => 'nullable|image|mimes:jpg,png,jpeg|max:500', // Validate image
+            'profile_picture' => 'nullable|image|mimes:jpg,png,jpeg|max:2048',
         ]);
 
         $user = Auth::user();
@@ -196,19 +196,14 @@ class UserController extends Controller
 
         // Handle profile picture upload
         if ($request->hasFile('profile_picture')) {
-            // Delete old profile picture if exists
-            if ($user->profile_picture) {
-                Storage::delete($user->profile_picture);
-            }
-
-            // Store new profile picture
-            $path = $request->file('profile_picture')->store('profile_pictures', 'public');
-            $user->profile_picture = $path;
+            $filename = $this->fileUploadService->uploadImage('profile_picture/', $request->file('profile_picture'));
+            $user->profile_picture = $filename;
         }
+
 
         $user->save();
 
-        return redirect()->route('user.profile.edit')->with('success', 'Profile updated successfully!');
+        return redirect()->back()->with(['message' => 'profile updated successfully', 'alert-type' => 'success']);
     }
 
 

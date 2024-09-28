@@ -23,7 +23,7 @@ class SalaryController extends Controller
         // Filter based on search query
         if ($request->has('search')) {
             $query->where('name', 'like', '%' . $request->search . '%')
-            ->orderByDesc('created_at');
+                ->orderByDesc('created_at');
         }
         // Paginate the users (adjust pagination number as needed)
         $salaries = $query->paginate(10);
@@ -32,7 +32,7 @@ class SalaryController extends Controller
             return view('employee::salary.partials.salary-index', compact('salaries'))->render();
         }
 
-        return view('employee::salary.index',compact('salaries'));
+        return view('employee::salary.index', compact('salaries'));
     }
 
     /**
@@ -41,12 +41,12 @@ class SalaryController extends Controller
      */
     public function create()
     {
-         $departments = Department::where('status',1)
-        ->orderByDesc('created_at')
-        ->get();
-        $hrs = HrName::where('designation','HR Head')->get(['id','name']);
+        $departments = Department::where('status', 1)
+            ->orderByDesc('created_at')
+            ->get();
+        $hrs = HrName::where('designation', 'HR Head')->get(['id', 'name']);
 
-        return view('employee::salary.create',compact('departments','hrs'));
+        return view('employee::salary.create', compact('departments', 'hrs'));
     }
 
     /**
@@ -104,10 +104,10 @@ class SalaryController extends Controller
      */
     public function edit($id)
     {
-        $users = User::orderByDesc('created_at')->get(['id', 'department', 'designation','name']);
+        $users = User::orderByDesc('created_at')->get(['id', 'department', 'designation', 'name']);
         $salary = Salary::findOrFail($id);
         $hrs = HrName::where('designation', 'HR Head')->get(['id', 'name']);
-        return view('employee::salary.edit', compact('salary', 'users','hrs'));
+        return view('employee::salary.edit', compact('salary', 'users', 'hrs'));
     }
 
 
@@ -164,17 +164,15 @@ class SalaryController extends Controller
 
     public function getEmployees(Request $request)
     {
-    $department = $request->get('department');
-    $designation = $request->get('designation');
+        $department = $request->query('department');
+        $designation = $request->query('designation');
 
-    return $employees = User::where('department', $department)
-                    ->where('designation', $designation)
-                    ->where('status', 1) // assuming status 1 means active
-                    ->orderBy('name')
-                    ->get(['id', 'name']); // fetching only id and name for dropdown
+        // Fetch employees based on department and designation
+        $employees = User::where('department', $department)
+                          ->where('designation', $designation)
+                          ->get(['id', 'name']); // Return only the ID and name
 
-    return response()->json($employees);
-
+        return response()->json($employees);
     }
 
     public function SalaryStatus(Request $request)

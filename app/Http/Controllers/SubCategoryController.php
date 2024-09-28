@@ -42,7 +42,6 @@ class SubCategoryController extends Controller
         return view('backend.sub-category.index', compact('subcategories','categories'));
     }
 
-
     public function store(Request $request)
     {
         // 'required|file|mimetypes:image/jpeg,image/png,image/gif,image/svg+xml,image/webp,image/heif,image/heic'

@@ -65,8 +65,8 @@ class EmployeeController extends Controller
         $employees = User::where('status', 1)->get('name');
 
 
-        $hr_names = HrName::where('status', 1)->where('designation','HR Head')->get();
-        $hr_exe = HrName::where('status', 1)->where('designation','HR Executive')->get();
+        $hr_names = HrName::where('status', 1)->where('designation', 'HR Head')->get();
+        $hr_exe = HrName::where('status', 1)->where('designation', 'HR Executive')->get();
         $companies = Companie::where('status', 1)->get();
         return view('employee::employee.create', compact('roles', 'companies', 'employees','hr_names','hr_exe'));
     }
@@ -110,8 +110,6 @@ class EmployeeController extends Controller
             'permanent_address' => 'nullable|string|max:191',
         ]);
 
-
-
         try {
             // Format the designation for the role name and title
             $designation = $validatedData['designation'];
@@ -129,11 +127,13 @@ class EmployeeController extends Controller
             $passwordString = ucfirst(strtolower($firstName)) . '@123'; // First letter capitalized, then '123'
             $hashedPassword = Hash::make($passwordString); // Hash the generated password
 
+            $employmentCode = $this->generateEmploymentCode();
             // Create the employee with validated data
             $employee = new User();
             $employee->fill($validatedData);
             $employee->password = $hashedPassword;
             $employee->user_type = $role->id;
+            $employee->employee_code = $employmentCode;
             $employee->status = 1;
             $employee->created_by = auth()->user()->id;
             $employee->save();
@@ -182,6 +182,30 @@ class EmployeeController extends Controller
             return redirect()->back()->withErrors(['error' => 'An error occurred while creating the employee: ' . $e->getMessage()]);
         }
     }
+
+    private function generateEmploymentCode()
+    {
+        $prefix = 'ZBE';
+        $datePart = '150820'; // Fixed date part as per your requirement
+
+        // Get the last employee to find the highest employment code
+        $lastEmployee = User::where('employee_code', 'LIKE', $prefix . $datePart . '%')
+                            ->orderBy('employee_code', 'desc')
+                            ->first();
+
+        if ($lastEmployee) {
+            // Extract the numeric part of the last employment code
+            $lastCodeNumber = intval(substr($lastEmployee->employee_code, -1)); // Get the last digit
+            $newCodeNumber = $lastCodeNumber + 1; // Increment the code number
+        } else {
+            $newCodeNumber = 1; // Start from 1 if no employees exist
+        }
+
+        // Format the new employment code with the incremented number
+        return $prefix . $datePart . $newCodeNumber; // No need for padding since we are using a single digit for the increment
+    }
+
+
 
 
 

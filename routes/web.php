@@ -139,9 +139,12 @@ Route::post('/get-otp', [OtpController::class, 'getOtp'])->name('getOtp');
 Route::post('/verify-otp', [OtpController::class, 'verifyOtp'])->name('verifyOtp');
 
 Route::middleware(['auth', 'check.ip'])->group(function () {
-    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+    // Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+    // Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+    // Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+
+    Route::post('/user/profile/update', [UserController::class, 'update'])->name('user.profile.update');
+
 
     Route::controller(UserController::class)->group(function () {
         Route::get('/user', 'index')->name('user.index');
@@ -153,7 +156,6 @@ Route::middleware(['auth', 'check.ip'])->group(function () {
         Route::delete('/user/{user}', 'destroy')->name('user.destroy')->middleware('can:user-delete');
         Route::post('/user-status', 'userStatus')->name('user.status')->middleware('can:user-status');
         Route::get('/profile', 'profile')->name('user.profile');
-
     });
     // Permission Module
     Route::get('/role-permission', [RolePermission::class, 'index'])->name('role.permission.list')->middleware('can:role-list');

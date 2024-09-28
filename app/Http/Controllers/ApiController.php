@@ -13,7 +13,6 @@ use App\Models\SubMenu;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 
 class ApiController extends Controller
@@ -23,6 +22,7 @@ class ApiController extends Controller
         try {
             $subcategories = Subcategory::select('id', 'name', 'slug', 'icon', 'background_image', 'featured', 'trending')
                 ->where('status', 1)
+                ->orderByDesc('created_at')
                 ->get()
                 ->map(function ($subcategory) {
                     // Include the URLs in the response
@@ -64,7 +64,7 @@ class ApiController extends Controller
     {
         try {
             // Fetch the subcategory by ID
-            $subcategory = SubCategory::select('id')->find($id);
+            $subcategory = SubCategory::select('id')->orderByDesc('created_at')->find($id);
 
             // Check if the subcategory exists
             if (!$subcategory) {
@@ -157,6 +157,7 @@ class ApiController extends Controller
             $menu = Menu::select('id', 'name', 'image', 'slug', 'subcategory_id')
                 ->where('id', $id)
                 ->where('status', 1)
+                ->orderByDesc('created_at')
                 ->first();
 
             // Check if the menu exists
@@ -173,7 +174,12 @@ class ApiController extends Controller
                 ->where('status', 1)
                 ->orderByDesc('created_at')
                 ->select('id', 'name', 'image', 'total_price', 'discounted_price', 'menu_id', 'city_id', 'description', 'details')
-                ->get();
+                ->get()
+                ->map(function ($submenus) {
+                    // Include the URLs in the response
+                    $submenus->image = $submenus->image_url; // This will call the accessor for the URL
+                    return $submenus;
+                });
 
             // Fetch city and state for each submenu
             $submenus = $submenus->map(function ($submenu) {
@@ -183,12 +189,11 @@ class ApiController extends Controller
 
                 // Format city and state name
                 $cityState = $city && $state ? $city->name . ', ' . $state->name : null;
-                $baseUrl = env('BASE_URL');
-                $imageUrl = $submenu->image ? $baseUrl . Storage::url($submenu->image) : null;
+
                 return [
                     'id' => $submenu->id,
                     'name' => $submenu->name,
-                    'image' => $imageUrl, // Adding the image URL here
+                    'image' => $submenu->image,
                     'total_price' => $submenu->total_price,
                     'discounted_price' => $submenu->discounted_price,
                     'menu_id' => $submenu->menu_id,
@@ -222,6 +227,7 @@ class ApiController extends Controller
             $menus = Menu::select('id', 'name', 'subcategory_id', 'image')
                 ->where('subcategory_id', $id)
                 ->where('status', 1)
+                ->orderByDesc('created_at')
                 ->get()
                 ->map(function ($menu) {
                     $menu->icon = $menu->icon_url; // This will call the accessor for the image URL and map it to 'icon'
@@ -295,7 +301,8 @@ class ApiController extends Controller
     {
         try {
             $faqs = Faq::select('id', 'question', 'answer')
-                ->orderByDesc('created_at')->where('status', 1)
+                ->orderByDesc('created_at')
+                ->where('status', 1)
                 ->get();
 
 
@@ -324,7 +331,6 @@ class ApiController extends Controller
                 'error' => $e->getMessage()
             ], Response::HTTP_INTERNAL_SERVER_ERROR);
         }
-
     }
 
     public function sendOtp(Request $request)
@@ -393,7 +399,9 @@ class ApiController extends Controller
 
         try {
             // Find the enquiry by mobile number
-            $enquiry = Enquiry::where('mobile_number', $request->mobile_number)->first();
+            $enquiry = Enquiry::where('mobile_number', $request->mobile_number)
+            ->orderByDesc('created_at')
+            ->first();
 
             if (!$enquiry) {
                 return response()->json([
@@ -479,7 +487,4 @@ class ApiController extends Controller
             ], Response::HTTP_INTERNAL_SERVER_ERROR);
         }
     }
-
-
-
 }

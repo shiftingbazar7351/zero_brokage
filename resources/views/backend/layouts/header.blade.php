@@ -61,7 +61,7 @@
                         <div class="subscription-menu">
                             <ul>
                                 <li>
-                                    <a href="account-settings.html">Profile</a>
+                                    <a href="{{ route('user.profile') }}">Profile</a>
                                 </li>
                                 {{-- <li>
                                     <a href="localization.html">Settings</a>

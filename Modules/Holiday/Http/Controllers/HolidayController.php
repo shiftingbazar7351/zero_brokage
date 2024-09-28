@@ -4,6 +4,7 @@ namespace Modules\Holiday\Http\Controllers;
 
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\Request;
+use Modules\Holiday\Entities\Holiday;
 use Illuminate\Routing\Controller;
 
 class HolidayController extends Controller
@@ -12,9 +13,23 @@ class HolidayController extends Controller
      * Display a listing of the resource.
      * @return Renderable
      */
-    public function index()
+
+    public function index(Request $request)
     {
-        return view('holiday::index');
+        $query = Holiday::query();
+        // Filter based on search query
+        if ($request->has('search')) {
+            $query->where('name', 'like', '%' . $request->search . '%')
+            ->orWhere('number', 'like', '%' . $request->search . '%')
+            ->orWhere('address', 'like', '%' . $request->search . '%');
+        }
+        // Paginate the users (adjust pagination number as needed)
+        $holidays = $query->orderByDesc('created_at')->paginate(10);
+        // Check if it's an AJAX request
+        if ($request->ajax()) {
+            return view('holiday::holiday.partials.holiday-index', compact('holidays'))->render();
+        }
+        return view('holiday::holiday.index',compact('holidays'));
     }
 
     /**

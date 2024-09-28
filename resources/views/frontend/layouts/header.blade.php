@@ -44,7 +44,7 @@
                         <a href="{{ route('contact-us') }}" style="color: black;font-weight:bold;"><img src="{{ asset('assets/img/icons/call-blue.svg') }}" alt="" class="suuport-icons"> Support
                         </a>
                     </li>
-                    <li><a href="{{ route('admin_page') }}">Admin</a></li>
+                    
                 </ul>
             </div>
             {{-- @include('frontend.layouts.login-popup') --}}

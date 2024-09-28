@@ -25,6 +25,7 @@ use App\Http\Controllers\TransactionController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\VendorController;
 use App\Http\Controllers\VerifiedController;
+use App\Http\Controllers\TaskController;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Route;
 
@@ -265,6 +266,16 @@ Route::middleware(['auth', 'check.ip'])->group(function () {
         Route::post('/getsubMenus/{menuId}', 'getsubMenus');
         Route::post('/vendor-send-otp', 'sendOtp')->name('vendor.send.otp');
         Route::post('/vendor-verify-otp', 'verifyOtp')->name('vendor.verify.otp');
+    });
+
+    Route::controller(TaskController::class)->group(function () {
+        Route::get('/vendor-task', 'index')->name('vendor-task.index')->middleware('can:vendor-task-list');
+        Route::get('/vendor-task/create', 'create')->name('vendor-task.create')->middleware('can:vendor-task-create');
+        Route::post('/vendor-task', 'store')->name('vendor-task.store')->middleware('can:vendor-task-create');
+        Route::get('/vendor-task/{vendor-task}/edit', 'edit')->name('vendor-task.edit')->middleware('can:vendor-task-edit');
+        Route::put('/vendor-task/{vendor-task}', 'update')->name('vendor-task.update')->middleware('can:vendor-task-edit');
+        Route::get('/vendor-task/{vendor-task}', 'show')->name('vendor-task.show')->middleware('can:vendor-task-show');
+        Route::delete('/vendor-task/{vendor-task}', 'destroy')->name('vendor-task.destroy')->middleware('can:vendor-task-delete');
     });
 
     Route::controller(ProductController::class)->group(function () {

@@ -70,7 +70,7 @@
                                     </div>
                                     <div class="col-md-6 form-group">
                                         <label>Employement Code</label>
-                                        <div>{{ old('employee_code', $user->employee_code ?? '') }}dslkajflkdsa</div>
+                                        <div>{{ old('employee_code', $user->employee_code ?? '') }}</div>
                                     </div>
                                     <div class="col-md-6 form-group">
                                         <label>Current Address</label>

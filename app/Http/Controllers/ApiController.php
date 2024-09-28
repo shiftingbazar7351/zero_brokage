@@ -331,7 +331,6 @@ class ApiController extends Controller
                 'error' => $e->getMessage()
             ], Response::HTTP_INTERNAL_SERVER_ERROR);
         }
-
     }
 
     public function sendOtp(Request $request)

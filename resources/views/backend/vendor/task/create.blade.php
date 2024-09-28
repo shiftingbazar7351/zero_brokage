@@ -11,6 +11,18 @@
                     <form action="{{ route('vendor-task.store') }}" method="POST" enctype="multipart/form-data">
                         @csrf
                         <div class="row">
+                            <div class="mb-3 col-md-4">
+                                <label for="category">Category<b style="color: red;">*</b></label>
+                                <select class="form-control" id="category" name="category" required>
+                                    <option value="">Select category</option>
+                                    @foreach ($categories as $category)
+                                        <option value="{{ $category->id }}">{{ $category->name }}</option>
+                                    @endforeach
+                                </select>
+                                @error('category')
+                                    <div class="error text-danger">{{ $message }}</div>
+                                @enderror
+                            </div>
 
                         <!-- Next Follow-up Date -->
                         <div class="mb-3 col-md-4">

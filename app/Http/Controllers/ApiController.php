@@ -359,6 +359,7 @@ class ApiController extends Controller
                 [
                     'name' => $request->name,
                     'otp' => $otp,
+                    ''
                 ]
             );
             return response()->json([
@@ -366,6 +367,7 @@ class ApiController extends Controller
                 'message' => $enquiry->wasRecentlyCreated ? 'OTP created and sent successfully.' : 'OTP updated successfully.',
                 'name' => $request->name,
                 'otp' => $otp,
+                'mobile_number' => $request->mobile_number,
                 'otp_verified_at' => $enquiry->otp_verified_at
             ], Response::HTTP_OK);
 

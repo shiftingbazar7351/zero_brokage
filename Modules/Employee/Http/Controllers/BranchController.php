@@ -139,4 +139,15 @@ class BranchController extends Controller
 
         return redirect(route('employee-branch.index'))->with('success', ' Deleted Successfully!');
     }
+
+    public function branchStatus(Request $request)
+    {
+        $item = Branch::find($request->id);
+        if ($item) {
+            $item->status = $request->status;
+            $item->save();
+            return response()->json(['success' => true, 'message' => 'Status updated successfully.']);
+        }
+        return response()->json(['success' => false, 'message' => 'Item not found.']);
+    }
 }

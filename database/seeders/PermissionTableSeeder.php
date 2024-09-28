@@ -202,6 +202,14 @@ class PermissionTableSeeder extends Seeder
             ['name' => 'employee-hr-show', 'title' => 'Employee-hr Show', 'guard_name' => 'web'],
             ['name' => 'employee-hr-delete', 'title' => 'Employee-hr Delete', 'guard_name' => 'web'],
 
+
+            ['name' => 'vendor-task-list', 'title' => 'Vendor-task List', 'guard_name' => 'web'],
+            ['name' => 'vendor-task-create', 'title' => 'Vendor-task Create', 'guard_name' => 'web'],
+            ['name' => 'vendor-task-edit', 'title' => 'Vendor-task Edit', 'guard_name' => 'web'],
+            ['name' => 'vendor-task-status', 'title' => 'Vendor-task Status', 'guard_name' => 'web'],
+            ['name' => 'vendor-task-show', 'title' => 'Vendor-task Show', 'guard_name' => 'web'],
+            ['name' => 'vendor-task-delete', 'title' => 'Vendor-task Delete', 'guard_name' => 'web'],
+
         ];
         Permission::insert($permissions);
     }

@@ -83,7 +83,8 @@ class BankController extends Controller
      */
     public function show($id)
     {
-        return view('employee::bank.show');
+        $bank = Bank::with('userdata')->findOrFail($id);
+        return view('employee::bank.show',compact('bank'));
     }
 
     /**
@@ -146,6 +147,17 @@ class BankController extends Controller
             'message' => 'Bank deleted successfully',
             'alert-type' => 'success'
         ]);
+    }
+
+    public function BankStatus(Request $request)
+    {
+        $item = Bank::find($request->id);
+        if ($item) {
+            $item->status = $request->status;
+            $item->save();
+            return response()->json(['success' => true, 'message' => 'Status updated successfully.']);
+        }
+        return response()->json(['success' => false, 'message' => 'Item not found.']);
     }
 
 }

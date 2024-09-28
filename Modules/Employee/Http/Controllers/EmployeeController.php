@@ -58,14 +58,17 @@ class EmployeeController extends Controller
     {
         $roles = Role::where('name', 'employee')->get();
         $role = Role::where('name', 'employee')->first();
-        $employee = User::where('status', 1)
-            ->where('user_type', $role->id ?? '')
-            ->get();
+        // $employee = User::where('status', 1)
+        //     ->where('user_type', $role->id ?? '')
+        //     ->get();
+
+        $employees = User::where('status', 1)->get('name');
+
 
         $hr_names = HrName::where('status', 1)->where('designation', 'HR Head')->get();
         $hr_exe = HrName::where('status', 1)->where('designation', 'HR Executive')->get();
         $companies = Companie::where('status', 1)->get();
-        return view('employee::employee.create', compact('roles', 'companies', 'hr_names', 'hr_exe'));
+        return view('employee::employee.create', compact('roles', 'companies', 'employees','hr_names','hr_exe'));
     }
 
     /**
@@ -208,7 +211,8 @@ class EmployeeController extends Controller
 
     public function show($id)
     {
-        return view('employee::employee.show');
+         $employee = User::with('hrName','hrExecutive')->findOrFail($id);
+        return view('employee::employee.show',compact('employee'));
     }
 
     /**
@@ -220,9 +224,10 @@ class EmployeeController extends Controller
     {
         $employee = User::findOrFail($id);
         $roles = Role::get();
-        $hr_names = HrName::where('status', 1)->where('designation', 'HR Head')->get();
-        $hr_exe = HrName::where('status', 1)->where('designation', 'HR Executive')->get();
-        return view('employee::employee.edit', compact('employee', 'roles', 'hr_names', 'hr_exe'));
+        $employees = User::where('status', 1)->get('name');
+        $hr_names = HrName::where('status', 1)->where('designation','HR Head')->get();
+        $hr_exe = HrName::where('status', 1)->where('designation','HR Executive')->get();
+        return view('employee::employee.edit', compact('employee', 'employees','roles','hr_names','hr_exe'));
     }
 
     /**
@@ -342,6 +347,17 @@ class EmployeeController extends Controller
         } catch (Exception $e) {
             return redirect()->back()->with('error', 'Something went wrong');
         }
+    }
+
+    public function employeeStatus(Request $request)
+    {
+        $item = User::find($request->id);
+        if ($item) {
+            $item->status = $request->status;
+            $item->save();
+            return response()->json(['success' => true, 'message' => 'Status updated successfully.']);
+        }
+        return response()->json(['success' => false, 'message' => 'Item not found.']);
     }
 
 }

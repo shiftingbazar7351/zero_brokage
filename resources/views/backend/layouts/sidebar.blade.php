@@ -257,6 +257,16 @@
                                     </a>
                                 </li>
                             @endcan
+                            @can('vendor-task-create')
+                            <li>
+                                <a href="{{ route('vendor-task.create') }}"
+                                    class="{{ Route::currentRouteName() === 'vendor-task.create' ? 'active' : '' }}">
+                                    <i class="fe fe-file-text"></i>
+                                    <span> Task</span>
+                                </a>
+                            </li>
+                        @endcan
+
                         </ul>
                     </li>
                 @endcanany

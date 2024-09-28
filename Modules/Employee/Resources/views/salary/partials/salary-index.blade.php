@@ -3,6 +3,9 @@
         <tr>
             <th>#</th>
             <th>Name</th>
+            @can('employee-salary-status')
+            <th>Status</th>
+            @endcan
             @canany(['employee-salary-edit', 'employee-salary-delete', 'employee-salary-show'])
                 <th>Action</th>
             @endcanany
@@ -13,6 +16,19 @@
             <tr>
                 <td>{{ $salary->id ?? '' }}</td>
                 <td>{{ $salary->basic_salary ?? ''}}</td>
+                @can('employee-salary-status')
+                <td>
+                    <div class="active-switch">
+                        <label class="switch">
+                            <input type="checkbox" class="status-toggle"
+                                data-id="{{ $salary->id }}"
+                                onclick="return confirm('Are you sure want to change status?')"
+                                {{ $salary->status ? 'checked' : '' }}>
+                            <span class="sliders round"></span>
+                        </label>
+                    </div>
+                </td>
+                @endcan
 
                 @canany(['employee-salary-edit', 'employee-salary-delete', 'employee-salary-show'])
                     <td>
@@ -46,3 +62,4 @@
         @endforelse
     </tbody>
 </table>
+

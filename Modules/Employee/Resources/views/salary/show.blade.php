@@ -25,38 +25,54 @@
         <div class="content">
             <div class="container-fluid">
                 <div class="row">
-                    <h1 class="text-center">Employee Details</h1>
-                    <div class="col-md-4">
+                    <h1 class="text-center">Salary Details</h1>
+                    <div class="col-md-12">
                         <table class="table table-sm table-bordered table-striped">
 
                             <tbody>
                                 <tr>
-                                    <th scope="row">Name :</th>
-                                    <td class="text-wrap"> alex </td>
-
+                                    <th scope="row">Basic Salary</th>
+                                    <td class="text-wrap"> {{ $salary->basic_salary  ?? '' }}  </td>
                                 </tr>
                                 <tr>
-                                    <th scope="row">Number :</th>
-                                    <td class="text-wrap"> 1234567890 </td>
+                                    <th scope="row">House rent</th>
+                                    <td class="text-wrap"> {{ $salary->house_rent_allowance ?? ''}}  </td>
                                 </tr>
                                 <tr>
-                                    <th scope="row">Adress</th>
-                                    {{-- <td class="text-wrap">{{ $vendor->address  }}</td> --}}
-                                    <td class="text-wrap">Lorem, ipsum d asperiores iste dolore quasi dolores hic ut officia libero.</td>
+                                    <th scope="row">Conveyance allowance</th>
+                                    <td class="text-wrap">{{ $salary->conveyance_allowance ?? ''}}</td>
                                 </tr>
                                 <tr>
-                                    <th scope="row">city</th>
-                                    <td class="text-wrap">noidas</td>
+                                    <th scope="row">Other allowance</th>
+                                    <td class="text-wrap">{{ $salary->other_allowance ?? '' }}</td>
                                 </tr>
                                 <tr>
-                                    <th scope="row">Pin Code</th>
-                                    <td class="text-wrap">34563</td>
+                                    <th scope="row">Personal pay</th>
+                                    <td class="text-wrap">{{ $salary->other_allowance ?? '' }}</td>
                                 </tr>
                                 <tr>
-                                    <th scope="row">Visiting Card</th>
-                                    <td style="text-align: center">
-                                        <img src="{{ asset('assets/img/service-img-10.jpg') }}" alt="" style="width: 120px;">
-                                    </td>
+                                    <th scope="row">Food allowance</th>
+                                    <td class="text-wrap">{{ $salary->food_allowance ?? ''}}</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">Medical allowance</th>
+                                    <td class="text-wrap">{{ $salary->medical_allowance ?? '' }}</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">Telephone allowance</th>
+                                    <td class="text-wrap">{{ $salary->telephone_allowance ?? '' }}</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">Provident fund</th>
+                                    <td class="text-wrap">{{ $salary->provident_fund ?? ''}}</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">Voluntary Provident fund</th>
+                                    <td class="text-wrap">{{ $salary->voluntary_provident_fund ?? '' }}</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">Professional tax</th>
+                                    <td class="text-wrap">{{ $salary->professional_tax ?? '' }}</td>
                                 </tr>
 
 

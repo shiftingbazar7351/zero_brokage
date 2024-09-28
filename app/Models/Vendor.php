@@ -51,6 +51,7 @@ class Vendor extends Model
         'created_by',
         'price',
         'description',
+
     ];
 
 

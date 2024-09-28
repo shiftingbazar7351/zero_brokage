@@ -6,6 +6,9 @@
             <th>Company</th>
             <th>Email</th>
             <th>Department</th>
+            @can('employee-status')
+                <th>Status</th>
+            @endcan
             @canany(['employee-edit', 'employee-delete', 'employee-show'])
                 <th>Action</th>
             @endcanany
@@ -19,6 +22,18 @@
                 <td>{{ $employee->companyName->legel_name??''}}</td>
                 <td>{{ $employee->email ??''}}</td>
                 <td>{{ $employee->department ??''}}</td>
+                @can('employee-status')
+                        <td>
+                            <div class="active-switch">
+                                <label class="switch">
+                                    <input type="checkbox" class="status-toggle" data-id="{{ $employee->id }}"
+                                        onclick="return confirm('Are you sure want to change status?')"
+                                        {{ $employee->status ? 'checked' : '' }}>
+                                    <span class="sliders round"></span>
+                                </label>
+                            </div>
+                        </td>
+                    @endcan
                 @canany(['employee-edit', 'employee-delete', 'employee-show'])
                     <td>
                         <div class="d-flex">

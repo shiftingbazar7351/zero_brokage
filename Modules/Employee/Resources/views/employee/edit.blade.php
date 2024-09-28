@@ -158,15 +158,7 @@
                                 <label for="office_shift" class="form-label">Office Shift</label><b
                                     style="color: red;">*</b>
                                 <select class="form-control" id="office_shift" name="office_shift" required>
-                                    <option value="">Select Office Shift</option>
-                                    <option value="hr1" {{ old('office_shift') == 'hr1' ? 'selected' : '' }}>9:00am -
-                                        6:00pm
-                                    </option>
-                                    <option value="hr2" {{ old('office_shift') == 'hr2' ? 'selected' : '' }}>10:00am -
-                                        7:00pm
-                                    </option>
-                                    <option value="hr3" {{ old('office_shift') == 'hr3' ? 'selected' : '' }}>11:00am -
-                                        8:00pm
+                                    <option value="9:30am-6:30pm" {{ old('office_shift') == 'hr1' ? 'selected' : '' }}>9:30am-6:30pm
                                     </option>
                                 </select>
                                 @error('office_shift')
@@ -176,15 +168,21 @@
 
                             <!-- Reporting Head -->
                             <div class="mb-3 col-md-3">
-                                <label for="reporting_head" class="form-label">Reporting Head</label><b
-                                    style="color: red;">*</b>
-                                <input type="text" class="form-control" id="reporting_head" name="reporting_head"
-                                    value="{{ old('reporting_head', $employee->reporting_head ?? '') }}"
-                                    placeholder="Enter reporting head" required>
+                                <label for="reporting_head" class="form-label">Reporting Head</label><b style="color: red;">*</b>
+                                <select name="reporting_head" class="form-select">
+                                    <option value="" selected disabled>Select Employee</option>
+                                    @foreach ($employees as $employee)
+                                        <option value="{{ $employee->name }}"
+                                            {{ old('reporting_head', $employee->name ?? '') == $employee->name ? 'selected' : '' }}>
+                                            {{ $employee->name ?? '' }}
+                                        </option>
+                                    @endforeach
+                                </select>
                                 @error('reporting_head')
-                                    <div class="error text-danger ">{{ $message }}</div>
+                                    <div class="error text-danger">{{ $message }}</div>
                                 @enderror
                             </div>
+
 
                             <!-- HR Head -->
                             <div class="mb-3 col-md-3">

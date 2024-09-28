@@ -10,6 +10,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use Modules\Employee\Entities\Companie;
+use Modules\Employee\Entities\HrName;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Traits\HasRoles;
 
@@ -91,8 +92,13 @@ class User extends Authenticatable
         return $this->belongsTo(Companie::class,'company','id');
     }
 
-    public function role()
+    public function hrName()
     {
-        return $this->belongsTo(Role::class);
+        return $this->belongsTo(HrName::class,'hr_head','id');
+    }
+
+    public function hrExecutive()
+    {
+        return $this->belongsTo(HrName::class,'hr_executive','id');
     }
 }

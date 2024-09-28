@@ -212,12 +212,13 @@
 
 @endsection
 @section('scripts')
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script>
-        var searchRoute = `{{ route('employee-department.index') }}`;
-    </script>
-    <script src="{{ asset('admin/assets/js/search.js') }}"></script>
-    <script src="{{ asset('admin/assets/js/status-update.js') }}"></script>
+<script>
+    var statusRoute = `{{ route('employee-department.status') }}`;
+    var searchRoute = `{{ route('employee-department.index') }}`;
+</script>
+<script src="{{ asset('admin/assets/js/search.js') }}"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="{{ asset('admin/assets/js/status-update.js') }}"></script>
     <script src="{{ asset('admin/assets/js/preview-img.js') }}"></script>
     <script>
         // Helper function to populate dropdown

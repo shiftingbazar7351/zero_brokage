@@ -156,4 +156,15 @@ class HeadOfficeController extends Controller
 
         return redirect(route('employee-headoffice.index'))->with('success', ' Deleted Successfully!');
     }
+
+    public function HeadOfficeStatus(Request $request)
+    {
+        $item = HeadOffice::find($request->id);
+        if ($item) {
+            $item->status = $request->status;
+            $item->save();
+            return response()->json(['success' => true, 'message' => 'Status updated successfully.']);
+        }
+        return response()->json(['success' => false, 'message' => 'Item not found.']);
+    }
 }

@@ -92,7 +92,7 @@ Route::controller(EmployeeController::class)->group(function () {
     Route::put('/employee/{id}', 'update')->name('employee.update')->middleware('can:employee-edit'); // Update the department
     Route::get('/employee/{id}', 'show')->name('employee.show')->middleware('can:employee-show'); // Show a single department (corrected to GET)
     Route::delete('/employee/{id}', 'destroy')->name('employee.destroy')->middleware('can:employee-delete'); // Delete a category
-    Route::post('/employee-status', 'DepartmentStatus')->name('employee.status')->middleware('can:employee-status'); // Change category status
+    Route::post('/employee-status', 'employeeStatus')->name('employee.status')->middleware('can:employee-status'); // Change category status
 });
 
 Route::controller(SalaryController::class)->group(function () {

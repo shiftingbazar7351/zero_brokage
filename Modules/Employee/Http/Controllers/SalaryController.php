@@ -93,7 +93,8 @@ class SalaryController extends Controller
      */
     public function show($id)
     {
-        return view('employee::salary.show');
+        $salary = Salary::findOrFail($id);
+        return view('employee::salary.show',compact('salary'));
     }
 
     /**
@@ -174,7 +175,15 @@ class SalaryController extends Controller
         return response()->json($employees);
     }
 
-
-
+    public function SalaryStatus(Request $request)
+    {
+        $item = Salary::find($request->id);
+        if ($item) {
+            $item->status = $request->status;
+            $item->save();
+            return response()->json(['success' => true, 'message' => 'Status updated successfully.']);
+        }
+        return response()->json(['success' => false, 'message' => 'Item not found.']);
+    }
 
 }

@@ -11,10 +11,10 @@
                     <form action="{{ route('vendor-task.store') }}" method="POST" enctype="multipart/form-data">
                         @csrf
                         <div class="row">
-                            <div class="mb-3 col-md-4">
+                            <div class="mb-3 col-md-3">
                                 <label for="category">Category<b style="color: red;">*</b></label>
                                 <select class="form-control" id="category" name="category" required>
-                                    <option value="">Select category</option>
+                                    <option value="" selected disabled>Select category</option>
                                     @foreach ($categories as $category)
                                         <option value="{{ $category->id }}">{{ $category->name }}</option>
                                     @endforeach
@@ -24,112 +24,169 @@
                                 @enderror
                             </div>
 
-                            <div class="col-md-4">
+                            <div class="col-md-3">
                                 <label for="subcategory">Sub Category<b style="color: red;">*</b></label>
                                 <select class="form-control" id="subcategory" name="sub_category" required>
-                                    <option value="">Select subcategory</option>
+                                    <option value="" selected disabled>Select subcategory</option>
                                 </select>
                                 @error('sub_category')
                                     <div class="error text-danger">{{ $message }}</div>
                                 @enderror
                             </div>
-
-
-                            <div class="col-md-4">
+                            <div class="col-md-3">
                                 <label for="menu">Menu<b style="color: red;">*</b></label>
                                 <select class="form-control" id="menu" name="menu_id" required>
-                                    <option value="">Select menu</option>
+                                    <option value="" selected disabled>Select menu</option>
                                 </select>
                                 @error('menu_id')
                                     <div class="error text-danger">{{ $message }}</div>
                                 @enderror
                             </div>
-                            <div class="col-md-4">
+                            <div class="col-md-3">
                                 <label for="submenu">Sub-Menu<b style="color: red;">*</b></label>
                                 <select class="form-control" id="submenu" name="submenu_id" required>
-                                    <option value="">Select submenu</option>
+                                    <option value="" selected disabled>Select submenu</option>
                                 </select>
                                 @error('submenu_id')
                                     <div class="error text-danger">{{ $message }}</div>
                                 @enderror
                             </div>
 
-                        <!-- Next Follow-up Date -->
-                        <div class="mb-3 col-md-4">
-                            <label for="next_followup_date" class="form-label">Next Follow-up Date</label>
-                            <input type="date" class="form-control" id="next_followup_date" name="next_followup_date">
-                        </div>
+                            <div class="mb-3 col-md-4">
+                                <label for="company_name" class="form-label">Company Name</label>
+                                <input type="text" class="form-control" id="company_name" value="{{ old('company_name') }}"
+                                    name="company_name" placeholder="Enter company name">
+                                    @error('company_name')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
+                            </div>
 
-                        <!-- Next Follow-up Time -->
-                        <div class="mb-3 col-md-4">
-                            <label for="next_followup_time" class="form-label">Next Follow-up Time</label>
-                            <input type="time" class="form-control" id="next_followup_time" name="next_followup_time">
-                        </div>
+                            <div class="mb-3 col-md-4">
+                                <label for="email" class="form-label">Email</label>
+                                <input type="text" class="form-control" id="email" value="{{ old('email') }}"
+                                    name="email" placeholder="Enter Email">
+                                    @error('email')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
+                            </div>
 
-                        <!-- Next Follow-up AM/PM -->
-                        <div class="mb-3 col-md-4">
-                            <label for="next_followup_am_pm" class="form-label">Next Follow-up AM/PM <span class="text-danger">*</span></label>
-                            <select class="form-select" id="next_followup_am_pm" name="next_followup_am_pm" required>
-                                <option value="" selected disabled>Select AM/PM</option>
-                                <option value="AM">AM</option>
-                                <option value="PM">PM</option>
-                            </select>
-                        </div>
 
-                        <!-- Tags -->
-                        <div class="mb-3 col-md-4">
-                            <label for="tags" class="form-label">Tags</label>
-                            <input type="text" class="form-control" id="tags" name="tags" placeholder="Enter tags, separated by commas">
-                        </div>
+                            <div class="mb-3 col-md-4">
+                                <label for="number" class="form-label">Mobile Number</label>
+                                <input type="text" class="form-control" id="number" value="{{ old('number') }}" id="number" maxlength="10"
+                                    name="number" placeholder="Enter number">
 
-                        <!-- Call Record -->
-                        <div class="mb-3 col-md-4">
-                            <label for="call_record" class="form-label">Call Record</label>
-                            <input type="file" class="form-control" id="call_record" name="call_record">
-                        </div>
+                                    @error('number')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
+                            </div>
 
-                        <!-- Call History Image -->
-                        <div class="mb-3 col-md-4">
-                            <label for="call_history_img" class="form-label">Call History Image</label>
-                            <input type="file" class="form-control" id="call_history_img" name="call_history_img">
-                        </div>
+                            <div class="mb-3 col-md-4">
+                                <label for="status" class="form-label"> Status</label>
+                                <select class="form-control" id="status" name="status">
+                                    <option value="" selected disabled>Select</option>
+                                    <option value="in_progress" {{ old('status') == 'in_progress' ? 'selected' : '' }}>In Progress</option>
+                                    <option value="cancelled" {{ old('status') == 'cancelled' ? 'selected' : '' }}>Cancelled</option>
+                                    <option value="on_hold" {{ old('status') == 'on_hold' ? 'selected' : '' }}>On Hold</option>
+                                    <option value="completed" {{ old('status') == 'completed' ? 'selected' : '' }}>Completed</option>
+                                </select>
+                                @error('status')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
+                            </div>
+                            <div class="mb-3 col-md-4">
+                                <label for="tags" class="form-label">Tag</label>
+                                <select class="form-control @error('tags') is-invalid @enderror" id="tags" name="tags">
+                                    <option value="" selected disabled>Select</option>
+                                    <option value="dmu" {{ old('tags') == 'dmu' ? 'selected' : '' }}>DMU</option>
+                                    <option value="pg" {{ old('tags') == 'pg' ? 'selected' : '' }}>pg</option>
+                                    <option value="dmu_follow" {{ old('tags') == 'dmu_follow' ? 'selected' : '' }}>DMU Follow</option>
+                                    <option value="not_dec" {{ old('tags') == 'not_dec' ? 'selected' : '' }}>rhe</option>
+                                    <option value="not" {{ old('tags') == 'not' ? 'selected' : '' }}>Not</option>
+                                </select>
 
-                        <!-- Client Type -->
-                        <div class="mb-3 col-md-4">
-                            <label for="client_type" class="form-label">Client Type</label>
-                            <select class="form-select" id="client_type" name="client_type">
-                                <option value="" selected disabled>Select Client Type</option>
-                                <option value="new">New</option>
-                                <option value="existing">Existing</option>
-                            </select>
-                        </div>
+                                @error('tags')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
+                            </div>
 
-                        <!-- Task Status -->
-                        <div class="mb-3 col-md-4">
-                            <label for="task_status" class="form-label">Task Status</label>
-                            <select class="form-select" id="task_status" name="task_status">
-                                <option value="" selected disabled>Select Task Status</option>
-                                <option value="pending">Pending</option>
-                                <option value="completed">Completed</option>
-                                <option value="in-progress">In Progress</option>
-                            </select>
-                        </div>
 
-                        <!-- Comments -->
-                        <div class="mb-3 col-md-4">
-                            <label for="comments" class="form-label">Comments</label>
-                            <textarea class="form-control" id="comments" name="comments" placeholder="Enter your comments" rows="3"></textarea>
-                        </div>
 
-                        <!-- Note -->
-                        <div class="mb-3 col-md-4">
-                            <label for="note" class="form-label">Note</label>
-                            <textarea class="form-control" id="note" name="note" placeholder="Enter your note" rows="3"></textarea>
-                        </div>
 
-                    </div>
-                    <!-- Submit Button -->
-                    <button type="submit" class="btn btn-primary">Submit</button>
+
+                            <!-- Next Follow-up Date -->
+                            <div class="mb-3 col-md-4">
+                                <label for="next_followup_date_time_am_pm" class="form-label">Next Follow-up</label>
+                                <input type="datetime-local" class="form-control" id="next_followup_date_time_am_pm"
+                                    name="next_followup_date_time_am_pm">
+                                    @error('next_followup_date_time_am_pm')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
+                            </div>
+                            <!-- Call Record -->
+                            <div class="mb-3 col-md-4">
+                                <label for="call_record" class="form-label">Call Record</label>
+                                <input type="file" class="form-control" id="call_record" name="call_record">
+                                @error('call_record')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
+                            </div>
+
+                            <!-- Call History Image -->
+                            <div class="mb-3 col-md-4">
+                                <label for="call_history_img" class="form-label">Call History Image</label>
+                                <input type="file" class="form-control" id="call_history_img" name="call_history_img">
+                                @error('call_history_img')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
+                            </div>
+
+                            <!-- Client Type -->
+                            <div class="mb-3 col-md-4">
+                                <label for="client_type" class="form-label">Client Type</label>
+                                <select class="form-select" id="client_type" name="client_type">
+                                    <option value="" selected disabled>Select Client Type</option>
+                                    <option value="NC">NC</option>
+                                    <option value="EC">EC</option>
+                                    <option value="DC">DC</option>
+                                </select>
+                                @error('client_type')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
+                            </div>
+
+                            <div class="mb-3 col-md-4">
+                                <label for="address" class="form-label">Address</label>
+                                <textarea type="text" class="form-control" id="address" value="{{ old('address') }}"
+                                    name="address" placeholder="Enter address">{{ old('address') }}</textarea>
+
+                                    @error('address')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
+                            </div>
+
+
+                            <div class="mb-3 col-md-4">
+                                <label for="comments" class="form-label">Any comment?</label>
+                                <textarea type="text" class="form-control" id="comments" value="{{ old('comments') }}"
+                                    name="comments" placeholder="Enter comments">{{ old('comments') }}</textarea>
+
+                                    @error('comments')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
+                            </div>
+
+                            <div class="mb-3 col-md-4">
+                                <label for="note" class="form-label">Any note?</label>
+                                <textarea type="text" class="form-control" id="note" value="{{ old('note') }}"
+                                    name="note" placeholder="Enter note">{{ old('note') }}</textarea>
+                                    @error('note')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
+                            </div>
+                        </div>
+                        <!-- Submit Button -->
+                        <button type="submit" class="btn btn-primary">Submit</button>
                     </form>
                 </div>
             </div>
@@ -137,8 +194,8 @@
     </div>
 @endsection
 @section('scripts')
-<script>
-       $(document).ready(function() {
+    <script>
+        $(document).ready(function() {
             $('#state').on('change', function() {
                 var stateId = $(this).val();
                 if (stateId) {
@@ -150,7 +207,7 @@
                         },
                         success: function(response) {
                             console.log(response);
-                            $('#city').empty().append('<option value="">Select City</option>');
+                            $('#city').empty().append('<option value="" selected disabled>Select City</option>');
                             if (response.status === 1) {
                                 $.each(response.data, function(key, city) {
                                     $('#city').append("<option value='" + city.id +
@@ -158,17 +215,17 @@
                                 });
                             } else {
                                 $('#city').append(
-                                    '<option value="" disabled>No cities found</option>');
+                                    '<option value="" selected disabled>No cities found</option>');
                             }
                         },
                         error: function(xhr, status, error) {
                             console.log(error);
                             $('#city').empty().append(
-                                '<option value="" disabled>Error loading cities</option>');
+                                '<option value="" selected disabled>Error loading cities</option>');
                         }
                     });
                 } else {
-                    $('#city').empty().append('<option value="">Select City</option>');
+                    $('#city').empty().append('<option value="" selected disabled>Select City</option>');
                 }
             });
         });
@@ -196,19 +253,19 @@
                             });
                         } else {
                             $('#subcategory').append(
-                                '<option value="" disabled>No subcategories found</option>'
+                                '<option value="" selected disabled>No subcategories found</option>'
                             );
                         }
                     },
                     error: function() {
                         $('#subcategory').empty().append(
-                            '<option value="" disabled>Error loading subcategories</option>'
+                            '<option value="" selected disabled>Error loading subcategories</option>'
                         );
                     }
                 });
             } else {
                 $('#subcategory').empty().append(
-                    '<option value="" selected disabled>Select Subcategory</option>');
+                    '<option value="" selected disabled selected disabled>Select Subcategory</option>');
             }
         });
 
@@ -233,14 +290,14 @@
                             });
                         } else {
                             $('#menu').append(
-                                '<option value="" disabled>No menus available</option>'
+                                '<option value="" selected disabled>No menus available</option>'
                             );
                         }
                     },
                     error: function(xhr) {
                         console.error('Error loading menus:', xhr);
                         $('#menu').empty().append(
-                            '<option value="" disabled>Error loading menus</option>'
+                            '<option value="" selected disabled>Error loading menus</option>'
                         );
                     }
                 });
@@ -272,14 +329,14 @@
                             });
                         } else {
                             $('#submenu').append(
-                                '<option value="" disabled>No menus available</option>'
+                                '<option value="" selected disabled>No menus available</option>'
                             );
                         }
                     },
                     error: function(xhr) {
                         console.error('Error loading menus:', xhr);
                         $('#submenu').empty().append(
-                            '<option value="" disabled>Error loading menus</option>'
+                            '<option value="" selected disabled>Error loading menus</option>'
                         );
                     }
                 });
@@ -289,5 +346,5 @@
                 );
             }
         });
-</script>
+    </script>
 @endsection

@@ -333,6 +333,57 @@ class ApiController extends Controller
         }
     }
 
+    // public function sendOtp(Request $request)
+    // {
+    //     // Validate the incoming request
+    //     $validator = Validator::make($request->all(), [
+    //         'mobile_number' => 'required|digits:10',
+    //         'name' => 'required|string|max:255',
+    //     ]);
+
+    //     if ($validator->fails()) {
+    //         return response()->json([
+    //             'success' => false,
+    //             'message' => 'Validation errors',
+    //             'errors' => $validator->errors()
+    //         ], Response::HTTP_UNPROCESSABLE_ENTITY);
+    //     }
+
+    //     try {
+    //         // Generate a new OTP
+    //         $otp = rand(1000, 9999);
+
+    //         // Find the enquiry by mobile number or create a new one
+    //         $enquiry = Enquiry::updateOrCreate(
+    //             ['mobile_number' => $request->mobile_number],
+    //             [
+    //                 'name' => $request->name,
+    //                 'otp' => $otp,
+    //                 ''
+    //             ]
+    //         );
+    //         return response()->json([
+    //             'success' => true,
+    //             'message' => $enquiry->wasRecentlyCreated ? 'OTP created and sent successfully.' : 'OTP updated successfully.',
+    //             'name' => $request->name,
+    //             'otp' => $otp,
+    //             'mobile_number' => $request->mobile_number,
+    //             'otp_verified_at' => $enquiry->otp_verified_at
+    //         ], Response::HTTP_OK);
+
+    //     } catch (\Exception $e) {
+    //         // Log the exception for debugging
+    //         Log::error('Error sending OTP: ' . $e->getMessage());
+
+    //         return response()->json([
+    //             'success' => false,
+    //             'message' => 'An error occurred while sending OTP.',
+    //             'error' => $e->getMessage()
+    //         ], Response::HTTP_INTERNAL_SERVER_ERROR);
+    //     }
+    // }
+
+
     public function sendOtp(Request $request)
     {
         // Validate the incoming request
@@ -353,21 +404,24 @@ class ApiController extends Controller
             // Generate a new OTP
             $otp = rand(1000, 9999);
 
+            // Ensure mobile number is treated as a number (integer)
+            $mobileNumber = (int) $request->mobile_number;
+
             // Find the enquiry by mobile number or create a new one
             $enquiry = Enquiry::updateOrCreate(
-                ['mobile_number' => $request->mobile_number],
+                ['mobile_number' => $mobileNumber],
                 [
                     'name' => $request->name,
                     'otp' => $otp,
-                    ''
                 ]
             );
+
             return response()->json([
                 'success' => true,
                 'message' => $enquiry->wasRecentlyCreated ? 'OTP created and sent successfully.' : 'OTP updated successfully.',
                 'name' => $request->name,
                 'otp' => $otp,
-                'mobile_number' => $request->mobile_number,
+                'mobile_number' => $mobileNumber, // mobile_number as integer
                 'otp_verified_at' => $enquiry->otp_verified_at
             ], Response::HTTP_OK);
 
@@ -382,6 +436,7 @@ class ApiController extends Controller
             ], Response::HTTP_INTERNAL_SERVER_ERROR);
         }
     }
+
 
     public function verifyOtp(Request $request)
     {
@@ -402,8 +457,8 @@ class ApiController extends Controller
         try {
             // Find the enquiry by mobile number
             $enquiry = Enquiry::where('mobile_number', $request->mobile_number)
-            ->orderByDesc('created_at')
-            ->first();
+                ->orderByDesc('created_at')
+                ->first();
 
             if (!$enquiry) {
                 return response()->json([

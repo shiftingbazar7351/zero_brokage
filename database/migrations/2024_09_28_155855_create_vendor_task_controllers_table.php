@@ -13,16 +13,17 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('vendor_task_controllers', function (Blueprint $table) {
+        Schema::create('vendor_tasks', function (Blueprint $table) {
             $table->id();
             $table->string('vendor_id')->nullable();
             $table->string('comments')->nullable();
             $table->string('note')->nullable();
-            $table->string('next_followup_date_time_am_pm')->nullable();
+            $table->string('next_followup_date_time')->nullable();
             $table->string('tags')->nullable();
             $table->string('call_record')->nullable();
             $table->string('call_history_img')->nullable();
             $table->string('client_type')->nullable();
+            $table->string('employee_id')->nullable();
             $table->boolean('status')->default(1)->comment('0=>inactive,1=>active');
             $table->string('created_by')->nullable();
             $table->softDeletes();
@@ -37,6 +38,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('vendor_task_controllers');
+        Schema::dropIfExists('vendor_tasks');
     }
 };

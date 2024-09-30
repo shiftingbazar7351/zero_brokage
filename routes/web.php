@@ -274,10 +274,12 @@ Route::middleware(['auth', 'check.ip'])->group(function () {
         Route::get('/vendor-task', 'index')->name('vendor-task.index')->middleware('can:vendor-task-list');
         Route::get('/vendor-task/create', 'create')->name('vendor-task.create')->middleware('can:vendor-task-create');
         Route::post('/vendor-task', 'store')->name('vendor-task.store')->middleware('can:vendor-task-create');
-        Route::get('/vendor-task/{vendor-task}/edit', 'edit')->name('vendor-task.edit')->middleware('can:vendor-task-edit');
-        Route::put('/vendor-task/{vendor-task}', 'update')->name('vendor-task.update')->middleware('can:vendor-task-edit');
-        Route::get('/vendor-task/{vendor-task}', 'show')->name('vendor-task.show')->middleware('can:vendor-task-show');
-        Route::delete('/vendor-task/{vendor-task}', 'destroy')->name('vendor-task.destroy')->middleware('can:vendor-task-delete');
+        Route::get('/vendor-task/{vendortask}/edit', 'edit')->name('vendor-task.edit')->middleware('can:vendor-task-edit');
+        Route::put('/vendor-task/{vendortask}', 'update')->name('vendor-task.update')->middleware('can:vendor-task-edit');
+        Route::get('/vendor-task/{vendortask}', 'show')->name('vendor-task.show')->middleware('can:vendor-task-show');
+        Route::delete('/vendor-task/{vendortask}', 'destroy')->name('vendor-task.destroy')->middleware('can:vendor-task-delete');
+        Route::get('/fetch-vendor-data', 'fetchVendorData')->name('fetch.vendor.data');
+        Route::post('/vendor-task-status', 'vendorTaskStatus')->name('vendor-task.status')->middleware('can:vendor-task-status');
     });
 
     Route::controller(ProductController::class)->group(function () {

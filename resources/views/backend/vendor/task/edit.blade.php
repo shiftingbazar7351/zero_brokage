@@ -4,11 +4,13 @@
         <div class="content">
             <div class="main-wrapper">
                 <div class="container border p-2 shadow-sm mt-2">
-                    <h4>Create Task</h4>
+                    <h4>Edit Task</h4>
                 </div>
                 <div class="container mt-4 border p-5 rounded shadow">
-                    <form action="{{ route('vendor-task.store') }}" method="POST" enctype="multipart/form-data">
+                    <form action="{{ route('vendor-task.update', $task->id ?? '') }}" method="POST"
+                        enctype="multipart/form-data">
                         @csrf
+                        @method('PUT')
                         <div class="row">
                             <div class="mb-3 col-md-3">
                                 <label for="category">Category<b style="color: red;">*</b></label>
@@ -83,32 +85,43 @@
                             </div>
 
                             <div class="mb-3 col-md-3">
-                                <label for="status" class="form-label"> Status</label>
+                                <label for="status" class="form-label">Status</label>
                                 <select class="form-control" id="status" name="status">
-                                    <option value="" selected disabled>Select</option>
-                                    <option value="in_progress" {{ old('status') == 'in_progress' ? 'selected' : '' }}>In
-                                        Progress</option>
-                                    <option value="cancelled" {{ old('status') == 'cancelled' ? 'selected' : '' }}>
+                                    <option value="" disabled {{ !old('status') ? 'selected' : '' }}>Select</option>
+                                    <option value="in_progress"
+                                        {{ old('status') == 'in_progress' || $task->status == 'in_progress' ? 'selected' : '' }}>
+                                        In Progress</option>
+                                    <option value="cancelled"
+                                        {{ old('status') == 'cancelled' || $task->status == 'cancelled' ? 'selected' : '' }}>
                                         Cancelled</option>
-                                    <option value="on_hold" {{ old('status') == 'on_hold' ? 'selected' : '' }}>On Hold
-                                    </option>
-                                    <option value="completed" {{ old('status') == 'completed' ? 'selected' : '' }}>
+                                    <option value="on_hold"
+                                        {{ old('status') == 'on_hold' || $task->status == 'on_hold' ? 'selected' : '' }}>
+                                        On Hold</option>
+                                    <option value="completed"
+                                        {{ old('status') == 'completed' || $task->status == 'completed' ? 'selected' : '' }}>
                                         Completed</option>
                                 </select>
                                 @error('status')
                                     <div class="error text-danger">{{ $message }}</div>
                                 @enderror
                             </div>
+
                             <div class="mb-3 col-md-3">
                                 <label for="tags" class="form-label">Tag</label>
                                 <select class="form-control" id="tags" name="tags">
-                                    <option value="" selected disabled>Select</option>
-                                    <option value="dmu" {{ old('tags') == 'dmu' ? 'selected' : '' }}>DMU</option>
-                                    <option value="pg" {{ old('tags') == 'pg' ? 'selected' : '' }}>pg</option>
-                                    <option value="dmu_follow" {{ old('tags') == 'dmu_follow' ? 'selected' : '' }}>DMU
-                                        Follow</option>
-                                    <option value="not_dec" {{ old('tags') == 'not_dec' ? 'selected' : '' }}>rhe</option>
-                                    <option value="not" {{ old('tags') == 'not' ? 'selected' : '' }}>Not</option>
+                                    <option value="" disabled {{ !old('tags') ? 'selected' : '' }}>Select</option>
+                                    <option value="dmu"
+                                        {{ old('tags') == 'dmu' || $task->tags == 'dmu' ? 'selected' : '' }}>DMU</option>
+                                    <option value="pg"
+                                        {{ old('tags') == 'pg' || $task->tags == 'pg' ? 'selected' : '' }}>PG</option>
+                                    <option value="dmu_follow"
+                                        {{ old('tags') == 'dmu_follow' || $task->tags == 'dmu_follow' ? 'selected' : '' }}>
+                                        DMU Follow</option>
+                                    <option value="not_dec"
+                                        {{ old('tags') == 'not_dec' || $task->tags == 'not_dec' ? 'selected' : '' }}>RHE
+                                    </option>
+                                    <option value="not"
+                                        {{ old('tags') == 'not' || $task->tags == 'not' ? 'selected' : '' }}>Not</option>
                                 </select>
 
                                 @error('tags')
@@ -116,11 +129,13 @@
                                 @enderror
                             </div>
 
+
                             <!-- Next Follow-up Date -->
                             <div class="mb-3 col-md-3">
                                 <label for="next_followup_date_time" class="form-label">Next Follow-up</label>
-                                <input type="datetime-local" class="form-control" value="{{ old('next_followup_date_time') }}" id="next_followup_date_time"
-                                    name="next_followup_date_time">
+                                <input type="datetime-local" class="form-control"
+                                    value="{{ old('next_followup_date_time', $task->next_followup_date_time ?? '') }}"
+                                    id="next_followup_date_time" name="next_followup_date_time">
                                 @error('next_followup_date_time')
                                     <div class="error text-danger">{{ $message }}</div>
                                 @enderror
@@ -139,20 +154,37 @@
                             <div class="mb-3 col-md-4">
                                 <label for="call_history_img" class="form-label">Call History Image <span
                                         style="color:red">(Max: 3MB)</span></label>
+
+                                @if (isset($task->call_history_img))
+                                    <!-- Check if the image exists -->
+                                    <img src="{{ Storage::url('call_history_images/' . $task->call_history_img) }}"
+                                        alt="Call History Image" class="img-thumbnail mb-2" style="max-height: 50px;">
+                                @else
+                                    <p>No image uploaded.</p> <!-- Optional message if no image exists -->
+                                @endif
+
                                 <input type="file" class="form-control" id="imgInp" name="call_history_img"
-                                    accept="image/*">
+                                    value="{{ old('call_history_img', $task->call_history_img ?? '') }}" accept="image/*">
+
                                 @error('call_history_img')
                                     <div class="error text-danger">{{ $message }}</div>
                                 @enderror
                             </div>
+
                             <!-- Client Type -->
                             <div class="mb-3 col-md-4">
                                 <label for="client_type" class="form-label">Client Type</label>
                                 <select class="form-select" id="client_type" name="client_type">
-                                    <option value="" selected disabled>Select Client Type</option>
-                                    <option value="NC" {{ old('client_type') == 'NC' ? 'selected' : '' }}>NC</option>
-                                    <option value="EC" {{ old('client_type') == 'EC' ? 'selected' : '' }}>EC</option>
-                                    <option value="DC" {{ old('client_type') == 'DC' ? 'selected' : '' }}>DC</option>
+                                    <option value="" disabled>Select Client Type</option>
+                                    <option value="NC"
+                                        {{ isset($task) && $task->client_type == 'NC' ? 'selected' : (old('client_type') == 'NC' ? 'selected' : '') }}>
+                                        NC</option>
+                                    <option value="EC"
+                                        {{ isset($task) && $task->client_type == 'EC' ? 'selected' : (old('client_type') == 'EC' ? 'selected' : '') }}>
+                                        EC</option>
+                                    <option value="DC"
+                                        {{ isset($task) && $task->client_type == 'DC' ? 'selected' : (old('client_type') == 'DC' ? 'selected' : '') }}>
+                                        DC</option>
                                 </select>
                                 @error('client_type')
                                     <div class="error text-danger">{{ $message }}</div>
@@ -161,11 +193,14 @@
 
 
                             <div class="mb-3 col-md-4">
-                                <label for="employee">Employee<b style="color: red;">*</b></label>
+                                <label for="employee">Employee <b style="color: red;">*</b></label>
                                 <select class="form-control" id="employee" name="employee_id">
-                                    <option value="" selected disabled>Select employee</option>
+                                    <option value="" disabled>Select employee</option>
                                     @foreach ($employees as $employee)
-                                        <option value="{{ $employee->id }}">{{ $employee->name }}</option>
+                                        <option value="{{ $employee->id }}"
+                                            {{ isset($task) && $task->employee_id == $employee->id ? 'selected' : (old('employee_id') == $employee->id ? 'selected' : '') }}>
+                                            {{ $employee->name }}
+                                        </option>
                                     @endforeach
                                 </select>
                                 @error('employee_id')
@@ -173,10 +208,11 @@
                                 @enderror
                             </div>
 
+
                             <div class="mb-3 col-md-4">
                                 <label for="address" class="form-label">Address</label>
-                                <textarea type="text" class="form-control" id="address" id="address" value="{{ old('address') }}"
-                                    name="address" placeholder="Enter address">{{ old('address') }}</textarea>
+                                <textarea type="text" class="form-control" id="address" id="address"
+                                    value="{{ old('address', $task->address ?? '') }}" name="address" placeholder="Enter address">{{ old('address', $task->address ?? '') }}</textarea>
 
                                 @error('address')
                                     <div class="error text-danger">{{ $message }}</div>
@@ -186,8 +222,8 @@
 
                             <div class="mb-3 col-md-4">
                                 <label for="comments" class="form-label">Any comment?</label>
-                                <textarea type="text" class="form-control" id="comments" value="{{ old('comments') }}" name="comments"
-                                    placeholder="Enter comments">{{ old('comments') }}</textarea>
+                                <textarea type="text" class="form-control" id="comments" value="{{ old('comments', $task->comments ?? '') }}"
+                                    name="comments" placeholder="Enter comments">{{ old('comments', $task->comments ?? '') }}</textarea>
 
                                 @error('comments')
                                     <div class="error text-danger">{{ $message }}</div>
@@ -196,8 +232,8 @@
 
                             <div class="mb-3 col-md-4">
                                 <label for="note" class="form-label">Any note?</label>
-                                <textarea type="text" class="form-control" id="note" value="{{ old('note') }}" name="note"
-                                    placeholder="Enter note">{{ old('note') }}</textarea>
+                                <textarea type="text" class="form-control" id="note" value="{{ old('note', $task->note ?? '') }}"
+                                    name="note" placeholder="Enter note">{{ old('note', $task->note ?? '') }}</textarea>
                                 @error('note')
                                     <div class="error text-danger">{{ $message }}</div>
                                 @enderror
@@ -228,7 +264,7 @@
                             if (data.success) {
                                 // Populate fields with the vendor data
                                 $('#vendor_id').val(data.vendor
-                                .id); // Change 'vendor_id' to 'id' if needed
+                                    .id); // Change 'vendor_id' to 'id' if needed
                                 $('#company_name').val(data.vendor.company_name);
                                 $('#email').val(data.vendor.email);
                                 $('#number').val(data.vendor.number);
@@ -246,8 +282,6 @@
             });
         });
     </script>
-
-
     <script>
         $(document).ready(function() {
             $('#state').on('change', function() {

@@ -234,7 +234,7 @@
                         </a>
                     </li>
                 @endcan
-                @canany(['vendors-list', 'verified-list','vendor-task-create'])
+                @canany(['vendors-list', 'verified-list','vendor-task-list'])
                     <li class="submenu">
                         <a href="javascript:void(0);"><i class="fa fa-venus-double" aria-hidden="true"></i>
                             <span>Vendors</span>
@@ -259,10 +259,10 @@
                                     </a>
                                 </li>
                             @endcan
-                            @can('vendor-task-create')
+                            @can('vendor-task-list')
                                 <li>
-                                    <a href="{{ route('vendor-task.create') }}"
-                                        class="{{ Route::currentRouteName() === 'vendor-task.create' ? 'active' : '' }}">
+                                    <a href="{{ route('vendor-task.index') }}"
+                                        class="{{ in_array(Route::currentRouteName(), ['vendor-task.index', 'vendor-task.create', 'vendor-task.edit', 'vendor-task.show']) ? 'active' : '' }}">
                                         <i class="fe fe-file-text"></i>
                                         <span> Task</span>
                                     </a>

@@ -26,6 +26,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\VendorController;
 use App\Http\Controllers\VerifiedController;
 use App\Http\Controllers\TaskController;
+use App\Http\Controllers\PackageController;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Route;
 
@@ -363,73 +364,17 @@ Route::middleware(['auth', 'check.ip'])->group(function () {
         Route::get('/reciept/{id}', 'reciept')->name('reciept');
     });
 
+    Route::controller(PackageController::class)->group(function () {
+        Route::get('/package', 'index')->name('package.index')->middleware('can:package-list');
+        Route::get('/package/create', 'create')->name('package.create')->middleware('can:package-create');
+        Route::post('/package', 'store')->name('package.store')->middleware('can:package-create');
+        Route::get('/package/{package}/edit', 'edit')->name('package.edit')->middleware('can:package-edit');
+        Route::put('/package/{package}', 'update')->name('package.update')->middleware('can:package-edit');
+        Route::get('/package/{package}', 'show')->name('package.show')->middleware('can:package-show');
+        Route::delete('/package/{package}', 'destroy')->name('package.destroy')->middleware('can:package-delete');
+    });
+
     Route::get('/dashboard', [AdminController::class, 'homepage'])->name('admin_page');
-    // Route::resource('categories', CategoryController::class);
-    // Route::post('/category-status', [CategoryController::class, 'categoryStatus'])->name('categories.status');
-
-    // Route::resource('subcategories', SubCategoryController::class);
-    // Route::post('/sub-category-status', [SubCategoryController::class, 'subCategoryStatus'])->name('subcategories.status');
-
-    // Route::resource('/menus', MenuController::class);
-    // Route::post('/menu-status', [MenuController::class, 'menuStatus'])->name('menu.status');
-
-    // Resource route for submenu
-    // Route::resource('/submenu', SubMenuController::class);
-
-    // Grouping the additional routes related to submenu
-    // Route::controller(SubMenuController::class)->group(function () {
-    //     Route::post('/submenu-status', 'subMenuStatus')->name('submenu.status');
-    //     Route::post('/fetch-subcategory/{id}', 'fetchsubcategory');
-    //     Route::post('/getMenus/{subcatId}', 'getMenus');
-    //     Route::post('/reviews-status', 'subMenuStatus')->name('reviews.status');
-    // });
-
-
-
-    // Route::resource('service-detail', ServiceDetailController::class);
-
-    // Route::resource('/enquiry', EnquiryController::class);
-    // Route::controller(EnquiryController::class)->group(function () {
-    // Route::post('/enquiry-status', 'enquiryStatus')->name('enquiry.status');
-    // Route::get('/get-menus/{subcategoryId}', 'fetchMenu');
-    // Route::get('/reporting-data', 'reportData')->name('report.index');
-    // });
-
-
-    // Route::resource('/meta', MetaUrlController::class);
-
-    // Route::resource('/verified', VerifiedController::class);
-    // Route::post('/verified-status', [VerifiedController::class, 'verifyStatus'])->name('verified.status');
-    // Route::resource('/vendors', VendorController::class);
-    // Route::controller(VendorController::class)->group(function () {
-    //     Route::post('/fetch-city-vendor/{stateId}', 'fetchCity');
-    //     Route::post('/product-fetch-subcategory', 'fetchSubcategory')->name('fetch.subcategory');
-    //     Route::post('/product-fetch-menu', 'fetchMenu')->name('fetch.menu');
-    //     Route::post('/product-fetch-submenu', 'fetchSubmenu')->name('fetch.submenu');
-    //     Route::post('/getsubMenus/{menuId}', 'getsubMenus');
-    //     Route::post('/vendor-send-otp', 'sendOtp')->name('vendor.send.otp');
-    //     Route::post('/vendor-verify-otp', 'verifyOtp')->name('vendor.verify.otp');
-    // });
-
-    // Route::resource('/products', ProductController::class);
-    // Route::resource('/ipaddress', IpAddressController::class);
-    // Route::post('/ipaddress-status', [IpAddressController::class, 'ipaddressStatus'])->name('ipaddress.status');
-
-    // Route::resource('/reviews', ReviewController::class);
-    // Route::resource('/faq', FaqController::class);
-    // Route::post('/faq-status', [FaqController::class, 'faqStatus'])->name('faq.status');
-    // Route::resource('/india-services', IndiaServiceController::class);
-    // Route::resource('/newsletter', NewsletterController::class);
-    // Route::resource('/transaction', TransactionController::class);
-    // Route::post('/transaction-status', [TransactionController::class, 'transactionStatus'])->name('transaction.status');
-    // Route::post('/transaction/approve/{id}', [TransactionController::class, 'approve'])->name('transaction.approve');
-    // Route::post('/transaction/reject/{id}', [TransactionController::class, 'reject'])->name('transaction.reject');
-
-    // Route::resource('/invoice', InvoiceController::class);
-    // Route::post('invoice/{id}/edit', [InvoiceController::class, 'update'])->name('invoice.edit');
-    // Route::get('/transactions', [TransactionController::class, 'getTransactionDetails'])->name('transactions.details');
-    // Route::get('/generate-pdf', [InvoiceController::class, 'generatePDF'])->name('generate.pdf');
-    // Route::post('/invoice/data/store/{id}', [InvoiceController::class, 'dataStore'])->name('invoice.data.store');
 
 });
 

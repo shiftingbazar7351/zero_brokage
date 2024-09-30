@@ -102,8 +102,31 @@
                     </li>
                 @endcanany
 
+                @canany(['holiday-list'])
+                    <li class="submenu">
+                        <a href="javascript:void(0);"><i class="fe fe-briefcase"></i>
+                            <span>Holiday</span>
+                            <span class="menu-arrow"><i class="fe fe-chevron-right"></i></span>
+                        </a>
+                        <ul>
+
+                            @can(['categories-list'])
+                                <li>
+                                    <a href="{{ route('holiday.index') }}"
+                                        class="{{ Route::currentRouteName() === 'holiday.index' ? 'active' : '' }}">
+                                        <i class="fe fe-file-text"></i>
+                                        <span>Holiday</span>
+                                    </a>
+                                </li>
+                            @endcan
+                        </ul>
+                    </li>
+                @endcanany
+
+
                 @canany(['employee-headoffice-list', 'employee-company-list', 'employee-product-list',
-                    'employee-branch-list', 'employee-department-list', 'employee-list'])
+                    'employee-branch-list', 'employee-department-list', 'employee-list', 'employee-salary-list',
+                    'employee-bank-list', 'employee-hr-list'])
                     <li class="submenu">
                         <a href="javascript:void(0);"><i class="fa fa-database" aria-hidden="true"></i>
                             <span>Employee Data</span>
@@ -225,13 +248,34 @@
                         </a>
                     </li>
                 @endcan
-                @can('product-list')
-                    <li
-                        class="{{ in_array(Route::currentRouteName(), ['products.index', 'products.create', 'products.edit', 'products.show']) ? 'active' : '' }}">
-                        <a href="{{ route('products.index') }}">
-                            <i class="fa fa-product-hunt" aria-hidden="true"></i>
+                @canany(['product-list'])
+                    <li class="submenu">
+                        <a href="javascript:void(0);"><i class="fe fe-briefcase"></i>
                             <span>Products</span>
+                            <span class="menu-arrow"><i class="fe fe-chevron-right"></i></span>
                         </a>
+                        <ul>
+
+                            @can(['product-list'])
+                                <li
+                                    class="{{ in_array(Route::currentRouteName(), ['products.index', 'products.create', 'products.edit', 'products.show']) ? 'active' : '' }}">
+                                    <a href="{{ route('products.index') }}">
+                                        <i class="fa fa-product-hunt" aria-hidden="true"></i>
+                                        <span>Products</span>
+                                    </a>
+                                </li>
+                            @endcan
+
+                            @can(['package-list'])
+                                <li
+                                    class="{{ in_array(Route::currentRouteName(), ['package.index', 'package.create']) ? 'active' : '' }}">
+                                    <a href="{{ route('package.index') }}">
+                                        <i class="fa fa-product-hunt" aria-hidden="true"></i>
+                                        <span>Package</span>
+                                    </a>
+                                </li>
+                            @endcan
+                        </ul>
                     </li>
                 @endcan
                 @canany(['vendors-list', 'verified-list','vendor-task-list'])

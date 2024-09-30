@@ -210,6 +210,20 @@ class PermissionTableSeeder extends Seeder
             ['name' => 'vendor-task-show', 'title' => 'Vendor-task Show', 'guard_name' => 'web'],
             ['name' => 'vendor-task-delete', 'title' => 'Vendor-task Delete', 'guard_name' => 'web'],
 
+            ['name' => 'holiday-list', 'title' => 'Holiday List', 'guard_name' => 'web'],
+            ['name' => 'holiday-create', 'title' => 'Holiday Create', 'guard_name' => 'web'],
+            ['name' => 'holiday-edit', 'title' => 'Holiday Edit', 'guard_name' => 'web'],
+            ['name' => 'holiday-status', 'title' => 'Holiday Status', 'guard_name' => 'web'],
+            ['name' => 'holiday-show', 'title' => 'Holiday Show', 'guard_name' => 'web'],
+            ['name' => 'holiday-delete', 'title' => 'Holiday Delete', 'guard_name' => 'web'],
+
+            ['name' => 'package-list', 'title' => 'Package List', 'guard_name' => 'web'],
+            ['name' => 'package-create', 'title' => 'Package Create', 'guard_name' => 'web'],
+            ['name' => 'package-edit', 'title' => 'Package Edit', 'guard_name' => 'web'],
+            ['name' => 'package-status', 'title' => 'Package Status', 'guard_name' => 'web'],
+            ['name' => 'package-show', 'title' => 'Package Show', 'guard_name' => 'web'],
+            ['name' => 'package-delete', 'title' => 'Package Delete', 'guard_name' => 'web'],
+
         ];
         Permission::insert($permissions);
     }

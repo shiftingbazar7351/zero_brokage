@@ -14,10 +14,12 @@
                         <div class="row">
                             <div class="mb-3 col-md-3">
                                 <label for="category">Category<b style="color: red;">*</b></label>
-                                <select class="form-control" id="category" name="category">
-                                    <option value="" selected disabled>Select category</option>
+                                <select class="form-control" id="category" name="category" required>
+                                    <option value="" disabled>Select category</option>
                                     @foreach ($categories as $category)
-                                        <option value="{{ $category->id }}">{{ $category->name }}</option>
+                                        <option value="{{ $category->id }}" {{ (old('category', $vendor->category_id ?? '') == $category->id) ? 'selected' : '' }}>
+                                            {{ $category->name }}
+                                        </option>
                                     @endforeach
                                 </select>
                                 @error('category')
@@ -27,36 +29,57 @@
 
                             <div class="col-md-3">
                                 <label for="subcategory">Sub Category<b style="color: red;">*</b></label>
-                                <select class="form-control" id="subcategory" name="sub_category">
-                                    <option value="" selected disabled>Select subcategory</option>
+                                <select class="form-control" id="subcategory" name="sub_category" required>
+                                    <option value="" disabled>Select subcategory</option>
+                                    <!-- Populate subcategories based on selected category -->
+                                    @foreach ($subcategories as $subcategory)
+                                        <option value="{{ $subcategory->id }}" {{ (old('sub_category', $vendor->sub_category_id ?? '') == $subcategory->id) ? 'selected' : '' }}>
+                                            {{ $subcategory->name }}
+                                        </option>
+                                    @endforeach
                                 </select>
                                 @error('sub_category')
                                     <div class="error text-danger">{{ $message }}</div>
                                 @enderror
                             </div>
+
                             <div class="col-md-3">
                                 <label for="menu">Menu<b style="color: red;">*</b></label>
-                                <select class="form-control" id="menu" name="menu_id">
-                                    <option value="" selected disabled>Select menu</option>
+                                <select class="form-control" id="menu" name="menu_id" required>
+                                    <option value="" disabled>Select menu</option>
+                                    <!-- Populate menus based on selected category or subcategory -->
+                                    @foreach ($menus as $menu)
+                                        <option value="{{ $menu->id }}" {{ (old('menu_id', $vendor->menu_id ?? '') == $menu->id) ? 'selected' : '' }}>
+                                            {{ $menu->name }}
+                                        </option>
+                                    @endforeach
                                 </select>
                                 @error('menu_id')
                                     <div class="error text-danger">{{ $message }}</div>
                                 @enderror
                             </div>
+
                             <div class="col-md-3">
                                 <label for="submenu">Sub-Menu<b style="color: red;">*</b></label>
-                                <select class="form-control" id="submenu" name="submenu_id">
-                                    <option value="" selected disabled>Select submenu</option>
+                                <select class="form-control" id="submenu" name="submenu_id" required>
+                                    <option value="" disabled>Select submenu</option>
+                                    <!-- Populate submenus based on selected menu -->
+                                    @foreach ($submenus as $submenu)
+                                        <option value="{{ $submenu->id }}" {{ (old('submenu_id', $vendor->submenu_id ?? '') == $submenu->id) ? 'selected' : '' }}>
+                                            {{ $submenu->name }}
+                                        </option>
+                                    @endforeach
                                 </select>
                                 @error('submenu_id')
                                     <div class="error text-danger">{{ $message }}</div>
                                 @enderror
                             </div>
+
                             <div class="mb-3 col-md-4">
                                 <label for="company_name" class="form-label">Company Name</label>
                                 <input type="text" class="form-control" id="company_name"
                                     value="{{ old('company_name', $vendor->company_name ?? '') }}" name="company_name"
-                                    placeholder="Enter company name">
+                                    placeholder="Enter company name" required>
                                 @error('company_name')
                                     <div class="error text-danger">{{ $message }}</div>
                                 @enderror
@@ -64,25 +87,25 @@
 
                             <div class="mb-3 col-md-4">
                                 <label for="email" class="form-label">Email</label>
-                                <input type="text" class="form-control" id="email"
+                                <input type="email" class="form-control" id="email"
                                     value="{{ old('email', $vendor->email ?? '') }}" name="email"
-                                    placeholder="Enter Email">
+                                    placeholder="Enter Email" required>
                                 @error('email')
                                     <div class="error text-danger">{{ $message }}</div>
                                 @enderror
                             </div>
 
-                            <input type="hidden" name="vendor_id" id="vendor_id">
+                            <input type="hidden" name="vendor_id" value="{{ $vendor->id ?? '' }}">
 
                             <div class="mb-3 col-md-4">
                                 <label for="number" class="form-label">Mobile Number</label>
-                                <input type="text" class="form-control" id="number" value="{{ old('number') }}"
-                                    id="number" maxlength="10" name="number" placeholder="Enter number">
-
+                                <input type="text" class="form-control" id="number" value="{{ old('number', $vendor->number ?? '') }}"
+                                    maxlength="10" name="number" placeholder="Enter number" required>
                                 @error('number')
                                     <div class="error text-danger">{{ $message }}</div>
                                 @enderror
                             </div>
+
 
                             <div class="mb-3 col-md-3">
                                 <label for="status" class="form-label">Status</label>

@@ -2,9 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+use App\Models\Category;
 use App\Models\Vendor;
 use App\Services\FileUploadService;
+use Illuminate\Http\Request;
 
 class TaskController extends Controller
 {
@@ -31,7 +32,8 @@ class TaskController extends Controller
      */
     public function create()
     {
-        return view('backend.vendor.task.create');
+        $categories = Category::where('status', 1)->orderByDesc('created_at')->get();
+        return view('backend.vendor.task.create',compact('categories'));
     }
 
     /**

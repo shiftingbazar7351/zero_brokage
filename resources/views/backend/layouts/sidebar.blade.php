@@ -22,13 +22,15 @@
 
                 @can(['permission-list'])
                     <li class ="{{ Route::currentRouteName() === 'role.permission.list' ? 'active' : '' }}">
-                        <a href="{{ route('role.permission.list') }}"><i class="fa fa-flag" aria-hidden="true"></i> <span>Assign
+                        <a href="{{ route('role.permission.list') }}"><i class="fa fa-flag" aria-hidden="true"></i>
+                            <span>Assign
                                 Permission</span></a>
                     </li>
                 @endcan
                 @can(['user-list'])
                     <li class ="{{ Route::currentRouteName() === 'user.index' ? 'active' : '' }}">
-                        <a href="{{ route('user.index') }}"><i class="fa fa-users" aria-hidden="true"></i> <span>Users</span></a>
+                        <a href="{{ route('user.index') }}"><i class="fa fa-users" aria-hidden="true"></i>
+                            <span>Users</span></a>
                     </li>
                 @endcan
                 @canany(['categories-list', 'subcategory-list', 'menus-list', 'submenu-list', 'india-services-list',
@@ -76,7 +78,7 @@
                                     </a>
                                 </li>
                             @endcan
-                            {{-- ---------------------This Route currently not in use --------------------------------------------------}}
+                            {{-- ---------------------This Route currently not in use ------------------------------------------------ --}}
                             {{-- @can(['service-detail-list'])
                                 <li>
                                     <a href="{{ route('service-detail.index') }}"
@@ -100,101 +102,102 @@
                     </li>
                 @endcanany
 
-                @canany(['employee-headoffice-list', 'employee-company-list', 'employee-product-list', 'employee-branch-list', 'employee-department-list','employee-list'])
-                <li class="submenu">
-                    <a href="javascript:void(0);"><i class="fa fa-database" aria-hidden="true"></i>
-                        <span>Employee Data</span>
-                        <span class="menu-arrow"><i class="fe fe-chevron-right"></i></span>
-                    </a>
-                    <ul>
-                        @can(['employee-headoffice-list'])
-                        <li>
-                            <a href="{{ route('employee-headoffice.index') }}"
-                                class="{{ Route::currentRouteName() === 'employee-headoffice.index' ? 'active' : '' }}">
-                                <i class="fa fa-building" aria-hidden="true"></i>
-                                <span>Office Head</span>
-                            </a>
-                        </li>
-                        @endcan
-                        @can(['employee-company-list'])
-                        <li>
-                            <a href="{{ route('employee-company.index') }}"
-                                class="{{ Route::currentRouteName() === 'employee-company.index' ? 'active' : '' }}">
-                                <i class="fe fe-file-text"></i>
-                                <span>Company</span>
-                            </a>
-                        </li>
-                        @endcan
-                        @can(['employee-product-list'])
-                        <li>
-                            <a href="{{ route('employee-product.index') }}"
-                                class="{{ Route::currentRouteName() === 'employee-product.index' ? 'active' : '' }}">
-                                <i class="fa fa-product-hunt" aria-hidden="true"></i>
-                                <span>Product</span>
-                            </a>
-                        </li>
-                        @endcan
-                        @can(['employee-branch-list'])
-                        <li>
-                            <a href="{{ route('employee-branch.index') }}"
-                                class="{{ Route::currentRouteName() === 'employee-branch.index' ? 'active' : '' }}">
-                                <i class="fa fa-code-fork" aria-hidden="true"></i>
-                                <span>Branch</span>
-                            </a>
-                        </li>
-                        @endcan
-                        @can(['employee-department-list'])
-                        <li>
-                            <a href="{{ route('employee-department.index') }}"
-                                class="{{ Route::currentRouteName() === 'employee-department.index' ? 'active' : '' }}">
-                                <i class="fa fa-building" aria-hidden="true"></i>
-                                <span>Department</span>
-                            </a>
-                        </li>
-                        @endcan
-                        @can(['employee-list'])
-                        <li>
-                            <a href="{{ route('employee.index') }}"
-                                class="{{ Route::currentRouteName() === 'employee.index' ? 'active' : '' }}
+                @canany(['employee-headoffice-list', 'employee-company-list', 'employee-product-list',
+                    'employee-branch-list', 'employee-department-list', 'employee-list'])
+                    <li class="submenu">
+                        <a href="javascript:void(0);"><i class="fa fa-database" aria-hidden="true"></i>
+                            <span>Employee Data</span>
+                            <span class="menu-arrow"><i class="fe fe-chevron-right"></i></span>
+                        </a>
+                        <ul>
+                            @can(['employee-headoffice-list'])
+                                <li>
+                                    <a href="{{ route('employee-headoffice.index') }}"
+                                        class="{{ Route::currentRouteName() === 'employee-headoffice.index' ? 'active' : '' }}">
+                                        <i class="fa fa-building" aria-hidden="true"></i>
+                                        <span>Office Head</span>
+                                    </a>
+                                </li>
+                            @endcan
+                            @can(['employee-company-list'])
+                                <li>
+                                    <a href="{{ route('employee-company.index') }}"
+                                        class="{{ Route::currentRouteName() === 'employee-company.index' ? 'active' : '' }}">
+                                        <i class="fe fe-file-text"></i>
+                                        <span>Company</span>
+                                    </a>
+                                </li>
+                            @endcan
+                            @can(['employee-product-list'])
+                                <li>
+                                    <a href="{{ route('employee-product.index') }}"
+                                        class="{{ Route::currentRouteName() === 'employee-product.index' ? 'active' : '' }}">
+                                        <i class="fa fa-product-hunt" aria-hidden="true"></i>
+                                        <span>Product</span>
+                                    </a>
+                                </li>
+                            @endcan
+                            @can(['employee-branch-list'])
+                                <li>
+                                    <a href="{{ route('employee-branch.index') }}"
+                                        class="{{ Route::currentRouteName() === 'employee-branch.index' ? 'active' : '' }}">
+                                        <i class="fa fa-code-fork" aria-hidden="true"></i>
+                                        <span>Branch</span>
+                                    </a>
+                                </li>
+                            @endcan
+                            @can(['employee-department-list'])
+                                <li>
+                                    <a href="{{ route('employee-department.index') }}"
+                                        class="{{ Route::currentRouteName() === 'employee-department.index' ? 'active' : '' }}">
+                                        <i class="fa fa-building" aria-hidden="true"></i>
+                                        <span>Department</span>
+                                    </a>
+                                </li>
+                            @endcan
+                            @can(['employee-list'])
+                                <li>
+                                    <a href="{{ route('employee.index') }}"
+                                        class="{{ Route::currentRouteName() === 'employee.index' ? 'active' : '' }}
                                 {{ Route::currentRouteName() === 'employee.create' ? 'active' : '' }}
                                  {{ Route::currentRouteName() === 'employee.edit' ? 'active' : '' }}">
-                                <i class="fe fe-file-text"></i>
-                                <span>Employee</span>
-                            </a>
-                        </li>
-                        @endcan
+                                        <i class="fe fe-file-text"></i>
+                                        <span>Employee</span>
+                                    </a>
+                                </li>
+                            @endcan
 
-                        @can(['employee-salary-list'])
-                        <li>
-                            <a href="{{ route('employee-salary.index') }}"
-                                class="{{ Route::currentRouteName() === 'employee-salary.index' ? 'active' : '' }} {{ Route::currentRouteName() === 'employee-salary.create' ? 'active' : '' }} {{ Route::currentRouteName() === 'employee-salary.edit' ? 'active' : '' }}">
-                                <i class="fa fa-building" aria-hidden="true"></i>
-                                <span>Salary</span>
-                            </a>
-                        </li>
-                        @endcan
+                            @can(['employee-salary-list'])
+                                <li>
+                                    <a href="{{ route('employee-salary.index') }}"
+                                        class="{{ Route::currentRouteName() === 'employee-salary.index' ? 'active' : '' }} {{ Route::currentRouteName() === 'employee-salary.create' ? 'active' : '' }} {{ Route::currentRouteName() === 'employee-salary.edit' ? 'active' : '' }}">
+                                        <i class="fa fa-building" aria-hidden="true"></i>
+                                        <span>Salary</span>
+                                    </a>
+                                </li>
+                            @endcan
 
-                        @can(['employee-bank-list'])
-                        <li>
-                            <a href="{{ route('employee-bank.index') }}"
-                                class="{{ Route::currentRouteName() === 'employee-bank.index' ? 'active' : '' }} {{ Route::currentRouteName() === 'employee-bank.create' ? 'active' : '' }} {{ Route::currentRouteName() === 'employee-bank.edit' ? 'active' : '' }}">
-                                <i class="fa fa-building" aria-hidden="true"></i>
-                                <span>Bank</span>
-                            </a>
-                        </li>
-                        @endcan
+                            @can(['employee-bank-list'])
+                                <li>
+                                    <a href="{{ route('employee-bank.index') }}"
+                                        class="{{ Route::currentRouteName() === 'employee-bank.index' ? 'active' : '' }} {{ Route::currentRouteName() === 'employee-bank.create' ? 'active' : '' }} {{ Route::currentRouteName() === 'employee-bank.edit' ? 'active' : '' }}">
+                                        <i class="fa fa-building" aria-hidden="true"></i>
+                                        <span>Bank</span>
+                                    </a>
+                                </li>
+                            @endcan
 
-                        @can(['employee-hr-list'])
-                        <li>
-                            <a href="{{ route('employee-hr.index') }}"
-                                class="{{ Route::currentRouteName() === 'employee-hr.index' ? 'active' : '' }} {{ Route::currentRouteName() === 'employee-hr.create' ? 'active' : '' }} {{ Route::currentRouteName() === 'employee-hr.edit' ? 'active' : '' }}">
-                                <i class="fa fa-building" aria-hidden="true"></i>
-                                <span>Hr Name</span>
-                            </a>
-                        </li>
-                        @endcan
-                    </ul>
-                </li>
+                            @can(['employee-hr-list'])
+                                <li>
+                                    <a href="{{ route('employee-hr.index') }}"
+                                        class="{{ Route::currentRouteName() === 'employee-hr.index' ? 'active' : '' }} {{ Route::currentRouteName() === 'employee-hr.create' ? 'active' : '' }} {{ Route::currentRouteName() === 'employee-hr.edit' ? 'active' : '' }}">
+                                        <i class="fa fa-building" aria-hidden="true"></i>
+                                        <span>Hr Name</span>
+                                    </a>
+                                </li>
+                            @endcan
+                        </ul>
+                    </li>
                 @endcanany
 
                 @can(['enquiry-list'])
@@ -224,30 +227,20 @@
                 @endcan
                 @can('product-list')
                     <li
-                        class="{{ in_array(Route::currentRouteName(), ['products.index', 'products.create', 'products.edit','products.show']) ? 'active' : '' }}">
+                        class="{{ in_array(Route::currentRouteName(), ['products.index', 'products.create', 'products.edit', 'products.show']) ? 'active' : '' }}">
                         <a href="{{ route('products.index') }}">
                             <i class="fa fa-product-hunt" aria-hidden="true"></i>
                             <span>Products</span>
                         </a>
                     </li>
                 @endcan
-                @canany(['vendors-list', 'verified-list'])
+                @canany(['vendors-list', 'verified-list','vendor-task-create'])
                     <li class="submenu">
                         <a href="javascript:void(0);"><i class="fa fa-venus-double" aria-hidden="true"></i>
                             <span>Vendors</span>
                             <span class="menu-arrow"><i class="fe fe-chevron-right"></i></span>
                         </a>
                         <ul>
-                            @can('vendors-list')
-                                <li>
-                                    <a href="{{ route('vendors.index') }}"
-                                        class="{{ in_array(Route::currentRouteName(), ['vendors.index', 'vendors.create', 'vendors.edit','vendors.show']) ? 'active' : '' }}">
-                                        <i class="fe fe-file-text"></i>
-                                        <span>Vendor</span>
-                                    </a>
-
-                                </li>
-                            @endcan
                             @can('verified-list')
                                 <li>
                                     <a href="{{ route('verified.index') }}"
@@ -257,16 +250,24 @@
                                     </a>
                                 </li>
                             @endcan
+                            @can('vendors-list')
+                                <li>
+                                    <a href="{{ route('vendors.index') }}"
+                                        class="{{ in_array(Route::currentRouteName(), ['vendors.index', 'vendors.create', 'vendors.edit', 'vendors.show']) ? 'active' : '' }}">
+                                        <i class="fe fe-file-text"></i>
+                                        <span>Vendor</span>
+                                    </a>
+                                </li>
+                            @endcan
                             @can('vendor-task-create')
-                            <li>
-                                <a href="{{ route('vendor-task.create') }}"
-                                    class="{{ Route::currentRouteName() === 'vendor-task.create' ? 'active' : '' }}">
-                                    <i class="fe fe-file-text"></i>
-                                    <span> Task</span>
-                                </a>
-                            </li>
-                        @endcan
-
+                                <li>
+                                    <a href="{{ route('vendor-task.create') }}"
+                                        class="{{ Route::currentRouteName() === 'vendor-task.create' ? 'active' : '' }}">
+                                        <i class="fe fe-file-text"></i>
+                                        <span> Task</span>
+                                    </a>
+                                </li>
+                            @endcan
                         </ul>
                     </li>
                 @endcanany

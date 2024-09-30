@@ -208,7 +208,6 @@
                     $('#editUtrId').val(data.utr);
                     $('#editTimeId').val(data.payment_time);
                     $('#editPaymentMethodId').val(data.payment_method);
-
                     // Generate the URL for the screenshot image
                     if (data.screenshot) {
                         // Assuming `data.screenshot` is the path relative to `storage/app/public`

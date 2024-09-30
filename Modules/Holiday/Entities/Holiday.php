@@ -10,11 +10,11 @@ class Holiday extends Model
     use HasFactory;
 
     protected $fillable = [
-        'hoffice_id',
-        'company_id',
-        'name',
-        'image',
-        'address',
+        'festival_name',
+        'start_date',
+        'end_date',
+        'festival_types',
+        'Number_of_days',
         'status',
         'created_by'
     ];

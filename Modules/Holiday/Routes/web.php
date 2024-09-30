@@ -16,12 +16,12 @@ use Modules\Holiday\Http\Controllers\HolidayController;
 
 
 Route::controller(HolidayController::class)->group(function () {
-    Route::get('/holiday-bank', 'index')->name('holiday-bank.index')->middleware('can:holiday-bank-list'); // List all holiday-headoffice
-    Route::get('/holiday-bank/create', 'create')->name('holiday-bank.create')->middleware('can:holiday-bank-create'); // Show form to create a category
-    Route::post('/holiday-bank', 'store')->name('holiday-bank.store')->middleware('can:holiday-bank-create'); // Store a new category
-    Route::get('/holiday-bank/{bank}/edit', 'edit')->name('holiday-bank.edit')->middleware('can:holiday-bank-edit'); // Edit category form
-    Route::put('/holiday-bank/{bank}', 'update')->name('holiday-bank.update')->middleware('can:holiday-bank-edit'); // Update the category
-    Route::get('/holiday-bank/{bank}', 'show')->name('holiday-bank.show')->middleware('can:holiday-bank-show'); // Show a single category (corrected to GET)
-    Route::delete('/holiday-bank/{bank}', 'destroy')->name('holiday-bank.destroy')->middleware('can:holiday-bank-delete'); // Delete a category
-    Route::post('/holiday-bank-status', 'BankStatus')->name('holiday-bank.status')->middleware('can:holiday-bank-status'); // Change category status
+    Route::get('/holiday', 'index')->name('holiday.index')->middleware('can:holiday-list'); // List all holiday-headoffice
+    Route::get('/holiday/create', 'create')->name('holiday.create')->middleware('can:holiday-create'); // Show form to create a category
+    Route::post('/holiday', 'store')->name('holiday.store')->middleware('can:holiday-create'); // Store a new category
+    Route::get('/holiday/{id}/edit', 'edit')->name('holiday.edit')->middleware('can:holiday-edit'); // Edit category form
+    Route::put('/holiday/{id}', 'update')->name('holiday.update')->middleware('can:holiday-edit'); // Update the category
+    Route::get('/holiday/{id}', 'show')->name('holiday.show')->middleware('can:holiday-show'); // Show a single category (corrected to GET)
+    Route::delete('/holiday/{id}', 'destroy')->name('holiday.destroy')->middleware('can:holiday-delete'); // Delete a category
+    Route::post('/holiday-status', 'HolidayStatus')->name('holiday.status')->middleware('can:holiday-status'); // Change category status
 });

@@ -19,9 +19,7 @@ class HolidayController extends Controller
         $query = Holiday::query();
         // Filter based on search query
         if ($request->has('search')) {
-            $query->where('name', 'like', '%' . $request->search . '%')
-            ->orWhere('number', 'like', '%' . $request->search . '%')
-            ->orWhere('address', 'like', '%' . $request->search . '%');
+            $query->where('festival_name', 'like', '%' . $request->search . '%');
         }
         // Paginate the users (adjust pagination number as needed)
         $holidays = $query->orderByDesc('created_at')->paginate(10);
@@ -48,7 +46,28 @@ class HolidayController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'festival_name' => 'required',
+            'start_date' => 'required',
+            'end_date'=> 'required',
+            'festival_types'=> 'required',
+            'Number_of_days'=> 'required'
+        ]);
+
+
+        $holiday = new Holiday();
+        $holiday->festival_name = $request->festival_name;
+        $holiday->start_date = $request->start_date;
+        $holiday->end_date = $request->end_date;
+        $holiday->festival_types = $request->festival_types;
+        // $holiday->Number_of_days = $request->Number_of_days;
+        $holiday->Number_of_days = (new \DateTime($request->start_date))->diff(new \DateTime($request->end_date))->days;
+
+
+
+        $holiday->save();
+
+        return response()->json(['success' => true, 'message' => 'holiday created successfully.']);
     }
 
     /**
@@ -68,7 +87,8 @@ class HolidayController extends Controller
      */
     public function edit($id)
     {
-        return view('holiday::edit');
+        $holiday = Holiday::find($id);
+        return response()->json(['holiday' => $holiday]);
     }
 
     /**
@@ -79,7 +99,26 @@ class HolidayController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $request->validate([
+            'festival_name' => 'required',
+            'start_date' => 'required',
+            'end_date'=> 'required',
+            'festival_types'=> 'required',
+            'Number_of_days'=> 'required'
+        ]);
+
+
+        $holiday = Holiday::findOrFail($id);
+        $holiday->festival_name = $request->festival_name;
+        $holiday->start_date = $request->start_date;
+        $holiday->end_date = $request->end_date;
+        $holiday->festival_types = $request->festival_types;
+        $holiday->Number_of_days = $request->Number_of_days;
+
+
+        $holiday->save();
+
+        return response()->json(['success' => true, 'message' => 'holiday created successfully.']);
     }
 
     /**
@@ -89,6 +128,20 @@ class HolidayController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $holiday = Holiday::findOrFail($id);
+        $holiday->delete();
+
+        return redirect(route('holiday.index'))->with('success', ' Deleted Successfully!');
+    }
+
+    public function HolidayStatus(Request $request)
+    {
+        $item = Holiday::find($request->id);
+        if ($item) {
+            $item->status = $request->status;
+            $item->save();
+            return response()->json(['success' => true, 'message' => 'Status updated successfully.']);
+        }
+        return response()->json(['success' => false, 'message' => 'Item not found.']);
     }
 }

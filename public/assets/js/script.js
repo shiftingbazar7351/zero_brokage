@@ -78,7 +78,7 @@ Version      : 1.0
 		});
 	}
 
-	
+
 	// Remove Gallery
 	$(document).on("click",".remove-gallery",function () {
 		$(this).parent().parent().hide();
@@ -125,7 +125,7 @@ Version      : 1.0
 		}
 	});
 
-	// fade in scroll 
+	// fade in scroll
 
 	if ($('.main-wrapper .aos').length > 0) {
 		AOS.init({
@@ -984,7 +984,7 @@ Version      : 1.0
 		})
 	}
 
-	// Service slider 
+	// Service slider
 	if ($('.owl-carousel.partners-slider').length > 0) {
 		$('.owl-carousel.partners-slider').owlCarousel({
 			loop: true,
@@ -1012,7 +1012,7 @@ Version      : 1.0
 			}
 		})
 	}
-	// Service slider 
+	// Service slider
 	if ($('.owl-carousel.partners-slider-seven').length > 0) {
 		$('.owl-carousel.partners-slider-seven').owlCarousel({
 			loop: true,
@@ -1350,7 +1350,7 @@ Version      : 1.0
 		});
 	}
 
-	// Payment Method 
+	// Payment Method
 
 	$('.payment-card').on('click', function () {
 		$('.card-payment').each(function () {
@@ -1457,7 +1457,7 @@ Version      : 1.0
 	}
 
 	// Tooltip
-	
+
 	if($('[data-bs-toggle="tooltip"]').length > 0 ){
 		var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
 		var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
@@ -1531,7 +1531,7 @@ Version      : 1.0
 			});
 			// Adding Class Active To Show Steps Forward;
 			$('#progressbar .active').removeClass('active').addClass('activated').next().addClass('active');
-			
+
 
 		});
 		$(".service-inform-fieldset .prev_btn").on('click', function () { // Function Runs On NEXT Button Click
@@ -1541,7 +1541,7 @@ Version      : 1.0
 			});
 			// Adding Class Active To Show Steps Forward;
 			$('#progressbar .active').removeClass('active').prev().removeClass('activated').addClass('active');
-			
+
 
 		});
 	});
@@ -1682,7 +1682,7 @@ Version      : 1.0
 	});
 
 	// Add More Cards
-	$(".add-more-cards").on('click', function () { 
+	$(".add-more-cards").on('click', function () {
 		var debitcards = '<div class="payment-card save-cards">' +
 		'<div class="payment-head">' +
 			'<div class="payment-title">' +
@@ -1911,7 +1911,7 @@ Version      : 1.0
 				button.innerHTML = "Show less <i class='feather-arrow-up-circle ms-1'>";
 			} else {
 				isLess = true;
-				container.style.height = '180px';
+				container.style.height = 'auto';
 				button.innerHTML = "Show more <i class='feather-arrow-down-circle ms-1'></i>";
 			}
 		}
@@ -2151,7 +2151,7 @@ Version      : 1.0
 	$(document).ready(function () {
 		let progressVal = 0;
 		let businessType = 0;
-		
+
 		$(".next_btns").on('click', function () {
 			$(this).parent().parent().parent().next().fadeIn('slow');
 			$(this).parent().parent().parent().css({
@@ -2166,7 +2166,7 @@ Version      : 1.0
 				'display': 'none'
 			});
 			progressVal = progressVal - 1;
-			$('.progress-active').removeClass('progress-active').prev().removeClass('progress-activated').addClass('progress-active'); 
+			$('.progress-active').removeClass('progress-active').prev().removeClass('progress-activated').addClass('progress-active');
 		});
   });
 
@@ -2191,34 +2191,34 @@ Version      : 1.0
 	});
 
 	// Otp Verfication  
-	 $('.digit-group').find('input').each(function () { 
-		$(this).attr('maxlength', 1); 
-		$(this).on('keyup', function (e) {  
-			var parent = $($(this).parent());  
-			if (e.keyCode === 8 || e.keyCode === 37) {  
-				var prev = parent.find('input#' + $(this).data('previous'));  
-				if (prev.length) {   $(prev).select();  
-				}  
-			} 
-			else if ((e.keyCode >= 48 && e.keyCode <= 57) || (e.keyCode >= 65 && e.keyCode <= 90) || (e.keyCode >= 96 && e.keyCode <= 105) || e.keyCode === 39) {  
-				var next = parent.find('input#' + $(this).data('next'));  
-				if (next.length) {   
-					$(next).select();  
-				} else {   
-					if (parent.data('autosubmit')) {   
-						parent.submit();   
-					}  
-				}  
-			} 
-		}); 
-	}); 
-	$('.digit-group input').on('keyup', function () { 
-		var self = $(this); 
-		if (self.val() != '') {  
-			self.addClass('active'); 
-		} else {  
-			self.removeClass('active'); 
-		} 
+	 $('.digit-group').find('input').each(function () {
+		$(this).attr('maxlength', 1);
+		$(this).on('keyup', function (e) {
+			var parent = $($(this).parent());
+			if (e.keyCode === 8 || e.keyCode === 37) {
+				var prev = parent.find('input#' + $(this).data('previous'));
+				if (prev.length) {   $(prev).select();
+				}
+			}
+			else if ((e.keyCode >= 48 && e.keyCode <= 57) || (e.keyCode >= 65 && e.keyCode <= 90) || (e.keyCode >= 96 && e.keyCode <= 105) || e.keyCode === 39) {
+				var next = parent.find('input#' + $(this).data('next'));
+				if (next.length) {
+					$(next).select();
+				} else {
+					if (parent.data('autosubmit')) {
+						parent.submit();
+					}
+				}
+			}
+		});
+	});
+	$('.digit-group input').on('keyup', function () {
+		var self = $(this);
+		if (self.val() != '') {
+			self.addClass('active');
+		} else {
+			self.removeClass('active');
+		}
 	});
 
 	// Rating Star Review

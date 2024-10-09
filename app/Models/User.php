@@ -4,12 +4,19 @@ namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Laravel\Sanctum\HasApiTokens;
+use Modules\Employee\Entities\Companie;
+use Modules\Employee\Entities\HrName;
+use Spatie\Permission\Models\Role;
+use Spatie\Permission\Traits\HasRoles;
 
 class User extends Authenticatable
 {
-    use HasFactory, Notifiable;
+    use HasApiTokens, HasFactory, Notifiable, HasRoles,SoftDeletes;
 
     /**
      * The attributes that are mass assignable.
@@ -20,6 +27,45 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'image',
+        'employee_code',
+        'fname',
+        'lname',
+        'gender',
+        'dob',
+        'role',
+        'country',
+        'number',
+        'joining_date',
+        'company',
+        'no_of_experience',
+        'department',
+        'designation',
+        'office_shift',
+        'reporting_head',
+        'hr_head',
+        'hr_executive',
+        'official_mobile',
+        'official_email',
+        'experience_type',
+        'high_school_certificate',
+        'intermediate_certificate',
+        'graduation_certificate',
+        'experience_letter',
+        'relieving_letter',
+        'offer_letter',
+        'salary_slip',
+        'bank_statement',
+        'current_address',
+        'permanent_address',
+        'character_certificate',
+        'medical_certificate',
+        'previous_ref_name',
+        'previous_ref_email',
+        'previous_ref_number',
+        'previous_ref_designation',
+        'status',
+        'created_by'
     ];
 
     /**
@@ -33,15 +79,26 @@ class User extends Authenticatable
     ];
 
     /**
-     * Get the attributes that should be cast.
+     * The attributes that should be cast.
      *
-     * @return array<string, string>
+     * @var array<string, string>
      */
-    protected function casts(): array
+    protected $casts = [
+        'email_verified_at' => 'datetime',
+    ];
+
+    public function companyName()
     {
-        return [
-            'email_verified_at' => 'datetime',
-            'password' => 'hashed',
-        ];
+        return $this->belongsTo(Companie::class,'company','id');
+    }
+
+    public function hrName()
+    {
+        return $this->belongsTo(HrName::class,'hr_head','id');
+    }
+
+    public function hrExecutive()
+    {
+        return $this->belongsTo(HrName::class,'hr_executive','id');
     }
 }

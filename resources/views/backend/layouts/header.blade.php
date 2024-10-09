@@ -12,189 +12,15 @@
     </a>
     <div class="header-split">
         <div class="page-headers">
-            <div class="search-bar">
-                <span><i class="fe fe-search"></i></span>
-                <input type="text" placeholder="Search" class="form-control">
-            </div>
+            <a href="{{route('cache.clear')}}" class="btn btn-primary">
+                Cache Clear
+            </a>
         </div>
         <ul class="nav user-menu">
             <li class="nav-item">
-                <a href="../index.html" class="viewsite"><i class="fe fe-globe me-2"></i>View Site</a>
+                <a href="{{ route('home') }}" class="viewsite"><i class="fe fe-globe me-2"></i>View Site</a>
             </li>
-            <li class="nav-item dropdown has-arrow dropdown-heads flag-nav">
-                <a class="nav-link" data-bs-toggle="dropdown" href="javascript:void(0);" role="button">
-                    <img src="assets/img/flags/us1.png" alt="Flag" height="20">
-                </a>
-                <div class="dropdown-menu dropdown-menu-right">
-                    <a href="javascript:void(0);" class="dropdown-item">
-                        <img src="assets/img/flags/us.png" class="me-2" alt="Flag" height="16"> English
-                    </a>
-                    <a href="javascript:void(0);" class="dropdown-item">
-                        <img src="assets/img/flags/fr.png" class="me-2" alt="Flag" height="16"> French
-                    </a>
-                    <a href="javascript:void(0);" class="dropdown-item">
-                        <img src="assets/img/flags/es.png" class="me-2" alt="Flag" height="16"> Spanish
-                    </a>
-                    <a href="javascript:void(0);" class="dropdown-item">
-                        <img src="assets/img/flags/de.png" class="me-2" alt="Flag" height="16"> German
-                    </a>
-                </div>
-            </li>
-            <li class="nav-item  has-arrow dropdown-heads ">
-                <a href="javascript:void(0);" class="toggle-switch">
-                    <i class="fe fe-moon"></i>
-                </a>
-            </li>
-            <li class="nav-item dropdown has-arrow dropdown-heads ">
-                <a href="javascript:void(0);" data-bs-toggle="dropdown">
-                    <i class="fe fe-bell"></i>
-                </a>
-                <div class="dropdown-menu notifications">
-                    <div class="topnav-dropdown-header">
-                        <span class="notification-title">Notifications</span>
-                        <a href="javascript:void(0)" class="clear-noti"> Clear All </a>
-                    </div>
-                    <div class="noti-content">
-                        <ul class="notification-list">
-                            <li class="notification-message">
-                                <a href="notifications.html">
-                                    <div class="media d-flex">
-                                        <span class="avatar avatar-sm flex-shrink-0">
-                                            <img class="avatar-img rounded-circle" alt="user"
-                                                src="{{asset('admin/assets/img/provider/provider-01.jpg')}}">
-                                        </span>
-                                        <div class="media-body flex-grow-1">
-                                            <p class="noti-details">
-                                                <span class="noti-title">Thomas Herzberg have been
-                                                    subscribed</span>
-                                            </p>
-                                            <p class="noti-time">
-                                                <span class="notification-time">15 Sep 2020 10:20 PM</span>
-                                            </p>
-                                        </div>
-                                    </div>
-                                </a>
-                            </li>
-                            <li class="notification-message">
-                                <a href="notifications.html">
-                                    <div class="media d-flex">
-                                        <span class="avatar avatar-sm flex-shrink-0">
-                                            <img class="avatar-img rounded-circle" alt="user"
-                                                src="assets/img/provider/provider-02.jpg">
-                                        </span>
-                                        <div class="media-body flex-grow-1">
-                                            <p class="noti-details">
-                                                <span class="noti-title">Matthew Garcia have been
-                                                    subscribed</span>
-                                            </p>
-                                            <p class="noti-time">
-                                                <span class="notification-time">13 Sep 2020 03:56 AM</span>
-                                            </p>
-                                        </div>
-                                    </div>
-                                </a>
-                            </li>
-                            <li class="notification-message">
-                                <a href="notifications.html">
-                                    <div class="media d-flex">
-                                        <span class="avatar avatar-sm flex-shrink-0">
-                                            <img class="avatar-img rounded-circle" alt="user"
-                                                src="assets/img/provider/provider-03.jpg">
-                                        </span>
-                                        <div class="media-body flex-grow-1">
-                                            <p class="noti-details">
-                                                <span class="noti-title">Yolanda Potter have been
-                                                    subscribed</span>
-                                            </p>
-                                            <p class="noti-time">
-                                                <span class="notification-time">12 Sep 2020 09:25 PM</span>
-                                            </p>
-                                        </div>
-                                    </div>
-                                </a>
-                            </li>
-                            <li class="notification-message">
-                                <a href="notifications.html">
-                                    <div class="media d-flex">
-                                        <span class="avatar avatar-sm flex-shrink-0">
-                                            <img class="avatar-img rounded-circle" alt="User Image"
-                                                src="assets/img/provider/provider-04.jpg">
-                                        </span>
-                                        <div class="media-body flex-grow-1">
-                                            <p class="noti-details">
-                                                <span class="noti-title">Ricardo Flemings have been
-                                                    subscribed</span>
-                                            </p>
-                                            <p class="noti-time">
-                                                <span class="notification-time">11 Sep 2020 06:36 PM</span>
-                                            </p>
-                                        </div>
-                                    </div>
-                                </a>
-                            </li>
-                            <li class="notification-message">
-                                <a href="notifications.html">
-                                    <div class="media d-flex">
-                                        <span class="avatar avatar-sm flex-shrink-0">
-                                            <img class="avatar-img rounded-circle" alt="User Image"
-                                                src="{{asset('admin/assets/img/provider/provider-05.jpg')}}">
-                                        </span>
-                                        <div class="media-body flex-grow-1">
-                                            <p class="noti-details">
-                                                <span class="noti-title">Maritza Wasson have been
-                                                    subscribed</span>
-                                            </p>
-                                            <p class="noti-time">
-                                                <span class="notification-time">10 Sep 2020 08:42 AM</span>
-                                            </p>
-                                        </div>
-                                    </div>
-                                </a>
-                            </li>
-                            <li class="notification-message">
-                                <a href="notifications.html">
-                                    <div class="media d-flex">
-                                        <span class="avatar avatar-sm flex-shrink-0">
-                                            <img class="avatar-img rounded-circle" alt="User Image"
-                                                src="{{asset('admin/assets/img/provider/provider-06.jpg')}}">
-                                        </span>
-                                        <div class="media-body flex-grow-1">
-                                            <p class="noti-details">
-                                                <span class="noti-title">Marya Ruiz have been subscribed</span>
-                                            </p>
-                                            <p class="noti-time">
-                                                <span class="notification-time">9 Sep 2020 11:01 AM</span>
-                                            </p>
-                                        </div>
-                                    </div>
-                                </a>
-                            </li>
-                            <li class="notification-message">
-                                <a href="notifications.html">
-                                    <div class="media d-flex">
-                                        <span class="avatar avatar-sm flex-shrink-0">
-                                            <img class="avatar-img rounded-circle" alt="User Image"
-                                                src="{{asset('admin/assets/img/provider/provider-07.jpg')}}">
-                                        </span>
-                                        <div class="media-body flex-grow-1">
-                                            <p class="noti-details">
-                                                <span class="noti-title">Richard Hughes have been
-                                                    subscribed</span>
-                                            </p>
-                                            <p class="noti-time">
-                                                <span class="notification-time">8 Sep 2020 06:23 AM</span>
-                                            </p>
-                                        </div>
-                                    </div>
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
-                    <div class="topnav-dropdown-footer">
-                        <a href="notifications.html">View all Notifications</a>
-                    </div>
-                </div>
-            </li>
+
             <li class="nav-item  has-arrow dropdown-heads ">
                 <a href="javascript:void(0);" class="win-maximize">
                     <i class="fe fe-maximize"></i>
@@ -208,8 +34,8 @@
                         <span class="animate-circle"></span>
                     </span>
                     <span class="user-content">
-                        <span class="user-name">John Smith</span>
-                        <span class="user-details">Demo User</span>
+                        <span class="user-name">{{ Auth::user()->name ??'No Name' }}</span>
+                        <span class="user-details">{{ Auth::user()->designation ??'' }}</span>
                     </span>
                 </a>
                 <div class="dropdown-menu menu-drop-user">
@@ -220,24 +46,30 @@
                                     <img src="{{asset('admin/assets/img/user.jpg')}}" alt="img" class="profilesidebar">
                                 </span>
                                 <span class="profile-content">
-                                    <span>John Smith</span>
-                                    <span><span class="__cf_email__"
+                                    <span>{{ Auth::user()->name ??'' }}</span>
+                                    {{-- <span><span class="__cf_email__"
                                             data-cfemail="b7fdd8dfd9f7d2cfd6dac7dbd299d4d8da">[email&#160;protected]</span></span>
+                                </span> --}}
+                                <span>
+                                    <span class="__cf_email__">
+                                        {{ Auth::user()->email ?? '' }}
+                                    </span>
                                 </span>
+
                             </a>
                         </div>
                         <div class="subscription-menu">
                             <ul>
                                 <li>
-                                    <a href="account-settings.html">Profile</a>
+                                    <a href="{{ route('user.profile') }}">Profile</a>
                                 </li>
-                                <li>
+                                {{-- <li>
                                     <a href="localization.html">Settings</a>
-                                </li>
+                                </li> --}}
                             </ul>
                         </div>
                         <div class="subscription-logout">
-                            <a href="signin.html">Log Out</a>
+                            <a href="{{ route('logout') }}">Log Out</a>
                         </div>
                     </div>
                 </div>

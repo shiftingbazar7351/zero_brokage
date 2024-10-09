@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\CategoryRequest;
 use App\Models\Category;
+use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
@@ -11,61 +13,46 @@ class CategoryController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $categories = Category::orderByDesc('created_at')->get();
+        $query = Category::query();
+        // Filter based on search query
+        if ($request->has('search')) {
+            $query->where('name', 'like', '%' . $request->search . '%');
+        }
+        // Paginate the users (adjust pagination number as needed)
+        $categories = $query->orderByDesc('created_at')->paginate(10);
+        // Check if it's an AJAX request
+        if ($request->ajax()) {
+            return view('backend.category.partials.category-index', compact('categories'))->render();
+        }
         return view('backend.category.index', compact('categories'));
     }
+
     /**
      * Show the form for creating a new resource.
      */
     public function create()
     {
-
+        //
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(CategoryRequest $request)
     {
-        $request->validate([
-            'name' => 'required',
-            // 'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:5048',
-            // 'icon' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:5048', // Validate icon field as an image
-        ]);
-
-        $category = new Category();
-        $category->name = $request->name;
-        $category->image = $request->image;
-        $category->icon = $request->icon;
-        $category->slug = $this->generateSlug($request->name);
-
-        if ($request->hasFile('image')) {
-            $image = $request->file('image');
-            $imageName = time() . '_' . $image->getClientOriginalName();
-            $image->storeAs('assets/category', $imageName, 'public');
-            $category->image = $imageName; 
+        try {
+            $slug = generateSlug($request->name);
+            $data = array_merge($request->validated(), ['slug' => $slug]);
+            Category::create($data);
+            session()->flash('success', 'Added Successfully');
+            return response()->json(['success' => true, 'message' => 'Category added successfully']);
+        } catch (Exception $e) {
+            return response()->json(['success' => false, 'message' => $e->getMessage()], 500);
         }
-
-        if ($request->hasFile('icon')) {
-            $icon = $request->file('icon');
-            $iconName = time() . '_' . $icon->getClientOriginalName();
-            $icon->storeAs('assets/icon', $iconName, 'public'); 
-            $category->icon = $iconName; 
-        }
-
-        $category->save();
-
-        return redirect()->back()->with('success', 'Category created successfully.');
     }
 
-    protected function generateSlug($name)
-    {
-        $slug = str_replace(' ', '_', $name);
-        $slug = strtolower($slug);
-        return $slug;
-    }
 
     /**
      * Display the specified resource.
@@ -86,60 +73,44 @@ class CategoryController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Category $category)
+    public function update(CategoryRequest $request, $id)
     {
-        $request->validate([
-            'name' => 'required',
-            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:5048',
-            'icon' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:5048',
-        ]);
-
-        $category->name = $request->name;
-        $category->slug = $this->generateSlug($request->name);
-        if ($request->hasFile('image')) {
-            $image = $request->file('image');
-            $imageName = time() . '_' . $image->getClientOriginalName();
-            $image->storeAs('assets/category', $imageName, 'public');
-            $category->image = $imageName;
+        try {
+            $category = Category::findOrFail($id);
+            $slug = generateSlug($request->name);
+            $data = array_merge($request->validated(), ['slug' => $slug]);
+            $category->update($data);
+            return response()->json(['success' => true, 'message' => 'Category updated successfully']);
+        } catch (Exception $e) {
+            return response()->json(['success' => false, 'message' => $e->getMessage()], 500);
         }
-
-        if ($request->hasFile('icon')) {
-            $icon = $request->file('icon');
-            $iconName = time() . '_' . $icon->getClientOriginalName();
-            $icon->storeAs('assets/icon', $iconName, 'public');
-            $category->icon = $iconName;
-        }
-
-        $category->save();
-
-        return redirect()->back()->with('success', 'Category updated successfully.');
     }
+
 
     /**
      * Remove the specified resource from storage.
      */
     public function destroy(Category $category)
     {
-        if ($category->image) {
-            Storage::delete('public/assets/category/' . $category->image);
-        }
-        if ($category->icon) {
-            Storage::delete('public/assets/icon/' . $category->icon);
-        }
 
         $category->delete();
 
-        return redirect()->back()->with('success', 'Category deleted successfully.');
+        return redirect()->back()->with(['message' => 'Category deleted successfully.', 'alert-type' => 'success']);
+
     }
 
-    public function updateStatus(Request $request)
+    public function categoryStatus(Request $request)
     {
         $item = Category::find($request->id);
         if ($item) {
             $item->status = $request->status;
             $item->save();
+
             return response()->json(['success' => true, 'message' => 'Status updated successfully.']);
         }
+
         return response()->json(['success' => false, 'message' => 'Item not found.']);
     }
+
+
 }

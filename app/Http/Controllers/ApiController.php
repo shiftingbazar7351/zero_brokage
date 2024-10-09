@@ -17,48 +17,6 @@ use Illuminate\Support\Facades\Validator;
 
 class ApiController extends Controller
 {
-    public function categoryList()
-    {
-        try {
-            $subcategories = Subcategory::select('id', 'name', 'slug', 'icon', 'background_image', 'featured', 'trending')
-                ->where('status', 1)
-                ->orderByDesc('created_at')
-                ->get()
-                ->map(function ($subcategory) {
-                    // Include the URLs in the response
-                    $subcategory->icon = $subcategory->icon_url; // This will call the accessor for the URL
-                    $subcategory->background_image = $subcategory->background_image_url; // This will call the accessor for the URL
-                    return $subcategory;
-                });
-
-            // Check if subcategories are found
-            if ($subcategories->isEmpty()) {
-                return response()->json([
-                    'success' => false,
-                    'message' => 'No subcategories found.',
-                    'data' => []
-                ], Response::HTTP_NOT_FOUND);
-            }
-
-            return response()->json([
-                'success' => true,
-                'message' => 'Subcategories retrieved successfully.',
-                'data' => $subcategories
-            ], Response::HTTP_OK);
-
-        } catch (\Exception $e) {
-            // Log the exception for debugging
-            Log::error('Error retrieving subcategories: ' . $e->getMessage());
-
-            return response()->json([
-                'success' => false,
-                'message' => 'An error occurred while retrieving subcategories.',
-                'error' => $e->getMessage()
-            ], Response::HTTP_INTERNAL_SERVER_ERROR);
-        }
-
-    }
-
 
     public function subMenuList($id)
     {
@@ -467,9 +425,7 @@ class ApiController extends Controller
                 ], Response::HTTP_NOT_FOUND);
             }
 
-            // Check if the OTP matches
             if ($enquiry->otp == $request->otp) {
-                // Update the otp_verified_at timestamp
                 $enquiry->update([
                     'otp_verified_at' => now(),
                 ]);
@@ -487,7 +443,6 @@ class ApiController extends Controller
             }
 
         } catch (\Exception $e) {
-            // Log the exception for debugging
             Log::error('Error verifying OTP: ' . $e->getMessage());
 
             return response()->json([
@@ -500,7 +455,6 @@ class ApiController extends Controller
 
     public function resendOtp(Request $request)
     {
-        // Validate the incoming request
         $validator = Validator::make($request->all(), [
             'mobile_number' => 'required|digits:10',
         ]);
@@ -514,7 +468,6 @@ class ApiController extends Controller
         }
 
         try {
-            // Find the enquiry by mobile number
             $enquiry = Enquiry::where('mobile_number', $request->mobile_number)->first();
 
             if (!$enquiry) {
@@ -524,7 +477,6 @@ class ApiController extends Controller
                 ], Response::HTTP_NOT_FOUND);
             }
 
-            // Resend the existing OTP
             $otp = $enquiry->otp;
 
             return response()->json([
@@ -534,7 +486,6 @@ class ApiController extends Controller
             ], Response::HTTP_OK);
 
         } catch (\Exception $e) {
-            // Log the exception for debugging
             Log::error('Error resending OTP: ' . $e->getMessage());
 
             return response()->json([

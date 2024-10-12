@@ -69,11 +69,7 @@ class ProductController extends Controller
         // return $request->all();
         $product = Product::create([
 
-<<<<<<< HEAD
             'category_id' => json_encode($request->category_id), // Use json_encode if storing multiple IDs
-=======
-            'category_id' => json_encode($request->category_id), 
->>>>>>> 0c852a3875ed29744674d07e140907a1bd8825fa
             'subcategory_id' => json_encode($request->subcategory_id),
             'menu_id' => json_encode($request->menu_id),
             'submenu_id' => json_encode($request->submenu_id),

@@ -21,7 +21,6 @@ class CheckIpAddress
      */
     public function handle(Request $request, Closure $next)
     {
-<<<<<<< HEAD
         try {
             // Fetch the real public IP address using an external service with a timeout
             $response = Http::timeout(5)->withoutVerifying()->get('https://api.ipify.org?format=json');
@@ -54,41 +53,6 @@ class CheckIpAddress
         }
 
         return $next($request);
-=======
-        // try {
-        //     // Fetch the real public IP address using an external service with a timeout
-        //     $response = Http::timeout(5)->withoutVerifying()->get('https://api.ipify.org?format=json');
-
-        //     if ($response->successful()) {
-        //         $userIp = $response->json('ip');
-        //         Log::info('Public User IP: ' . $userIp);
-
-        //         if (!$this->isAllowedIp($userIp)) {
-        //             Auth::guard('web')->logout();
-        //             $request->session()->invalidate();
-        //             $request->session()->regenerateToken();
-        //             // session()->flash('message', 'Unauthorized IP address.');
-        //             // session()->flash('alert-type', 'error');
-        //             toastr()->success('Unauthorized IP address.');
-        //             return redirect('/login')->withErrors(['ip' => 'Unauthorized IP address.']);
-        //         }
-        //     } else {
-        //         // Handle the scenario where the response is not successful
-        //         Log::warning('Failed to fetch public IP. Response: ' . $response->status());
-        //     }
-
-        // } catch (Exception $e) {
-        //     // Handle any exception, like a network error
-        //     Log::error('Failed to fetch public IP. Error: ' . $e->getMessage());
-
-        //     // Optionally, you can handle what happens if the IP fetch fails.
-        //     // session()->flash('error', 'Unable to verify your IP address due to network issues.');
-        //     return redirect('/login')->withErrors(['ip' => 'Unable to verify your IP address.']);
-        // }
-
-        return $next($request);
-
->>>>>>> 0c852a3875ed29744674d07e140907a1bd8825fa
     }
 
     /**

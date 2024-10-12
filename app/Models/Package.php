@@ -13,4 +13,11 @@ class Package extends Model
         'subcategory_id', 'menu_id', 'submenu_id', 'created_by'
     ];
 
+<<<<<<< HEAD
+=======
+    public function productdata()
+    {
+        return $this->belongsTo(Product::class,'product_id','id');
+    }
+>>>>>>> 0c852a3875ed29744674d07e140907a1bd8825fa
 }

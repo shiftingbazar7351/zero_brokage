@@ -19073,6 +19073,12 @@ p.total-client-content {
     font-size: 16px;
     margin: 0;
     color: #74788d;
+<<<<<<< HEAD
+=======
+}
+.footer .footerDisclaimer{
+    font-size: 12px;
+>>>>>>> 0c852a3875ed29744674d07e140907a1bd8825fa
 }
 .footer-content {
     max-width: 304px;
@@ -23987,6 +23993,7 @@ td.ant-table-column-sort {
     margin: auto;
     background-color: #bdfaf2;
 }
+
 /*-----------------
 	52. Responsive
 -----------------------*/
@@ -27517,6 +27524,10 @@ td.ant-table-column-sort {
     }
     .popup-content {
         width: 77% !important;
+<<<<<<< HEAD
+=======
+        margin-top: 20% !important;
+>>>>>>> 0c852a3875ed29744674d07e140907a1bd8825fa
     }
     .card{
         margin: 24px 0px;
@@ -28085,6 +28096,10 @@ td.ant-table-column-sort {
     }
     .popup-content {
         width: 85% !important;
+<<<<<<< HEAD
+=======
+        margin-top: 23% !important;
+>>>>>>> 0c852a3875ed29744674d07e140907a1bd8825fa
     }
     #div2{
         flex-direction: column !important;
@@ -28096,6 +28111,25 @@ td.ant-table-column-sort {
     .city-select{
         width: 80% !important;
         margin: auto;
+<<<<<<< HEAD
+=======
+    }
+    .resend{
+        width: 100% !important;
+    }
+    .resend-container{
+        width:100% !important;;
+    }
+
+    .term-condition{
+        gap:8px;
+    }
+    .term-condition p{
+        font-size: 14px;
+    }
+    .popup-content h5{
+        font-size: 16px;
+>>>>>>> 0c852a3875ed29744674d07e140907a1bd8825fa
     }
 }
 @media only screen and (max-width: 485.98px) {
@@ -28239,7 +28273,29 @@ td.ant-table-column-sort {
         margin: auto !important;
     }
     .input-div{
+<<<<<<< HEAD
         width: 14%;
+=======
+        width: 14% !important;
+    }
+    .feature-section{
+        padding:0px;
+    }
+    .section-heading{
+        margin-bottom: 13px;
+    }
+    .section-heading h2{
+        margin-bottom:5px;
+    }
+    .section-heading p{
+        margin-bottom: 0px;
+    }
+    .service-section{
+        padding: 0px;
+    }
+    .service-section{
+        padding: 0px;
+>>>>>>> 0c852a3875ed29744674d07e140907a1bd8825fa
     }
 }
 @media only screen and (max-width: 320.98px) {
@@ -28268,6 +28324,10 @@ td.ant-table-column-sort {
     .iti__flag-container input {
         padding-left: 80%;
     }
+<<<<<<< HEAD
+=======
+
+>>>>>>> 0c852a3875ed29744674d07e140907a1bd8825fa
 }
 @media only screen and (max-width: 485.98px) {
     #progressbar li {
@@ -28435,7 +28495,11 @@ td.ant-table-column-sort {
     justify-content: center;
 }
 
+<<<<<<< HEAD
 /* ...............My css.......... */
+=======
+/* ...............Custom css.......... */
+>>>>>>> 0c852a3875ed29744674d07e140907a1bd8825fa
 .truely {
     color: red;
     font-weight: bold;

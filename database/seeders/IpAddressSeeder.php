@@ -26,6 +26,12 @@ class IpAddressSeeder extends Seeder
                 'status' => 1,
                 'created_at' => now(),
             ],
+
+             [
+                'name' => '16.171.5.120',
+                'status' => 1,
+                'created_at' => now(),
+            ],
         ];
 
         // Insert using the model

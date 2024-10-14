@@ -19074,6 +19074,9 @@ p.total-client-content {
     margin: 0;
     color: #74788d;
 }
+.footer .footerDisclaimer{
+    font-size: 12px;
+}
 .footer-content {
     max-width: 304px;
 }
@@ -27518,6 +27521,7 @@ td.ant-table-column-sort {
     }
     .popup-content {
         width: 77% !important;
+        margin-top: 20% !important;
     }
     .card{
         margin: 24px 0px;
@@ -28086,6 +28090,7 @@ td.ant-table-column-sort {
     }
     .popup-content {
         width: 85% !important;
+        margin-top: 23% !important;
     }
     #div2{
         flex-direction: column !important;
@@ -28097,6 +28102,22 @@ td.ant-table-column-sort {
     .city-select{
         width: 80% !important;
         margin: auto;
+    }
+    .resend{
+        width: 100% !important;
+    }
+    .resend-container{
+        width:100% !important;;
+    }
+
+    .term-condition{
+        gap:8px;
+    }
+    .term-condition p{
+        font-size: 14px;
+    }
+    .popup-content h5{
+        font-size: 16px;
     }
 }
 @media only screen and (max-width: 485.98px) {
@@ -28240,7 +28261,25 @@ td.ant-table-column-sort {
         margin: auto !important;
     }
     .input-div{
-        width: 14%;
+        width: 14% !important;
+    }
+    .feature-section{
+        padding:0px;
+    }
+    .section-heading{
+        margin-bottom: 13px;
+    }
+    .section-heading h2{
+        margin-bottom:5px;
+    }
+    .section-heading p{
+        margin-bottom: 0px;
+    }
+    .service-section{
+        padding: 0px;
+    }
+    .service-section{
+        padding: 0px;
     }
 }
 @media only screen and (max-width: 320.98px) {
@@ -28269,6 +28308,7 @@ td.ant-table-column-sort {
     .iti__flag-container input {
         padding-left: 80%;
     }
+
 }
 @media only screen and (max-width: 485.98px) {
     #progressbar li {
@@ -28436,7 +28476,7 @@ td.ant-table-column-sort {
     justify-content: center;
 }
 
-/* ...............My css.......... */
+/* ...............Custom css.......... */
 .truely {
     color: red;
     font-weight: bold;

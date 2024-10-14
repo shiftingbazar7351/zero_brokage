@@ -101,36 +101,23 @@
     </div>
 
 
-<div class="footer-bottom">
-    <div class="container">
-
-        <div class="copyright">
-            <div class="row align-items-center">
-                <div class="col-md-4">
-                    <div class="copyright-text">
-                        <p class="mb-0">Copyright &copy; 2023. All Rights Reserved.</p>
-                    </div>
+    <div class="footer-bottom">
+        <div class="container">
+            <hr>
+            <div class="disclaimer">
+                <div>
+                    <p class="footerDisclaimer">Disclaimer -  ZeroBrokage has been developed by Flybizz Services India Private Limited, You are kindly advised
+                        to check the genuineness of all companies listed above on your own behalf prior to signing a
+                        contract with them. We are in no way responsible for any loss. <a href="{{ route('disclaimer') }}"
+                            style="color: blue">Read More</a></p>
                 </div>
-                <div class="col-md-4">
-                    <div class="payment-image">
-                        <ul>
-                            <li>
-                                <a href="javascript:void(0);"><img src="assets/img/payment/visa.png"
-                                        alt="img"></a>
-                            </li>
-                            <li>
-                                <a href="javascript:void(0);"><img src="assets/img/payment/mastercard.png"
-                                        alt="img"></a>
-                            </li>
-                            <li>
-                                <a href="javascript:void(0);"><img src="assets/img/payment/stripe.png"
-                                        alt="img"></a>
-                            </li>
-                            <li>
-                                <a href="javascript:void(0);"><img src="assets/img/payment/discover.png"
-                                        alt="img"></a>
-                            </li>
-                        </ul>
+            </div>
+            <div class="copyright">
+                <div class="row align-items-center">
+                    <div class="col-md-6">
+                        <div class="copyright-text">
+                            <p class="mb-0"> &copy;2024 Copyright Flybizz.com. All Rights Reserved.</p>
+                        </div>
                     </div>
 
                     <div class="col-md-6">

@@ -372,6 +372,7 @@ Route::middleware(['auth', 'check.ip'])->group(function () {
         Route::put('/package/{package}', 'update')->name('package.update')->middleware('can:package-edit');
         Route::get('/package/{package}', 'show')->name('package.show')->middleware('can:package-show');
         Route::delete('/package/{package}', 'destroy')->name('package.destroy')->middleware('can:package-delete');
+        Route::get('/fetch-product-data', 'fetchProductData')->name('fetch.product.data');
     });
 
     Route::get('/dashboard', [AdminController::class, 'homepage'])->name('admin_page');

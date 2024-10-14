@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ApiController;
+use App\Http\Controllers\SubCategoryController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -20,8 +21,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 Route::controller(ApiController::class)->group(function () {
-    Route::get('/categories', 'categoryList'); // Corrected route for categoryList
-    Route::get('/subcategories', 'subcategoryList'); // Adjusted route to match method name if it exists
+    Route::get('/subcategories', 'categoryList');
     Route::get('/submenus/{id}', 'subMenuList');
     Route::get('/menus/{id}', 'menuList');
     Route::get('/reviews', 'reviews');

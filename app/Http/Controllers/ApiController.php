@@ -19,13 +19,6 @@ class ApiController extends Controller
 {
     public function categoryList()
     {
-
-        return response()->json([
-            'success' => true,
-            'message' => 'No subcategories found.',
-            'data' => []
-        ]);
-
         try {
             $subcategories = Subcategory::select('id', 'name', 'slug', 'icon', 'background_image', 'featured', 'trending')
                 ->where('status', 1)

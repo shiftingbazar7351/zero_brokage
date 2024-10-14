@@ -1,18 +1,18 @@
-/.phpunit.cache
-/node_modules
-/public/build
-/public/hot
-/public/storage
-/storage/*.key
-/vendor
-.env
-.env.backup
-.env.production
-Homestead.json
-Homestead.yaml
-auth.json
-npm-debug.log
-yarn-error.log
-/.fleet
-/.idea
-/.vscode
+/.phpunit.cache            # Ignore PHPUnit cache files
+/node_modules               # Ignore Node.js modules (for projects using npm)
+public/build                # Ignore build artifacts from frontend tools
+/public/hot                 # Ignore hot module reloading files
+/public/storage             # Ignore public storage directory
+/storage/*.key              # Ignore key files in the storage directory
+/vendor                     # Ignore Composer dependencies
+/.env                       # Ignore environment variable files (for security)
+/.env.backup                # Ignore backup of environment variable files
+/.env.production            # Ignore production environment variable files
+Homestead.json              # Ignore Homestead configuration
+Homestead.yaml              # Ignore Homestead configuration
+auth.json                  # Ignore authentication configuration files
+npm-debug.log              # Ignore npm debug log files
+yarn-error.log             # Ignore yarn error log files
+/.fleet                    # Ignore fleet files (if applicable)
+/.idea                     # Ignore JetBrains IDE project files
+/.vscode                   # Ignore Visual Studio Code project files

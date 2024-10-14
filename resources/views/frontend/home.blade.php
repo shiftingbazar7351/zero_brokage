@@ -54,10 +54,7 @@
                             <h2>Service Categories</h2>
                             <p>What do you need to find?</p>
                         </div>
-                        {{-- <div class="col-md-6 text-md-end aos" data-aos="fade-up">
-                            <a href="search-list.html" class="btn btn-primary btn-view">View All<i
-                                    class="feather-arrow-right-circle"></i></a>
-                        </div> --}}
+
                     </div>
                 </div>
                 <div class="row">
@@ -92,10 +89,7 @@
                             <h2>Trending Categories</h2>
                             <p>What do you like most?</p>
                         </div>
-                        {{-- <div class="col-md-6 text-md-end aos" data-aos="fade-up">
-                        <a href="categories.html" class="btn btn-primary btn-view">View All<i
-                                class="feather-arrow-right-circle"></i></a>
-                    </div> --}}
+
                     </div>
                 </div>
                 <div class="row">
@@ -169,10 +163,7 @@
                             <h2>Top Providers</h2>
                             <p>Meet Our Experts</p>
                         </div>
-                        {{-- <div class="col-md-6 text-md-end aos" data-aos="fade-up">
-                        <a href="providers.html" class="btn btn-primary btn-view">View All<i
-                                class="feather-arrow-right-circle"></i></a>
-                    </div> --}}
+
                     </div>
                 </div>
                 <div class="row  aos" data-aos="fade-up">
@@ -211,96 +202,6 @@
                             </div>
                         </div>
                     @endforeach
-                    {{-- <div class="col-lg-3 col-sm-3">
-                    <div class="providerset">
-                        <div class="providerset-img">
-                            <a href="provider-details.html">
-                                <img src="assets/img/provider/provider-12.jpg" alt="img">
-                            </a>
-                        </div>
-                        <div class="providerset-content">
-                            <div class="providerset-price">
-                                <div class="providerset-name">
-                                    <h4><a href="provider-details.html">Michael</a><i class="fa fa-check-circle"
-                                            aria-hidden="true"></i></h4>
-                                    <span>Carpenter</span>
-                                </div>
-                                <div class="providerset-prices">
-                                    <h6>$50.00<span>/hr</span></h6>
-                                </div>
-                            </div>
-                            <div class="provider-rating">
-                                <div class="rating">
-                                    <i class="fas fa-star filled"></i>
-                                    <i class="fas fa-star filled"></i>
-                                    <i class="fas fa-star filled"></i>
-                                    <i class="fas fa-star filled"></i>
-                                    <i class="fa-solid fa-star-half-stroke filled"></i><span>(228)</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-sm-3">
-                    <div class="providerset">
-                        <div class="providerset-img">
-                            <a href="provider-details.html">
-                                <img src="assets/img/provider/provider-13.jpg" alt="img">
-                            </a>
-                        </div>
-                        <div class="providerset-content">
-                            <div class="providerset-price">
-                                <div class="providerset-name">
-                                    <h4><a href="provider-details.html">Antoinette</a><i class="fa fa-check-circle"
-                                            aria-hidden="true"></i></h4>
-                                    <span>Cleaner</span>
-                                </div>
-                                <div class="providerset-prices">
-                                    <h6>$25.00<span>/hr</span></h6>
-                                </div>
-                            </div>
-                            <div class="provider-rating">
-                                <div class="rating">
-                                    <i class="fas fa-star filled"></i>
-                                    <i class="fas fa-star filled"></i>
-                                    <i class="fas fa-star filled"></i>
-                                    <i class="fas fa-star filled"></i>
-                                    <i class="fa-solid fa-star-half-stroke filled"></i><span>(130)</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-sm-3">
-                    <div class="providerset">
-                        <div class="providerset-img">
-                            <a href="provider-details.html">
-                                <img src="assets/img/provider/provider-14.jpg" alt="img">
-                            </a>
-                        </div>
-                        <div class="providerset-content">
-                            <div class="providerset-price">
-                                <div class="providerset-name">
-                                    <h4><a href="provider-details.html">Thompson</a><i class="fa fa-check-circle"
-                                            aria-hidden="true"></i></h4>
-                                    <span>Mechanic</span>
-                                </div>
-                                <div class="providerset-prices">
-                                    <h6>$25.00<span>/hr</span></h6>
-                                </div>
-                            </div>
-                            <div class="provider-rating">
-                                <div class="rating">
-                                    <i class="fas fa-star filled"></i>
-                                    <i class="fas fa-star filled"></i>
-                                    <i class="fas fa-star filled"></i>
-                                    <i class="fas fa-star filled"></i>
-                                    <i class="fa-solid fa-star-half-stroke filled"></i><span>(95)</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div> --}}
 
                 </div>
             </div>

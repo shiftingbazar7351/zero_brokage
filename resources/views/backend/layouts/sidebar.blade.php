@@ -278,6 +278,7 @@
                         </ul>
                     </li>
                 @endcan
+
                 @canany(['vendors-list', 'verified-list','vendor-task-list'])
                     <li class="submenu">
                         <a href="javascript:void(0);"><i class="fa fa-venus-double" aria-hidden="true"></i>

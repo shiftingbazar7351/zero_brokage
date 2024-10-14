@@ -72,23 +72,23 @@ class SubMenuController extends Controller
             'menu' => 'required',
             'state' => 'required',
             'city' => 'required',
-            'total_price' => 'required|numeric',
-            'discount' => 'required|numeric',
+            // 'total_price' => 'required|numeric',
+            // 'discount' => 'required|numeric',
             'details' => 'required',
             'description' => 'required',
             'image' => 'required|image|max:2048',
         ]);
 
 
-        $finalPrice = $request->input('total_price');
-        $discountPercentage = $request->input('discount');
+        // $finalPrice = $request->input('total_price');
+        // $discountPercentage = $request->input('discount');
 
-        if (!empty($finalPrice) && !empty($discountPercentage)) {
-            $discountAmount = ($finalPrice * $discountPercentage) / 100;
-            $finalPrice -= $discountAmount;
-        } else {
-            $finalPrice = $request->input('total_price');
-        }
+        // if (!empty($finalPrice) && !empty($discountPercentage)) {
+        //     $discountAmount = ($finalPrice * $discountPercentage) / 100;
+        //     $finalPrice -= $discountAmount;
+        // } else {
+        //     $finalPrice = $request->input('total_price');
+        // }
 
         $sub_menu = new SubMenu();
         $sub_menu->name = $request->name;
@@ -99,9 +99,9 @@ class SubMenuController extends Controller
         $sub_menu->description = $request->description;
         $sub_menu->details = $request->details;
         $sub_menu->slug = generateSlug($request->name);
-        $sub_menu->total_price = $request->total_price;
-        $sub_menu->discount = $request->discount;
-        $sub_menu->discounted_price = $finalPrice;
+        // $sub_menu->total_price = $request->total_price;
+        // $sub_menu->discount = $request->discount;
+        // $sub_menu->discounted_price = $finalPrice;
 
         if ($request->hasFile('image')) {
             $filename = $this->fileUploadService->uploadImage('submenu/', $request->file('image'));
@@ -149,22 +149,22 @@ class SubMenuController extends Controller
                 'max:255',
                 Rule::unique('sub_menus')->ignore($sub_menu->id)
             ],
-            'total_price' => 'required|numeric',
-            'discount' => 'required|numeric',
+            // 'total_price' => 'required|numeric',
+            // 'discount' => 'required|numeric',
             'image' => 'nullable|image|max:2048',
         ]);
 
         // Calculate final price with discount
 
-        $finalPrice = $request->input('total_price');
-        $discountPercentage = $request->input('discount');
+        // $finalPrice = $request->input('total_price');
+        // $discountPercentage = $request->input('discount');
 
-        if (!empty($finalPrice) && !empty($discountPercentage)) {
-            $discountAmount = ($finalPrice * $discountPercentage) / 100;
-            $finalPrice -= $discountAmount;
-        } else {
-            $finalPrice = $request->input('total_price');
-        }
+        // if (!empty($finalPrice) && !empty($discountPercentage)) {
+        //     $discountAmount = ($finalPrice * $discountPercentage) / 100;
+        //     $finalPrice -= $discountAmount;
+        // } else {
+        //     $finalPrice = $request->input('total_price');
+        // }
 
         // Update submenu fields  details
         $sub_menu->name = $request->input('name');
@@ -173,9 +173,9 @@ class SubMenuController extends Controller
         $sub_menu->subcategory_id = $request->input('subcategory_id');
         $sub_menu->menu_id = $request->input('menu_id');
         $sub_menu->city_id = $request->input('city');
-        $sub_menu->total_price = $request->input('total_price');
-        $sub_menu->discount = $request->input('discount');
-        $sub_menu->discounted_price = $finalPrice;
+        // $sub_menu->total_price = $request->input('total_price');
+        // $sub_menu->discount = $request->input('discount');
+        // $sub_menu->discounted_price = $finalPrice;
         $sub_menu->details = $request->details;
         $sub_menu->description = $request->input('description');
 

@@ -31,7 +31,6 @@ class ApiController extends Controller
                     return $subcategory;
                 });
 
-            // Check if subcategories are found
             if ($subcategories->isEmpty()) {
                 return response()->json([
                     'success' => false,

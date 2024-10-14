@@ -192,27 +192,27 @@
                             </div>
                         </div>
 
-                        <div class="row">
+                        {{-- <div class="row">
                             <div class="form-group col-md-6">
                                 <label for="price">Price(INR)</label>
                                 <input type="text" class="form-control" id="price" name="total_price"
                                     placeholder="Enter Ammount">
                                 <div id="price-error" class="text-danger"></div>
-                            </div>
+                            </div> --}}
 
-                            <div class="form-group col-md-6">
+                            {{-- <div class="form-group col-md-6">
                                 <label for="price">Discount(%)</label>
                                 <input type="text" class="form-control" ass="form-control" id="discount"
                                     name="discount" placeholder="Enter Discount percentage">
                                 <div id="discount-error" class="text-danger"></div>
                             </div>
-                        </div>
-                        <div class="form-group">
+                        </div> --}}
+                        {{-- <div class="form-group">
                             <label for="final-price">Final Price (INR)</label>
                             <input type="text" class="form-control" id="final-price" name="final_price" readonly
                                 disabled>
                             <div id="final_price-error" class="text-danger"></div>
-                        </div>
+                        </div> --}}
                         <div class="mb-3">
                             <label class="form-label">Sub Menu Image</label>
                             <div class="form-uploads">
@@ -406,7 +406,7 @@
 
                         <div class="form-group">
                             <label for="description">Description</label>
-                            <textarea type="text" class="form-control" id="edit-description" name="description" placeholder="Enter Ammount"></textarea>
+                            <textarea type="text" class="form-control" id="edit-description" name="description" placeholder="Enter Description"></textarea>
                             <div id="editdescription-error" class="text-danger"></div>
                         </div>
 

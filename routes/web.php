@@ -116,6 +116,10 @@ Route::get('/cache', function () {
     return back();
 })->name('cache.clear');
 
+Route::get('testing',function(){
+    dd(1);
+});
+
 Route::controller(FrontendController::class)->group(function () {
     Route::get('/', 'home')->name('home');
     Route::get('/service-list', 'serviceList')->name('service-list');
@@ -397,6 +401,8 @@ Route::middleware(['auth', 'vendor'])->group(function () {
     // Notification Routes
     Route::get('/vendor/notifications', [VendorNotificationController::class, 'index'])->name('vendor.notifications');
 });
+
+
 
 
 require __DIR__ . '/auth.php';

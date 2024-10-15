@@ -20,8 +20,8 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
+Route::get('/subcategories', 'ApiController@categoryList');
 Route::controller(ApiController::class)->group(function () {
-    Route::get('/subcategories', 'categoryList');
     Route::get('/submenus/{id}', 'subMenuList');
     Route::get('/menus/{id}', 'menuList');
     Route::get('/reviews', 'reviews');

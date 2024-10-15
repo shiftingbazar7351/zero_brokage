@@ -390,8 +390,8 @@ class ComposerStaticInit15e7cd72009fcd05a50c0a0ff189b602
         ),
         'Psr\\Http\\Message\\' => 
         array (
-            0 => __DIR__ . '/..' . '/psr/http-message/src',
-            1 => __DIR__ . '/..' . '/psr/http-factory/src',
+            0 => __DIR__ . '/..' . '/psr/http-factory/src',
+            1 => __DIR__ . '/..' . '/psr/http-message/src',
         ),
         'Psr\\Http\\Client\\' => 
         array (
@@ -660,6 +660,9 @@ class ComposerStaticInit15e7cd72009fcd05a50c0a0ff189b602
         'App\\Http\\Controllers\\TransactionController' => __DIR__ . '/../..' . '/app/Http/Controllers/TransactionController.php',
         'App\\Http\\Controllers\\UserController' => __DIR__ . '/../..' . '/app/Http/Controllers/UserController.php',
         'App\\Http\\Controllers\\VendorController' => __DIR__ . '/../..' . '/app/Http/Controllers/VendorController.php',
+        'App\\Http\\Controllers\\Vendor\\BookingController' => __DIR__ . '/../..' . '/app/Http/Controllers/Vendor/BookingController.php',
+        'App\\Http\\Controllers\\Vendor\\NotificationController' => __DIR__ . '/../..' . '/app/Http/Controllers/Vendor/NotificationController.php',
+        'App\\Http\\Controllers\\Vendor\\ServiceController' => __DIR__ . '/../..' . '/app/Http/Controllers/Vendor/ServiceController.php',
         'App\\Http\\Controllers\\VerifiedController' => __DIR__ . '/../..' . '/app/Http/Controllers/VerifiedController.php',
         'App\\Http\\Kernel' => __DIR__ . '/../..' . '/app/Http/Kernel.php',
         'App\\Http\\Middleware\\Authenticate' => __DIR__ . '/../..' . '/app/Http/Middleware/Authenticate.php',

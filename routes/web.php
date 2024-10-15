@@ -378,5 +378,25 @@ Route::middleware(['auth', 'check.ip'])->group(function () {
     Route::get('/dashboard', [AdminController::class, 'homepage'])->name('admin_page');
 
 });
+// routes/web.php
+
+// Dashboard Routes
+Route::middleware(['auth', 'vendor'])->group(function () {
+    Route::get('/vendor/dashboard', [VendorDashboardController::class, 'index'])->name('vendor.dashboard');
+    Route::get('/vendor/bookings', [VendorBookingController::class, 'index'])->name('vendor.bookings');
+    Route::get('/vendor/bookings/{id}', [VendorBookingController::class, 'show'])->name('vendor.bookings.show');
+    Route::post('/vendor/bookings/accept/{id}', [VendorBookingController::class, 'accept'])->name('vendor.bookings.accept');
+    Route::post('/vendor/bookings/reject/{id}', [VendorBookingController::class, 'reject'])->name('vendor.bookings.reject');
+
+    // Profile Routes
+    Route::get('/vendor/profile', [VendorProfileController::class, 'show'])->name('vendor.profile');
+
+    // Reports Routes
+    Route::get('/vendor/reports', [VendorReportController::class, 'index'])->name('vendor.reports');
+
+    // Notification Routes
+    Route::get('/vendor/notifications', [VendorNotificationController::class, 'index'])->name('vendor.notifications');
+});
+
 
 require __DIR__ . '/auth.php';

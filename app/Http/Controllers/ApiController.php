@@ -19,6 +19,7 @@ class ApiController extends Controller
 {
     public function categoryList()
     {
+        dd(1);
         try {
             $subcategories = Subcategory::select('id', 'name', 'slug', 'icon', 'background_image', 'featured', 'trending')
                 ->where('status', 1)

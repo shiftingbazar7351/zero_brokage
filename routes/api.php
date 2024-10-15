@@ -21,7 +21,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 Route::get('subcategories', function(){
-    dd(1);
+    dd(222);
 });
 Route::controller(ApiController::class)->group(function () {
     Route::get('/submenus/{id}', 'subMenuList');

@@ -1,0 +1,84 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+}
+
+/* Popup Background */
+.popup {
+    /* display: block; */
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(207, 205, 205, 0.5);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+/* Popup Content */
+.popup-content {
+    background-color: #ffffff;
+    margin: 8% auto;
+    padding: 20px;
+    border: 1px solid #b6b3b3;
+    box-shadow: 0px 0px 4px 8px rgba(32, 32, 32, 0.25);
+    width: 40%;
+    text-align: center;
+    border-radius: 45px;
+    transform: translateY(-30px);
+    transition: transform 0.3s ease;
+}
+
+.popup.show {
+    display: block;
+    opacity: 1;
+}
+
+.popup.show .popup-content {
+    transform: translateY(0);
+    /* Move to original position */
+}
+
+.detail-input input {
+    font-size: 17px;
+    box-shadow: 0px 0px 4px -1px rgba(32, 32, 32, 0.25);
+    border: none;
+    border-bottom: 2px solid gray;
+}
+
+.close {
+    color: red;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+    padding: 0px 12px;
+    border: 2px solid rgb(62, 190, 230);
+}
+
+.close:hover,
+.close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.btn {
+    background-color: #007bff;
+    /* Bootstrap primary color */
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    margin: 5px;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.btn:hover {
+    background-color: #1573d6;
+    color: black;
+    /* Darker blue on hover */
+}

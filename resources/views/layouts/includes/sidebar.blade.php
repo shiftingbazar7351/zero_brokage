@@ -23,8 +23,9 @@
                     </div>
                 </a>
             </div>
+
             <div class="menu-header">Navigation</div>
-           
+
         </div>
         <!-- BEGIN minify-button -->
         <div class="menu-item d-flex">

@@ -10,8 +10,14 @@ use Spatie\Permission\Models\Permission;
 
 class RolePermission extends Controller
 {
+
+     public function __construct()
+     {
+        dd(1);
+     }
     public function index(Request $request)
     {
+        dd(1);
         $roles = Role::get();
         $permissions = Permission::get();
         return view('backend.role-permission.permissions', compact('roles', 'permissions'));

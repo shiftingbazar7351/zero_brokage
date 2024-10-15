@@ -10,6 +10,7 @@ class AdminController extends Controller
     public function homepage()
     {
 
+
         return view('backend.dashboard');
 
     }

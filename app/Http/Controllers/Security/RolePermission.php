@@ -17,6 +17,7 @@ class RolePermission extends Controller
      }
     public function index(Request $request)
     {
+        dd(1);
         $roles = Role::get();
         $permissions = Permission::get();
         return view('backend.role-permission.permissions', compact('roles', 'permissions'));

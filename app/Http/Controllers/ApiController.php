@@ -21,29 +21,29 @@ class ApiController extends Controller
     {
         dd(1);
         try {
-            $subcategories = Subcategory::select('id', 'name', 'slug', 'icon', 'background_image', 'featured', 'trending')
-                ->where('status', 1)
-                ->orderByDesc('created_at')
-                ->get()
-                ->map(function ($subcategory) {
-                    // Include the URLs in the response
-                    $subcategory->icon = $subcategory->icon_url; // This will call the accessor for the URL
-                    $subcategory->background_image = $subcategory->background_image_url; // This will call the accessor for the URL
-                    return $subcategory;
-                });
+            // $subcategories = Subcategory::select('id', 'name', 'slug', 'icon', 'background_image', 'featured', 'trending')
+            //     ->where('status', 1)
+            //     ->orderByDesc('created_at')
+            //     ->get()
+            //     ->map(function ($subcategory) {
+            //         // Include the URLs in the response
+            //         $subcategory->icon = $subcategory->icon_url; // This will call the accessor for the URL
+            //         $subcategory->background_image = $subcategory->background_image_url; // This will call the accessor for the URL
+            //         return $subcategory;
+            //     });
 
-            if ($subcategories->isEmpty()) {
-                return response()->json([
-                    'success' => false,
-                    'message' => 'No subcategories found.',
-                    'data' => []
-                ], Response::HTTP_NOT_FOUND);
-            }
+            // if ($subcategories->isEmpty()) {
+            //     return response()->json([
+            //         'success' => false,
+            //         'message' => 'No subcategories found.',
+            //         'data' => []
+            //     ], Response::HTTP_NOT_FOUND);
+            // }
 
             return response()->json([
                 'success' => true,
                 'message' => 'Subcategories retrieved successfully.',
-                'data' => $subcategories
+                'data' => !empty($subcategories)?$subcategories:[],
             ], Response::HTTP_OK);
 
         } catch (\Exception $e) {

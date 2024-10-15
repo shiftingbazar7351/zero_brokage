@@ -41,8 +41,7 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
-print_R(22222);
-die;
+
 Route::get('/pricing-details', function () {
     return view('frontend.pricing');
 })->name('pricing');

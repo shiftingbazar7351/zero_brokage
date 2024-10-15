@@ -16,3 +16,5 @@ yarn-error.log             # Ignore yarn error log files
 /.fleet                    # Ignore fleet files (if applicable)
 /.idea                     # Ignore JetBrains IDE project files
 /.vscode                   # Ignore Visual Studio Code project files
+vendor/
+public/storage/

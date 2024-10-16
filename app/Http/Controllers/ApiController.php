@@ -26,9 +26,8 @@ class ApiController extends Controller
                 ->orderByDesc('created_at')
                 ->get()
                 ->map(function ($subcategory) {
-                    // Include the URLs in the response
-                    $subcategory->icon = $subcategory->icon_url; // This will call the accessor for the URL
-                    $subcategory->background_image = $subcategory->background_image_url; // This will call the accessor for the URL
+                    $subcategory->icon = $subcategory->icon_url;
+                    $subcategory->background_image = $subcategory->background_image_url;
                     return $subcategory;
                 });
 
@@ -47,8 +46,7 @@ class ApiController extends Controller
             ], Response::HTTP_OK);
 
         } catch (\Exception $e) {
-            // Log the exception for debugging
-            // Log::error('Error retrieving subcategories: ' . $e->getMessage());
+
 
             return response()->json([
                 'success' => false,
@@ -63,10 +61,8 @@ class ApiController extends Controller
     public function subMenuList($id)
     {
         try {
-            // Fetch the subcategory by ID
             $subcategory = SubCategory::select('id')->orderByDesc('created_at')->find($id);
 
-            // Check if the subcategory exists
             if (!$subcategory) {
                 return response()->json([
                     'success' => false,
@@ -75,14 +71,12 @@ class ApiController extends Controller
                 ]);
             }
 
-            // Fetch the menus associated with the subcategory
             $menus = Menu::select('id', 'name', 'image', 'slug', 'subcategory_id')
                 ->where('subcategory_id', $subcategory->id)
                 ->where('status', 1)
                 ->orderByDesc('created_at')
                 ->get();
 
-            // Fetch the submenus associated with the subcategory
             $submenus = SubMenu::join('menus', 'sub_menus.menu_id', '=', 'menus.id')
                 ->where('sub_menus.subcategory_id', $subcategory->id)
                 ->where('sub_menus.status', 1)
@@ -103,7 +97,6 @@ class ApiController extends Controller
                     'sub_menus.details'
                 )
                 ->paginate(10);
-            // Fetch the cities
             $cities = City::paginate(10);
 
             return response()->json([
@@ -121,7 +114,7 @@ class ApiController extends Controller
                             'next_page_url' => $submenus->nextPageUrl(),
                             'prev_page_url' => $submenus->previousPageUrl(),
                         ],
-                        'submenu_data' => $submenus->items() // Submenu data
+                        'submenu_data' => $submenus->items()
                     ],
                     'cities' => [
                         'pagination' => [
@@ -132,13 +125,12 @@ class ApiController extends Controller
                             'next_page_url' => $cities->nextPageUrl(),
                             'prev_page_url' => $cities->previousPageUrl(),
                         ],
-                        'cities_data' => $cities->items() // Cities data
+                        'cities_data' => $cities->items()
                     ]
                 ]
             ], Response::HTTP_OK);
 
         } catch (\Exception $e) {
-            // Log the exception for debugging
             Log::error('Error retrieving subcategory details: ' . $e->getMessage());
 
             return response()->json([
@@ -153,14 +145,12 @@ class ApiController extends Controller
     public function subMenu($id)
     {
         try {
-            // Fetch the menu by ID
             $menu = Menu::select('id', 'name', 'image', 'slug', 'subcategory_id')
                 ->where('id', $id)
                 ->where('status', 1)
                 ->orderByDesc('created_at')
                 ->first();
 
-            // Check if the menu exists
             if (!$menu) {
                 return response()->json([
                     'success' => false,
@@ -169,25 +159,20 @@ class ApiController extends Controller
                 ]);
             }
 
-            // Fetch the submenus associated with the menu without pagination
             $submenus = SubMenu::where('menu_id', $menu->id)
                 ->where('status', 1)
                 ->orderByDesc('created_at')
                 ->select('id', 'name', 'image', 'total_price', 'discounted_price', 'menu_id', 'city_id', 'description', 'details')
                 ->get()
                 ->map(function ($submenus) {
-                    // Include the URLs in the response
-                    $submenus->image = $submenus->image_url; // This will call the accessor for the URL
+                    $submenus->image = $submenus->image_url;
                     return $submenus;
                 });
 
-            // Fetch city and state for each submenu
             $submenus = $submenus->map(function ($submenu) {
-                // Fetch the city and its state
                 $city = City::find($submenu->city_id);
-                $state = $city ? $city->state : null; // Assuming City model has a relation to State
+                $state = $city ? $city->state : null;
 
-                // Format city and state name
                 $cityState = $city && $state ? $city->name . ', ' . $state->name : null;
 
                 return [
@@ -197,7 +182,7 @@ class ApiController extends Controller
                     'total_price' => $submenu->total_price,
                     'discounted_price' => $submenu->discounted_price,
                     'menu_id' => $submenu->menu_id,
-                    'city' => $cityState, // Adding the city and state here
+                    'city' => $cityState,
                     'description' => $submenu->description,
                     'details' => $submenu->details,
                 ];
@@ -210,7 +195,6 @@ class ApiController extends Controller
 
             ], Response::HTTP_OK);
         } catch (\Exception $e) {
-            // Log the exception for debugging
             Log::error('Error retrieving SubMenu details: ' . $e->getMessage());
 
             return response()->json([
@@ -230,12 +214,11 @@ class ApiController extends Controller
                 ->orderByDesc('created_at')
                 ->get()
                 ->map(function ($menu) {
-                    $menu->icon = $menu->icon_url; // This will call the accessor for the image URL and map it to 'icon'
-                    unset($menu->image); // Optionally remove the 'image' field if you don't want it in the response
+                    $menu->icon = $menu->icon_url;
+                    unset($menu->image);
                     return $menu;
                 });
 
-            // Check if menus are found
             if ($menus->isEmpty()) {
                 return response()->json([
                     'success' => false,
@@ -386,7 +369,6 @@ class ApiController extends Controller
 
     public function sendOtp(Request $request)
     {
-        // Validate the incoming request
         $validator = Validator::make($request->all(), [
             'mobile_number' => 'required|digits:10',
             'name' => 'required|string|max:255',
@@ -401,13 +383,10 @@ class ApiController extends Controller
         }
 
         try {
-            // Generate a new OTP
             $otp = rand(1000, 9999);
 
-            // Ensure mobile number is treated as a number (integer)
             $mobileNumber = (int) $request->mobile_number;
 
-            // Find the enquiry by mobile number or create a new one
             $enquiry = Enquiry::updateOrCreate(
                 ['mobile_number' => $mobileNumber],
                 [
@@ -416,17 +395,20 @@ class ApiController extends Controller
                 ]
             );
 
+            $message = "Dear User, Your OTP for login to ZeroBrokage is {$otp}. Valid for 2 minutes. Please do not share this OTP. Regards, Team ZeroBrokage";
+
+
             return response()->json([
                 'success' => true,
                 'message' => $enquiry->wasRecentlyCreated ? 'OTP created and sent successfully.' : 'OTP updated successfully.',
                 'name' => $request->name,
                 'otp' => $otp,
-                'mobile_number' => $mobileNumber, // mobile_number as integer
+                'mobile_number' => $mobileNumber,
+                'otp_message' => $message,
                 'otp_verified_at' => $enquiry->otp_verified_at
             ], Response::HTTP_OK);
 
         } catch (\Exception $e) {
-            // Log the exception for debugging
             Log::error('Error sending OTP: ' . $e->getMessage());
 
             return response()->json([
@@ -436,9 +418,7 @@ class ApiController extends Controller
             ], Response::HTTP_INTERNAL_SERVER_ERROR);
         }
     }
-
-
-    public function verifyOtp(Request $request)
+        public function verifyOtp(Request $request)
     {
         // Validate the incoming request
         $validator = Validator::make($request->all(), [
@@ -500,7 +480,6 @@ class ApiController extends Controller
 
     public function resendOtp(Request $request)
     {
-        // Validate the incoming request
         $validator = Validator::make($request->all(), [
             'mobile_number' => 'required|digits:10',
         ]);
@@ -514,7 +493,6 @@ class ApiController extends Controller
         }
 
         try {
-            // Find the enquiry by mobile number
             $enquiry = Enquiry::where('mobile_number', $request->mobile_number)->first();
 
             if (!$enquiry) {
@@ -524,17 +502,43 @@ class ApiController extends Controller
                 ], Response::HTTP_NOT_FOUND);
             }
 
-            // Resend the existing OTP
             $otp = $enquiry->otp;
+
+            $message = "Dear User, Your OTP for login to ZeroBrokage is {$otp}. Valid for 2 minutes. Please do not share this OTP. Regards, Team ZeroBrokage";
+
+            $text = urlencode($message);
+            $dltContentId = '1707172872636147832';
+
+            $ch = curl_init();
+            curl_setopt($ch, CURLOPT_URL, "https://cerf.cerfgs.com/multicpaas?unicode=false&token=O3chuztXPZayQp7Rm7JE6GWaH90OqWXh&from=ZRBRKG&");
+            curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+            curl_setopt($ch, CURLOPT_POST, true);
+            curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query([
+                'to' => $request->mobile_number,
+                'dltContentId' => $dltContentId,
+                'text' => $text
+            ]));
+
+            $result = curl_exec($ch);
+
+            if (curl_errno($ch)) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Failed to send OTP via SMS.',
+                    'error' => curl_error($ch)
+                ], Response::HTTP_INTERNAL_SERVER_ERROR);
+            }
+
+            curl_close($ch);
 
             return response()->json([
                 'success' => true,
                 'message' => 'OTP resent successfully.',
                 'otp' => $otp,
+                'sms_message' => $message
             ], Response::HTTP_OK);
 
         } catch (\Exception $e) {
-            // Log the exception for debugging
             Log::error('Error resending OTP: ' . $e->getMessage());
 
             return response()->json([

@@ -583,7 +583,6 @@ curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
 
             $text = urlencode($message);
             $dltContentId = '1707172872636147832';
-
             $ch = curl_init();
             curl_setopt($ch, CURLOPT_URL, "https://cerf.cerfgs.com/multicpaas?unicode=false&token=O3chuztXPZayQp7Rm7JE6GWaH90OqWXh&from=ZRBRKG&");
             curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);

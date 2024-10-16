@@ -450,7 +450,7 @@ curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
 
             // Execute the request
             $apiResponse = curl_exec($ch);
-            dd($apiResponse);
+            // dd($apiResponse);
 
             // Handle cURL errors
             if (curl_errno($ch)) {

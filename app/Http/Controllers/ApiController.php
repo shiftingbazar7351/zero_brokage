@@ -316,60 +316,10 @@ class ApiController extends Controller
         }
     }
 
-    // public function sendOtp(Request $request)
-    // {
-    //     // Validate the incoming request
-    //     $validator = Validator::make($request->all(), [
-    //         'mobile_number' => 'required|digits:10',
-    //         'name' => 'required|string|max:255',
-    //     ]);
-
-    //     if ($validator->fails()) {
-    //         return response()->json([
-    //             'success' => false,
-    //             'message' => 'Validation errors',
-    //             'errors' => $validator->errors()
-    //         ], Response::HTTP_UNPROCESSABLE_ENTITY);
-    //     }
-
-    //     try {
-    //         // Generate a new OTP
-    //         $otp = rand(1000, 9999);
-
-    //         // Find the enquiry by mobile number or create a new one
-    //         $enquiry = Enquiry::updateOrCreate(
-    //             ['mobile_number' => $request->mobile_number],
-    //             [
-    //                 'name' => $request->name,
-    //                 'otp' => $otp,
-    //                 ''
-    //             ]
-    //         );
-    //         return response()->json([
-    //             'success' => true,
-    //             'message' => $enquiry->wasRecentlyCreated ? 'OTP created and sent successfully.' : 'OTP updated successfully.',
-    //             'name' => $request->name,
-    //             'otp' => $otp,
-    //             'mobile_number' => $request->mobile_number,
-    //             'otp_verified_at' => $enquiry->otp_verified_at
-    //         ], Response::HTTP_OK);
-
-    //     } catch (\Exception $e) {
-    //         // Log the exception for debugging
-    //         Log::error('Error sending OTP: ' . $e->getMessage());
-
-    //         return response()->json([
-    //             'success' => false,
-    //             'message' => 'An error occurred while sending OTP.',
-    //             'error' => $e->getMessage()
-    //         ], Response::HTTP_INTERNAL_SERVER_ERROR);
-    //     }
-    // }
 
 
     public function sendOtp(Request $request)
     {
-        // Validate the incoming request
         $validator = Validator::make($request->all(), [
             'mobile_number' => 'required|digits:12',
         ]);
@@ -383,7 +333,6 @@ class ApiController extends Controller
         }
 
         try {
-            // Check if the OTP already exists for this mobile number
             $existingEnquiry = Enquiry::where('mobile_number', $request->mobile_number)->first();
 
             if ($existingEnquiry) {
@@ -393,8 +342,7 @@ class ApiController extends Controller
                 ], Response::HTTP_CONFLICT);
             }
 
-            // Generate a new OTP
-            $otp = rand(100000, 999999); // Generate 6-digit OTP
+            $otp = rand(100000, 999999);
 
             Enquiry::create([
                 'mobile_number' => $request->mobile_number,
@@ -422,12 +370,7 @@ class ApiController extends Controller
             $mobile=$request->mobile_number;
             $url="https://cerf.cerfgs.com/multicpaas?unicode=false&token=O3chuztXPZayQp7Rm7JE6GWaH90OqWXh&from=ZRBRKG&";
 
-            // $ch = curl_init();
-            // curl_setopt($ch,CURLOPT_URL, "https://cerf.cerfgs.com/multicpaas?unicode=false&token=O3chuztXPZayQp7Rm7JE6GWaH90OqWXh&from=ZRBRKG&");
-            // curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-            // curl_setopt($ch, CURLOPT_POST, 1);
-            // curl_setopt($ch, CURLOPT_POSTFIELDS, "to=$mobile&dltContentId=$dltContentId&text=$Text");
-            // $response = curl_exec($ch);
+
 
             $ch = curl_init();
 
@@ -439,20 +382,9 @@ curl_setopt($ch, CURLOPT_POSTFIELDS, "to=$mobile&dltContentId=$dltContentId&text
 
 curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
 
-// $response = curl_exec($ch);
 
-            // // $ch = curl_init();
-            // curl_setopt($ch, CURLOPT_URL, $url);
-            // curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-            // curl_setopt($ch, CURLOPT_POST, true);
-            // curl_setopt($ch, CURLOPT_POSTFIELDS, $postFields);
-            // curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false); // Disable SSL verification (for local testing)
-
-            // Execute the request
             $apiResponse = curl_exec($ch);
-            // dd($apiResponse);
 
-            // Handle cURL errors
             if (curl_errno($ch)) {
                 return response()->json([
                     'success' => false,
@@ -461,17 +393,15 @@ curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
                 ], Response::HTTP_INTERNAL_SERVER_ERROR);
             }
 
-            // Get HTTP status code from the response
             $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
             curl_close($ch);
 
-            // Check the API response
             if ($httpCode == 200) {
                 return response()->json([
                     'success' => true,
                     'message' => 'OTP sent successfully.',
                     'otp' => $otp,
-                    'api_response' => $apiResponse // Debug info
+                    'api_response' => $apiResponse
                 ], Response::HTTP_OK);
             } else {
                 return response()->json([
@@ -481,7 +411,6 @@ curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
                 ], Response::HTTP_BAD_REQUEST);
             }
         } catch (\Exception $e) {
-            // Log the exception
             Log::error('Error sending OTP: ' . $e->getMessage());
 
             return response()->json([
@@ -509,7 +438,6 @@ curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
         }
 
         try {
-            // Find the enquiry by mobile number
             $enquiry = Enquiry::where('mobile_number', $request->mobile_number)
                 ->orderByDesc('created_at')
                 ->first();
@@ -521,9 +449,7 @@ curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
                 ], Response::HTTP_NOT_FOUND);
             }
 
-            // Check if the OTP matches
             if ($enquiry->otp == $request->otp) {
-                // Update the otp_verified_at timestamp
                 $enquiry->update([
                     'otp_verified_at' => now(),
                 ]);
@@ -541,7 +467,6 @@ curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
             }
 
         } catch (\Exception $e) {
-            // Log the exception for debugging
             Log::error('Error verifying OTP: ' . $e->getMessage());
 
             return response()->json([
@@ -555,7 +480,7 @@ curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
     public function resendOtp(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'mobile_number' => 'required|digits:10',
+            'mobile_number' => 'required|digits:12',
         ]);
 
         if ($validator->fails()) {
@@ -567,51 +492,82 @@ curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
         }
 
         try {
-            $enquiry = Enquiry::where('mobile_number', $request->mobile_number)->first();
 
-            if (!$enquiry) {
+            $existingEnquiry = Enquiry::where('mobile_number', $request->mobile_number)->first();
+
+            if (!$existingEnquiry) {
                 return response()->json([
                     'success' => false,
-                    'message' => 'Mobile number not found.'
+                    'message' => 'No OTP found for this mobile number. Please request a new OTP.'
                 ], Response::HTTP_NOT_FOUND);
             }
 
-            $otp = $enquiry->otp;
+
+            $otp = $existingEnquiry->otp;
+
 
             $message = "Dear User, Your OTP for login to ZeroBrokage is {$otp}. Valid for 2 minutes. Please do not share this OTP. Regards, Team ZeroBrokage";
+            $encodedMessage = urlencode($message);
 
-            $text = urlencode($message);
+
+            $apiUrl = "https://cerf.cerfgs.com/multicpaas";
+            $token = 'O3chuztXPZayQp7Rm7JE6GWaH90OqWXh';
+            $from = 'ZRBRKG';
             $dltContentId = '1707172872636147832';
-            $ch = curl_init();
-            curl_setopt($ch, CURLOPT_URL, "https://cerf.cerfgs.com/multicpaas?unicode=false&token=O3chuztXPZayQp7Rm7JE6GWaH90OqWXh&from=ZRBRKG&");
-            curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-            curl_setopt($ch, CURLOPT_POST, true);
-            curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query([
-                'to' => $request->mobile_number,
-                'dltContentId' => $dltContentId,
-                'text' => $text
-            ]));
 
-            $result = curl_exec($ch);
+
+            $postFields = http_build_query([
+                'unicode' => 'false',
+                'token' => $token,
+                'from' => $from,
+                'to' => '91' . $request->mobile_number,
+                'text' => $encodedMessage,
+                'dltContentId' => $dltContentId,
+            ]);
+            $mobile=$request->mobile_number;
+            $url="https://cerf.cerfgs.com/multicpaas?unicode=false&token=O3chuztXPZayQp7Rm7JE6GWaH90OqWXh&from=ZRBRKG&";
+
+            $ch = curl_init();
+
+curl_setopt($ch, CURLOPT_URL, "https://cerf.cerfgs.com/multicpaas?unicode=false&token=O3chuztXPZayQp7Rm7JE6GWaH90OqWXh&from=ZRBRKG&");
+curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+curl_setopt($ch, CURLOPT_POST, 1);
+
+curl_setopt($ch, CURLOPT_POSTFIELDS, "to=$mobile&dltContentId=$dltContentId&text=$encodedMessage");
+
+curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+
+
+            $apiResponse = curl_exec($ch);
+
 
             if (curl_errno($ch)) {
                 return response()->json([
                     'success' => false,
-                    'message' => 'Failed to send OTP via SMS.',
+                    'message' => 'Failed to resend OTP via SMS.',
                     'error' => curl_error($ch)
                 ], Response::HTTP_INTERNAL_SERVER_ERROR);
             }
 
+            $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
             curl_close($ch);
 
-            return response()->json([
-                'success' => true,
-                'message' => 'OTP resent successfully.',
-                'otp' => $otp,
-                'sms_message' => $message
-            ], Response::HTTP_OK);
-
+            if ($httpCode == 200) {
+                return response()->json([
+                    'success' => true,
+                    'message' => 'OTP resent successfully.',
+                    'otp' => $otp,
+                    'api_response' => $apiResponse
+                ], Response::HTTP_OK);
+            } else {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Failed to resend OTP via the external API.',
+                    'api_response' => $apiResponse
+                ], Response::HTTP_BAD_REQUEST);
+            }
         } catch (\Exception $e) {
+
             Log::error('Error resending OTP: ' . $e->getMessage());
 
             return response()->json([

@@ -340,7 +340,7 @@ Route::middleware(['auth', 'check.ip'])->group(function () {
         Route::delete('/india-services/{india-services}', 'destroy')->name('india-services.destroy')->middleware('can:india-services-delete');
     });
 
-    Route::resource('/newsletter', NewsletterController::class);
+Route::resource('/newsletter', NewsletterController::class);
     Route::controller(TransactionController::class)->group(function () {
         Route::get('/transaction', 'index')->name('transaction.index')->middleware('can:transaction-list');
         Route::get('/transaction/create', 'create')->name('transaction.create')->middleware('can:transaction-create');

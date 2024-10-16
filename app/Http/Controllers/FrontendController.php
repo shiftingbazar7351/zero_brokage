@@ -162,63 +162,7 @@ class FrontendController extends Controller
     }
 
 
-    // public function filterSubmenus(Request $request,$slug)
-    // {
-    //     $subcategory = SubCategory::where('slug', $slug)->select('id', 'slug', 'name', 'background_image')->first();
-    //     $query = Submenu::where('sub_menus.subcategory_id', $subcategory->id ?? '')->query();
 
-    //     // Keyword filter
-    //     if ($request->filled('keyword')) {
-    //         $query->where('name', 'like', '%' . $request->keyword . '%')
-    //             ->orWhere('discounted_price', 'like', '%' . $request->keyword . '%')
-    //             ->orWhere('description', 'like', '%' . $request->keyword . '%')
-    //             ->orWhere('total_price', 'like', '%' . $request->keyword . '%')
-    //             ->orWhereHas('cityName', function ($q) use ($request) {
-    //                 $q->where('name', 'like', '%' . $request->keyword . '%');
-    //             })
-    //             ->orWhereHas('menu', function ($q) use ($request) {
-    //                 $q->where('name', 'like', '%' . $request->keyword . '%');
-    //             });
-    //     }
-
-    //     // Location filter
-    //     if ($request->filled('location')) {
-    //         $query->whereHas('cityName', function ($q) use ($request) {
-    //             $q->where('name', 'like', '%' . $request->location . '%')
-    //                 ->orWhereHas('state', function ($stateQuery) use ($request) {
-    //                     $stateQuery->where('name', 'like', '%' . $request->location . '%');
-    //                 });
-    //         });
-    //     }
-
-    //     // Categories filter
-    //     if ($request->filled('categories')) {
-    //         $query->whereHas('menu', function ($q) use ($request) {
-    //             $q->whereIn('name', $request->categories);
-    //         });
-    //     }
-
-    //     // Experience filter (from Vendor table)
-    //     if ($request->filled('experience')) {
-    //         $experienceRange = explode('-', $request->experience); // For example, "1-5"
-    //         $minExperience = trim($experienceRange[0]);
-    //         $maxExperience = trim($experienceRange[1]);
-
-    //         $query->whereHas('vendors', function ($q) use ($minExperience, $maxExperience) {
-    //             $q->whereBetween('experience', [$minExperience, $maxExperience]);
-    //         });
-    //     }
-
-    //     $submenus = $query->get();
-
-    //     $serviceListView = view('frontend.partials.service-list', compact('submenus'))->render();
-    //     $filterView = view('frontend.partials.service-list', compact('submenus'))->render(); // Updated filter
-
-    //     return response()->json([
-    //         'html' => $serviceListView,
-    //         'filterHtml' => $filterView,
-    //     ]);
-    // }
 
     public function servicesInIndia($city)
     {
@@ -261,7 +205,6 @@ class FrontendController extends Controller
             ->where('status', 'active')
             ->paginate(10);
 
-        // Use a subquery to directly filter vendors by city
         $vendors = Vendor::whereIn('city', function ($query) {
             $query->select('id')
                 ->from('cities')
@@ -302,10 +245,8 @@ class FrontendController extends Controller
             return response()->json(['errors' => $validator->errors()], 422);
         }
 
-        // Generate a random 4-digit OTP
         $otp = rand(1000, 9999);
 
-        // Update the enquiry based on mobile number
         $enquiry = Enquiry::where('mobile_number', $request->mobile_number)->first();
         if ($enquiry) {
             $enquiry->name = $request->name;
@@ -313,7 +254,7 @@ class FrontendController extends Controller
             $enquiry->email = $request->email;
             $enquiry->date_time = $request->date_time;
             $enquiry->subcategory_id = $request->subcategory_id;
-            $enquiry->otp = $otp; // Store the generated OTP
+            $enquiry->otp = $otp;
             $enquiry->save();
 
             return response()->json(['success' => 'Details and OTP updated successfully']);
@@ -324,23 +265,19 @@ class FrontendController extends Controller
 
     public function verifyOtp(Request $request)
     {
-        // Validate the OTP input
         $validator = Validator::make($request->all(), [
             'mobile_number' => 'required|string',
-            'otp' => 'required|digits:4', // Ensure OTP is exactly 4 digits
+            'otp' => 'required|digits:4',
         ]);
 
         if ($validator->fails()) {
             return response()->json(['errors' => $validator->errors()], 422);
         }
 
-        // Find the enquiry by mobile number
         $enquiry = Enquiry::where('mobile_number', $request->mobile_number)->first();
 
         if ($enquiry) {
-            // Check if the OTP matches and is not already verified
             if ($enquiry->otp == $request->otp && is_null($enquiry->otp_verified_at)) {
-                // OTP is valid, update the verification time
                 $enquiry->otp_verified_at = now();
                 $enquiry->save();
 
@@ -366,18 +303,7 @@ class FrontendController extends Controller
 
     public function reviewStore(Request $request)
     {
-        // Validate request
-        // $request->validate([
-        //     'name' => 'required|string|max:255',
-        //     'email' => 'required|email',
-        //     'phone_number' => 'required|max:15',
-        //     'description' => 'required|string',
-        //     'rating' => 'required',
-        // ]);
 
-        // Store review logic here
-        // Example:
-        // return $request->all();
         Review::create([
             'name' => $request->name,
             'email' => $request->email,
@@ -387,13 +313,12 @@ class FrontendController extends Controller
             'type' => 1,
         ]);
 
-        // Return success response
         return response()->json(['success' => true, 'message' => 'Review submitted successfully!']);
     }
     public function sitemapXML()
     {
-        $services = subcategory::all(); // Fetch your services
-        $cities = City::all();      // Fetch your cities
+        $services = subcategory::all();
+        $cities = City::all();
 
         $content = view('sitemap', compact('services', 'cities'))->render();
 

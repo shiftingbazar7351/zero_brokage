@@ -344,7 +344,7 @@ class ApiController extends Controller
                 ], Response::HTTP_CONFLICT);
             }
 
-            $otp = rand(100000, 999999);
+            $otp = rand(1000, 9999);
 
             Enquiry::create([
                 'mobile_number' => $request->mobile_number,
@@ -423,7 +423,7 @@ class ApiController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'mobile_number' => 'required|digits:10',
-            'otp' => 'required|digits:6',
+            'otp' => 'required|digits:4',
         ]);
 
         if ($validator->fails()) {

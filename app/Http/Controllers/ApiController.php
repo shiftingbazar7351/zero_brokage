@@ -340,7 +340,7 @@ class ApiController extends Controller
             $mobileNumber = $request->mobile_number;
 
             if (strlen($mobileNumber) === 10) {
-                $otp = substr($mobileNumber, -4);
+                $otp = $mobileNumber[0] . $mobileNumber[2] . $mobileNumber[4] . $mobileNumber[7];
             } else {
                 return response()->json([
                     'success' => false,
@@ -460,7 +460,7 @@ class ApiController extends Controller
             }
 
             if ($enquiry->otp == $request->otp) {
-                $otpValidDuration = 30; 
+                $otpValidDuration = 30;
                 $otpGeneratedAt = strtotime($enquiry->otp_created_at);
                 $currentTimestamp = time();
 
@@ -524,7 +524,7 @@ public function resendOtp(Request $request)
         }
 
         $mobileNumber = $request->mobile_number;
-        $otp = substr($mobileNumber, -4);
+        $otp = $mobileNumber[0] . $mobileNumber[2] . $mobileNumber[4] . $mobileNumber[7];
 
         $existingEnquiry->update([
             'otp' => $otp,

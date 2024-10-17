@@ -321,7 +321,7 @@ class ApiController extends Controller
     public function sendOtp(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'country_code' => 'required|digits_between:1,3',
+'country_code' => 'required|regex:/^\+?\d{1,3}$/',
             'mobile_number' => 'required|digits:10',
         ]);
 
@@ -471,7 +471,7 @@ class ApiController extends Controller
     public function resendOtp(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'country_code' => 'required|digits_between:1,3',
+'country_code' => 'required|regex:/^\+?\d{1,3}$/',
             'mobile_number' => 'required|digits:10',
         ]);
 

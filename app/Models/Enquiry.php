@@ -26,7 +26,8 @@ class Enquiry extends Model
         'email',
         'mobile_number',
         'otp',
-        'otp_verified_at'
+        'otp_verified_at',
+        'country_code'
     ];
 
     public function categoryName()

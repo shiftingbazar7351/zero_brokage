@@ -321,7 +321,8 @@ class ApiController extends Controller
     public function sendOtp(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'mobile_number' => 'required|digits:12',
+            'country_code' => 'required|digits_between:1,3',
+            'mobile_number' => 'required|digits:10',
         ]);
 
         if ($validator->fails()) {
@@ -350,7 +351,6 @@ class ApiController extends Controller
             ]);
 
             $message = "Dear User, Your OTP for login to ZeroBrokage is {$otp}. Valid for 2 minutes. Please do not share this OTP. Regards, Team ZeroBrokage";
-
             $encodedMessage = urlencode($message);
 
             $apiUrl = "https://cerf.cerfgs.com/multicpaas";
@@ -362,26 +362,19 @@ class ApiController extends Controller
                 'unicode' => 'false',
                 'token' => $token,
                 'from' => $from,
-                'to' => '91' . $request->mobile_number,
+                'to' => $request->country_code . $request->mobile_number,
                 'text' => $encodedMessage,
-                'dltContentId' =>$dltContentId,
-
+                'dltContentId' => $dltContentId,
             ]);
-            $mobile=$request->mobile_number;
-            $url="https://cerf.cerfgs.com/multicpaas?unicode=false&token=O3chuztXPZayQp7Rm7JE6GWaH90OqWXh&from=ZRBRKG&";
 
-
-
+            $mobile = $request->country_code . $request->mobile_number;
             $ch = curl_init();
 
-curl_setopt($ch, CURLOPT_URL, "https://cerf.cerfgs.com/multicpaas?unicode=false&token=O3chuztXPZayQp7Rm7JE6GWaH90OqWXh&from=ZRBRKG&");
-curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-curl_setopt($ch, CURLOPT_POST, 1);
-
-curl_setopt($ch, CURLOPT_POSTFIELDS, "to=$mobile&dltContentId=$dltContentId&text=$encodedMessage");
-
-curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
-
+            curl_setopt($ch, CURLOPT_URL, "https://cerf.cerfgs.com/multicpaas?unicode=false&token=O3chuztXPZayQp7Rm7JE6GWaH90OqWXh&from=ZRBRKG&");
+            curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+            curl_setopt($ch, CURLOPT_POST, 1);
+            curl_setopt($ch, CURLOPT_POSTFIELDS, "to=$mobile&dltContentId=$dltContentId&text=$encodedMessage");
+            curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
 
             $apiResponse = curl_exec($ch);
 
@@ -420,13 +413,11 @@ curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
             ], Response::HTTP_INTERNAL_SERVER_ERROR);
         }
     }
-
-        public function verifyOtp(Request $request)
+            public function verifyOtp(Request $request)
     {
-        // Validate the incoming request
         $validator = Validator::make($request->all(), [
             'mobile_number' => 'required|digits:10',
-            'otp' => 'required|digits:4',
+            'otp' => 'required|digits:6',
         ]);
 
         if ($validator->fails()) {
@@ -480,7 +471,8 @@ curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
     public function resendOtp(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'mobile_number' => 'required|digits:12',
+            'country_code' => 'required|digits_between:1,3',
+            'mobile_number' => 'required|digits:10',
         ]);
 
         if ($validator->fails()) {
@@ -492,7 +484,6 @@ curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
         }
 
         try {
-
             $existingEnquiry = Enquiry::where('mobile_number', $request->mobile_number)->first();
 
             if (!$existingEnquiry) {
@@ -502,44 +493,27 @@ curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
                 ], Response::HTTP_NOT_FOUND);
             }
 
-
             $otp = $existingEnquiry->otp;
-
 
             $message = "Dear User, Your OTP for login to ZeroBrokage is {$otp}. Valid for 2 minutes. Please do not share this OTP. Regards, Team ZeroBrokage";
             $encodedMessage = urlencode($message);
-
 
             $apiUrl = "https://cerf.cerfgs.com/multicpaas";
             $token = 'O3chuztXPZayQp7Rm7JE6GWaH90OqWXh';
             $from = 'ZRBRKG';
             $dltContentId = '1707172872636147832';
 
-
-            $postFields = http_build_query([
-                'unicode' => 'false',
-                'token' => $token,
-                'from' => $from,
-                'to' => '91' . $request->mobile_number,
-                'text' => $encodedMessage,
-                'dltContentId' => $dltContentId,
-            ]);
-            $mobile=$request->mobile_number;
-            $url="https://cerf.cerfgs.com/multicpaas?unicode=false&token=O3chuztXPZayQp7Rm7JE6GWaH90OqWXh&from=ZRBRKG&";
+            $mobile = $request->country_code . $request->mobile_number;
 
             $ch = curl_init();
 
-curl_setopt($ch, CURLOPT_URL, "https://cerf.cerfgs.com/multicpaas?unicode=false&token=O3chuztXPZayQp7Rm7JE6GWaH90OqWXh&from=ZRBRKG&");
-curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-curl_setopt($ch, CURLOPT_POST, 1);
-
-curl_setopt($ch, CURLOPT_POSTFIELDS, "to=$mobile&dltContentId=$dltContentId&text=$encodedMessage");
-
-curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
-
+            curl_setopt($ch, CURLOPT_URL, "https://cerf.cerfgs.com/multicpaas?unicode=false&token=O3chuztXPZayQp7Rm7JE6GWaH90OqWXh&from=ZRBRKG&");
+            curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+            curl_setopt($ch, CURLOPT_POST, 1);
+            curl_setopt($ch, CURLOPT_POSTFIELDS, "to=$mobile&dltContentId=$dltContentId&text=$encodedMessage");
+            curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
 
             $apiResponse = curl_exec($ch);
-
 
             if (curl_errno($ch)) {
                 return response()->json([
@@ -566,8 +540,8 @@ curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
                     'api_response' => $apiResponse
                 ], Response::HTTP_BAD_REQUEST);
             }
-        } catch (\Exception $e) {
 
+        } catch (\Exception $e) {
             Log::error('Error resending OTP: ' . $e->getMessage());
 
             return response()->json([

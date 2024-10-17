@@ -319,7 +319,6 @@ class ApiController extends Controller
 
 
     public function sendOtp(Request $request)
-
     {
         $validator = Validator::make($request->all(), [
             'country_code' => 'required|regex:/^\+?\d{1,3}$/',
@@ -338,8 +337,19 @@ class ApiController extends Controller
         try {
             $existingEnquiry = Enquiry::where('mobile_number', $request->mobile_number)->first();
 
+            $mobileNumber = $request->mobile_number;
+
+            if (strlen($mobileNumber) === 10) {
+                $otp = substr($mobileNumber, -4);
+            } else {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Invalid mobile number format.'
+                ], Response::HTTP_BAD_REQUEST);
+            }
+
             if ($existingEnquiry) {
-                $otpValidDuration = 2 * 60;
+                $otpValidDuration = 30; // 5 seconds
                 $otpGeneratedAt = strtotime($existingEnquiry->otp_created_at);
                 $currentTime = time();
 
@@ -350,13 +360,10 @@ class ApiController extends Controller
                     ], Response::HTTP_CONFLICT);
                 }
 
-                $otp = rand(1000, 9999);
                 $existingEnquiry->otp = $otp;
                 $existingEnquiry->otp_created_at = now();
                 $existingEnquiry->save();
             } else {
-                $otp = rand(1000, 9999);
-
                 Enquiry::create([
                     'mobile_number' => $request->mobile_number,
                     'country_code' => $request->country_code,
@@ -366,22 +373,13 @@ class ApiController extends Controller
                 ]);
             }
 
-            $message = "Dear User, Your OTP for login to ZeroBrokage is {$otp}. Valid for 2 minutes. Please do not share this OTP. Regards, Team ZeroBrokage";
+            $message = "Dear User, Your OTP for login to ZeroBrokage is {$otp}. Valid for 30 seconds. Please do not share this OTP. Regards, Team ZeroBrokage";
             $encodedMessage = urlencode($message);
 
             $apiUrl = "https://cerf.cerfgs.com/multicpaas";
             $token = 'O3chuztXPZayQp7Rm7JE6GWaH90OqWXh';
             $from = 'ZRBRKG';
             $dltContentId = '1707172872636147832';
-
-            $postFields = http_build_query([
-                'unicode' => 'false',
-                'token' => $token,
-                'from' => $from,
-                'to' => $request->country_code . $request->mobile_number,
-                'text' => $encodedMessage,
-                'dltContentId' => $dltContentId,
-            ]);
 
             $mobile = $request->country_code . $request->mobile_number;
             $ch = curl_init();
@@ -391,6 +389,7 @@ class ApiController extends Controller
             curl_setopt($ch, CURLOPT_POST, 1);
             curl_setopt($ch, CURLOPT_POSTFIELDS, "to=$mobile&dltContentId=$dltContentId&text=$encodedMessage");
             curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+
 
             $apiResponse = curl_exec($ch);
 
@@ -432,7 +431,8 @@ class ApiController extends Controller
             ], Response::HTTP_INTERNAL_SERVER_ERROR);
         }
     }
-     public function verifyOtp(Request $request)
+
+    public function verifyOtp(Request $request)
     {
         $validator = Validator::make($request->all(), [
             'mobile_number' => 'required|digits:10',
@@ -460,15 +460,24 @@ class ApiController extends Controller
             }
 
             if ($enquiry->otp == $request->otp) {
-                $enquiry->update([
-                    'otp_verified_at' => now(),
-                ]);
+                $otpValidDuration = 30; 
+                $otpGeneratedAt = strtotime($enquiry->otp_created_at);
+                $currentTimestamp = time();
 
-                return response()->json([
-                    'success' => true,
-                    'message' => 'OTP verified successfully.',
-                    'otp_verified_at' => $enquiry->otp_verified_at,
-                ], Response::HTTP_OK);
+                if (($currentTimestamp - $otpGeneratedAt) <= $otpValidDuration) {
+                    $enquiry->update(['otp_verified_at' => now()]);
+
+                    return response()->json([
+                        'success' => true,
+                        'message' => 'OTP verified successfully.',
+                        'otp_verified_at' => $enquiry->otp_verified_at,
+                    ], Response::HTTP_OK);
+                } else {
+                    return response()->json([
+                        'success' => false,
+                        'message' => 'OTP has expired. Please request a new one.',
+                    ], Response::HTTP_UNAUTHORIZED);
+                }
             } else {
                 return response()->json([
                     'success' => false,
@@ -487,7 +496,8 @@ class ApiController extends Controller
         }
     }
 
-    public function resendOtp(Request $request)
+
+public function resendOtp(Request $request)
 {
     $validator = Validator::make($request->all(), [
         'country_code' => 'required|regex:/^\+?\d{1,3}$/',
@@ -503,6 +513,7 @@ class ApiController extends Controller
     }
 
     try {
+
         $existingEnquiry = Enquiry::where('mobile_number', $request->mobile_number)->first();
 
         if (!$existingEnquiry) {
@@ -512,7 +523,13 @@ class ApiController extends Controller
             ], Response::HTTP_NOT_FOUND);
         }
 
-        $otp = $existingEnquiry->otp;
+        $mobileNumber = $request->mobile_number;
+        $otp = substr($mobileNumber, -4);
+
+        $existingEnquiry->update([
+            'otp' => $otp,
+            'otp_created_at' => now(),
+        ]);
 
         $message = "Dear User, Your OTP for login to ZeroBrokage is {$otp}. Valid for 2 minutes. Please do not share this OTP. Regards, Team ZeroBrokage";
         $encodedMessage = urlencode($message);
@@ -545,13 +562,6 @@ class ApiController extends Controller
         curl_close($ch);
 
         if ($httpCode == 200) {
-
-            $existingEnquiry->update([
-                'country_code' => $request->country_code,
-                'otp' => $otp,
-                'mobile_number' => $request->mobile_number,
-            ]);
-
             return response()->json([
                 'success' => true,
                 'message' => 'OTP resent successfully.',

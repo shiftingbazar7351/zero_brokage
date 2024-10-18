@@ -707,9 +707,9 @@ public function getSavedAddresses(Request $request): JsonResponse
                     'addresses.city',
                     'addresses.state',
                     'addresses.house_number',
-                    'addresses.building_name',
+
                     'addresses.road_name',
-                    'addresses.area_colony',
+
                     'enquiries.name',
                      'enquiries.email',
                     'enquiries.mobile_number'
@@ -752,9 +752,9 @@ public function getSavedAddresses(Request $request): JsonResponse
                 'city' => 'required|string|max:50',
                 'state' => 'required|string|max:50',
                 'house_number' => 'sometimes|string|max:50',
-                'building_name' => 'sometimes|string|max:100',
+
                 'road_name' => 'sometimes|string|max:100',
-                'area_colony' => 'sometimes|string|max:100',
+
                 'name' => 'required|string|max:50',
                 'email' => 'sometimes|email|max:100',
                 'mobile_number' => 'required|string|max:15',
@@ -796,4 +796,109 @@ public function getSavedAddresses(Request $request): JsonResponse
             ], 500);
         }
     }
+
+// public function storeAddress(Request $request): JsonResponse
+// {
+//     try {
+//         $validated = $request->validate([
+//             'type' => 'required|string|in:home,work',
+//             'pincode' => 'required|string|max:20',
+//             'city' => 'required|string|max:50',
+//             'state' => 'required|string|max:50',
+//             'house_number' => 'sometimes|string|max:50',
+//             'road_name' => 'sometimes|string|max:100',
+//             'name' => 'required|string|max:50',
+//             'email' => 'sometimes|email|max:100',
+//             'mobile_number' => 'required|string|max:15',
+//         ]);
+
+//         $address = Address::create($validated);
+
+//         $enquiry = Enquiry::findOrFail($address->enquiries_id);
+//         $enquiry->update([
+//             'name' => $validated['name'],
+//             'email' => $validated['email'] ?? $enquiry->email,
+//             'mobile_number' => $validated['mobile_number'],
+//         ]);
+
+//         Cache::forget('saved_addresses');
+
+//         return response()->json([
+//             'success' => true,
+//             'data' => $address,
+//             'message' => 'Address and enquiry created successfully.',
+//         ]);
+//     } catch (ModelNotFoundException $e) {
+//         return response()->json([
+//             'success' => false,
+//             'message' => 'Enquiry not found.',
+//         ], 404);
+//     } catch (ValidationException $e) {
+//         return response()->json([
+//             'success' => false,
+//             'message' => 'Validation failed.',
+//             'errors' => $e->errors(),
+//         ], 422);
+//     } catch (\Exception $e) {
+//         return response()->json([
+//             'success' => false,
+//             'message' => 'An error occurred while creating the address.',
+//         ], 500);
+//     }
+// }
+
+
+public function storeAddress(Request $request): JsonResponse
+{
+    try {
+        // Validate incoming request without enquiries_id
+        $validated = $request->validate([
+            'type' => 'required|string|in:home,work',
+            'pincode' => 'required|string|max:20',
+            'city' => 'required|string|max:50',
+            'state' => 'required|string|max:50',
+            'house_number' => 'sometimes|string|max:50',
+            'road_name' => 'sometimes|string|max:100',
+            'name' => 'required|string|max:50',
+            'email' => 'sometimes|email|max:100',
+            'mobile_number' => 'required|string|max:15',
+        ]);
+
+        // Create the enquiry first
+        $enquiry = Enquiry::create([
+            'name' => $validated['name'],
+            'email' => $validated['email'] ?? null,
+            'mobile_number' => $validated['mobile_number'],
+            // Add any other required fields for Enquiry here
+        ]);
+
+        // Create the address using the enquiry's ID
+        $address = Address::create(array_merge($validated, ['enquiries_id' => $enquiry->id]));
+
+        // Clear the cache if needed
+        Cache::forget('saved_addresses');
+
+        // Return success response
+        return response()->json([
+            'success' => true,
+            'data' => $address,
+            'message' => 'Address and enquiry created successfully.',
+        ]);
+
+    } catch (ValidationException $e) {
+        // Handle validation errors
+        return response()->json([
+            'success' => false,
+            'message' => 'Validation failed.',
+            'errors' => $e->errors(),
+        ], 422);
+    } catch (\Exception $e) {
+        // Handle general errors
+        return response()->json([
+            'success' => false,
+            'message' => 'An error occurred while creating the address.',
+            'error' => $e->getMessage(), // Include error message for debugging
+        ], 500);
+    }
+}
 }

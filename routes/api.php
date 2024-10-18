@@ -34,6 +34,7 @@ Route::controller(ApiController::class)->group(function () {
     Route::post('/booking-list', 'createBooking');
 
     Route::get('/saved-addresses', 'getSavedAddresses'); // Get saved addresses
-    Route::put('/update-address/{id}', 'updateAddress'); // Update address by ID
+    Route::put('/update-address/{id}', 'updateAddress');
+    Route::post('/address', 'storeAddress');
 
 });

@@ -30,4 +30,11 @@ Route::controller(ApiController::class)->group(function () {
     Route::post('/verify-otp', 'verifyOtp');
     Route::post('/resend-otp', 'resendOtp');
     Route::get('/submenu/{id}', 'subMenu');
+    Route::get('/booking-list', 'bookingList');
+    Route::post('/booking-list', 'createBooking');
+
+    Route::get('/address-list', 'addressList');
+    Route::get('/saved-address-list', 'savedAddressList');
+
+
 });

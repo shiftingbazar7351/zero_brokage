@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use App\Models\Address;
 use App\Models\Category;
 use App\Models\City;
 use App\Models\Enquiry;
@@ -14,6 +14,8 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
+
 
 class ApiController extends Controller
 {
@@ -587,4 +589,125 @@ public function resendOtp(Request $request)
         ], Response::HTTP_INTERNAL_SERVER_ERROR);
     }
 }
+
+public function bookingList()
+{
+    try {
+        $enquiries = Enquiry::select('id', 'name', 'email', 'mobile_number')->get();
+
+        $addresses = Address::select('enquiries_id', 'address1')->get()->keyBy('enquiries_id');
+
+        $bookingList = $enquiries->map(function ($enquiry) use ($addresses) {
+            $enquiryId = $enquiry->id;
+
+            \Log::info("Enquiry ID: $enquiryId");
+            if ($addresses->has($enquiryId)) {
+                \Log::info("Matching address found for Enquiry ID: $enquiryId");
+            } else {
+                \Log::info("No address found for Enquiry ID: $enquiryId");
+            }
+
+            return [
+                'name' => $enquiry->name,
+                'email' => $enquiry->email,
+                'mobile_number' => $enquiry->mobile_number,
+                'location' => $addresses->has($enquiryId) ? $addresses[$enquiryId]->address1 : null, // Fetch address1 as location
+            ];
+        });
+
+        return response()->json([
+            'status' => 'success',
+            'data' => $bookingList,
+        ]);
+    } catch (ModelNotFoundException $e) {
+        return response()->json([
+            'status' => 'error',
+            'message' => 'Data not found.',
+        ], 404);
+    } catch (\Exception $e) {
+        return response()->json([
+            'status' => 'error',
+            'message' => 'An unexpected error occurred: ' . $e->getMessage(),
+        ], 500);
+    }
+}
+
+
+// POST request ke liye function
+public function createBooking(Request $request)
+{
+    $validatedData = $request->validate([
+        'name' => 'required|string|max:255',
+        'email' => 'required|email|max:255',
+        'mobile_number' => 'required|string|max:15',
+        'location' => 'required|string|max:255',
+    ]);
+
+    try {
+        $enquiry = Enquiry::create([
+            'name' => $validatedData['name'],
+            'email' => $validatedData['email'],
+            'mobile_number' => $validatedData['mobile_number'],
+        ]);
+
+        Address::create([
+            'enquiry_id' => $enquiry->id,
+            'address1' => $validatedData['location'],
+        ]);
+
+        return response()->json([
+            'status' => 'success',
+            'message' => 'Booking created successfully.',
+            'data' => [
+                'enquiry_id' => $enquiry->id,
+                'name' => $validatedData['name'],
+                'email' => $validatedData['email'],
+                'mobile_number' => $validatedData['mobile_number'],
+                'location' => $validatedData['location'],
+            ],
+        ], 201);
+    } catch (\Exception $e) {
+        return response()->json([
+            'status' => 'error',
+            'message' => 'An unexpected error occurred: ' . $e->getMessage(),
+        ], 500);
+    }
+}
+
+
+public function addressList()
+{
+    try {
+        $addresses = Address::all();
+
+        return response()->json([
+            'status' => 'success',
+            'data' => $addresses,
+        ]);
+    } catch (\Exception $e) {
+        return response()->json([
+            'status' => 'error',
+            'message' => 'An unexpected error occurred: ' . $e->getMessage(),
+        ], 500);
+    }
+}
+public function savedAddressList()
+{
+    try {
+        $savedAddresses = Address::with('enquiry')
+            ->select('enquiries_id', 'address1', 'address2')
+            ->get();
+
+        return response()->json([
+            'status' => 'success',
+            'data' => $savedAddresses,
+        ]);
+    } catch (\Exception $e) {
+        return response()->json([
+            'status' => 'error',
+            'message' => 'An unexpected error occurred: ' . $e->getMessage(),
+        ], 500);
+    }
+}
+
 }

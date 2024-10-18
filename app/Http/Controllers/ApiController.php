@@ -15,6 +15,10 @@ use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Support\Facades\Cache;
+use Illuminate\Validation\ValidationException;
+
 
 
 class ApiController extends Controller
@@ -691,23 +695,105 @@ public function addressList()
         ], 500);
     }
 }
-public function savedAddressList()
-{
-    try {
-        $savedAddresses = Address::with('enquiry')
-            ->select('enquiries_id', 'address1', 'address2')
-            ->get();
+public function getSavedAddresses(Request $request): JsonResponse
+    {
+        try {
+            $cacheKey = 'saved_addresses';
 
-        return response()->json([
-            'status' => 'success',
-            'data' => $savedAddresses,
-        ]);
-    } catch (\Exception $e) {
-        return response()->json([
-            'status' => 'error',
-            'message' => 'An unexpected error occurred: ' . $e->getMessage(),
-        ], 500);
+            $addresses = Cache::remember($cacheKey, 60, function () {
+                return Address::select(
+                    'addresses.type',
+                    'addresses.pincode',
+                    'addresses.city',
+                    'addresses.state',
+                    'addresses.house_number',
+                    'addresses.building_name',
+                    'addresses.road_name',
+                    'addresses.area_colony',
+                    'enquiries.name',
+                     'enquiries.email',
+                    'enquiries.mobile_number'
+                )
+                ->join('enquiries', 'addresses.enquiries_id', '=', 'enquiries.id')
+                ->get();
+            });
+
+            if ($addresses->isEmpty()) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'No addresses found.',
+                ], 404);
+            }
+
+            return response()->json([
+                'success' => true,
+                'data' => $addresses,
+                'message' => 'Addresses retrieved successfully.',
+            ]);
+        } catch (ModelNotFoundException $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Address not found.',
+            ], 404);
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'An error occurred while retrieving addresses.',
+            ], 500);
+        }
     }
-}
 
+    public function updateAddress(Request $request, $id): JsonResponse
+    {
+        try {
+            $validated = $request->validate([
+                'type' => 'required|string|in:home,work',
+                'pincode' => 'required|string|max:20',
+                'city' => 'required|string|max:50',
+                'state' => 'required|string|max:50',
+                'house_number' => 'sometimes|string|max:50',
+                'building_name' => 'sometimes|string|max:100',
+                'road_name' => 'sometimes|string|max:100',
+                'area_colony' => 'sometimes|string|max:100',
+                'name' => 'required|string|max:50',
+                'email' => 'sometimes|email|max:100',
+                'mobile_number' => 'required|string|max:15',
+            ]);
+
+            $address = Address::findOrFail($id);
+
+            $address->update($validated);
+
+            $enquiry = Enquiry::findOrFail($address->enquiries_id);
+            $enquiry->update([
+                'name' => $validated['name'],
+                'email' => $validated['email'] ?? $enquiry->email,
+                'mobile_number' => $validated['mobile_number'],
+            ]);
+
+            Cache::forget('saved_addresses');
+
+            return response()->json([
+                'success' => true,
+                'data' => $address,
+                'message' => 'Address and enquiry updated successfully.',
+            ]);
+        } catch (ModelNotFoundException $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Address or Enquiry not found.',
+            ], 404);
+        } catch (ValidationException $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Validation failed.',
+                'errors' => $e->errors(),
+            ], 422);
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'An error occurred while updating the address.',
+            ], 500);
+        }
+    }
 }

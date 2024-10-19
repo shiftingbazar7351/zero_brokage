@@ -747,7 +747,7 @@ public function getSavedAddresses(Request $request): JsonResponse
     {
         try {
             $validated = $request->validate([
-                'type' => 'required|string|in:home,work',
+                'type' => 'required|string',
                 'pincode' => 'required|string|max:20',
                 'city' => 'required|string|max:50',
                 'state' => 'required|string|max:50',
@@ -853,7 +853,7 @@ public function storeAddress(Request $request): JsonResponse
     try {
         // Validate incoming request without enquiries_id
         $validated = $request->validate([
-            'type' => 'required|string|in:home,work',
+            'type' => 'required|string',
             'pincode' => 'required|string|max:20',
             'city' => 'required|string|max:50',
             'state' => 'required|string|max:50',

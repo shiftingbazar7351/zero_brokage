@@ -696,52 +696,64 @@ public function addressList()
     }
 }
 public function getSavedAddresses(Request $request): JsonResponse
-    {
-        try {
-            $cacheKey = 'saved_addresses';
+{
+    try {
+        $cacheKey = 'saved_addresses';
 
-            $addresses = Cache::remember($cacheKey, 60, function () {
-                return Address::select(
-                    'addresses.type',
-                    'addresses.pincode',
-                    'addresses.city',
-                    'addresses.state',
-                    'addresses.house_number',
+        $addresses = Cache::remember($cacheKey, 60, function () {
+            return Address::select(
+                'addresses.type',
+                'addresses.pincode',
+                'addresses.city',
+                'addresses.state',
+                'addresses.house_number',
+                'addresses.road_name',
+                'enquiries.name',
+                'enquiries.email',
+                'enquiries.mobile_number'
+            )
+            ->join('enquiries', 'addresses.enquiries_id', '=', 'enquiries.id')
+            ->get();
+        });
 
-                    'addresses.road_name',
-
-                    'enquiries.name',
-                     'enquiries.email',
-                    'enquiries.mobile_number'
-                )
-                ->join('enquiries', 'addresses.enquiries_id', '=', 'enquiries.id')
-                ->get();
-            });
-
-            if ($addresses->isEmpty()) {
-                return response()->json([
-                    'success' => false,
-                    'message' => 'No addresses found.',
-                ], 404);
-            }
-
-            return response()->json([
-                'success' => true,
-                'data' => $addresses,
-                'message' => 'Addresses retrieved successfully.',
-            ]);
-        } catch (ModelNotFoundException $e) {
+        if ($addresses->isEmpty()) {
             return response()->json([
                 'success' => false,
-                'message' => 'Address not found.',
+                'message' => 'No addresses found.',
             ], 404);
-        } catch (\Exception $e) {
-            return response()->json([
-                'success' => false,
-                'message' => 'An error occurred while retrieving addresses.',
-            ], 500);
         }
+
+        // Formatting the address and enquiry details as per the requirement
+        $formattedAddresses = $addresses->map(function($address) {
+            return [
+                'name' => $address->name,
+                'type' => $address->type,
+                'address' => $address->house_number . ', ' .
+                             $address->road_name . ', ' .
+                             $address->city . ', ' .
+                             $address->state . ' - ' .
+                             $address->pincode,
+                'mobile_number' => $address->mobile_number
+            ];
+        });
+
+        return response()->json([
+            'success' => true,
+            'data' => $formattedAddresses,
+            'message' => 'Addresses retrieved successfully.',
+        ]);
+    } catch (ModelNotFoundException $e) {
+        return response()->json([
+            'success' => false,
+            'message' => 'Address not found.',
+        ], 404);
+    } catch (\Exception $e) {
+        return response()->json([
+            'success' => false,
+            'message' => 'An error occurred while retrieving addresses.',
+        ], 500);
     }
+}
 
     public function updateAddress(Request $request, $id): JsonResponse
     {

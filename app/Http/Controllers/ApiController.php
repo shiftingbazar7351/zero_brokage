@@ -379,7 +379,7 @@ class ApiController extends Controller
                 ]);
             }
 
-            $message = "Dear User, Your OTP for login to ZeroBrokage is {$otp}. Valid for 30 seconds. Please do not share this OTP. Regards, Team ZeroBrokage";
+    $message = "Dear User, Your OTP for login to ZeroBrokage is {$otp}. Valid for 2 minutes. Please do not share this OTP. Regards, Team ZeroBrokage";
             $encodedMessage = urlencode($message);
 
             $apiUrl = "https://cerf.cerfgs.com/multicpaas";
@@ -388,14 +388,13 @@ class ApiController extends Controller
             $dltContentId = '1707172872636147832';
 
             $mobile = $request->country_code . $request->mobile_number;
-            $ch = curl_init();
 
-            curl_setopt($ch, CURLOPT_URL, "https://cerf.cerfgs.com/multicpaas?unicode=false&token=O3chuztXPZayQp7Rm7JE6GWaH90OqWXh&from=ZRBRKG&");
+            $ch = curl_init();
+            curl_setopt($ch, CURLOPT_URL, "$apiUrl?unicode=false&token=$token&from=$from&");
             curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
             curl_setopt($ch, CURLOPT_POST, 1);
             curl_setopt($ch, CURLOPT_POSTFIELDS, "to=$mobile&dltContentId=$dltContentId&text=$encodedMessage");
             curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
-
 
             $apiResponse = curl_exec($ch);
 
@@ -437,6 +436,7 @@ class ApiController extends Controller
             ], Response::HTTP_INTERNAL_SERVER_ERROR);
         }
     }
+
 
     public function verifyOtp(Request $request)
     {

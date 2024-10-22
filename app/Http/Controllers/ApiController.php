@@ -379,7 +379,7 @@ class ApiController extends Controller
                 ]);
             }
 
-    $message = "Dear User, Your OTP for login to ZeroBrokage is {$otp}. Valid for 2 minutes. Please do not share this OTP. Regards, Team ZeroBrokage";
+       $message = "Dear User, Your OTP for login to ZeroBrokage is {$otp}. Valid for 2 minutes. Please do not share this OTP. Regards, Team ZeroBrokage";
             $encodedMessage = urlencode($message);
 
             $apiUrl = "https://cerf.cerfgs.com/multicpaas";

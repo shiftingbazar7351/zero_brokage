@@ -379,7 +379,7 @@ class ApiController extends Controller
                 ]);
             }
 
-       $message = "Dear User, Your OTP for login to ZeroBrokage is {$otp}. Valid for 2 minutes. Please do not share this OTP. Regards, Team ZeroBrokage";
+    $message = "Dear User, Your OTP for login to ZeroBrokage is {$otp}. Valid for 2 minutes. Please do not share this OTP. Regards, Team ZeroBrokage";
             $encodedMessage = urlencode($message);
 
             $apiUrl = "https://cerf.cerfgs.com/multicpaas";
@@ -454,43 +454,46 @@ class ApiController extends Controller
         }
 
         try {
-            $enquiry = Enquiry::where('mobile_number', $request->mobile_number)
-                ->orderByDesc('created_at')
-                ->first();
+            $existingEnquiry = Enquiry::where('mobile_number', $request->mobile_number)->first();
 
-            if (!$enquiry) {
+            if (!$existingEnquiry) {
                 return response()->json([
                     'success' => false,
-                    'message' => 'Mobile number not found.'
+                    'message' => 'No enquiry found for this mobile number.'
                 ], Response::HTTP_NOT_FOUND);
             }
 
-            if ($enquiry->otp == $request->otp) {
-                $otpValidDuration = 30;
-                $otpGeneratedAt = strtotime($enquiry->otp_created_at);
-                $currentTimestamp = time();
-
-                if (($currentTimestamp - $otpGeneratedAt) <= $otpValidDuration) {
-                    $enquiry->update(['otp_verified_at' => now()]);
-
-                    return response()->json([
-                        'success' => true,
-                        'message' => 'OTP verified successfully.',
-                        'otp_verified_at' => $enquiry->otp_verified_at,
-                    ], Response::HTTP_OK);
-                } else {
-                    return response()->json([
-                        'success' => false,
-                        'message' => 'OTP has expired. Please request a new one.',
-                    ], Response::HTTP_UNAUTHORIZED);
-                }
-            } else {
+            if ($existingEnquiry->otp !== $request->otp) {
                 return response()->json([
                     'success' => false,
-                    'message' => 'Invalid OTP.',
-                ], Response::HTTP_UNAUTHORIZED);
+                    'message' => 'Invalid OTP entered. Please try again.'
+                ], Response::HTTP_BAD_REQUEST);
             }
 
+
+            $otpValidDuration = 30;
+            $otpGeneratedAt = strtotime($existingEnquiry->otp_created_at);
+            $currentTime = time();
+
+            if ($currentTime - $otpGeneratedAt > $otpValidDuration) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'OTP has expired. Please request a new OTP.'
+                ], Response::HTTP_CONFLICT);
+            }
+
+
+            $existingEnquiry->otp = null;
+            $existingEnquiry->otp_created_at = null;
+            $existingEnquiry->save();
+
+            return response()->json([
+                'success' => true,
+                'message' => 'OTP verified successfully.',
+                'name' => $existingEnquiry->name,
+                'country_code' => $existingEnquiry->country_code,
+                'mobile_number' => $existingEnquiry->mobile_number,
+            ], Response::HTTP_OK);
         } catch (\Exception $e) {
             Log::error('Error verifying OTP: ' . $e->getMessage());
 
@@ -501,7 +504,6 @@ class ApiController extends Controller
             ], Response::HTTP_INTERNAL_SERVER_ERROR);
         }
     }
-
 
 public function resendOtp(Request $request)
 {

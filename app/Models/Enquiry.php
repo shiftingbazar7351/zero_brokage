@@ -29,7 +29,9 @@ class Enquiry extends Model
         'otp',
         'otp_verified_at',
         'country_code',
-        'otp_created_at'
+        'otp_created_at',
+        'dob',
+        'gender'
     ];
 
     public function categoryName()

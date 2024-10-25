@@ -1187,55 +1187,51 @@ public function store(Request $request)
             ], 500);
         }
     }
-
     public function updateProfile(Request $request, $id): JsonResponse
-{
-    try {
-        // Step 1: Validate the incoming request
-        $validated = $request->validate([
-            'name' => 'required|string|max:50',
-            'phone_number' => 'required|string|max:15',
-            'email' => 'required|email|max:100',
-            'gender' => 'required|in:male,female,other', // Radio button values
-            'dob' => 'required|date', // Ensure valid date format
-        ]);
+    {
+        try {
+            $validated = $request->validate([
+                'name' => 'required|string|max:50',
+                'mobile_number' => 'required|string|max:10',
+                'email' => 'required|email|max:100',
+                'gender' => 'required|in:male,female,other',
+                'dob' => 'required|date_format:Y-m-d',
+            ]);
 
-        // Step 2: Find the user by ID
-        $user = User::findOrFail($id); // Assuming 'User' is the model for user profiles
+            $user = Enquiry::findOrFail($id);
 
-        // Step 3: Update user profile with the validated data
-        $user->update([
-            'name' => $validated['name'],
-            'phone_number' => $validated['phone_number'],
-            'email' => $validated['email'],
-            'gender' => $validated['gender'],
-            'dob' => $validated['dob'],
-        ]);
+            $user->update([
+                'name' => $validated['name'],
+                'mobile_number' => $validated['mobile_number'],
+                'email' => $validated['email'],
+                'gender' => $validated['gender'],
+                'dob' => $validated['dob'],
+            ]);
 
-        // Step 4: Return a success response with updated user data
-        return response()->json([
-            'success' => true,
-            'message' => 'Profile updated successfully.',
-            'data' => $user,
-        ]);
-    } catch (ModelNotFoundException $e) {
-        return response()->json([
-            'success' => false,
-            'message' => 'User not found.',
-        ], 404);
-    } catch (ValidationException $e) {
-        return response()->json([
-            'success' => false,
-            'message' => 'Validation failed.',
-            'errors' => $e->errors(),
-        ], 422);
-    } catch (\Exception $e) {
-        return response()->json([
-            'success' => false,
-            'message' => 'An error occurred while updating the profile.',
-        ], 500);
+            return response()->json([
+                'success' => true,
+                'message' => 'Profile updated successfully.',
+                'data' => $user,
+            ]);
+        } catch (ModelNotFoundException $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'User not found.',
+            ], 404);
+        } catch (ValidationException $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Validation failed.',
+                'errors' => $e->errors(),
+            ], 422);
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'An error occurred while updating the profile.',
+            ], 500);
+        }
     }
-}
+
 
 }
 

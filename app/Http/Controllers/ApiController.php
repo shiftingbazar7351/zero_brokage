@@ -1194,7 +1194,7 @@ public function store(Request $request)
                 'name' => 'required|string|max:50',
                 'mobile_number' => 'required|string|size:10',
                 'email' => 'required|email|max:100',
-                'gender' => 'required|in:male,female,other',
+                'gender' => 'required|in:Male,Female,Other',
                 'dob' => 'required|date_format:Y-m-d',
             ]);
 

@@ -1190,28 +1190,24 @@ public function store(Request $request)
     public function updateProfile(Request $request, $id): JsonResponse
     {
         try {
-            // Step 1: Validate the incoming request
             $validated = $request->validate([
                 'name' => 'required|string|max:50',
-                'mobile_number' => 'required|digits:10', // Ensures mobile_number is exactly 10 digits
+                'mobile_number' => 'required|string|max:10',
                 'email' => 'required|email|max:100',
                 'gender' => 'required|in:male,female,other',
                 'dob' => 'required|date_format:Y-m-d',
             ]);
 
-            // Step 2: Find the user by ID
             $user = Enquiry::findOrFail($id);
 
-            // Step 3: Update user profile with the validated data
             $user->update([
                 'name' => $validated['name'],
-                'mobile_number' => $validated['mobile_number'], // This should now be a valid 10-digit number
+                'mobile_number' => $validated['mobile_number'],
                 'email' => $validated['email'],
                 'gender' => $validated['gender'],
                 'dob' => $validated['dob'],
             ]);
 
-            // Step 4: Return a success response with updated user data
             return response()->json([
                 'success' => true,
                 'message' => 'Profile updated successfully.',
@@ -1235,4 +1231,7 @@ public function store(Request $request)
             ], 500);
         }
     }
+
+
 }
+

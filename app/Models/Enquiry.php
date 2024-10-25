@@ -14,6 +14,7 @@ class Enquiry extends Model
     use HasFactory;
     protected $fillable = [
         'subcategory_id',
+        'device_id',
         'move_from_origin',
         'move_from_destination',
         'date_time',

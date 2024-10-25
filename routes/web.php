@@ -1,4 +1,9 @@
 <?php
+use App\Http\Controllers\BookingController;
+use App\Http\Controllers\CartController;
+use App\Http\Controllers\Frontend\LoginController;
+use App\Http\Controllers\Frontend\UserAuthController;
+use App\Http\Controllers\AddressController;
 
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\CategoryController;
@@ -23,12 +28,23 @@ use App\Http\Controllers\SubCategoryController;
 use App\Http\Controllers\SubMenuController;
 use App\Http\Controllers\TransactionController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\ApiController;
 use App\Http\Controllers\VendorController;
 use App\Http\Controllers\VerifiedController;
 use App\Http\Controllers\TaskController;
 use App\Http\Controllers\PackageController;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\VendorDashboardController;
+use App\Http\Controllers\VendorAvailabilityController;
+use App\Http\Controllers\AvailabilityController;
+use App\Http\Controllers\frontend\AuthController;
+use App\Http\Controllers\ServiceController;
+
+
+
+
+
 
 
 /*
@@ -62,6 +78,17 @@ Route::get('/privacy-policy', function () {
 // Route::get('/reciept', function () {
 //     return view('frontend.reciept');
 // })->name('reciept');
+
+// frontend auth
+Route::post('/checkout', [ServiceController::class, 'checkout'])->name('checkout');
+
+// Login Route
+// Login routes
+Route::get('/user/login', [UserAuthController::class, 'showLoginForm'])->name('user.login');
+Route::post('/user/login', [UserAuthController::class, 'sendOtp']);
+Route::get('/user/verify-otp', [UserAuthController::class, 'showOtpForm'])->name('user.verify.otp');
+Route::post('/user/verify-otp', [UserAuthController::class, 'verifyOtp']);
+Route::post('logout', [UserAuthController::class, 'logout'])->name('user.logout'); // Logout route
 
 Route::get('/offer-letter', function () {
     return view('frontend.offer-letter');
@@ -382,27 +409,28 @@ Route::resource('/newsletter', NewsletterController::class);
     Route::get('/dashboard', [AdminController::class, 'homepage'])->name('admin_page');
 
 });
-// routes/web.php
+// cart routes
+Route::get('/cart', [CartController::class, 'index'])->name('cart');
 
-// Dashboard Routes
-Route::middleware(['auth', 'vendor'])->group(function () {
-    Route::get('/vendor/dashboard', [VendorDashboardController::class, 'index'])->name('vendor.dashboard');
-    Route::get('/vendor/bookings', [VendorBookingController::class, 'index'])->name('vendor.bookings');
-    Route::get('/vendor/bookings/{id}', [VendorBookingController::class, 'show'])->name('vendor.bookings.show');
-    Route::post('/vendor/bookings/accept/{id}', [VendorBookingController::class, 'accept'])->name('vendor.bookings.accept');
-    Route::post('/vendor/bookings/reject/{id}', [VendorBookingController::class, 'reject'])->name('vendor.bookings.reject');
+// booking controller otp
 
-    // Profile Routes
-    Route::get('/vendor/profile', [VendorProfileController::class, 'show'])->name('vendor.profile');
+Route::post('/send-otp', [BookingController::class, 'sendOtp']);
+Route::post('/verify-otp', [BookingController::class, 'verifyOtp']);
+Route::post('/store-enquiry', [BookingController::class, 'storeEnquiry']);
+Route::post('/send-otp', [ApiController::class, 'sendOtp'])->name('sendOtp');
+Route::post('/verify-otp', [ApiController::class, 'verifyOtp'])->name('verifyOtp');
 
-    // Reports Routes
-    Route::get('/vendor/reports', [VendorReportController::class, 'index'])->name('vendor.reports');
+Route::post('/availability/bulk-delete', [AvailabilityController::class, 'bulkDelete'])->name('availability.bulkDelete');
 
-    // Notification Routes
-    Route::get('/vendor/notifications', [VendorNotificationController::class, 'index'])->name('vendor.notifications');
-});
+Route::resource('availability', AvailabilityController::class);
+Route::post('/availability/bulk-delete', [AvailabilityController::class, 'bulkDelete'])->name('availability.bulkDelete');
 
+Route::get('/vendor-availability', [VendorAvailabilityController::class, 'index'])->name('vendor.availability');
 
-
+Route::get('/vendor-dashboard', [VendorDashboardController::class, 'index'])->name('vendor.dashboard');
+Route::post('/addresses', [AddressController::class, 'store'])->name('addresses.store');
+Route::resource('bookings', BookingController::class);
+Route::get('/bookings/{bookingId}', [BookingController::class, 'getBookingDetails']);
+Route::post('/api/bookings', [BookingController::class, 'store'])->middleware('auth');
 
 require __DIR__ . '/auth.php';

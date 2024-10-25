@@ -35,7 +35,7 @@ class User extends Authenticatable
         'dob',
         'role',
         'country',
-        'number',
+        'phone_number',
         'joining_date',
         'company',
         'no_of_experience',

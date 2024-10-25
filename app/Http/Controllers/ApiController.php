@@ -1,6 +1,13 @@
 <?php
 
 namespace App\Http\Controllers;
+use Illuminate\Support\Facades\Auth;
+use App\Models\User;
+use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Hash;
+use App\Models\Booking; // Assuming you have a Booking model
+use App\Models\BookingItem; // Assuming you have a BookingItem model
+
 use App\Models\Address;
 use App\Models\Category;
 use App\Models\City;
@@ -757,6 +764,41 @@ public function getSavedAddresses(Request $request): JsonResponse
     }
 }
 
+public function deleteAddress($id): JsonResponse
+{
+    try {
+        // Find the address by ID
+        $address = Address::findOrFail($id);
+
+        // Delete the address
+        $address->delete();
+
+        // Optionally, delete the related enquiry if required
+        // Uncomment the following lines if you want to delete the enquiry as well
+        // $enquiry = Enquiry::find($address->enquiries_id);
+        // if ($enquiry) {
+        //     $enquiry->delete();
+        // }
+
+        Cache::forget('saved_addresses');
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Address deleted successfully.',
+        ]);
+    } catch (ModelNotFoundException $e) {
+        return response()->json([
+            'success' => false,
+            'message' => 'Address not found.',
+        ], 404);
+    } catch (\Exception $e) {
+        return response()->json([
+            'success' => false,
+            'message' => 'An error occurred while deleting the address.',
+        ], 500);
+    }
+}
+
     public function updateAddress(Request $request, $id): JsonResponse
     {
         try {
@@ -915,4 +957,285 @@ public function storeAddress(Request $request): JsonResponse
         ], 500);
     }
 }
+
+
+
+public function loginsendotp(Request $request)
+{
+    // Validate the incoming request
+    $validator = Validator::make($request->all(), [
+        'phone_number' => 'required|string|size:10',
+    ]);
+
+    if ($validator->fails()) {
+        return response()->json([
+            'status' => 'error',
+            'message' => 'Invalid mobile number.',
+            'errors' => $validator->errors()
+        ], 400);
+    }
+
+    try {
+        $mobile = $request->phone_number;
+
+        // Generate a random 4-digit OTP
+        $otp = rand(1000, 9999);
+        $message = "Dear User, Your OTP for login to ZeroBrokage is $otp. Valid for 2 minutes. Please do not share this OTP. Regards, Team ZeroBrokage";
+        $Text = urlencode($message);
+        $dltContentId = '1707172872636147832';
+
+        // Initialize cURL to send the OTP message
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, "https://cerf.cerfgs.com/multicpaas?unicode=false&token=O3chuztXPZayQp7Rm7JE6GWaH90OqWXh&from=ZRBRKG&");
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+        curl_setopt($ch, CURLOPT_POST, 1);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, "to=$mobile&dltContentId=$dltContentId&text=$Text");
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+
+        // Execute the cURL request and close it
+        $response = curl_exec($ch);
+        curl_close($ch);
+
+        // Check if the response was successful
+        if ($response) {
+            // Hash the OTP before storing it in the database
+            $hashedOtp = Hash::make($otp);
+
+            // Update or create the user record with the hashed OTP
+            User::updateOrCreate(
+                ['phone_number' => $mobile],
+                ['otp' => $hashedOtp] // Store the hashed OTP
+            );
+
+            // Store the plain OTP in the cache for verification
+            Cache::put("otp_{$mobile}", $otp, 120); // Expires in 120 seconds (2 minutes)
+
+            return response()->json([
+                'status' => 'success',
+                'message' => 'OTP sent successfully',
+                'data' => [
+                    'phone_number' => $mobile,
+                ]
+            ], 200);
+        } else {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Failed to send OTP. Please try again.'
+            ], 500);
+        }
+    } catch (\Exception $e) {
+        return response()->json([
+            'status' => 'error',
+            'message' => 'An error occurred while sending OTP.',
+            'error' => $e->getMessage()
+        ], 500);
+    }
 }
+
+/**
+ * Resend OTP to user's mobile.
+ */
+public function loginresendotp(Request $request)
+{
+    $request->validate([
+        'phone_number' => 'required|string', // Validate mobile number
+    ]);
+
+    try {
+        $mobile = $request->phone_number; // Get the mobile number directly from the request
+
+        // Store the mobile number in the session
+        session(['phone_number' => $mobile]);
+
+        // Generate a new 4-digit OTP
+        $otp = rand(1000, 9999);
+        $message = "Dear User, Your OTP for login to ZeroBrokage is $otp. Valid for 2 minutes. Please do not share this OTP. Regards, Team ZeroBrokage";
+        $Text = urlencode($message);
+        $dltContentId = 'your_dlt_content_id_here'; // Replace with actual DLT content ID
+
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, "https://cerf.cerfgs.com/multicpaas?unicode=false&token=O3chuztXPZayQp7Rm7JE6GWaH90OqWXh&from=ZRBRKG&");
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+        curl_setopt($ch, CURLOPT_POST, 1);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, "to=$mobile&dltContentId=$dltContentId&text=$Text");
+        $response = curl_exec($ch);
+        curl_close($ch);
+
+        if ($response) {
+            Cache::put("otp_{$mobile}", $otp, 120);
+
+            return response()->json(['message' => 'OTP resent successfully'], 200);
+        } else {
+            return response()->json(['error' => 'Failed to resend OTP. Please try again.'], 500);
+        }
+    } catch (\Exception $e) {
+        return response()->json(['error' => 'An error occurred while resending OTP.'], 500);
+    }
+}
+
+/**
+ * Verify OTP.
+ */
+public function loginverifyotp(Request $request)
+{
+    $request->validate([
+        'phone_number' => 'required|string',
+        'otp' => 'required|digits:4',
+    ]);
+
+    try {
+        $mobile = $request->phone_number;
+        $otp = $request->otp;
+        $cachedOtp = Cache::get("otp_{$mobile}");
+
+        if ($cachedOtp && $cachedOtp == $otp) {
+            $user = User::where('phone_number', $mobile)->first();
+
+            if ($user) {
+                session()->forget('phone_number');
+
+                Auth::login($user);
+
+                return response()->json(['message' => 'OTP verified successfully. User logged in.'], 200);
+            } else {
+                return response()->json(['error' => 'User not found.'], 404);
+            }
+        } else {
+            return response()->json(['error' => 'Invalid OTP or OTP expired.'], 401);
+        }
+    } catch (\Exception $e) {
+        return response()->json(['error' => 'An error occurred while verifying OTP.'], 500);
+    }
+}
+
+
+public function logout(Request $request)
+{
+    Auth::logout();
+    return redirect('/');
+}
+public function store(Request $request)
+    {
+        // Validate incoming request data
+        $request->validate([
+            'user_id' => 'required|exists:users,id',
+            'items' => 'required|array',
+            'comments' => 'nullable|string',
+            'delivery_option' => 'required|string',
+            'delivery_address' => 'required|string',
+        ]);
+
+        // Create a new booking
+        $booking = Booking::create([
+            'user_id' => $request->input('user_id'),
+            'comments' => $request->input('comments'),
+            'delivery_option' => $request->input('delivery_option'),
+            'delivery_address' => $request->input('delivery_address'),
+        ]);
+
+        // Attach items to the booking
+        foreach ($request->input('items') as $itemId) {
+            BookingItem::create([
+                'booking_id' => $booking->id,
+                'item_id' => $itemId,
+            ]);
+        }
+
+        // Return a JSON response with success message and booking ID
+        return response()->json([
+            'success' => true,
+            'booking_id' => $booking->id,
+        ]);
+    }
+
+
+    public function handleDeviceId(Request $request)
+    {
+        try {
+            // Validate the request
+            $validator = Validator::make($request->all(), [
+                'id' => 'required|string|unique:enquiries,device_id',
+            ]);
+
+            if ($validator->fails()) {
+                return response()->json([
+                    'status' => 'error',
+                    'message' => 'Validation failed',
+                    'errors' => $validator->errors(),
+                ], 422);
+            }
+
+            // Process the device ID and store it in the enquiries table
+            $deviceId = $request->input('id');
+
+            // Create a new record in the enquiries table
+            Enquiry::create(['device_id' => $deviceId]);
+
+            return response()->json([
+                'status' => 'success',
+                'message' => 'Device ID processed and stored successfully',
+                'data' => [
+                    'device_id' => $deviceId,
+                ],
+            ], 200);
+
+        } catch (\Exception $e) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'An error occurred',
+                'error' => $e->getMessage(),
+            ], 500);
+        }
+    }
+
+    public function updateProfile(Request $request, $id): JsonResponse
+{
+    try {
+        // Step 1: Validate the incoming request
+        $validated = $request->validate([
+            'name' => 'required|string|max:50',
+            'phone_number' => 'required|string|max:15',
+            'email' => 'required|email|max:100',
+            'gender' => 'required|in:male,female,other', // Radio button values
+            'dob' => 'required|date', // Ensure valid date format
+        ]);
+
+        // Step 2: Find the user by ID
+        $user = User::findOrFail($id); // Assuming 'User' is the model for user profiles
+
+        // Step 3: Update user profile with the validated data
+        $user->update([
+            'name' => $validated['name'],
+            'phone_number' => $validated['phone_number'],
+            'email' => $validated['email'],
+            'gender' => $validated['gender'],
+            'dob' => $validated['dob'],
+        ]);
+
+        // Step 4: Return a success response with updated user data
+        return response()->json([
+            'success' => true,
+            'message' => 'Profile updated successfully.',
+            'data' => $user,
+        ]);
+    } catch (ModelNotFoundException $e) {
+        return response()->json([
+            'success' => false,
+            'message' => 'User not found.',
+        ], 404);
+    } catch (ValidationException $e) {
+        return response()->json([
+            'success' => false,
+            'message' => 'Validation failed.',
+            'errors' => $e->errors(),
+        ], 422);
+    } catch (\Exception $e) {
+        return response()->json([
+            'success' => false,
+            'message' => 'An error occurred while updating the profile.',
+        ], 500);
+    }
+}
+
+}
+

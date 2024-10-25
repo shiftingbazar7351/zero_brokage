@@ -36,5 +36,17 @@ Route::controller(ApiController::class)->group(function () {
     Route::get('/saved-addresses', 'getSavedAddresses'); // Get saved addresses
     Route::put('/update-address/{id}', 'updateAddress');
     Route::post('/address', 'storeAddress');
+    Route::post('/loginsendotp',  'loginsendotp');
+Route::post('/loginresendotp',  'loginresendotp');
+Route::post('/loginverifyotp',  'loginverifyotp');
+Route::post('/logout',  'logout')->name('logout');
+Route::post('/bookings',  'store');
+Route::post('/device-id',  'handleDeviceId');
+Route::delete('/address/{id}',  'deleteAddress');
+Route::put('/profile/{id}',  'updateProfile');
+
+
+
+
 
 });

@@ -652,7 +652,7 @@ public function createBooking(Request $request)
     $validatedData = $request->validate([
         'name' => 'required|string|max:255',
         'email' => 'required|email|max:255',
-        'mobile_number' => 'required|string|max:15',
+        'mobile_number' => 'required|int|max:15',
         'location' => 'required|string|max:255',
     ]);
 
@@ -813,7 +813,7 @@ public function deleteAddress($id): JsonResponse
 
                 'name' => 'required|string|max:50',
                 'email' => 'sometimes|email|max:100',
-                'mobile_number' => 'required|string|max:15',
+                'mobile_number' => 'required|int|max:15',
             ]);
 
             $address = Address::findOrFail($id);
@@ -917,7 +917,7 @@ public function storeAddress(Request $request): JsonResponse
             'road_name' => 'sometimes|string|max:100',
             'name' => 'required|string|max:50',
             'email' => 'sometimes|email|max:100',
-            'mobile_number' => 'required|string|max:15',
+            'mobile_number' => 'required|int|max:15',
         ]);
 
         // Create the enquiry first
@@ -1038,7 +1038,7 @@ public function loginsendotp(Request $request)
 public function loginresendotp(Request $request)
 {
     $request->validate([
-        'phone_number' => 'required|string', // Validate mobile number
+        'phone_number' => 'required|int', // Validate mobile number
     ]);
 
     try {
@@ -1079,7 +1079,7 @@ public function loginresendotp(Request $request)
 public function loginverifyotp(Request $request)
 {
     $request->validate([
-        'phone_number' => 'required|string',
+        'phone_number' => 'required|int',
         'otp' => 'required|digits:4',
     ]);
 
@@ -1192,7 +1192,7 @@ public function store(Request $request)
         try {
             $validated = $request->validate([
                 'name' => 'required|string|max:50',
-                'mobile_number' => 'required|string|max:10',
+                'mobile_number' => 'required|int|max:10',
                 'email' => 'required|email|max:100',
                 'gender' => 'required|in:male,female,other',
                 'dob' => 'required|date_format:Y-m-d',

@@ -1195,7 +1195,7 @@ public function store(Request $request)
                 'mobile_number' => 'required|string|size:10',
                 'email' => 'required|email|max:100',
                 'gender' => 'required|in:Male,Female,Other',
-                'dob' => 'required|date_format:Y-m-d',
+                'dob' => 'required|date_format:Y/m/d',
             ]);
 
             $user = Enquiry::findOrFail($id);

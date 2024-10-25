@@ -1192,7 +1192,7 @@ public function store(Request $request)
         try {
             $validated = $request->validate([
                 'name' => 'required|string|max:50',
-                'mobile_number' => 'required|string|max:10',
+                'mobile_number' => 'required|string|size:10',
                 'email' => 'required|email|max:100',
                 'gender' => 'required|in:male,female,other',
                 'dob' => 'required|date_format:Y-m-d',

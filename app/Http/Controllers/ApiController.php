@@ -732,23 +732,22 @@ public function getSavedAddresses(Request $request): JsonResponse
             ], 404);
         }
 
-        // Formatting the address and enquiry details as per the requirement
-        $formattedAddresses = $addresses->map(function($address) {
-            return [
-                'name' => $address->name,
-                'type' => $address->type,
-                'address' => $address->house_number . ', ' .
-                             $address->road_name . ', ' .
-                             $address->city . ', ' .
-                             $address->state . ' - ' .
-                             $address->pincode,
-                'mobile_number' => $address->mobile_number
-            ];
-        });
+        // $formattedAddresses = $addresses->map(function($address) {
+        //     return [
+        //         'name' => $address->name,
+        //         'type' => $address->type,
+        //         'address' => $address->house_number . ', ' .
+        //                      $address->road_name . ', ' .
+        //                      $address->city . ', ' .
+        //                      $address->state . ' - ' .
+        //                      $address->pincode,
+        //         'mobile_number' => $address->mobile_number
+        //     ];
+        // });
 
         return response()->json([
             'success' => true,
-            'data' => $formattedAddresses,
+            'data' => $addresses,
             'message' => 'Addresses retrieved successfully.',
         ]);
     } catch (ModelNotFoundException $e) {

@@ -704,13 +704,13 @@ public function addressList()
         ], 500);
     }
 }
-public function getSavedAddresses(Request $request): JsonResponse
+public function getSavedAddresses(Request $request, $id = null): JsonResponse
 {
     try {
-        $cacheKey = 'saved_addresses';
+        $cacheKey = 'saved_addresses' . ($id ? "_{$id}" : '');
 
-        $addresses = Cache::remember($cacheKey, 60, function () {
-            return Address::select(
+        $addresses = Cache::remember($cacheKey, 60, function () use ($id) {
+            $query = Address::select(
                 'addresses.type',
                 'addresses.pincode',
                 'addresses.city',
@@ -721,8 +721,14 @@ public function getSavedAddresses(Request $request): JsonResponse
                 'enquiries.email',
                 'enquiries.mobile_number'
             )
-            ->join('enquiries', 'addresses.enquiries_id', '=', 'enquiries.id')
-            ->get();
+            ->join('enquiries', 'addresses.enquiries_id', '=', 'enquiries.id');
+
+            // Apply filter if ID is provided
+            if ($id) {
+                $query->where('addresses.id', $id);
+            }
+
+            return $query->get();
         });
 
         if ($addresses->isEmpty()) {
@@ -731,19 +737,6 @@ public function getSavedAddresses(Request $request): JsonResponse
                 'message' => 'No addresses found.',
             ], 404);
         }
-
-        // $formattedAddresses = $addresses->map(function($address) {
-        //     return [
-        //         'name' => $address->name,
-        //         'type' => $address->type,
-        //         'address' => $address->house_number . ', ' .
-        //                      $address->road_name . ', ' .
-        //                      $address->city . ', ' .
-        //                      $address->state . ' - ' .
-        //                      $address->pincode,
-        //         'mobile_number' => $address->mobile_number
-        //     ];
-        // });
 
         return response()->json([
             'success' => true,
@@ -762,6 +755,7 @@ public function getSavedAddresses(Request $request): JsonResponse
         ], 500);
     }
 }
+
 
 public function deleteAddress($id): JsonResponse
 {

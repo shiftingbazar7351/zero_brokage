@@ -704,13 +704,13 @@ public function addressList()
         ], 500);
     }
 }
-public function getSavedAddresses(Request $request, $id = null): JsonResponse
+public function getSavedAddresses(Request $request, $enquiries_id): JsonResponse
 {
     try {
-        $cacheKey = 'saved_addresses' . ($id ? "_{$id}" : '');
+        $cacheKey = 'saved_addresses_for_enquiry_' . $enquiries_id;
 
-        $addresses = Cache::remember($cacheKey, 60, function () use ($id) {
-            $query = Address::select(
+        $addresses = Cache::remember($cacheKey, 60, function () use ($enquiries_id) {
+            return Address::select(
                 'addresses.type',
                 'addresses.pincode',
                 'addresses.city',
@@ -721,20 +721,15 @@ public function getSavedAddresses(Request $request, $id = null): JsonResponse
                 'enquiries.email',
                 'enquiries.mobile_number'
             )
-            ->join('enquiries', 'addresses.enquiries_id', '=', 'enquiries.id');
-
-            // Apply filter if ID is provided
-            if ($id) {
-                $query->where('addresses.id', $id);
-            }
-
-            return $query->get();
+            ->join('enquiries', 'addresses.enquiries_id', '=', 'enquiries.id')
+            ->where('addresses.enquiries_id', $enquiries_id) // Filter for specific enquiries_id
+            ->get();
         });
 
         if ($addresses->isEmpty()) {
             return response()->json([
                 'success' => false,
-                'message' => 'No addresses found.',
+                'message' => 'No addresses found for this enquiry ID.',
             ], 404);
         }
 
@@ -755,6 +750,7 @@ public function getSavedAddresses(Request $request, $id = null): JsonResponse
         ], 500);
     }
 }
+
 
 
 public function deleteAddress($id): JsonResponse
@@ -788,6 +784,65 @@ public function deleteAddress($id): JsonResponse
         return response()->json([
             'success' => false,
             'message' => 'An error occurred while deleting the address.',
+        ], 500);
+    }
+}
+public function patchAddress(Request $request, $id): JsonResponse
+{
+    try {
+        // Validate incoming request but allow empty fields for PATCH
+        $validated = $request->validate([
+            'type' => 'sometimes|required|string',
+            'pincode' => 'sometimes|required|string|max:20',
+            'city' => 'sometimes|required|string|max:50',
+            'state' => 'sometimes|required|string|max:50',
+            'house_number' => 'sometimes|string|max:50',
+            'road_name' => 'sometimes|string|max:100',
+            'name' => 'sometimes|required|string|max:50',
+            'email' => 'sometimes|email|max:100',
+            'mobile_number' => 'sometimes|required|string|max:15',
+        ]);
+
+        // Find the address by ID
+        $address = Address::findOrFail($id);
+
+        // Update only the fields that are present in the validated data
+        $address->update(array_filter($validated)); // array_filter removes null values
+
+        // Find and update the related enquiry if the relevant fields are provided
+        if (isset($validated['name']) || isset($validated['email']) || isset($validated['mobile_number'])) {
+            $enquiry = Enquiry::findOrFail($address->enquiries_id);
+            $enquiry->update([
+                'name' => $validated['name'] ?? $enquiry->name,
+                'email' => $validated['email'] ?? $enquiry->email,
+                'mobile_number' => $validated['mobile_number'] ?? $enquiry->mobile_number,
+            ]);
+        }
+
+        // Clear cached addresses
+        Cache::forget('saved_addresses');
+
+        // Return success response
+        return response()->json([
+            'success' => true,
+            'data' => $address,
+            'message' => 'Address and enquiry updated successfully.',
+        ]);
+    } catch (ModelNotFoundException $e) {
+        return response()->json([
+            'success' => false,
+            'message' => 'Address or Enquiry not found.',
+        ], 404);
+    } catch (ValidationException $e) {
+        return response()->json([
+            'success' => false,
+            'message' => 'Validation failed.',
+            'errors' => $e->errors(),
+        ], 422);
+    } catch (\Exception $e) {
+        return response()->json([
+            'success' => false,
+            'message' => 'An error occurred while updating the address.',
         ], 500);
     }
 }
@@ -900,38 +955,45 @@ public function deleteAddress($id): JsonResponse
 public function storeAddress(Request $request): JsonResponse
 {
     try {
-        // Validate incoming request without enquiries_id
+        // Validate incoming request data
         $validated = $request->validate([
+            'enquiries_id' => 'nullable|exists:enquiries,id', // Check if enquiries_id is valid
             'type' => 'required|string',
             'pincode' => 'required|string|max:20',
             'city' => 'required|string|max:50',
             'state' => 'required|string|max:50',
             'house_number' => 'sometimes|string|max:50',
             'road_name' => 'sometimes|string|max:100',
-            'name' => 'required|string|max:50',
+            'name' => 'required_without:enquiries_id|string|max:50',
             'email' => 'sometimes|email|max:100',
-            'mobile_number' => 'required|string|max:15',
+            'mobile_number' => 'required_without:enquiries_id|string|max:15',
         ]);
 
-        // Create the enquiry first
-        $enquiry = Enquiry::create([
-            'name' => $validated['name'],
-            'email' => $validated['email'] ?? null,
-            'mobile_number' => $validated['mobile_number'],
-            // Add any other required fields for Enquiry here
-        ]);
+        // Check if enquiries_id exists in request
+        if (isset($validated['enquiries_id'])) {
+            // Use the existing enquiries_id from the request
+            $enquiryId = $validated['enquiries_id'];
+        } else {
+            // If no enquiries_id is provided, create a new enquiry
+            $enquiry = Enquiry::create([
+                'name' => $validated['name'],
+                'email' => $validated['email'] ?? null,
+                'mobile_number' => $validated['mobile_number'],
+            ]);
+            $enquiryId = $enquiry->id;
+        }
 
-        // Create the address using the enquiry's ID
-        $address = Address::create(array_merge($validated, ['enquiries_id' => $enquiry->id]));
+        // Create the address with the determined enquiries_id
+        $address = Address::create(array_merge($validated, ['enquiries_id' => $enquiryId]));
 
-        // Clear the cache if needed
-        Cache::forget('saved_addresses');
+        // Clear the cache for the specific enquiries_id
+        Cache::forget('saved_addresses_for_enquiry_' . $enquiryId);
 
         // Return success response
         return response()->json([
             'success' => true,
             'data' => $address,
-            'message' => 'Address and enquiry created successfully.',
+            'message' => 'Address added successfully.',
         ]);
 
     } catch (ValidationException $e) {
@@ -946,7 +1008,7 @@ public function storeAddress(Request $request): JsonResponse
         return response()->json([
             'success' => false,
             'message' => 'An error occurred while creating the address.',
-            'error' => $e->getMessage(), // Include error message for debugging
+            'error' => $e->getMessage(),
         ], 500);
     }
 }

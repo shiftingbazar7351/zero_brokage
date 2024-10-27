@@ -33,9 +33,11 @@ Route::controller(ApiController::class)->group(function () {
     Route::get('/booking-list', 'bookingList');
     Route::post('/booking-list', 'createBooking');
 
-    Route::get('/saved-addresses/{id}', 'getSavedAddresses'); // Get saved addresses
+    Route::get('/saved-addresses/{id}', 'getSavedAddresses');
     Route::put('/update-address/{id}', 'updateAddress');
     Route::post('/address', 'storeAddress');
+    Route::patch('/addresses/{id}',  'patchAddress');
+
     Route::post('/loginsendotp',  'loginsendotp');
 Route::post('/loginresendotp',  'loginresendotp');
 Route::post('/loginverifyotp',  'loginverifyotp');

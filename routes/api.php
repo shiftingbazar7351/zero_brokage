@@ -33,7 +33,7 @@ Route::controller(ApiController::class)->group(function () {
     Route::get('/booking-list', 'bookingList');
     Route::post('/booking-list', 'createBooking');
 
-    Route::get('/saved-addresses', 'getSavedAddresses'); // Get saved addresses
+    Route::get('/saved-addresses/{id?}', 'getSavedAddresses'); // Get saved addresses
     Route::put('/update-address/{id}', 'updateAddress');
     Route::post('/address', 'storeAddress');
     Route::post('/loginsendotp',  'loginsendotp');

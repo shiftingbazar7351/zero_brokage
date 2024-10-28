@@ -847,59 +847,65 @@ public function patchAddress(Request $request, $id): JsonResponse
     }
 }
 
-    public function updateAddress(Request $request, $id): JsonResponse
-    {
-        try {
-            $validated = $request->validate([
-                'type' => 'required|string',
-                'pincode' => 'required|string|max:20',
-                'city' => 'required|string|max:50',
-                'state' => 'required|string|max:50',
-                'house_number' => 'sometimes|string|max:50',
+public function updateAddress(Request $request, $id): JsonResponse
+{
+    try {
+        // Validate incoming request
+        $validated = $request->validate([
+            'type' => 'required|string',
+            'pincode' => 'required|string|max:20',
+            'city' => 'required|string|max:50',
+            'state' => 'required|string|max:50',
+            'house_number' => 'sometimes|string|max:50',
+            'road_name' => 'sometimes|string|max:100',
+            'name' => 'required|string|max:50',
+            'email' => 'sometimes|email|max:100',
+            'mobile_number' => 'required|string|max:15',
+            'enquiries_id' => 'required|integer|exists:enquiries,id', // Ensure enquiries_id is provided
+        ]);
 
-                'road_name' => 'sometimes|string|max:100',
+        // Fetch the address that matches the ID and enquiries_id
+        $address = Address::where('id', $id)
+                          ->where('enquiries_id', $validated['enquiries_id'])
+                          ->firstOrFail();
 
-                'name' => 'required|string|max:50',
-                'email' => 'sometimes|email|max:100',
-                'mobile_number' => 'required|string|max:15',
-            ]);
+        // Update the address with validated data
+        $address->update($validated);
 
-            $address = Address::findOrFail($id);
+        // Fetch the associated enquiry and update
+        $enquiry = Enquiry::findOrFail($validated['enquiries_id']);
+        $enquiry->update([
+            'name' => $validated['name'],
+            'email' => $validated['email'] ?? $enquiry->email,
+            'mobile_number' => $validated['mobile_number'],
+        ]);
 
-            $address->update($validated);
+        // Clear the cache
+        Cache::forget('saved_addresses');
 
-            $enquiry = Enquiry::findOrFail($address->enquiries_id);
-            $enquiry->update([
-                'name' => $validated['name'],
-                'email' => $validated['email'] ?? $enquiry->email,
-                'mobile_number' => $validated['mobile_number'],
-            ]);
-
-            Cache::forget('saved_addresses');
-
-            return response()->json([
-                'success' => true,
-                'data' => $address,
-                'message' => 'Address and enquiry updated successfully.',
-            ]);
-        } catch (ModelNotFoundException $e) {
-            return response()->json([
-                'success' => false,
-                'message' => 'Address or Enquiry not found.',
-            ], 404);
-        } catch (ValidationException $e) {
-            return response()->json([
-                'success' => false,
-                'message' => 'Validation failed.',
-                'errors' => $e->errors(),
-            ], 422);
-        } catch (\Exception $e) {
-            return response()->json([
-                'success' => false,
-                'message' => 'An error occurred while updating the address.',
-            ], 500);
-        }
+        return response()->json([
+            'success' => true,
+            'data' => $address,
+            'message' => 'Address and enquiry updated successfully.',
+        ]);
+    } catch (ModelNotFoundException $e) {
+        return response()->json([
+            'success' => false,
+            'message' => 'Address or Enquiry not found.',
+        ], 404);
+    } catch (ValidationException $e) {
+        return response()->json([
+            'success' => false,
+            'message' => 'Validation failed.',
+            'errors' => $e->errors(),
+        ], 422);
+    } catch (\Exception $e) {
+        return response()->json([
+            'success' => false,
+            'message' => 'An error occurred while updating the address.',
+        ], 500);
     }
+}
 
 // public function storeAddress(Request $request): JsonResponse
 // {
@@ -952,12 +958,11 @@ public function patchAddress(Request $request, $id): JsonResponse
 // }
 
 
-public function storeAddress(Request $request): JsonResponse
+public function storeAddress(Request $request, $enquiries_id = null): JsonResponse
 {
     try {
-        // Validate incoming request data
-        $validated = $request->validate([
-            'enquiries_id' => 'nullable|exists:enquiries,id', // Check if enquiries_id is valid
+        $validated = $request->merge(['enquiries_id' => $enquiries_id])->validate([
+            'enquiries_id' => 'nullable|exists:enquiries,id',
             'type' => 'required|string',
             'pincode' => 'required|string|max:20',
             'city' => 'required|string|max:50',
@@ -969,27 +974,27 @@ public function storeAddress(Request $request): JsonResponse
             'mobile_number' => 'required_without:enquiries_id|string|max:15',
         ]);
 
-        // Check if enquiries_id exists in request
-        if (isset($validated['enquiries_id'])) {
-            // Use the existing enquiries_id from the request
+        if ($validated['enquiries_id']) {
             $enquiryId = $validated['enquiries_id'];
         } else {
-            // If no enquiries_id is provided, create a new enquiry
-            $enquiry = Enquiry::create([
-                'name' => $validated['name'],
-                'email' => $validated['email'] ?? null,
-                'mobile_number' => $validated['mobile_number'],
-            ]);
-            $enquiryId = $enquiry->id;
+            $existingEnquiry = Enquiry::where('mobile_number', $validated['mobile_number'])->first();
+
+            if ($existingEnquiry) {
+                $enquiryId = $existingEnquiry->id;
+            } else {
+                $enquiry = Enquiry::create([
+                    'name' => $validated['name'],
+                    'email' => $validated['email'] ?? null,
+                    'mobile_number' => $validated['mobile_number'],
+                ]);
+                $enquiryId = $enquiry->id;
+            }
         }
 
-        // Create the address with the determined enquiries_id
         $address = Address::create(array_merge($validated, ['enquiries_id' => $enquiryId]));
 
-        // Clear the cache for the specific enquiries_id
         Cache::forget('saved_addresses_for_enquiry_' . $enquiryId);
 
-        // Return success response
         return response()->json([
             'success' => true,
             'data' => $address,
@@ -997,14 +1002,12 @@ public function storeAddress(Request $request): JsonResponse
         ]);
 
     } catch (ValidationException $e) {
-        // Handle validation errors
         return response()->json([
             'success' => false,
             'message' => 'Validation failed.',
             'errors' => $e->errors(),
         ], 422);
     } catch (\Exception $e) {
-        // Handle general errors
         return response()->json([
             'success' => false,
             'message' => 'An error occurred while creating the address.',
@@ -1012,7 +1015,6 @@ public function storeAddress(Request $request): JsonResponse
         ], 500);
     }
 }
-
 
 
 public function loginsendotp(Request $request)

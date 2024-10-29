@@ -477,8 +477,7 @@ class ApiController extends Controller
                 ], Response::HTTP_BAD_REQUEST);
             }
 
-
-            $otpValidDuration = 30;
+            $otpValidDuration = 30; // Duration in seconds
             $otpGeneratedAt = strtotime($existingEnquiry->otp_created_at);
             $currentTime = time();
 
@@ -489,7 +488,7 @@ class ApiController extends Controller
                 ], Response::HTTP_CONFLICT);
             }
 
-
+            // Clear OTP and timestamp after verification
             $existingEnquiry->otp = null;
             $existingEnquiry->otp_created_at = null;
             $existingEnquiry->save();
@@ -497,6 +496,7 @@ class ApiController extends Controller
             return response()->json([
                 'success' => true,
                 'message' => 'OTP verified successfully.',
+                'id' => $existingEnquiry->id,
                 'name' => $existingEnquiry->name,
                 'country_code' => $existingEnquiry->country_code,
                 'mobile_number' => $existingEnquiry->mobile_number,

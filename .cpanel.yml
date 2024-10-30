@@ -1,11 +1,18 @@
 ---
 deployment:
   tasks:
-    - export DEPLOYPATH=${HOME}/public_html
+    - export DEPLOYPATH=${HOME}/public_html/zero_brokage
     - echo "Starting deployment on $(date)"
+
+    # Install Composer dependencies
+    - cd ${DEPLOYPATH}
     - /usr/local/bin/composer install --no-interaction --prefer-dist --optimize-autoloader
+
+    # Run Laravel commands for optimization
     - php artisan migrate --force
     - php artisan config:cache
     - php artisan route:cache
     - php artisan view:cache
+
+    # Copy files to the deployment directory
     - rsync -av --exclude='.git' --exclude='.env' ${HOME}/repositories/zero_brokage/ $DEPLOYPATH/

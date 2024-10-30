@@ -1,0 +1,11 @@
+---
+deployment:
+  tasks:
+    - export DEPLOYPATH=${HOME}/public_html
+    - echo "Starting deployment on $(date)"
+    - /usr/local/bin/composer install --no-interaction --prefer-dist --optimize-autoloader
+    - php artisan migrate --force
+    - php artisan config:cache
+    - php artisan route:cache
+    - php artisan view:cache
+    - rsync -av --exclude='.git' --exclude='.env' ${HOME}/repositories/zero_brokage/ $DEPLOYPATH/
